@@ -36,116 +36,116 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> The Azure Resource Manager identifier of this sandbox group. </summary>
         public virtual ResourceIdentifier Id => new ResourceIdentifier($"/subscriptions/{_subscriptionId}/resourceGroups/{_resourceGroupName}/providers/Microsoft.App/sandboxGroups/{_sandboxGroupName}");
 
-        /// <summary> Gets a client for a sandbox in this group. </summary>
+        /// <summary> Gets a resource for a sandbox in this group. </summary>
         /// <param name="id"> The identifier of the sandbox. </param>
-        /// <returns> A client scoped to the sandbox. </returns>
-        public virtual SandboxClient GetSandbox(string id)
+        /// <returns> A resource scoped to the sandbox. </returns>
+        public virtual SandboxResource GetSandbox(string id)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
-            return new SandboxClient(GetSandboxesClient(), id);
+            return new SandboxResource(GetSandboxesClient(), id);
         }
 
-        /// <summary> Gets a client for a connection in this group. </summary>
+        /// <summary> Gets a resource for a connection in this group. </summary>
         /// <param name="id"> The identifier of the connection. </param>
-        /// <returns> A client scoped to the connection. </returns>
-        public virtual ConnectionClient GetConnection(string id)
+        /// <returns> A resource scoped to the connection. </returns>
+        public virtual ConnectionResource GetConnection(string id)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
-            return new ConnectionClient(GetConnectionsClient(), id);
+            return new ConnectionResource(GetConnectionsClient(), id);
         }
 
-        /// <summary> Gets a client for a content package in this group. </summary>
+        /// <summary> Gets a resource for a content package in this group. </summary>
         /// <param name="id"> The identifier of the content package. </param>
-        /// <returns> A client scoped to the content package. </returns>
-        public virtual ContentPackageClient GetContentPackage(string id)
+        /// <returns> A resource scoped to the content package. </returns>
+        public virtual ContentPackageResource GetContentPackage(string id)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
-            return new ContentPackageClient(GetContentPackagesClient(), id);
+            return new ContentPackageResource(GetContentPackagesClient(), id);
         }
 
-        /// <summary> Gets a client for a credential in this group. </summary>
+        /// <summary> Gets a resource for a credential in this group. </summary>
         /// <param name="credentialName"> The name of the credential. </param>
-        /// <returns> A client scoped to the credential. </returns>
-        public virtual CredentialClient GetCredential(string credentialName)
+        /// <returns> A resource scoped to the credential. </returns>
+        public virtual CredentialResource GetCredential(string credentialName)
         {
             Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
-            return new CredentialClient(GetCredentialsClient(), credentialName);
+            return new CredentialResource(GetCredentialsClient(), credentialName);
         }
 
-        /// <summary> Gets a client for a disk image in this group. </summary>
+        /// <summary> Gets a resource for a disk image in this group. </summary>
         /// <param name="id"> The identifier of the disk image. </param>
-        /// <returns> A client scoped to the disk image. </returns>
-        public virtual DiskImageClient GetDiskImage(string id)
+        /// <returns> A resource scoped to the disk image. </returns>
+        public virtual DiskImageResource GetDiskImage(string id)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
-            return new DiskImageClient(GetDiskImagesClient(), id);
+            return new DiskImageResource(GetDiskImagesClient(), id);
         }
 
-        /// <summary> Gets a client for a public disk image. </summary>
+        /// <summary> Gets a resource for a public disk image. </summary>
         /// <param name="name"> The name of the public disk image. </param>
-        /// <returns> A client scoped to the public disk image. </returns>
-        public virtual PublicDiskImageClient GetPublicDiskImage(string name)
+        /// <returns> A resource scoped to the public disk image. </returns>
+        public virtual PublicDiskImageResource GetPublicDiskImage(string name)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            return new PublicDiskImageClient(GetPublicDiskImagesClient(), name);
+            return new PublicDiskImageResource(GetPublicDiskImagesClient(), name);
         }
 
-        /// <summary> Gets a client for an egress policy in this group. </summary>
+        /// <summary> Gets a resource for an egress policy in this group. </summary>
         /// <param name="policyId"> The identifier of the egress policy. </param>
-        /// <returns> A client scoped to the egress policy. </returns>
-        public virtual EgressPolicyClient GetEgressPolicy(string policyId)
+        /// <returns> A resource scoped to the egress policy. </returns>
+        public virtual EgressPolicyResource GetEgressPolicy(string policyId)
         {
             Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
-            return new EgressPolicyClient(GetEgressPoliciesClient(), policyId);
+            return new EgressPolicyResource(GetEgressPoliciesClient(), policyId);
         }
 
-        /// <summary> Gets a client for a secret in this group. </summary>
+        /// <summary> Gets a resource for a secret in this group. </summary>
         /// <param name="secretId"> The identifier of the secret. </param>
-        /// <returns> A client scoped to the secret. </returns>
-        public virtual SandboxSecretClient GetSecret(string secretId)
+        /// <returns> A resource scoped to the secret. </returns>
+        public virtual SecretResource GetSecret(string secretId)
         {
             Argument.AssertNotNullOrEmpty(secretId, nameof(secretId));
-            return new SandboxSecretClient(GetSecretsClient(), secretId);
+            return new SecretResource(GetSecretsClient(), secretId);
         }
 
-        /// <summary> Gets a client for a snapshot in this group. </summary>
+        /// <summary> Gets a resource for a snapshot in this group. </summary>
         /// <param name="id"> The identifier of the snapshot. </param>
-        /// <returns> A client scoped to the snapshot. </returns>
-        public virtual SnapshotClient GetSnapshot(string id)
+        /// <returns> A resource scoped to the snapshot. </returns>
+        public virtual SnapshotResource GetSnapshot(string id)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
-            return new SnapshotClient(GetSnapshotsClient(), id);
+            return new SnapshotResource(GetSnapshotsClient(), id);
         }
 
-        /// <summary> Gets a client for a volume in this group. </summary>
+        /// <summary> Gets a resource for a volume in this group. </summary>
         /// <param name="volumeName"> The name of the volume. </param>
-        /// <returns> A client scoped to the volume. </returns>
-        public virtual VolumeClient GetVolume(string volumeName)
+        /// <returns> A resource scoped to the volume. </returns>
+        public virtual VolumeResource GetVolume(string volumeName)
         {
             Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-            return new VolumeClient(GetVolumesClient(), volumeName);
+            return new VolumeResource(GetVolumesClient(), volumeName);
         }
 
-        /// <summary> Lists sandboxes as scoped clients. </summary>
+        /// <summary> Lists sandboxes as scoped resources. </summary>
         /// <param name="skipToken"> Continuation token for paginated results. </param>
         /// <param name="labels"> Comma-separated label selector. </param>
         /// <param name="cancellationToken"> The cancellation token for service requests. </param>
-        public virtual Pageable<SandboxClient> GetSandboxes(string skipToken = default, string labels = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SandboxResource> GetSandboxes(string skipToken = default, string labels = default, CancellationToken cancellationToken = default)
         {
-            return new ResourcePageable<SandboxProperties, SandboxClient>(
+            return new ResourcePageable<SandboxProperties, SandboxResource>(
                 GetSandboxesClient().GetSandboxes(skipToken, labels, cancellationToken),
-                model => new SandboxClient(GetSandboxesClient(), model.Id, model));
+                model => new SandboxResource(GetSandboxesClient(), model.Id, model));
         }
 
-        /// <summary> Lists sandboxes as scoped clients asynchronously. </summary>
+        /// <summary> Lists sandboxes as scoped resources asynchronously. </summary>
         /// <param name="skipToken"> Continuation token for paginated results. </param>
         /// <param name="labels"> Comma-separated label selector. </param>
         /// <param name="cancellationToken"> The cancellation token for service requests. </param>
-        public virtual AsyncPageable<SandboxClient> GetSandboxesAsync(string skipToken = default, string labels = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SandboxResource> GetSandboxesAsync(string skipToken = default, string labels = default, CancellationToken cancellationToken = default)
         {
-            return new ResourceAsyncPageable<SandboxProperties, SandboxClient>(
+            return new ResourceAsyncPageable<SandboxProperties, SandboxResource>(
                 GetSandboxesClient().GetSandboxesAsync(skipToken, labels, cancellationToken),
-                model => new SandboxClient(GetSandboxesClient(), model.Id, model));
+                model => new SandboxResource(GetSandboxesClient(), model.Id, model));
         }
 
         /// <summary> Gets the total number of sandboxes in this group. </summary>
@@ -164,174 +164,174 @@ namespace Azure.Containers.Apps.Sandbox
             return Response.FromValue(response.Value.Count, response.GetRawResponse());
         }
 
-        /// <summary> Lists connections as scoped clients. </summary>
+        /// <summary> Lists connections as scoped resources. </summary>
         /// <param name="includeSandboxIds"> Whether to include sandbox identifiers using each connection. </param>
         /// <param name="labels"> Comma-separated key=value labels that all resources must match. </param>
         /// <param name="skipToken"> Continuation token for paginated results. </param>
         /// <param name="cancellationToken"> The cancellation token for service requests. </param>
-        public virtual Pageable<ConnectionClient> GetConnections(bool? includeSandboxIds = default, string labels = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ConnectionResource> GetConnections(bool? includeSandboxIds = default, string labels = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
-            return new ResourcePageable<SandboxConnection, ConnectionClient>(
+            return new ResourcePageable<SandboxConnection, ConnectionResource>(
                 GetConnectionsClient().GetConnections(includeSandboxIds, labels, skipToken, cancellationToken),
-                model => new ConnectionClient(GetConnectionsClient(), model.Id, model));
+                model => new ConnectionResource(GetConnectionsClient(), model.Id, model));
         }
 
-        /// <summary> Lists connections as scoped clients asynchronously. </summary>
+        /// <summary> Lists connections as scoped resources asynchronously. </summary>
         /// <param name="includeSandboxIds"> Whether to include sandbox identifiers using each connection. </param>
         /// <param name="labels"> Comma-separated key=value labels that all resources must match. </param>
         /// <param name="skipToken"> Continuation token for paginated results. </param>
         /// <param name="cancellationToken"> The cancellation token for service requests. </param>
-        public virtual AsyncPageable<ConnectionClient> GetConnectionsAsync(bool? includeSandboxIds = default, string labels = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ConnectionResource> GetConnectionsAsync(bool? includeSandboxIds = default, string labels = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
-            return new ResourceAsyncPageable<SandboxConnection, ConnectionClient>(
+            return new ResourceAsyncPageable<SandboxConnection, ConnectionResource>(
                 GetConnectionsClient().GetConnectionsAsync(includeSandboxIds, labels, skipToken, cancellationToken),
-                model => new ConnectionClient(GetConnectionsClient(), model.Id, model));
+                model => new ConnectionResource(GetConnectionsClient(), model.Id, model));
         }
 
-        /// <summary> Lists content packages as scoped clients. </summary>
+        /// <summary> Lists content packages as scoped resources. </summary>
         /// <param name="skipToken"> Continuation token for paginated results. </param>
         /// <param name="labels"> Comma-separated label selector. </param>
         /// <param name="cancellationToken"> The cancellation token for service requests. </param>
-        public virtual Pageable<ContentPackageClient> GetContentPackages(string skipToken = default, string labels = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ContentPackageResource> GetContentPackages(string skipToken = default, string labels = default, CancellationToken cancellationToken = default)
         {
-            return new ResourcePageable<ContentPackage, ContentPackageClient>(
+            return new ResourcePageable<ContentPackage, ContentPackageResource>(
                 GetContentPackagesClient().GetContentPackages(skipToken, labels, cancellationToken),
-                model => new ContentPackageClient(GetContentPackagesClient(), model.Id, model));
+                model => new ContentPackageResource(GetContentPackagesClient(), model.Id, model));
         }
 
-        /// <summary> Lists content packages as scoped clients asynchronously. </summary>
+        /// <summary> Lists content packages as scoped resources asynchronously. </summary>
         /// <param name="skipToken"> Continuation token for paginated results. </param>
         /// <param name="labels"> Comma-separated label selector. </param>
         /// <param name="cancellationToken"> The cancellation token for service requests. </param>
-        public virtual AsyncPageable<ContentPackageClient> GetContentPackagesAsync(string skipToken = default, string labels = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ContentPackageResource> GetContentPackagesAsync(string skipToken = default, string labels = default, CancellationToken cancellationToken = default)
         {
-            return new ResourceAsyncPageable<ContentPackage, ContentPackageClient>(
+            return new ResourceAsyncPageable<ContentPackage, ContentPackageResource>(
                 GetContentPackagesClient().GetContentPackagesAsync(skipToken, labels, cancellationToken),
-                model => new ContentPackageClient(GetContentPackagesClient(), model.Id, model));
+                model => new ContentPackageResource(GetContentPackagesClient(), model.Id, model));
         }
 
-        /// <summary> Lists credentials as scoped clients. </summary>
+        /// <summary> Lists credentials as scoped resources. </summary>
         /// <param name="skipToken"> Continuation token for paginated results. </param>
         /// <param name="cancellationToken"> The cancellation token for service requests. </param>
-        public virtual Pageable<CredentialClient> GetCredentials(string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<CredentialResource> GetCredentials(string skipToken = default, CancellationToken cancellationToken = default)
         {
-            return new ResourcePageable<SandboxGroupCredential, CredentialClient>(
+            return new ResourcePageable<SandboxGroupCredential, CredentialResource>(
                 GetCredentialsClient().GetCredentials(skipToken, cancellationToken),
-                model => new CredentialClient(GetCredentialsClient(), model.Name, model));
+                model => new CredentialResource(GetCredentialsClient(), model.Name, model));
         }
 
-        /// <summary> Lists credentials as scoped clients asynchronously. </summary>
+        /// <summary> Lists credentials as scoped resources asynchronously. </summary>
         /// <param name="skipToken"> Continuation token for paginated results. </param>
         /// <param name="cancellationToken"> The cancellation token for service requests. </param>
-        public virtual AsyncPageable<CredentialClient> GetCredentialsAsync(string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CredentialResource> GetCredentialsAsync(string skipToken = default, CancellationToken cancellationToken = default)
         {
-            return new ResourceAsyncPageable<SandboxGroupCredential, CredentialClient>(
+            return new ResourceAsyncPageable<SandboxGroupCredential, CredentialResource>(
                 GetCredentialsClient().GetCredentialsAsync(skipToken, cancellationToken),
-                model => new CredentialClient(GetCredentialsClient(), model.Name, model));
+                model => new CredentialResource(GetCredentialsClient(), model.Name, model));
         }
 
-        /// <summary> Lists disk images as scoped clients. </summary>
+        /// <summary> Lists disk images as scoped resources. </summary>
         /// <param name="skipToken"> Continuation token for paginated results. </param>
         /// <param name="labels"> Comma-separated label selector. </param>
         /// <param name="cancellationToken"> The cancellation token for service requests. </param>
-        public virtual Pageable<DiskImageClient> GetDiskImages(string skipToken = default, string labels = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<DiskImageResource> GetDiskImages(string skipToken = default, string labels = default, CancellationToken cancellationToken = default)
         {
-            return new ResourcePageable<DiskImage, DiskImageClient>(
+            return new ResourcePageable<DiskImage, DiskImageResource>(
                 GetDiskImagesClient().GetDiskImages(skipToken, labels, cancellationToken),
-                model => new DiskImageClient(GetDiskImagesClient(), model.Id, model));
+                model => new DiskImageResource(GetDiskImagesClient(), model.Id, model));
         }
 
-        /// <summary> Lists disk images as scoped clients asynchronously. </summary>
+        /// <summary> Lists disk images as scoped resources asynchronously. </summary>
         /// <param name="skipToken"> Continuation token for paginated results. </param>
         /// <param name="labels"> Comma-separated label selector. </param>
         /// <param name="cancellationToken"> The cancellation token for service requests. </param>
-        public virtual AsyncPageable<DiskImageClient> GetDiskImagesAsync(string skipToken = default, string labels = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DiskImageResource> GetDiskImagesAsync(string skipToken = default, string labels = default, CancellationToken cancellationToken = default)
         {
-            return new ResourceAsyncPageable<DiskImage, DiskImageClient>(
+            return new ResourceAsyncPageable<DiskImage, DiskImageResource>(
                 GetDiskImagesClient().GetDiskImagesAsync(skipToken, labels, cancellationToken),
-                model => new DiskImageClient(GetDiskImagesClient(), model.Id, model));
+                model => new DiskImageResource(GetDiskImagesClient(), model.Id, model));
         }
 
-        /// <summary> Lists public disk images as scoped clients. </summary>
+        /// <summary> Lists public disk images as scoped resources. </summary>
         /// <param name="skipToken"> Continuation token for paginated results. </param>
         /// <param name="cancellationToken"> The cancellation token for service requests. </param>
-        public virtual Pageable<PublicDiskImageClient> GetPublicDiskImages(string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<PublicDiskImageResource> GetPublicDiskImages(string skipToken = default, CancellationToken cancellationToken = default)
         {
-            return new ResourcePageable<PublicDiskImage, PublicDiskImageClient>(
+            return new ResourcePageable<PublicDiskImage, PublicDiskImageResource>(
                 GetPublicDiskImagesClient().GetPublicDiskImages(skipToken, cancellationToken),
-                model => new PublicDiskImageClient(GetPublicDiskImagesClient(), model.Name, model));
+                model => new PublicDiskImageResource(GetPublicDiskImagesClient(), model.Name, model));
         }
 
-        /// <summary> Lists public disk images as scoped clients asynchronously. </summary>
+        /// <summary> Lists public disk images as scoped resources asynchronously. </summary>
         /// <param name="skipToken"> Continuation token for paginated results. </param>
         /// <param name="cancellationToken"> The cancellation token for service requests. </param>
-        public virtual AsyncPageable<PublicDiskImageClient> GetPublicDiskImagesAsync(string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PublicDiskImageResource> GetPublicDiskImagesAsync(string skipToken = default, CancellationToken cancellationToken = default)
         {
-            return new ResourceAsyncPageable<PublicDiskImage, PublicDiskImageClient>(
+            return new ResourceAsyncPageable<PublicDiskImage, PublicDiskImageResource>(
                 GetPublicDiskImagesClient().GetPublicDiskImagesAsync(skipToken, cancellationToken),
-                model => new PublicDiskImageClient(GetPublicDiskImagesClient(), model.Name, model));
+                model => new PublicDiskImageResource(GetPublicDiskImagesClient(), model.Name, model));
         }
 
-        /// <summary> Lists egress policies as scoped clients. </summary>
+        /// <summary> Lists egress policies as scoped resources. </summary>
         /// <param name="skipToken"> Continuation token for paginated results. </param>
         /// <param name="cancellationToken"> The cancellation token for service requests. </param>
-        public virtual Pageable<EgressPolicyClient> GetEgressPolicies(string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<EgressPolicyResource> GetEgressPolicies(string skipToken = default, CancellationToken cancellationToken = default)
         {
-            return new ResourcePageable<NamedEgressPolicy, EgressPolicyClient>(
+            return new ResourcePageable<NamedEgressPolicy, EgressPolicyResource>(
                 GetEgressPoliciesClient().GetEgressPolicies(skipToken, cancellationToken),
-                model => new EgressPolicyClient(GetEgressPoliciesClient(), model.Id, model));
+                model => new EgressPolicyResource(GetEgressPoliciesClient(), model.Id, model));
         }
 
-        /// <summary> Lists egress policies as scoped clients asynchronously. </summary>
+        /// <summary> Lists egress policies as scoped resources asynchronously. </summary>
         /// <param name="skipToken"> Continuation token for paginated results. </param>
         /// <param name="cancellationToken"> The cancellation token for service requests. </param>
-        public virtual AsyncPageable<EgressPolicyClient> GetEgressPoliciesAsync(string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EgressPolicyResource> GetEgressPoliciesAsync(string skipToken = default, CancellationToken cancellationToken = default)
         {
-            return new ResourceAsyncPageable<NamedEgressPolicy, EgressPolicyClient>(
+            return new ResourceAsyncPageable<NamedEgressPolicy, EgressPolicyResource>(
                 GetEgressPoliciesClient().GetEgressPoliciesAsync(skipToken, cancellationToken),
-                model => new EgressPolicyClient(GetEgressPoliciesClient(), model.Id, model));
+                model => new EgressPolicyResource(GetEgressPoliciesClient(), model.Id, model));
         }
 
-        /// <summary> Lists secrets as scoped clients. </summary>
+        /// <summary> Lists secrets as scoped resources. </summary>
         /// <param name="skipToken"> Continuation token for paginated results. </param>
         /// <param name="cancellationToken"> The cancellation token for service requests. </param>
-        public virtual Pageable<SandboxSecretClient> GetSecrets(string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SecretResource> GetSecrets(string skipToken = default, CancellationToken cancellationToken = default)
         {
-            return new ResourcePageable<SandboxSecret, SandboxSecretClient>(
+            return new ResourcePageable<SandboxSecret, SecretResource>(
                 GetSecretsClient().GetSecrets(skipToken, cancellationToken),
-                model => new SandboxSecretClient(GetSecretsClient(), model.Id, model));
+                model => new SecretResource(GetSecretsClient(), model.Id, model));
         }
 
-        /// <summary> Lists secrets as scoped clients asynchronously. </summary>
+        /// <summary> Lists secrets as scoped resources asynchronously. </summary>
         /// <param name="skipToken"> Continuation token for paginated results. </param>
         /// <param name="cancellationToken"> The cancellation token for service requests. </param>
-        public virtual AsyncPageable<SandboxSecretClient> GetSecretsAsync(string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SecretResource> GetSecretsAsync(string skipToken = default, CancellationToken cancellationToken = default)
         {
-            return new ResourceAsyncPageable<SandboxSecret, SandboxSecretClient>(
+            return new ResourceAsyncPageable<SandboxSecret, SecretResource>(
                 GetSecretsClient().GetSecretsAsync(skipToken, cancellationToken),
-                model => new SandboxSecretClient(GetSecretsClient(), model.Id, model));
+                model => new SecretResource(GetSecretsClient(), model.Id, model));
         }
 
-        /// <summary> Lists snapshots as scoped clients. </summary>
+        /// <summary> Lists snapshots as scoped resources. </summary>
         /// <param name="skipToken"> Continuation token for paginated results. </param>
         /// <param name="labels"> Comma-separated label selector. </param>
         /// <param name="cancellationToken"> The cancellation token for service requests. </param>
-        public virtual Pageable<SnapshotClient> GetSnapshots(string skipToken = default, string labels = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SnapshotResource> GetSnapshots(string skipToken = default, string labels = default, CancellationToken cancellationToken = default)
         {
-            return new ResourcePageable<SandboxSnapshot, SnapshotClient>(
+            return new ResourcePageable<SandboxSnapshot, SnapshotResource>(
                 GetSnapshotsClient().GetSnapshots(skipToken, labels, cancellationToken),
-                model => new SnapshotClient(GetSnapshotsClient(), model.Id, model));
+                model => new SnapshotResource(GetSnapshotsClient(), model.Id, model));
         }
 
-        /// <summary> Lists snapshots as scoped clients asynchronously. </summary>
+        /// <summary> Lists snapshots as scoped resources asynchronously. </summary>
         /// <param name="skipToken"> Continuation token for paginated results. </param>
         /// <param name="labels"> Comma-separated label selector. </param>
         /// <param name="cancellationToken"> The cancellation token for service requests. </param>
-        public virtual AsyncPageable<SnapshotClient> GetSnapshotsAsync(string skipToken = default, string labels = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SnapshotResource> GetSnapshotsAsync(string skipToken = default, string labels = default, CancellationToken cancellationToken = default)
         {
-            return new ResourceAsyncPageable<SandboxSnapshot, SnapshotClient>(
+            return new ResourceAsyncPageable<SandboxSnapshot, SnapshotResource>(
                 GetSnapshotsClient().GetSnapshotsAsync(skipToken, labels, cancellationToken),
-                model => new SnapshotClient(GetSnapshotsClient(), model.Id, model));
+                model => new SnapshotResource(GetSnapshotsClient(), model.Id, model));
         }
 
         /// <summary> Gets the total number of snapshots in this group. </summary>
@@ -350,26 +350,26 @@ namespace Azure.Containers.Apps.Sandbox
             return Response.FromValue(response.Value.Count, response.GetRawResponse());
         }
 
-        /// <summary> Lists volumes as scoped clients. </summary>
+        /// <summary> Lists volumes as scoped resources. </summary>
         /// <param name="skipToken"> Continuation token for paginated results. </param>
         /// <param name="labels"> Comma-separated label selector. </param>
         /// <param name="cancellationToken"> The cancellation token for service requests. </param>
-        public virtual Pageable<VolumeClient> GetVolumes(string skipToken = default, string labels = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<VolumeResource> GetVolumes(string skipToken = default, string labels = default, CancellationToken cancellationToken = default)
         {
-            return new ResourcePageable<SandboxGroupVolume, VolumeClient>(
+            return new ResourcePageable<SandboxGroupVolume, VolumeResource>(
                 GetVolumesClient().GetVolumes(skipToken, labels, cancellationToken),
-                model => new VolumeClient(GetVolumesClient(), model.VolumeName, model));
+                model => new VolumeResource(GetVolumesClient(), model.VolumeName, model));
         }
 
-        /// <summary> Lists volumes as scoped clients asynchronously. </summary>
+        /// <summary> Lists volumes as scoped resources asynchronously. </summary>
         /// <param name="skipToken"> Continuation token for paginated results. </param>
         /// <param name="labels"> Comma-separated label selector. </param>
         /// <param name="cancellationToken"> The cancellation token for service requests. </param>
-        public virtual AsyncPageable<VolumeClient> GetVolumesAsync(string skipToken = default, string labels = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VolumeResource> GetVolumesAsync(string skipToken = default, string labels = default, CancellationToken cancellationToken = default)
         {
-            return new ResourceAsyncPageable<SandboxGroupVolume, VolumeClient>(
+            return new ResourceAsyncPageable<SandboxGroupVolume, VolumeResource>(
                 GetVolumesClient().GetVolumesAsync(skipToken, labels, cancellationToken),
-                model => new VolumeClient(GetVolumesClient(), model.VolumeName, model));
+                model => new VolumeResource(GetVolumesClient(), model.VolumeName, model));
         }
 
         /// <summary> Gets the count of volumes in this group, grouped by volume type. </summary>
@@ -386,202 +386,202 @@ namespace Azure.Containers.Apps.Sandbox
             return await GetVolumesClient().GetVolumeCountsAsync(cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Creates a sandbox and returns its client. </summary>
+        /// <summary> Creates a sandbox and returns its resource. </summary>
         /// <param name="content"> Sandbox create request. </param>
         /// <param name="cancellationToken"> The cancellation token for the request. </param>
-        public virtual Response<SandboxClient> CreateSandbox(CreateSandboxContent content, CancellationToken cancellationToken = default)
+        public virtual Response<SandboxResource> CreateSandbox(CreateSandboxContent content, CancellationToken cancellationToken = default)
         {
             Response<SandboxProperties> response = GetSandboxesClient().CreateSandbox(content, cancellationToken);
-            return Response.FromValue(new SandboxClient(GetSandboxesClient(), response.Value.Id, response.Value), response.GetRawResponse());
+            return Response.FromValue(new SandboxResource(GetSandboxesClient(), response.Value.Id, response.Value), response.GetRawResponse());
         }
 
-        /// <summary> Creates a sandbox and returns its client asynchronously. </summary>
+        /// <summary> Creates a sandbox and returns its resource asynchronously. </summary>
         /// <param name="content"> Sandbox create request. </param>
         /// <param name="cancellationToken"> The cancellation token for the request. </param>
-        public virtual async Task<Response<SandboxClient>> CreateSandboxAsync(CreateSandboxContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SandboxResource>> CreateSandboxAsync(CreateSandboxContent content, CancellationToken cancellationToken = default)
         {
             Response<SandboxProperties> response = await GetSandboxesClient().CreateSandboxAsync(content, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(new SandboxClient(GetSandboxesClient(), response.Value.Id, response.Value), response.GetRawResponse());
+            return Response.FromValue(new SandboxResource(GetSandboxesClient(), response.Value.Id, response.Value), response.GetRawResponse());
         }
 
-        /// <summary> Creates a connection and returns its client. </summary>
+        /// <summary> Creates a connection and returns its resource. </summary>
         /// <param name="body"> The connection to create. </param>
         /// <param name="cancellationToken"> The cancellation token for the request. </param>
-        public virtual Response<ConnectionClient> CreateConnection(CreateConnectionContent body, CancellationToken cancellationToken = default)
+        public virtual Response<ConnectionResource> CreateConnection(CreateConnectionContent body, CancellationToken cancellationToken = default)
         {
             Response<SandboxConnection> response = GetConnectionsClient().CreateConnection(body, cancellationToken);
-            return Response.FromValue(new ConnectionClient(GetConnectionsClient(), response.Value.Id, response.Value), response.GetRawResponse());
+            return Response.FromValue(new ConnectionResource(GetConnectionsClient(), response.Value.Id, response.Value), response.GetRawResponse());
         }
 
-        /// <summary> Creates a connection and returns its client asynchronously. </summary>
+        /// <summary> Creates a connection and returns its resource asynchronously. </summary>
         /// <param name="body"> The connection to create. </param>
         /// <param name="cancellationToken"> The cancellation token for the request. </param>
-        public virtual async Task<Response<ConnectionClient>> CreateConnectionAsync(CreateConnectionContent body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConnectionResource>> CreateConnectionAsync(CreateConnectionContent body, CancellationToken cancellationToken = default)
         {
             Response<SandboxConnection> response = await GetConnectionsClient().CreateConnectionAsync(body, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(new ConnectionClient(GetConnectionsClient(), response.Value.Id, response.Value), response.GetRawResponse());
+            return Response.FromValue(new ConnectionResource(GetConnectionsClient(), response.Value.Id, response.Value), response.GetRawResponse());
         }
 
-        /// <summary> Sets a credential and returns its client. </summary>
+        /// <summary> Sets a credential and returns its resource. </summary>
         /// <param name="credentialName"> The name of the credential. </param>
         /// <param name="body"> The credential to set. </param>
         /// <param name="cancellationToken"> The cancellation token for the request. </param>
-        public virtual Response<CredentialClient> SetCredential(string credentialName, CreateSandboxGroupCredentialContent body, CancellationToken cancellationToken = default)
+        public virtual Response<CredentialResource> SetCredential(string credentialName, CreateSandboxGroupCredentialContent body, CancellationToken cancellationToken = default)
         {
             Response<SandboxGroupCredential> response = GetCredentialsClient().SetCredential(credentialName, body, cancellationToken);
-            return Response.FromValue(new CredentialClient(GetCredentialsClient(), credentialName, response.Value), response.GetRawResponse());
+            return Response.FromValue(new CredentialResource(GetCredentialsClient(), credentialName, response.Value), response.GetRawResponse());
         }
 
-        /// <summary> Sets a credential and returns its client asynchronously. </summary>
+        /// <summary> Sets a credential and returns its resource asynchronously. </summary>
         /// <param name="credentialName"> The name of the credential. </param>
         /// <param name="body"> The credential to set. </param>
         /// <param name="cancellationToken"> The cancellation token for the request. </param>
-        public virtual async Task<Response<CredentialClient>> SetCredentialAsync(string credentialName, CreateSandboxGroupCredentialContent body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CredentialResource>> SetCredentialAsync(string credentialName, CreateSandboxGroupCredentialContent body, CancellationToken cancellationToken = default)
         {
             Response<SandboxGroupCredential> response = await GetCredentialsClient().SetCredentialAsync(credentialName, body, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(new CredentialClient(GetCredentialsClient(), credentialName, response.Value), response.GetRawResponse());
+            return Response.FromValue(new CredentialResource(GetCredentialsClient(), credentialName, response.Value), response.GetRawResponse());
         }
 
-        /// <summary> Creates a disk image and returns its client. </summary>
+        /// <summary> Creates a disk image and returns its resource. </summary>
         /// <param name="body"> The disk image to create. </param>
         /// <param name="cancellationToken"> The cancellation token for the request. </param>
-        public virtual Response<DiskImageClient> CreateDiskImage(CreateDiskImageContent body, CancellationToken cancellationToken = default)
+        public virtual Response<DiskImageResource> CreateDiskImage(CreateDiskImageContent body, CancellationToken cancellationToken = default)
         {
             Response<DiskImage> response = GetDiskImagesClient().CreateDiskImage(body, cancellationToken);
-            return Response.FromValue(new DiskImageClient(GetDiskImagesClient(), response.Value.Id, response.Value), response.GetRawResponse());
+            return Response.FromValue(new DiskImageResource(GetDiskImagesClient(), response.Value.Id, response.Value), response.GetRawResponse());
         }
 
-        /// <summary> Creates a disk image and returns its client asynchronously. </summary>
+        /// <summary> Creates a disk image and returns its resource asynchronously. </summary>
         /// <param name="body"> The disk image to create. </param>
         /// <param name="cancellationToken"> The cancellation token for the request. </param>
-        public virtual async Task<Response<DiskImageClient>> CreateDiskImageAsync(CreateDiskImageContent body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiskImageResource>> CreateDiskImageAsync(CreateDiskImageContent body, CancellationToken cancellationToken = default)
         {
             Response<DiskImage> response = await GetDiskImagesClient().CreateDiskImageAsync(body, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(new DiskImageClient(GetDiskImagesClient(), response.Value.Id, response.Value), response.GetRawResponse());
+            return Response.FromValue(new DiskImageResource(GetDiskImagesClient(), response.Value.Id, response.Value), response.GetRawResponse());
         }
 
-        /// <summary> Sets an egress policy and returns its client. </summary>
+        /// <summary> Sets an egress policy and returns its resource. </summary>
         /// <param name="policyId"> The identifier of the policy. </param>
         /// <param name="resource"> The policy to set. </param>
         /// <param name="cancellationToken"> The cancellation token for the request. </param>
-        public virtual Response<EgressPolicyClient> SetEgressPolicy(string policyId, NamedEgressPolicy resource, CancellationToken cancellationToken = default)
+        public virtual Response<EgressPolicyResource> SetEgressPolicy(string policyId, NamedEgressPolicy resource, CancellationToken cancellationToken = default)
         {
             Response<NamedEgressPolicy> response = GetEgressPoliciesClient().SetEgressPolicy(policyId, resource, cancellationToken);
-            return Response.FromValue(new EgressPolicyClient(GetEgressPoliciesClient(), policyId, response.Value), response.GetRawResponse());
+            return Response.FromValue(new EgressPolicyResource(GetEgressPoliciesClient(), policyId, response.Value), response.GetRawResponse());
         }
 
-        /// <summary> Sets an egress policy and returns its client asynchronously. </summary>
+        /// <summary> Sets an egress policy and returns its resource asynchronously. </summary>
         /// <param name="policyId"> The identifier of the policy. </param>
         /// <param name="resource"> The policy to set. </param>
         /// <param name="cancellationToken"> The cancellation token for the request. </param>
-        public virtual async Task<Response<EgressPolicyClient>> SetEgressPolicyAsync(string policyId, NamedEgressPolicy resource, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EgressPolicyResource>> SetEgressPolicyAsync(string policyId, NamedEgressPolicy resource, CancellationToken cancellationToken = default)
         {
             Response<NamedEgressPolicy> response = await GetEgressPoliciesClient().SetEgressPolicyAsync(policyId, resource, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(new EgressPolicyClient(GetEgressPoliciesClient(), policyId, response.Value), response.GetRawResponse());
+            return Response.FromValue(new EgressPolicyResource(GetEgressPoliciesClient(), policyId, response.Value), response.GetRawResponse());
         }
 
-        /// <summary> Sets a secret and returns its client. </summary>
+        /// <summary> Sets a secret and returns its resource. </summary>
         /// <param name="secretId"> The identifier of the secret. </param>
         /// <param name="body"> The secret to set. </param>
         /// <param name="cancellationToken"> The cancellation token for the request. </param>
-        public virtual Response<SandboxSecretClient> SetSecret(string secretId, SetSecretContent body, CancellationToken cancellationToken = default)
+        public virtual Response<SecretResource> SetSecret(string secretId, SetSecretContent body, CancellationToken cancellationToken = default)
         {
             Response<SandboxSecret> response = GetSecretsClient().SetSecret(secretId, body, cancellationToken);
-            return Response.FromValue(new SandboxSecretClient(GetSecretsClient(), secretId, response.Value), response.GetRawResponse());
+            return Response.FromValue(new SecretResource(GetSecretsClient(), secretId, response.Value), response.GetRawResponse());
         }
 
-        /// <summary> Sets a secret and returns its client asynchronously. </summary>
+        /// <summary> Sets a secret and returns its resource asynchronously. </summary>
         /// <param name="secretId"> The identifier of the secret. </param>
         /// <param name="body"> The secret to set. </param>
         /// <param name="cancellationToken"> The cancellation token for the request. </param>
-        public virtual async Task<Response<SandboxSecretClient>> SetSecretAsync(string secretId, SetSecretContent body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecretResource>> SetSecretAsync(string secretId, SetSecretContent body, CancellationToken cancellationToken = default)
         {
             Response<SandboxSecret> response = await GetSecretsClient().SetSecretAsync(secretId, body, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(new SandboxSecretClient(GetSecretsClient(), secretId, response.Value), response.GetRawResponse());
+            return Response.FromValue(new SecretResource(GetSecretsClient(), secretId, response.Value), response.GetRawResponse());
         }
 
-        /// <summary> Creates a snapshot of a sandbox and returns its client. </summary>
+        /// <summary> Creates a snapshot of a sandbox and returns its resource. </summary>
         /// <param name="sandboxId"> The identifier of the sandbox. </param>
         /// <param name="body"> The snapshot to create. </param>
         /// <param name="cancellationToken"> The cancellation token for the request. </param>
-        public virtual Response<SnapshotClient> CreateSnapshot(string sandboxId, CreateSnapshotContent body, CancellationToken cancellationToken = default)
+        public virtual Response<SnapshotResource> CreateSnapshot(string sandboxId, CreateSnapshotContent body, CancellationToken cancellationToken = default)
         {
             Response<SandboxSnapshot> response = GetSandboxesClient().CreateSnapshot(sandboxId, body, cancellationToken);
-            return Response.FromValue(new SnapshotClient(GetSnapshotsClient(), response.Value.Id, response.Value), response.GetRawResponse());
+            return Response.FromValue(new SnapshotResource(GetSnapshotsClient(), response.Value.Id, response.Value), response.GetRawResponse());
         }
 
-        /// <summary> Creates a snapshot of a sandbox and returns its client asynchronously. </summary>
+        /// <summary> Creates a snapshot of a sandbox and returns its resource asynchronously. </summary>
         /// <param name="sandboxId"> The identifier of the sandbox. </param>
         /// <param name="body"> The snapshot to create. </param>
         /// <param name="cancellationToken"> The cancellation token for the request. </param>
-        public virtual async Task<Response<SnapshotClient>> CreateSnapshotAsync(string sandboxId, CreateSnapshotContent body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SnapshotResource>> CreateSnapshotAsync(string sandboxId, CreateSnapshotContent body, CancellationToken cancellationToken = default)
         {
             Response<SandboxSnapshot> response = await GetSandboxesClient().CreateSnapshotAsync(sandboxId, body, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(new SnapshotClient(GetSnapshotsClient(), response.Value.Id, response.Value), response.GetRawResponse());
+            return Response.FromValue(new SnapshotResource(GetSnapshotsClient(), response.Value.Id, response.Value), response.GetRawResponse());
         }
 
-        /// <summary> Creates a volume and returns its client. </summary>
+        /// <summary> Creates a volume and returns its resource. </summary>
         /// <param name="volumeName"> The name of the volume. </param>
         /// <param name="body"> The volume to create. </param>
         /// <param name="cancellationToken"> The cancellation token for the request. </param>
-        public virtual Response<VolumeClient> CreateVolume(string volumeName, SandboxGroupVolume body, CancellationToken cancellationToken = default)
+        public virtual Response<VolumeResource> CreateVolume(string volumeName, SandboxGroupVolume body, CancellationToken cancellationToken = default)
         {
             Response<SandboxGroupVolume> response = GetVolumesClient().CreateVolume(volumeName, body, cancellationToken);
-            return Response.FromValue(new VolumeClient(GetVolumesClient(), volumeName, response.Value), response.GetRawResponse());
+            return Response.FromValue(new VolumeResource(GetVolumesClient(), volumeName, response.Value), response.GetRawResponse());
         }
 
-        /// <summary> Creates a volume and returns its client asynchronously. </summary>
+        /// <summary> Creates a volume and returns its resource asynchronously. </summary>
         /// <param name="volumeName"> The name of the volume. </param>
         /// <param name="body"> The volume to create. </param>
         /// <param name="cancellationToken"> The cancellation token for the request. </param>
-        public virtual async Task<Response<VolumeClient>> CreateVolumeAsync(string volumeName, SandboxGroupVolume body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VolumeResource>> CreateVolumeAsync(string volumeName, SandboxGroupVolume body, CancellationToken cancellationToken = default)
         {
             Response<SandboxGroupVolume> response = await GetVolumesClient().CreateVolumeAsync(volumeName, body, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(new VolumeClient(GetVolumesClient(), volumeName, response.Value), response.GetRawResponse());
+            return Response.FromValue(new VolumeResource(GetVolumesClient(), volumeName, response.Value), response.GetRawResponse());
         }
 
         /// <summary> Forks a volume and returns the new volume's client. </summary>
         /// <param name="volumeName"> The name of the source volume. </param>
         /// <param name="body"> The fork configuration. </param>
         /// <param name="cancellationToken"> The cancellation token for the request. </param>
-        public virtual Response<VolumeClient> ForkVolume(string volumeName, ForkDataDiskVolumeContent body, CancellationToken cancellationToken = default)
+        public virtual Response<VolumeResource> ForkVolume(string volumeName, ForkDataDiskVolumeContent body, CancellationToken cancellationToken = default)
         {
             Response<SandboxGroupVolume> response = GetVolumesClient().ForkVolume(volumeName, body, cancellationToken);
-            return Response.FromValue(new VolumeClient(GetVolumesClient(), response.Value.VolumeName, response.Value), response.GetRawResponse());
+            return Response.FromValue(new VolumeResource(GetVolumesClient(), response.Value.VolumeName, response.Value), response.GetRawResponse());
         }
 
         /// <summary> Forks a volume and returns the new volume's client asynchronously. </summary>
         /// <param name="volumeName"> The name of the source volume. </param>
         /// <param name="body"> The fork configuration. </param>
         /// <param name="cancellationToken"> The cancellation token for the request. </param>
-        public virtual async Task<Response<VolumeClient>> ForkVolumeAsync(string volumeName, ForkDataDiskVolumeContent body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VolumeResource>> ForkVolumeAsync(string volumeName, ForkDataDiskVolumeContent body, CancellationToken cancellationToken = default)
         {
             Response<SandboxGroupVolume> response = await GetVolumesClient().ForkVolumeAsync(volumeName, body, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(new VolumeClient(GetVolumesClient(), response.Value.VolumeName, response.Value), response.GetRawResponse());
+            return Response.FromValue(new VolumeResource(GetVolumesClient(), response.Value.VolumeName, response.Value), response.GetRawResponse());
         }
 
-        /// <summary> Uploads a content package from a readable, seekable stream and returns its client. The caller retains ownership of the stream. </summary>
+        /// <summary> Uploads a content package from a readable, seekable stream and returns its resource. The caller retains ownership of the stream. </summary>
         /// <param name="content"> The content to upload. </param>
         /// <param name="contentType"> The content type of the package. </param>
         /// <param name="labels"> Labels for the package. </param>
         /// <param name="cancellationToken"> The cancellation token for the request. </param>
-        public virtual Response<ContentPackageClient> UploadContentPackage(Stream content, string contentType = default, string labels = default, CancellationToken cancellationToken = default)
+        public virtual Response<ContentPackageResource> UploadContentPackage(Stream content, string contentType = default, string labels = default, CancellationToken cancellationToken = default)
         {
             ContentPackagesClient client = GetContentPackagesClient();
             Response<ContentPackage> response = client.UploadContentPackage(content, contentType, labels, cancellationToken);
-            return Response.FromValue(new ContentPackageClient(client, response.Value.Id, response.Value), response.GetRawResponse());
+            return Response.FromValue(new ContentPackageResource(client, response.Value.Id, response.Value), response.GetRawResponse());
         }
 
-        /// <summary> Uploads a content package from a readable, seekable stream and returns its client asynchronously. The caller retains ownership of the stream. </summary>
+        /// <summary> Uploads a content package from a readable, seekable stream and returns its resource asynchronously. The caller retains ownership of the stream. </summary>
         /// <param name="content"> The content to upload. </param>
         /// <param name="contentType"> The content type of the package. </param>
         /// <param name="labels"> Labels for the package. </param>
         /// <param name="cancellationToken"> The cancellation token for the request. </param>
-        public virtual async Task<Response<ContentPackageClient>> UploadContentPackageAsync(Stream content, string contentType = default, string labels = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContentPackageResource>> UploadContentPackageAsync(Stream content, string contentType = default, string labels = default, CancellationToken cancellationToken = default)
         {
             ContentPackagesClient client = GetContentPackagesClient();
             Response<ContentPackage> response = await client.UploadContentPackageAsync(content, contentType, labels, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(new ContentPackageClient(client, response.Value.Id, response.Value), response.GetRawResponse());
+            return Response.FromValue(new ContentPackageResource(client, response.Value.Id, response.Value), response.GetRawResponse());
         }
 
         internal virtual ConnectionsClient GetConnectionsClient()

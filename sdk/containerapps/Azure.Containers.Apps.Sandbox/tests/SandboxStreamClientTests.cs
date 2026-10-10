@@ -276,7 +276,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         {
             MockTransport transport = new MockTransport(new MockResponse(200).SetContent("log line\n"));
             SandboxesClient client = CreateClient(out _, transport);
-            SandboxClient resource = new SandboxClient(client, "sandbox/id");
+            SandboxResource resource = new SandboxResource(client, "sandbox/id");
             List<Uri> websocketUris = new List<Uri>();
             client.WebSocketConnector = (address, _, _) =>
             {

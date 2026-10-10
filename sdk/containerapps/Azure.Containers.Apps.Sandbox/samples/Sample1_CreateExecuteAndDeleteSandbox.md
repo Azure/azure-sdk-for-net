@@ -18,7 +18,7 @@ CreateSandboxContent content = new CreateSandboxContent
     Resources = new SandboxResources("1000m", "2048Mi")
 };
 
-SandboxClient sandbox = sandboxGroup.CreateSandbox(content).Value;
+SandboxResource sandbox = sandboxGroup.CreateSandbox(content).Value;
 try
 {
     ExecuteSandboxCommandContent command = new ExecuteSandboxCommandContent("/bin/echo");
