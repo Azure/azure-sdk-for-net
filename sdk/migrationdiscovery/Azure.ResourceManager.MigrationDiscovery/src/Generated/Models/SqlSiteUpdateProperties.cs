@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="discoveryScenario"> Gets or sets the discovery scenario. </param>
         /// <param name="arcScope"> Gets or sets the Arc scope properties for the sql site. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlSiteUpdateProperties(IList<SiteApplianceProperties> siteAppliancePropertiesCollection, SqlSitePropertiesDiscoveryScenario? discoveryScenario, ArcScopePropertiesUpdate arcScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlSiteUpdateProperties(IList<SiteApplianceProperties> siteAppliancePropertiesCollection, SqlSitePropertiesDiscoveryScenario? discoveryScenario, ArcScopePropertiesPatch arcScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SiteAppliancePropertiesCollection = siteAppliancePropertiesCollection;
             DiscoveryScenario = discoveryScenario;
@@ -49,6 +49,6 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public SqlSitePropertiesDiscoveryScenario? DiscoveryScenario { get; set; }
 
         /// <summary> Gets or sets the Arc scope properties for the sql site. </summary>
-        public ArcScopePropertiesUpdate ArcScope { get; set; }
+        public ArcScopePropertiesPatch ArcScope { get; set; }
     }
 }

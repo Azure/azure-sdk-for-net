@@ -23,15 +23,15 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
 
         /// <summary> Initializes a new instance of <see cref="MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent"/>. </summary>
         /// <param name="serverPort"> port of server. </param>
-        /// <param name="startsOn"> start time. </param>
-        /// <param name="endsOn"> end time. </param>
+        /// <param name="startOn"> start time. </param>
+        /// <param name="endOn"> end time. </param>
         /// <param name="filters"> optional filters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent(int? serverPort, DateTimeOffset? startsOn, DateTimeOffset? endsOn, MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent(int? serverPort, DateTimeOffset? startOn, DateTimeOffset? endOn, MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServerPort = serverPort;
-            StartsOn = startsOn;
-            EndsOn = endsOn;
+            StartOn = startOn;
+            EndOn = endOn;
             Filters = filters;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public int? ServerPort { get; set; }
 
         /// <summary> start time. </summary>
-        public DateTimeOffset? StartsOn { get; set; }
+        public DateTimeOffset? StartOn { get; set; }
 
         /// <summary> end time. </summary>
-        public DateTimeOffset? EndsOn { get; set; }
+        public DateTimeOffset? EndOn { get; set; }
 
         /// <summary> optional filters. </summary>
         public MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters Filters { get; set; }

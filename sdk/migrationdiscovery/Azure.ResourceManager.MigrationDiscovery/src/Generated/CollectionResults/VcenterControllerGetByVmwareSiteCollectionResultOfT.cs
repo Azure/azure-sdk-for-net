@@ -14,7 +14,7 @@ using Azure.ResourceManager.MigrationDiscovery.Models;
 
 namespace Azure.ResourceManager.MigrationDiscovery
 {
-    internal partial class VcenterControllerGetByVmwareSiteCollectionResultOfT : Pageable<VcenterData>
+    internal partial class VcenterControllerGetByVmwareSiteCollectionResultOfT : Pageable<MigrationDiscoveryVcenterData>
     {
         private readonly VcenterController _client;
         private readonly string _subscriptionId;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of VcenterControllerGetByVmwareSiteCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<VcenterData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<MigrationDiscoveryVcenterData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 }
                 VcenterListResult result = VcenterListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<VcenterData>.FromValues((IReadOnlyList<VcenterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<MigrationDiscoveryVcenterData>.FromValues((IReadOnlyList<MigrationDiscoveryVcenterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

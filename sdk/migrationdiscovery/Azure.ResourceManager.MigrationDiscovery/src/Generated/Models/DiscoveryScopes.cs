@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <summary> StaticData value. </summary>
         private const string StaticDataValue = "StaticData";
         /// <summary> SQLServerConnectionInfo value. </summary>
-        private const string SQLServerConnectionInfoValue = "SQLServerConnectionInfo";
+        private const string SqlServerConnectionInfoValue = "SQLServerConnectionInfo";
 
         /// <summary> Initializes a new instance of <see cref="DiscoveryScopes"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public static DiscoveryScopes StaticData { get; } = new DiscoveryScopes(StaticDataValue);
 
         /// <summary> SQLServerConnectionInfo value. </summary>
-        public static DiscoveryScopes SQLServerConnectionInfo { get; } = new DiscoveryScopes(SQLServerConnectionInfoValue);
+        public static DiscoveryScopes SqlServerConnectionInfo { get; } = new DiscoveryScopes(SqlServerConnectionInfoValue);
 
         /// <summary> Determines if two <see cref="DiscoveryScopes"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

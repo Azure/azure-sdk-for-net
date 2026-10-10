@@ -17,15 +17,15 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MigrationDiscovery
 {
     /// <summary>
-    /// A class representing a VmwareRunAsAccountResource along with the instance operations that can be performed on it.
+    /// A class representing a VmwareRunAsAccount along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VmwareRunAsAccountResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VmwareSiteResource"/> using the GetVmwareRunAsAccountResources method.
+    /// Otherwise you can get one from its parent resource <see cref="VmwareSiteResource"/> using the GetVmwareRunAsAccounts method.
     /// </summary>
     public partial class VmwareRunAsAccountResource : ArmResource
     {
         private readonly ClientDiagnostics _runAsAccountsControllerClientDiagnostics;
         private readonly RunAsAccountsController _runAsAccountsControllerRestClient;
-        private readonly VmwareRunAsAccountResourceData _data;
+        private readonly VmwareRunAsAccountData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.OffAzure/vmwareSites/runAsAccounts";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <summary> Initializes a new instance of <see cref="VmwareRunAsAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VmwareRunAsAccountResource(ArmClient client, VmwareRunAsAccountResourceData data) : this(client, data.Id)
+        internal VmwareRunAsAccountResource(ArmClient client, VmwareRunAsAccountData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VmwareRunAsAccountResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string vmwareRunAsAccountResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string vmwareRunAsAccountApiVersion);
             _runAsAccountsControllerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MigrationDiscovery", ResourceType.Namespace, Diagnostics);
-            _runAsAccountsControllerRestClient = new RunAsAccountsController(_runAsAccountsControllerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, vmwareRunAsAccountResourceApiVersion ?? "2024-12-01-preview");
+            _runAsAccountsControllerRestClient = new RunAsAccountsController(_runAsAccountsControllerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, vmwareRunAsAccountApiVersion ?? "2024-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual VmwareRunAsAccountResourceData Data
+        public virtual VmwareRunAsAccountData Data
         {
             get
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 };
                 HttpMessage message = _runAsAccountsControllerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<VmwareRunAsAccountResourceData> response = Response.FromValue(VmwareRunAsAccountResourceData.FromResponse(result), result);
+                Response<VmwareRunAsAccountData> response = Response.FromValue(VmwareRunAsAccountData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 };
                 HttpMessage message = _runAsAccountsControllerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<VmwareRunAsAccountResourceData> response = Response.FromValue(VmwareRunAsAccountResourceData.FromResponse(result), result);
+                Response<VmwareRunAsAccountData> response = Response.FromValue(VmwareRunAsAccountData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

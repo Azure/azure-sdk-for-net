@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <summary> PowerShell value. </summary>
         private const string PowerShellValue = "PowerShell";
         /// <summary> SSH value. </summary>
-        private const string SSHValue = "SSH";
+        private const string SshValue = "SSH";
         /// <summary> CIM value. </summary>
         private const string CIMValue = "CIM";
         /// <summary> Other value. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public static SqlMetadataDiscoveryPipe PowerShell { get; } = new SqlMetadataDiscoveryPipe(PowerShellValue);
 
         /// <summary> SSH value. </summary>
-        public static SqlMetadataDiscoveryPipe SSH { get; } = new SqlMetadataDiscoveryPipe(SSHValue);
+        public static SqlMetadataDiscoveryPipe Ssh { get; } = new SqlMetadataDiscoveryPipe(SshValue);
 
         /// <summary> CIM value. </summary>
         public static SqlMetadataDiscoveryPipe CIM { get; } = new SqlMetadataDiscoveryPipe(CIMValue);

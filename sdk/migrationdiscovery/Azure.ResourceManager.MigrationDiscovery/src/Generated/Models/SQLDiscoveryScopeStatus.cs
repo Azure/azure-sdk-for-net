@@ -12,7 +12,7 @@ using Azure.ResourceManager.MigrationDiscovery;
 namespace Azure.ResourceManager.MigrationDiscovery.Models
 {
     /// <summary> SQLDiscoveryScope Status. </summary>
-    public readonly partial struct SQLDiscoveryScopeStatus : IEquatable<SQLDiscoveryScopeStatus>
+    public readonly partial struct SqlDiscoveryScopeStatus : IEquatable<SqlDiscoveryScopeStatus>
     {
         private readonly string _value;
         /// <summary> DiscoverySucceededAtleastOnce value. </summary>
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <summary> DiscoverySucceeded value. </summary>
         private const string DiscoverySucceededValue = "DiscoverySucceeded";
 
-        /// <summary> Initializes a new instance of <see cref="SQLDiscoveryScopeStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDiscoveryScopeStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SQLDiscoveryScopeStatus(string value)
+        public SqlDiscoveryScopeStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -43,53 +43,53 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         }
 
         /// <summary> DiscoverySucceededAtleastOnce value. </summary>
-        public static SQLDiscoveryScopeStatus DiscoverySucceededAtLeastOnce { get; } = new SQLDiscoveryScopeStatus(DiscoverySucceededAtLeastOnceValue);
+        public static SqlDiscoveryScopeStatus DiscoverySucceededAtLeastOnce { get; } = new SqlDiscoveryScopeStatus(DiscoverySucceededAtLeastOnceValue);
 
         /// <summary> DiscoveryFailed value. </summary>
-        public static SQLDiscoveryScopeStatus DiscoveryFailed { get; } = new SQLDiscoveryScopeStatus(DiscoveryFailedValue);
+        public static SqlDiscoveryScopeStatus DiscoveryFailed { get; } = new SqlDiscoveryScopeStatus(DiscoveryFailedValue);
 
         /// <summary> RunAsAccountNotAssociated value. </summary>
-        public static SQLDiscoveryScopeStatus RunAsAccountNotAssociated { get; } = new SQLDiscoveryScopeStatus(RunAsAccountNotAssociatedValue);
+        public static SqlDiscoveryScopeStatus RunAsAccountNotAssociated { get; } = new SqlDiscoveryScopeStatus(RunAsAccountNotAssociatedValue);
 
         /// <summary> DiscoveryNotStarted value. </summary>
-        public static SQLDiscoveryScopeStatus DiscoveryNotStarted { get; } = new SQLDiscoveryScopeStatus(DiscoveryNotStartedValue);
+        public static SqlDiscoveryScopeStatus DiscoveryNotStarted { get; } = new SqlDiscoveryScopeStatus(DiscoveryNotStartedValue);
 
         /// <summary> DiscoveryInProgress value. </summary>
-        public static SQLDiscoveryScopeStatus DiscoveryInProgress { get; } = new SQLDiscoveryScopeStatus(DiscoveryInProgressValue);
+        public static SqlDiscoveryScopeStatus DiscoveryInProgress { get; } = new SqlDiscoveryScopeStatus(DiscoveryInProgressValue);
 
         /// <summary> Disabled value. </summary>
-        public static SQLDiscoveryScopeStatus Disabled { get; } = new SQLDiscoveryScopeStatus(DisabledValue);
+        public static SqlDiscoveryScopeStatus Disabled { get; } = new SqlDiscoveryScopeStatus(DisabledValue);
 
         /// <summary> DiscoveryPartiallySucceded value. </summary>
-        public static SQLDiscoveryScopeStatus DiscoveryPartiallySucceeded { get; } = new SQLDiscoveryScopeStatus(DiscoveryPartiallySucceededValue);
+        public static SqlDiscoveryScopeStatus DiscoveryPartiallySucceeded { get; } = new SqlDiscoveryScopeStatus(DiscoveryPartiallySucceededValue);
 
         /// <summary> DiscoverySucceeded value. </summary>
-        public static SQLDiscoveryScopeStatus DiscoverySucceeded { get; } = new SQLDiscoveryScopeStatus(DiscoverySucceededValue);
+        public static SqlDiscoveryScopeStatus DiscoverySucceeded { get; } = new SqlDiscoveryScopeStatus(DiscoverySucceededValue);
 
-        /// <summary> Determines if two <see cref="SQLDiscoveryScopeStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SqlDiscoveryScopeStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(SQLDiscoveryScopeStatus left, SQLDiscoveryScopeStatus right) => left.Equals(right);
+        public static bool operator ==(SqlDiscoveryScopeStatus left, SqlDiscoveryScopeStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SQLDiscoveryScopeStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SqlDiscoveryScopeStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(SQLDiscoveryScopeStatus left, SQLDiscoveryScopeStatus right) => !left.Equals(right);
+        public static bool operator !=(SqlDiscoveryScopeStatus left, SqlDiscoveryScopeStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SQLDiscoveryScopeStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SqlDiscoveryScopeStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SQLDiscoveryScopeStatus(string value) => new SQLDiscoveryScopeStatus(value);
+        public static implicit operator SqlDiscoveryScopeStatus(string value) => new SqlDiscoveryScopeStatus(value);
 
-        /// <summary> Converts a string to a <see cref="SQLDiscoveryScopeStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SqlDiscoveryScopeStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SQLDiscoveryScopeStatus?(string value) => value == null ? null : new SQLDiscoveryScopeStatus(value);
+        public static implicit operator SqlDiscoveryScopeStatus?(string value) => value == null ? null : new SqlDiscoveryScopeStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SQLDiscoveryScopeStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is SqlDiscoveryScopeStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(SQLDiscoveryScopeStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SqlDiscoveryScopeStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

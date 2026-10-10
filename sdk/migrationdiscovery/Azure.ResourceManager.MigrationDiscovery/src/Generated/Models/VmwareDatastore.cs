@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="type"> Type of the data store. </param>
         /// <param name="symbolicName"> Symbolic name of the data store. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VmwareDatastore(string uuid, float? capacityInGb, float? freeSpaceInGb, VMwareDatastoreType? @type, string symbolicName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VmwareDatastore(string uuid, float? capacityInGb, float? freeSpaceInGb, VmwareDatastoreType? @type, string symbolicName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uuid = uuid;
             CapacityInGb = capacityInGb;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public float? FreeSpaceInGb { get; }
 
         /// <summary> Type of the data store. </summary>
-        public VMwareDatastoreType? Type { get; }
+        public VmwareDatastoreType? Type { get; }
 
         /// <summary> Symbolic name of the data store. </summary>
         public string SymbolicName { get; }

@@ -12,7 +12,7 @@ using Azure.ResourceManager.MigrationDiscovery;
 namespace Azure.ResourceManager.MigrationDiscovery.Models
 {
     /// <summary> HealthError Details Source. </summary>
-    public readonly partial struct MicrosoftAzureFDSWebRoleHealthErrorDetailsSource : IEquatable<MicrosoftAzureFDSWebRoleHealthErrorDetailsSource>
+    public readonly partial struct MicrosoftAzureFdsWebRoleHealthErrorDetailsSource : IEquatable<MicrosoftAzureFdsWebRoleHealthErrorDetailsSource>
     {
         private readonly string _value;
         /// <summary> RefreshFabricLayout value. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <summary> RefreshFabricLayoutDependencyMap value. </summary>
         private const string RefreshFabricLayoutDependencyMapValue = "RefreshFabricLayoutDependencyMap";
 
-        /// <summary> Initializes a new instance of <see cref="MicrosoftAzureFDSWebRoleHealthErrorDetailsSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MicrosoftAzureFdsWebRoleHealthErrorDetailsSource"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MicrosoftAzureFDSWebRoleHealthErrorDetailsSource(string value)
+        public MicrosoftAzureFdsWebRoleHealthErrorDetailsSource(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         }
 
         /// <summary> RefreshFabricLayout value. </summary>
-        public static MicrosoftAzureFDSWebRoleHealthErrorDetailsSource RefreshFabricLayout { get; } = new MicrosoftAzureFDSWebRoleHealthErrorDetailsSource(RefreshFabricLayoutValue);
+        public static MicrosoftAzureFdsWebRoleHealthErrorDetailsSource RefreshFabricLayout { get; } = new MicrosoftAzureFdsWebRoleHealthErrorDetailsSource(RefreshFabricLayoutValue);
 
         /// <summary> RefreshFabricLayoutGuest value. </summary>
-        public static MicrosoftAzureFDSWebRoleHealthErrorDetailsSource RefreshFabricLayoutGuest { get; } = new MicrosoftAzureFDSWebRoleHealthErrorDetailsSource(RefreshFabricLayoutGuestValue);
+        public static MicrosoftAzureFdsWebRoleHealthErrorDetailsSource RefreshFabricLayoutGuest { get; } = new MicrosoftAzureFdsWebRoleHealthErrorDetailsSource(RefreshFabricLayoutGuestValue);
 
         /// <summary> RefreshFabricLayoutDependencyMap value. </summary>
-        public static MicrosoftAzureFDSWebRoleHealthErrorDetailsSource RefreshFabricLayoutDependencyMap { get; } = new MicrosoftAzureFDSWebRoleHealthErrorDetailsSource(RefreshFabricLayoutDependencyMapValue);
+        public static MicrosoftAzureFdsWebRoleHealthErrorDetailsSource RefreshFabricLayoutDependencyMap { get; } = new MicrosoftAzureFdsWebRoleHealthErrorDetailsSource(RefreshFabricLayoutDependencyMapValue);
 
-        /// <summary> Determines if two <see cref="MicrosoftAzureFDSWebRoleHealthErrorDetailsSource"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="MicrosoftAzureFdsWebRoleHealthErrorDetailsSource"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(MicrosoftAzureFDSWebRoleHealthErrorDetailsSource left, MicrosoftAzureFDSWebRoleHealthErrorDetailsSource right) => left.Equals(right);
+        public static bool operator ==(MicrosoftAzureFdsWebRoleHealthErrorDetailsSource left, MicrosoftAzureFdsWebRoleHealthErrorDetailsSource right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="MicrosoftAzureFDSWebRoleHealthErrorDetailsSource"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="MicrosoftAzureFdsWebRoleHealthErrorDetailsSource"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(MicrosoftAzureFDSWebRoleHealthErrorDetailsSource left, MicrosoftAzureFDSWebRoleHealthErrorDetailsSource right) => !left.Equals(right);
+        public static bool operator !=(MicrosoftAzureFdsWebRoleHealthErrorDetailsSource left, MicrosoftAzureFdsWebRoleHealthErrorDetailsSource right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="MicrosoftAzureFDSWebRoleHealthErrorDetailsSource"/>. </summary>
+        /// <summary> Converts a string to a <see cref="MicrosoftAzureFdsWebRoleHealthErrorDetailsSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MicrosoftAzureFDSWebRoleHealthErrorDetailsSource(string value) => new MicrosoftAzureFDSWebRoleHealthErrorDetailsSource(value);
+        public static implicit operator MicrosoftAzureFdsWebRoleHealthErrorDetailsSource(string value) => new MicrosoftAzureFdsWebRoleHealthErrorDetailsSource(value);
 
-        /// <summary> Converts a string to a <see cref="MicrosoftAzureFDSWebRoleHealthErrorDetailsSource"/>. </summary>
+        /// <summary> Converts a string to a <see cref="MicrosoftAzureFdsWebRoleHealthErrorDetailsSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MicrosoftAzureFDSWebRoleHealthErrorDetailsSource?(string value) => value == null ? null : new MicrosoftAzureFDSWebRoleHealthErrorDetailsSource(value);
+        public static implicit operator MicrosoftAzureFdsWebRoleHealthErrorDetailsSource?(string value) => value == null ? null : new MicrosoftAzureFdsWebRoleHealthErrorDetailsSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is MicrosoftAzureFDSWebRoleHealthErrorDetailsSource other && Equals(other);
+        public override bool Equals(object obj) => obj is MicrosoftAzureFdsWebRoleHealthErrorDetailsSource other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(MicrosoftAzureFDSWebRoleHealthErrorDetailsSource other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(MicrosoftAzureFdsWebRoleHealthErrorDetailsSource other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

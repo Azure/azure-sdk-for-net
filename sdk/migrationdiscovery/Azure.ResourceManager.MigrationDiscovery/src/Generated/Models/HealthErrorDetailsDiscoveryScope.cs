@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <summary> StaticData value. </summary>
         private const string StaticDataValue = "StaticData";
         /// <summary> SQLServerConnectionInfo value. </summary>
-        private const string SQLServerConnectionInfoValue = "SQLServerConnectionInfo";
+        private const string SqlServerConnectionInfoValue = "SQLServerConnectionInfo";
         /// <summary> DiscoveryTargets value. </summary>
         private const string DiscoveryTargetsValue = "DiscoveryTargets";
 
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public static HealthErrorDetailsDiscoveryScope StaticData { get; } = new HealthErrorDetailsDiscoveryScope(StaticDataValue);
 
         /// <summary> SQLServerConnectionInfo value. </summary>
-        public static HealthErrorDetailsDiscoveryScope SQLServerConnectionInfo { get; } = new HealthErrorDetailsDiscoveryScope(SQLServerConnectionInfoValue);
+        public static HealthErrorDetailsDiscoveryScope SqlServerConnectionInfo { get; } = new HealthErrorDetailsDiscoveryScope(SqlServerConnectionInfoValue);
 
         /// <summary> DiscoveryTargets value. </summary>
         public static HealthErrorDetailsDiscoveryScope DiscoveryTargets { get; } = new HealthErrorDetailsDiscoveryScope(DiscoveryTargetsValue);

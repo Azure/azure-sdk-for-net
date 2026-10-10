@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (MachineResourceData item in Value)
+            foreach (MigrationDiscoveryMachineData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             {
                 return null;
             }
-            IList<MachineResourceData> value = default;
+            IList<MigrationDiscoveryMachineData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<MachineResourceData> array = new List<MachineResourceData>();
+                    List<MigrationDiscoveryMachineData> array = new List<MigrationDiscoveryMachineData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MachineResourceData.DeserializeMachineResourceData(item, options));
+                        array.Add(MigrationDiscoveryMachineData.DeserializeMigrationDiscoveryMachineData(item, options));
                     }
                     value = array;
                     continue;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new MachineResourceListResult(value, nextLink, additionalBinaryDataProperties);

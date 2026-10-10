@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 writer.WritePropertyName("numberOfMachinesDeleted"u8);
                 writer.WriteNumberValue(NumberOfMachinesDeleted.Value);
             }
-            if (Optional.IsDefined(DeletionConfirmation))
+            if (Optional.IsDefined(IsDeletionConfirmation))
             {
                 writer.WritePropertyName("deletionConfirmation"u8);
-                writer.WriteBooleanValue(DeletionConfirmation.Value);
+                writer.WriteBooleanValue(IsDeletionConfirmation.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             string errorSasUri = default;
             DeleteImportedMachinesJobPropertiesJobState? jobState = default;
             int? numberOfMachinesDeleted = default;
-            bool? deletionConfirmation = default;
+            bool? isDeletionConfirmation = default;
             IReadOnlyList<string> errors = default;
             string status = default;
             string startTime = default;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    deletionConfirmation = prop.Value.GetBoolean();
+                    isDeletionConfirmation = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("errors"u8))
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DeleteImportedMachinesJobProperties(
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 errorSasUri,
                 jobState,
                 numberOfMachinesDeleted,
-                deletionConfirmation,
+                isDeletionConfirmation,
                 errors ?? new ChangeTrackingList<string>(),
                 status,
                 startTime,

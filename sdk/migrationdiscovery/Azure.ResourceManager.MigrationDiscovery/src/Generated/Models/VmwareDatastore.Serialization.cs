@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             string uuid = default;
             float? capacityInGb = default;
             float? freeSpaceInGb = default;
-            VMwareDatastoreType? @type = default;
+            VmwareDatastoreType? @type = default;
             string symbolicName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    @type = new VMwareDatastoreType(prop.Value.GetString());
+                    @type = new VmwareDatastoreType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("symbolicName"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new VmwareDatastore(

@@ -203,11 +203,11 @@ namespace Azure.ResourceManager.MigrationDiscovery
         }
 
         /// <summary> Gets or sets the SQL start time. </summary>
-        public DateTimeOffset? SqlStartsOn
+        public DateTimeOffset? SqlStartOn
         {
             get
             {
-                return Properties is null ? default : Properties.SqlStartsOn;
+                return Properties is null ? default : Properties.SqlStartOn;
             }
         }
 

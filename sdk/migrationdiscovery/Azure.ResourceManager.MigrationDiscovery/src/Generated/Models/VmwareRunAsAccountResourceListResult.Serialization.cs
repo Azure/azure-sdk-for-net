@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (VmwareRunAsAccountResourceData item in Value)
+            foreach (VmwareRunAsAccountData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             {
                 return null;
             }
-            IList<VmwareRunAsAccountResourceData> value = default;
+            IList<VmwareRunAsAccountData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<VmwareRunAsAccountResourceData> array = new List<VmwareRunAsAccountResourceData>();
+                    List<VmwareRunAsAccountData> array = new List<VmwareRunAsAccountData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VmwareRunAsAccountResourceData.DeserializeVmwareRunAsAccountResourceData(item, options));
+                        array.Add(VmwareRunAsAccountData.DeserializeVmwareRunAsAccountData(item, options));
                     }
                     value = array;
                     continue;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new VmwareRunAsAccountResourceListResult(value, nextLink, additionalBinaryDataProperties);

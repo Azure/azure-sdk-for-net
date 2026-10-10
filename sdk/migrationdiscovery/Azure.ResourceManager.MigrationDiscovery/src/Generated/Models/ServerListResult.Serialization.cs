@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ServerData item in Value)
+            foreach (MigrationDiscoveryServerData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             {
                 return null;
             }
-            IList<ServerData> value = default;
+            IList<MigrationDiscoveryServerData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ServerData> array = new List<ServerData>();
+                    List<MigrationDiscoveryServerData> array = new List<MigrationDiscoveryServerData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ServerData.DeserializeServerData(item, options));
+                        array.Add(MigrationDiscoveryServerData.DeserializeMigrationDiscoveryServerData(item, options));
                     }
                     value = array;
                     continue;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ServerListResult(value, nextLink, additionalBinaryDataProperties);

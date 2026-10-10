@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.MigrationDiscovery
 {
     /// <summary>
     /// A class representing a collection of <see cref="VmwareMachineSoftwareInventoryResource"/> and their operations.
-    /// Each <see cref="VmwareMachineSoftwareInventoryResource"/> in the collection will belong to the same instance of <see cref="MachineResource"/>.
-    /// To get a <see cref="VmwareMachineSoftwareInventoryCollection"/> instance call the GetVmwareMachineSoftwareInventories method from an instance of <see cref="MachineResource"/>.
+    /// Each <see cref="VmwareMachineSoftwareInventoryResource"/> in the collection will belong to the same instance of <see cref="MigrationDiscoveryMachineResource"/>.
+    /// To get a <see cref="VmwareMachineSoftwareInventoryCollection"/> instance call the GetVmwareMachineSoftwareInventories method from an instance of <see cref="MigrationDiscoveryMachineResource"/>.
     /// </summary>
     public partial class VmwareMachineSoftwareInventoryCollection : ArmCollection, IEnumerable<VmwareMachineSoftwareInventoryResource>, IAsyncEnumerable<VmwareMachineSoftwareInventoryResource>
     {
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.MigrationDiscovery
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != MachineResource.ResourceType)
+            if (id.ResourceType != MigrationDiscoveryMachineResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MachineResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MigrationDiscoveryMachineResource.ResourceType), nameof(id));
             }
         }
 

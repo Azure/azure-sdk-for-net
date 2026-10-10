@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 writer.WritePropertyName("numberOfAvailabilityGroupsImported"u8);
                 writer.WriteNumberValue(NumberOfAvailabilityGroupsImported.Value);
             }
-            if (Optional.IsDefined(BlobCreatedOn))
+            if (Optional.IsDefined(BlobCreationTimeStamp))
             {
                 writer.WritePropertyName("blobCreationTimeStamp"u8);
-                writer.WriteStringValue(BlobCreatedOn.Value, "O");
+                writer.WriteStringValue(BlobCreationTimeStamp.Value, "O");
             }
             if (Optional.IsDefined(ErrorSummary))
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             int? numberOfServersImported = default;
             int? numberOfDatabasesImported = default;
             int? numberOfAvailabilityGroupsImported = default;
-            DateTimeOffset? blobCreatedOn = default;
+            DateTimeOffset? blobCreationTimeStamp = default;
             SqlImportJobErrorSummary errorSummary = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    blobCreatedOn = prop.Value.GetDateTimeOffset("O");
+                    blobCreationTimeStamp = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("errorSummary"u8))
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ImportSqlInventoryJobProperties(
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 numberOfServersImported,
                 numberOfDatabasesImported,
                 numberOfAvailabilityGroupsImported,
-                blobCreatedOn,
+                blobCreationTimeStamp,
                 errorSummary,
                 additionalBinaryDataProperties);
         }

@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             }
             IList<SiteApplianceProperties> siteAppliancePropertiesCollection = default;
             SqlSitePropertiesDiscoveryScenario? discoveryScenario = default;
-            ArcScopePropertiesUpdate arcScope = default;
+            ArcScopePropertiesPatch arcScope = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -171,12 +171,12 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    arcScope = ArcScopePropertiesUpdate.DeserializeArcScopePropertiesUpdate(prop.Value, options);
+                    arcScope = ArcScopePropertiesPatch.DeserializeArcScopePropertiesPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SqlSiteUpdateProperties(siteAppliancePropertiesCollection ?? new ChangeTrackingList<SiteApplianceProperties>(), discoveryScenario, arcScope, additionalBinaryDataProperties);

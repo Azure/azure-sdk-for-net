@@ -15,7 +15,7 @@ using Azure.ResourceManager.MigrationDiscovery.Models;
 
 namespace Azure.ResourceManager.MigrationDiscovery
 {
-    internal partial class ServerSitesControllerGetBySubscriptionAsyncCollectionResultOfT : AsyncPageable<ServerSiteResourceData>
+    internal partial class ServerSitesControllerGetBySubscriptionAsyncCollectionResultOfT : AsyncPageable<ServerSiteData>
     {
         private readonly ServerSitesController _client;
         private readonly string _subscriptionId;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ServerSitesControllerGetBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ServerSiteResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<ServerSiteData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 }
                 ServerSiteResourceListResult result = ServerSiteResourceListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<ServerSiteResourceData>.FromValues((IReadOnlyList<ServerSiteResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ServerSiteData>.FromValues((IReadOnlyList<ServerSiteData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

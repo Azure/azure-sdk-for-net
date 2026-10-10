@@ -12,7 +12,7 @@ using Azure.ResourceManager.MigrationDiscovery;
 namespace Azure.ResourceManager.MigrationDiscovery.Models
 {
     /// <summary> vmware datastore type. </summary>
-    public readonly partial struct VMwareDatastoreType : IEquatable<VMwareDatastoreType>
+    public readonly partial struct VmwareDatastoreType : IEquatable<VmwareDatastoreType>
     {
         private readonly string _value;
         /// <summary> Unknown value. </summary>
@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <summary> CIFS value. </summary>
         private const string CifsValue = "CIFS";
         /// <summary> NFS value. </summary>
-        private const string NFSValue = "NFS";
+        private const string NfsValue = "NFS";
         /// <summary> NFS41 value. </summary>
-        private const string NFS41Value = "NFS41";
+        private const string Nfs41Value = "NFS41";
         /// <summary> PMEM value. </summary>
         private const string PmemValue = "PMEM";
         /// <summary> VFFS value. </summary>
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <summary> VVOL value. </summary>
         private const string VvolValue = "VVOL";
 
-        /// <summary> Initializes a new instance of <see cref="VMwareDatastoreType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmwareDatastoreType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VMwareDatastoreType(string value)
+        public VmwareDatastoreType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -45,56 +45,56 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         }
 
         /// <summary> Unknown value. </summary>
-        public static VMwareDatastoreType Unknown { get; } = new VMwareDatastoreType(UnknownValue);
+        public static VmwareDatastoreType Unknown { get; } = new VmwareDatastoreType(UnknownValue);
 
         /// <summary> CIFS value. </summary>
-        public static VMwareDatastoreType Cifs { get; } = new VMwareDatastoreType(CifsValue);
+        public static VmwareDatastoreType Cifs { get; } = new VmwareDatastoreType(CifsValue);
 
         /// <summary> NFS value. </summary>
-        public static VMwareDatastoreType NFS { get; } = new VMwareDatastoreType(NFSValue);
+        public static VmwareDatastoreType Nfs { get; } = new VmwareDatastoreType(NfsValue);
 
         /// <summary> NFS41 value. </summary>
-        public static VMwareDatastoreType NFS41 { get; } = new VMwareDatastoreType(NFS41Value);
+        public static VmwareDatastoreType Nfs41 { get; } = new VmwareDatastoreType(Nfs41Value);
 
         /// <summary> PMEM value. </summary>
-        public static VMwareDatastoreType Pmem { get; } = new VMwareDatastoreType(PmemValue);
+        public static VmwareDatastoreType Pmem { get; } = new VmwareDatastoreType(PmemValue);
 
         /// <summary> VFFS value. </summary>
-        public static VMwareDatastoreType Vffs { get; } = new VMwareDatastoreType(VffsValue);
+        public static VmwareDatastoreType Vffs { get; } = new VmwareDatastoreType(VffsValue);
 
         /// <summary> VMFS value. </summary>
-        public static VMwareDatastoreType Vmfs { get; } = new VMwareDatastoreType(VmfsValue);
+        public static VmwareDatastoreType Vmfs { get; } = new VmwareDatastoreType(VmfsValue);
 
         /// <summary> VSAN value. </summary>
-        public static VMwareDatastoreType Vsan { get; } = new VMwareDatastoreType(VsanValue);
+        public static VmwareDatastoreType Vsan { get; } = new VmwareDatastoreType(VsanValue);
 
         /// <summary> VVOL value. </summary>
-        public static VMwareDatastoreType Vvol { get; } = new VMwareDatastoreType(VvolValue);
+        public static VmwareDatastoreType Vvol { get; } = new VmwareDatastoreType(VvolValue);
 
-        /// <summary> Determines if two <see cref="VMwareDatastoreType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="VmwareDatastoreType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(VMwareDatastoreType left, VMwareDatastoreType right) => left.Equals(right);
+        public static bool operator ==(VmwareDatastoreType left, VmwareDatastoreType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="VMwareDatastoreType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="VmwareDatastoreType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(VMwareDatastoreType left, VMwareDatastoreType right) => !left.Equals(right);
+        public static bool operator !=(VmwareDatastoreType left, VmwareDatastoreType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="VMwareDatastoreType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="VmwareDatastoreType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VMwareDatastoreType(string value) => new VMwareDatastoreType(value);
+        public static implicit operator VmwareDatastoreType(string value) => new VmwareDatastoreType(value);
 
-        /// <summary> Converts a string to a <see cref="VMwareDatastoreType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="VmwareDatastoreType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VMwareDatastoreType?(string value) => value == null ? null : new VMwareDatastoreType(value);
+        public static implicit operator VmwareDatastoreType?(string value) => value == null ? null : new VmwareDatastoreType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is VMwareDatastoreType other && Equals(other);
+        public override bool Equals(object obj) => obj is VmwareDatastoreType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(VMwareDatastoreType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(VmwareDatastoreType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

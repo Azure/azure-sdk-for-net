@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="sqlMetadataDiscoveryPipe"> sql Metadata DiscoveryPipe. </param>
         /// <param name="discoveryScopeStatus"> discovery Scope Status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlDiscovery(int? successfullyDiscoveredServerCount, int? totalServerCount, string sqlMetadataHydratedRunAsAccountId, SqlMetadataDiscoveryPipe? sqlMetadataDiscoveryPipe, SQLDiscoveryScopeStatus? discoveryScopeStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlDiscovery(int? successfullyDiscoveredServerCount, int? totalServerCount, string sqlMetadataHydratedRunAsAccountId, SqlMetadataDiscoveryPipe? sqlMetadataDiscoveryPipe, SqlDiscoveryScopeStatus? discoveryScopeStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SuccessfullyDiscoveredServerCount = successfullyDiscoveredServerCount;
             TotalServerCount = totalServerCount;
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public SqlMetadataDiscoveryPipe? SqlMetadataDiscoveryPipe { get; }
 
         /// <summary> discovery Scope Status. </summary>
-        public SQLDiscoveryScopeStatus? DiscoveryScopeStatus { get; }
+        public SqlDiscoveryScopeStatus? DiscoveryScopeStatus { get; }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <summary> StaticData value. </summary>
         private const string StaticDataValue = "StaticData";
         /// <summary> SQLServerConnectionInfo value. </summary>
-        private const string SQLServerConnectionInfoValue = "SQLServerConnectionInfo";
+        private const string SqlServerConnectionInfoValue = "SQLServerConnectionInfo";
 
         /// <summary> Initializes a new instance of <see cref="ExportMachineErrorsProperties"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public static ExportMachineErrorsProperties StaticData { get; } = new ExportMachineErrorsProperties(StaticDataValue);
 
         /// <summary> SQLServerConnectionInfo value. </summary>
-        public static ExportMachineErrorsProperties SQLServerConnectionInfo { get; } = new ExportMachineErrorsProperties(SQLServerConnectionInfoValue);
+        public static ExportMachineErrorsProperties SqlServerConnectionInfo { get; } = new ExportMachineErrorsProperties(SqlServerConnectionInfoValue);
 
         /// <summary> Determines if two <see cref="ExportMachineErrorsProperties"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

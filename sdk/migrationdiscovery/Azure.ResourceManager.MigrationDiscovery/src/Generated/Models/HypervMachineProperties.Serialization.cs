@@ -154,45 +154,45 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 writer.WritePropertyName("secureBootTemplateId"u8);
                 writer.WriteStringValue(SecureBootTemplateId);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecureBootEnabled))
+            if (options.Format != "W" && Optional.IsDefined(IsSecureBootEnabled))
             {
                 writer.WritePropertyName("secureBootEnabled"u8);
-                writer.WriteBooleanValue(SecureBootEnabled.Value);
+                writer.WriteBooleanValue(IsSecureBootEnabled.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(SecureBootTemplate))
             {
                 writer.WritePropertyName("secureBootTemplate"u8);
                 writer.WriteStringValue(SecureBootTemplate);
             }
-            if (options.Format != "W" && Optional.IsDefined(TpmEnabled))
+            if (options.Format != "W" && Optional.IsDefined(IsTpmEnabled))
             {
                 writer.WritePropertyName("tpmEnabled"u8);
-                writer.WriteBooleanValue(TpmEnabled.Value);
+                writer.WriteBooleanValue(IsTpmEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(KsdEnabled))
+            if (options.Format != "W" && Optional.IsDefined(IsKsdEnabled))
             {
                 writer.WritePropertyName("ksdEnabled"u8);
-                writer.WriteBooleanValue(KsdEnabled.Value);
+                writer.WriteBooleanValue(IsKsdEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ShieldingRequested))
+            if (options.Format != "W" && Optional.IsDefined(IsShieldingRequested))
             {
                 writer.WritePropertyName("shieldingRequested"u8);
-                writer.WriteBooleanValue(ShieldingRequested.Value);
+                writer.WriteBooleanValue(IsShieldingRequested.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataProtectionRequested))
+            if (options.Format != "W" && Optional.IsDefined(IsDataProtectionRequested))
             {
                 writer.WritePropertyName("dataProtectionRequested"u8);
-                writer.WriteBooleanValue(DataProtectionRequested.Value);
+                writer.WriteBooleanValue(IsDataProtectionRequested.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(EncryptStateAndVmMigrationTraffic))
+            if (options.Format != "W" && Optional.IsDefined(IsEncryptStateAndVmMigrationTraffic))
             {
                 writer.WritePropertyName("encryptStateAndVmMigrationTraffic"u8);
-                writer.WriteBooleanValue(EncryptStateAndVmMigrationTraffic.Value);
+                writer.WriteBooleanValue(IsEncryptStateAndVmMigrationTraffic.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(VirtualizationBasedSecurityOptOut))
+            if (options.Format != "W" && Optional.IsDefined(IsVirtualizationBasedSecurityOptOut))
             {
                 writer.WritePropertyName("virtualizationBasedSecurityOptOut"u8);
-                writer.WriteBooleanValue(VirtualizationBasedSecurityOptOut.Value);
+                writer.WriteBooleanValue(IsVirtualizationBasedSecurityOptOut.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(PowerStatus))
             {
@@ -234,10 +234,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 writer.WritePropertyName("numberOfSecurityRisks"u8);
                 writer.WriteNumberValue(NumberOfSecurityRisks.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(GuestDetailsDiscoveryOn))
+            if (options.Format != "W" && Optional.IsDefined(GuestDetailsDiscoveryTimestamp))
             {
                 writer.WritePropertyName("guestDetailsDiscoveryTimestamp"u8);
-                writer.WriteStringValue(GuestDetailsDiscoveryOn.Value, "O");
+                writer.WriteStringValue(GuestDetailsDiscoveryTimestamp.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(IsGuestDetailsDiscoveryInProgress))
             {
@@ -249,10 +249,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 writer.WritePropertyName("dependencyMapping"u8);
                 writer.WriteStringValue(DependencyMapping);
             }
-            if (options.Format != "W" && Optional.IsDefined(DependencyMappingStartsOn))
+            if (options.Format != "W" && Optional.IsDefined(DependencyMappingStartOn))
             {
                 writer.WritePropertyName("dependencyMappingStartTime"u8);
-                writer.WriteStringValue(DependencyMappingStartsOn.Value, "O");
+                writer.WriteStringValue(DependencyMappingStartOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(DependencyMappingEndTime))
             {
@@ -471,14 +471,14 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             IReadOnlyList<HypervNetworkAdapter> networkAdapters = default;
             string managementServerType = default;
             string secureBootTemplateId = default;
-            bool? secureBootEnabled = default;
+            bool? isSecureBootEnabled = default;
             string secureBootTemplate = default;
-            bool? tpmEnabled = default;
-            bool? ksdEnabled = default;
-            bool? shieldingRequested = default;
-            bool? dataProtectionRequested = default;
-            bool? encryptStateAndVmMigrationTraffic = default;
-            bool? virtualizationBasedSecurityOptOut = default;
+            bool? isTpmEnabled = default;
+            bool? isKsdEnabled = default;
+            bool? isShieldingRequested = default;
+            bool? isDataProtectionRequested = default;
+            bool? isEncryptStateAndVmMigrationTraffic = default;
+            bool? isVirtualizationBasedSecurityOptOut = default;
             string powerStatus = default;
             string vmFqdn = default;
             string vmConfigurationFileLocation = default;
@@ -487,10 +487,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             int? numberOfApplications = default;
             int? numberOfSoftware = default;
             int? numberOfSecurityRisks = default;
-            DateTimeOffset? guestDetailsDiscoveryOn = default;
+            DateTimeOffset? guestDetailsDiscoveryTimestamp = default;
             bool? isGuestDetailsDiscoveryInProgress = default;
             string dependencyMapping = default;
-            DateTimeOffset? dependencyMappingStartsOn = default;
+            DateTimeOffset? dependencyMappingStartOn = default;
             string dependencyMappingEndTime = default;
             string runAsAccountId = default;
             IReadOnlyList<string> applianceNames = default;
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    secureBootEnabled = prop.Value.GetBoolean();
+                    isSecureBootEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("secureBootTemplate"u8))
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    tpmEnabled = prop.Value.GetBoolean();
+                    isTpmEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("ksdEnabled"u8))
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    ksdEnabled = prop.Value.GetBoolean();
+                    isKsdEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("shieldingRequested"u8))
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    shieldingRequested = prop.Value.GetBoolean();
+                    isShieldingRequested = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("dataProtectionRequested"u8))
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    dataProtectionRequested = prop.Value.GetBoolean();
+                    isDataProtectionRequested = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("encryptStateAndVmMigrationTraffic"u8))
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    encryptStateAndVmMigrationTraffic = prop.Value.GetBoolean();
+                    isEncryptStateAndVmMigrationTraffic = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("virtualizationBasedSecurityOptOut"u8))
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    virtualizationBasedSecurityOptOut = prop.Value.GetBoolean();
+                    isVirtualizationBasedSecurityOptOut = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("powerStatus"u8))
@@ -755,7 +755,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    guestDetailsDiscoveryOn = prop.Value.GetDateTimeOffset("O");
+                    guestDetailsDiscoveryTimestamp = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("isGuestDetailsDiscoveryInProgress"u8))
@@ -778,7 +778,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    dependencyMappingStartsOn = prop.Value.GetDateTimeOffset("O");
+                    dependencyMappingStartOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("dependencyMappingEndTime"u8))
@@ -1027,7 +1027,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new HypervMachineProperties(
@@ -1045,14 +1045,14 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 networkAdapters ?? new ChangeTrackingList<HypervNetworkAdapter>(),
                 managementServerType,
                 secureBootTemplateId,
-                secureBootEnabled,
+                isSecureBootEnabled,
                 secureBootTemplate,
-                tpmEnabled,
-                ksdEnabled,
-                shieldingRequested,
-                dataProtectionRequested,
-                encryptStateAndVmMigrationTraffic,
-                virtualizationBasedSecurityOptOut,
+                isTpmEnabled,
+                isKsdEnabled,
+                isShieldingRequested,
+                isDataProtectionRequested,
+                isEncryptStateAndVmMigrationTraffic,
+                isVirtualizationBasedSecurityOptOut,
                 powerStatus,
                 vmFqdn,
                 vmConfigurationFileLocation,
@@ -1061,10 +1061,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 numberOfApplications,
                 numberOfSoftware,
                 numberOfSecurityRisks,
-                guestDetailsDiscoveryOn,
+                guestDetailsDiscoveryTimestamp,
                 isGuestDetailsDiscoveryInProgress,
                 dependencyMapping,
-                dependencyMappingStartsOn,
+                dependencyMappingStartOn,
                 dependencyMappingEndTime,
                 runAsAccountId,
                 applianceNames ?? new ChangeTrackingList<string>(),

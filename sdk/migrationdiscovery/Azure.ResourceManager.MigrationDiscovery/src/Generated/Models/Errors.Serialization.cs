@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            if (options.Format != "W" && Optional.IsDefined(UpdatedTimeStamp))
             {
                 writer.WritePropertyName("updatedTimeStamp"u8);
-                writer.WriteStringValue(UpdatedOn.Value, "O");
+                writer.WriteStringValue(UpdatedTimeStamp.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(RunAsAccountId))
             {
@@ -201,8 +201,8 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             string recommendedAction = default;
             string severity = default;
             string summaryMessage = default;
-            MicrosoftAzureFDSWebRoleHealthErrorDetailsSource? source = default;
-            DateTimeOffset? updatedOn = default;
+            MicrosoftAzureFdsWebRoleHealthErrorDetailsSource? source = default;
+            DateTimeOffset? updatedTimeStamp = default;
             string runAsAccountId = default;
             HealthErrorDetailsDiscoveryScope? discoveryScope = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    source = new MicrosoftAzureFDSWebRoleHealthErrorDetailsSource(prop.Value.GetString());
+                    source = new MicrosoftAzureFdsWebRoleHealthErrorDetailsSource(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("updatedTimeStamp"u8))
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    updatedOn = prop.Value.GetDateTimeOffset("O");
+                    updatedTimeStamp = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("runAsAccountId"u8))
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new Errors(
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 severity,
                 summaryMessage,
                 source,
-                updatedOn,
+                updatedTimeStamp,
                 runAsAccountId,
                 discoveryScope,
                 additionalBinaryDataProperties);

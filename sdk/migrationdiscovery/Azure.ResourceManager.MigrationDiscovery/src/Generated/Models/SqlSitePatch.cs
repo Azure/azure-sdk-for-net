@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         }
 
         /// <summary> Gets or sets the Arc scope properties for the sql site. </summary>
-        public ArcScopePropertiesUpdate ArcScope
+        public ArcScopePropertiesPatch ArcScope
         {
             get
             {

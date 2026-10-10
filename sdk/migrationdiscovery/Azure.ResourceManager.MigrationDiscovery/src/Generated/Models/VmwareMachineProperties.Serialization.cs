@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(HostInMaintenanceMode))
+            if (options.Format != "W" && Optional.IsDefined(IsHostInMaintenanceMode))
             {
                 writer.WritePropertyName("hostInMaintenanceMode"u8);
-                writer.WriteBooleanValue(HostInMaintenanceMode.Value);
+                writer.WriteBooleanValue(IsHostInMaintenanceMode.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(HostName))
             {
@@ -149,20 +149,20 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 writer.WritePropertyName("vMwareToolsVersion"u8);
                 writer.WriteStringValue(VMwareToolsVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(ChangeTrackingSupported))
+            if (options.Format != "W" && Optional.IsDefined(IsChangeTrackingSupported))
             {
                 writer.WritePropertyName("changeTrackingSupported"u8);
-                writer.WriteBooleanValue(ChangeTrackingSupported.Value);
+                writer.WriteBooleanValue(IsChangeTrackingSupported.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ChangeTrackingEnabled))
+            if (options.Format != "W" && Optional.IsDefined(IsChangeTrackingEnabled))
             {
                 writer.WritePropertyName("changeTrackingEnabled"u8);
-                writer.WriteBooleanValue(ChangeTrackingEnabled.Value);
+                writer.WriteBooleanValue(IsChangeTrackingEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecureBootEnabled))
+            if (options.Format != "W" && Optional.IsDefined(IsSecureBootEnabled))
             {
                 writer.WritePropertyName("secureBootEnabled"u8);
-                writer.WriteBooleanValue(SecureBootEnabled.Value);
+                writer.WriteBooleanValue(IsSecureBootEnabled.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(MaxSnapshots))
             {
@@ -224,10 +224,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 writer.WritePropertyName("numberOfSecurityRisks"u8);
                 writer.WriteNumberValue(NumberOfSecurityRisks.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(GuestDetailsDiscoveryOn))
+            if (options.Format != "W" && Optional.IsDefined(GuestDetailsDiscoveryTimestamp))
             {
                 writer.WritePropertyName("guestDetailsDiscoveryTimestamp"u8);
-                writer.WriteStringValue(GuestDetailsDiscoveryOn.Value, "O");
+                writer.WriteStringValue(GuestDetailsDiscoveryTimestamp.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(IsGuestDetailsDiscoveryInProgress))
             {
@@ -239,10 +239,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 writer.WritePropertyName("dependencyMapping"u8);
                 writer.WriteStringValue(DependencyMapping);
             }
-            if (options.Format != "W" && Optional.IsDefined(DependencyMappingStartsOn))
+            if (options.Format != "W" && Optional.IsDefined(DependencyMappingStartOn))
             {
                 writer.WritePropertyName("dependencyMappingStartTime"u8);
-                writer.WriteStringValue(DependencyMappingStartsOn.Value, "O");
+                writer.WriteStringValue(DependencyMappingStartOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(DependencyMappingEndTime))
             {
@@ -453,16 +453,16 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             string dataCenterScope = default;
             string description = default;
             IReadOnlyList<VmwareDisk> disks = default;
-            bool? hostInMaintenanceMode = default;
+            bool? isHostInMaintenanceMode = default;
             string hostName = default;
             string hostPowerState = default;
             string hostVersion = default;
             IReadOnlyList<VmwareNetworkAdapter> networkAdapters = default;
             string vMwareToolsStatus = default;
             string vMwareToolsVersion = default;
-            bool? changeTrackingSupported = default;
-            bool? changeTrackingEnabled = default;
-            bool? secureBootEnabled = default;
+            bool? isChangeTrackingSupported = default;
+            bool? isChangeTrackingEnabled = default;
+            bool? isSecureBootEnabled = default;
             int? maxSnapshots = default;
             string diskEnabledUuid = default;
             int? numberOfSnapshots = default;
@@ -475,10 +475,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             int? numberOfApplications = default;
             int? numberOfSoftware = default;
             int? numberOfSecurityRisks = default;
-            DateTimeOffset? guestDetailsDiscoveryOn = default;
+            DateTimeOffset? guestDetailsDiscoveryTimestamp = default;
             bool? isGuestDetailsDiscoveryInProgress = default;
             string dependencyMapping = default;
-            DateTimeOffset? dependencyMappingStartsOn = default;
+            DateTimeOffset? dependencyMappingStartOn = default;
             string dependencyMappingEndTime = default;
             string runAsAccountId = default;
             IReadOnlyList<string> applianceNames = default;
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    hostInMaintenanceMode = prop.Value.GetBoolean();
+                    isHostInMaintenanceMode = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("hostName"u8))
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    changeTrackingSupported = prop.Value.GetBoolean();
+                    isChangeTrackingSupported = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("changeTrackingEnabled"u8))
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    changeTrackingEnabled = prop.Value.GetBoolean();
+                    isChangeTrackingEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("secureBootEnabled"u8))
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    secureBootEnabled = prop.Value.GetBoolean();
+                    isSecureBootEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("maxSnapshots"u8))
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    guestDetailsDiscoveryOn = prop.Value.GetDateTimeOffset("O");
+                    guestDetailsDiscoveryTimestamp = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("isGuestDetailsDiscoveryInProgress"u8))
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    dependencyMappingStartsOn = prop.Value.GetDateTimeOffset("O");
+                    dependencyMappingStartOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("dependencyMappingEndTime"u8))
@@ -985,7 +985,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new VmwareMachineProperties(
@@ -995,16 +995,16 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 dataCenterScope,
                 description,
                 disks ?? new ChangeTrackingList<VmwareDisk>(),
-                hostInMaintenanceMode,
+                isHostInMaintenanceMode,
                 hostName,
                 hostPowerState,
                 hostVersion,
                 networkAdapters ?? new ChangeTrackingList<VmwareNetworkAdapter>(),
                 vMwareToolsStatus,
                 vMwareToolsVersion,
-                changeTrackingSupported,
-                changeTrackingEnabled,
-                secureBootEnabled,
+                isChangeTrackingSupported,
+                isChangeTrackingEnabled,
+                isSecureBootEnabled,
                 maxSnapshots,
                 diskEnabledUuid,
                 numberOfSnapshots,
@@ -1017,10 +1017,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 numberOfApplications,
                 numberOfSoftware,
                 numberOfSecurityRisks,
-                guestDetailsDiscoveryOn,
+                guestDetailsDiscoveryTimestamp,
                 isGuestDetailsDiscoveryInProgress,
                 dependencyMapping,
-                dependencyMappingStartsOn,
+                dependencyMappingStartOn,
                 dependencyMappingEndTime,
                 runAsAccountId,
                 applianceNames ?? new ChangeTrackingList<string>(),

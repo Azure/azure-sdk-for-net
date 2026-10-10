@@ -10,12 +10,15 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected DeleteImportMachinesJobCollection() { }
         public virtual Azure.Response<bool> Exists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobResource> Get(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobResource>> GetAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobResource> GetIfExists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobResource>> GetIfExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobResource>.GetEnumerator() { throw null; }
@@ -25,11 +28,11 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         internal DeleteImportMachinesJobData() { }
         public string BlobName { get { throw null; } }
-        public bool? DeletionConfirmation { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public string EndTime { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Errors { get { throw null; } }
         public string ErrorSasUri { get { throw null; } }
+        public bool? IsDeletionConfirmation { get { throw null; } }
         public Azure.ResourceManager.MigrationDiscovery.Models.DeleteImportedMachinesJobPropertiesJobState? JobState { get { throw null; } }
         public int? NumberOfMachinesDeleted { get { throw null; } }
         public Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? ProvisioningState { get { throw null; } }
@@ -53,6 +56,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string jobName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -64,14 +68,18 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected DiscoverySiteDataSourceCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string discoverySiteDataSourceName, Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string discoverySiteDataSourceName, Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource> Get(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource>> GetAsync(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource> GetIfExists(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource>> GetIfExistsAsync(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource>.GetEnumerator() { throw null; }
@@ -100,8 +108,10 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string webAppSiteName, string discoverySiteDataSourceName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -109,18 +119,22 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ExportImportedMachinesJobCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource>, System.Collections.IEnumerable
     {
         protected ExportImportedMachinesJobCollection() { }
         public virtual Azure.Response<bool> Exists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource> Get(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource>> GetAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource> GetIfExists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource>> GetIfExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource>.GetEnumerator() { throw null; }
@@ -152,6 +166,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string jobName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -163,14 +178,18 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected HypervClusterCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string clusterName, Azure.ResourceManager.MigrationDiscovery.HypervClusterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string clusterName, Azure.ResourceManager.MigrationDiscovery.HypervClusterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource> Get(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource>> GetAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource> GetIfExists(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource>> GetIfExistsAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource>.GetEnumerator() { throw null; }
@@ -206,8 +225,10 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string clusterName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.HypervClusterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervClusterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervClusterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -215,20 +236,25 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervClusterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervClusterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.HypervClusterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.HypervClusterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class HypervHostCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervHostResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervHostResource>, System.Collections.IEnumerable
     {
         protected HypervHostCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.HypervHostResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string hostName, Azure.ResourceManager.MigrationDiscovery.HypervHostData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.HypervHostResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string hostName, Azure.ResourceManager.MigrationDiscovery.HypervHostData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervHostResource> Get(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.HypervHostResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.HypervHostResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervHostResource>> GetAsync(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.HypervHostResource> GetIfExists(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.HypervHostResource>> GetIfExistsAsync(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.HypervHostResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervHostResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.HypervHostResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervHostResource>.GetEnumerator() { throw null; }
@@ -262,8 +288,10 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string hostName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervHostResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervHostResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.HypervHostData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervHostData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervHostData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -271,18 +299,22 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervHostData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervHostData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.HypervHostResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.HypervHostData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.HypervHostResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.HypervHostData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class HypervJobCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervJobResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervJobResource>, System.Collections.IEnumerable
     {
         protected HypervJobCollection() { }
         public virtual Azure.Response<bool> Exists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervJobResource> Get(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.HypervJobResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.HypervJobResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervJobResource>> GetAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.HypervJobResource> GetIfExists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.HypervJobResource>> GetIfExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.HypervJobResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervJobResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.HypervJobResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervJobResource>.GetEnumerator() { throw null; }
@@ -317,6 +349,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string jobName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervJobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervJobResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.HypervJobData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervJobData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervJobData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -328,12 +361,15 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected HypervMachineCollection() { }
         public virtual Azure.Response<bool> Exists(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource> Get(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource> GetAll(string filter = null, int? maxCount = default(int?), string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource> GetAllAsync(string filter = null, int? maxCount = default(int?), string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource>> GetAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource> GetIfExists(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource>> GetIfExistsAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource>.GetEnumerator() { throw null; }
@@ -352,28 +388,32 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public string ClusterFqdn { get { throw null; } }
         public string ClusterId { get { throw null; } }
         public string CreatedTimestamp { get { throw null; } }
-        public bool? DataProtectionRequested { get { throw null; } }
         public Azure.ResourceManager.MigrationDiscovery.Models.DependencyMapDiscovery DependencyMapDiscovery { get { throw null; } }
         public string DependencyMapping { get { throw null; } }
         public string DependencyMappingEndTime { get { throw null; } }
-        public System.DateTimeOffset? DependencyMappingStartsOn { get { throw null; } }
+        public System.DateTimeOffset? DependencyMappingStartOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MigrationDiscovery.Models.HypervDisk> Disks { get { throw null; } }
         public string DisplayName { get { throw null; } }
-        public bool? EncryptStateAndVmMigrationTraffic { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetails> Errors { get { throw null; } }
         public string Firmware { get { throw null; } }
         public int? Generation { get { throw null; } }
-        public System.DateTimeOffset? GuestDetailsDiscoveryOn { get { throw null; } }
+        public System.DateTimeOffset? GuestDetailsDiscoveryTimestamp { get { throw null; } }
         public Azure.ResourceManager.MigrationDiscovery.Models.GuestOSDetails GuestOSDetails { get { throw null; } }
         public Azure.ResourceManager.MigrationDiscovery.Models.HighAvailability? HighAvailability { get { throw null; } }
         public string HostFqdn { get { throw null; } }
         public string HostId { get { throw null; } }
         public Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery IisDiscovery { get { throw null; } }
         public string InstanceUuid { get { throw null; } }
+        public bool? IsDataProtectionRequested { get { throw null; } }
         public bool? IsDeleted { get { throw null; } }
         public bool? IsDynamicMemoryEnabled { get { throw null; } }
+        public bool? IsEncryptStateAndVmMigrationTraffic { get { throw null; } }
         public bool? IsGuestDetailsDiscoveryInProgress { get { throw null; } }
-        public bool? KsdEnabled { get { throw null; } }
+        public bool? IsKsdEnabled { get { throw null; } }
+        public bool? IsSecureBootEnabled { get { throw null; } }
+        public bool? IsShieldingRequested { get { throw null; } }
+        public bool? IsTpmEnabled { get { throw null; } }
+        public bool? IsVirtualizationBasedSecurityOptOut { get { throw null; } }
         public string ManagementServerType { get { throw null; } }
         public int? MaxMemoryMb { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MigrationDiscovery.Models.HypervNetworkAdapter> NetworkAdapters { get { throw null; } }
@@ -387,19 +427,15 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public Azure.ResourceManager.MigrationDiscovery.Models.ProductSupportStatus ProductSupportStatus { get { throw null; } }
         public Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string RunAsAccountId { get { throw null; } }
-        public bool? SecureBootEnabled { get { throw null; } }
         public string SecureBootTemplate { get { throw null; } }
         public string SecureBootTemplateId { get { throw null; } }
-        public bool? ShieldingRequested { get { throw null; } }
         public Azure.ResourceManager.MigrationDiscovery.Models.SpringBootDiscovery SpringBootDiscovery { get { throw null; } }
         public Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscovery SqlDiscovery { get { throw null; } }
         public Azure.ResourceManager.MigrationDiscovery.Models.StaticDiscovery StaticDiscovery { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery TomcatDiscovery { get { throw null; } }
-        public bool? TpmEnabled { get { throw null; } }
         public string UpdatedTimestamp { get { throw null; } }
         public string Version { get { throw null; } }
-        public bool? VirtualizationBasedSecurityOptOut { get { throw null; } }
         public string VmConfigurationFileLocation { get { throw null; } }
         public string VmFqdn { get { throw null; } }
         public Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery WebAppDiscovery { get { throw null; } }
@@ -421,9 +457,11 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string machineName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryCollection GetHypervVmSoftwareInventories() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource> GetHypervVmSoftwareInventory(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource>> GetHypervVmSoftwareInventoryAsync(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.HypervMachineData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervMachineData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervMachineData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -431,41 +469,30 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervMachineData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervMachineData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource> Update(Azure.ResourceManager.MigrationDiscovery.Models.HypervMachinePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource>> UpdateAsync(Azure.ResourceManager.MigrationDiscovery.Models.HypervMachinePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class HypervRunAsAccountResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResourceData>
+    public partial class HypervRunAsAccountCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource>, System.Collections.IEnumerable
     {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected HypervRunAsAccountResource() { }
-        public virtual Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResourceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string accountName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class HypervRunAsAccountResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource>, System.Collections.IEnumerable
-    {
-        protected HypervRunAsAccountResourceCollection() { }
+        protected HypervRunAsAccountCollection() { }
         public virtual Azure.Response<bool> Exists(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource> Get(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource>> GetAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource> GetIfExists(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource>> GetIfExistsAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class HypervRunAsAccountResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResourceData>
+    public partial class HypervRunAsAccountData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountData>
     {
-        internal HypervRunAsAccountResourceData() { }
+        internal HypervRunAsAccountData() { }
         public string ApplianceName { get { throw null; } }
         public string CreatedTimestamp { get { throw null; } }
         public string CredentialType { get { throw null; } }
@@ -476,24 +503,44 @@ namespace Azure.ResourceManager.MigrationDiscovery
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class HypervRunAsAccountResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected HypervRunAsAccountResource() { }
+        public virtual Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string accountName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class HypervSiteCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource>, System.Collections.IEnumerable
     {
         protected HypervSiteCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.MigrationDiscovery.HypervSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.MigrationDiscovery.HypervSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource> Get(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource>> GetAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource> GetIfExists(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource>> GetIfExistsAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource>.GetEnumerator() { throw null; }
@@ -528,54 +575,76 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual Azure.ResourceManager.MigrationDiscovery.HypervSiteData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ClientGroupMembers(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ClientGroupMembersAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SiteErrorSummary> ComputeErrorSummary(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SiteErrorSummary>> ComputeErrorSummaryAsync(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.HypervSiteUsage> Computeusage(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.HypervSiteUsage>> ComputeusageAsync(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ExportApplications(Azure.WaitUntil waitUntil, System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ExportApplicationsAsync(Azure.WaitUntil waitUntil, System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ExportDependencies(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ExportDependenciesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ExportMachineErrors(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryExportMachineErrorsRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ExportMachineErrorsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryExportMachineErrorsRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> GenerateCoarseMap(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> GenerateCoarseMapAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> GenerateDetailedMap(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> GenerateDetailedMapAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySiteHealthSummaryList> GetHealthSummary(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySiteHealthSummaryList>> GetHealthSummaryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource> GetHypervCluster(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource>> GetHypervClusterAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.HypervClusterCollection GetHypervClusters() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervHostResource> GetHypervHost(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervHostResource>> GetHypervHostAsync(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.HypervHostCollection GetHypervHosts() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervJobResource> GetHypervJob(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervJobResource>> GetHypervJobAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.HypervJobCollection GetHypervJobs() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource> GetHypervMachine(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource>> GetHypervMachineAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.HypervMachineCollection GetHypervMachines() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.OperationStatus> GetHypervOperationsStatus(string operationStatusName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.OperationStatus>> GetHypervOperationsStatusAsync(string operationStatusName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource> GetHypervRunAsAccountResource(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource>> GetHypervRunAsAccountResourceAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResourceCollection GetHypervRunAsAccountResources() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource> GetHypervRunAsAccount(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource>> GetHypervRunAsAccountAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountCollection GetHypervRunAsAccounts() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ServerGroupMembers(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ServerGroupMembersAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.HypervSiteUsage> Summary(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.HypervSiteUsage>> SummaryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.HypervSiteData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervSiteData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervSiteData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -583,22 +652,28 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervSiteData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervSiteData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource> Update(Azure.ResourceManager.MigrationDiscovery.Models.HypervSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource>> UpdateAsync(Azure.ResourceManager.MigrationDiscovery.Models.HypervSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> UpdateDependencyMapStatus(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.UpdateMachineDepMapStatus mapRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> UpdateDependencyMapStatusAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.UpdateMachineDepMapStatus mapRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> UpdateProperties(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachineMetadataList metaData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> UpdatePropertiesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachineMetadataList metaData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class HypervVmSoftwareInventoryCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource>, System.Collections.IEnumerable
     {
         protected HypervVmSoftwareInventoryCollection() { }
         public virtual Azure.Response<bool> Exists(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource> Get(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource>> GetAsync(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource> GetIfExists(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource>> GetIfExistsAsync(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource>.GetEnumerator() { throw null; }
@@ -627,6 +702,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string machineName, Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -638,12 +714,15 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected IisWebApplicationsCollection() { }
         public virtual Azure.Response<bool> Exists(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource> Get(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource> GetAll(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource> GetAllAsync(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource>> GetAsync(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource> GetIfExists(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource>> GetIfExistsAsync(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource>.GetEnumerator() { throw null; }
@@ -693,6 +772,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string webAppSiteName, string webApplicationName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -700,18 +780,22 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource> Update(Azure.ResourceManager.MigrationDiscovery.Models.IisWebApplicationsPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource>> UpdateAsync(Azure.ResourceManager.MigrationDiscovery.Models.IisWebApplicationsPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class IisWebServersCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource>, System.Collections.IEnumerable
     {
         protected IisWebServersCollection() { }
         public virtual Azure.Response<bool> Exists(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource> Get(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource> GetAll(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource> GetAllAsync(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource>> GetAsync(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource> GetIfExists(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource>> GetIfExistsAsync(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource>.GetEnumerator() { throw null; }
@@ -753,6 +837,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string webAppSiteName, string webServerName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.IisWebServersData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.IisWebServersData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.IisWebServersData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -764,12 +849,15 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected ImportJobCollection() { }
         public virtual Azure.Response<bool> Exists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportJobResource> Get(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.ImportJobResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.ImportJobResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportJobResource>> GetAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ImportJobResource> GetIfExists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ImportJobResource>> GetIfExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.ImportJobResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ImportJobResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.ImportJobResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ImportJobResource>.GetEnumerator() { throw null; }
@@ -804,6 +892,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string jobName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportJobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportJobResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.ImportJobData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ImportJobData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ImportJobData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -815,12 +904,15 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected ImportMachineCollection() { }
         public virtual Azure.Response<bool> Exists(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportMachineResource> Get(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.ImportMachineResource> GetAll(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.ImportMachineResource> GetAllAsync(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportMachineResource>> GetAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ImportMachineResource> GetIfExists(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ImportMachineResource>> GetIfExistsAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.ImportMachineResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ImportMachineResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.ImportMachineResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ImportMachineResource>.GetEnumerator() { throw null; }
@@ -880,8 +972,10 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string machineName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportMachineResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportMachineResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.ImportMachineData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ImportMachineData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ImportMachineData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -893,12 +987,15 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected ImportMachinesJobCollection() { }
         public virtual Azure.Response<bool> Exists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource> Get(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource>> GetAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource> GetIfExists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource>> GetIfExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource>.GetEnumerator() { throw null; }
@@ -930,6 +1027,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string jobName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -941,14 +1039,18 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected ImportSiteCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.MigrationDiscovery.ImportSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.MigrationDiscovery.ImportSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> Get(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource>> GetAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> GetIfExists(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource>> GetIfExistsAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource>.GetEnumerator() { throw null; }
@@ -978,36 +1080,49 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual Azure.ResourceManager.MigrationDiscovery.ImportSiteData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySasUriResult> DeleteImportedMachines(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySasUriResult>> DeleteImportedMachinesAsync(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySasUriResult> ExportUri(Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySasUriResult body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySasUriResult>> ExportUriAsync(Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySasUriResult body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobResource> GetDeleteImportMachinesJob(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobResource>> GetDeleteImportMachinesJobAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobCollection GetDeleteImportMachinesJobs() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource> GetExportImportedMachinesJob(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource>> GetExportImportedMachinesJobAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobCollection GetExportImportedMachinesJobs() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportJobResource> GetImportJob(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportJobResource>> GetImportJobAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.ImportJobCollection GetImportJobs() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportMachineResource> GetImportMachine(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportMachineResource>> GetImportMachineAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.ImportMachineCollection GetImportMachines() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource> GetImportMachinesJob(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource>> GetImportMachinesJobAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobCollection GetImportMachinesJobs() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySasUriResult> ImportUri(Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySasUriResult body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySasUriResult>> ImportUriAsync(Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySasUriResult body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.ImportSiteData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ImportSiteData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ImportSiteData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1015,18 +1130,22 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ImportSiteData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ImportSiteData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> Update(Azure.ResourceManager.MigrationDiscovery.Models.ImportSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource>> UpdateAsync(Azure.ResourceManager.MigrationDiscovery.Models.ImportSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ImportSqlInventoryJobCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource>, System.Collections.IEnumerable
     {
         protected ImportSqlInventoryJobCollection() { }
         public virtual Azure.Response<bool> Exists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource> Get(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource>> GetAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource> GetIfExists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource>> GetIfExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource>.GetEnumerator() { throw null; }
@@ -1054,6 +1173,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string sqlSiteName, string jobName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1061,129 +1181,22 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MachineResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MachineResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MachineResourceData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected MachineResource() { }
-        public virtual Azure.ResourceManager.MigrationDiscovery.MachineResourceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string machineName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MachineResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MachineResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryCollection GetVmwareMachineSoftwareInventories() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource> GetVmwareMachineSoftwareInventory(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource>> GetVmwareMachineSoftwareInventoryAsync(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> Start(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> StartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> Stop(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> StopAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.MigrationDiscovery.MachineResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MachineResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MachineResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MigrationDiscovery.MachineResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MachineResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MachineResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MachineResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MachineResource> Update(Azure.ResourceManager.MigrationDiscovery.Models.MachineResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MachineResource>> UpdateAsync(Azure.ResourceManager.MigrationDiscovery.Models.MachineResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class MachineResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.MachineResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.MachineResource>, System.Collections.IEnumerable
-    {
-        protected MachineResourceCollection() { }
-        public virtual Azure.Response<bool> Exists(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MachineResource> Get(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.MachineResource> GetAll(string filter = null, int? maxCount = default(int?), string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.MachineResource> GetAllAsync(string filter = null, int? maxCount = default(int?), string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MachineResource>> GetAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.MachineResource> GetIfExists(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.MachineResource>> GetIfExistsAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.MachineResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.MachineResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.MachineResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.MachineResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class MachineResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MachineResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MachineResourceData>
-    {
-        internal MachineResourceData() { }
-        public double? AllocatedMemoryInMb { get { throw null; } }
-        public string AltGuestName { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> ApplianceNames { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.ApplicationDiscovery ApplicationDiscovery { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.AppsAndRoles AppsAndRoles { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.ArcDiscovery ArcDiscovery { get { throw null; } }
-        public string BiosGuid { get { throw null; } }
-        public string BiosSerialNumber { get { throw null; } }
-        public bool? ChangeTrackingEnabled { get { throw null; } }
-        public bool? ChangeTrackingSupported { get { throw null; } }
-        public string CreatedTimestamp { get { throw null; } }
-        public string DataCenterScope { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.DependencyMapDiscovery DependencyMapDiscovery { get { throw null; } }
-        public string DependencyMapping { get { throw null; } }
-        public string DependencyMappingEndTime { get { throw null; } }
-        public System.DateTimeOffset? DependencyMappingStartsOn { get { throw null; } }
-        public string Description { get { throw null; } }
-        public string DiskEnabledUuid { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MigrationDiscovery.Models.VmwareDisk> Disks { get { throw null; } }
-        public string DisplayName { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetails> Errors { get { throw null; } }
-        public string Firmware { get { throw null; } }
-        public System.DateTimeOffset? GuestDetailsDiscoveryOn { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.GuestOSDetails GuestOSDetails { get { throw null; } }
-        public bool? HostInMaintenanceMode { get { throw null; } }
-        public string HostName { get { throw null; } }
-        public string HostPowerState { get { throw null; } }
-        public string HostVersion { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery IisDiscovery { get { throw null; } }
-        public string InstanceUuid { get { throw null; } }
-        public bool? IsDeleted { get { throw null; } }
-        public bool? IsGuestDetailsDiscoveryInProgress { get { throw null; } }
-        public int? MaxSnapshots { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MigrationDiscovery.Models.VmwareNetworkAdapter> NetworkAdapters { get { throw null; } }
-        public int? NumberOfApplications { get { throw null; } }
-        public int? NumberOfProcessorCore { get { throw null; } }
-        public int? NumberOfSecurityRisks { get { throw null; } }
-        public int? NumberOfSnapshots { get { throw null; } }
-        public int? NumberOfSoftware { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.OperatingSystem OperatingSystemDetails { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.OracleDiscovery OracleDiscovery { get { throw null; } }
-        public string PowerStatus { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.ProductSupportStatus ProductSupportStatus { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string RunAsAccountId { get { throw null; } }
-        public bool? SecureBootEnabled { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.SpringBootDiscovery SpringBootDiscovery { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscovery SqlDiscovery { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.StaticDiscovery StaticDiscovery { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery TomcatDiscovery { get { throw null; } }
-        public string UpdatedTimestamp { get { throw null; } }
-        public string VCenterFqdn { get { throw null; } }
-        public string VCenterId { get { throw null; } }
-        public string VmConfigurationFileLocation { get { throw null; } }
-        public string VmFqdn { get { throw null; } }
-        public string VMwareToolsStatus { get { throw null; } }
-        public string VMwareToolsVersion { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery WebAppDiscovery { get { throw null; } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.MigrationDiscovery.MachineResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MachineResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MachineResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MigrationDiscovery.MachineResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MachineResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MachineResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MachineResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class MasterSiteCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource>, System.Collections.IEnumerable
     {
         protected MasterSiteCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.MigrationDiscovery.MasterSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.MigrationDiscovery.MasterSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> Get(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource>> GetAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> GetIfExists(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource>> GetIfExistsAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource>.GetEnumerator() { throw null; }
@@ -1217,33 +1230,45 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual Azure.ResourceManager.MigrationDiscovery.MasterSiteData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SiteErrorSummary> ErrorSummary(Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryErrorSummaryRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SiteErrorSummary>> ErrorSummaryAsync(Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryErrorSummaryRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource> GetPrivateEndpointConnection(string peConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string peConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionCollection GetPrivateEndpointConnections() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.PrivateLinkResource> GetPrivateLinkResource(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.PrivateLinkResource>> GetPrivateLinkResourceAsync(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.PrivateLinkResourceCollection GetPrivateLinkResources() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource> GetSqlSite(string sqlSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource>> GetSqlSiteAsync(string sqlSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.SqlSiteCollection GetSqlSites() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.OperationStatus> GetVmwareOperationStatus(string operationStatusName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.OperationStatus>> GetVmwareOperationStatusAsync(string operationStatusName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource> GetWebAppSite(string webAppSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource>> GetWebAppSiteAsync(string webAppSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.WebAppSiteCollection GetWebAppSites() { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> RefreshArcStatus(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> RefreshArcStatusAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.MasterSiteData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MasterSiteData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MasterSiteData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1251,6 +1276,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MasterSiteData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MasterSiteData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MasterSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MasterSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class MigrationDiscoveryExtensions
@@ -1264,6 +1290,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public static Azure.ResourceManager.MigrationDiscovery.HypervMachineResource GetHypervMachineResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource GetHypervRunAsAccountResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource> GetHypervSite(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource>> GetHypervSiteAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.HypervSiteResource GetHypervSiteResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.HypervSiteCollection GetHypervSites(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
@@ -1276,30 +1303,34 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public static Azure.ResourceManager.MigrationDiscovery.ImportMachineResource GetImportMachineResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource GetImportMachinesJobResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> GetImportSite(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource>> GetImportSiteAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.ImportSiteResource GetImportSiteResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.ImportSiteCollection GetImportSites(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> GetImportSites(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> GetImportSitesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource GetImportSqlInventoryJobResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.MachineResource GetMachineResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> GetMasterSite(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource>> GetMasterSiteAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.MasterSiteResource GetMasterSiteResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.MasterSiteCollection GetMasterSites(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> GetMasterSites(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> GetMasterSitesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource GetMigrationDiscoveryMachineResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource GetMigrationDiscoveryServerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource GetMigrationDiscoveryVcenterResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.PrivateLinkResource GetPrivateLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.ServerJobResource GetServerJobResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.ServerResource GetServerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource GetServerRunAsAccountResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> GetServerSite(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>> GetServerSiteAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.ServerSiteResource GetServerSiteResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> GetServerSiteResource(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>> GetServerSiteResourceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.ServerSiteResourceCollection GetServerSiteResources(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> GetServerSiteResources(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> GetServerSiteResourcesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.ServerSiteCollection GetServerSites(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> GetServerSites(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> GetServerSitesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource GetServerSoftwareInventoryResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupResource GetSqlAvailabilityGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Resource GetSqlDatabaseV2Resource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1310,12 +1341,12 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public static Azure.ResourceManager.MigrationDiscovery.SqlSiteResource GetSqlSiteResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource GetTomcatWebApplicationsResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource GetTomcatWebServersResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.VcenterResource GetVcenterResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.VmwareHostResource GetVmwareHostResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.VmwareJobResource GetVmwareJobResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource GetVmwareMachineSoftwareInventoryResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource GetVmwareRunAsAccountResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource> GetVmwareSite(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource>> GetVmwareSiteAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource GetVmwareSiteResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.VmwareSiteCollection GetVmwareSites(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
@@ -1324,6 +1355,125 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public static Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource GetWebAppExtendedMachineResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountResource GetWebAppRunAsAccountResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource GetWebAppSiteResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MigrationDiscoveryMachineCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource>, System.Collections.IEnumerable
+    {
+        protected MigrationDiscoveryMachineCollection() { }
+        public virtual Azure.Response<bool> Exists(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource> Get(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource> GetAll(string filter = null, int? maxCount = default(int?), string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource> GetAllAsync(string filter = null, int? maxCount = default(int?), string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource>> GetAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource> GetIfExists(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource>> GetIfExistsAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class MigrationDiscoveryMachineData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineData>
+    {
+        internal MigrationDiscoveryMachineData() { }
+        public double? AllocatedMemoryInMb { get { throw null; } }
+        public string AltGuestName { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> ApplianceNames { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.ApplicationDiscovery ApplicationDiscovery { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.AppsAndRoles AppsAndRoles { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.ArcDiscovery ArcDiscovery { get { throw null; } }
+        public string BiosGuid { get { throw null; } }
+        public string BiosSerialNumber { get { throw null; } }
+        public string CreatedTimestamp { get { throw null; } }
+        public string DataCenterScope { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.DependencyMapDiscovery DependencyMapDiscovery { get { throw null; } }
+        public string DependencyMapping { get { throw null; } }
+        public string DependencyMappingEndTime { get { throw null; } }
+        public System.DateTimeOffset? DependencyMappingStartOn { get { throw null; } }
+        public string Description { get { throw null; } }
+        public string DiskEnabledUuid { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MigrationDiscovery.Models.VmwareDisk> Disks { get { throw null; } }
+        public string DisplayName { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetails> Errors { get { throw null; } }
+        public string Firmware { get { throw null; } }
+        public System.DateTimeOffset? GuestDetailsDiscoveryTimestamp { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.GuestOSDetails GuestOSDetails { get { throw null; } }
+        public string HostName { get { throw null; } }
+        public string HostPowerState { get { throw null; } }
+        public string HostVersion { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery IisDiscovery { get { throw null; } }
+        public string InstanceUuid { get { throw null; } }
+        public bool? IsChangeTrackingEnabled { get { throw null; } }
+        public bool? IsChangeTrackingSupported { get { throw null; } }
+        public bool? IsDeleted { get { throw null; } }
+        public bool? IsGuestDetailsDiscoveryInProgress { get { throw null; } }
+        public bool? IsHostInMaintenanceMode { get { throw null; } }
+        public bool? IsSecureBootEnabled { get { throw null; } }
+        public int? MaxSnapshots { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MigrationDiscovery.Models.VmwareNetworkAdapter> NetworkAdapters { get { throw null; } }
+        public int? NumberOfApplications { get { throw null; } }
+        public int? NumberOfProcessorCore { get { throw null; } }
+        public int? NumberOfSecurityRisks { get { throw null; } }
+        public int? NumberOfSnapshots { get { throw null; } }
+        public int? NumberOfSoftware { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.OperatingSystem OperatingSystemDetails { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.OracleDiscovery OracleDiscovery { get { throw null; } }
+        public string PowerStatus { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.ProductSupportStatus ProductSupportStatus { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public string RunAsAccountId { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.SpringBootDiscovery SpringBootDiscovery { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscovery SqlDiscovery { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.StaticDiscovery StaticDiscovery { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery TomcatDiscovery { get { throw null; } }
+        public string UpdatedTimestamp { get { throw null; } }
+        public string VCenterFqdn { get { throw null; } }
+        public string VCenterId { get { throw null; } }
+        public string VmConfigurationFileLocation { get { throw null; } }
+        public string VmFqdn { get { throw null; } }
+        public string VMwareToolsStatus { get { throw null; } }
+        public string VMwareToolsVersion { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery WebAppDiscovery { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MigrationDiscoveryMachineResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected MigrationDiscoveryMachineResource() { }
+        public virtual Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string machineName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryCollection GetVmwareMachineSoftwareInventories() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource> GetVmwareMachineSoftwareInventory(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource>> GetVmwareMachineSoftwareInventoryAsync(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> Start(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> StartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> Stop(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> StopAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource> Update(Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachinePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource>> UpdateAsync(Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachinePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MigrationDiscoveryPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateEndpointConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateEndpointConnectionData>
     {
@@ -1359,18 +1509,191 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateLinkResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateLinkResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class MigrationDiscoveryServerCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource>, System.Collections.IEnumerable
+    {
+        protected MigrationDiscoveryServerCollection() { }
+        public virtual Azure.Response<bool> Exists(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource> Get(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource> GetAll(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource> GetAllAsync(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource>> GetAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource> GetIfExists(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource>> GetIfExistsAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class MigrationDiscoveryServerData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerData>
+    {
+        internal MigrationDiscoveryServerData() { }
+        public float? AllocatedMemoryInMb { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> ApplianceNames { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.ApplicationDiscovery ApplicationDiscovery { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.AppsAndRoles AppsAndRoles { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.ArcDiscovery ArcDiscovery { get { throw null; } }
+        public string BiosGuid { get { throw null; } }
+        public string BiosSerialNumber { get { throw null; } }
+        public string CreatedTimestamp { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.DependencyMapDiscovery DependencyMapDiscovery { get { throw null; } }
+        public string DependencyMapping { get { throw null; } }
+        public string DependencyMappingEndTime { get { throw null; } }
+        public System.DateTimeOffset? DependencyMappingStartOn { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.DiscoverySource? DiscoverySource { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.MigrationDiscovery.Models.ServerDisk> Disks { get { throw null; } }
+        public string DisplayName { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetails> Errors { get { throw null; } }
+        public string Firmware { get { throw null; } }
+        public string Fqdn { get { throw null; } }
+        public System.DateTimeOffset? GuestDetailsDiscoveryTimestamp { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.GuestOSDetails GuestOSDetails { get { throw null; } }
+        public string HydratedFqdn { get { throw null; } }
+        public string Hypervisor { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery IisDiscovery { get { throw null; } }
+        public bool? IsDeleted { get { throw null; } }
+        public bool? IsGuestDetailsDiscoveryInProgress { get { throw null; } }
+        public bool? IsSecureBootEnabled { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.MigrationDiscovery.Models.ServerNetworkAdapter> NetworkAdapters { get { throw null; } }
+        public int? NumberOfApplications { get { throw null; } }
+        public int? NumberOfProcessorCore { get { throw null; } }
+        public int? NumberOfSecurityRisks { get { throw null; } }
+        public int? NumberOfSoftware { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.OperatingSystem OperatingSystemDetails { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.OracleDiscovery OracleDiscovery { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.ProcessorInfo ProcessorInfo { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.ProductSupportStatus ProductSupportStatus { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public string RunAsAccountId { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.SpringBootDiscovery SpringBootDiscovery { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscovery SqlDiscovery { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.StaticDiscovery StaticDiscovery { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> Tags { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery TomcatDiscovery { get { throw null; } }
+        public string UpdatedTimestamp { get { throw null; } }
+        public string ValidationRequired { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery WebAppDiscovery { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MigrationDiscoveryServerResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected MigrationDiscoveryServerResource() { }
+        public virtual Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string machineName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryCollection GetServerSoftwareInventories() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource> GetServerSoftwareInventory(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource>> GetServerSoftwareInventoryAsync(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource> Update(Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource>> UpdateAsync(Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MigrationDiscoveryVcenterCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource>, System.Collections.IEnumerable
+    {
+        protected MigrationDiscoveryVcenterCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string vcenterName, Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string vcenterName, Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource> Get(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource>> GetAsync(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource> GetIfExists(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource>> GetIfExistsAsync(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class MigrationDiscoveryVcenterData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData>
+    {
+        public MigrationDiscoveryVcenterData() { }
+        public string CreatedTimestamp { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetails> Errors { get { throw null; } }
+        public string Fqdn { get { throw null; } set { } }
+        public string FriendlyName { get { throw null; } set { } }
+        public string InstanceUuid { get { throw null; } }
+        public string PerfStatisticsLevel { get { throw null; } }
+        public string Port { get { throw null; } set { } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? ProvisioningState { get { throw null; } set { } }
+        public string RunAsAccountId { get { throw null; } set { } }
+        public string UpdatedTimestamp { get { throw null; } }
+        public string Version { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MigrationDiscoveryVcenterResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected MigrationDiscoveryVcenterResource() { }
+        public virtual Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string vcenterName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class PrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
         protected PrivateEndpointConnectionCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string peConnectionName, Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string peConnectionName, Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string peConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string peConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource> Get(string peConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource>> GetAsync(string peConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource> GetIfExists(string peConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource>> GetIfExistsAsync(string peConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
@@ -1384,8 +1707,10 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string peConnectionName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1393,6 +1718,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateEndpointConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateEndpointConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class PrivateLinkResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateLinkResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateLinkResourceData>
@@ -1403,6 +1729,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string privateLinkResourceName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.PrivateLinkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.PrivateLinkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateLinkResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1414,100 +1741,33 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected PrivateLinkResourceCollection() { }
         public virtual Azure.Response<bool> Exists(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.PrivateLinkResource> Get(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.PrivateLinkResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.PrivateLinkResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.PrivateLinkResource>> GetAsync(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.PrivateLinkResource> GetIfExists(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.PrivateLinkResource>> GetIfExistsAsync(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.PrivateLinkResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.PrivateLinkResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.PrivateLinkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.PrivateLinkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServerCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerResource>, System.Collections.IEnumerable
-    {
-        protected ServerCollection() { }
-        public virtual Azure.Response<bool> Exists(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerResource> Get(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.ServerResource> GetAll(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.ServerResource> GetAllAsync(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerResource>> GetAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ServerResource> GetIfExists(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ServerResource>> GetIfExistsAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.ServerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.ServerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServerData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ServerData>
-    {
-        internal ServerData() { }
-        public float? AllocatedMemoryInMb { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> ApplianceNames { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.ApplicationDiscovery ApplicationDiscovery { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.AppsAndRoles AppsAndRoles { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.ArcDiscovery ArcDiscovery { get { throw null; } }
-        public string BiosGuid { get { throw null; } }
-        public string BiosSerialNumber { get { throw null; } }
-        public string CreatedTimestamp { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.DependencyMapDiscovery DependencyMapDiscovery { get { throw null; } }
-        public string DependencyMapping { get { throw null; } }
-        public string DependencyMappingEndTime { get { throw null; } }
-        public System.DateTimeOffset? DependencyMappingStartsOn { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.DiscoverySource? DiscoverySource { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.MigrationDiscovery.Models.ServerDisk> Disks { get { throw null; } }
-        public string DisplayName { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetails> Errors { get { throw null; } }
-        public string Firmware { get { throw null; } }
-        public string Fqdn { get { throw null; } }
-        public System.DateTimeOffset? GuestDetailsDiscoveryOn { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.GuestOSDetails GuestOSDetails { get { throw null; } }
-        public string HydratedFqdn { get { throw null; } }
-        public string Hypervisor { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery IisDiscovery { get { throw null; } }
-        public bool? IsDeleted { get { throw null; } }
-        public bool? IsGuestDetailsDiscoveryInProgress { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.MigrationDiscovery.Models.ServerNetworkAdapter> NetworkAdapters { get { throw null; } }
-        public int? NumberOfApplications { get { throw null; } }
-        public int? NumberOfProcessorCore { get { throw null; } }
-        public int? NumberOfSecurityRisks { get { throw null; } }
-        public int? NumberOfSoftware { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.OperatingSystem OperatingSystemDetails { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.OracleDiscovery OracleDiscovery { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.ProcessorInfo ProcessorInfo { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.ProductSupportStatus ProductSupportStatus { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public string RunAsAccountId { get { throw null; } }
-        public bool? SecureBootEnabled { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.SpringBootDiscovery SpringBootDiscovery { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscovery SqlDiscovery { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.StaticDiscovery StaticDiscovery { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, System.BinaryData> Tags { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery TomcatDiscovery { get { throw null; } }
-        public string UpdatedTimestamp { get { throw null; } }
-        public string ValidationRequired { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery WebAppDiscovery { get { throw null; } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.MigrationDiscovery.ServerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MigrationDiscovery.ServerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ServerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ServerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ServerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class ServerJobCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerJobResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerJobResource>, System.Collections.IEnumerable
     {
         protected ServerJobCollection() { }
         public virtual Azure.Response<bool> Exists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerJobResource> Get(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.ServerJobResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.ServerJobResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerJobResource>> GetAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ServerJobResource> GetIfExists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ServerJobResource>> GetIfExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.ServerJobResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerJobResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.ServerJobResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerJobResource>.GetEnumerator() { throw null; }
@@ -1542,6 +1802,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string jobName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerJobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerJobResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.ServerJobData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerJobData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerJobData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1549,38 +1810,19 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ServerJobData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ServerJobData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServerResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ServerData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerResource() { }
-        public virtual Azure.ResourceManager.MigrationDiscovery.ServerData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string machineName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryCollection GetServerSoftwareInventories() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource> GetServerSoftwareInventory(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource>> GetServerSoftwareInventoryAsync(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.MigrationDiscovery.ServerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MigrationDiscovery.ServerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ServerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ServerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ServerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerResource> Update(Azure.ResourceManager.MigrationDiscovery.Models.ServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerResource>> UpdateAsync(Azure.ResourceManager.MigrationDiscovery.Models.ServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class ServerRunAsAccountCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource>, System.Collections.IEnumerable
     {
         protected ServerRunAsAccountCollection() { }
         public virtual Azure.Response<bool> Exists(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource> Get(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource>> GetAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource> GetIfExists(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource>> GetIfExistsAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource>.GetEnumerator() { throw null; }
@@ -1613,6 +1855,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string accountName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1620,90 +1863,30 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServerSiteResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteResourceData>
+    public partial class ServerSiteCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>, System.Collections.IEnumerable
     {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServerSiteResource() { }
-        public virtual Azure.ResourceManager.MigrationDiscovery.ServerSiteResourceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ClientGroupMembers(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ClientGroupMembersAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SiteErrorSummary> ComputeErrorSummary(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SiteErrorSummary>> ComputeErrorSummaryAsync(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryServerSiteUsageResult> Computeusage(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryServerSiteUsageResult>> ComputeusageAsync(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ExportApplications(Azure.WaitUntil waitUntil, System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ExportApplicationsAsync(Azure.WaitUntil waitUntil, System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ExportDependencies(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ExportDependenciesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ExportMachineErrors(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryExportMachineErrorsRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ExportMachineErrorsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryExportMachineErrorsRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> GenerateCoarseMap(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> GenerateCoarseMapAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> GenerateDetailedMap(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> GenerateDetailedMapAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySiteHealthSummaryList> GetHealthSummary(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySiteHealthSummaryList>> GetHealthSummaryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerResource> GetServer(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerResource>> GetServerAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerJobResource> GetServerJob(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerJobResource>> GetServerJobAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MigrationDiscovery.ServerJobCollection GetServerJobs() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource> GetServerRunAsAccount(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource>> GetServerRunAsAccountAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountCollection GetServerRunAsAccounts() { throw null; }
-        public virtual Azure.ResourceManager.MigrationDiscovery.ServerCollection GetServers() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.OperationStatus> GetServerSiteOperationsStatus(string operationStatusName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.OperationStatus>> GetServerSiteOperationsStatusAsync(string operationStatusName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> RefreshSite(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> RefreshSiteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ServerGroupMembers(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ServerGroupMembersAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.ServerSiteUsage> Summary(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.ServerSiteUsage>> SummaryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.MigrationDiscovery.ServerSiteResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MigrationDiscovery.ServerSiteResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> Update(Azure.ResourceManager.MigrationDiscovery.Models.ServerSiteResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>> UpdateAsync(Azure.ResourceManager.MigrationDiscovery.Models.ServerSiteResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> UpdateDependencyMapStatus(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.UpdateMachineDepMapStatus mapRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> UpdateDependencyMapStatusAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.UpdateMachineDepMapStatus mapRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> UpdateProperties(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachineMetadataList metaData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> UpdatePropertiesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachineMetadataList metaData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServerSiteResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>, System.Collections.IEnumerable
-    {
-        protected ServerSiteResourceCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.MigrationDiscovery.ServerSiteResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.MigrationDiscovery.ServerSiteResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected ServerSiteCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.MigrationDiscovery.ServerSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.MigrationDiscovery.ServerSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> Get(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>> GetAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> GetIfExists(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>> GetIfExistsAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServerSiteResourceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteResourceData>
+    public partial class ServerSiteData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteData>
     {
-        public ServerSiteResourceData(Azure.Core.AzureLocation location) { }
+        public ServerSiteData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.MigrationDiscovery.Models.SiteAgentProperties AgentDetails { get { throw null; } set { } }
         public string ApplianceName { get { throw null; } set { } }
         public Azure.ResourceManager.MigrationDiscovery.Models.ArcScopeProperties ArcScope { get { throw null; } set { } }
@@ -1718,22 +1901,113 @@ namespace Azure.ResourceManager.MigrationDiscovery
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.MigrationDiscovery.ServerSiteResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MigrationDiscovery.ServerSiteResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.MigrationDiscovery.ServerSiteData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MigrationDiscovery.ServerSiteData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ServerSiteResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ServerSiteResource() { }
+        public virtual Azure.ResourceManager.MigrationDiscovery.ServerSiteData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ClientGroupMembers(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ClientGroupMembersAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SiteErrorSummary> ComputeErrorSummary(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SiteErrorSummary>> ComputeErrorSummaryAsync(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryServerSiteUsageResult> Computeusage(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryServerSiteUsageResult>> ComputeusageAsync(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ExportApplications(Azure.WaitUntil waitUntil, System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ExportApplicationsAsync(Azure.WaitUntil waitUntil, System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ExportDependencies(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ExportDependenciesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ExportMachineErrors(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryExportMachineErrorsRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ExportMachineErrorsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryExportMachineErrorsRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> GenerateCoarseMap(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> GenerateCoarseMapAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> GenerateDetailedMap(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> GenerateDetailedMapAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySiteHealthSummaryList> GetHealthSummary(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySiteHealthSummaryList>> GetHealthSummaryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource> GetMigrationDiscoveryServer(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource>> GetMigrationDiscoveryServerAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerCollection GetMigrationDiscoveryServers() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerJobResource> GetServerJob(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerJobResource>> GetServerJobAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MigrationDiscovery.ServerJobCollection GetServerJobs() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource> GetServerRunAsAccount(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource>> GetServerRunAsAccountAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountCollection GetServerRunAsAccounts() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.OperationStatus> GetServerSiteOperationsStatus(string operationStatusName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.OperationStatus>> GetServerSiteOperationsStatusAsync(string operationStatusName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> RefreshSite(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> RefreshSiteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ServerGroupMembers(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ServerGroupMembersAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.ServerSiteUsage> Summary(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.ServerSiteUsage>> SummaryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MigrationDiscovery.ServerSiteData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MigrationDiscovery.ServerSiteData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> Update(Azure.ResourceManager.MigrationDiscovery.Models.ServerSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>> UpdateAsync(Azure.ResourceManager.MigrationDiscovery.Models.ServerSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> UpdateDependencyMapStatus(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.UpdateMachineDepMapStatus mapRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> UpdateDependencyMapStatusAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.UpdateMachineDepMapStatus mapRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> UpdateProperties(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachineMetadataList metaData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> UpdatePropertiesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachineMetadataList metaData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ServerSoftwareInventoryCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource>, System.Collections.IEnumerable
     {
         protected ServerSoftwareInventoryCollection() { }
         public virtual Azure.Response<bool> Exists(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource> Get(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource>> GetAsync(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource> GetIfExists(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource>> GetIfExistsAsync(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource>.GetEnumerator() { throw null; }
@@ -1762,6 +2036,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string machineName, Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1773,12 +2048,15 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected SqlAvailabilityGroupCollection() { }
         public virtual Azure.Response<bool> Exists(string sqlAvailabilityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string sqlAvailabilityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupResource> Get(string sqlAvailabilityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupResource> GetAll(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupResource> GetAllAsync(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupResource>> GetAsync(string sqlAvailabilityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupResource> GetIfExists(string sqlAvailabilityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupResource>> GetIfExistsAsync(string sqlAvailabilityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupResource>.GetEnumerator() { throw null; }
@@ -1818,6 +2096,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string sqlSiteName, string sqlAvailabilityGroupName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1829,12 +2108,15 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected SqlDatabaseV2Collection() { }
         public virtual Azure.Response<bool> Exists(string sqlDatabaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string sqlDatabaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Resource> Get(string sqlDatabaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Resource> GetAll(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Resource> GetAllAsync(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Resource>> GetAsync(string sqlDatabaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Resource> GetIfExists(string sqlDatabaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Resource>> GetIfExistsAsync(string sqlDatabaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Resource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Resource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Resource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Resource>.GetEnumerator() { throw null; }
@@ -1878,6 +2160,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string sqlSiteName, string sqlDatabaseName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Resource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Resource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Data System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Data>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Data>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1889,14 +2172,18 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected SqlDiscoverySiteDataSourceCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string discoverySiteDataSourceName, Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string discoverySiteDataSourceName, Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource> Get(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource>> GetAsync(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource> GetIfExists(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource>> GetIfExistsAsync(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource>.GetEnumerator() { throw null; }
@@ -1925,8 +2212,10 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string sqlSiteName, string discoverySiteDataSourceName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1934,18 +2223,22 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SqlJobCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlJobResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlJobResource>, System.Collections.IEnumerable
     {
         protected SqlJobCollection() { }
         public virtual Azure.Response<bool> Exists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlJobResource> Get(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.SqlJobResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.SqlJobResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlJobResource>> GetAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.SqlJobResource> GetIfExists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.SqlJobResource>> GetIfExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.SqlJobResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlJobResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.SqlJobResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlJobResource>.GetEnumerator() { throw null; }
@@ -1980,6 +2273,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string sqlSiteName, string jobName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlJobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlJobResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.SqlJobData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.SqlJobData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.SqlJobData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1991,12 +2285,15 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected SqlRunAsAccountCollection() { }
         public virtual Azure.Response<bool> Exists(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountResource> Get(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountResource>> GetAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountResource> GetIfExists(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountResource>> GetIfExistsAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountResource>.GetEnumerator() { throw null; }
@@ -2029,6 +2326,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string sqlSiteName, string accountName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2040,12 +2338,15 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected SqlServerV2Collection() { }
         public virtual Azure.Response<bool> Exists(string sqlServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string sqlServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource> Get(string sqlServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource> GetAll(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource> GetAllAsync(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource>> GetAsync(string sqlServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource> GetIfExists(string sqlServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource>> GetIfExistsAsync(string sqlServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource>.GetEnumerator() { throw null; }
@@ -2080,7 +2381,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public string RunAsAccountId { get { throw null; } }
         public Azure.ResourceManager.MigrationDiscovery.Models.SqlFciProperties SqlFciProperties { get { throw null; } }
         public string SqlServerName { get { throw null; } }
-        public System.DateTimeOffset? SqlStartsOn { get { throw null; } }
+        public System.DateTimeOffset? SqlStartOn { get { throw null; } }
         public Azure.ResourceManager.MigrationDiscovery.Models.SqlServerStatus? Status { get { throw null; } }
         public float? SumOfUserDatabasesSizeInMb { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Tags { get { throw null; } }
@@ -2106,6 +2407,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string sqlSiteName, string sqlServerName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.SqlServerV2Data System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Data>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Data>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2113,20 +2415,25 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Data>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Data>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource> Update(Azure.ResourceManager.MigrationDiscovery.Models.SqlServerV2Patch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource>> UpdateAsync(Azure.ResourceManager.MigrationDiscovery.Models.SqlServerV2Patch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SqlSiteCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource>, System.Collections.IEnumerable
     {
         protected SqlSiteCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string sqlSiteName, Azure.ResourceManager.MigrationDiscovery.SqlSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string sqlSiteName, Azure.ResourceManager.MigrationDiscovery.SqlSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string sqlSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string sqlSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource> Get(string sqlSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource>> GetAsync(string sqlSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource> GetIfExists(string sqlSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource>> GetIfExistsAsync(string sqlSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource>.GetEnumerator() { throw null; }
@@ -2158,45 +2465,62 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string sqlSiteName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SiteErrorSummary> ErrorSummary(Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryErrorSummaryRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SiteErrorSummary>> ErrorSummaryAsync(Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryErrorSummaryRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ExportSqlServerErrors(Azure.WaitUntil waitUntil, System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ExportSqlServerErrorsAsync(Azure.WaitUntil waitUntil, System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ExportSqlServers(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryExportSqlServersRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ExportSqlServersAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryExportSqlServersRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SqlInventoryImportContent> ExportUri(Azure.ResourceManager.MigrationDiscovery.Models.SqlInventoryImportContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SqlInventoryImportContent>> ExportUriAsync(Azure.ResourceManager.MigrationDiscovery.Models.SqlInventoryImportContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource> GetImportSqlInventoryJob(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource>> GetImportSqlInventoryJobAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobCollection GetImportSqlInventoryJobs() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupResource> GetSqlAvailabilityGroup(string sqlAvailabilityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupResource>> GetSqlAvailabilityGroupAsync(string sqlAvailabilityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupCollection GetSqlAvailabilityGroups() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Resource> GetSqlDatabaseV2(string sqlDatabaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Resource>> GetSqlDatabaseV2Async(string sqlDatabaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Collection GetSqlDatabaseV2s() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource> GetSqlDiscoverySiteDataSource(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource>> GetSqlDiscoverySiteDataSourceAsync(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceCollection GetSqlDiscoverySiteDataSources() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlJobResource> GetSqlJob(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlJobResource>> GetSqlJobAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.SqlJobCollection GetSqlJobs() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.OperationStatus> GetSqlOperationStatus(string operationStatusName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.OperationStatus>> GetSqlOperationStatusAsync(string operationStatusName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountResource> GetSqlRunAsAccount(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountResource>> GetSqlRunAsAccountAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountCollection GetSqlRunAsAccounts() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource> GetSqlServerV2(string sqlServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource>> GetSqlServerV2Async(string sqlServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.SqlServerV2Collection GetSqlServerV2s() { throw null; }
         public virtual Azure.ResourceManager.ArmOperation ImportUri(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.SqlInventoryImportContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ImportUriAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.SqlInventoryImportContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> Refresh(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.SqlSiteRefreshContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> RefreshAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.SqlSiteRefreshContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SqlSiteUsage> Summary(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SqlSiteUsage>> SummaryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.SqlSiteData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.SqlSiteData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.SqlSiteData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2204,20 +2528,25 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.SqlSiteData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.SqlSiteData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.SqlSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.SqlSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SqlInventoryImportContent> ValidateAndImportUri(Azure.ResourceManager.MigrationDiscovery.Models.SqlInventoryImportContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SqlInventoryImportContent>> ValidateAndImportUriAsync(Azure.ResourceManager.MigrationDiscovery.Models.SqlInventoryImportContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TomcatWebApplicationsCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource>, System.Collections.IEnumerable
     {
         protected TomcatWebApplicationsCollection() { }
         public virtual Azure.Response<bool> Exists(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource> Get(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource> GetAll(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource> GetAllAsync(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource>> GetAsync(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource> GetIfExists(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource>> GetIfExistsAsync(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource>.GetEnumerator() { throw null; }
@@ -2267,6 +2596,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string webAppSiteName, string webApplicationName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2274,18 +2604,22 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource> Update(System.Collections.Generic.IDictionary<string, System.BinaryData> body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource>> UpdateAsync(System.Collections.Generic.IDictionary<string, System.BinaryData> body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TomcatWebServersCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource>, System.Collections.IEnumerable
     {
         protected TomcatWebServersCollection() { }
         public virtual Azure.Response<bool> Exists(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource> Get(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource> GetAll(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource> GetAllAsync(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource>> GetAsync(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource> GetIfExists(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource>> GetIfExistsAsync(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource>.GetEnumerator() { throw null; }
@@ -2337,6 +2671,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string webAppSiteName, string webServerName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.TomcatWebServersData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2344,76 +2679,19 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VcenterCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.VcenterResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.VcenterResource>, System.Collections.IEnumerable
-    {
-        protected VcenterCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.VcenterResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string vcenterName, Azure.ResourceManager.MigrationDiscovery.VcenterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.VcenterResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string vcenterName, Azure.ResourceManager.MigrationDiscovery.VcenterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VcenterResource> Get(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.VcenterResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.VcenterResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VcenterResource>> GetAsync(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.VcenterResource> GetIfExists(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.VcenterResource>> GetIfExistsAsync(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.VcenterResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.VcenterResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.VcenterResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.VcenterResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class VcenterData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VcenterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.VcenterData>
-    {
-        public VcenterData() { }
-        public string CreatedTimestamp { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetails> Errors { get { throw null; } }
-        public string Fqdn { get { throw null; } set { } }
-        public string FriendlyName { get { throw null; } set { } }
-        public string InstanceUuid { get { throw null; } }
-        public string PerfStatisticsLevel { get { throw null; } }
-        public string Port { get { throw null; } set { } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? ProvisioningState { get { throw null; } set { } }
-        public string RunAsAccountId { get { throw null; } set { } }
-        public string UpdatedTimestamp { get { throw null; } }
-        public string Version { get { throw null; } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.MigrationDiscovery.VcenterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VcenterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VcenterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MigrationDiscovery.VcenterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.VcenterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.VcenterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.VcenterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class VcenterResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VcenterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.VcenterData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected VcenterResource() { }
-        public virtual Azure.ResourceManager.MigrationDiscovery.VcenterData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string vcenterName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VcenterResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VcenterResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.MigrationDiscovery.VcenterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VcenterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VcenterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MigrationDiscovery.VcenterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.VcenterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.VcenterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.VcenterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.VcenterResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.VcenterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.VcenterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.VcenterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class VmwareHostCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.VmwareHostResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.VmwareHostResource>, System.Collections.IEnumerable
     {
         protected VmwareHostCollection() { }
         public virtual Azure.Response<bool> Exists(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareHostResource> Get(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.VmwareHostResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.VmwareHostResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareHostResource>> GetAsync(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.VmwareHostResource> GetIfExists(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.VmwareHostResource>> GetIfExistsAsync(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.VmwareHostResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.VmwareHostResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.VmwareHostResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.VmwareHostResource>.GetEnumerator() { throw null; }
@@ -2447,6 +2725,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string hostName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareHostResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareHostResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.VmwareHostData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VmwareHostData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VmwareHostData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2458,12 +2737,15 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected VmwareJobCollection() { }
         public virtual Azure.Response<bool> Exists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareJobResource> Get(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.VmwareJobResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.VmwareJobResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareJobResource>> GetAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.VmwareJobResource> GetIfExists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.VmwareJobResource>> GetIfExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.VmwareJobResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.VmwareJobResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.VmwareJobResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.VmwareJobResource>.GetEnumerator() { throw null; }
@@ -2498,6 +2780,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string jobName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareJobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareJobResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.VmwareJobData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VmwareJobData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VmwareJobData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2509,12 +2792,15 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected VmwareMachineSoftwareInventoryCollection() { }
         public virtual Azure.Response<bool> Exists(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource> Get(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource>> GetAsync(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource> GetIfExists(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource>> GetIfExistsAsync(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource>.GetEnumerator() { throw null; }
@@ -2543,6 +2829,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string machineName, Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2550,39 +2837,27 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VmwareRunAsAccountResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResourceData>
+    public partial class VmwareRunAsAccountCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource>, System.Collections.IEnumerable
     {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected VmwareRunAsAccountResource() { }
-        public virtual Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResourceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string accountName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class VmwareRunAsAccountResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource>, System.Collections.IEnumerable
-    {
-        protected VmwareRunAsAccountResourceCollection() { }
+        protected VmwareRunAsAccountCollection() { }
         public virtual Azure.Response<bool> Exists(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource> Get(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource>> GetAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource> GetIfExists(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource>> GetIfExistsAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VmwareRunAsAccountResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResourceData>
+    public partial class VmwareRunAsAccountData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountData>
     {
-        internal VmwareRunAsAccountResourceData() { }
+        internal VmwareRunAsAccountData() { }
         public string ApplianceName { get { throw null; } }
         public string CreatedTimestamp { get { throw null; } }
         public string CredentialType { get { throw null; } }
@@ -2593,24 +2868,44 @@ namespace Azure.ResourceManager.MigrationDiscovery
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class VmwareRunAsAccountResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected VmwareRunAsAccountResource() { }
+        public virtual Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string accountName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class VmwareSiteCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource>, System.Collections.IEnumerable
     {
         protected VmwareSiteCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.MigrationDiscovery.VmwareSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.MigrationDiscovery.VmwareSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource> Get(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource>> GetAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource> GetIfExists(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource>> GetIfExistsAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource>.GetEnumerator() { throw null; }
@@ -2623,7 +2918,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public string ApplianceName { get { throw null; } set { } }
         public Azure.ResourceManager.MigrationDiscovery.Models.DiscoveryScenario? DiscoveryScenario { get { throw null; } set { } }
         public string DiscoverySolutionId { get { throw null; } set { } }
-        public string ETag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string MasterSiteId { get { throw null; } }
         public Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string ServiceEndpoint { get { throw null; } }
@@ -2646,56 +2941,79 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual Azure.ResourceManager.MigrationDiscovery.VmwareSiteData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ClientGroupMembers(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ClientGroupMembersAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SiteErrorSummary> ComputeErrorSummary(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SiteErrorSummary>> ComputeErrorSummaryAsync(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.VmwareSiteUsage> Computeusage(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.VmwareSiteUsage>> ComputeusageAsync(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ExportApplications(Azure.WaitUntil waitUntil, System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ExportApplicationsAsync(Azure.WaitUntil waitUntil, System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ExportDependencies(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ExportDependenciesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ExportMachineErrors(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryExportMachineErrorsRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ExportMachineErrorsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryExportMachineErrorsRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ExportMachines(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryExportMachinesRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ExportMachinesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryExportMachinesRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> GenerateCoarseMap(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> GenerateCoarseMapAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> GenerateDetailedMap(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> GenerateDetailedMapAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySiteHealthSummaryList> GetHealthSummary(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySiteHealthSummaryList>> GetHealthSummaryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MachineResource> GetMachineResource(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MachineResource>> GetMachineResourceAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MigrationDiscovery.MachineResourceCollection GetMachineResources() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VcenterResource> GetVcenter(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VcenterResource>> GetVcenterAsync(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MigrationDiscovery.VcenterCollection GetVcenters() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource> GetMigrationDiscoveryMachine(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource>> GetMigrationDiscoveryMachineAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineCollection GetMigrationDiscoveryMachines() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource> GetMigrationDiscoveryVcenter(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource>> GetMigrationDiscoveryVcenterAsync(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterCollection GetMigrationDiscoveryVcenters() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareHostResource> GetVmwareHost(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareHostResource>> GetVmwareHostAsync(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.VmwareHostCollection GetVmwareHosts() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareJobResource> GetVmwareJob(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareJobResource>> GetVmwareJobAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.VmwareJobCollection GetVmwareJobs() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.OperationStatus> GetVmwareOperationStatus(string operationStatusName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.OperationStatus>> GetVmwareOperationStatusAsync(string operationStatusName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource> GetVmwareRunAsAccountResource(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource>> GetVmwareRunAsAccountResourceAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResourceCollection GetVmwareRunAsAccountResources() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource> GetVmwareRunAsAccount(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource>> GetVmwareRunAsAccountAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountCollection GetVmwareRunAsAccounts() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ServerGroupMembers(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ServerGroupMembersAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.VmwareSiteUsage> Summary(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.VmwareSiteUsage>> SummaryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.VmwareSiteData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VmwareSiteData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VmwareSiteData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2703,26 +3021,34 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.VmwareSiteData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.VmwareSiteData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource> Update(Azure.ResourceManager.MigrationDiscovery.Models.VmwareSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource>> UpdateAsync(Azure.ResourceManager.MigrationDiscovery.Models.VmwareSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> UpdateDependencyMapStatus(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.UpdateMachineDepMapStatus updateMachineDepMapStatus, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> UpdateDependencyMapStatusAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.UpdateMachineDepMapStatus updateMachineDepMapStatus, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> UpdateProperties(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachineMetadataList metaData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> UpdatePropertiesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachineMetadataList metaData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> UpdateRunAsAccount(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.UpdateMachineRunAsAccount updateMachineRunAsAccount, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> UpdateRunAsAccountAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.UpdateMachineRunAsAccount updateMachineRunAsAccount, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> UpdateTags(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.UpdateMachineTags updateMachineTags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> UpdateTagsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.UpdateMachineTags updateMachineTags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class WebAppExtendedMachineCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource>, System.Collections.IEnumerable
     {
         protected WebAppExtendedMachineCollection() { }
         public virtual Azure.Response<bool> Exists(string extendedMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string extendedMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource> Get(string extendedMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource> GetAll(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource> GetAllAsync(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource>> GetAsync(string extendedMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource> GetIfExists(string extendedMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource>> GetIfExistsAsync(string extendedMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource>.GetEnumerator() { throw null; }
@@ -2759,6 +3085,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string webAppSiteName, string extendedMachineName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2770,12 +3097,15 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected WebAppRunAsAccountCollection() { }
         public virtual Azure.Response<bool> Exists(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountResource> Get(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountResource>> GetAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountResource> GetIfExists(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountResource>> GetIfExistsAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountResource>.GetEnumerator() { throw null; }
@@ -2808,6 +3138,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string webAppSiteName, string accountName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2819,14 +3150,18 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected WebAppSiteCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string webAppSiteName, Azure.ResourceManager.MigrationDiscovery.WebAppSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string webAppSiteName, Azure.ResourceManager.MigrationDiscovery.WebAppSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string webAppSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string webAppSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource> Get(string webAppSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource>> GetAsync(string webAppSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource> GetIfExists(string webAppSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource>> GetIfExistsAsync(string webAppSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource>.GetEnumerator() { throw null; }
@@ -2857,41 +3192,54 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string webAppSiteName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SiteErrorSummary> ErrorSummary(Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryErrorSummaryRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SiteErrorSummary>> ErrorSummaryAsync(Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryErrorSummaryRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ExportInventory(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryExportWebAppsRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ExportInventoryAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryExportWebAppsRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsCollection GetAllIisWebApplications() { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.IisWebServersCollection GetAllIisWebServers() { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsCollection GetAllTomcatWebApplications() { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.TomcatWebServersCollection GetAllTomcatWebServers() { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource> GetDiscoverySiteDataSource(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource>> GetDiscoverySiteDataSourceAsync(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceCollection GetDiscoverySiteDataSources() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource> GetIisWebApplications(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource>> GetIisWebApplicationsAsync(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource> GetIisWebServers(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource>> GetIisWebServersAsync(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource> GetTomcatWebApplications(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource>> GetTomcatWebApplicationsAsync(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource> GetTomcatWebServers(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource>> GetTomcatWebServersAsync(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource> GetWebAppExtendedMachine(string extendedMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource>> GetWebAppExtendedMachineAsync(string extendedMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineCollection GetWebAppExtendedMachines() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.Models.WebApplication> GetWebApplicationsByWebAppSite(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.Models.WebApplication> GetWebApplicationsByWebAppSiteAsync(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountResource> GetWebAppRunAsAccount(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountResource>> GetWebAppRunAsAccountAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountCollection GetWebAppRunAsAccounts() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.Models.WebServer> GetWebServersByWebAppSite(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.Models.WebServer> GetWebServersByWebAppSiteAsync(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> Refresh(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.ProxySiteRefreshContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> RefreshAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.ProxySiteRefreshContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.WebAppSiteUsage> Summary(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.WebAppSiteUsage>> SummaryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.WebAppSiteData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.WebAppSiteData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.WebAppSiteData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2899,8 +3247,10 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.WebAppSiteData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.WebAppSiteData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.WebAppSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.WebAppSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> UpdateProperties(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryWebAppPropertiesList body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> UpdatePropertiesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryWebAppPropertiesList body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
@@ -2926,12 +3276,13 @@ namespace Azure.ResourceManager.MigrationDiscovery.Mocking
         public virtual Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource GetImportMachinesJobResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.ImportSiteResource GetImportSiteResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource GetImportSqlInventoryJobResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.MigrationDiscovery.MachineResource GetMachineResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.MasterSiteResource GetMasterSiteResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource GetMigrationDiscoveryMachineResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource GetMigrationDiscoveryServerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource GetMigrationDiscoveryVcenterResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.PrivateLinkResource GetPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.ServerJobResource GetServerJobResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.MigrationDiscovery.ServerResource GetServerResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource GetServerRunAsAccountResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.ServerSiteResource GetServerSiteResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource GetServerSoftwareInventoryResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -2944,7 +3295,6 @@ namespace Azure.ResourceManager.MigrationDiscovery.Mocking
         public virtual Azure.ResourceManager.MigrationDiscovery.SqlSiteResource GetSqlSiteResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource GetTomcatWebApplicationsResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource GetTomcatWebServersResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.MigrationDiscovery.VcenterResource GetVcenterResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.VmwareHostResource GetVmwareHostResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.VmwareJobResource GetVmwareJobResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource GetVmwareMachineSoftwareInventoryResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -2958,18 +3308,23 @@ namespace Azure.ResourceManager.MigrationDiscovery.Mocking
     {
         protected MockableMigrationDiscoveryResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource> GetHypervSite(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource>> GetHypervSiteAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.HypervSiteCollection GetHypervSites() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> GetImportSite(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource>> GetImportSiteAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.ImportSiteCollection GetImportSites() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> GetMasterSite(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource>> GetMasterSiteAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.MasterSiteCollection GetMasterSites() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> GetServerSiteResource(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>> GetServerSiteResourceAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MigrationDiscovery.ServerSiteResourceCollection GetServerSiteResources() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> GetServerSite(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>> GetServerSiteAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MigrationDiscovery.ServerSiteCollection GetServerSites() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource> GetVmwareSite(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource>> GetVmwareSiteAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.VmwareSiteCollection GetVmwareSites() { throw null; }
     }
@@ -2982,8 +3337,8 @@ namespace Azure.ResourceManager.MigrationDiscovery.Mocking
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> GetImportSitesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> GetMasterSites(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> GetMasterSitesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> GetServerSiteResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> GetServerSiteResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> GetServerSites(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> GetServerSitesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource> GetVmwareSites(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource> GetVmwareSitesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -3101,23 +3456,23 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.ArcScopeProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.ArcScopeProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArcScopePropertiesUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesUpdate>
+    public partial class ArcScopePropertiesPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesPatch>
     {
-        public ArcScopePropertiesUpdate() { }
+        public ArcScopePropertiesPatch() { }
         public System.Collections.Generic.IList<string> Locations { get { throw null; } }
         public Azure.ResourceManager.MigrationDiscovery.Models.ArcSiteScopeType? ScopeType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> SubscriptionOrResourceGroupIds { get { throw null; } }
         public Azure.ResourceManager.MigrationDiscovery.Models.ArcSyncType? SyncType { get { throw null; } set { } }
         public Azure.ResourceManager.MigrationDiscovery.Models.TagSyncMode? TagSyncMode { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesUpdate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesUpdate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ArcSiteScopeType : System.IEquatable<Azure.ResourceManager.MigrationDiscovery.Models.ArcSiteScopeType>
@@ -3159,17 +3514,17 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public static Azure.ResourceManager.MigrationDiscovery.Models.AppsAndRoles AppsAndRoles(System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.Application> applications = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.WebApplicationAppsAndRolesModel> webApplications = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.Feature> features = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.SqlServerApplication> sqlServers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.SharePointServer> sharePointServers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.SystemCenter> systemCenters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.BizTalkServer> bizTalkServers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.ExchangeServer> exchangeServers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.OtherDatabase> otherDatabases = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.ArcDiscovery ArcDiscovery(Azure.ResourceManager.MigrationDiscovery.Models.AzureArcStatus status = default(Azure.ResourceManager.MigrationDiscovery.Models.AzureArcStatus), Azure.Core.ResourceIdentifier machineResourceId = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.ArcScopeProperties ArcScopeProperties(System.Collections.Generic.IEnumerable<string> locations = null, Azure.ResourceManager.MigrationDiscovery.Models.ArcSiteScopeType scopeType = default(Azure.ResourceManager.MigrationDiscovery.Models.ArcSiteScopeType), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> subscriptionOrResourceGroupIds = null, Azure.ResourceManager.MigrationDiscovery.Models.ArcSyncType? syncType = default(Azure.ResourceManager.MigrationDiscovery.Models.ArcSyncType?), Azure.ResourceManager.MigrationDiscovery.Models.TagSyncMode? tagSyncMode = default(Azure.ResourceManager.MigrationDiscovery.Models.TagSyncMode?), System.DateTimeOffset? lastSuccessfulSyncOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesUpdate ArcScopePropertiesUpdate(System.Collections.Generic.IEnumerable<string> locations = null, Azure.ResourceManager.MigrationDiscovery.Models.ArcSiteScopeType? scopeType = default(Azure.ResourceManager.MigrationDiscovery.Models.ArcSiteScopeType?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> subscriptionOrResourceGroupIds = null, Azure.ResourceManager.MigrationDiscovery.Models.ArcSyncType? syncType = default(Azure.ResourceManager.MigrationDiscovery.Models.ArcSyncType?), Azure.ResourceManager.MigrationDiscovery.Models.TagSyncMode? tagSyncMode = default(Azure.ResourceManager.MigrationDiscovery.Models.TagSyncMode?)) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesPatch ArcScopePropertiesPatch(System.Collections.Generic.IEnumerable<string> locations = null, Azure.ResourceManager.MigrationDiscovery.Models.ArcSiteScopeType? scopeType = default(Azure.ResourceManager.MigrationDiscovery.Models.ArcSiteScopeType?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> subscriptionOrResourceGroupIds = null, Azure.ResourceManager.MigrationDiscovery.Models.ArcSyncType? syncType = default(Azure.ResourceManager.MigrationDiscovery.Models.ArcSyncType?), Azure.ResourceManager.MigrationDiscovery.Models.TagSyncMode? tagSyncMode = default(Azure.ResourceManager.MigrationDiscovery.Models.TagSyncMode?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.BizTalkServer BizTalkServer(string productName = null, string status = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.ConnectorUnit ConnectorUnit(System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.FrontEndBinding> bindings = null) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobData DeleteImportMachinesJobData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string blobName = null, string errorSasUri = null, Azure.ResourceManager.MigrationDiscovery.Models.DeleteImportedMachinesJobPropertiesJobState? jobState = default(Azure.ResourceManager.MigrationDiscovery.Models.DeleteImportedMachinesJobPropertiesJobState?), int? numberOfMachinesDeleted = default(int?), bool? deletionConfirmation = default(bool?), System.Collections.Generic.IEnumerable<string> errors = null, string status = null, string startTime = null, string endTime = null, string displayName = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobData DeleteImportMachinesJobData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string blobName = null, string errorSasUri = null, Azure.ResourceManager.MigrationDiscovery.Models.DeleteImportedMachinesJobPropertiesJobState? jobState = default(Azure.ResourceManager.MigrationDiscovery.Models.DeleteImportedMachinesJobPropertiesJobState?), int? numberOfMachinesDeleted = default(int?), bool? isDeletionConfirmation = default(bool?), System.Collections.Generic.IEnumerable<string> errors = null, string status = null, string startTime = null, string endTime = null, string displayName = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.DependencyMapDiscovery DependencyMapDiscovery(Azure.ResourceManager.MigrationDiscovery.Models.DependencyMapDiscoveryScopeStatus? discoveryScopeStatus = default(Azure.ResourceManager.MigrationDiscovery.Models.DependencyMapDiscoveryScopeStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetails> errors = null, string hydratedRunAsAccountId = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.DependencyMapMachineInput DependencyMapMachineInput(string machineId = null, bool? isDependencyMapToBeEnabled = default(bool?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.DirectoryPath DirectoryPath(string @virtual = null, string physical = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.DiscoveryScopeErrorSummary DiscoveryScopeErrorSummary(string affectedResourceType = null, long affectedObjectsCount = (long)0, Azure.ResourceManager.MigrationDiscovery.Models.DiscoveryScopes discoveryScope = default(Azure.ResourceManager.MigrationDiscovery.Models.DiscoveryScopes)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceData DiscoverySiteDataSourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string discoverySiteId = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.ErrorDetails ErrorDetails(string code = null, string message = null, string possibleCauses = null, string recommendedAction = null, string severity = null, bool? isAgentReportedError = default(bool?), string agentErrorCode = null, string agentErrorMessage = null, string agentErrorPossibleCauses = null, string agentErrorRecommendedAction = null) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.Errors Errors(string message = null, System.Collections.Generic.IReadOnlyDictionary<string, string> messageParameters = null, string applianceName = null, int? id = default(int?), string code = null, string possibleCauses = null, string recommendedAction = null, string severity = null, string summaryMessage = null, Azure.ResourceManager.MigrationDiscovery.Models.MicrosoftAzureFDSWebRoleHealthErrorDetailsSource? source = default(Azure.ResourceManager.MigrationDiscovery.Models.MicrosoftAzureFDSWebRoleHealthErrorDetailsSource?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string runAsAccountId = null, Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetailsDiscoveryScope? discoveryScope = default(Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetailsDiscoveryScope?)) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.Errors Errors(string message = null, System.Collections.Generic.IReadOnlyDictionary<string, string> messageParameters = null, string applianceName = null, int? id = default(int?), string code = null, string possibleCauses = null, string recommendedAction = null, string severity = null, string summaryMessage = null, Azure.ResourceManager.MigrationDiscovery.Models.MicrosoftAzureFdsWebRoleHealthErrorDetailsSource? source = default(Azure.ResourceManager.MigrationDiscovery.Models.MicrosoftAzureFdsWebRoleHealthErrorDetailsSource?), System.DateTimeOffset? updatedTimeStamp = default(System.DateTimeOffset?), string runAsAccountId = null, Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetailsDiscoveryScope? discoveryScope = default(Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetailsDiscoveryScope?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.ExchangeServer ExchangeServer(string productName = null, string edition = null, string roles = null, string servicePack = null, string version = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobContent ExportImportedMachinesJobContent(Azure.Core.ResourceIdentifier id = null, string name = null, string type = null, Azure.ResourceManager.MigrationDiscovery.Models.ExportImportedMachinesJobEntityProperties properties = null, string status = null, string startTime = null, string endTime = null, string displayName = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.ExportImportedMachinesJobEntityProperties ExportImportedMachinesJobEntityProperties(string blobName = null, string sasUri = null) { throw null; }
@@ -3178,15 +3533,15 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public static Azure.ResourceManager.MigrationDiscovery.Models.FrontEndBinding FrontEndBinding(string protocol = null, string hostName = null, string port = null, string ipAddress = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.GenericArcDiscovery GenericArcDiscovery(Azure.ResourceManager.MigrationDiscovery.Models.AzureArcStatus status = default(Azure.ResourceManager.MigrationDiscovery.Models.AzureArcStatus), Azure.Core.ResourceIdentifier resourceId = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.GuestOSDetails GuestOSDetails(string osType = null, string osName = null, string osVersion = null, string osArchitecture = null, string osDistro = null, string osMajorVersion = null, string osVariant = null, string kernelVersion = null) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetails HealthErrorDetails(string message = null, System.Collections.Generic.IReadOnlyDictionary<string, string> messageParameters = null, string applianceName = null, long? id = default(long?), string code = null, string possibleCauses = null, string recommendedAction = null, string severity = null, string summaryMessage = null, Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetailsSource? source = default(Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetailsSource?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string runAsAccountId = null, Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetailsDiscoveryScope? discoveryScope = default(Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetailsDiscoveryScope?)) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetails HealthErrorDetails(string message = null, System.Collections.Generic.IReadOnlyDictionary<string, string> messageParameters = null, string applianceName = null, long? id = default(long?), string code = null, string possibleCauses = null, string recommendedAction = null, string severity = null, string summaryMessage = null, Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetailsSource? source = default(Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetailsSource?), System.DateTimeOffset? updatedTimeStamp = default(System.DateTimeOffset?), string runAsAccountId = null, Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetailsDiscoveryScope? discoveryScope = default(Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetailsDiscoveryScope?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.HypervClusterData HypervClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string createdTimestamp = null, string updatedTimestamp = null, string fqdn = null, int? functionalLevel = default(int?), string status = null, string runAsAccountId = null, System.Collections.Generic.IEnumerable<string> hostFqdnList = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetails> errors = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.HypervDisk HypervDisk(string instanceId = null, string vhdId = null, long? maxSizeInBytes = default(long?), string name = null, string diskType = null, int? lun = default(int?), string isOSDisk = null, string path = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.HypervHostData HypervHostData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string createdTimestamp = null, string updatedTimestamp = null, string fqdn = null, string runAsAccountId = null, string version = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetails> errors = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.HypervJobData HypervJobData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string status = null, string startTime = null, string endTime = null, string displayName = null, string clientRequestId = null, string activityId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.ErrorDetails> errors = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.HypervMachineData HypervMachineData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string instanceUuid = null, string hostFqdn = null, string hostId = null, int? generation = default(int?), string version = null, Azure.ResourceManager.MigrationDiscovery.Models.HighAvailability? highAvailability = default(Azure.ResourceManager.MigrationDiscovery.Models.HighAvailability?), string clusterFqdn = null, string clusterId = null, int? maxMemoryMb = default(int?), bool? isDynamicMemoryEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.HypervDisk> disks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.HypervNetworkAdapter> networkAdapters = null, string managementServerType = null, string secureBootTemplateId = null, bool? secureBootEnabled = default(bool?), string secureBootTemplate = null, bool? tpmEnabled = default(bool?), bool? ksdEnabled = default(bool?), bool? shieldingRequested = default(bool?), bool? dataProtectionRequested = default(bool?), bool? encryptStateAndVmMigrationTraffic = default(bool?), bool? virtualizationBasedSecurityOptOut = default(bool?), string powerStatus = null, string vmFqdn = null, string vmConfigurationFileLocation = null, string firmware = null, Azure.ResourceManager.MigrationDiscovery.Models.GuestOSDetails guestOSDetails = null, int? numberOfApplications = default(int?), int? numberOfSoftware = default(int?), int? numberOfSecurityRisks = default(int?), System.DateTimeOffset? guestDetailsDiscoveryOn = default(System.DateTimeOffset?), bool? isGuestDetailsDiscoveryInProgress = default(bool?), string dependencyMapping = null, System.DateTimeOffset? dependencyMappingStartsOn = default(System.DateTimeOffset?), string dependencyMappingEndTime = null, string runAsAccountId = null, System.Collections.Generic.IEnumerable<string> applianceNames = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetails> errors = null, Azure.ResourceManager.MigrationDiscovery.Models.ApplicationDiscovery applicationDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.DependencyMapDiscovery dependencyMapDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.StaticDiscovery staticDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscovery sqlDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery webAppDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.OracleDiscovery oracleDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.SpringBootDiscovery springBootDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery iisDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery tomcatDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.AppsAndRoles appsAndRoles = null, Azure.ResourceManager.MigrationDiscovery.Models.ProductSupportStatus productSupportStatus = null, int? numberOfProcessorCore = default(int?), double? allocatedMemoryInMb = default(double?), Azure.ResourceManager.MigrationDiscovery.Models.OperatingSystem operatingSystemDetails = null, string biosSerialNumber = null, string biosGuid = null, string displayName = null, bool? isDeleted = default(bool?), string createdTimestamp = null, System.Collections.Generic.IDictionary<string, string> tags = null, string updatedTimestamp = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?), Azure.ResourceManager.MigrationDiscovery.Models.ArcDiscovery arcDiscovery = null) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.HypervMachineData HypervMachineData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string instanceUuid = null, string hostFqdn = null, string hostId = null, int? generation = default(int?), string version = null, Azure.ResourceManager.MigrationDiscovery.Models.HighAvailability? highAvailability = default(Azure.ResourceManager.MigrationDiscovery.Models.HighAvailability?), string clusterFqdn = null, string clusterId = null, int? maxMemoryMb = default(int?), bool? isDynamicMemoryEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.HypervDisk> disks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.HypervNetworkAdapter> networkAdapters = null, string managementServerType = null, string secureBootTemplateId = null, bool? isSecureBootEnabled = default(bool?), string secureBootTemplate = null, bool? isTpmEnabled = default(bool?), bool? isKsdEnabled = default(bool?), bool? isShieldingRequested = default(bool?), bool? isDataProtectionRequested = default(bool?), bool? isEncryptStateAndVmMigrationTraffic = default(bool?), bool? isVirtualizationBasedSecurityOptOut = default(bool?), string powerStatus = null, string vmFqdn = null, string vmConfigurationFileLocation = null, string firmware = null, Azure.ResourceManager.MigrationDiscovery.Models.GuestOSDetails guestOSDetails = null, int? numberOfApplications = default(int?), int? numberOfSoftware = default(int?), int? numberOfSecurityRisks = default(int?), System.DateTimeOffset? guestDetailsDiscoveryTimestamp = default(System.DateTimeOffset?), bool? isGuestDetailsDiscoveryInProgress = default(bool?), string dependencyMapping = null, System.DateTimeOffset? dependencyMappingStartOn = default(System.DateTimeOffset?), string dependencyMappingEndTime = null, string runAsAccountId = null, System.Collections.Generic.IEnumerable<string> applianceNames = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetails> errors = null, Azure.ResourceManager.MigrationDiscovery.Models.ApplicationDiscovery applicationDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.DependencyMapDiscovery dependencyMapDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.StaticDiscovery staticDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscovery sqlDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery webAppDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.OracleDiscovery oracleDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.SpringBootDiscovery springBootDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery iisDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery tomcatDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.AppsAndRoles appsAndRoles = null, Azure.ResourceManager.MigrationDiscovery.Models.ProductSupportStatus productSupportStatus = null, int? numberOfProcessorCore = default(int?), double? allocatedMemoryInMb = default(double?), Azure.ResourceManager.MigrationDiscovery.Models.OperatingSystem operatingSystemDetails = null, string biosSerialNumber = null, string biosGuid = null, string displayName = null, bool? isDeleted = default(bool?), string createdTimestamp = null, System.Collections.Generic.IDictionary<string, string> tags = null, string updatedTimestamp = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?), Azure.ResourceManager.MigrationDiscovery.Models.ArcDiscovery arcDiscovery = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.HypervMachinePatch HypervMachinePatch(string firmware = null, string runAsAccountId = null, Azure.ResourceManager.MigrationDiscovery.Models.ProductSupportStatus productSupportStatus = null, int? numberOfProcessorCore = default(int?), double? allocatedMemoryInMb = default(double?), Azure.ResourceManager.MigrationDiscovery.Models.OperatingSystem operatingSystemDetails = null, string biosSerialNumber = null, string biosGuid = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.HypervNetworkAdapter HypervNetworkAdapter(string networkId = null, string subnetName = null, string staticIPAddress = null, string nicType = null, string nicId = null, string macAddress = null, System.Collections.Generic.IEnumerable<string> ipAddressList = null, string networkName = null, string ipAddressType = null) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResourceData HypervRunAsAccountResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, string credentialType = null, string createdTimestamp = null, string updatedTimestamp = null, string applianceName = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountData HypervRunAsAccountData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, string credentialType = null, string createdTimestamp = null, string updatedTimestamp = null, string applianceName = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.HypervSiteData HypervSiteData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string masterSiteId = null, Azure.ResourceManager.MigrationDiscovery.Models.SiteSpnProperties servicePrincipalIdentityDetails = null, Azure.ResourceManager.MigrationDiscovery.Models.SiteAgentProperties agentDetails = null, string applianceName = null, string discoverySolutionId = null, string serviceEndpoint = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.SiteApplianceProperties> siteAppliancePropertiesCollection = null, Azure.ResourceManager.MigrationDiscovery.Models.DiscoveryScenario? discoveryScenario = default(Azure.ResourceManager.MigrationDiscovery.Models.DiscoveryScenario?), Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.HypervSitePatch HypervSitePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.MigrationDiscovery.Models.SiteSpnProperties servicePrincipalIdentityDetails = null, Azure.ResourceManager.MigrationDiscovery.Models.SiteAgentProperties agentDetails = null, string applianceName = null, string discoverySolutionId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.SiteApplianceProperties> siteAppliancePropertiesCollection = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.HypervSiteUsage HypervSiteUsage(int? machineCount = default(int?), int? runAsAccountCount = default(int?), int? hostCount = default(int?), int? clusterCount = default(int?)) { throw null; }
@@ -3199,35 +3554,38 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public static Azure.ResourceManager.MigrationDiscovery.ImportJobData ImportJobData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string status = null, string startTime = null, string endTime = null, string displayName = null, string clientRequestId = null, string activityId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.ErrorDetails> errors = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.ImportMachineData ImportMachineData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string firmware = null, float? percentageCpuUtilization = default(float?), float? percentageMemoryUtilization = default(float?), int? numberOfDisks = default(int?), float? totalDiskReadOperationsPerSecond = default(float?), float? totalDiskWriteOperationsPerSecond = default(float?), float? totalDiskWriteThroughput = default(float?), float? totalDiskReadThroughput = default(float?), string macAddress = null, System.Collections.Generic.IEnumerable<string> ipAddresses = null, string machineId = null, string machineManagerId = null, int? numberOfNetworkAdapters = default(int?), float? networkInThroughput = default(float?), float? networkOutThroughput = default(float?), string serverType = null, string hypervisor = null, string hypervisorVersionNumber = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.WebRoleImportDisk> disks = null, string vmFqdn = null, float? storageInUseGb = default(float?), int? numberOfProcessorCore = default(int?), double? allocatedMemoryInMb = default(double?), Azure.ResourceManager.MigrationDiscovery.Models.WebRoleOperatingSystem operatingSystemDetails = null, string biosSerialNumber = null, string biosGuid = null, string displayName = null, Azure.ResourceManager.MigrationDiscovery.Models.DiscoverySource? discoverySource = default(Azure.ResourceManager.MigrationDiscovery.Models.DiscoverySource?), bool? isDeleted = default(bool?), string createdTimestamp = null, string updatedTimestamp = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobContent ImportMachinesJobContent(Azure.Core.ResourceIdentifier id = null, string name = null, string type = null, Azure.ResourceManager.MigrationDiscovery.Models.ImportMachinesJobProperties properties = null, string status = null, string startTime = null, string endTime = null, string displayName = null) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.ImportMachinesJobProperties ImportMachinesJobProperties(string blobName = null, string blobSasUri = null, Azure.ResourceManager.MigrationDiscovery.Models.JobResult? jobResult = default(Azure.ResourceManager.MigrationDiscovery.Models.JobResult?), int? numberOfMachinesImported = default(int?), System.DateTimeOffset? blobCreatedOn = default(System.DateTimeOffset?), Azure.ResourceManager.MigrationDiscovery.Models.JobErrorSummary errorSummary = null) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.ImportMachinesJobProperties ImportMachinesJobProperties(string blobName = null, string blobSasUri = null, Azure.ResourceManager.MigrationDiscovery.Models.JobResult? jobResult = default(Azure.ResourceManager.MigrationDiscovery.Models.JobResult?), int? numberOfMachinesImported = default(int?), System.DateTimeOffset? blobCreationTimeStamp = default(System.DateTimeOffset?), Azure.ResourceManager.MigrationDiscovery.Models.JobErrorSummary errorSummary = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.ImportSiteData ImportSiteData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string discoverySolutionId = null, string masterSiteId = null, string serviceEndpoint = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.ImportSitePatch ImportSitePatch(System.Collections.Generic.IDictionary<string, string> tags = null, string discoverySolutionId = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobData ImportSqlInventoryJobData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.MigrationDiscovery.Models.ImportSqlInventoryJobProperties properties = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.JobErrorSummary JobErrorSummary(System.Collections.Generic.IEnumerable<string> errors = null, int? errorCount = default(int?), int? warningCount = default(int?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.MachineMetadata MachineMetadata(string machineArmId = null, string dependencyMapping = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.MachineResourceData MachineResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string vCenterFqdn = null, string vCenterId = null, string instanceUuid = null, string dataCenterScope = null, string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.VmwareDisk> disks = null, bool? hostInMaintenanceMode = default(bool?), string hostName = null, string hostPowerState = null, string hostVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.VmwareNetworkAdapter> networkAdapters = null, string vMwareToolsStatus = null, string vMwareToolsVersion = null, bool? changeTrackingSupported = default(bool?), bool? changeTrackingEnabled = default(bool?), bool? secureBootEnabled = default(bool?), int? maxSnapshots = default(int?), string diskEnabledUuid = null, int? numberOfSnapshots = default(int?), string altGuestName = null, string powerStatus = null, string vmFqdn = null, string vmConfigurationFileLocation = null, string firmware = null, Azure.ResourceManager.MigrationDiscovery.Models.GuestOSDetails guestOSDetails = null, int? numberOfApplications = default(int?), int? numberOfSoftware = default(int?), int? numberOfSecurityRisks = default(int?), System.DateTimeOffset? guestDetailsDiscoveryOn = default(System.DateTimeOffset?), bool? isGuestDetailsDiscoveryInProgress = default(bool?), string dependencyMapping = null, System.DateTimeOffset? dependencyMappingStartsOn = default(System.DateTimeOffset?), string dependencyMappingEndTime = null, string runAsAccountId = null, System.Collections.Generic.IEnumerable<string> applianceNames = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetails> errors = null, Azure.ResourceManager.MigrationDiscovery.Models.ApplicationDiscovery applicationDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.DependencyMapDiscovery dependencyMapDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.StaticDiscovery staticDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscovery sqlDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery webAppDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.OracleDiscovery oracleDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.SpringBootDiscovery springBootDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery iisDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery tomcatDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.AppsAndRoles appsAndRoles = null, Azure.ResourceManager.MigrationDiscovery.Models.ProductSupportStatus productSupportStatus = null, int? numberOfProcessorCore = default(int?), double? allocatedMemoryInMb = default(double?), Azure.ResourceManager.MigrationDiscovery.Models.OperatingSystem operatingSystemDetails = null, string biosSerialNumber = null, string biosGuid = null, string displayName = null, bool? isDeleted = default(bool?), string createdTimestamp = null, System.Collections.Generic.IDictionary<string, string> tags = null, string updatedTimestamp = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?), Azure.ResourceManager.MigrationDiscovery.Models.ArcDiscovery arcDiscovery = null) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.MachineResourcePatch MachineResourcePatch(string firmware = null, string runAsAccountId = null, Azure.ResourceManager.MigrationDiscovery.Models.ProductSupportStatus productSupportStatus = null, int? numberOfProcessorCore = default(int?), double? allocatedMemoryInMb = default(double?), Azure.ResourceManager.MigrationDiscovery.Models.OperatingSystem operatingSystemDetails = null, string biosSerialNumber = null, string biosGuid = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.MasterSiteData MasterSiteData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.MigrationDiscovery.Models.MasterSitePropertiesPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.MigrationDiscovery.Models.MasterSitePropertiesPublicNetworkAccess?), bool? allowMultipleSites = default(bool?), System.Collections.Generic.IEnumerable<string> sites = null, string customerStorageAccountArmId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateEndpointConnectionData> privateEndpointConnections = null, System.Collections.Generic.IEnumerable<string> nestedSites = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?), System.DateTimeOffset? lastRefreshArcStatusOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.MasterSitePatch MasterSitePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.MigrationDiscovery.Models.MasterSitePropertiesPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.MigrationDiscovery.Models.MasterSitePropertiesPublicNetworkAccess?), bool? allowMultipleSites = default(bool?), System.Collections.Generic.IEnumerable<string> sites = null, string customerStorageAccountArmId = null) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent(string machineId = null, string processGroupName = null, string processName = null, System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters = null) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent(string machineId = null, string processGroupName = null, string processName = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters(System.Collections.Generic.IEnumerable<string> machineIds = null, System.Collections.Generic.IEnumerable<string> processIds = null) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent(System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent(System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters = null) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent(int? serverPort = default(int?), System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters = null) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent(string machineId = null, System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters = null) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent(System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent(System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters = null) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent(int? serverPort = default(int?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters = null) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent(string machineId = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryErrorSummaryRequestContent MigrationDiscoveryErrorSummaryRequestContent(string applianceName = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryExportMachineErrorsRequestContent MigrationDiscoveryExportMachineErrorsRequestContent(Azure.ResourceManager.MigrationDiscovery.Models.ExportMachineErrorsProperties? requestExportMachineErrorsDiscoveryScope = default(Azure.ResourceManager.MigrationDiscovery.Models.ExportMachineErrorsProperties?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryExportMachinesRequestContent MigrationDiscoveryExportMachinesRequestContent(string filter = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryExportSqlServersRequestContent MigrationDiscoveryExportSqlServersRequestContent(string applianceName = null, string filter = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryExportWebAppsRequestContent MigrationDiscoveryExportWebAppsRequestContent(string filter = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryJobBaseInfo MigrationDiscoveryJobBaseInfo(Azure.Core.ResourceIdentifier id = null, string name = null, string type = null) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineData MigrationDiscoveryMachineData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string vCenterFqdn = null, string vCenterId = null, string instanceUuid = null, string dataCenterScope = null, string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.VmwareDisk> disks = null, bool? isHostInMaintenanceMode = default(bool?), string hostName = null, string hostPowerState = null, string hostVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.VmwareNetworkAdapter> networkAdapters = null, string vMwareToolsStatus = null, string vMwareToolsVersion = null, bool? isChangeTrackingSupported = default(bool?), bool? isChangeTrackingEnabled = default(bool?), bool? isSecureBootEnabled = default(bool?), int? maxSnapshots = default(int?), string diskEnabledUuid = null, int? numberOfSnapshots = default(int?), string altGuestName = null, string powerStatus = null, string vmFqdn = null, string vmConfigurationFileLocation = null, string firmware = null, Azure.ResourceManager.MigrationDiscovery.Models.GuestOSDetails guestOSDetails = null, int? numberOfApplications = default(int?), int? numberOfSoftware = default(int?), int? numberOfSecurityRisks = default(int?), System.DateTimeOffset? guestDetailsDiscoveryTimestamp = default(System.DateTimeOffset?), bool? isGuestDetailsDiscoveryInProgress = default(bool?), string dependencyMapping = null, System.DateTimeOffset? dependencyMappingStartOn = default(System.DateTimeOffset?), string dependencyMappingEndTime = null, string runAsAccountId = null, System.Collections.Generic.IEnumerable<string> applianceNames = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetails> errors = null, Azure.ResourceManager.MigrationDiscovery.Models.ApplicationDiscovery applicationDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.DependencyMapDiscovery dependencyMapDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.StaticDiscovery staticDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscovery sqlDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery webAppDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.OracleDiscovery oracleDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.SpringBootDiscovery springBootDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery iisDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery tomcatDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.AppsAndRoles appsAndRoles = null, Azure.ResourceManager.MigrationDiscovery.Models.ProductSupportStatus productSupportStatus = null, int? numberOfProcessorCore = default(int?), double? allocatedMemoryInMb = default(double?), Azure.ResourceManager.MigrationDiscovery.Models.OperatingSystem operatingSystemDetails = null, string biosSerialNumber = null, string biosGuid = null, string displayName = null, bool? isDeleted = default(bool?), string createdTimestamp = null, System.Collections.Generic.IDictionary<string, string> tags = null, string updatedTimestamp = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?), Azure.ResourceManager.MigrationDiscovery.Models.ArcDiscovery arcDiscovery = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachineMetadataList MigrationDiscoveryMachineMetadataList(System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.MachineMetadata> value = null) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachinePatch MigrationDiscoveryMachinePatch(string firmware = null, string runAsAccountId = null, Azure.ResourceManager.MigrationDiscovery.Models.ProductSupportStatus productSupportStatus = null, int? numberOfProcessorCore = default(int?), double? allocatedMemoryInMb = default(double?), Azure.ResourceManager.MigrationDiscovery.Models.OperatingSystem operatingSystemDetails = null, string biosSerialNumber = null, string biosGuid = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateEndpointConnectionData MigrationDiscoveryPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?), Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, string privateEndpointId = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateLinkResourceData MigrationDiscoveryPrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null, string groupId = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryPrivateLinkServiceConnectionState MigrationDiscoveryPrivateLinkServiceConnectionState(Azure.ResourceManager.MigrationDiscovery.Models.PrivateLinkServiceConnectionStateStatus? status = default(Azure.ResourceManager.MigrationDiscovery.Models.PrivateLinkServiceConnectionStateStatus?), string description = null, string actionsRequired = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySasUriResult MigrationDiscoverySasUriResult(string jobArmId = null, string uri = null, Azure.ResourceManager.MigrationDiscovery.Models.ImportTypeValues? importType = default(Azure.ResourceManager.MigrationDiscovery.Models.ImportTypeValues?)) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerData MigrationDiscoveryServerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, string fqdn = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.ServerNetworkAdapter> networkAdapters = null, string hydratedFqdn = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.ServerDisk> disks = null, string validationRequired = null, Azure.ResourceManager.MigrationDiscovery.Models.ProcessorInfo processorInfo = null, string firmware = null, bool? isSecureBootEnabled = default(bool?), Azure.ResourceManager.MigrationDiscovery.Models.GuestOSDetails guestOSDetails = null, int? numberOfApplications = default(int?), int? numberOfSoftware = default(int?), int? numberOfSecurityRisks = default(int?), System.DateTimeOffset? guestDetailsDiscoveryTimestamp = default(System.DateTimeOffset?), bool? isGuestDetailsDiscoveryInProgress = default(bool?), string dependencyMapping = null, System.DateTimeOffset? dependencyMappingStartOn = default(System.DateTimeOffset?), string dependencyMappingEndTime = null, string runAsAccountId = null, System.Collections.Generic.IEnumerable<string> applianceNames = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetails> errors = null, Azure.ResourceManager.MigrationDiscovery.Models.ApplicationDiscovery applicationDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.DependencyMapDiscovery dependencyMapDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.StaticDiscovery staticDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscovery sqlDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery webAppDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.OracleDiscovery oracleDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.SpringBootDiscovery springBootDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery iisDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery tomcatDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.AppsAndRoles appsAndRoles = null, Azure.ResourceManager.MigrationDiscovery.Models.ProductSupportStatus productSupportStatus = null, int? numberOfProcessorCore = default(int?), float? allocatedMemoryInMb = default(float?), Azure.ResourceManager.MigrationDiscovery.Models.OperatingSystem operatingSystemDetails = null, string biosSerialNumber = null, string biosGuid = null, bool? isDeleted = default(bool?), string createdTimestamp = null, System.Collections.Generic.IDictionary<string, System.BinaryData> tags = null, string updatedTimestamp = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?), Azure.ResourceManager.MigrationDiscovery.Models.ArcDiscovery arcDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.DiscoverySource? discoverySource = default(Azure.ResourceManager.MigrationDiscovery.Models.DiscoverySource?), string hypervisor = null) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryServerPatch MigrationDiscoveryServerPatch(string fqdn = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.ServerNetworkAdapter> networkAdapters = null, string hydratedFqdn = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.ServerDisk> disks = null, string validationRequired = null, string firmware = null, string runAsAccountId = null, Azure.ResourceManager.MigrationDiscovery.Models.ProductSupportStatus productSupportStatus = null, int? numberOfProcessorCore = default(int?), float? allocatedMemoryInMb = default(float?), Azure.ResourceManager.MigrationDiscovery.Models.OperatingSystem operatingSystemDetails = null, string biosSerialNumber = null, string biosGuid = null, System.Collections.Generic.IDictionary<string, System.BinaryData> tags = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryServerSiteUsageResult MigrationDiscoveryServerSiteUsageResult(int runAsAccounts = 0, int serverCount = 0) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySiteHealthSummaryList MigrationDiscoverySiteHealthSummaryList(System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.SiteHealthSummary> value = null, System.Uri nextLink = null) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData MigrationDiscoveryVcenterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string runAsAccountId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetails> errors = null, string createdTimestamp = null, string updatedTimestamp = null, string fqdn = null, string port = null, string version = null, string perfStatisticsLevel = null, string instanceUuid = null, string friendlyName = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryWebAppPropertiesList MigrationDiscoveryWebAppPropertiesList(System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.WebAppProperties> webApps = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.OperatingSystem OperatingSystem(string osType = null, string osName = null, string osVersion = null, string osArchitecture = null, string osDistro = null, string osMajorVersion = null, string osVariant = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.OperationStatus OperationStatus(string id = null, string name = null, string status = null, string startTime = null, string endTime = null, Azure.ResourceManager.MigrationDiscovery.Models.OperationStatusError error = null, string operationStatusResult = null) { throw null; }
@@ -3235,17 +3593,15 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public static Azure.ResourceManager.MigrationDiscovery.Models.OracleDiscovery OracleDiscovery(long? totalInstanceCount = default(long?), long? totalDatabaseCount = default(long?), Azure.ResourceManager.MigrationDiscovery.Models.ShallowDiscoveryStatus? shallowDiscoveryStatus = default(Azure.ResourceManager.MigrationDiscovery.Models.ShallowDiscoveryStatus?), Azure.ResourceManager.MigrationDiscovery.Models.DiscoveryScopeStatus? discoveryScopeStatus = default(Azure.ResourceManager.MigrationDiscovery.Models.DiscoveryScopeStatus?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.OtherDatabase OtherDatabase(string databaseType = null, string instance = null, string version = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.ProcessorInfo ProcessorInfo(string name = null, int? numberOfSockets = default(int?), int? numberOfCoresPerSocket = default(int?)) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.ProductSupportStatus ProductSupportStatus(string currentVersion = null, Azure.ResourceManager.MigrationDiscovery.Models.EsuStatus? esuStatus = default(Azure.ResourceManager.MigrationDiscovery.Models.EsuStatus?), Azure.ResourceManager.MigrationDiscovery.Models.SupportStatus? supportStatus = default(Azure.ResourceManager.MigrationDiscovery.Models.SupportStatus?), System.DateTimeOffset? supportEndsOn = default(System.DateTimeOffset?), Azure.ResourceManager.MigrationDiscovery.Models.EsuYear? esuYear = default(Azure.ResourceManager.MigrationDiscovery.Models.EsuYear?)) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.ProductSupportStatus ProductSupportStatus(string currentVersion = null, Azure.ResourceManager.MigrationDiscovery.Models.EsuStatus? esuStatus = default(Azure.ResourceManager.MigrationDiscovery.Models.EsuStatus?), Azure.ResourceManager.MigrationDiscovery.Models.SupportStatus? supportStatus = default(Azure.ResourceManager.MigrationDiscovery.Models.SupportStatus?), System.DateTimeOffset? supportEndOn = default(System.DateTimeOffset?), Azure.ResourceManager.MigrationDiscovery.Models.EsuYear? esuYear = default(Azure.ResourceManager.MigrationDiscovery.Models.EsuYear?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.ProxySiteRefreshContent ProxySiteRefreshContent(string applianceName = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.RunAsAccountMachineInput RunAsAccountMachineInput(string machineId = null, string runAsAccountId = null) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.ServerData ServerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, string fqdn = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.ServerNetworkAdapter> networkAdapters = null, string hydratedFqdn = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.ServerDisk> disks = null, string validationRequired = null, Azure.ResourceManager.MigrationDiscovery.Models.ProcessorInfo processorInfo = null, string firmware = null, bool? secureBootEnabled = default(bool?), Azure.ResourceManager.MigrationDiscovery.Models.GuestOSDetails guestOSDetails = null, int? numberOfApplications = default(int?), int? numberOfSoftware = default(int?), int? numberOfSecurityRisks = default(int?), System.DateTimeOffset? guestDetailsDiscoveryOn = default(System.DateTimeOffset?), bool? isGuestDetailsDiscoveryInProgress = default(bool?), string dependencyMapping = null, System.DateTimeOffset? dependencyMappingStartsOn = default(System.DateTimeOffset?), string dependencyMappingEndTime = null, string runAsAccountId = null, System.Collections.Generic.IEnumerable<string> applianceNames = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetails> errors = null, Azure.ResourceManager.MigrationDiscovery.Models.ApplicationDiscovery applicationDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.DependencyMapDiscovery dependencyMapDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.StaticDiscovery staticDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscovery sqlDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery webAppDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.OracleDiscovery oracleDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.SpringBootDiscovery springBootDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery iisDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery tomcatDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.AppsAndRoles appsAndRoles = null, Azure.ResourceManager.MigrationDiscovery.Models.ProductSupportStatus productSupportStatus = null, int? numberOfProcessorCore = default(int?), float? allocatedMemoryInMb = default(float?), Azure.ResourceManager.MigrationDiscovery.Models.OperatingSystem operatingSystemDetails = null, string biosSerialNumber = null, string biosGuid = null, bool? isDeleted = default(bool?), string createdTimestamp = null, System.Collections.Generic.IDictionary<string, System.BinaryData> tags = null, string updatedTimestamp = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?), Azure.ResourceManager.MigrationDiscovery.Models.ArcDiscovery arcDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.DiscoverySource? discoverySource = default(Azure.ResourceManager.MigrationDiscovery.Models.DiscoverySource?), string hypervisor = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.ServerDisk ServerDisk(string id = null, string generatedId = null, int? maxSizeInBytes = default(int?), string name = null, string diskType = null, int? lun = default(int?), string diskId = null, string isOSDisk = null, string path = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.ServerJobData ServerJobData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string status = null, string startTime = null, string endTime = null, string displayName = null, string clientRequestId = null, string activityId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.ErrorDetails> errors = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.ServerNetworkAdapter ServerNetworkAdapter(string nicId = null, string macAddress = null, System.Collections.Generic.IEnumerable<string> ipAddressList = null, string networkName = null, string ipAddressType = null) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.ServerPatch ServerPatch(string fqdn = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.ServerNetworkAdapter> networkAdapters = null, string hydratedFqdn = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.ServerDisk> disks = null, string validationRequired = null, string firmware = null, string runAsAccountId = null, Azure.ResourceManager.MigrationDiscovery.Models.ProductSupportStatus productSupportStatus = null, int? numberOfProcessorCore = default(int?), float? allocatedMemoryInMb = default(float?), Azure.ResourceManager.MigrationDiscovery.Models.OperatingSystem operatingSystemDetails = null, string biosSerialNumber = null, string biosGuid = null, System.Collections.Generic.IDictionary<string, System.BinaryData> tags = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountData ServerRunAsAccountData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, string credentialType = null, string createdTimestamp = null, string updatedTimestamp = null, string applianceName = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.ServerSiteResourceData ServerSiteResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string masterSiteId = null, Azure.ResourceManager.MigrationDiscovery.Models.SiteSpnProperties servicePrincipalIdentityDetails = null, Azure.ResourceManager.MigrationDiscovery.Models.SiteAgentProperties agentDetails = null, string applianceName = null, string discoverySolutionId = null, string serviceEndpoint = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.SiteApplianceProperties> siteAppliancePropertiesCollection = null, Azure.ResourceManager.MigrationDiscovery.Models.DiscoveryScenario? discoveryScenario = default(Azure.ResourceManager.MigrationDiscovery.Models.DiscoveryScenario?), Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?), Azure.ResourceManager.MigrationDiscovery.Models.ArcScopeProperties arcScope = null) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.ServerSiteResourcePatch ServerSiteResourcePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.MigrationDiscovery.Models.SiteSpnProperties servicePrincipalIdentityDetails = null, Azure.ResourceManager.MigrationDiscovery.Models.SiteAgentProperties agentDetails = null, string applianceName = null, string discoverySolutionId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.SiteApplianceProperties> siteAppliancePropertiesCollection = null, Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesUpdate arcScope = null) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.ServerSiteData ServerSiteData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string masterSiteId = null, Azure.ResourceManager.MigrationDiscovery.Models.SiteSpnProperties servicePrincipalIdentityDetails = null, Azure.ResourceManager.MigrationDiscovery.Models.SiteAgentProperties agentDetails = null, string applianceName = null, string discoverySolutionId = null, string serviceEndpoint = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.SiteApplianceProperties> siteAppliancePropertiesCollection = null, Azure.ResourceManager.MigrationDiscovery.Models.DiscoveryScenario? discoveryScenario = default(Azure.ResourceManager.MigrationDiscovery.Models.DiscoveryScenario?), Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?), Azure.ResourceManager.MigrationDiscovery.Models.ArcScopeProperties arcScope = null) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.ServerSitePatch ServerSitePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.MigrationDiscovery.Models.SiteSpnProperties servicePrincipalIdentityDetails = null, Azure.ResourceManager.MigrationDiscovery.Models.SiteAgentProperties agentDetails = null, string applianceName = null, string discoverySolutionId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.SiteApplianceProperties> siteAppliancePropertiesCollection = null, Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesPatch arcScope = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.ServerSiteUsage ServerSiteUsage(int? runAsAccountCount = default(int?), int? serverCount = default(int?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryData ServerSoftwareInventoryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.MigrationDiscovery.Models.AppsAndRoles appsAndRoles = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.SharePointServer SharePointServer(string productName = null, bool? isEnterprise = default(bool?), string status = null, string version = null) { throw null; }
@@ -3261,18 +3617,18 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public static Azure.ResourceManager.MigrationDiscovery.Models.SqlAvailabilityReplicaProperties SqlAvailabilityReplicaProperties(string availabilityReplicaName = null, string availabilityReplicaId = null, Azure.ResourceManager.MigrationDiscovery.Models.SqlAvailabilityGroupSqlAvailabilityReplicaPropertiesReplicaType? replicaType = default(Azure.ResourceManager.MigrationDiscovery.Models.SqlAvailabilityGroupSqlAvailabilityReplicaPropertiesReplicaType?), Azure.ResourceManager.MigrationDiscovery.Models.SqlAvailabilityGroupSqlAvailabilityReplicaPropertiesReplicaState? replicaState = default(Azure.ResourceManager.MigrationDiscovery.Models.SqlAvailabilityGroupSqlAvailabilityReplicaPropertiesReplicaState?), Azure.ResourceManager.MigrationDiscovery.Models.SqlAvailabilityGroupSqlAvailabilityReplicaPropertiesReplicaSyncStatus? replicaSyncStatus = default(Azure.ResourceManager.MigrationDiscovery.Models.SqlAvailabilityGroupSqlAvailabilityReplicaPropertiesReplicaSyncStatus?), Azure.ResourceManager.MigrationDiscovery.Models.SqlAvailabilityGroupSqlAvailabilityReplicaPropertiesReplicaCommitMode? replicaCommitMode = default(Azure.ResourceManager.MigrationDiscovery.Models.SqlAvailabilityGroupSqlAvailabilityReplicaPropertiesReplicaCommitMode?), Azure.ResourceManager.MigrationDiscovery.Models.SqlAvailabilityGroupSqlAvailabilityReplicaPropertiesReplicaReadMode? replicaReadMode = default(Azure.ResourceManager.MigrationDiscovery.Models.SqlAvailabilityGroupSqlAvailabilityReplicaPropertiesReplicaReadMode?), Azure.ResourceManager.MigrationDiscovery.Models.SqlAvailabilityGroupSqlAvailabilityReplicaPropertiesReplicaSeedMode? replicaSeedMode = default(Azure.ResourceManager.MigrationDiscovery.Models.SqlAvailabilityGroupSqlAvailabilityReplicaPropertiesReplicaSeedMode?), Azure.ResourceManager.MigrationDiscovery.Models.SqlDatabaseReplicaInfo sqlDatabaseReplicaInfo = null, Azure.ResourceManager.MigrationDiscovery.Models.SqlAvailabilityGroupReplicaInfo sqlAvailabilityGroupReplicaInfo = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.SqlDatabaseReplicaInfo SqlDatabaseReplicaInfo(string hostName = null, string sqlServerName = null, string sqlServerArmId = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Data SqlDatabaseV2Data(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.MigrationDiscovery.Models.SqlAvailabilityReplicaOverview parentReplicaOverview = null, bool? isDatabaseHighlyAvailable = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.FileMetadata> fileMetadataList = null, string hostname = null, string sqlServerName = null, string status = null, float? sizeMb = default(float?), string databaseName = null, string sqlServerArmId = null, string compatibilityLevel = null, bool? isDeleted = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.Errors> errors = null, string createdTimestamp = null, string updatedTimestamp = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?), Azure.ResourceManager.MigrationDiscovery.Models.GenericArcDiscovery arcDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.DiscoverySource? discoverySource = default(Azure.ResourceManager.MigrationDiscovery.Models.DiscoverySource?)) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscovery SqlDiscovery(int? successfullyDiscoveredServerCount = default(int?), int? totalServerCount = default(int?), string sqlMetadataHydratedRunAsAccountId = null, Azure.ResourceManager.MigrationDiscovery.Models.SqlMetadataDiscoveryPipe? sqlMetadataDiscoveryPipe = default(Azure.ResourceManager.MigrationDiscovery.Models.SqlMetadataDiscoveryPipe?), Azure.ResourceManager.MigrationDiscovery.Models.SQLDiscoveryScopeStatus? discoveryScopeStatus = default(Azure.ResourceManager.MigrationDiscovery.Models.SQLDiscoveryScopeStatus?)) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscovery SqlDiscovery(int? successfullyDiscoveredServerCount = default(int?), int? totalServerCount = default(int?), string sqlMetadataHydratedRunAsAccountId = null, Azure.ResourceManager.MigrationDiscovery.Models.SqlMetadataDiscoveryPipe? sqlMetadataDiscoveryPipe = default(Azure.ResourceManager.MigrationDiscovery.Models.SqlMetadataDiscoveryPipe?), Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscoveryScopeStatus? discoveryScopeStatus = default(Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscoveryScopeStatus?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceData SqlDiscoverySiteDataSourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string discoverySiteId = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.SqlFciProperties SqlFciProperties(Azure.ResourceManager.MigrationDiscovery.Models.FCIInstanceState? state = default(Azure.ResourceManager.MigrationDiscovery.Models.FCIInstanceState?), string networkName = null, bool? isMultiSubnet = default(bool?), int? sharedDiskCount = default(int?)) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.SqlFciProperties SqlFciProperties(Azure.ResourceManager.MigrationDiscovery.Models.FciInstanceState? state = default(Azure.ResourceManager.MigrationDiscovery.Models.FciInstanceState?), string networkName = null, bool? isMultiSubnet = default(bool?), int? sharedDiskCount = default(int?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.SqlInventoryImportContent SqlInventoryImportContent(Azure.Core.ResourceIdentifier jobArmId = null, string uri = null, Azure.ResourceManager.MigrationDiscovery.Models.SqlImportType? importType = default(Azure.ResourceManager.MigrationDiscovery.Models.SqlImportType?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.SqlJobData SqlJobData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string status = null, string startTime = null, string endTime = null, string displayName = null, string clientRequestId = null, string activityId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.ErrorDetails> errors = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.SqlMachineOverview SqlMachineOverview(string machineArmId = null, string displayName = null, Azure.ResourceManager.MigrationDiscovery.Models.SqlMachineOverviewFciRole? fciRole = default(Azure.ResourceManager.MigrationDiscovery.Models.SqlMachineOverviewFciRole?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountData SqlRunAsAccountData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, string credentialType = null, string createdTimestamp = null, string updatedTimestamp = null, string applianceName = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.SqlServerApplication SqlServerApplication(string name = null, string edition = null, string servicePack = null, string version = null, string clustered = null, string clusterName = null, string dnsHostName = null, string port = null, string commaSeparatedIps = null, string status = null, bool? isNamedPipeEnabled = default(bool?), bool? isTcpIPEnabled = default(bool?), string namedPipeName = null) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.SqlServerV2Data SqlServerV2Data(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.SqlMachineOverview> machineOverviewList = null, int? numberOfAgDatabases = default(int?), Azure.ResourceManager.MigrationDiscovery.Models.SqlFciProperties sqlFciProperties = null, Azure.ResourceManager.MigrationDiscovery.Models.ProductSupportStatus productSupportStatus = null, string version = null, int? numberOfUserDatabases = default(int?), float? sumOfUserDatabasesSizeInMb = default(float?), float? tempDBSizeInMb = default(float?), float? maxServerMemoryInUseInMb = default(float?), int? visibleOnlineCoreCount = default(int?), int? numOfLogins = default(int?), float? physicalCpuCount = default(float?), int? logicalCpuCount = default(int?), string engineEdition = null, string edition = null, bool? isHighAvailabilityEnabled = default(bool?), bool? isClustered = default(bool?), int? hyperthreadRatio = default(int?), System.DateTimeOffset? sqlStartsOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> machineArmIds = null, string runAsAccountId = null, string hydratedRunAsAccountId = null, string hostName = null, string sqlServerName = null, int? portNumber = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.Errors> errors = null, System.Collections.Generic.IDictionary<string, System.BinaryData> tags = null, bool? isDeleted = default(bool?), string createdTimestamp = null, string updatedTimestamp = null, Azure.ResourceManager.MigrationDiscovery.Models.SqlServerStatus? status = default(Azure.ResourceManager.MigrationDiscovery.Models.SqlServerStatus?), Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?), Azure.ResourceManager.MigrationDiscovery.Models.GenericArcDiscovery arcDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.DiscoverySource? discoverySource = default(Azure.ResourceManager.MigrationDiscovery.Models.DiscoverySource?)) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.SqlServerV2Patch SqlServerV2Patch(int? numberOfAgDatabases = default(int?), Azure.ResourceManager.MigrationDiscovery.Models.SqlFciProperties sqlFciProperties = null, Azure.ResourceManager.MigrationDiscovery.Models.ProductSupportStatus productSupportStatus = null, string version = null, int? numberOfUserDatabases = default(int?), float? sumOfUserDatabasesSizeInMb = default(float?), float? tempDBSizeInMb = default(float?), float? maxServerMemoryInUseInMb = default(float?), int? visibleOnlineCoreCount = default(int?), int? numOfLogins = default(int?), float? physicalCpuCount = default(float?), int? logicalCpuCount = default(int?), string engineEdition = null, string edition = null, bool? isHighAvailabilityEnabled = default(bool?), bool? isClustered = default(bool?), int? hyperthreadRatio = default(int?), System.DateTimeOffset? sqlStartsOn = default(System.DateTimeOffset?), string runAsAccountId = null, string hydratedRunAsAccountId = null, string hostName = null, string sqlServerName = null, int? portNumber = default(int?), System.Collections.Generic.IDictionary<string, System.BinaryData> tags = null, bool? isDeleted = default(bool?), string createdTimestamp = null, string updatedTimestamp = null, Azure.ResourceManager.MigrationDiscovery.Models.SqlServerStatus? status = default(Azure.ResourceManager.MigrationDiscovery.Models.SqlServerStatus?), Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.SqlServerV2Data SqlServerV2Data(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.SqlMachineOverview> machineOverviewList = null, int? numberOfAgDatabases = default(int?), Azure.ResourceManager.MigrationDiscovery.Models.SqlFciProperties sqlFciProperties = null, Azure.ResourceManager.MigrationDiscovery.Models.ProductSupportStatus productSupportStatus = null, string version = null, int? numberOfUserDatabases = default(int?), float? sumOfUserDatabasesSizeInMb = default(float?), float? tempDBSizeInMb = default(float?), float? maxServerMemoryInUseInMb = default(float?), int? visibleOnlineCoreCount = default(int?), int? numOfLogins = default(int?), float? physicalCpuCount = default(float?), int? logicalCpuCount = default(int?), string engineEdition = null, string edition = null, bool? isHighAvailabilityEnabled = default(bool?), bool? isClustered = default(bool?), int? hyperthreadRatio = default(int?), System.DateTimeOffset? sqlStartOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> machineArmIds = null, string runAsAccountId = null, string hydratedRunAsAccountId = null, string hostName = null, string sqlServerName = null, int? portNumber = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.Errors> errors = null, System.Collections.Generic.IDictionary<string, System.BinaryData> tags = null, bool? isDeleted = default(bool?), string createdTimestamp = null, string updatedTimestamp = null, Azure.ResourceManager.MigrationDiscovery.Models.SqlServerStatus? status = default(Azure.ResourceManager.MigrationDiscovery.Models.SqlServerStatus?), Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?), Azure.ResourceManager.MigrationDiscovery.Models.GenericArcDiscovery arcDiscovery = null, Azure.ResourceManager.MigrationDiscovery.Models.DiscoverySource? discoverySource = default(Azure.ResourceManager.MigrationDiscovery.Models.DiscoverySource?)) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.SqlServerV2Patch SqlServerV2Patch(int? numberOfAgDatabases = default(int?), Azure.ResourceManager.MigrationDiscovery.Models.SqlFciProperties sqlFciProperties = null, Azure.ResourceManager.MigrationDiscovery.Models.ProductSupportStatus productSupportStatus = null, string version = null, int? numberOfUserDatabases = default(int?), float? sumOfUserDatabasesSizeInMb = default(float?), float? tempDBSizeInMb = default(float?), float? maxServerMemoryInUseInMb = default(float?), int? visibleOnlineCoreCount = default(int?), int? numOfLogins = default(int?), float? physicalCpuCount = default(float?), int? logicalCpuCount = default(int?), string engineEdition = null, string edition = null, bool? isHighAvailabilityEnabled = default(bool?), bool? isClustered = default(bool?), int? hyperthreadRatio = default(int?), System.DateTimeOffset? sqlStartOn = default(System.DateTimeOffset?), string runAsAccountId = null, string hydratedRunAsAccountId = null, string hostName = null, string sqlServerName = null, int? portNumber = default(int?), System.Collections.Generic.IDictionary<string, System.BinaryData> tags = null, bool? isDeleted = default(bool?), string createdTimestamp = null, string updatedTimestamp = null, Azure.ResourceManager.MigrationDiscovery.Models.SqlServerStatus? status = default(Azure.ResourceManager.MigrationDiscovery.Models.SqlServerStatus?), Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.SqlSiteData SqlSiteData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.SiteApplianceProperties> siteAppliancePropertiesCollection = null, Azure.ResourceManager.MigrationDiscovery.Models.SqlSitePropertiesDiscoveryScenario? discoveryScenario = default(Azure.ResourceManager.MigrationDiscovery.Models.SqlSitePropertiesDiscoveryScenario?), string serviceEndpoint = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?), Azure.ResourceManager.MigrationDiscovery.Models.ArcScopeProperties arcScope = null) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.SqlSitePatch SqlSitePatch(System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.SiteApplianceProperties> siteAppliancePropertiesCollection = null, Azure.ResourceManager.MigrationDiscovery.Models.SqlSitePropertiesDiscoveryScenario? discoveryScenario = default(Azure.ResourceManager.MigrationDiscovery.Models.SqlSitePropertiesDiscoveryScenario?), Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesUpdate arcScope = null) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.SqlSitePatch SqlSitePatch(System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.SiteApplianceProperties> siteAppliancePropertiesCollection = null, Azure.ResourceManager.MigrationDiscovery.Models.SqlSitePropertiesDiscoveryScenario? discoveryScenario = default(Azure.ResourceManager.MigrationDiscovery.Models.SqlSitePropertiesDiscoveryScenario?), Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesPatch arcScope = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.SqlSiteRefreshContent SqlSiteRefreshContent(string applianceName = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.SqlSiteUsage SqlSiteUsage(int? serverCount = default(int?), int? databaseCount = default(int?), int? runAsAccountCount = default(int?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.StaticDiscovery StaticDiscovery(Azure.ResourceManager.MigrationDiscovery.Models.StaticDiscoveryScopeStatus? discoveryScopeStatus = default(Azure.ResourceManager.MigrationDiscovery.Models.StaticDiscoveryScopeStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetails> errors = null, string hydratedRunAsAccountId = null) { throw null; }
@@ -3286,15 +3642,14 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public static Azure.ResourceManager.MigrationDiscovery.Models.UpdateMachineDepMapStatus UpdateMachineDepMapStatus(System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.DependencyMapMachineInput> machines = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.UpdateMachineRunAsAccount UpdateMachineRunAsAccount(System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.RunAsAccountMachineInput> machines = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.UpdateMachineTags UpdateMachineTags(System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.TagsMachineInput> machines = null) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.VcenterData VcenterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string runAsAccountId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetails> errors = null, string createdTimestamp = null, string updatedTimestamp = null, string fqdn = null, string port = null, string version = null, string perfStatisticsLevel = null, string instanceUuid = null, string friendlyName = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.VmwareDatastore VmwareDatastore(string uuid = null, float? capacityInGb = default(float?), float? freeSpaceInGb = default(float?), Azure.ResourceManager.MigrationDiscovery.Models.VMwareDatastoreType? type = default(Azure.ResourceManager.MigrationDiscovery.Models.VMwareDatastoreType?), string symbolicName = null) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.VmwareDatastore VmwareDatastore(string uuid = null, float? capacityInGb = default(float?), float? freeSpaceInGb = default(float?), Azure.ResourceManager.MigrationDiscovery.Models.VmwareDatastoreType? type = default(Azure.ResourceManager.MigrationDiscovery.Models.VmwareDatastoreType?), string symbolicName = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.VmwareDisk VmwareDisk(string uuid = null, string label = null, string diskProvisioningPolicy = null, string diskScrubbingPolicy = null, string diskMode = null, string controllerType = null, long? maxSizeInBytes = default(long?), string name = null, string diskType = null, int? lun = default(int?), string isOSDisk = null, string path = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.VmwareHostData VmwareHostData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string createdTimestamp = null, string updatedTimestamp = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.VmwareDatastore> datastores = null, string vcenterId = null, string uuid = null, System.Collections.Generic.IEnumerable<string> applianceNames = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.VmwareJobData VmwareJobData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string status = null, string startTime = null, string endTime = null, string displayName = null, string clientRequestId = null, string activityId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.ErrorDetails> errors = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryData VmwareMachineSoftwareInventoryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.MigrationDiscovery.Models.AppsAndRoles appsAndRoles = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.VmwareNetworkAdapter VmwareNetworkAdapter(string label = null, string adapterType = null, string nicId = null, string macAddress = null, System.Collections.Generic.IEnumerable<string> ipAddressList = null, string networkName = null, string ipAddressType = null) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResourceData VmwareRunAsAccountResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, string credentialType = null, string createdTimestamp = null, string updatedTimestamp = null, string applianceName = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.VmwareSiteData VmwareSiteData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string masterSiteId = null, Azure.ResourceManager.MigrationDiscovery.Models.SiteSpnProperties servicePrincipalIdentityDetails = null, Azure.ResourceManager.MigrationDiscovery.Models.SiteAgentProperties agentDetails = null, string applianceName = null, string discoverySolutionId = null, string serviceEndpoint = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.SiteApplianceProperties> siteAppliancePropertiesCollection = null, Azure.ResourceManager.MigrationDiscovery.Models.DiscoveryScenario? discoveryScenario = default(Azure.ResourceManager.MigrationDiscovery.Models.DiscoveryScenario?), Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?), string eTag = null) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountData VmwareRunAsAccountData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, string credentialType = null, string createdTimestamp = null, string updatedTimestamp = null, string applianceName = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.VmwareSiteData VmwareSiteData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string masterSiteId = null, Azure.ResourceManager.MigrationDiscovery.Models.SiteSpnProperties servicePrincipalIdentityDetails = null, Azure.ResourceManager.MigrationDiscovery.Models.SiteAgentProperties agentDetails = null, string applianceName = null, string discoverySolutionId = null, string serviceEndpoint = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.SiteApplianceProperties> siteAppliancePropertiesCollection = null, Azure.ResourceManager.MigrationDiscovery.Models.DiscoveryScenario? discoveryScenario = default(Azure.ResourceManager.MigrationDiscovery.Models.DiscoveryScenario?), Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?), Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.VmwareSitePatch VmwareSitePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.MigrationDiscovery.Models.SiteSpnProperties servicePrincipalIdentityDetails = null, Azure.ResourceManager.MigrationDiscovery.Models.SiteAgentProperties agentDetails = null, string applianceName = null, string discoverySolutionId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.Models.SiteApplianceProperties> siteAppliancePropertiesCollection = null, Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.VmwareSiteUsage VmwareSiteUsage(int? machineCount = default(int?), int? runAsAccountCount = default(int?), int? vCenterCount = default(int?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.WebAppDiscovery WebAppDiscovery(long? totalWebServerCount = default(long?), long? totalWebApplicationCount = default(long?), Azure.ResourceManager.MigrationDiscovery.Models.DiscoveryScopeStatus? discoveryScopeStatus = default(Azure.ResourceManager.MigrationDiscovery.Models.DiscoveryScopeStatus?)) { throw null; }
@@ -3490,7 +3845,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public DiscoveryScopes(string value) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.DiscoveryScopes AppsAndRoles { get { throw null; } }
         public static Azure.ResourceManager.MigrationDiscovery.Models.DiscoveryScopes DependencyMap { get { throw null; } }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.DiscoveryScopes SQLServerConnectionInfo { get { throw null; } }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.DiscoveryScopes SqlServerConnectionInfo { get { throw null; } }
         public static Azure.ResourceManager.MigrationDiscovery.Models.DiscoveryScopes StaticData { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MigrationDiscovery.Models.DiscoveryScopes other) { throw null; }
         public override bool Equals(object obj) { throw null; }
@@ -3579,9 +3934,9 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public string RecommendedAction { get { throw null; } }
         public string RunAsAccountId { get { throw null; } }
         public string Severity { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.MicrosoftAzureFDSWebRoleHealthErrorDetailsSource? Source { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.MicrosoftAzureFdsWebRoleHealthErrorDetailsSource? Source { get { throw null; } }
         public string SummaryMessage { get { throw null; } }
-        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+        public System.DateTimeOffset? UpdatedTimeStamp { get { throw null; } }
         protected virtual Azure.ResourceManager.MigrationDiscovery.Models.Errors JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.MigrationDiscovery.Models.Errors PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3671,7 +4026,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public ExportMachineErrorsProperties(string value) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.Models.ExportMachineErrorsProperties AppsAndRoles { get { throw null; } }
         public static Azure.ResourceManager.MigrationDiscovery.Models.ExportMachineErrorsProperties DependencyMap { get { throw null; } }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.ExportMachineErrorsProperties SQLServerConnectionInfo { get { throw null; } }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.ExportMachineErrorsProperties SqlServerConnectionInfo { get { throw null; } }
         public static Azure.ResourceManager.MigrationDiscovery.Models.ExportMachineErrorsProperties StaticData { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MigrationDiscovery.Models.ExportMachineErrorsProperties other) { throw null; }
         public override bool Equals(object obj) { throw null; }
@@ -3683,27 +4038,27 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FCIInstanceState : System.IEquatable<Azure.ResourceManager.MigrationDiscovery.Models.FCIInstanceState>
+    public readonly partial struct FciInstanceState : System.IEquatable<Azure.ResourceManager.MigrationDiscovery.Models.FciInstanceState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public FCIInstanceState(string value) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.FCIInstanceState Failed { get { throw null; } }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.FCIInstanceState Inherited { get { throw null; } }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.FCIInstanceState Initializing { get { throw null; } }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.FCIInstanceState Offline { get { throw null; } }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.FCIInstanceState OfflinePending { get { throw null; } }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.FCIInstanceState Online { get { throw null; } }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.FCIInstanceState OnlinePending { get { throw null; } }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.FCIInstanceState Pending { get { throw null; } }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.FCIInstanceState Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MigrationDiscovery.Models.FCIInstanceState other) { throw null; }
+        public FciInstanceState(string value) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.FciInstanceState Failed { get { throw null; } }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.FciInstanceState Inherited { get { throw null; } }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.FciInstanceState Initializing { get { throw null; } }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.FciInstanceState Offline { get { throw null; } }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.FciInstanceState OfflinePending { get { throw null; } }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.FciInstanceState Online { get { throw null; } }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.FciInstanceState OnlinePending { get { throw null; } }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.FciInstanceState Pending { get { throw null; } }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.FciInstanceState Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MigrationDiscovery.Models.FciInstanceState other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MigrationDiscovery.Models.FCIInstanceState left, Azure.ResourceManager.MigrationDiscovery.Models.FCIInstanceState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MigrationDiscovery.Models.FCIInstanceState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.MigrationDiscovery.Models.FCIInstanceState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MigrationDiscovery.Models.FCIInstanceState left, Azure.ResourceManager.MigrationDiscovery.Models.FCIInstanceState right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MigrationDiscovery.Models.FciInstanceState left, Azure.ResourceManager.MigrationDiscovery.Models.FciInstanceState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MigrationDiscovery.Models.FciInstanceState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.MigrationDiscovery.Models.FciInstanceState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MigrationDiscovery.Models.FciInstanceState left, Azure.ResourceManager.MigrationDiscovery.Models.FciInstanceState right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class Feature : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.Feature>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.Feature>
@@ -3829,7 +4184,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public string Severity { get { throw null; } }
         public Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetailsSource? Source { get { throw null; } }
         public string SummaryMessage { get { throw null; } }
-        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+        public System.DateTimeOffset? UpdatedTimeStamp { get { throw null; } }
         protected virtual Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3849,7 +4204,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public static Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetailsDiscoveryScope AppsAndRoles { get { throw null; } }
         public static Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetailsDiscoveryScope DependencyMap { get { throw null; } }
         public static Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetailsDiscoveryScope DiscoveryTargets { get { throw null; } }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetailsDiscoveryScope SQLServerConnectionInfo { get { throw null; } }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetailsDiscoveryScope SqlServerConnectionInfo { get { throw null; } }
         public static Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetailsDiscoveryScope StaticData { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MigrationDiscovery.Models.HealthErrorDetailsDiscoveryScope other) { throw null; }
         public override bool Equals(object obj) { throw null; }
@@ -4050,7 +4405,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
     public partial class ImportMachinesJobProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.ImportMachinesJobProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.ImportMachinesJobProperties>
     {
         internal ImportMachinesJobProperties() { }
-        public System.DateTimeOffset? BlobCreatedOn { get { throw null; } }
+        public System.DateTimeOffset? BlobCreationTimeStamp { get { throw null; } }
         public string BlobName { get { throw null; } }
         public string BlobSasUri { get { throw null; } }
         public Azure.ResourceManager.MigrationDiscovery.Models.JobErrorSummary ErrorSummary { get { throw null; } }
@@ -4085,7 +4440,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
     public partial class ImportSqlInventoryJobProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.ImportSqlInventoryJobProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.ImportSqlInventoryJobProperties>
     {
         internal ImportSqlInventoryJobProperties() { }
-        public System.DateTimeOffset? BlobCreatedOn { get { throw null; } }
+        public System.DateTimeOffset? BlobCreationTimeStamp { get { throw null; } }
         public string BlobName { get { throw null; } }
         public string BlobSasUri { get { throw null; } }
         public Azure.ResourceManager.MigrationDiscovery.Models.ImportSqlInventoryJobResult? JobResult { get { throw null; } }
@@ -4195,28 +4550,6 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.MachineMetadata>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.MachineMetadata>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MachineResourcePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.MachineResourcePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.MachineResourcePatch>
-    {
-        public MachineResourcePatch() { }
-        public double? AllocatedMemoryInMb { get { throw null; } set { } }
-        public string BiosGuid { get { throw null; } set { } }
-        public string BiosSerialNumber { get { throw null; } set { } }
-        public string Firmware { get { throw null; } set { } }
-        public int? NumberOfProcessorCore { get { throw null; } set { } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.OperatingSystem OperatingSystemDetails { get { throw null; } set { } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.ProductSupportStatus ProductSupportStatus { get { throw null; } set { } }
-        public string RunAsAccountId { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        protected virtual Azure.ResourceManager.MigrationDiscovery.Models.MachineResourcePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.MigrationDiscovery.Models.MachineResourcePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.MigrationDiscovery.Models.MachineResourcePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.MachineResourcePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.MachineResourcePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MigrationDiscovery.Models.MachineResourcePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.MachineResourcePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.MachineResourcePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.MachineResourcePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class MasterSitePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.MasterSitePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.MasterSitePatch>
     {
         public MasterSitePatch() { }
@@ -4254,32 +4587,32 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MicrosoftAzureFDSWebRoleHealthErrorDetailsSource : System.IEquatable<Azure.ResourceManager.MigrationDiscovery.Models.MicrosoftAzureFDSWebRoleHealthErrorDetailsSource>
+    public readonly partial struct MicrosoftAzureFdsWebRoleHealthErrorDetailsSource : System.IEquatable<Azure.ResourceManager.MigrationDiscovery.Models.MicrosoftAzureFdsWebRoleHealthErrorDetailsSource>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public MicrosoftAzureFDSWebRoleHealthErrorDetailsSource(string value) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.MicrosoftAzureFDSWebRoleHealthErrorDetailsSource RefreshFabricLayout { get { throw null; } }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.MicrosoftAzureFDSWebRoleHealthErrorDetailsSource RefreshFabricLayoutDependencyMap { get { throw null; } }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.MicrosoftAzureFDSWebRoleHealthErrorDetailsSource RefreshFabricLayoutGuest { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MigrationDiscovery.Models.MicrosoftAzureFDSWebRoleHealthErrorDetailsSource other) { throw null; }
+        public MicrosoftAzureFdsWebRoleHealthErrorDetailsSource(string value) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.MicrosoftAzureFdsWebRoleHealthErrorDetailsSource RefreshFabricLayout { get { throw null; } }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.MicrosoftAzureFdsWebRoleHealthErrorDetailsSource RefreshFabricLayoutDependencyMap { get { throw null; } }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.MicrosoftAzureFdsWebRoleHealthErrorDetailsSource RefreshFabricLayoutGuest { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MigrationDiscovery.Models.MicrosoftAzureFdsWebRoleHealthErrorDetailsSource other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MigrationDiscovery.Models.MicrosoftAzureFDSWebRoleHealthErrorDetailsSource left, Azure.ResourceManager.MigrationDiscovery.Models.MicrosoftAzureFDSWebRoleHealthErrorDetailsSource right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MigrationDiscovery.Models.MicrosoftAzureFDSWebRoleHealthErrorDetailsSource (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.MigrationDiscovery.Models.MicrosoftAzureFDSWebRoleHealthErrorDetailsSource? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MigrationDiscovery.Models.MicrosoftAzureFDSWebRoleHealthErrorDetailsSource left, Azure.ResourceManager.MigrationDiscovery.Models.MicrosoftAzureFDSWebRoleHealthErrorDetailsSource right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MigrationDiscovery.Models.MicrosoftAzureFdsWebRoleHealthErrorDetailsSource left, Azure.ResourceManager.MigrationDiscovery.Models.MicrosoftAzureFdsWebRoleHealthErrorDetailsSource right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MigrationDiscovery.Models.MicrosoftAzureFdsWebRoleHealthErrorDetailsSource (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.MigrationDiscovery.Models.MicrosoftAzureFdsWebRoleHealthErrorDetailsSource? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MigrationDiscovery.Models.MicrosoftAzureFdsWebRoleHealthErrorDetailsSource left, Azure.ResourceManager.MigrationDiscovery.Models.MicrosoftAzureFdsWebRoleHealthErrorDetailsSource right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent>
     {
         public MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent() { }
-        public System.DateTimeOffset? EndsOn { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters Filters { get { throw null; } set { } }
         public string MachineId { get { throw null; } set { } }
         public string ProcessGroupName { get { throw null; } set { } }
         public string ProcessName { get { throw null; } set { } }
-        public System.DateTimeOffset? StartsOn { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4308,8 +4641,8 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
     public partial class MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent>
     {
         public MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent() { }
-        public System.DateTimeOffset? EndsOn { get { throw null; } set { } }
-        public System.DateTimeOffset? StartsOn { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4323,9 +4656,9 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
     public partial class MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent>
     {
         public MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent() { }
-        public System.DateTimeOffset? EndsOn { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters Filters { get { throw null; } set { } }
-        public System.DateTimeOffset? StartsOn { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4339,10 +4672,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
     public partial class MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent>
     {
         public MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent() { }
-        public System.DateTimeOffset? EndsOn { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters Filters { get { throw null; } set { } }
         public int? ServerPort { get { throw null; } set { } }
-        public System.DateTimeOffset? StartsOn { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4356,10 +4689,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
     public partial class MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent>
     {
         public MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent() { }
-        public System.DateTimeOffset? EndsOn { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters Filters { get { throw null; } set { } }
         public string MachineId { get { throw null; } set { } }
-        public System.DateTimeOffset? StartsOn { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4471,6 +4804,28 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachineMetadataList>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachineMetadataList>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class MigrationDiscoveryMachinePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachinePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachinePatch>
+    {
+        public MigrationDiscoveryMachinePatch() { }
+        public double? AllocatedMemoryInMb { get { throw null; } set { } }
+        public string BiosGuid { get { throw null; } set { } }
+        public string BiosSerialNumber { get { throw null; } set { } }
+        public string Firmware { get { throw null; } set { } }
+        public int? NumberOfProcessorCore { get { throw null; } set { } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.OperatingSystem OperatingSystemDetails { get { throw null; } set { } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.ProductSupportStatus ProductSupportStatus { get { throw null; } set { } }
+        public string RunAsAccountId { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachinePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachinePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachinePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachinePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachinePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachinePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachinePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachinePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachinePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class MigrationDiscoveryPrivateLinkServiceConnectionState : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryPrivateLinkServiceConnectionState>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryPrivateLinkServiceConnectionState>
     {
         public MigrationDiscoveryPrivateLinkServiceConnectionState() { }
@@ -4502,6 +4857,34 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySasUriResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySasUriResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySasUriResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySasUriResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MigrationDiscoveryServerPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryServerPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryServerPatch>
+    {
+        public MigrationDiscoveryServerPatch() { }
+        public float? AllocatedMemoryInMb { get { throw null; } set { } }
+        public string BiosGuid { get { throw null; } set { } }
+        public string BiosSerialNumber { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.MigrationDiscovery.Models.ServerDisk> Disks { get { throw null; } }
+        public string Firmware { get { throw null; } set { } }
+        public string Fqdn { get { throw null; } set { } }
+        public string HydratedFqdn { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.MigrationDiscovery.Models.ServerNetworkAdapter> NetworkAdapters { get { throw null; } }
+        public int? NumberOfProcessorCore { get { throw null; } set { } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.OperatingSystem OperatingSystemDetails { get { throw null; } set { } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.ProductSupportStatus ProductSupportStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? ProvisioningState { get { throw null; } set { } }
+        public string RunAsAccountId { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> Tags { get { throw null; } }
+        public string ValidationRequired { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryServerPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryServerPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryServerPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryServerPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryServerPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryServerPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryServerPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryServerPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryServerPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MigrationDiscoveryServerSiteUsageResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryServerSiteUsageResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryServerSiteUsageResult>
     {
@@ -4676,7 +5059,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public string CurrentVersion { get { throw null; } set { } }
         public Azure.ResourceManager.MigrationDiscovery.Models.EsuStatus? EsuStatus { get { throw null; } set { } }
         public Azure.ResourceManager.MigrationDiscovery.Models.EsuYear? EsuYear { get { throw null; } set { } }
-        public System.DateTimeOffset? SupportEndsOn { get { throw null; } set { } }
+        public System.DateTimeOffset? SupportEndOn { get { throw null; } set { } }
         public Azure.ResourceManager.MigrationDiscovery.Models.SupportStatus? SupportStatus { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.MigrationDiscovery.Models.ProductSupportStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4779,53 +5162,25 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.ServerNetworkAdapter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.ServerNetworkAdapter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServerPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.ServerPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.ServerPatch>
+    public partial class ServerSitePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.ServerSitePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.ServerSitePatch>
     {
-        public ServerPatch() { }
-        public float? AllocatedMemoryInMb { get { throw null; } set { } }
-        public string BiosGuid { get { throw null; } set { } }
-        public string BiosSerialNumber { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.MigrationDiscovery.Models.ServerDisk> Disks { get { throw null; } }
-        public string Firmware { get { throw null; } set { } }
-        public string Fqdn { get { throw null; } set { } }
-        public string HydratedFqdn { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.MigrationDiscovery.Models.ServerNetworkAdapter> NetworkAdapters { get { throw null; } }
-        public int? NumberOfProcessorCore { get { throw null; } set { } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.OperatingSystem OperatingSystemDetails { get { throw null; } set { } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.ProductSupportStatus ProductSupportStatus { get { throw null; } set { } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.ProvisioningState? ProvisioningState { get { throw null; } set { } }
-        public string RunAsAccountId { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, System.BinaryData> Tags { get { throw null; } }
-        public string ValidationRequired { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.MigrationDiscovery.Models.ServerPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.MigrationDiscovery.Models.ServerPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.MigrationDiscovery.Models.ServerPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.ServerPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.ServerPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MigrationDiscovery.Models.ServerPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.ServerPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.ServerPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.ServerPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ServerSiteResourcePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.ServerSiteResourcePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.ServerSiteResourcePatch>
-    {
-        public ServerSiteResourcePatch() { }
+        public ServerSitePatch() { }
         public Azure.ResourceManager.MigrationDiscovery.Models.SiteAgentProperties AgentDetails { get { throw null; } set { } }
         public string ApplianceName { get { throw null; } set { } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesUpdate ArcScope { get { throw null; } set { } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesPatch ArcScope { get { throw null; } set { } }
         public string DiscoverySolutionId { get { throw null; } set { } }
         public Azure.ResourceManager.MigrationDiscovery.Models.SiteSpnProperties ServicePrincipalIdentityDetails { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.MigrationDiscovery.Models.SiteApplianceProperties> SiteAppliancePropertiesCollection { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        protected virtual Azure.ResourceManager.MigrationDiscovery.Models.ServerSiteResourcePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.MigrationDiscovery.Models.ServerSitePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.MigrationDiscovery.Models.ServerSiteResourcePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.MigrationDiscovery.Models.ServerSitePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.MigrationDiscovery.Models.ServerSiteResourcePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.ServerSiteResourcePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.ServerSiteResourcePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MigrationDiscovery.Models.ServerSiteResourcePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.ServerSiteResourcePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.ServerSiteResourcePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.ServerSiteResourcePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.MigrationDiscovery.Models.ServerSitePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.ServerSitePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.ServerSitePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MigrationDiscovery.Models.ServerSitePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.ServerSitePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.ServerSitePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.ServerSitePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ServerSiteUsage : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.ServerSiteUsage>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.ServerSiteUsage>
     {
@@ -5248,7 +5603,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
     public partial class SqlDiscovery : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscovery>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscovery>
     {
         internal SqlDiscovery() { }
-        public Azure.ResourceManager.MigrationDiscovery.Models.SQLDiscoveryScopeStatus? DiscoveryScopeStatus { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscoveryScopeStatus? DiscoveryScopeStatus { get { throw null; } }
         public Azure.ResourceManager.MigrationDiscovery.Models.SqlMetadataDiscoveryPipe? SqlMetadataDiscoveryPipe { get { throw null; } }
         public string SqlMetadataHydratedRunAsAccountId { get { throw null; } }
         public int? SuccessfullyDiscoveredServerCount { get { throw null; } }
@@ -5264,26 +5619,26 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscovery>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SQLDiscoveryScopeStatus : System.IEquatable<Azure.ResourceManager.MigrationDiscovery.Models.SQLDiscoveryScopeStatus>
+    public readonly partial struct SqlDiscoveryScopeStatus : System.IEquatable<Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscoveryScopeStatus>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public SQLDiscoveryScopeStatus(string value) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.SQLDiscoveryScopeStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.SQLDiscoveryScopeStatus DiscoveryFailed { get { throw null; } }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.SQLDiscoveryScopeStatus DiscoveryInProgress { get { throw null; } }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.SQLDiscoveryScopeStatus DiscoveryNotStarted { get { throw null; } }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.SQLDiscoveryScopeStatus DiscoveryPartiallySucceeded { get { throw null; } }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.SQLDiscoveryScopeStatus DiscoverySucceeded { get { throw null; } }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.SQLDiscoveryScopeStatus DiscoverySucceededAtLeastOnce { get { throw null; } }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.SQLDiscoveryScopeStatus RunAsAccountNotAssociated { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MigrationDiscovery.Models.SQLDiscoveryScopeStatus other) { throw null; }
+        public SqlDiscoveryScopeStatus(string value) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscoveryScopeStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscoveryScopeStatus DiscoveryFailed { get { throw null; } }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscoveryScopeStatus DiscoveryInProgress { get { throw null; } }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscoveryScopeStatus DiscoveryNotStarted { get { throw null; } }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscoveryScopeStatus DiscoveryPartiallySucceeded { get { throw null; } }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscoveryScopeStatus DiscoverySucceeded { get { throw null; } }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscoveryScopeStatus DiscoverySucceededAtLeastOnce { get { throw null; } }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscoveryScopeStatus RunAsAccountNotAssociated { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscoveryScopeStatus other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MigrationDiscovery.Models.SQLDiscoveryScopeStatus left, Azure.ResourceManager.MigrationDiscovery.Models.SQLDiscoveryScopeStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MigrationDiscovery.Models.SQLDiscoveryScopeStatus (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.MigrationDiscovery.Models.SQLDiscoveryScopeStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MigrationDiscovery.Models.SQLDiscoveryScopeStatus left, Azure.ResourceManager.MigrationDiscovery.Models.SQLDiscoveryScopeStatus right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscoveryScopeStatus left, Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscoveryScopeStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscoveryScopeStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscoveryScopeStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscoveryScopeStatus left, Azure.ResourceManager.MigrationDiscovery.Models.SqlDiscoveryScopeStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class SqlFciProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.SqlFciProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.SqlFciProperties>
@@ -5292,7 +5647,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public bool? IsMultiSubnet { get { throw null; } set { } }
         public string NetworkName { get { throw null; } set { } }
         public int? SharedDiskCount { get { throw null; } set { } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.FCIInstanceState? State { get { throw null; } set { } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.FciInstanceState? State { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.MigrationDiscovery.Models.SqlFciProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.MigrationDiscovery.Models.SqlFciProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5380,7 +5735,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public static Azure.ResourceManager.MigrationDiscovery.Models.SqlMetadataDiscoveryPipe CIM { get { throw null; } }
         public static Azure.ResourceManager.MigrationDiscovery.Models.SqlMetadataDiscoveryPipe Other { get { throw null; } }
         public static Azure.ResourceManager.MigrationDiscovery.Models.SqlMetadataDiscoveryPipe PowerShell { get { throw null; } }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.SqlMetadataDiscoveryPipe SSH { get { throw null; } }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.SqlMetadataDiscoveryPipe Ssh { get { throw null; } }
         public static Azure.ResourceManager.MigrationDiscovery.Models.SqlMetadataDiscoveryPipe Unknown { get { throw null; } }
         public static Azure.ResourceManager.MigrationDiscovery.Models.SqlMetadataDiscoveryPipe VMware { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MigrationDiscovery.Models.SqlMetadataDiscoveryPipe other) { throw null; }
@@ -5465,7 +5820,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public string RunAsAccountId { get { throw null; } set { } }
         public Azure.ResourceManager.MigrationDiscovery.Models.SqlFciProperties SqlFciProperties { get { throw null; } set { } }
         public string SqlServerName { get { throw null; } set { } }
-        public System.DateTimeOffset? SqlStartsOn { get { throw null; } set { } }
+        public System.DateTimeOffset? SqlStartOn { get { throw null; } set { } }
         public Azure.ResourceManager.MigrationDiscovery.Models.SqlServerStatus? Status { get { throw null; } set { } }
         public float? SumOfUserDatabasesSizeInMb { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Tags { get { throw null; } }
@@ -5486,7 +5841,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
     public partial class SqlSitePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.SqlSitePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.SqlSitePatch>
     {
         public SqlSitePatch() { }
-        public Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesUpdate ArcScope { get { throw null; } set { } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.ArcScopePropertiesPatch ArcScope { get { throw null; } set { } }
         public Azure.ResourceManager.MigrationDiscovery.Models.SqlSitePropertiesDiscoveryScenario? DiscoveryScenario { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.MigrationDiscovery.Models.SiteApplianceProperties> SiteAppliancePropertiesCollection { get { throw null; } }
         protected virtual Azure.ResourceManager.MigrationDiscovery.Models.SqlSitePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5746,7 +6101,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public float? CapacityInGb { get { throw null; } }
         public float? FreeSpaceInGb { get { throw null; } }
         public string SymbolicName { get { throw null; } }
-        public Azure.ResourceManager.MigrationDiscovery.Models.VMwareDatastoreType? Type { get { throw null; } }
+        public Azure.ResourceManager.MigrationDiscovery.Models.VmwareDatastoreType? Type { get { throw null; } }
         public string Uuid { get { throw null; } }
         protected virtual Azure.ResourceManager.MigrationDiscovery.Models.VmwareDatastore JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -5759,27 +6114,27 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.VmwareDatastore>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VMwareDatastoreType : System.IEquatable<Azure.ResourceManager.MigrationDiscovery.Models.VMwareDatastoreType>
+    public readonly partial struct VmwareDatastoreType : System.IEquatable<Azure.ResourceManager.MigrationDiscovery.Models.VmwareDatastoreType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public VMwareDatastoreType(string value) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.VMwareDatastoreType Cifs { get { throw null; } }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.VMwareDatastoreType NFS { get { throw null; } }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.VMwareDatastoreType NFS41 { get { throw null; } }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.VMwareDatastoreType Pmem { get { throw null; } }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.VMwareDatastoreType Unknown { get { throw null; } }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.VMwareDatastoreType Vffs { get { throw null; } }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.VMwareDatastoreType Vmfs { get { throw null; } }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.VMwareDatastoreType Vsan { get { throw null; } }
-        public static Azure.ResourceManager.MigrationDiscovery.Models.VMwareDatastoreType Vvol { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MigrationDiscovery.Models.VMwareDatastoreType other) { throw null; }
+        public VmwareDatastoreType(string value) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.VmwareDatastoreType Cifs { get { throw null; } }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.VmwareDatastoreType Nfs { get { throw null; } }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.VmwareDatastoreType Nfs41 { get { throw null; } }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.VmwareDatastoreType Pmem { get { throw null; } }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.VmwareDatastoreType Unknown { get { throw null; } }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.VmwareDatastoreType Vffs { get { throw null; } }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.VmwareDatastoreType Vmfs { get { throw null; } }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.VmwareDatastoreType Vsan { get { throw null; } }
+        public static Azure.ResourceManager.MigrationDiscovery.Models.VmwareDatastoreType Vvol { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MigrationDiscovery.Models.VmwareDatastoreType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MigrationDiscovery.Models.VMwareDatastoreType left, Azure.ResourceManager.MigrationDiscovery.Models.VMwareDatastoreType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MigrationDiscovery.Models.VMwareDatastoreType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.MigrationDiscovery.Models.VMwareDatastoreType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MigrationDiscovery.Models.VMwareDatastoreType left, Azure.ResourceManager.MigrationDiscovery.Models.VMwareDatastoreType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MigrationDiscovery.Models.VmwareDatastoreType left, Azure.ResourceManager.MigrationDiscovery.Models.VmwareDatastoreType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MigrationDiscovery.Models.VmwareDatastoreType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.MigrationDiscovery.Models.VmwareDatastoreType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MigrationDiscovery.Models.VmwareDatastoreType left, Azure.ResourceManager.MigrationDiscovery.Models.VmwareDatastoreType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class VmwareDisk : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.Models.VmwareDisk>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.Models.VmwareDisk>

@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 writer.WritePropertyName("supportStatus"u8);
                 writer.WriteStringValue(SupportStatus.Value.ToString());
             }
-            if (Optional.IsDefined(SupportEndsOn))
+            if (Optional.IsDefined(SupportEndOn))
             {
                 writer.WritePropertyName("supportEndDate"u8);
-                writer.WriteStringValue(SupportEndsOn.Value, "O");
+                writer.WriteStringValue(SupportEndOn.Value, "O");
             }
             if (Optional.IsDefined(EsuYear))
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             string currentVersion = default;
             EsuStatus? esuStatus = default;
             SupportStatus? supportStatus = default;
-            DateTimeOffset? supportEndsOn = default;
+            DateTimeOffset? supportEndOn = default;
             EsuYear? esuYear = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    supportEndsOn = prop.Value.GetDateTimeOffset("O");
+                    supportEndOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("esuYear"u8))
@@ -192,14 +192,14 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ProductSupportStatus(
                 currentVersion,
                 esuStatus,
                 supportStatus,
-                supportEndsOn,
+                supportEndOn,
                 esuYear,
                 additionalBinaryDataProperties);
         }

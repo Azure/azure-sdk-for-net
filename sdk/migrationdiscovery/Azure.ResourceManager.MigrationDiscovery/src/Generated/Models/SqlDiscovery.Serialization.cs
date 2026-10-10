@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             int? totalServerCount = default;
             string sqlMetadataHydratedRunAsAccountId = default;
             SqlMetadataDiscoveryPipe? sqlMetadataDiscoveryPipe = default;
-            SQLDiscoveryScopeStatus? discoveryScopeStatus = default;
+            SqlDiscoveryScopeStatus? discoveryScopeStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -187,12 +187,12 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    discoveryScopeStatus = new SQLDiscoveryScopeStatus(prop.Value.GetString());
+                    discoveryScopeStatus = new SqlDiscoveryScopeStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SqlDiscovery(

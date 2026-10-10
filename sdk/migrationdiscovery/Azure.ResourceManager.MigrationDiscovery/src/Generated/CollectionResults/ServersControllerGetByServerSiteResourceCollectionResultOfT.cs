@@ -14,7 +14,7 @@ using Azure.ResourceManager.MigrationDiscovery.Models;
 
 namespace Azure.ResourceManager.MigrationDiscovery
 {
-    internal partial class ServersControllerGetByServerSiteResourceCollectionResultOfT : Pageable<ServerData>
+    internal partial class ServersControllerGetByServerSiteResourceCollectionResultOfT : Pageable<MigrationDiscoveryServerData>
     {
         private readonly ServersController _client;
         private readonly string _subscriptionId;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ServersControllerGetByServerSiteResourceCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ServerData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<MigrationDiscoveryServerData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 }
                 ServerListResult result = ServerListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<ServerData>.FromValues((IReadOnlyList<ServerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<MigrationDiscoveryServerData>.FromValues((IReadOnlyList<MigrationDiscoveryServerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

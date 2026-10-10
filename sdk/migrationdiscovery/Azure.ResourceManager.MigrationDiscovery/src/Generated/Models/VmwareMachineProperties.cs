@@ -34,16 +34,16 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="dataCenterScope"> Scope of the data center. </param>
         /// <param name="description"> User description of the machine. </param>
         /// <param name="disks"> Disks attached to the machine. </param>
-        /// <param name="hostInMaintenanceMode"> Indicates whether the host is in maintenance mode. </param>
+        /// <param name="isHostInMaintenanceMode"> Indicates whether the host is in maintenance mode. </param>
         /// <param name="hostName"> The host name. </param>
         /// <param name="hostPowerState"> The host power state. </param>
         /// <param name="hostVersion"> The host version. </param>
         /// <param name="networkAdapters"> Network adapters attached to the machine. </param>
         /// <param name="vMwareToolsStatus"> VMware tools status. </param>
         /// <param name="vMwareToolsVersion"> VMware tools version. </param>
-        /// <param name="changeTrackingSupported"> Value indicating whether change tracking is supported. </param>
-        /// <param name="changeTrackingEnabled"> Value indicating whether change tracking is enabled. </param>
-        /// <param name="secureBootEnabled"> Gets or sets a value indicating whether Secure boot is enabled for the VM. </param>
+        /// <param name="isChangeTrackingSupported"> Value indicating whether change tracking is supported. </param>
+        /// <param name="isChangeTrackingEnabled"> Value indicating whether change tracking is enabled. </param>
+        /// <param name="isSecureBootEnabled"> Gets or sets a value indicating whether Secure boot is enabled for the VM. </param>
         /// <param name="maxSnapshots"> Maximum number of snapshots for the VM.            Default value is -1. </param>
         /// <param name="diskEnabledUuid"> Gets or sets whether Disk Enabled UUID is set or not. </param>
         /// <param name="numberOfSnapshots"> Number of snapshots for the VM.             Default value is -1. </param>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="numberOfApplications"> Number of applications installed in the guest VM. </param>
         /// <param name="numberOfSoftware"> Number of software installed in the guest VM. </param>
         /// <param name="numberOfSecurityRisks"> Number of security risks identified on the guest VM. </param>
-        /// <param name="guestDetailsDiscoveryOn">
+        /// <param name="guestDetailsDiscoveryTimestamp">
         /// The last time at which the Guest Details was discovered
         /// or the
         /// error while discovering guest details based discovery
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// for
         /// the VM.
         /// </param>
-        /// <param name="dependencyMappingStartsOn"> Gets or sets when dependency mapping collection is last started. </param>
+        /// <param name="dependencyMappingStartOn"> Gets or sets when dependency mapping collection is last started. </param>
         /// <param name="dependencyMappingEndTime"> Gets or sets when dependency mapping collection was last disabled. </param>
         /// <param name="runAsAccountId"> Gets or sets the run as account ID of the machine. </param>
         /// <param name="applianceNames"> Gets the appliance names. </param>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="arcDiscovery"> Gets the data related to Azure arc discovery. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VmwareMachineProperties(string vCenterFqdn, string vCenterId, string instanceUuid, string dataCenterScope, string description, IReadOnlyList<VmwareDisk> disks, bool? hostInMaintenanceMode, string hostName, string hostPowerState, string hostVersion, IReadOnlyList<VmwareNetworkAdapter> networkAdapters, string vMwareToolsStatus, string vMwareToolsVersion, bool? changeTrackingSupported, bool? changeTrackingEnabled, bool? secureBootEnabled, int? maxSnapshots, string diskEnabledUuid, int? numberOfSnapshots, string altGuestName, string powerStatus, string vmFqdn, string vmConfigurationFileLocation, string firmware, GuestOSDetails guestOSDetails, int? numberOfApplications, int? numberOfSoftware, int? numberOfSecurityRisks, DateTimeOffset? guestDetailsDiscoveryOn, bool? isGuestDetailsDiscoveryInProgress, string dependencyMapping, DateTimeOffset? dependencyMappingStartsOn, string dependencyMappingEndTime, string runAsAccountId, IReadOnlyList<string> applianceNames, IReadOnlyList<HealthErrorDetails> errors, ApplicationDiscovery applicationDiscovery, DependencyMapDiscovery dependencyMapDiscovery, StaticDiscovery staticDiscovery, SqlDiscovery sqlDiscovery, WebAppDiscovery webAppDiscovery, OracleDiscovery oracleDiscovery, SpringBootDiscovery springBootDiscovery, WebAppDiscovery iisDiscovery, WebAppDiscovery tomcatDiscovery, AppsAndRoles appsAndRoles, ProductSupportStatus productSupportStatus, int? numberOfProcessorCore, double? allocatedMemoryInMb, OperatingSystem operatingSystemDetails, string biosSerialNumber, string biosGuid, string displayName, bool? isDeleted, string createdTimestamp, IDictionary<string, string> tags, string updatedTimestamp, ProvisioningState? provisioningState, ArcDiscovery arcDiscovery, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VmwareMachineProperties(string vCenterFqdn, string vCenterId, string instanceUuid, string dataCenterScope, string description, IReadOnlyList<VmwareDisk> disks, bool? isHostInMaintenanceMode, string hostName, string hostPowerState, string hostVersion, IReadOnlyList<VmwareNetworkAdapter> networkAdapters, string vMwareToolsStatus, string vMwareToolsVersion, bool? isChangeTrackingSupported, bool? isChangeTrackingEnabled, bool? isSecureBootEnabled, int? maxSnapshots, string diskEnabledUuid, int? numberOfSnapshots, string altGuestName, string powerStatus, string vmFqdn, string vmConfigurationFileLocation, string firmware, GuestOSDetails guestOSDetails, int? numberOfApplications, int? numberOfSoftware, int? numberOfSecurityRisks, DateTimeOffset? guestDetailsDiscoveryTimestamp, bool? isGuestDetailsDiscoveryInProgress, string dependencyMapping, DateTimeOffset? dependencyMappingStartOn, string dependencyMappingEndTime, string runAsAccountId, IReadOnlyList<string> applianceNames, IReadOnlyList<HealthErrorDetails> errors, ApplicationDiscovery applicationDiscovery, DependencyMapDiscovery dependencyMapDiscovery, StaticDiscovery staticDiscovery, SqlDiscovery sqlDiscovery, WebAppDiscovery webAppDiscovery, OracleDiscovery oracleDiscovery, SpringBootDiscovery springBootDiscovery, WebAppDiscovery iisDiscovery, WebAppDiscovery tomcatDiscovery, AppsAndRoles appsAndRoles, ProductSupportStatus productSupportStatus, int? numberOfProcessorCore, double? allocatedMemoryInMb, OperatingSystem operatingSystemDetails, string biosSerialNumber, string biosGuid, string displayName, bool? isDeleted, string createdTimestamp, IDictionary<string, string> tags, string updatedTimestamp, ProvisioningState? provisioningState, ArcDiscovery arcDiscovery, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VCenterFqdn = vCenterFqdn;
             VCenterId = vCenterId;
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             DataCenterScope = dataCenterScope;
             Description = description;
             Disks = disks;
-            HostInMaintenanceMode = hostInMaintenanceMode;
+            IsHostInMaintenanceMode = isHostInMaintenanceMode;
             HostName = hostName;
             HostPowerState = hostPowerState;
             HostVersion = hostVersion;
             NetworkAdapters = networkAdapters;
             VMwareToolsStatus = vMwareToolsStatus;
             VMwareToolsVersion = vMwareToolsVersion;
-            ChangeTrackingSupported = changeTrackingSupported;
-            ChangeTrackingEnabled = changeTrackingEnabled;
-            SecureBootEnabled = secureBootEnabled;
+            IsChangeTrackingSupported = isChangeTrackingSupported;
+            IsChangeTrackingEnabled = isChangeTrackingEnabled;
+            IsSecureBootEnabled = isSecureBootEnabled;
             MaxSnapshots = maxSnapshots;
             DiskEnabledUuid = diskEnabledUuid;
             NumberOfSnapshots = numberOfSnapshots;
@@ -139,10 +139,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             NumberOfApplications = numberOfApplications;
             NumberOfSoftware = numberOfSoftware;
             NumberOfSecurityRisks = numberOfSecurityRisks;
-            GuestDetailsDiscoveryOn = guestDetailsDiscoveryOn;
+            GuestDetailsDiscoveryTimestamp = guestDetailsDiscoveryTimestamp;
             IsGuestDetailsDiscoveryInProgress = isGuestDetailsDiscoveryInProgress;
             DependencyMapping = dependencyMapping;
-            DependencyMappingStartsOn = dependencyMappingStartsOn;
+            DependencyMappingStartOn = dependencyMappingStartOn;
             DependencyMappingEndTime = dependencyMappingEndTime;
             RunAsAccountId = runAsAccountId;
             ApplianceNames = applianceNames;
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public IReadOnlyList<VmwareDisk> Disks { get; } = new ChangeTrackingList<VmwareDisk>();
 
         /// <summary> Indicates whether the host is in maintenance mode. </summary>
-        public bool? HostInMaintenanceMode { get; }
+        public bool? IsHostInMaintenanceMode { get; }
 
         /// <summary> The host name. </summary>
         public string HostName { get; }
@@ -213,13 +213,13 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public string VMwareToolsVersion { get; }
 
         /// <summary> Value indicating whether change tracking is supported. </summary>
-        public bool? ChangeTrackingSupported { get; }
+        public bool? IsChangeTrackingSupported { get; }
 
         /// <summary> Value indicating whether change tracking is enabled. </summary>
-        public bool? ChangeTrackingEnabled { get; }
+        public bool? IsChangeTrackingEnabled { get; }
 
         /// <summary> Gets or sets a value indicating whether Secure boot is enabled for the VM. </summary>
-        public bool? SecureBootEnabled { get; }
+        public bool? IsSecureBootEnabled { get; }
 
         /// <summary> Maximum number of snapshots for the VM.            Default value is -1. </summary>
         public int? MaxSnapshots { get; }
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// of the
         /// machine.
         /// </summary>
-        public DateTimeOffset? GuestDetailsDiscoveryOn { get; }
+        public DateTimeOffset? GuestDetailsDiscoveryTimestamp { get; }
 
         /// <summary>
         /// Whether Refresh Fabric Layout Guest Details has been completed once.
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public string DependencyMapping { get; }
 
         /// <summary> Gets or sets when dependency mapping collection is last started. </summary>
-        public DateTimeOffset? DependencyMappingStartsOn { get; }
+        public DateTimeOffset? DependencyMappingStartOn { get; }
 
         /// <summary> Gets or sets when dependency mapping collection was last disabled. </summary>
         public string DependencyMappingEndTime { get; }

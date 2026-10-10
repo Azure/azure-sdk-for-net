@@ -16,7 +16,6 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.MigrationDiscovery.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MigrationDiscovery
 {
@@ -2454,9 +2453,10 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    TagResourceData tagData = new TagResourceData(new Tag());
-                    tagData.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -2496,9 +2496,10 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    TagResourceData tagData = new TagResourceData(new Tag());
-                    tagData.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -2682,11 +2683,11 @@ namespace Azure.ResourceManager.MigrationDiscovery
             return GetVmwareJobs().Get(jobName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MachineResources in the <see cref="VmwareSiteResource"/>. </summary>
-        /// <returns> An object representing collection of MachineResources and their operations over a MachineResource. </returns>
-        public virtual MachineResourceCollection GetMachineResources()
+        /// <summary> Gets a collection of MigrationDiscoveryMachines in the <see cref="VmwareSiteResource"/>. </summary>
+        /// <returns> An object representing collection of MigrationDiscoveryMachines and their operations over a MigrationDiscoveryMachineResource. </returns>
+        public virtual MigrationDiscoveryMachineCollection GetMigrationDiscoveryMachines()
         {
-            return GetCachedClient(client => new MachineResourceCollection(client, Id));
+            return GetCachedClient(client => new MigrationDiscoveryMachineCollection(client, Id));
         }
 
         /// <summary> Get a MachineResource. </summary>
@@ -2695,11 +2696,11 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MachineResource>> GetMachineResourceAsync(string machineName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MigrationDiscoveryMachineResource>> GetMigrationDiscoveryMachineAsync(string machineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
 
-            return await GetMachineResources().GetAsync(machineName, cancellationToken).ConfigureAwait(false);
+            return await GetMigrationDiscoveryMachines().GetAsync(machineName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a MachineResource. </summary>
@@ -2708,31 +2709,18 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MachineResource> GetMachineResource(string machineName, CancellationToken cancellationToken = default)
+        public virtual Response<MigrationDiscoveryMachineResource> GetMigrationDiscoveryMachine(string machineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
 
-            return GetMachineResources().Get(machineName, cancellationToken);
+            return GetMigrationDiscoveryMachines().Get(machineName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VmwareRunAsAccountResources in the <see cref="VmwareSiteResource"/>. </summary>
-        /// <returns> An object representing collection of VmwareRunAsAccountResources and their operations over a VmwareRunAsAccountResource. </returns>
-        public virtual VmwareRunAsAccountResourceCollection GetVmwareRunAsAccountResources()
+        /// <summary> Gets a collection of VmwareRunAsAccounts in the <see cref="VmwareSiteResource"/>. </summary>
+        /// <returns> An object representing collection of VmwareRunAsAccounts and their operations over a VmwareRunAsAccountResource. </returns>
+        public virtual VmwareRunAsAccountCollection GetVmwareRunAsAccounts()
         {
-            return GetCachedClient(client => new VmwareRunAsAccountResourceCollection(client, Id));
-        }
-
-        /// <summary> Get a VmwareRunAsAccountResource. </summary>
-        /// <param name="accountName">  RunAsAccounts name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<VmwareRunAsAccountResource>> GetVmwareRunAsAccountResourceAsync(string accountName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-
-            return await GetVmwareRunAsAccountResources().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new VmwareRunAsAccountCollection(client, Id));
         }
 
         /// <summary> Get a VmwareRunAsAccountResource. </summary>
@@ -2741,18 +2729,31 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VmwareRunAsAccountResource> GetVmwareRunAsAccountResource(string accountName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VmwareRunAsAccountResource>> GetVmwareRunAsAccountAsync(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            return GetVmwareRunAsAccountResources().Get(accountName, cancellationToken);
+            return await GetVmwareRunAsAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of Vcenters in the <see cref="VmwareSiteResource"/>. </summary>
-        /// <returns> An object representing collection of Vcenters and their operations over a VcenterResource. </returns>
-        public virtual VcenterCollection GetVcenters()
+        /// <summary> Get a VmwareRunAsAccountResource. </summary>
+        /// <param name="accountName">  RunAsAccounts name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<VmwareRunAsAccountResource> GetVmwareRunAsAccount(string accountName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new VcenterCollection(client, Id));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+
+            return GetVmwareRunAsAccounts().Get(accountName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of MigrationDiscoveryVcenters in the <see cref="VmwareSiteResource"/>. </summary>
+        /// <returns> An object representing collection of MigrationDiscoveryVcenters and their operations over a MigrationDiscoveryVcenterResource. </returns>
+        public virtual MigrationDiscoveryVcenterCollection GetMigrationDiscoveryVcenters()
+        {
+            return GetCachedClient(client => new MigrationDiscoveryVcenterCollection(client, Id));
         }
 
         /// <summary> Get a Vcenter. </summary>
@@ -2761,11 +2762,11 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<VcenterResource>> GetVcenterAsync(string vcenterName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MigrationDiscoveryVcenterResource>> GetMigrationDiscoveryVcenterAsync(string vcenterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
 
-            return await GetVcenters().GetAsync(vcenterName, cancellationToken).ConfigureAwait(false);
+            return await GetMigrationDiscoveryVcenters().GetAsync(vcenterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a Vcenter. </summary>
@@ -2774,11 +2775,11 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VcenterResource> GetVcenter(string vcenterName, CancellationToken cancellationToken = default)
+        public virtual Response<MigrationDiscoveryVcenterResource> GetMigrationDiscoveryVcenter(string vcenterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
 
-            return GetVcenters().Get(vcenterName, cancellationToken);
+            return GetMigrationDiscoveryVcenters().Get(vcenterName, cancellationToken);
         }
     }
 }

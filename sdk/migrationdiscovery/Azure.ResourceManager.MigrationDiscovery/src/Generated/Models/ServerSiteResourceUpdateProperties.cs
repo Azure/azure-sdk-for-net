@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="siteAppliancePropertiesCollection"> Gets or sets the appliance details used by service to communicate to the appliance. </param>
         /// <param name="arcScope"> Gets or sets the Arc scope properties for the server site. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServerSiteResourceUpdateProperties(SiteSpnProperties servicePrincipalIdentityDetails, SiteAgentProperties agentDetails, string applianceName, string discoverySolutionId, IList<SiteApplianceProperties> siteAppliancePropertiesCollection, ArcScopePropertiesUpdate arcScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServerSiteResourceUpdateProperties(SiteSpnProperties servicePrincipalIdentityDetails, SiteAgentProperties agentDetails, string applianceName, string discoverySolutionId, IList<SiteApplianceProperties> siteAppliancePropertiesCollection, ArcScopePropertiesPatch arcScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServicePrincipalIdentityDetails = servicePrincipalIdentityDetails;
             AgentDetails = agentDetails;
@@ -66,6 +66,6 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public IList<SiteApplianceProperties> SiteAppliancePropertiesCollection { get; } = new ChangeTrackingList<SiteApplianceProperties>();
 
         /// <summary> Gets or sets the Arc scope properties for the server site. </summary>
-        public ArcScopePropertiesUpdate ArcScope { get; set; }
+        public ArcScopePropertiesPatch ArcScope { get; set; }
     }
 }

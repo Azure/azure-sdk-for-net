@@ -159,10 +159,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 writer.WritePropertyName("hyperthreadRatio"u8);
                 writer.WriteNumberValue(HyperthreadRatio.Value);
             }
-            if (Optional.IsDefined(SqlStartsOn))
+            if (Optional.IsDefined(SqlStartOn))
             {
                 writer.WritePropertyName("sqlStartTime"u8);
-                writer.WriteStringValue(SqlStartsOn.Value, "O");
+                writer.WriteStringValue(SqlStartOn.Value, "O");
             }
             if (Optional.IsDefined(RunAsAccountId))
             {
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             bool? isHighAvailabilityEnabled = default;
             bool? isClustered = default;
             int? hyperthreadRatio = default;
-            DateTimeOffset? sqlStartsOn = default;
+            DateTimeOffset? sqlStartOn = default;
             string runAsAccountId = default;
             string hydratedRunAsAccountId = default;
             string hostName = default;
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    sqlStartsOn = prop.Value.GetDateTimeOffset("O");
+                    sqlStartOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("runAsAccountId"u8))
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
+                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     tags = dictionary;
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SqlServerV2UpdateProperties(
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 isHighAvailabilityEnabled,
                 isClustered,
                 hyperthreadRatio,
-                sqlStartsOn,
+                sqlStartOn,
                 runAsAccountId,
                 hydratedRunAsAccountId,
                 hostName,

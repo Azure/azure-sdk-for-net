@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.MigrationDiscovery
 {
     /// <summary>
     /// A class representing a collection of <see cref="ServerSoftwareInventoryResource"/> and their operations.
-    /// Each <see cref="ServerSoftwareInventoryResource"/> in the collection will belong to the same instance of <see cref="ServerResource"/>.
-    /// To get a <see cref="ServerSoftwareInventoryCollection"/> instance call the GetServerSoftwareInventories method from an instance of <see cref="ServerResource"/>.
+    /// Each <see cref="ServerSoftwareInventoryResource"/> in the collection will belong to the same instance of <see cref="MigrationDiscoveryServerResource"/>.
+    /// To get a <see cref="ServerSoftwareInventoryCollection"/> instance call the GetServerSoftwareInventories method from an instance of <see cref="MigrationDiscoveryServerResource"/>.
     /// </summary>
     public partial class ServerSoftwareInventoryCollection : ArmCollection, IEnumerable<ServerSoftwareInventoryResource>, IAsyncEnumerable<ServerSoftwareInventoryResource>
     {
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.MigrationDiscovery
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ServerResource.ResourceType)
+            if (id.ResourceType != MigrationDiscoveryServerResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ServerResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MigrationDiscoveryServerResource.ResourceType), nameof(id));
             }
         }
 

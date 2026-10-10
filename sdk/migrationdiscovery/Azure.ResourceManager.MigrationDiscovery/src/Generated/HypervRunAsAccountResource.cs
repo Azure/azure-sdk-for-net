@@ -17,15 +17,15 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MigrationDiscovery
 {
     /// <summary>
-    /// A class representing a HypervRunAsAccountResource along with the instance operations that can be performed on it.
+    /// A class representing a HypervRunAsAccount along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HypervRunAsAccountResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HypervSiteResource"/> using the GetHypervRunAsAccountResources method.
+    /// Otherwise you can get one from its parent resource <see cref="HypervSiteResource"/> using the GetHypervRunAsAccounts method.
     /// </summary>
     public partial class HypervRunAsAccountResource : ArmResource
     {
         private readonly ClientDiagnostics _hypervRunAsAccountsControllerClientDiagnostics;
         private readonly HypervRunAsAccountsController _hypervRunAsAccountsControllerRestClient;
-        private readonly HypervRunAsAccountResourceData _data;
+        private readonly HypervRunAsAccountData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.OffAzure/hypervSites/runAsAccounts";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <summary> Initializes a new instance of <see cref="HypervRunAsAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal HypervRunAsAccountResource(ArmClient client, HypervRunAsAccountResourceData data) : this(client, data.Id)
+        internal HypervRunAsAccountResource(ArmClient client, HypervRunAsAccountData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HypervRunAsAccountResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string hypervRunAsAccountResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string hypervRunAsAccountApiVersion);
             _hypervRunAsAccountsControllerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MigrationDiscovery", ResourceType.Namespace, Diagnostics);
-            _hypervRunAsAccountsControllerRestClient = new HypervRunAsAccountsController(_hypervRunAsAccountsControllerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hypervRunAsAccountResourceApiVersion ?? "2024-12-01-preview");
+            _hypervRunAsAccountsControllerRestClient = new HypervRunAsAccountsController(_hypervRunAsAccountsControllerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hypervRunAsAccountApiVersion ?? "2024-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual HypervRunAsAccountResourceData Data
+        public virtual HypervRunAsAccountData Data
         {
             get
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 };
                 HttpMessage message = _hypervRunAsAccountsControllerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HypervRunAsAccountResourceData> response = Response.FromValue(HypervRunAsAccountResourceData.FromResponse(result), result);
+                Response<HypervRunAsAccountData> response = Response.FromValue(HypervRunAsAccountData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 };
                 HttpMessage message = _hypervRunAsAccountsControllerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<HypervRunAsAccountResourceData> response = Response.FromValue(HypervRunAsAccountResourceData.FromResponse(result), result);
+                Response<HypervRunAsAccountData> response = Response.FromValue(HypervRunAsAccountData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

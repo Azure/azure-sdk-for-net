@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             {
                 return null;
             }
-            FCIInstanceState? state = default;
+            FciInstanceState? state = default;
             string networkName = default;
             bool? isMultiSubnet = default;
             int? sharedDiskCount = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    state = new FCIInstanceState(prop.Value.GetString());
+                    state = new FciInstanceState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("networkName"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SqlFciProperties(state, networkName, isMultiSubnet, sharedDiskCount, additionalBinaryDataProperties);

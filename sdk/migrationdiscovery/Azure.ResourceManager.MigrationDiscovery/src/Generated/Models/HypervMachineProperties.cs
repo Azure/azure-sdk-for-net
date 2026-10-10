@@ -46,20 +46,20 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// enumeration.
         /// </param>
         /// <param name="secureBootTemplateId"> Gets or sets the SecureBootTemplateId setting of the VM. </param>
-        /// <param name="secureBootEnabled"> Gets or sets a value indicating whether Secure boot is enabled for the VM. </param>
+        /// <param name="isSecureBootEnabled"> Gets or sets a value indicating whether Secure boot is enabled for the VM. </param>
         /// <param name="secureBootTemplate"> Gets or sets the SecureBootTemplateId setting of the VM. </param>
-        /// <param name="tpmEnabled">
+        /// <param name="isTpmEnabled">
         /// Gets or sets a value indicating whether trusted platform module is enabled on
         /// the VM.
         /// </param>
-        /// <param name="ksdEnabled"> Gets or sets a value indicating whether key storage device is enabled on the VM. </param>
-        /// <param name="shieldingRequested"> Gets or sets a value indicating whether shielding is enabled for the VM. </param>
-        /// <param name="dataProtectionRequested"> Gets or sets a value indicating whether data protection is requested for a VM. </param>
-        /// <param name="encryptStateAndVmMigrationTraffic">
+        /// <param name="isKsdEnabled"> Gets or sets a value indicating whether key storage device is enabled on the VM. </param>
+        /// <param name="isShieldingRequested"> Gets or sets a value indicating whether shielding is enabled for the VM. </param>
+        /// <param name="isDataProtectionRequested"> Gets or sets a value indicating whether data protection is requested for a VM. </param>
+        /// <param name="isEncryptStateAndVmMigrationTraffic">
         /// Gets or sets a value indicating whether encryption of state and migration
         /// traffic is enabled for the VM.
         /// </param>
-        /// <param name="virtualizationBasedSecurityOptOut">
+        /// <param name="isVirtualizationBasedSecurityOptOut">
         /// Gets or sets a value indicating whether VM virtualization based security is
         /// enabled for the VM.
         /// </param>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="numberOfApplications"> Number of applications installed in the guest VM. </param>
         /// <param name="numberOfSoftware"> Number of software installed in the guest VM. </param>
         /// <param name="numberOfSecurityRisks"> Number of security risks identified on the guest VM. </param>
-        /// <param name="guestDetailsDiscoveryOn">
+        /// <param name="guestDetailsDiscoveryTimestamp">
         /// The last time at which the Guest Details was discovered
         /// or the
         /// error while discovering guest details based discovery
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// for
         /// the VM.
         /// </param>
-        /// <param name="dependencyMappingStartsOn"> Gets or sets when dependency mapping collection is last started. </param>
+        /// <param name="dependencyMappingStartOn"> Gets or sets when dependency mapping collection is last started. </param>
         /// <param name="dependencyMappingEndTime"> Gets or sets when dependency mapping collection was last disabled. </param>
         /// <param name="runAsAccountId"> Gets or sets the run as account ID of the machine. </param>
         /// <param name="applianceNames"> Gets the appliance names. </param>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="arcDiscovery"> Gets the data related to Azure arc discovery. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HypervMachineProperties(string instanceUuid, string hostFqdn, string hostId, int? generation, string version, HighAvailability? highAvailability, string clusterFqdn, string clusterId, int? maxMemoryMb, bool? isDynamicMemoryEnabled, IReadOnlyList<HypervDisk> disks, IReadOnlyList<HypervNetworkAdapter> networkAdapters, string managementServerType, string secureBootTemplateId, bool? secureBootEnabled, string secureBootTemplate, bool? tpmEnabled, bool? ksdEnabled, bool? shieldingRequested, bool? dataProtectionRequested, bool? encryptStateAndVmMigrationTraffic, bool? virtualizationBasedSecurityOptOut, string powerStatus, string vmFqdn, string vmConfigurationFileLocation, string firmware, GuestOSDetails guestOSDetails, int? numberOfApplications, int? numberOfSoftware, int? numberOfSecurityRisks, DateTimeOffset? guestDetailsDiscoveryOn, bool? isGuestDetailsDiscoveryInProgress, string dependencyMapping, DateTimeOffset? dependencyMappingStartsOn, string dependencyMappingEndTime, string runAsAccountId, IReadOnlyList<string> applianceNames, IReadOnlyList<HealthErrorDetails> errors, ApplicationDiscovery applicationDiscovery, DependencyMapDiscovery dependencyMapDiscovery, StaticDiscovery staticDiscovery, SqlDiscovery sqlDiscovery, WebAppDiscovery webAppDiscovery, OracleDiscovery oracleDiscovery, SpringBootDiscovery springBootDiscovery, WebAppDiscovery iisDiscovery, WebAppDiscovery tomcatDiscovery, AppsAndRoles appsAndRoles, ProductSupportStatus productSupportStatus, int? numberOfProcessorCore, double? allocatedMemoryInMb, OperatingSystem operatingSystemDetails, string biosSerialNumber, string biosGuid, string displayName, bool? isDeleted, string createdTimestamp, IDictionary<string, string> tags, string updatedTimestamp, ProvisioningState? provisioningState, ArcDiscovery arcDiscovery, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HypervMachineProperties(string instanceUuid, string hostFqdn, string hostId, int? generation, string version, HighAvailability? highAvailability, string clusterFqdn, string clusterId, int? maxMemoryMb, bool? isDynamicMemoryEnabled, IReadOnlyList<HypervDisk> disks, IReadOnlyList<HypervNetworkAdapter> networkAdapters, string managementServerType, string secureBootTemplateId, bool? isSecureBootEnabled, string secureBootTemplate, bool? isTpmEnabled, bool? isKsdEnabled, bool? isShieldingRequested, bool? isDataProtectionRequested, bool? isEncryptStateAndVmMigrationTraffic, bool? isVirtualizationBasedSecurityOptOut, string powerStatus, string vmFqdn, string vmConfigurationFileLocation, string firmware, GuestOSDetails guestOSDetails, int? numberOfApplications, int? numberOfSoftware, int? numberOfSecurityRisks, DateTimeOffset? guestDetailsDiscoveryTimestamp, bool? isGuestDetailsDiscoveryInProgress, string dependencyMapping, DateTimeOffset? dependencyMappingStartOn, string dependencyMappingEndTime, string runAsAccountId, IReadOnlyList<string> applianceNames, IReadOnlyList<HealthErrorDetails> errors, ApplicationDiscovery applicationDiscovery, DependencyMapDiscovery dependencyMapDiscovery, StaticDiscovery staticDiscovery, SqlDiscovery sqlDiscovery, WebAppDiscovery webAppDiscovery, OracleDiscovery oracleDiscovery, SpringBootDiscovery springBootDiscovery, WebAppDiscovery iisDiscovery, WebAppDiscovery tomcatDiscovery, AppsAndRoles appsAndRoles, ProductSupportStatus productSupportStatus, int? numberOfProcessorCore, double? allocatedMemoryInMb, OperatingSystem operatingSystemDetails, string biosSerialNumber, string biosGuid, string displayName, bool? isDeleted, string createdTimestamp, IDictionary<string, string> tags, string updatedTimestamp, ProvisioningState? provisioningState, ArcDiscovery arcDiscovery, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InstanceUuid = instanceUuid;
             HostFqdn = hostFqdn;
@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             NetworkAdapters = networkAdapters;
             ManagementServerType = managementServerType;
             SecureBootTemplateId = secureBootTemplateId;
-            SecureBootEnabled = secureBootEnabled;
+            IsSecureBootEnabled = isSecureBootEnabled;
             SecureBootTemplate = secureBootTemplate;
-            TpmEnabled = tpmEnabled;
-            KsdEnabled = ksdEnabled;
-            ShieldingRequested = shieldingRequested;
-            DataProtectionRequested = dataProtectionRequested;
-            EncryptStateAndVmMigrationTraffic = encryptStateAndVmMigrationTraffic;
-            VirtualizationBasedSecurityOptOut = virtualizationBasedSecurityOptOut;
+            IsTpmEnabled = isTpmEnabled;
+            IsKsdEnabled = isKsdEnabled;
+            IsShieldingRequested = isShieldingRequested;
+            IsDataProtectionRequested = isDataProtectionRequested;
+            IsEncryptStateAndVmMigrationTraffic = isEncryptStateAndVmMigrationTraffic;
+            IsVirtualizationBasedSecurityOptOut = isVirtualizationBasedSecurityOptOut;
             PowerStatus = powerStatus;
             VmFqdn = vmFqdn;
             VmConfigurationFileLocation = vmConfigurationFileLocation;
@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             NumberOfApplications = numberOfApplications;
             NumberOfSoftware = numberOfSoftware;
             NumberOfSecurityRisks = numberOfSecurityRisks;
-            GuestDetailsDiscoveryOn = guestDetailsDiscoveryOn;
+            GuestDetailsDiscoveryTimestamp = guestDetailsDiscoveryTimestamp;
             IsGuestDetailsDiscoveryInProgress = isGuestDetailsDiscoveryInProgress;
             DependencyMapping = dependencyMapping;
-            DependencyMappingStartsOn = dependencyMappingStartsOn;
+            DependencyMappingStartOn = dependencyMappingStartOn;
             DependencyMappingEndTime = dependencyMappingEndTime;
             RunAsAccountId = runAsAccountId;
             ApplianceNames = applianceNames;
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public string SecureBootTemplateId { get; }
 
         /// <summary> Gets or sets a value indicating whether Secure boot is enabled for the VM. </summary>
-        public bool? SecureBootEnabled { get; }
+        public bool? IsSecureBootEnabled { get; }
 
         /// <summary> Gets or sets the SecureBootTemplateId setting of the VM. </summary>
         public string SecureBootTemplate { get; }
@@ -242,28 +242,28 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// Gets or sets a value indicating whether trusted platform module is enabled on
         /// the VM.
         /// </summary>
-        public bool? TpmEnabled { get; }
+        public bool? IsTpmEnabled { get; }
 
         /// <summary> Gets or sets a value indicating whether key storage device is enabled on the VM. </summary>
-        public bool? KsdEnabled { get; }
+        public bool? IsKsdEnabled { get; }
 
         /// <summary> Gets or sets a value indicating whether shielding is enabled for the VM. </summary>
-        public bool? ShieldingRequested { get; }
+        public bool? IsShieldingRequested { get; }
 
         /// <summary> Gets or sets a value indicating whether data protection is requested for a VM. </summary>
-        public bool? DataProtectionRequested { get; }
+        public bool? IsDataProtectionRequested { get; }
 
         /// <summary>
         /// Gets or sets a value indicating whether encryption of state and migration
         /// traffic is enabled for the VM.
         /// </summary>
-        public bool? EncryptStateAndVmMigrationTraffic { get; }
+        public bool? IsEncryptStateAndVmMigrationTraffic { get; }
 
         /// <summary>
         /// Gets or sets a value indicating whether VM virtualization based security is
         /// enabled for the VM.
         /// </summary>
-        public bool? VirtualizationBasedSecurityOptOut { get; }
+        public bool? IsVirtualizationBasedSecurityOptOut { get; }
 
         /// <summary> Gets the Machine power status. </summary>
         public string PowerStatus { get; }
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// of the
         /// machine.
         /// </summary>
-        public DateTimeOffset? GuestDetailsDiscoveryOn { get; }
+        public DateTimeOffset? GuestDetailsDiscoveryTimestamp { get; }
 
         /// <summary>
         /// Whether Refresh Fabric Layout Guest Details has been completed once.
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public string DependencyMapping { get; }
 
         /// <summary> Gets or sets when dependency mapping collection is last started. </summary>
-        public DateTimeOffset? DependencyMappingStartsOn { get; }
+        public DateTimeOffset? DependencyMappingStartOn { get; }
 
         /// <summary> Gets or sets when dependency mapping collection was last disabled. </summary>
         public string DependencyMappingEndTime { get; }

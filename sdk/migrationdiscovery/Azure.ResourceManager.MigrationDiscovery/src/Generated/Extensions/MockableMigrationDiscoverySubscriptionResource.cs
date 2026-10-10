@@ -192,13 +192,13 @@ namespace Azure.ResourceManager.MigrationDiscovery.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServerSiteResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerSiteResource> GetServerSiteResourcesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ServerSiteResource> GetServerSitesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServerSiteResourceData, ServerSiteResource>(new ServerSitesControllerGetBySubscriptionAsyncCollectionResultOfT(ServerSitesControllerRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySubscriptionResource.GetServerSiteResources"), data => new ServerSiteResource(Client, data));
+            return new AsyncPageableWrapper<ServerSiteData, ServerSiteResource>(new ServerSitesControllerGetBySubscriptionAsyncCollectionResultOfT(ServerSitesControllerRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySubscriptionResource.GetServerSites"), data => new ServerSiteResource(Client, data));
         }
 
         /// <summary>
@@ -220,13 +220,13 @@ namespace Azure.ResourceManager.MigrationDiscovery.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServerSiteResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerSiteResource> GetServerSiteResources(CancellationToken cancellationToken = default)
+        public virtual Pageable<ServerSiteResource> GetServerSites(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServerSiteResourceData, ServerSiteResource>(new ServerSitesControllerGetBySubscriptionCollectionResultOfT(ServerSitesControllerRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySubscriptionResource.GetServerSiteResources"), data => new ServerSiteResource(Client, data));
+            return new PageableWrapper<ServerSiteData, ServerSiteResource>(new ServerSitesControllerGetBySubscriptionCollectionResultOfT(ServerSitesControllerRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySubscriptionResource.GetServerSites"), data => new ServerSiteResource(Client, data));
         }
 
         /// <summary>

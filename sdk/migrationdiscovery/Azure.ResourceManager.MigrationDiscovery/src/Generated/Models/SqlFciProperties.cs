@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// </param>
         /// <param name="sharedDiskCount"> Gets or sets the count of Shared Disks for SQL FCI. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlFciProperties(FCIInstanceState? state, string networkName, bool? isMultiSubnet, int? sharedDiskCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlFciProperties(FciInstanceState? state, string networkName, bool? isMultiSubnet, int? sharedDiskCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             NetworkName = networkName;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         }
 
         /// <summary> Gets or sets the state of the FCI instance. </summary>
-        public FCIInstanceState? State { get; set; }
+        public FciInstanceState? State { get; set; }
 
         /// <summary> Gets or sets the FCI Network Name used to connect to this FCI instance. </summary>
         public string NetworkName { get; set; }

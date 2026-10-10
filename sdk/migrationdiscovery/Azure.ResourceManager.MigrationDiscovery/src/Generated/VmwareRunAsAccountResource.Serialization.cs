@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.MigrationDiscovery
 {
     /// <summary></summary>
-    public partial class VmwareRunAsAccountResource : IJsonModel<VmwareRunAsAccountResourceData>
+    public partial class VmwareRunAsAccountResource : IJsonModel<VmwareRunAsAccountData>
     {
-        private static IJsonModel<VmwareRunAsAccountResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<VmwareRunAsAccountData> s_dataDeserializationInstance;
 
-        private static IJsonModel<VmwareRunAsAccountResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new VmwareRunAsAccountResourceData();
+        private static IJsonModel<VmwareRunAsAccountData> DataDeserializationInstance => s_dataDeserializationInstance ??= new VmwareRunAsAccountData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VmwareRunAsAccountResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VmwareRunAsAccountResourceData>)Data).Write(writer, options);
+        void IJsonModel<VmwareRunAsAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VmwareRunAsAccountData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VmwareRunAsAccountResourceData IJsonModel<VmwareRunAsAccountResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        VmwareRunAsAccountData IJsonModel<VmwareRunAsAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VmwareRunAsAccountResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VmwareRunAsAccountResourceData>(Data, options, AzureResourceManagerMigrationDiscoveryContext.Default);
+        BinaryData IPersistableModel<VmwareRunAsAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VmwareRunAsAccountData>(Data, options, AzureResourceManagerMigrationDiscoveryContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VmwareRunAsAccountResourceData IPersistableModel<VmwareRunAsAccountResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VmwareRunAsAccountResourceData>(data, options, AzureResourceManagerMigrationDiscoveryContext.Default);
+        VmwareRunAsAccountData IPersistableModel<VmwareRunAsAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VmwareRunAsAccountData>(data, options, AzureResourceManagerMigrationDiscoveryContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VmwareRunAsAccountResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<VmwareRunAsAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

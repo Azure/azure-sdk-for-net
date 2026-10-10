@@ -16,14 +16,13 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.MigrationDiscovery.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MigrationDiscovery
 {
     /// <summary>
-    /// A class representing a ServerSiteResource along with the instance operations that can be performed on it.
+    /// A class representing a ServerSite along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServerSiteResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetServerSiteResources method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetServerSites method.
     /// </summary>
     public partial class ServerSiteResource : ArmResource
     {
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         private readonly ServerDependencyMapController _serverDependencyMapControllerRestClient;
         private readonly ClientDiagnostics _serverOperationsStatusControllerClientDiagnostics;
         private readonly ServerOperationsStatusController _serverOperationsStatusControllerRestClient;
-        private readonly ServerSiteResourceData _data;
+        private readonly ServerSiteData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.OffAzure/serverSites";
 
@@ -45,7 +44,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <summary> Initializes a new instance of <see cref="ServerSiteResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ServerSiteResource(ArmClient client, ServerSiteResourceData data) : this(client, data.Id)
+        internal ServerSiteResource(ArmClient client, ServerSiteData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -56,13 +55,13 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServerSiteResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string serverSiteResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string serverSiteApiVersion);
             _serverSitesControllerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MigrationDiscovery", ResourceType.Namespace, Diagnostics);
-            _serverSitesControllerRestClient = new ServerSitesController(_serverSitesControllerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serverSiteResourceApiVersion ?? "2024-12-01-preview");
+            _serverSitesControllerRestClient = new ServerSitesController(_serverSitesControllerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serverSiteApiVersion ?? "2024-12-01-preview");
             _serverDependencyMapControllerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MigrationDiscovery", ResourceType.Namespace, Diagnostics);
-            _serverDependencyMapControllerRestClient = new ServerDependencyMapController(_serverDependencyMapControllerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serverSiteResourceApiVersion ?? "2024-12-01-preview");
+            _serverDependencyMapControllerRestClient = new ServerDependencyMapController(_serverDependencyMapControllerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serverSiteApiVersion ?? "2024-12-01-preview");
             _serverOperationsStatusControllerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MigrationDiscovery", ResourceType.Namespace, Diagnostics);
-            _serverOperationsStatusControllerRestClient = new ServerOperationsStatusController(_serverOperationsStatusControllerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serverSiteResourceApiVersion ?? "2024-12-01-preview");
+            _serverOperationsStatusControllerRestClient = new ServerOperationsStatusController(_serverOperationsStatusControllerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serverSiteApiVersion ?? "2024-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ServerSiteResourceData Data
+        public virtual ServerSiteData Data
         {
             get
             {
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 };
                 HttpMessage message = _serverSitesControllerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ServerSiteResourceData> response = Response.FromValue(ServerSiteResourceData.FromResponse(result), result);
+                Response<ServerSiteData> response = Response.FromValue(ServerSiteData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 };
                 HttpMessage message = _serverSitesControllerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ServerSiteResourceData> response = Response.FromValue(ServerSiteResourceData.FromResponse(result), result);
+                Response<ServerSiteData> response = Response.FromValue(ServerSiteData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -222,7 +221,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<ServerSiteResource>> UpdateAsync(ServerSiteResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerSiteResource>> UpdateAsync(ServerSitePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -234,9 +233,9 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverSitesControllerRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ServerSiteResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _serverSitesControllerRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ServerSitePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ServerSiteResourceData> response = Response.FromValue(ServerSiteResourceData.FromResponse(result), result);
+                Response<ServerSiteData> response = Response.FromValue(ServerSiteData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -274,7 +273,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<ServerSiteResource> Update(ServerSiteResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<ServerSiteResource> Update(ServerSitePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -286,9 +285,9 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverSitesControllerRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ServerSiteResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _serverSitesControllerRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ServerSitePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ServerSiteResourceData> response = Response.FromValue(ServerSiteResourceData.FromResponse(result), result);
+                Response<ServerSiteData> response = Response.FromValue(ServerSiteData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -2113,13 +2112,13 @@ namespace Azure.ResourceManager.MigrationDiscovery
                     };
                     HttpMessage message = _serverSitesControllerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ServerSiteResourceData> response = Response.FromValue(ServerSiteResourceData.FromResponse(result), result);
+                    Response<ServerSiteData> response = Response.FromValue(ServerSiteData.FromResponse(result), result);
                     return Response.FromValue(new ServerSiteResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ServerSiteResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ServerSiteResourcePatch patch = new ServerSiteResourcePatch();
+                    ServerSiteData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ServerSitePatch patch = new ServerSitePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -2161,13 +2160,13 @@ namespace Azure.ResourceManager.MigrationDiscovery
                     };
                     HttpMessage message = _serverSitesControllerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ServerSiteResourceData> response = Response.FromValue(ServerSiteResourceData.FromResponse(result), result);
+                    Response<ServerSiteData> response = Response.FromValue(ServerSiteData.FromResponse(result), result);
                     return Response.FromValue(new ServerSiteResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ServerSiteResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ServerSiteResourcePatch patch = new ServerSiteResourcePatch();
+                    ServerSiteData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ServerSitePatch patch = new ServerSitePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -2198,22 +2197,23 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    TagResourceData tagData = new TagResourceData(new Tag());
-                    tagData.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
                     };
                     HttpMessage message = _serverSitesControllerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ServerSiteResourceData> response = Response.FromValue(ServerSiteResourceData.FromResponse(result), result);
+                    Response<ServerSiteData> response = Response.FromValue(ServerSiteData.FromResponse(result), result);
                     return Response.FromValue(new ServerSiteResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ServerSiteResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ServerSiteResourcePatch patch = new ServerSiteResourcePatch();
+                    ServerSiteData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ServerSitePatch patch = new ServerSitePatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<ServerSiteResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -2240,22 +2240,23 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    TagResourceData tagData = new TagResourceData(new Tag());
-                    tagData.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
                     };
                     HttpMessage message = _serverSitesControllerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ServerSiteResourceData> response = Response.FromValue(ServerSiteResourceData.FromResponse(result), result);
+                    Response<ServerSiteData> response = Response.FromValue(ServerSiteData.FromResponse(result), result);
                     return Response.FromValue(new ServerSiteResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ServerSiteResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ServerSiteResourcePatch patch = new ServerSiteResourcePatch();
+                    ServerSiteData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ServerSitePatch patch = new ServerSitePatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<ServerSiteResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -2291,13 +2292,13 @@ namespace Azure.ResourceManager.MigrationDiscovery
                     };
                     HttpMessage message = _serverSitesControllerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ServerSiteResourceData> response = Response.FromValue(ServerSiteResourceData.FromResponse(result), result);
+                    Response<ServerSiteData> response = Response.FromValue(ServerSiteData.FromResponse(result), result);
                     return Response.FromValue(new ServerSiteResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ServerSiteResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ServerSiteResourcePatch patch = new ServerSiteResourcePatch();
+                    ServerSiteData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ServerSitePatch patch = new ServerSitePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -2337,13 +2338,13 @@ namespace Azure.ResourceManager.MigrationDiscovery
                     };
                     HttpMessage message = _serverSitesControllerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ServerSiteResourceData> response = Response.FromValue(ServerSiteResourceData.FromResponse(result), result);
+                    Response<ServerSiteData> response = Response.FromValue(ServerSiteData.FromResponse(result), result);
                     return Response.FromValue(new ServerSiteResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ServerSiteResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ServerSiteResourcePatch patch = new ServerSiteResourcePatch();
+                    ServerSiteData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ServerSitePatch patch = new ServerSitePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -2393,11 +2394,11 @@ namespace Azure.ResourceManager.MigrationDiscovery
             return GetServerJobs().Get(jobName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Servers in the <see cref="ServerSiteResource"/>. </summary>
-        /// <returns> An object representing collection of Servers and their operations over a ServerResource. </returns>
-        public virtual ServerCollection GetServers()
+        /// <summary> Gets a collection of MigrationDiscoveryServers in the <see cref="ServerSiteResource"/>. </summary>
+        /// <returns> An object representing collection of MigrationDiscoveryServers and their operations over a MigrationDiscoveryServerResource. </returns>
+        public virtual MigrationDiscoveryServerCollection GetMigrationDiscoveryServers()
         {
-            return GetCachedClient(client => new ServerCollection(client, Id));
+            return GetCachedClient(client => new MigrationDiscoveryServerCollection(client, Id));
         }
 
         /// <summary> Get a Server. </summary>
@@ -2406,11 +2407,11 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServerResource>> GetServerAsync(string machineName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MigrationDiscoveryServerResource>> GetMigrationDiscoveryServerAsync(string machineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
 
-            return await GetServers().GetAsync(machineName, cancellationToken).ConfigureAwait(false);
+            return await GetMigrationDiscoveryServers().GetAsync(machineName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a Server. </summary>
@@ -2419,11 +2420,11 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServerResource> GetServer(string machineName, CancellationToken cancellationToken = default)
+        public virtual Response<MigrationDiscoveryServerResource> GetMigrationDiscoveryServer(string machineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
 
-            return GetServers().Get(machineName, cancellationToken);
+            return GetMigrationDiscoveryServers().Get(machineName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ServerRunAsAccounts in the <see cref="ServerSiteResource"/>. </summary>

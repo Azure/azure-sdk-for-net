@@ -14,7 +14,7 @@ using Azure.ResourceManager.MigrationDiscovery.Models;
 
 namespace Azure.ResourceManager.MigrationDiscovery
 {
-    internal partial class RunAsAccountsControllerGetByVmwareSiteCollectionResultOfT : Pageable<VmwareRunAsAccountResourceData>
+    internal partial class RunAsAccountsControllerGetByVmwareSiteCollectionResultOfT : Pageable<VmwareRunAsAccountData>
     {
         private readonly RunAsAccountsController _client;
         private readonly string _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of RunAsAccountsControllerGetByVmwareSiteCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<VmwareRunAsAccountResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<VmwareRunAsAccountData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 }
                 VmwareRunAsAccountResourceListResult result = VmwareRunAsAccountResourceListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<VmwareRunAsAccountResourceData>.FromValues((IReadOnlyList<VmwareRunAsAccountResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<VmwareRunAsAccountData>.FromValues((IReadOnlyList<VmwareRunAsAccountData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

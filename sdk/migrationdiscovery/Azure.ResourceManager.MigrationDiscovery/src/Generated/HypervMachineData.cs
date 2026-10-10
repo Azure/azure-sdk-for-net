@@ -171,11 +171,11 @@ namespace Azure.ResourceManager.MigrationDiscovery
         }
 
         /// <summary> Gets or sets a value indicating whether Secure boot is enabled for the VM. </summary>
-        public bool? SecureBootEnabled
+        public bool? IsSecureBootEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.SecureBootEnabled;
+                return Properties is null ? default : Properties.IsSecureBootEnabled;
             }
         }
 
@@ -192,38 +192,38 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// Gets or sets a value indicating whether trusted platform module is enabled on
         /// the VM.
         /// </summary>
-        public bool? TpmEnabled
+        public bool? IsTpmEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.TpmEnabled;
+                return Properties is null ? default : Properties.IsTpmEnabled;
             }
         }
 
         /// <summary> Gets or sets a value indicating whether key storage device is enabled on the VM. </summary>
-        public bool? KsdEnabled
+        public bool? IsKsdEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.KsdEnabled;
+                return Properties is null ? default : Properties.IsKsdEnabled;
             }
         }
 
         /// <summary> Gets or sets a value indicating whether shielding is enabled for the VM. </summary>
-        public bool? ShieldingRequested
+        public bool? IsShieldingRequested
         {
             get
             {
-                return Properties is null ? default : Properties.ShieldingRequested;
+                return Properties is null ? default : Properties.IsShieldingRequested;
             }
         }
 
         /// <summary> Gets or sets a value indicating whether data protection is requested for a VM. </summary>
-        public bool? DataProtectionRequested
+        public bool? IsDataProtectionRequested
         {
             get
             {
-                return Properties is null ? default : Properties.DataProtectionRequested;
+                return Properties is null ? default : Properties.IsDataProtectionRequested;
             }
         }
 
@@ -231,11 +231,11 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// Gets or sets a value indicating whether encryption of state and migration
         /// traffic is enabled for the VM.
         /// </summary>
-        public bool? EncryptStateAndVmMigrationTraffic
+        public bool? IsEncryptStateAndVmMigrationTraffic
         {
             get
             {
-                return Properties is null ? default : Properties.EncryptStateAndVmMigrationTraffic;
+                return Properties is null ? default : Properties.IsEncryptStateAndVmMigrationTraffic;
             }
         }
 
@@ -243,11 +243,11 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// Gets or sets a value indicating whether VM virtualization based security is
         /// enabled for the VM.
         /// </summary>
-        public bool? VirtualizationBasedSecurityOptOut
+        public bool? IsVirtualizationBasedSecurityOptOut
         {
             get
             {
-                return Properties is null ? default : Properties.VirtualizationBasedSecurityOptOut;
+                return Properties is null ? default : Properties.IsVirtualizationBasedSecurityOptOut;
             }
         }
 
@@ -330,11 +330,11 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// of the
         /// machine.
         /// </summary>
-        public DateTimeOffset? GuestDetailsDiscoveryOn
+        public DateTimeOffset? GuestDetailsDiscoveryTimestamp
         {
             get
             {
-                return Properties is null ? default : Properties.GuestDetailsDiscoveryOn;
+                return Properties is null ? default : Properties.GuestDetailsDiscoveryTimestamp;
             }
         }
 
@@ -364,11 +364,11 @@ namespace Azure.ResourceManager.MigrationDiscovery
         }
 
         /// <summary> Gets or sets when dependency mapping collection is last started. </summary>
-        public DateTimeOffset? DependencyMappingStartsOn
+        public DateTimeOffset? DependencyMappingStartOn
         {
             get
             {
-                return Properties is null ? default : Properties.DependencyMappingStartsOn;
+                return Properties is null ? default : Properties.DependencyMappingStartOn;
             }
         }
 

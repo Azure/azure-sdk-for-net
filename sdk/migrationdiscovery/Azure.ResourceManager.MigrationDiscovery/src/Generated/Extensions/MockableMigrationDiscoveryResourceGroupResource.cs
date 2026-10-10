@@ -161,11 +161,11 @@ namespace Azure.ResourceManager.MigrationDiscovery.Mocking
             return GetMasterSites().Get(siteName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServerSiteResources in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of ServerSiteResources and their operations over a ServerSiteResource. </returns>
-        public virtual ServerSiteResourceCollection GetServerSiteResources()
+        /// <summary> Gets a collection of ServerSites in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ServerSites and their operations over a ServerSiteResource. </returns>
+        public virtual ServerSiteCollection GetServerSites()
         {
-            return GetCachedClient(client => new ServerSiteResourceCollection(client, Id));
+            return GetCachedClient(client => new ServerSiteCollection(client, Id));
         }
 
         /// <summary>
@@ -190,11 +190,11 @@ namespace Azure.ResourceManager.MigrationDiscovery.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServerSiteResource>> GetServerSiteResourceAsync(string siteName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerSiteResource>> GetServerSiteAsync(string siteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            return await GetServerSiteResources().GetAsync(siteName, cancellationToken).ConfigureAwait(false);
+            return await GetServerSites().GetAsync(siteName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -219,11 +219,11 @@ namespace Azure.ResourceManager.MigrationDiscovery.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServerSiteResource> GetServerSiteResource(string siteName, CancellationToken cancellationToken = default)
+        public virtual Response<ServerSiteResource> GetServerSite(string siteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            return GetServerSiteResources().Get(siteName, cancellationToken);
+            return GetServerSites().Get(siteName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VmwareSites in the <see cref="ResourceGroupResource"/>. </summary>

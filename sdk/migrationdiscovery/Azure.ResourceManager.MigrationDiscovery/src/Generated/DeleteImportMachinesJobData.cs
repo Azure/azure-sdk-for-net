@@ -77,11 +77,11 @@ namespace Azure.ResourceManager.MigrationDiscovery
         }
 
         /// <summary> deletion Confirmation. </summary>
-        public bool? DeletionConfirmation
+        public bool? IsDeletionConfirmation
         {
             get
             {
-                return Properties is null ? default : Properties.DeletionConfirmation;
+                return Properties is null ? default : Properties.IsDeletionConfirmation;
             }
         }
 

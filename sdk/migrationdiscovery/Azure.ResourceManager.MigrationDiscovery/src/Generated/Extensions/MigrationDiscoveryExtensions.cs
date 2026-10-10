@@ -668,21 +668,21 @@ namespace Azure.ResourceManager.MigrationDiscovery
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="MigrationDiscoveryServerResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMigrationDiscoveryArmClient.GetServerResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMigrationDiscoveryArmClient.GetMigrationDiscoveryServerResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ServerResource"/> object. </returns>
-        public static ServerResource GetServerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationDiscoveryServerResource"/> object. </returns>
+        public static MigrationDiscoveryServerResource GetMigrationDiscoveryServerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMigrationDiscoveryArmClient(client).GetServerResource(id);
+            return GetMockableMigrationDiscoveryArmClient(client).GetMigrationDiscoveryServerResource(id);
         }
 
         /// <summary>
@@ -758,21 +758,21 @@ namespace Azure.ResourceManager.MigrationDiscovery
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MachineResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="MigrationDiscoveryMachineResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMigrationDiscoveryArmClient.GetMachineResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMigrationDiscoveryArmClient.GetMigrationDiscoveryMachineResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineResource"/> object. </returns>
-        public static MachineResource GetMachineResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationDiscoveryMachineResource"/> object. </returns>
+        public static MigrationDiscoveryMachineResource GetMigrationDiscoveryMachineResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMigrationDiscoveryArmClient(client).GetMachineResource(id);
+            return GetMockableMigrationDiscoveryArmClient(client).GetMigrationDiscoveryMachineResource(id);
         }
 
         /// <summary>
@@ -812,21 +812,21 @@ namespace Azure.ResourceManager.MigrationDiscovery
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VcenterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="MigrationDiscoveryVcenterResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMigrationDiscoveryArmClient.GetVcenterResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMigrationDiscoveryArmClient.GetMigrationDiscoveryVcenterResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="VcenterResource"/> object. </returns>
-        public static VcenterResource GetVcenterResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationDiscoveryVcenterResource"/> object. </returns>
+        public static MigrationDiscoveryVcenterResource GetMigrationDiscoveryVcenterResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMigrationDiscoveryArmClient(client).GetVcenterResource(id);
+            return GetMockableMigrationDiscoveryArmClient(client).GetMigrationDiscoveryVcenterResource(id);
         }
 
         /// <summary>
@@ -940,27 +940,27 @@ namespace Azure.ResourceManager.MigrationDiscovery
         }
 
         /// <summary>
-        /// Gets a collection of ServerSiteResources in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of ServerSites in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMigrationDiscoveryResourceGroupResource.GetServerSiteResources()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMigrationDiscoveryResourceGroupResource.GetServerSites()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ServerSiteResources and their operations over a ServerSiteResource. </returns>
-        public static ServerSiteResourceCollection GetServerSiteResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ServerSites and their operations over a ServerSiteResource. </returns>
+        public static ServerSiteCollection GetServerSites(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMigrationDiscoveryResourceGroupResource(resourceGroupResource).GetServerSiteResources();
+            return GetMockableMigrationDiscoveryResourceGroupResource(resourceGroupResource).GetServerSites();
         }
 
         /// <summary>
         /// Get a ServerSiteResource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMigrationDiscoveryResourceGroupResource.GetServerSiteResourceAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMigrationDiscoveryResourceGroupResource.GetServerSiteAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -968,18 +968,18 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ServerSiteResource>> GetServerSiteResourceAsync(this ResourceGroupResource resourceGroupResource, string siteName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ServerSiteResource>> GetServerSiteAsync(this ResourceGroupResource resourceGroupResource, string siteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableMigrationDiscoveryResourceGroupResource(resourceGroupResource).GetServerSiteResourceAsync(siteName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMigrationDiscoveryResourceGroupResource(resourceGroupResource).GetServerSiteAsync(siteName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a ServerSiteResource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMigrationDiscoveryResourceGroupResource.GetServerSiteResource(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMigrationDiscoveryResourceGroupResource.GetServerSite(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -987,11 +987,11 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ServerSiteResource> GetServerSiteResource(this ResourceGroupResource resourceGroupResource, string siteName, CancellationToken cancellationToken = default)
+        public static Response<ServerSiteResource> GetServerSite(this ResourceGroupResource resourceGroupResource, string siteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMigrationDiscoveryResourceGroupResource(resourceGroupResource).GetServerSiteResource(siteName, cancellationToken);
+            return GetMockableMigrationDiscoveryResourceGroupResource(resourceGroupResource).GetServerSite(siteName, cancellationToken);
         }
 
         /// <summary>
@@ -1180,36 +1180,36 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// List ServerSiteResource resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMigrationDiscoverySubscriptionResource.GetServerSiteResourcesAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMigrationDiscoverySubscriptionResource.GetServerSitesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ServerSiteResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ServerSiteResource> GetServerSiteResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ServerSiteResource> GetServerSitesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMigrationDiscoverySubscriptionResource(subscriptionResource).GetServerSiteResourcesAsync(cancellationToken);
+            return GetMockableMigrationDiscoverySubscriptionResource(subscriptionResource).GetServerSitesAsync(cancellationToken);
         }
 
         /// <summary>
         /// List ServerSiteResource resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMigrationDiscoverySubscriptionResource.GetServerSiteResources(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMigrationDiscoverySubscriptionResource.GetServerSites(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ServerSiteResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ServerSiteResource> GetServerSiteResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<ServerSiteResource> GetServerSites(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMigrationDiscoverySubscriptionResource(subscriptionResource).GetServerSiteResources(cancellationToken);
+            return GetMockableMigrationDiscoverySubscriptionResource(subscriptionResource).GetServerSites(cancellationToken);
         }
 
         /// <summary>

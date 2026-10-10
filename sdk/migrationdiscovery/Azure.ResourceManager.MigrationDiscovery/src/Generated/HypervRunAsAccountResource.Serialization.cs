@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.MigrationDiscovery
 {
     /// <summary></summary>
-    public partial class HypervRunAsAccountResource : IJsonModel<HypervRunAsAccountResourceData>
+    public partial class HypervRunAsAccountResource : IJsonModel<HypervRunAsAccountData>
     {
-        private static IJsonModel<HypervRunAsAccountResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<HypervRunAsAccountData> s_dataDeserializationInstance;
 
-        private static IJsonModel<HypervRunAsAccountResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HypervRunAsAccountResourceData();
+        private static IJsonModel<HypervRunAsAccountData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HypervRunAsAccountData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HypervRunAsAccountResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HypervRunAsAccountResourceData>)Data).Write(writer, options);
+        void IJsonModel<HypervRunAsAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HypervRunAsAccountData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HypervRunAsAccountResourceData IJsonModel<HypervRunAsAccountResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        HypervRunAsAccountData IJsonModel<HypervRunAsAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HypervRunAsAccountResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HypervRunAsAccountResourceData>(Data, options, AzureResourceManagerMigrationDiscoveryContext.Default);
+        BinaryData IPersistableModel<HypervRunAsAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HypervRunAsAccountData>(Data, options, AzureResourceManagerMigrationDiscoveryContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HypervRunAsAccountResourceData IPersistableModel<HypervRunAsAccountResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HypervRunAsAccountResourceData>(data, options, AzureResourceManagerMigrationDiscoveryContext.Default);
+        HypervRunAsAccountData IPersistableModel<HypervRunAsAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HypervRunAsAccountData>(data, options, AzureResourceManagerMigrationDiscoveryContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HypervRunAsAccountResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<HypervRunAsAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

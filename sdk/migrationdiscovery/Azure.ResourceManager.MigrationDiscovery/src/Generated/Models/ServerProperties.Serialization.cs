@@ -124,10 +124,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 writer.WritePropertyName("firmware"u8);
                 writer.WriteStringValue(Firmware);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecureBootEnabled))
+            if (options.Format != "W" && Optional.IsDefined(IsSecureBootEnabled))
             {
                 writer.WritePropertyName("secureBootEnabled"u8);
-                writer.WriteBooleanValue(SecureBootEnabled.Value);
+                writer.WriteBooleanValue(IsSecureBootEnabled.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(GuestOSDetails))
             {
@@ -149,10 +149,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 writer.WritePropertyName("numberOfSecurityRisks"u8);
                 writer.WriteNumberValue(NumberOfSecurityRisks.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(GuestDetailsDiscoveryOn))
+            if (options.Format != "W" && Optional.IsDefined(GuestDetailsDiscoveryTimestamp))
             {
                 writer.WritePropertyName("guestDetailsDiscoveryTimestamp"u8);
-                writer.WriteStringValue(GuestDetailsDiscoveryOn.Value, "O");
+                writer.WriteStringValue(GuestDetailsDiscoveryTimestamp.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(IsGuestDetailsDiscoveryInProgress))
             {
@@ -164,10 +164,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 writer.WritePropertyName("dependencyMapping"u8);
                 writer.WriteStringValue(DependencyMapping);
             }
-            if (options.Format != "W" && Optional.IsDefined(DependencyMappingStartsOn))
+            if (options.Format != "W" && Optional.IsDefined(DependencyMappingStartOn))
             {
                 writer.WritePropertyName("dependencyMappingStartTime"u8);
-                writer.WriteStringValue(DependencyMappingStartsOn.Value, "O");
+                writer.WriteStringValue(DependencyMappingStartOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(DependencyMappingEndTime))
             {
@@ -392,15 +392,15 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             string validationRequired = default;
             ProcessorInfo processorInfo = default;
             string firmware = default;
-            bool? secureBootEnabled = default;
+            bool? isSecureBootEnabled = default;
             GuestOSDetails guestOSDetails = default;
             int? numberOfApplications = default;
             int? numberOfSoftware = default;
             int? numberOfSecurityRisks = default;
-            DateTimeOffset? guestDetailsDiscoveryOn = default;
+            DateTimeOffset? guestDetailsDiscoveryTimestamp = default;
             bool? isGuestDetailsDiscoveryInProgress = default;
             string dependencyMapping = default;
-            DateTimeOffset? dependencyMappingStartsOn = default;
+            DateTimeOffset? dependencyMappingStartOn = default;
             string dependencyMappingEndTime = default;
             string runAsAccountId = default;
             IReadOnlyList<string> applianceNames = default;
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    secureBootEnabled = prop.Value.GetBoolean();
+                    isSecureBootEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("guestOsDetails"u8))
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    guestDetailsDiscoveryOn = prop.Value.GetDateTimeOffset("O");
+                    guestDetailsDiscoveryTimestamp = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("isGuestDetailsDiscoveryInProgress"u8))
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    dependencyMappingStartsOn = prop.Value.GetDateTimeOffset("O");
+                    dependencyMappingStartOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("dependencyMappingEndTime"u8))
@@ -781,7 +781,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
+                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     tags = dictionary;
@@ -826,7 +826,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ServerProperties(
@@ -838,15 +838,15 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 validationRequired,
                 processorInfo,
                 firmware,
-                secureBootEnabled,
+                isSecureBootEnabled,
                 guestOSDetails,
                 numberOfApplications,
                 numberOfSoftware,
                 numberOfSecurityRisks,
-                guestDetailsDiscoveryOn,
+                guestDetailsDiscoveryTimestamp,
                 isGuestDetailsDiscoveryInProgress,
                 dependencyMapping,
-                dependencyMappingStartsOn,
+                dependencyMappingStartOn,
                 dependencyMappingEndTime,
                 runAsAccountId,
                 applianceNames ?? new ChangeTrackingList<string>(),

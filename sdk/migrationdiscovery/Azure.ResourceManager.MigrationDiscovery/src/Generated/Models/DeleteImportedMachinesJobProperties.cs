@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="errorSasUri"> error Sas Uri. </param>
         /// <param name="jobState"> job State. </param>
         /// <param name="numberOfMachinesDeleted"> number Of Machines Deleted. </param>
-        /// <param name="deletionConfirmation"> deletion Confirmation. </param>
+        /// <param name="isDeletionConfirmation"> deletion Confirmation. </param>
         /// <param name="errors"> errors list. </param>
         /// <param name="status"> Gets or sets the Job status. </param>
         /// <param name="startTime"> Gets or sets the Job start time. </param>
@@ -36,13 +36,13 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="displayName"> Gets or sets the Display name. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeleteImportedMachinesJobProperties(string blobName, string errorSasUri, DeleteImportedMachinesJobPropertiesJobState? jobState, int? numberOfMachinesDeleted, bool? deletionConfirmation, IReadOnlyList<string> errors, string status, string startTime, string endTime, string displayName, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeleteImportedMachinesJobProperties(string blobName, string errorSasUri, DeleteImportedMachinesJobPropertiesJobState? jobState, int? numberOfMachinesDeleted, bool? isDeletionConfirmation, IReadOnlyList<string> errors, string status, string startTime, string endTime, string displayName, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BlobName = blobName;
             ErrorSasUri = errorSasUri;
             JobState = jobState;
             NumberOfMachinesDeleted = numberOfMachinesDeleted;
-            DeletionConfirmation = deletionConfirmation;
+            IsDeletionConfirmation = isDeletionConfirmation;
             Errors = errors;
             Status = status;
             StartTime = startTime;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public int? NumberOfMachinesDeleted { get; }
 
         /// <summary> deletion Confirmation. </summary>
-        public bool? DeletionConfirmation { get; }
+        public bool? IsDeletionConfirmation { get; }
 
         /// <summary> errors list. </summary>
         public IReadOnlyList<string> Errors { get; } = new ChangeTrackingList<string>();

@@ -341,13 +341,13 @@ namespace Azure.ResourceManager.MigrationDiscovery.Mocking
             return new ServerJobResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ServerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MigrationDiscoveryServerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerResource"/> object. </returns>
-        public virtual ServerResource GetServerResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationDiscoveryServerResource"/> object. </returns>
+        public virtual MigrationDiscoveryServerResource GetMigrationDiscoveryServerResource(ResourceIdentifier id)
         {
-            ServerResource.ValidateResourceId(id);
-            return new ServerResource(Client, id);
+            MigrationDiscoveryServerResource.ValidateResourceId(id);
+            return new MigrationDiscoveryServerResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ServerSoftwareInventoryResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -386,13 +386,13 @@ namespace Azure.ResourceManager.MigrationDiscovery.Mocking
             return new VmwareJobResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="MachineResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MigrationDiscoveryMachineResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineResource"/> object. </returns>
-        public virtual MachineResource GetMachineResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationDiscoveryMachineResource"/> object. </returns>
+        public virtual MigrationDiscoveryMachineResource GetMigrationDiscoveryMachineResource(ResourceIdentifier id)
         {
-            MachineResource.ValidateResourceId(id);
-            return new MachineResource(Client, id);
+            MigrationDiscoveryMachineResource.ValidateResourceId(id);
+            return new MigrationDiscoveryMachineResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="VmwareMachineSoftwareInventoryResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -413,13 +413,13 @@ namespace Azure.ResourceManager.MigrationDiscovery.Mocking
             return new VmwareRunAsAccountResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="VcenterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MigrationDiscoveryVcenterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VcenterResource"/> object. </returns>
-        public virtual VcenterResource GetVcenterResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationDiscoveryVcenterResource"/> object. </returns>
+        public virtual MigrationDiscoveryVcenterResource GetMigrationDiscoveryVcenterResource(ResourceIdentifier id)
         {
-            VcenterResource.ValidateResourceId(id);
-            return new VcenterResource(Client, id);
+            MigrationDiscoveryVcenterResource.ValidateResourceId(id);
+            return new MigrationDiscoveryVcenterResource(Client, id);
         }
     }
 }

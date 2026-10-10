@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
     /// <summary>
     /// A class representing a ServerSoftwareInventory along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServerSoftwareInventoryResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServerResource"/> using the GetServerSoftwareInventories method.
+    /// Otherwise you can get one from its parent resource <see cref="MigrationDiscoveryServerResource"/> using the GetServerSoftwareInventories method.
     /// </summary>
     public partial class ServerSoftwareInventoryResource : ArmResource
     {
