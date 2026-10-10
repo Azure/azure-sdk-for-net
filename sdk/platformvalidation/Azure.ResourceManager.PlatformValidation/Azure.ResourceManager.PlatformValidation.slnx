@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.PlatformValidation.csproj" />
+  <Project Path="tests/Azure.ResourceManager.PlatformValidation.Tests.csproj" />
+</Solution>
