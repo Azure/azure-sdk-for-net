@@ -10,15 +10,12 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected DeleteImportMachinesJobCollection() { }
         public virtual Azure.Response<bool> Exists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobResource> Get(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobResource>> GetAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobResource> GetIfExists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobResource>> GetIfExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobResource>.GetEnumerator() { throw null; }
@@ -56,7 +53,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string jobName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -68,18 +64,14 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected DiscoverySiteDataSourceCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string discoverySiteDataSourceName, Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string discoverySiteDataSourceName, Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource> Get(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource>> GetAsync(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource> GetIfExists(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource>> GetIfExistsAsync(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource>.GetEnumerator() { throw null; }
@@ -108,10 +100,8 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string webAppSiteName, string discoverySiteDataSourceName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -119,22 +109,18 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ExportImportedMachinesJobCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource>, System.Collections.IEnumerable
     {
         protected ExportImportedMachinesJobCollection() { }
         public virtual Azure.Response<bool> Exists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource> Get(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource>> GetAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource> GetIfExists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource>> GetIfExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource>.GetEnumerator() { throw null; }
@@ -166,7 +152,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string jobName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -178,18 +163,14 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected HypervClusterCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string clusterName, Azure.ResourceManager.MigrationDiscovery.HypervClusterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string clusterName, Azure.ResourceManager.MigrationDiscovery.HypervClusterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource> Get(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource>> GetAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource> GetIfExists(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource>> GetIfExistsAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource>.GetEnumerator() { throw null; }
@@ -225,10 +206,8 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string clusterName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.HypervClusterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervClusterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervClusterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -236,25 +215,20 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervClusterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervClusterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.HypervClusterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.HypervClusterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class HypervHostCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervHostResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervHostResource>, System.Collections.IEnumerable
     {
         protected HypervHostCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.HypervHostResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string hostName, Azure.ResourceManager.MigrationDiscovery.HypervHostData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.HypervHostResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string hostName, Azure.ResourceManager.MigrationDiscovery.HypervHostData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervHostResource> Get(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.HypervHostResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.HypervHostResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervHostResource>> GetAsync(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.HypervHostResource> GetIfExists(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.HypervHostResource>> GetIfExistsAsync(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.HypervHostResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervHostResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.HypervHostResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervHostResource>.GetEnumerator() { throw null; }
@@ -288,10 +262,8 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string hostName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervHostResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervHostResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.HypervHostData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervHostData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervHostData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -299,22 +271,18 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervHostData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervHostData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.HypervHostResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.HypervHostData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.HypervHostResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.HypervHostData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class HypervJobCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervJobResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervJobResource>, System.Collections.IEnumerable
     {
         protected HypervJobCollection() { }
         public virtual Azure.Response<bool> Exists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervJobResource> Get(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.HypervJobResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.HypervJobResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervJobResource>> GetAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.HypervJobResource> GetIfExists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.HypervJobResource>> GetIfExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.HypervJobResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervJobResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.HypervJobResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervJobResource>.GetEnumerator() { throw null; }
@@ -349,7 +317,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string jobName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervJobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervJobResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.HypervJobData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervJobData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervJobData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -361,15 +328,12 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected HypervMachineCollection() { }
         public virtual Azure.Response<bool> Exists(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource> Get(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource> GetAll(string filter = null, int? maxCount = default(int?), string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource> GetAllAsync(string filter = null, int? maxCount = default(int?), string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource>> GetAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource> GetIfExists(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource>> GetIfExistsAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource>.GetEnumerator() { throw null; }
@@ -457,11 +421,9 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string machineName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryCollection GetHypervVmSoftwareInventories() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource> GetHypervVmSoftwareInventory(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource>> GetHypervVmSoftwareInventoryAsync(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.HypervMachineData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervMachineData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervMachineData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -469,22 +431,18 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervMachineData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervMachineData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource> Update(Azure.ResourceManager.MigrationDiscovery.Models.HypervMachinePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource>> UpdateAsync(Azure.ResourceManager.MigrationDiscovery.Models.HypervMachinePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class HypervRunAsAccountCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource>, System.Collections.IEnumerable
     {
         protected HypervRunAsAccountCollection() { }
         public virtual Azure.Response<bool> Exists(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource> Get(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource>> GetAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource> GetIfExists(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource>> GetIfExistsAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource>.GetEnumerator() { throw null; }
@@ -517,7 +475,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string accountName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -529,18 +486,14 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected HypervSiteCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.MigrationDiscovery.HypervSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.MigrationDiscovery.HypervSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource> Get(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource>> GetAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource> GetIfExists(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource>> GetIfExistsAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource>.GetEnumerator() { throw null; }
@@ -575,76 +528,54 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual Azure.ResourceManager.MigrationDiscovery.HypervSiteData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ClientGroupMembers(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ClientGroupMembersAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SiteErrorSummary> ComputeErrorSummary(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SiteErrorSummary>> ComputeErrorSummaryAsync(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.HypervSiteUsage> Computeusage(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.HypervSiteUsage>> ComputeusageAsync(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ExportApplications(Azure.WaitUntil waitUntil, System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ExportApplicationsAsync(Azure.WaitUntil waitUntil, System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ExportDependencies(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ExportDependenciesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ExportMachineErrors(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryExportMachineErrorsRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ExportMachineErrorsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryExportMachineErrorsRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> GenerateCoarseMap(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> GenerateCoarseMapAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> GenerateDetailedMap(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> GenerateDetailedMapAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySiteHealthSummaryList> GetHealthSummary(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySiteHealthSummaryList>> GetHealthSummaryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource> GetHypervCluster(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervClusterResource>> GetHypervClusterAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.HypervClusterCollection GetHypervClusters() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervHostResource> GetHypervHost(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervHostResource>> GetHypervHostAsync(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.HypervHostCollection GetHypervHosts() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervJobResource> GetHypervJob(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervJobResource>> GetHypervJobAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.HypervJobCollection GetHypervJobs() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource> GetHypervMachine(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervMachineResource>> GetHypervMachineAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.HypervMachineCollection GetHypervMachines() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.OperationStatus> GetHypervOperationsStatus(string operationStatusName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.OperationStatus>> GetHypervOperationsStatusAsync(string operationStatusName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource> GetHypervRunAsAccount(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource>> GetHypervRunAsAccountAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountCollection GetHypervRunAsAccounts() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ServerGroupMembers(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ServerGroupMembersAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.HypervSiteUsage> Summary(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.HypervSiteUsage>> SummaryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.HypervSiteData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervSiteData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervSiteData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -652,28 +583,22 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervSiteData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.HypervSiteData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource> Update(Azure.ResourceManager.MigrationDiscovery.Models.HypervSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource>> UpdateAsync(Azure.ResourceManager.MigrationDiscovery.Models.HypervSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> UpdateDependencyMapStatus(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.UpdateMachineDepMapStatus mapRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> UpdateDependencyMapStatusAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.UpdateMachineDepMapStatus mapRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> UpdateProperties(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachineMetadataList metaData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> UpdatePropertiesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachineMetadataList metaData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class HypervVmSoftwareInventoryCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource>, System.Collections.IEnumerable
     {
         protected HypervVmSoftwareInventoryCollection() { }
         public virtual Azure.Response<bool> Exists(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource> Get(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource>> GetAsync(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource> GetIfExists(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource>> GetIfExistsAsync(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource>.GetEnumerator() { throw null; }
@@ -702,7 +627,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string machineName, Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.HypervVmSoftwareInventoryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -714,15 +638,12 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected IisWebApplicationsCollection() { }
         public virtual Azure.Response<bool> Exists(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource> Get(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource> GetAll(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource> GetAllAsync(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource>> GetAsync(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource> GetIfExists(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource>> GetIfExistsAsync(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource>.GetEnumerator() { throw null; }
@@ -772,7 +693,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string webAppSiteName, string webApplicationName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -780,22 +700,18 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource> Update(Azure.ResourceManager.MigrationDiscovery.Models.IisWebApplicationsPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource>> UpdateAsync(Azure.ResourceManager.MigrationDiscovery.Models.IisWebApplicationsPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class IisWebServersCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource>, System.Collections.IEnumerable
     {
         protected IisWebServersCollection() { }
         public virtual Azure.Response<bool> Exists(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource> Get(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource> GetAll(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource> GetAllAsync(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource>> GetAsync(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource> GetIfExists(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource>> GetIfExistsAsync(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource>.GetEnumerator() { throw null; }
@@ -837,7 +753,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string webAppSiteName, string webServerName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.IisWebServersData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.IisWebServersData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.IisWebServersData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -849,15 +764,12 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected ImportJobCollection() { }
         public virtual Azure.Response<bool> Exists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportJobResource> Get(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.ImportJobResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.ImportJobResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportJobResource>> GetAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ImportJobResource> GetIfExists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ImportJobResource>> GetIfExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.ImportJobResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ImportJobResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.ImportJobResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ImportJobResource>.GetEnumerator() { throw null; }
@@ -892,7 +804,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string jobName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportJobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportJobResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.ImportJobData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ImportJobData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ImportJobData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -904,15 +815,12 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected ImportMachineCollection() { }
         public virtual Azure.Response<bool> Exists(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportMachineResource> Get(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.ImportMachineResource> GetAll(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.ImportMachineResource> GetAllAsync(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportMachineResource>> GetAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ImportMachineResource> GetIfExists(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ImportMachineResource>> GetIfExistsAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.ImportMachineResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ImportMachineResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.ImportMachineResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ImportMachineResource>.GetEnumerator() { throw null; }
@@ -972,10 +880,8 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string machineName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportMachineResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportMachineResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.ImportMachineData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ImportMachineData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ImportMachineData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -987,15 +893,12 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected ImportMachinesJobCollection() { }
         public virtual Azure.Response<bool> Exists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource> Get(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource>> GetAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource> GetIfExists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource>> GetIfExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource>.GetEnumerator() { throw null; }
@@ -1027,7 +930,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string jobName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1039,18 +941,14 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected ImportSiteCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.MigrationDiscovery.ImportSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.MigrationDiscovery.ImportSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> Get(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource>> GetAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> GetIfExists(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource>> GetIfExistsAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource>.GetEnumerator() { throw null; }
@@ -1080,49 +978,36 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual Azure.ResourceManager.MigrationDiscovery.ImportSiteData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySasUriResult> DeleteImportedMachines(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySasUriResult>> DeleteImportedMachinesAsync(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySasUriResult> ExportUri(Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySasUriResult body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySasUriResult>> ExportUriAsync(Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySasUriResult body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobResource> GetDeleteImportMachinesJob(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobResource>> GetDeleteImportMachinesJobAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.DeleteImportMachinesJobCollection GetDeleteImportMachinesJobs() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource> GetExportImportedMachinesJob(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobResource>> GetExportImportedMachinesJobAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.ExportImportedMachinesJobCollection GetExportImportedMachinesJobs() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportJobResource> GetImportJob(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportJobResource>> GetImportJobAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.ImportJobCollection GetImportJobs() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportMachineResource> GetImportMachine(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportMachineResource>> GetImportMachineAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.ImportMachineCollection GetImportMachines() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource> GetImportMachinesJob(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource>> GetImportMachinesJobAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobCollection GetImportMachinesJobs() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySasUriResult> ImportUri(Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySasUriResult body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySasUriResult>> ImportUriAsync(Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySasUriResult body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.ImportSiteData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ImportSiteData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ImportSiteData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1130,22 +1015,18 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ImportSiteData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ImportSiteData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> Update(Azure.ResourceManager.MigrationDiscovery.Models.ImportSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource>> UpdateAsync(Azure.ResourceManager.MigrationDiscovery.Models.ImportSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ImportSqlInventoryJobCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource>, System.Collections.IEnumerable
     {
         protected ImportSqlInventoryJobCollection() { }
         public virtual Azure.Response<bool> Exists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource> Get(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource>> GetAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource> GetIfExists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource>> GetIfExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource>.GetEnumerator() { throw null; }
@@ -1173,7 +1054,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string sqlSiteName, string jobName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1185,18 +1065,14 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected MasterSiteCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.MigrationDiscovery.MasterSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.MigrationDiscovery.MasterSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> Get(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource>> GetAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> GetIfExists(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource>> GetIfExistsAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource>.GetEnumerator() { throw null; }
@@ -1230,45 +1106,33 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual Azure.ResourceManager.MigrationDiscovery.MasterSiteData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SiteErrorSummary> ErrorSummary(Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryErrorSummaryRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SiteErrorSummary>> ErrorSummaryAsync(Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryErrorSummaryRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource> GetPrivateEndpointConnection(string peConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string peConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionCollection GetPrivateEndpointConnections() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.PrivateLinkResource> GetPrivateLinkResource(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.PrivateLinkResource>> GetPrivateLinkResourceAsync(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.PrivateLinkResourceCollection GetPrivateLinkResources() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource> GetSqlSite(string sqlSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource>> GetSqlSiteAsync(string sqlSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.SqlSiteCollection GetSqlSites() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.OperationStatus> GetVmwareOperationStatus(string operationStatusName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.OperationStatus>> GetVmwareOperationStatusAsync(string operationStatusName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource> GetWebAppSite(string webAppSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource>> GetWebAppSiteAsync(string webAppSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.WebAppSiteCollection GetWebAppSites() { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> RefreshArcStatus(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> RefreshArcStatusAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.MasterSiteData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MasterSiteData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MasterSiteData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1276,7 +1140,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MasterSiteData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MasterSiteData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MasterSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MasterSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class MigrationDiscoveryExtensions
@@ -1290,7 +1153,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public static Azure.ResourceManager.MigrationDiscovery.HypervMachineResource GetHypervMachineResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.HypervRunAsAccountResource GetHypervRunAsAccountResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource> GetHypervSite(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource>> GetHypervSiteAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.HypervSiteResource GetHypervSiteResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.HypervSiteCollection GetHypervSites(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
@@ -1303,7 +1165,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public static Azure.ResourceManager.MigrationDiscovery.ImportMachineResource GetImportMachineResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.ImportMachinesJobResource GetImportMachinesJobResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> GetImportSite(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource>> GetImportSiteAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.ImportSiteResource GetImportSiteResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.ImportSiteCollection GetImportSites(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
@@ -1311,7 +1172,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public static Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> GetImportSitesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource GetImportSqlInventoryJobResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> GetMasterSite(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource>> GetMasterSiteAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.MasterSiteResource GetMasterSiteResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.MasterSiteCollection GetMasterSites(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
@@ -1325,7 +1185,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public static Azure.ResourceManager.MigrationDiscovery.ServerJobResource GetServerJobResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource GetServerRunAsAccountResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> GetServerSite(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>> GetServerSiteAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.ServerSiteResource GetServerSiteResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.ServerSiteCollection GetServerSites(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
@@ -1346,7 +1205,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public static Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource GetVmwareMachineSoftwareInventoryResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource GetVmwareRunAsAccountResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource> GetVmwareSite(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource>> GetVmwareSiteAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource GetVmwareSiteResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MigrationDiscovery.VmwareSiteCollection GetVmwareSites(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
@@ -1360,15 +1218,12 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected MigrationDiscoveryMachineCollection() { }
         public virtual Azure.Response<bool> Exists(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource> Get(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource> GetAll(string filter = null, int? maxCount = default(int?), string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource> GetAllAsync(string filter = null, int? maxCount = default(int?), string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource>> GetAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource> GetIfExists(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource>> GetIfExistsAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource>.GetEnumerator() { throw null; }
@@ -1454,17 +1309,13 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string machineName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryCollection GetVmwareMachineSoftwareInventories() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource> GetVmwareMachineSoftwareInventory(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource>> GetVmwareMachineSoftwareInventoryAsync(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> Start(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> StartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> Stop(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> StopAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1472,7 +1323,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource> Update(Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachinePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource>> UpdateAsync(Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachinePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MigrationDiscoveryPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateEndpointConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateEndpointConnectionData>
@@ -1513,15 +1363,12 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected MigrationDiscoveryServerCollection() { }
         public virtual Azure.Response<bool> Exists(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource> Get(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource> GetAll(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource> GetAllAsync(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource>> GetAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource> GetIfExists(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource>> GetIfExistsAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource>.GetEnumerator() { throw null; }
@@ -1593,14 +1440,11 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string machineName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryCollection GetServerSoftwareInventories() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource> GetServerSoftwareInventory(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource>> GetServerSoftwareInventoryAsync(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1608,25 +1452,20 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource> Update(Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource>> UpdateAsync(Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MigrationDiscoveryVcenterCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource>, System.Collections.IEnumerable
     {
         protected MigrationDiscoveryVcenterCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string vcenterName, Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string vcenterName, Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource> Get(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource>> GetAsync(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource> GetIfExists(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource>> GetIfExistsAsync(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource>.GetEnumerator() { throw null; }
@@ -1664,10 +1503,8 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string vcenterName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1675,25 +1512,20 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class PrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
         protected PrivateEndpointConnectionCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string peConnectionName, Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string peConnectionName, Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string peConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string peConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource> Get(string peConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource>> GetAsync(string peConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource> GetIfExists(string peConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource>> GetIfExistsAsync(string peConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
@@ -1707,10 +1539,8 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string peConnectionName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1718,7 +1548,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateEndpointConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateEndpointConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.PrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class PrivateLinkResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateLinkResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateLinkResourceData>
@@ -1729,7 +1558,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string privateLinkResourceName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.PrivateLinkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.PrivateLinkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateLinkResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryPrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1741,15 +1569,12 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected PrivateLinkResourceCollection() { }
         public virtual Azure.Response<bool> Exists(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.PrivateLinkResource> Get(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.PrivateLinkResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.PrivateLinkResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.PrivateLinkResource>> GetAsync(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.PrivateLinkResource> GetIfExists(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.PrivateLinkResource>> GetIfExistsAsync(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.PrivateLinkResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.PrivateLinkResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.PrivateLinkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.PrivateLinkResource>.GetEnumerator() { throw null; }
@@ -1759,15 +1584,12 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected ServerJobCollection() { }
         public virtual Azure.Response<bool> Exists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerJobResource> Get(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.ServerJobResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.ServerJobResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerJobResource>> GetAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ServerJobResource> GetIfExists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ServerJobResource>> GetIfExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.ServerJobResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerJobResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.ServerJobResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerJobResource>.GetEnumerator() { throw null; }
@@ -1802,7 +1624,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string jobName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerJobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerJobResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.ServerJobData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerJobData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerJobData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1814,15 +1635,12 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected ServerRunAsAccountCollection() { }
         public virtual Azure.Response<bool> Exists(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource> Get(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource>> GetAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource> GetIfExists(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource>> GetIfExistsAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource>.GetEnumerator() { throw null; }
@@ -1855,7 +1673,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string accountName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1867,18 +1684,14 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected ServerSiteCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.MigrationDiscovery.ServerSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.MigrationDiscovery.ServerSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> Get(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>> GetAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> GetIfExists(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>> GetIfExistsAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>.GetEnumerator() { throw null; }
@@ -1914,71 +1727,50 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual Azure.ResourceManager.MigrationDiscovery.ServerSiteData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ClientGroupMembers(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ClientGroupMembersAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SiteErrorSummary> ComputeErrorSummary(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SiteErrorSummary>> ComputeErrorSummaryAsync(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryServerSiteUsageResult> Computeusage(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryServerSiteUsageResult>> ComputeusageAsync(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ExportApplications(Azure.WaitUntil waitUntil, System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ExportApplicationsAsync(Azure.WaitUntil waitUntil, System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ExportDependencies(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ExportDependenciesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ExportMachineErrors(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryExportMachineErrorsRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ExportMachineErrorsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryExportMachineErrorsRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> GenerateCoarseMap(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> GenerateCoarseMapAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> GenerateDetailedMap(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> GenerateDetailedMapAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySiteHealthSummaryList> GetHealthSummary(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySiteHealthSummaryList>> GetHealthSummaryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource> GetMigrationDiscoveryServer(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerResource>> GetMigrationDiscoveryServerAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryServerCollection GetMigrationDiscoveryServers() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerJobResource> GetServerJob(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerJobResource>> GetServerJobAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.ServerJobCollection GetServerJobs() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource> GetServerRunAsAccount(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountResource>> GetServerRunAsAccountAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.ServerRunAsAccountCollection GetServerRunAsAccounts() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.OperationStatus> GetServerSiteOperationsStatus(string operationStatusName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.OperationStatus>> GetServerSiteOperationsStatusAsync(string operationStatusName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> RefreshSite(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> RefreshSiteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ServerGroupMembers(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ServerGroupMembersAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.ServerSiteUsage> Summary(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.ServerSiteUsage>> SummaryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.ServerSiteData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1986,28 +1778,22 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.ServerSiteData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> Update(Azure.ResourceManager.MigrationDiscovery.Models.ServerSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>> UpdateAsync(Azure.ResourceManager.MigrationDiscovery.Models.ServerSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> UpdateDependencyMapStatus(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.UpdateMachineDepMapStatus mapRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> UpdateDependencyMapStatusAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.UpdateMachineDepMapStatus mapRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> UpdateProperties(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachineMetadataList metaData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> UpdatePropertiesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachineMetadataList metaData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ServerSoftwareInventoryCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource>, System.Collections.IEnumerable
     {
         protected ServerSoftwareInventoryCollection() { }
         public virtual Azure.Response<bool> Exists(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource> Get(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource>> GetAsync(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource> GetIfExists(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource>> GetIfExistsAsync(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource>.GetEnumerator() { throw null; }
@@ -2036,7 +1822,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string machineName, Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.ServerSoftwareInventoryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2048,15 +1833,12 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected SqlAvailabilityGroupCollection() { }
         public virtual Azure.Response<bool> Exists(string sqlAvailabilityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string sqlAvailabilityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupResource> Get(string sqlAvailabilityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupResource> GetAll(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupResource> GetAllAsync(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupResource>> GetAsync(string sqlAvailabilityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupResource> GetIfExists(string sqlAvailabilityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupResource>> GetIfExistsAsync(string sqlAvailabilityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupResource>.GetEnumerator() { throw null; }
@@ -2096,7 +1878,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string sqlSiteName, string sqlAvailabilityGroupName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2108,15 +1889,12 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected SqlDatabaseV2Collection() { }
         public virtual Azure.Response<bool> Exists(string sqlDatabaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string sqlDatabaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Resource> Get(string sqlDatabaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Resource> GetAll(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Resource> GetAllAsync(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Resource>> GetAsync(string sqlDatabaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Resource> GetIfExists(string sqlDatabaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Resource>> GetIfExistsAsync(string sqlDatabaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Resource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Resource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Resource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Resource>.GetEnumerator() { throw null; }
@@ -2160,7 +1938,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string sqlSiteName, string sqlDatabaseName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Resource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Resource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Data System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Data>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Data>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2172,18 +1949,14 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected SqlDiscoverySiteDataSourceCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string discoverySiteDataSourceName, Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string discoverySiteDataSourceName, Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource> Get(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource>> GetAsync(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource> GetIfExists(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource>> GetIfExistsAsync(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource>.GetEnumerator() { throw null; }
@@ -2212,10 +1985,8 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string sqlSiteName, string discoverySiteDataSourceName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2223,22 +1994,18 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SqlJobCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlJobResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlJobResource>, System.Collections.IEnumerable
     {
         protected SqlJobCollection() { }
         public virtual Azure.Response<bool> Exists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlJobResource> Get(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.SqlJobResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.SqlJobResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlJobResource>> GetAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.SqlJobResource> GetIfExists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.SqlJobResource>> GetIfExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.SqlJobResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlJobResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.SqlJobResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlJobResource>.GetEnumerator() { throw null; }
@@ -2273,7 +2040,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string sqlSiteName, string jobName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlJobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlJobResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.SqlJobData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.SqlJobData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.SqlJobData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2285,15 +2051,12 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected SqlRunAsAccountCollection() { }
         public virtual Azure.Response<bool> Exists(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountResource> Get(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountResource>> GetAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountResource> GetIfExists(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountResource>> GetIfExistsAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountResource>.GetEnumerator() { throw null; }
@@ -2326,7 +2089,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string sqlSiteName, string accountName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2338,15 +2100,12 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected SqlServerV2Collection() { }
         public virtual Azure.Response<bool> Exists(string sqlServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string sqlServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource> Get(string sqlServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource> GetAll(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource> GetAllAsync(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource>> GetAsync(string sqlServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource> GetIfExists(string sqlServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource>> GetIfExistsAsync(string sqlServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource>.GetEnumerator() { throw null; }
@@ -2407,7 +2166,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string sqlSiteName, string sqlServerName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.SqlServerV2Data System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Data>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Data>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2415,25 +2173,20 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Data>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Data>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource> Update(Azure.ResourceManager.MigrationDiscovery.Models.SqlServerV2Patch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource>> UpdateAsync(Azure.ResourceManager.MigrationDiscovery.Models.SqlServerV2Patch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SqlSiteCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource>, System.Collections.IEnumerable
     {
         protected SqlSiteCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string sqlSiteName, Azure.ResourceManager.MigrationDiscovery.SqlSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string sqlSiteName, Azure.ResourceManager.MigrationDiscovery.SqlSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string sqlSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string sqlSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource> Get(string sqlSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource>> GetAsync(string sqlSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource> GetIfExists(string sqlSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource>> GetIfExistsAsync(string sqlSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource>.GetEnumerator() { throw null; }
@@ -2465,62 +2218,45 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string sqlSiteName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SiteErrorSummary> ErrorSummary(Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryErrorSummaryRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SiteErrorSummary>> ErrorSummaryAsync(Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryErrorSummaryRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ExportSqlServerErrors(Azure.WaitUntil waitUntil, System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ExportSqlServerErrorsAsync(Azure.WaitUntil waitUntil, System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ExportSqlServers(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryExportSqlServersRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ExportSqlServersAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryExportSqlServersRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SqlInventoryImportContent> ExportUri(Azure.ResourceManager.MigrationDiscovery.Models.SqlInventoryImportContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SqlInventoryImportContent>> ExportUriAsync(Azure.ResourceManager.MigrationDiscovery.Models.SqlInventoryImportContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource> GetImportSqlInventoryJob(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobResource>> GetImportSqlInventoryJobAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.ImportSqlInventoryJobCollection GetImportSqlInventoryJobs() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupResource> GetSqlAvailabilityGroup(string sqlAvailabilityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupResource>> GetSqlAvailabilityGroupAsync(string sqlAvailabilityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.SqlAvailabilityGroupCollection GetSqlAvailabilityGroups() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Resource> GetSqlDatabaseV2(string sqlDatabaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Resource>> GetSqlDatabaseV2Async(string sqlDatabaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.SqlDatabaseV2Collection GetSqlDatabaseV2s() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource> GetSqlDiscoverySiteDataSource(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceResource>> GetSqlDiscoverySiteDataSourceAsync(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.SqlDiscoverySiteDataSourceCollection GetSqlDiscoverySiteDataSources() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlJobResource> GetSqlJob(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlJobResource>> GetSqlJobAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.SqlJobCollection GetSqlJobs() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.OperationStatus> GetSqlOperationStatus(string operationStatusName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.OperationStatus>> GetSqlOperationStatusAsync(string operationStatusName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountResource> GetSqlRunAsAccount(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountResource>> GetSqlRunAsAccountAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.SqlRunAsAccountCollection GetSqlRunAsAccounts() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource> GetSqlServerV2(string sqlServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.SqlServerV2Resource>> GetSqlServerV2Async(string sqlServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.SqlServerV2Collection GetSqlServerV2s() { throw null; }
         public virtual Azure.ResourceManager.ArmOperation ImportUri(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.SqlInventoryImportContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ImportUriAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.SqlInventoryImportContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> Refresh(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.SqlSiteRefreshContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> RefreshAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.SqlSiteRefreshContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SqlSiteUsage> Summary(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SqlSiteUsage>> SummaryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.SqlSiteData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.SqlSiteData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.SqlSiteData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2528,25 +2264,20 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.SqlSiteData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.SqlSiteData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.SqlSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.SqlSiteResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.SqlSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SqlInventoryImportContent> ValidateAndImportUri(Azure.ResourceManager.MigrationDiscovery.Models.SqlInventoryImportContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SqlInventoryImportContent>> ValidateAndImportUriAsync(Azure.ResourceManager.MigrationDiscovery.Models.SqlInventoryImportContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TomcatWebApplicationsCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource>, System.Collections.IEnumerable
     {
         protected TomcatWebApplicationsCollection() { }
         public virtual Azure.Response<bool> Exists(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource> Get(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource> GetAll(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource> GetAllAsync(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource>> GetAsync(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource> GetIfExists(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource>> GetIfExistsAsync(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource>.GetEnumerator() { throw null; }
@@ -2596,7 +2327,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string webAppSiteName, string webApplicationName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2604,22 +2334,18 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource> Update(System.Collections.Generic.IDictionary<string, System.BinaryData> body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource>> UpdateAsync(System.Collections.Generic.IDictionary<string, System.BinaryData> body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TomcatWebServersCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource>, System.Collections.IEnumerable
     {
         protected TomcatWebServersCollection() { }
         public virtual Azure.Response<bool> Exists(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource> Get(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource> GetAll(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource> GetAllAsync(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource>> GetAsync(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource> GetIfExists(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource>> GetIfExistsAsync(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource>.GetEnumerator() { throw null; }
@@ -2671,7 +2397,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string webAppSiteName, string webServerName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.TomcatWebServersData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2683,15 +2408,12 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected VmwareHostCollection() { }
         public virtual Azure.Response<bool> Exists(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareHostResource> Get(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.VmwareHostResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.VmwareHostResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareHostResource>> GetAsync(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.VmwareHostResource> GetIfExists(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.VmwareHostResource>> GetIfExistsAsync(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.VmwareHostResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.VmwareHostResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.VmwareHostResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.VmwareHostResource>.GetEnumerator() { throw null; }
@@ -2725,7 +2447,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string hostName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareHostResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareHostResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.VmwareHostData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VmwareHostData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VmwareHostData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2737,15 +2458,12 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected VmwareJobCollection() { }
         public virtual Azure.Response<bool> Exists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareJobResource> Get(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.VmwareJobResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.VmwareJobResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareJobResource>> GetAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.VmwareJobResource> GetIfExists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.VmwareJobResource>> GetIfExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.VmwareJobResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.VmwareJobResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.VmwareJobResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.VmwareJobResource>.GetEnumerator() { throw null; }
@@ -2780,7 +2498,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string jobName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareJobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareJobResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.VmwareJobData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VmwareJobData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VmwareJobData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2792,15 +2509,12 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected VmwareMachineSoftwareInventoryCollection() { }
         public virtual Azure.Response<bool> Exists(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource> Get(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource>> GetAsync(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource> GetIfExists(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource>> GetIfExistsAsync(Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource>.GetEnumerator() { throw null; }
@@ -2829,7 +2543,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string machineName, Azure.ResourceManager.MigrationDiscovery.Models.SoftwareInventoryName @default) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VmwareMachineSoftwareInventoryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2841,15 +2554,12 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected VmwareRunAsAccountCollection() { }
         public virtual Azure.Response<bool> Exists(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource> Get(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource>> GetAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource> GetIfExists(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource>> GetIfExistsAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource>.GetEnumerator() { throw null; }
@@ -2882,7 +2592,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string accountName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2894,18 +2603,14 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected VmwareSiteCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.MigrationDiscovery.VmwareSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.MigrationDiscovery.VmwareSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource> Get(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource>> GetAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource> GetIfExists(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource>> GetIfExistsAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource>.GetEnumerator() { throw null; }
@@ -2941,79 +2646,56 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual Azure.ResourceManager.MigrationDiscovery.VmwareSiteData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ClientGroupMembers(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ClientGroupMembersAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SiteErrorSummary> ComputeErrorSummary(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SiteErrorSummary>> ComputeErrorSummaryAsync(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.VmwareSiteUsage> Computeusage(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.VmwareSiteUsage>> ComputeusageAsync(System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ExportApplications(Azure.WaitUntil waitUntil, System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ExportApplicationsAsync(Azure.WaitUntil waitUntil, System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ExportDependencies(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ExportDependenciesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ExportMachineErrors(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryExportMachineErrorsRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ExportMachineErrorsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryExportMachineErrorsRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ExportMachines(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryExportMachinesRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ExportMachinesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryExportMachinesRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> GenerateCoarseMap(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> GenerateCoarseMapAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> GenerateDetailedMap(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> GenerateDetailedMapAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySiteHealthSummaryList> GetHealthSummary(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoverySiteHealthSummaryList>> GetHealthSummaryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource> GetMigrationDiscoveryMachine(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineResource>> GetMigrationDiscoveryMachineAsync(string machineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryMachineCollection GetMigrationDiscoveryMachines() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource> GetMigrationDiscoveryVcenter(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterResource>> GetMigrationDiscoveryVcenterAsync(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.MigrationDiscoveryVcenterCollection GetMigrationDiscoveryVcenters() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareHostResource> GetVmwareHost(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareHostResource>> GetVmwareHostAsync(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.VmwareHostCollection GetVmwareHosts() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareJobResource> GetVmwareJob(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareJobResource>> GetVmwareJobAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.VmwareJobCollection GetVmwareJobs() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.OperationStatus> GetVmwareOperationStatus(string operationStatusName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.OperationStatus>> GetVmwareOperationStatusAsync(string operationStatusName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource> GetVmwareRunAsAccount(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountResource>> GetVmwareRunAsAccountAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.VmwareRunAsAccountCollection GetVmwareRunAsAccounts() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ServerGroupMembers(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ServerGroupMembersAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.VmwareSiteUsage> Summary(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.VmwareSiteUsage>> SummaryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.VmwareSiteData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VmwareSiteData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.VmwareSiteData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3021,34 +2703,26 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.VmwareSiteData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.VmwareSiteData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource> Update(Azure.ResourceManager.MigrationDiscovery.Models.VmwareSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource>> UpdateAsync(Azure.ResourceManager.MigrationDiscovery.Models.VmwareSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> UpdateDependencyMapStatus(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.UpdateMachineDepMapStatus updateMachineDepMapStatus, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> UpdateDependencyMapStatusAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.UpdateMachineDepMapStatus updateMachineDepMapStatus, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> UpdateProperties(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachineMetadataList metaData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> UpdatePropertiesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryMachineMetadataList metaData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> UpdateRunAsAccount(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.UpdateMachineRunAsAccount updateMachineRunAsAccount, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> UpdateRunAsAccountAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.UpdateMachineRunAsAccount updateMachineRunAsAccount, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> UpdateTags(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.UpdateMachineTags updateMachineTags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> UpdateTagsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.UpdateMachineTags updateMachineTags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class WebAppExtendedMachineCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource>, System.Collections.IEnumerable
     {
         protected WebAppExtendedMachineCollection() { }
         public virtual Azure.Response<bool> Exists(string extendedMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string extendedMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource> Get(string extendedMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource> GetAll(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource> GetAllAsync(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource>> GetAsync(string extendedMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource> GetIfExists(string extendedMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource>> GetIfExistsAsync(string extendedMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource>.GetEnumerator() { throw null; }
@@ -3085,7 +2759,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string webAppSiteName, string extendedMachineName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3097,15 +2770,12 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected WebAppRunAsAccountCollection() { }
         public virtual Azure.Response<bool> Exists(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountResource> Get(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountResource>> GetAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountResource> GetIfExists(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountResource>> GetIfExistsAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountResource>.GetEnumerator() { throw null; }
@@ -3138,7 +2808,6 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string webAppSiteName, string accountName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3150,18 +2819,14 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         protected WebAppSiteCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string webAppSiteName, Azure.ResourceManager.MigrationDiscovery.WebAppSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string webAppSiteName, Azure.ResourceManager.MigrationDiscovery.WebAppSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string webAppSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string webAppSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource> Get(string webAppSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource>> GetAsync(string webAppSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource> GetIfExists(string webAppSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource>> GetIfExistsAsync(string webAppSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource>.GetEnumerator() { throw null; }
@@ -3192,54 +2857,41 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string webAppSiteName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SiteErrorSummary> ErrorSummary(Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryErrorSummaryRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.SiteErrorSummary>> ErrorSummaryAsync(Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryErrorSummaryRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> ExportInventory(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryExportWebAppsRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ExportInventoryAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryExportWebAppsRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsCollection GetAllIisWebApplications() { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.IisWebServersCollection GetAllIisWebServers() { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsCollection GetAllTomcatWebApplications() { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.TomcatWebServersCollection GetAllTomcatWebServers() { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource> GetDiscoverySiteDataSource(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceResource>> GetDiscoverySiteDataSourceAsync(string discoverySiteDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.DiscoverySiteDataSourceCollection GetDiscoverySiteDataSources() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource> GetIisWebApplications(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.IisWebApplicationsResource>> GetIisWebApplicationsAsync(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource> GetIisWebServers(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.IisWebServersResource>> GetIisWebServersAsync(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource> GetTomcatWebApplications(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.TomcatWebApplicationsResource>> GetTomcatWebApplicationsAsync(string webApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource> GetTomcatWebServers(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.TomcatWebServersResource>> GetTomcatWebServersAsync(string webServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource> GetWebAppExtendedMachine(string extendedMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineResource>> GetWebAppExtendedMachineAsync(string extendedMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.WebAppExtendedMachineCollection GetWebAppExtendedMachines() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.Models.WebApplication> GetWebApplicationsByWebAppSite(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.Models.WebApplication> GetWebApplicationsByWebAppSiteAsync(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountResource> GetWebAppRunAsAccount(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountResource>> GetWebAppRunAsAccountAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.WebAppRunAsAccountCollection GetWebAppRunAsAccounts() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MigrationDiscovery.Models.WebServer> GetWebServersByWebAppSite(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MigrationDiscovery.Models.WebServer> GetWebServersByWebAppSiteAsync(string filter = null, string maxCount = null, string continuationToken = null, int? totalRecordCount = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> Refresh(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.ProxySiteRefreshContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> RefreshAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.ProxySiteRefreshContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.WebAppSiteUsage> Summary(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.Models.WebAppSiteUsage>> SummaryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MigrationDiscovery.WebAppSiteData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.WebAppSiteData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscovery.WebAppSiteData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3247,10 +2899,8 @@ namespace Azure.ResourceManager.MigrationDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.WebAppSiteData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscovery.WebAppSiteData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.WebAppSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MigrationDiscovery.WebAppSiteResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.WebAppSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> UpdateProperties(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryWebAppPropertiesList body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> UpdatePropertiesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MigrationDiscovery.Models.MigrationDiscoveryWebAppPropertiesList body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
@@ -3308,23 +2958,18 @@ namespace Azure.ResourceManager.MigrationDiscovery.Mocking
     {
         protected MockableMigrationDiscoveryResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource> GetHypervSite(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.HypervSiteResource>> GetHypervSiteAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.HypervSiteCollection GetHypervSites() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource> GetImportSite(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ImportSiteResource>> GetImportSiteAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.ImportSiteCollection GetImportSites() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource> GetMasterSite(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.MasterSiteResource>> GetMasterSiteAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.MasterSiteCollection GetMasterSites() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource> GetServerSite(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.ServerSiteResource>> GetServerSiteAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.ServerSiteCollection GetServerSites() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource> GetVmwareSite(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscovery.VmwareSiteResource>> GetVmwareSiteAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MigrationDiscovery.VmwareSiteCollection GetVmwareSites() { throw null; }
     }
