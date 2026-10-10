@@ -44,15 +44,33 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
 
         private ClientDiagnostics WebTestsClientDiagnostics => _webTestsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private WebTests WebTestsRestClient => _webTestsRestClient ??= new WebTests(WebTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-06-15");
+        private WebTests WebTestsRestClient => _webTestsRestClient ??= new WebTests(
+            WebTestsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2022-06-15",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics WorkbooksClientDiagnostics => _workbooksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Workbooks WorkbooksRestClient => _workbooksRestClient ??= new Workbooks(WorkbooksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-06-01");
+        private Workbooks WorkbooksRestClient => _workbooksRestClient ??= new Workbooks(
+            WorkbooksClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2023-06-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ComponentsClientDiagnostics => _componentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Components ComponentsRestClient => _componentsRestClient ??= new Components(ComponentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-02-02");
+        private Components ComponentsRestClient => _componentsRestClient ??= new Components(
+            ComponentsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2020-02-02",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics DeletedWorkbooksClientDiagnostics => _deletedWorkbooksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

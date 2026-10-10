@@ -35,7 +35,13 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Mocking
 
         private ClientDiagnostics PrometheusRuleGroupResourcesClientDiagnostics => _prometheusRuleGroupResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PrometheusRuleGroups.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PrometheusRuleGroupResources PrometheusRuleGroupResourcesRestClient => _prometheusRuleGroupResourcesRestClient ??= new PrometheusRuleGroupResources(PrometheusRuleGroupResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-03-01");
+        private PrometheusRuleGroupResources PrometheusRuleGroupResourcesRestClient => _prometheusRuleGroupResourcesRestClient ??= new PrometheusRuleGroupResources(
+            PrometheusRuleGroupResourcesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2023-03-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// Retrieve Prometheus all rule group definitions in a subscription.

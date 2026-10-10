@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.PrometheusRuleGroups
         {
             TryGetApiVersion(ResourceType, out string prometheusRuleGroupApiVersion);
             _prometheusRuleGroupResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrometheusRuleGroups", ResourceType.Namespace, Diagnostics);
-            _prometheusRuleGroupResourcesRestClient = new PrometheusRuleGroupResources(_prometheusRuleGroupResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, prometheusRuleGroupApiVersion ?? "2023-03-01");
+            _prometheusRuleGroupResourcesRestClient = new PrometheusRuleGroupResources(
+                _prometheusRuleGroupResourcesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                prometheusRuleGroupApiVersion ?? "2023-03-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

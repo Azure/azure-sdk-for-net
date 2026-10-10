@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         {
             TryGetApiVersion(ResourceType, out string aiManagerApiVersion);
             _aiManagersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceAIManager", ResourceType.Namespace, Diagnostics);
-            _aiManagersRestClient = new AIManagers(_aiManagersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, aiManagerApiVersion ?? "2026-09-02-preview");
+            _aiManagersRestClient = new AIManagers(
+                _aiManagersClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                aiManagerApiVersion ?? "2026-09-02-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
