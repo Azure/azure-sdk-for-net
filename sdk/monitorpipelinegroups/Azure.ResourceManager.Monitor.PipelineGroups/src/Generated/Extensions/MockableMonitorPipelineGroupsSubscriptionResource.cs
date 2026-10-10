@@ -36,7 +36,13 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Mocking
 
         private ClientDiagnostics PipelineGroupOperationsClientDiagnostics => _pipelineGroupOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.PipelineGroups.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PipelineGroupOperations PipelineGroupOperationsRestClient => _pipelineGroupOperationsRestClient ??= new PipelineGroupOperations(PipelineGroupOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
+        private PipelineGroupOperations PipelineGroupOperationsRestClient => _pipelineGroupOperationsRestClient ??= new PipelineGroupOperations(
+            PipelineGroupOperationsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-04-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// Lists all workspaces in the specified subscription

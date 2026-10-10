@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(DscpConfigurationResource.ResourceType, out string dscpConfigurationApiVersion);
             _dscpConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", DscpConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _dscpConfigurationRestClient = new DscpConfiguration(_dscpConfigurationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dscpConfigurationApiVersion ?? "2026-01-01");
+            _dscpConfigurationRestClient = new DscpConfiguration(
+                _dscpConfigurationClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                dscpConfigurationApiVersion ?? "2026-01-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

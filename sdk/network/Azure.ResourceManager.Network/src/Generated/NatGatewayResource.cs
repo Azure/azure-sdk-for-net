@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string natGatewayApiVersion);
             _natGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _natGatewaysRestClient = new NatGateways(_natGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, natGatewayApiVersion ?? "2026-01-01");
+            _natGatewaysRestClient = new NatGateways(
+                _natGatewaysClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                natGatewayApiVersion ?? "2026-01-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

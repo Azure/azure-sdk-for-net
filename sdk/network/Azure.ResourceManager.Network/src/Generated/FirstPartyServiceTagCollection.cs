@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(FirstPartyServiceTagResource.ResourceType, out string firstPartyServiceTagApiVersion);
             _firstPartyServiceTagsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", FirstPartyServiceTagResource.ResourceType.Namespace, Diagnostics);
-            _firstPartyServiceTagsRestClient = new FirstPartyServiceTags(_firstPartyServiceTagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, firstPartyServiceTagApiVersion ?? "2026-01-01");
+            _firstPartyServiceTagsRestClient = new FirstPartyServiceTags(
+                _firstPartyServiceTagsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                firstPartyServiceTagApiVersion ?? "2026-01-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

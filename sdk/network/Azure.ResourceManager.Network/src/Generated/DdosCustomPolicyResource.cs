@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string ddosCustomPolicyApiVersion);
             _ddosCustomPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _ddosCustomPoliciesRestClient = new DdosCustomPolicies(_ddosCustomPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, ddosCustomPolicyApiVersion ?? "2026-01-01");
+            _ddosCustomPoliciesRestClient = new DdosCustomPolicies(
+                _ddosCustomPoliciesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                ddosCustomPolicyApiVersion ?? "2026-01-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

@@ -36,7 +36,13 @@ namespace Azure.ResourceManager.Nginx.Mocking
 
         private ClientDiagnostics NginxDeploymentsClientDiagnostics => _nginxDeploymentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Nginx.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NginxDeployments NginxDeploymentsRestClient => _nginxDeploymentsRestClient ??= new NginxDeployments(NginxDeploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-11-01");
+        private NginxDeployments NginxDeploymentsRestClient => _nginxDeploymentsRestClient ??= new NginxDeployments(
+            NginxDeploymentsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-11-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// List the NGINX deployments resources

@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string expressRouteLagApiVersion);
             _expressRouteLagsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _expressRouteLagsRestClient = new ExpressRouteLags(_expressRouteLagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteLagApiVersion ?? "2026-01-01");
+            _expressRouteLagsRestClient = new ExpressRouteLags(
+                _expressRouteLagsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                expressRouteLagApiVersion ?? "2026-01-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
