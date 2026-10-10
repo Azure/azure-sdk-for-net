@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WebAppProcessThreadInfoListResult(value, nextLink, additionalBinaryDataProperties);
+            return new WebAppProcessThreadInfoListResult(value ?? new ChangeTrackingList<WebAppProcessThreadInfo>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

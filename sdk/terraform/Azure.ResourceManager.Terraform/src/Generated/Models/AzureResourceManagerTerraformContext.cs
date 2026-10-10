@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Terraform
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(TerraformExportResult))]
     [ModelReaderWriterBuildable(typeof(TerraformOperationStatus))]
-    [ModelReaderWriterBuildable(typeof(UnknownCommonExportProperties))]
     public partial class AzureResourceManagerTerraformContext : ModelReaderWriterContext
     {
     }

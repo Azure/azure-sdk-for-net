@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HostNameBindingListResult(value, nextLink, additionalBinaryDataProperties);
+            return new HostNameBindingListResult(value ?? new ChangeTrackingList<HostNameBindingData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
