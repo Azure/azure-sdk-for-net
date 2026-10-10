@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
 {
     /// <summary> A resource introduced in preview and retained in the following stable API version. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class PreviewRetainedResource : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
