@@ -104,10 +104,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("ensembleModelDownloadTimeout"u8);
                 writer.WriteStringValue(EnsembleModelDownloadTimeout.Value, "P");
             }
-            if (Optional.IsDefined(StackEnsembleSettings))
+            if (_stackEnsembleSettingsIsDefined || Optional.IsDefined(StackEnsembleSettings))
             {
-                writer.WritePropertyName("stackEnsembleSettings"u8);
-                writer.WriteObjectValue(StackEnsembleSettings, options);
+                if (StackEnsembleSettings != null)
+                {
+                    writer.WritePropertyName("stackEnsembleSettings"u8);
+                    writer.WriteObjectValue(StackEnsembleSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("stackEnsembleSettings"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -157,6 +164,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             bool? enableStackEnsemble = default;
             bool? enableVoteEnsemble = default;
             TimeSpan? ensembleModelDownloadTimeout = default;
+            bool stackEnsembleSettingsIsDefined = false;
             MachineLearningStackEnsembleSettings stackEnsembleSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -217,6 +225,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("stackEnsembleSettings"u8))
                 {
+                    stackEnsembleSettingsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         stackEnsembleSettings = null;
@@ -238,7 +247,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 enableVoteEnsemble,
                 ensembleModelDownloadTimeout,
                 stackEnsembleSettings,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _stackEnsembleSettingsIsDefined = stackEnsembleSettingsIsDefined
+            };
         }
     }
 }

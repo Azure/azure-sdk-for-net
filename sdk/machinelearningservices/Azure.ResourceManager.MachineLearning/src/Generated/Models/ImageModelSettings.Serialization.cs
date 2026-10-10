@@ -78,165 +78,375 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(ImageModelSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AdvancedSettings))
+            if (_advancedSettingsIsDefined || Optional.IsDefined(AdvancedSettings))
             {
-                writer.WritePropertyName("advancedSettings"u8);
-                writer.WriteStringValue(AdvancedSettings);
+                if (AdvancedSettings != null)
+                {
+                    writer.WritePropertyName("advancedSettings"u8);
+                    writer.WriteStringValue(AdvancedSettings);
+                }
+                else
+                {
+                    writer.WriteNull("advancedSettings"u8);
+                }
             }
-            if (Optional.IsDefined(AmsGradient))
+            if (_amsGradientIsDefined || Optional.IsDefined(AmsGradient))
             {
-                writer.WritePropertyName("amsGradient"u8);
-                writer.WriteBooleanValue(AmsGradient.Value);
+                if (AmsGradient != null)
+                {
+                    writer.WritePropertyName("amsGradient"u8);
+                    writer.WriteBooleanValue(AmsGradient.Value);
+                }
+                else
+                {
+                    writer.WriteNull("amsGradient"u8);
+                }
             }
-            if (Optional.IsDefined(Augmentations))
+            if (_augmentationsIsDefined || Optional.IsDefined(Augmentations))
             {
-                writer.WritePropertyName("augmentations"u8);
-                writer.WriteStringValue(Augmentations);
+                if (Augmentations != null)
+                {
+                    writer.WritePropertyName("augmentations"u8);
+                    writer.WriteStringValue(Augmentations);
+                }
+                else
+                {
+                    writer.WriteNull("augmentations"u8);
+                }
             }
-            if (Optional.IsDefined(Beta1))
+            if (_beta1IsDefined || Optional.IsDefined(Beta1))
             {
-                writer.WritePropertyName("beta1"u8);
-                writer.WriteNumberValue(Beta1.Value);
+                if (Beta1 != null)
+                {
+                    writer.WritePropertyName("beta1"u8);
+                    writer.WriteNumberValue(Beta1.Value);
+                }
+                else
+                {
+                    writer.WriteNull("beta1"u8);
+                }
             }
-            if (Optional.IsDefined(Beta2))
+            if (_beta2IsDefined || Optional.IsDefined(Beta2))
             {
-                writer.WritePropertyName("beta2"u8);
-                writer.WriteNumberValue(Beta2.Value);
+                if (Beta2 != null)
+                {
+                    writer.WritePropertyName("beta2"u8);
+                    writer.WriteNumberValue(Beta2.Value);
+                }
+                else
+                {
+                    writer.WriteNull("beta2"u8);
+                }
             }
-            if (Optional.IsDefined(CheckpointFrequency))
+            if (_checkpointFrequencyIsDefined || Optional.IsDefined(CheckpointFrequency))
             {
-                writer.WritePropertyName("checkpointFrequency"u8);
-                writer.WriteNumberValue(CheckpointFrequency.Value);
+                if (CheckpointFrequency != null)
+                {
+                    writer.WritePropertyName("checkpointFrequency"u8);
+                    writer.WriteNumberValue(CheckpointFrequency.Value);
+                }
+                else
+                {
+                    writer.WriteNull("checkpointFrequency"u8);
+                }
             }
-            if (Optional.IsDefined(CheckpointModel))
+            if (_checkpointModelIsDefined || Optional.IsDefined(CheckpointModel))
             {
-                writer.WritePropertyName("checkpointModel"u8);
-                writer.WriteObjectValue(CheckpointModel, options);
+                if (CheckpointModel != null)
+                {
+                    writer.WritePropertyName("checkpointModel"u8);
+                    writer.WriteObjectValue(CheckpointModel, options);
+                }
+                else
+                {
+                    writer.WriteNull("checkpointModel"u8);
+                }
             }
-            if (Optional.IsDefined(CheckpointRunId))
+            if (_checkpointRunIdIsDefined || Optional.IsDefined(CheckpointRunId))
             {
-                writer.WritePropertyName("checkpointRunId"u8);
-                writer.WriteStringValue(CheckpointRunId);
+                if (CheckpointRunId != null)
+                {
+                    writer.WritePropertyName("checkpointRunId"u8);
+                    writer.WriteStringValue(CheckpointRunId);
+                }
+                else
+                {
+                    writer.WriteNull("checkpointRunId"u8);
+                }
             }
-            if (Optional.IsDefined(Distributed))
+            if (_distributedIsDefined || Optional.IsDefined(Distributed))
             {
-                writer.WritePropertyName("distributed"u8);
-                writer.WriteBooleanValue(Distributed.Value);
+                if (Distributed != null)
+                {
+                    writer.WritePropertyName("distributed"u8);
+                    writer.WriteBooleanValue(Distributed.Value);
+                }
+                else
+                {
+                    writer.WriteNull("distributed"u8);
+                }
             }
-            if (Optional.IsDefined(EarlyStopping))
+            if (_earlyStoppingIsDefined || Optional.IsDefined(EarlyStopping))
             {
-                writer.WritePropertyName("earlyStopping"u8);
-                writer.WriteBooleanValue(EarlyStopping.Value);
+                if (EarlyStopping != null)
+                {
+                    writer.WritePropertyName("earlyStopping"u8);
+                    writer.WriteBooleanValue(EarlyStopping.Value);
+                }
+                else
+                {
+                    writer.WriteNull("earlyStopping"u8);
+                }
             }
-            if (Optional.IsDefined(EarlyStoppingDelay))
+            if (_earlyStoppingDelayIsDefined || Optional.IsDefined(EarlyStoppingDelay))
             {
-                writer.WritePropertyName("earlyStoppingDelay"u8);
-                writer.WriteNumberValue(EarlyStoppingDelay.Value);
+                if (EarlyStoppingDelay != null)
+                {
+                    writer.WritePropertyName("earlyStoppingDelay"u8);
+                    writer.WriteNumberValue(EarlyStoppingDelay.Value);
+                }
+                else
+                {
+                    writer.WriteNull("earlyStoppingDelay"u8);
+                }
             }
-            if (Optional.IsDefined(EarlyStoppingPatience))
+            if (_earlyStoppingPatienceIsDefined || Optional.IsDefined(EarlyStoppingPatience))
             {
-                writer.WritePropertyName("earlyStoppingPatience"u8);
-                writer.WriteNumberValue(EarlyStoppingPatience.Value);
+                if (EarlyStoppingPatience != null)
+                {
+                    writer.WritePropertyName("earlyStoppingPatience"u8);
+                    writer.WriteNumberValue(EarlyStoppingPatience.Value);
+                }
+                else
+                {
+                    writer.WriteNull("earlyStoppingPatience"u8);
+                }
             }
-            if (Optional.IsDefined(EnableOnnxNormalization))
+            if (_enableOnnxNormalizationIsDefined || Optional.IsDefined(EnableOnnxNormalization))
             {
-                writer.WritePropertyName("enableOnnxNormalization"u8);
-                writer.WriteBooleanValue(EnableOnnxNormalization.Value);
+                if (EnableOnnxNormalization != null)
+                {
+                    writer.WritePropertyName("enableOnnxNormalization"u8);
+                    writer.WriteBooleanValue(EnableOnnxNormalization.Value);
+                }
+                else
+                {
+                    writer.WriteNull("enableOnnxNormalization"u8);
+                }
             }
-            if (Optional.IsDefined(EvaluationFrequency))
+            if (_evaluationFrequencyIsDefined || Optional.IsDefined(EvaluationFrequency))
             {
-                writer.WritePropertyName("evaluationFrequency"u8);
-                writer.WriteNumberValue(EvaluationFrequency.Value);
+                if (EvaluationFrequency != null)
+                {
+                    writer.WritePropertyName("evaluationFrequency"u8);
+                    writer.WriteNumberValue(EvaluationFrequency.Value);
+                }
+                else
+                {
+                    writer.WriteNull("evaluationFrequency"u8);
+                }
             }
-            if (Optional.IsDefined(GradientAccumulationStep))
+            if (_gradientAccumulationStepIsDefined || Optional.IsDefined(GradientAccumulationStep))
             {
-                writer.WritePropertyName("gradientAccumulationStep"u8);
-                writer.WriteNumberValue(GradientAccumulationStep.Value);
+                if (GradientAccumulationStep != null)
+                {
+                    writer.WritePropertyName("gradientAccumulationStep"u8);
+                    writer.WriteNumberValue(GradientAccumulationStep.Value);
+                }
+                else
+                {
+                    writer.WriteNull("gradientAccumulationStep"u8);
+                }
             }
-            if (Optional.IsDefined(LayersToFreeze))
+            if (_layersToFreezeIsDefined || Optional.IsDefined(LayersToFreeze))
             {
-                writer.WritePropertyName("layersToFreeze"u8);
-                writer.WriteNumberValue(LayersToFreeze.Value);
+                if (LayersToFreeze != null)
+                {
+                    writer.WritePropertyName("layersToFreeze"u8);
+                    writer.WriteNumberValue(LayersToFreeze.Value);
+                }
+                else
+                {
+                    writer.WriteNull("layersToFreeze"u8);
+                }
             }
-            if (Optional.IsDefined(LearningRate))
+            if (_learningRateIsDefined || Optional.IsDefined(LearningRate))
             {
-                writer.WritePropertyName("learningRate"u8);
-                writer.WriteNumberValue(LearningRate.Value);
+                if (LearningRate != null)
+                {
+                    writer.WritePropertyName("learningRate"u8);
+                    writer.WriteNumberValue(LearningRate.Value);
+                }
+                else
+                {
+                    writer.WriteNull("learningRate"u8);
+                }
             }
             if (Optional.IsDefined(LearningRateScheduler))
             {
                 writer.WritePropertyName("learningRateScheduler"u8);
                 writer.WriteStringValue(LearningRateScheduler.Value.ToString());
             }
-            if (Optional.IsDefined(ModelName))
+            if (_modelNameIsDefined || Optional.IsDefined(ModelName))
             {
-                writer.WritePropertyName("modelName"u8);
-                writer.WriteStringValue(ModelName);
+                if (ModelName != null)
+                {
+                    writer.WritePropertyName("modelName"u8);
+                    writer.WriteStringValue(ModelName);
+                }
+                else
+                {
+                    writer.WriteNull("modelName"u8);
+                }
             }
-            if (Optional.IsDefined(Momentum))
+            if (_momentumIsDefined || Optional.IsDefined(Momentum))
             {
-                writer.WritePropertyName("momentum"u8);
-                writer.WriteNumberValue(Momentum.Value);
+                if (Momentum != null)
+                {
+                    writer.WritePropertyName("momentum"u8);
+                    writer.WriteNumberValue(Momentum.Value);
+                }
+                else
+                {
+                    writer.WriteNull("momentum"u8);
+                }
             }
-            if (Optional.IsDefined(Nesterov))
+            if (_nesterovIsDefined || Optional.IsDefined(Nesterov))
             {
-                writer.WritePropertyName("nesterov"u8);
-                writer.WriteBooleanValue(Nesterov.Value);
+                if (Nesterov != null)
+                {
+                    writer.WritePropertyName("nesterov"u8);
+                    writer.WriteBooleanValue(Nesterov.Value);
+                }
+                else
+                {
+                    writer.WriteNull("nesterov"u8);
+                }
             }
-            if (Optional.IsDefined(NumberOfEpochs))
+            if (_numberOfEpochsIsDefined || Optional.IsDefined(NumberOfEpochs))
             {
-                writer.WritePropertyName("numberOfEpochs"u8);
-                writer.WriteNumberValue(NumberOfEpochs.Value);
+                if (NumberOfEpochs != null)
+                {
+                    writer.WritePropertyName("numberOfEpochs"u8);
+                    writer.WriteNumberValue(NumberOfEpochs.Value);
+                }
+                else
+                {
+                    writer.WriteNull("numberOfEpochs"u8);
+                }
             }
-            if (Optional.IsDefined(NumberOfWorkers))
+            if (_numberOfWorkersIsDefined || Optional.IsDefined(NumberOfWorkers))
             {
-                writer.WritePropertyName("numberOfWorkers"u8);
-                writer.WriteNumberValue(NumberOfWorkers.Value);
+                if (NumberOfWorkers != null)
+                {
+                    writer.WritePropertyName("numberOfWorkers"u8);
+                    writer.WriteNumberValue(NumberOfWorkers.Value);
+                }
+                else
+                {
+                    writer.WriteNull("numberOfWorkers"u8);
+                }
             }
             if (Optional.IsDefined(Optimizer))
             {
                 writer.WritePropertyName("optimizer"u8);
                 writer.WriteStringValue(Optimizer.Value.ToString());
             }
-            if (Optional.IsDefined(RandomSeed))
+            if (_randomSeedIsDefined || Optional.IsDefined(RandomSeed))
             {
-                writer.WritePropertyName("randomSeed"u8);
-                writer.WriteNumberValue(RandomSeed.Value);
+                if (RandomSeed != null)
+                {
+                    writer.WritePropertyName("randomSeed"u8);
+                    writer.WriteNumberValue(RandomSeed.Value);
+                }
+                else
+                {
+                    writer.WriteNull("randomSeed"u8);
+                }
             }
-            if (Optional.IsDefined(StepLRGamma))
+            if (_stepLRGammaIsDefined || Optional.IsDefined(StepLRGamma))
             {
-                writer.WritePropertyName("stepLRGamma"u8);
-                writer.WriteNumberValue(StepLRGamma.Value);
+                if (StepLRGamma != null)
+                {
+                    writer.WritePropertyName("stepLRGamma"u8);
+                    writer.WriteNumberValue(StepLRGamma.Value);
+                }
+                else
+                {
+                    writer.WriteNull("stepLRGamma"u8);
+                }
             }
-            if (Optional.IsDefined(StepLRStepSize))
+            if (_stepLRStepSizeIsDefined || Optional.IsDefined(StepLRStepSize))
             {
-                writer.WritePropertyName("stepLRStepSize"u8);
-                writer.WriteNumberValue(StepLRStepSize.Value);
+                if (StepLRStepSize != null)
+                {
+                    writer.WritePropertyName("stepLRStepSize"u8);
+                    writer.WriteNumberValue(StepLRStepSize.Value);
+                }
+                else
+                {
+                    writer.WriteNull("stepLRStepSize"u8);
+                }
             }
-            if (Optional.IsDefined(TrainingBatchSize))
+            if (_trainingBatchSizeIsDefined || Optional.IsDefined(TrainingBatchSize))
             {
-                writer.WritePropertyName("trainingBatchSize"u8);
-                writer.WriteNumberValue(TrainingBatchSize.Value);
+                if (TrainingBatchSize != null)
+                {
+                    writer.WritePropertyName("trainingBatchSize"u8);
+                    writer.WriteNumberValue(TrainingBatchSize.Value);
+                }
+                else
+                {
+                    writer.WriteNull("trainingBatchSize"u8);
+                }
             }
-            if (Optional.IsDefined(ValidationBatchSize))
+            if (_validationBatchSizeIsDefined || Optional.IsDefined(ValidationBatchSize))
             {
-                writer.WritePropertyName("validationBatchSize"u8);
-                writer.WriteNumberValue(ValidationBatchSize.Value);
+                if (ValidationBatchSize != null)
+                {
+                    writer.WritePropertyName("validationBatchSize"u8);
+                    writer.WriteNumberValue(ValidationBatchSize.Value);
+                }
+                else
+                {
+                    writer.WriteNull("validationBatchSize"u8);
+                }
             }
-            if (Optional.IsDefined(WarmupCosineLRCycles))
+            if (_warmupCosineLRCyclesIsDefined || Optional.IsDefined(WarmupCosineLRCycles))
             {
-                writer.WritePropertyName("warmupCosineLRCycles"u8);
-                writer.WriteNumberValue(WarmupCosineLRCycles.Value);
+                if (WarmupCosineLRCycles != null)
+                {
+                    writer.WritePropertyName("warmupCosineLRCycles"u8);
+                    writer.WriteNumberValue(WarmupCosineLRCycles.Value);
+                }
+                else
+                {
+                    writer.WriteNull("warmupCosineLRCycles"u8);
+                }
             }
-            if (Optional.IsDefined(WarmupCosineLRWarmupEpochs))
+            if (_warmupCosineLRWarmupEpochsIsDefined || Optional.IsDefined(WarmupCosineLRWarmupEpochs))
             {
-                writer.WritePropertyName("warmupCosineLRWarmupEpochs"u8);
-                writer.WriteNumberValue(WarmupCosineLRWarmupEpochs.Value);
+                if (WarmupCosineLRWarmupEpochs != null)
+                {
+                    writer.WritePropertyName("warmupCosineLRWarmupEpochs"u8);
+                    writer.WriteNumberValue(WarmupCosineLRWarmupEpochs.Value);
+                }
+                else
+                {
+                    writer.WriteNull("warmupCosineLRWarmupEpochs"u8);
+                }
             }
-            if (Optional.IsDefined(WeightDecay))
+            if (_weightDecayIsDefined || Optional.IsDefined(WeightDecay))
             {
-                writer.WritePropertyName("weightDecay"u8);
-                writer.WriteNumberValue(WeightDecay.Value);
+                if (WeightDecay != null)
+                {
+                    writer.WritePropertyName("weightDecay"u8);
+                    writer.WriteNumberValue(WeightDecay.Value);
+                }
+                else
+                {
+                    writer.WriteNull("weightDecay"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -280,43 +490,74 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool advancedSettingsIsDefined = false;
             string advancedSettings = default;
+            bool amsGradientIsDefined = false;
             bool? amsGradient = default;
+            bool augmentationsIsDefined = false;
             string augmentations = default;
+            bool beta1IsDefined = false;
             float? beta1 = default;
+            bool beta2IsDefined = false;
             float? beta2 = default;
+            bool checkpointFrequencyIsDefined = false;
             int? checkpointFrequency = default;
+            bool checkpointModelIsDefined = false;
             MachineLearningFlowModelJobInput checkpointModel = default;
+            bool checkpointRunIdIsDefined = false;
             string checkpointRunId = default;
+            bool distributedIsDefined = false;
             bool? distributed = default;
+            bool earlyStoppingIsDefined = false;
             bool? earlyStopping = default;
+            bool earlyStoppingDelayIsDefined = false;
             int? earlyStoppingDelay = default;
+            bool earlyStoppingPatienceIsDefined = false;
             int? earlyStoppingPatience = default;
+            bool enableOnnxNormalizationIsDefined = false;
             bool? enableOnnxNormalization = default;
+            bool evaluationFrequencyIsDefined = false;
             int? evaluationFrequency = default;
+            bool gradientAccumulationStepIsDefined = false;
             int? gradientAccumulationStep = default;
+            bool layersToFreezeIsDefined = false;
             int? layersToFreeze = default;
+            bool learningRateIsDefined = false;
             float? learningRate = default;
             LearningRateScheduler? learningRateScheduler = default;
+            bool modelNameIsDefined = false;
             string modelName = default;
+            bool momentumIsDefined = false;
             float? momentum = default;
+            bool nesterovIsDefined = false;
             bool? nesterov = default;
+            bool numberOfEpochsIsDefined = false;
             int? numberOfEpochs = default;
+            bool numberOfWorkersIsDefined = false;
             int? numberOfWorkers = default;
             StochasticOptimizer? optimizer = default;
+            bool randomSeedIsDefined = false;
             int? randomSeed = default;
+            bool stepLRGammaIsDefined = false;
             float? stepLRGamma = default;
+            bool stepLRStepSizeIsDefined = false;
             int? stepLRStepSize = default;
+            bool trainingBatchSizeIsDefined = false;
             int? trainingBatchSize = default;
+            bool validationBatchSizeIsDefined = false;
             int? validationBatchSize = default;
+            bool warmupCosineLRCyclesIsDefined = false;
             float? warmupCosineLRCycles = default;
+            bool warmupCosineLRWarmupEpochsIsDefined = false;
             int? warmupCosineLRWarmupEpochs = default;
+            bool weightDecayIsDefined = false;
             float? weightDecay = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("advancedSettings"u8))
                 {
+                    advancedSettingsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         advancedSettings = null;
@@ -327,6 +568,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("amsGradient"u8))
                 {
+                    amsGradientIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         amsGradient = null;
@@ -337,6 +579,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("augmentations"u8))
                 {
+                    augmentationsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         augmentations = null;
@@ -347,6 +590,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("beta1"u8))
                 {
+                    beta1IsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         beta1 = null;
@@ -357,6 +601,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("beta2"u8))
                 {
+                    beta2IsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         beta2 = null;
@@ -367,6 +612,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("checkpointFrequency"u8))
                 {
+                    checkpointFrequencyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         checkpointFrequency = null;
@@ -377,6 +623,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("checkpointModel"u8))
                 {
+                    checkpointModelIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         checkpointModel = null;
@@ -387,6 +634,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("checkpointRunId"u8))
                 {
+                    checkpointRunIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         checkpointRunId = null;
@@ -397,6 +645,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("distributed"u8))
                 {
+                    distributedIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         distributed = null;
@@ -407,6 +656,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("earlyStopping"u8))
                 {
+                    earlyStoppingIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         earlyStopping = null;
@@ -417,6 +667,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("earlyStoppingDelay"u8))
                 {
+                    earlyStoppingDelayIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         earlyStoppingDelay = null;
@@ -427,6 +678,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("earlyStoppingPatience"u8))
                 {
+                    earlyStoppingPatienceIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         earlyStoppingPatience = null;
@@ -437,6 +689,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("enableOnnxNormalization"u8))
                 {
+                    enableOnnxNormalizationIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         enableOnnxNormalization = null;
@@ -447,6 +700,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("evaluationFrequency"u8))
                 {
+                    evaluationFrequencyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         evaluationFrequency = null;
@@ -457,6 +711,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("gradientAccumulationStep"u8))
                 {
+                    gradientAccumulationStepIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         gradientAccumulationStep = null;
@@ -467,6 +722,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("layersToFreeze"u8))
                 {
+                    layersToFreezeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         layersToFreeze = null;
@@ -477,6 +733,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("learningRate"u8))
                 {
+                    learningRateIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         learningRate = null;
@@ -496,6 +753,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("modelName"u8))
                 {
+                    modelNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         modelName = null;
@@ -506,6 +764,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("momentum"u8))
                 {
+                    momentumIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         momentum = null;
@@ -516,6 +775,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("nesterov"u8))
                 {
+                    nesterovIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         nesterov = null;
@@ -526,6 +786,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("numberOfEpochs"u8))
                 {
+                    numberOfEpochsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         numberOfEpochs = null;
@@ -536,6 +797,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("numberOfWorkers"u8))
                 {
+                    numberOfWorkersIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         numberOfWorkers = null;
@@ -555,6 +817,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("randomSeed"u8))
                 {
+                    randomSeedIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         randomSeed = null;
@@ -565,6 +828,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("stepLRGamma"u8))
                 {
+                    stepLRGammaIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         stepLRGamma = null;
@@ -575,6 +839,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("stepLRStepSize"u8))
                 {
+                    stepLRStepSizeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         stepLRStepSize = null;
@@ -585,6 +850,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("trainingBatchSize"u8))
                 {
+                    trainingBatchSizeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         trainingBatchSize = null;
@@ -595,6 +861,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("validationBatchSize"u8))
                 {
+                    validationBatchSizeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         validationBatchSize = null;
@@ -605,6 +872,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("warmupCosineLRCycles"u8))
                 {
+                    warmupCosineLRCyclesIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         warmupCosineLRCycles = null;
@@ -615,6 +883,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("warmupCosineLRWarmupEpochs"u8))
                 {
+                    warmupCosineLRWarmupEpochsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         warmupCosineLRWarmupEpochs = null;
@@ -625,6 +894,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("weightDecay"u8))
                 {
+                    weightDecayIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         weightDecay = null;
@@ -671,7 +941,39 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 warmupCosineLRCycles,
                 warmupCosineLRWarmupEpochs,
                 weightDecay,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _advancedSettingsIsDefined = advancedSettingsIsDefined,
+                _amsGradientIsDefined = amsGradientIsDefined,
+                _augmentationsIsDefined = augmentationsIsDefined,
+                _beta1IsDefined = beta1IsDefined,
+                _beta2IsDefined = beta2IsDefined,
+                _checkpointFrequencyIsDefined = checkpointFrequencyIsDefined,
+                _checkpointModelIsDefined = checkpointModelIsDefined,
+                _checkpointRunIdIsDefined = checkpointRunIdIsDefined,
+                _distributedIsDefined = distributedIsDefined,
+                _earlyStoppingIsDefined = earlyStoppingIsDefined,
+                _earlyStoppingDelayIsDefined = earlyStoppingDelayIsDefined,
+                _earlyStoppingPatienceIsDefined = earlyStoppingPatienceIsDefined,
+                _enableOnnxNormalizationIsDefined = enableOnnxNormalizationIsDefined,
+                _evaluationFrequencyIsDefined = evaluationFrequencyIsDefined,
+                _gradientAccumulationStepIsDefined = gradientAccumulationStepIsDefined,
+                _layersToFreezeIsDefined = layersToFreezeIsDefined,
+                _learningRateIsDefined = learningRateIsDefined,
+                _modelNameIsDefined = modelNameIsDefined,
+                _momentumIsDefined = momentumIsDefined,
+                _nesterovIsDefined = nesterovIsDefined,
+                _numberOfEpochsIsDefined = numberOfEpochsIsDefined,
+                _numberOfWorkersIsDefined = numberOfWorkersIsDefined,
+                _randomSeedIsDefined = randomSeedIsDefined,
+                _stepLRGammaIsDefined = stepLRGammaIsDefined,
+                _stepLRStepSizeIsDefined = stepLRStepSizeIsDefined,
+                _trainingBatchSizeIsDefined = trainingBatchSizeIsDefined,
+                _validationBatchSizeIsDefined = validationBatchSizeIsDefined,
+                _warmupCosineLRCyclesIsDefined = warmupCosineLRCyclesIsDefined,
+                _warmupCosineLRWarmupEpochsIsDefined = warmupCosineLRWarmupEpochsIsDefined,
+                _weightDecayIsDefined = weightDecayIsDefined
+            };
         }
     }
 }

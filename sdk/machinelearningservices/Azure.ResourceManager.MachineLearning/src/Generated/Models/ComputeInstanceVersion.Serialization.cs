@@ -74,10 +74,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(ComputeInstanceVersion)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Runtime))
+            if (_runtimeIsDefined || Optional.IsDefined(Runtime))
             {
-                writer.WritePropertyName("runtime"u8);
-                writer.WriteStringValue(Runtime);
+                if (Runtime != null)
+                {
+                    writer.WritePropertyName("runtime"u8);
+                    writer.WriteStringValue(Runtime);
+                }
+                else
+                {
+                    writer.WriteNull("runtime"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,12 +128,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool runtimeIsDefined = false;
             string runtime = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("runtime"u8))
                 {
+                    runtimeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         runtime = null;
@@ -140,7 +149,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ComputeInstanceVersion(runtime, additionalBinaryDataProperties);
+            return new ComputeInstanceVersion(runtime, additionalBinaryDataProperties)
+            {
+                _runtimeIsDefined = runtimeIsDefined
+            };
         }
     }
 }

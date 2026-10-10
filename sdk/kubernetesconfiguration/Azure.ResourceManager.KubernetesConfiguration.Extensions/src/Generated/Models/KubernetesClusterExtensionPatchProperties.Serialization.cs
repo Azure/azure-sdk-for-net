@@ -89,42 +89,63 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
                 writer.WritePropertyName("releaseTrain"u8);
                 writer.WriteStringValue(ReleaseTrain);
             }
-            if (Optional.IsDefined(Version))
+            if (_versionIsDefined || Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version);
+                if (Version != null)
+                {
+                    writer.WritePropertyName("version"u8);
+                    writer.WriteStringValue(Version);
+                }
+                else
+                {
+                    writer.WriteNull("version"u8);
+                }
             }
             if (Optional.IsCollectionDefined(ConfigurationSettings))
             {
-                writer.WritePropertyName("configurationSettings"u8);
-                writer.WriteStartObject();
-                foreach (var item in ConfigurationSettings)
+                if (ConfigurationSettings != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("configurationSettings"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in ConfigurationSettings)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("configurationSettings"u8);
+                }
             }
             if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
             {
-                writer.WritePropertyName("configurationProtectedSettings"u8);
-                writer.WriteStartObject();
-                foreach (var item in ConfigurationProtectedSettings)
+                if (ConfigurationProtectedSettings != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("configurationProtectedSettings"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in ConfigurationProtectedSettings)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("configurationProtectedSettings"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -171,9 +192,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
             bool? isAutoUpgradeMinorVersionEnabled = default;
             KubernetesClusterAutoUpgradeMode? autoUpgradeMode = default;
             string releaseTrain = default;
+            bool versionIsDefined = false;
             string version = default;
-            IDictionary<string, string> configurationSettings = default;
-            IDictionary<string, string> configurationProtectedSettings = default;
+            IDictionary<string, string> configurationSettings = new ChangeTrackingDictionary<string, string>();
+            IDictionary<string, string> configurationProtectedSettings = new ChangeTrackingDictionary<string, string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -202,6 +224,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
                 }
                 if (prop.NameEquals("version"u8))
                 {
+                    versionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         version = null;
@@ -214,6 +237,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        configurationSettings = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -235,6 +259,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        configurationProtectedSettings = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -262,9 +287,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
                 autoUpgradeMode,
                 releaseTrain,
                 version,
-                configurationSettings ?? new ChangeTrackingDictionary<string, string>(),
-                configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
-                additionalBinaryDataProperties);
+                configurationSettings,
+                configurationProtectedSettings,
+                additionalBinaryDataProperties)
+            {
+                _versionIsDefined = versionIsDefined
+            };
         }
     }
 }

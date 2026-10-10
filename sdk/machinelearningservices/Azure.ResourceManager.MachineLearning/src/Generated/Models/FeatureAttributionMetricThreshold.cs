@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private MonitoringThreshold _threshold;
+        internal bool _thresholdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FeatureAttributionMetricThreshold"/>. </summary>
         /// <param name="metric"> [Required] The feature attribution metric to calculate. </param>
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal FeatureAttributionMetricThreshold(FeatureAttributionMetric metric, MonitoringThreshold threshold, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Metric = metric;
-            Threshold = threshold;
+            _threshold = threshold;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,7 +43,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The threshold value. If null, a default value will be set depending on the selected metric. </summary>
         [WirePath("threshold")]
-        internal MonitoringThreshold Threshold { get; set; }
+        internal MonitoringThreshold Threshold
+        {
+            get
+            {
+                return _threshold;
+            }
+            set
+            {
+                _threshold = value;
+                _thresholdIsDefined = true;
+            }
+        }
 
         /// <summary> The threshold value. If null, the set default is dependent on the metric type. </summary>
         [WirePath("threshold.value")]

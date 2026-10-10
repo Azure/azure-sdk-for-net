@@ -76,39 +76,60 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(EmailOn))
             {
-                writer.WritePropertyName("emailOn"u8);
-                writer.WriteStartArray();
-                foreach (EmailNotificationEnableType item in EmailOn)
+                if (EmailOn != null)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WritePropertyName("emailOn"u8);
+                    writer.WriteStartArray();
+                    foreach (EmailNotificationEnableType item in EmailOn)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("emailOn"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Emails))
             {
-                writer.WritePropertyName("emails"u8);
-                writer.WriteStartArray();
-                foreach (string item in Emails)
+                if (Emails != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("emails"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in Emails)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("emails"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Webhooks))
             {
-                writer.WritePropertyName("webhooks"u8);
-                writer.WriteStartObject();
-                foreach (var item in Webhooks)
+                if (Webhooks != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    writer.WritePropertyName("webhooks"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Webhooks)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteObjectValue(item.Value, options);
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("webhooks"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -152,9 +173,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            IList<EmailNotificationEnableType> emailOn = default;
-            IList<string> emails = default;
-            IDictionary<string, MachineLearningWebhook> webhooks = default;
+            IList<EmailNotificationEnableType> emailOn = new ChangeTrackingList<EmailNotificationEnableType>();
+            IList<string> emails = new ChangeTrackingList<string>();
+            IDictionary<string, MachineLearningWebhook> webhooks = new ChangeTrackingDictionary<string, MachineLearningWebhook>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -162,6 +183,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        emailOn = null;
                         continue;
                     }
                     List<EmailNotificationEnableType> array = new List<EmailNotificationEnableType>();
@@ -176,6 +198,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        emails = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -197,6 +220,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        webhooks = null;
                         continue;
                     }
                     Dictionary<string, MachineLearningWebhook> dictionary = new Dictionary<string, MachineLearningWebhook>();
@@ -212,7 +236,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NotificationSetting(emailOn ?? new ChangeTrackingList<EmailNotificationEnableType>(), emails ?? new ChangeTrackingList<string>(), webhooks ?? new ChangeTrackingDictionary<string, MachineLearningWebhook>(), additionalBinaryDataProperties);
+            return new NotificationSetting(emailOn, emails, webhooks, additionalBinaryDataProperties);
         }
     }
 }

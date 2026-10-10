@@ -16,6 +16,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private MachineLearningCodeConfiguration _codeConfiguration;
+        internal bool _codeConfigurationIsDefined;
+        private string _description;
+        internal bool _descriptionIsDefined;
+        private string _environmentId;
+        internal bool _environmentIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointDeploymentProperties"/>. </summary>
         public MachineLearningEndpointDeploymentProperties()
@@ -33,9 +39,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MachineLearningEndpointDeploymentProperties(MachineLearningCodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            CodeConfiguration = codeConfiguration;
-            Description = description;
-            EnvironmentId = environmentId;
+            _codeConfiguration = codeConfiguration;
+            _description = description;
+            _environmentId = environmentId;
             EnvironmentVariables = environmentVariables;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -43,15 +49,48 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Code configuration for the endpoint deployment. </summary>
         [WirePath("codeConfiguration")]
-        public MachineLearningCodeConfiguration CodeConfiguration { get; set; }
+        public MachineLearningCodeConfiguration CodeConfiguration
+        {
+            get
+            {
+                return _codeConfiguration;
+            }
+            set
+            {
+                _codeConfiguration = value;
+                _codeConfigurationIsDefined = true;
+            }
+        }
 
         /// <summary> Description of the endpoint deployment. </summary>
         [WirePath("description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return _description;
+            }
+            set
+            {
+                _description = value;
+                _descriptionIsDefined = true;
+            }
+        }
 
         /// <summary> ARM resource ID or AssetId of the environment specification for the endpoint deployment. </summary>
         [WirePath("environmentId")]
-        public string EnvironmentId { get; set; }
+        public string EnvironmentId
+        {
+            get
+            {
+                return _environmentId;
+            }
+            set
+            {
+                _environmentId = value;
+                _environmentIdIsDefined = true;
+            }
+        }
 
         /// <summary> Environment variables configuration for the deployment. </summary>
         [WirePath("environmentVariables")]

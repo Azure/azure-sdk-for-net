@@ -84,10 +84,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(Frequency.ToString());
             writer.WritePropertyName("interval"u8);
             writer.WriteNumberValue(Interval);
-            if (Optional.IsDefined(Schedule))
+            if (_scheduleIsDefined || Optional.IsDefined(Schedule))
             {
-                writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule, options);
+                if (Schedule != null)
+                {
+                    writer.WritePropertyName("schedule"u8);
+                    writer.WriteObjectValue(Schedule, options);
+                }
+                else
+                {
+                    writer.WriteNull("schedule"u8);
+                }
             }
         }
 
@@ -116,18 +123,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool endTimeIsDefined = false;
             string endTime = default;
+            bool startTimeIsDefined = false;
             string startTime = default;
             string timeZone = default;
             MachineLearningTriggerType triggerType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             MachineLearningRecurrenceFrequency frequency = default;
             int interval = default;
+            bool scheduleIsDefined = false;
             MachineLearningRecurrenceSchedule schedule = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("endTime"u8))
                 {
+                    endTimeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         endTime = null;
@@ -138,6 +149,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
+                    startTimeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         startTime = null;
@@ -168,6 +180,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("schedule"u8))
                 {
+                    scheduleIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         schedule = null;
@@ -189,7 +202,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 additionalBinaryDataProperties,
                 frequency,
                 interval,
-                schedule);
+                schedule)
+            {
+                _endTimeIsDefined = endTimeIsDefined,
+                _startTimeIsDefined = startTimeIsDefined,
+                _scheduleIsDefined = scheduleIsDefined
+            };
         }
     }
 }

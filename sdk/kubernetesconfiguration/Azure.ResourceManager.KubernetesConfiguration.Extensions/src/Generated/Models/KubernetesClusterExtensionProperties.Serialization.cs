@@ -92,10 +92,17 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
                 writer.WritePropertyName("releaseTrain"u8);
                 writer.WriteStringValue(ReleaseTrain);
             }
-            if (Optional.IsDefined(Version))
+            if (_versionIsDefined || Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version);
+                if (Version != null)
+                {
+                    writer.WritePropertyName("version"u8);
+                    writer.WriteStringValue(Version);
+                }
+                else
+                {
+                    writer.WriteNull("version"u8);
+                }
             }
             if (Optional.IsDefined(Scope))
             {
@@ -104,40 +111,61 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
             }
             if (Optional.IsCollectionDefined(ConfigurationSettings))
             {
-                writer.WritePropertyName("configurationSettings"u8);
-                writer.WriteStartObject();
-                foreach (var item in ConfigurationSettings)
+                if (ConfigurationSettings != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("configurationSettings"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in ConfigurationSettings)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("configurationSettings"u8);
+                }
             }
             if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
             {
-                writer.WritePropertyName("configurationProtectedSettings"u8);
-                writer.WriteStartObject();
-                foreach (var item in ConfigurationProtectedSettings)
+                if (ConfigurationProtectedSettings != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("configurationProtectedSettings"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in ConfigurationProtectedSettings)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("configurationProtectedSettings"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentVersion))
+            if (options.Format != "W" && (_currentVersionIsDefined || Optional.IsDefined(CurrentVersion)))
             {
-                writer.WritePropertyName("currentVersion"u8);
-                writer.WriteStringValue(CurrentVersion);
+                if (CurrentVersion != null)
+                {
+                    writer.WritePropertyName("currentVersion"u8);
+                    writer.WriteStringValue(CurrentVersion);
+                }
+                else
+                {
+                    writer.WriteNull("currentVersion"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -146,34 +174,55 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
             }
             if (Optional.IsCollectionDefined(Statuses))
             {
-                writer.WritePropertyName("statuses"u8);
-                writer.WriteStartArray();
-                foreach (KubernetesClusterExtensionStatus item in Statuses)
+                if (Statuses != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("statuses"u8);
+                    writer.WriteStartArray();
+                    foreach (KubernetesClusterExtensionStatus item in Statuses)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("statuses"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorInfo))
+            if (options.Format != "W" && (_errorInfoIsDefined || Optional.IsDefined(ErrorInfo)))
             {
-                writer.WritePropertyName("errorInfo"u8);
-                ((IJsonModel<ResponseError>)ErrorInfo).Write(writer, options);
+                if (ErrorInfo != null)
+                {
+                    writer.WritePropertyName("errorInfo"u8);
+                    ((IJsonModel<ResponseError>)ErrorInfo).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNull("errorInfo"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(CustomLocationSettings))
             {
-                writer.WritePropertyName("customLocationSettings"u8);
-                writer.WriteStartObject();
-                foreach (var item in CustomLocationSettings)
+                if (CustomLocationSettings != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("customLocationSettings"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in CustomLocationSettings)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("customLocationSettings"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(PackageUri))
             {
@@ -255,15 +304,18 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
             string extensionType = default;
             bool? isAutoUpgradeMinorVersionEnabled = default;
             string releaseTrain = default;
+            bool versionIsDefined = false;
             string version = default;
             KubernetesClusterExtensionScope scope = default;
-            IDictionary<string, string> configurationSettings = default;
-            IDictionary<string, string> configurationProtectedSettings = default;
+            IDictionary<string, string> configurationSettings = new ChangeTrackingDictionary<string, string>();
+            IDictionary<string, string> configurationProtectedSettings = new ChangeTrackingDictionary<string, string>();
+            bool currentVersionIsDefined = false;
             string currentVersion = default;
             KubernetesConfigurationProvisioningState? provisioningState = default;
-            IList<KubernetesClusterExtensionStatus> statuses = default;
+            IList<KubernetesClusterExtensionStatus> statuses = new ChangeTrackingList<KubernetesClusterExtensionStatus>();
+            bool errorInfoIsDefined = false;
             ResponseError errorInfo = default;
-            IReadOnlyDictionary<string, string> customLocationSettings = default;
+            IReadOnlyDictionary<string, string> customLocationSettings = new ChangeTrackingDictionary<string, string>();
             Uri packageUri = default;
             ManagedServiceIdentity aksAssignedIdentity = default;
             bool? isSystemExtension = default;
@@ -295,6 +347,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
                 }
                 if (prop.NameEquals("version"u8))
                 {
+                    versionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         version = null;
@@ -316,6 +369,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        configurationSettings = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -337,6 +391,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        configurationProtectedSettings = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -356,6 +411,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
                 }
                 if (prop.NameEquals("currentVersion"u8))
                 {
+                    currentVersionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         currentVersion = null;
@@ -377,6 +433,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        statuses = null;
                         continue;
                     }
                     List<KubernetesClusterExtensionStatus> array = new List<KubernetesClusterExtensionStatus>();
@@ -389,6 +446,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
                 }
                 if (prop.NameEquals("errorInfo"u8))
                 {
+                    errorInfoIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         errorInfo = null;
@@ -401,6 +459,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        customLocationSettings = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -488,13 +547,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
                 releaseTrain,
                 version,
                 scope,
-                configurationSettings ?? new ChangeTrackingDictionary<string, string>(),
-                configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
+                configurationSettings,
+                configurationProtectedSettings,
                 currentVersion,
                 provisioningState,
-                statuses ?? new ChangeTrackingList<KubernetesClusterExtensionStatus>(),
+                statuses,
                 errorInfo,
-                customLocationSettings ?? new ChangeTrackingDictionary<string, string>(),
+                customLocationSettings,
                 packageUri,
                 aksAssignedIdentity,
                 isSystemExtension,
@@ -502,7 +561,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
                 managementDetails,
                 additionalDetails,
                 extensionState,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _versionIsDefined = versionIsDefined,
+                _currentVersionIsDefined = currentVersionIsDefined,
+                _errorInfoIsDefined = errorInfoIsDefined
+            };
         }
     }
 }

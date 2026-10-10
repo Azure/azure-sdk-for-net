@@ -84,24 +84,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(Columns))
             {
-                writer.WritePropertyName("columns"u8);
-                writer.WriteStartObject();
-                foreach (var item in Columns)
+                if (Columns != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("columns"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Columns)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("columns"u8);
+                }
             }
-            if (Optional.IsDefined(DataContext))
+            if (_dataContextIsDefined || Optional.IsDefined(DataContext))
             {
-                writer.WritePropertyName("dataContext"u8);
-                writer.WriteStringValue(DataContext);
+                if (DataContext != null)
+                {
+                    writer.WritePropertyName("dataContext"u8);
+                    writer.WriteStringValue(DataContext);
+                }
+                else
+                {
+                    writer.WriteNull("dataContext"u8);
+                }
             }
             writer.WritePropertyName("inputDataType"u8);
             writer.WriteStringValue(InputDataType.ToString());

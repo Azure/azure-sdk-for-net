@@ -74,15 +74,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(ForecastingSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(CountryOrRegionForHolidays))
+            if (_countryOrRegionForHolidaysIsDefined || Optional.IsDefined(CountryOrRegionForHolidays))
             {
-                writer.WritePropertyName("countryOrRegionForHolidays"u8);
-                writer.WriteStringValue(CountryOrRegionForHolidays);
+                if (CountryOrRegionForHolidays != null)
+                {
+                    writer.WritePropertyName("countryOrRegionForHolidays"u8);
+                    writer.WriteStringValue(CountryOrRegionForHolidays);
+                }
+                else
+                {
+                    writer.WriteNull("countryOrRegionForHolidays"u8);
+                }
             }
-            if (Optional.IsDefined(CvStepSize))
+            if (_cvStepSizeIsDefined || Optional.IsDefined(CvStepSize))
             {
-                writer.WritePropertyName("cvStepSize"u8);
-                writer.WriteNumberValue(CvStepSize.Value);
+                if (CvStepSize != null)
+                {
+                    writer.WritePropertyName("cvStepSize"u8);
+                    writer.WriteNumberValue(CvStepSize.Value);
+                }
+                else
+                {
+                    writer.WriteNull("cvStepSize"u8);
+                }
             }
             if (Optional.IsDefined(FeatureLags))
             {
@@ -94,10 +108,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("forecastHorizon"u8);
                 writer.WriteObjectValue(ForecastHorizon, options);
             }
-            if (Optional.IsDefined(Frequency))
+            if (_frequencyIsDefined || Optional.IsDefined(Frequency))
             {
-                writer.WritePropertyName("frequency"u8);
-                writer.WriteStringValue(Frequency);
+                if (Frequency != null)
+                {
+                    writer.WritePropertyName("frequency"u8);
+                    writer.WriteStringValue(Frequency);
+                }
+                else
+                {
+                    writer.WriteNull("frequency"u8);
+                }
             }
             if (Optional.IsDefined(Seasonality))
             {
@@ -114,35 +135,63 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("targetAggregateFunction"u8);
                 writer.WriteStringValue(TargetAggregateFunction.Value.ToString());
             }
-            if (Optional.IsDefined(TargetLags))
+            if (_targetLagsIsDefined || Optional.IsDefined(TargetLags))
             {
-                writer.WritePropertyName("targetLags"u8);
-                writer.WriteObjectValue(TargetLags, options);
+                if (TargetLags != null)
+                {
+                    writer.WritePropertyName("targetLags"u8);
+                    writer.WriteObjectValue(TargetLags, options);
+                }
+                else
+                {
+                    writer.WriteNull("targetLags"u8);
+                }
             }
-            if (Optional.IsDefined(TargetRollingWindowSize))
+            if (_targetRollingWindowSizeIsDefined || Optional.IsDefined(TargetRollingWindowSize))
             {
-                writer.WritePropertyName("targetRollingWindowSize"u8);
-                writer.WriteObjectValue(TargetRollingWindowSize, options);
+                if (TargetRollingWindowSize != null)
+                {
+                    writer.WritePropertyName("targetRollingWindowSize"u8);
+                    writer.WriteObjectValue(TargetRollingWindowSize, options);
+                }
+                else
+                {
+                    writer.WriteNull("targetRollingWindowSize"u8);
+                }
             }
-            if (Optional.IsDefined(TimeColumnName))
+            if (_timeColumnNameIsDefined || Optional.IsDefined(TimeColumnName))
             {
-                writer.WritePropertyName("timeColumnName"u8);
-                writer.WriteStringValue(TimeColumnName);
+                if (TimeColumnName != null)
+                {
+                    writer.WritePropertyName("timeColumnName"u8);
+                    writer.WriteStringValue(TimeColumnName);
+                }
+                else
+                {
+                    writer.WriteNull("timeColumnName"u8);
+                }
             }
             if (Optional.IsCollectionDefined(TimeSeriesIdColumnNames))
             {
-                writer.WritePropertyName("timeSeriesIdColumnNames"u8);
-                writer.WriteStartArray();
-                foreach (string item in TimeSeriesIdColumnNames)
+                if (TimeSeriesIdColumnNames != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("timeSeriesIdColumnNames"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in TimeSeriesIdColumnNames)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("timeSeriesIdColumnNames"u8);
+                }
             }
             if (Optional.IsDefined(UseStl))
             {
@@ -191,24 +240,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool countryOrRegionForHolidaysIsDefined = false;
             string countryOrRegionForHolidays = default;
+            bool cvStepSizeIsDefined = false;
             int? cvStepSize = default;
             MachineLearningFeatureLag? featureLags = default;
             ForecastHorizon forecastHorizon = default;
+            bool frequencyIsDefined = false;
             string frequency = default;
             ForecastingSeasonality seasonality = default;
             MachineLearningShortSeriesHandlingConfiguration? shortSeriesHandlingConfig = default;
             TargetAggregationFunction? targetAggregateFunction = default;
+            bool targetLagsIsDefined = false;
             TargetLags targetLags = default;
+            bool targetRollingWindowSizeIsDefined = false;
             TargetRollingWindowSize targetRollingWindowSize = default;
+            bool timeColumnNameIsDefined = false;
             string timeColumnName = default;
-            IList<string> timeSeriesIdColumnNames = default;
+            IList<string> timeSeriesIdColumnNames = new ChangeTrackingList<string>();
             MachineLearningUseStl? useStl = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("countryOrRegionForHolidays"u8))
                 {
+                    countryOrRegionForHolidaysIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         countryOrRegionForHolidays = null;
@@ -219,6 +275,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("cvStepSize"u8))
                 {
+                    cvStepSizeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         cvStepSize = null;
@@ -247,6 +304,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("frequency"u8))
                 {
+                    frequencyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         frequency = null;
@@ -284,6 +342,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("targetLags"u8))
                 {
+                    targetLagsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         targetLags = null;
@@ -294,6 +353,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("targetRollingWindowSize"u8))
                 {
+                    targetRollingWindowSizeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         targetRollingWindowSize = null;
@@ -304,6 +364,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("timeColumnName"u8))
                 {
+                    timeColumnNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         timeColumnName = null;
@@ -316,6 +377,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        timeSeriesIdColumnNames = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -359,9 +421,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 targetLags,
                 targetRollingWindowSize,
                 timeColumnName,
-                timeSeriesIdColumnNames ?? new ChangeTrackingList<string>(),
+                timeSeriesIdColumnNames,
                 useStl,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _countryOrRegionForHolidaysIsDefined = countryOrRegionForHolidaysIsDefined,
+                _cvStepSizeIsDefined = cvStepSizeIsDefined,
+                _frequencyIsDefined = frequencyIsDefined,
+                _targetLagsIsDefined = targetLagsIsDefined,
+                _targetRollingWindowSizeIsDefined = targetRollingWindowSizeIsDefined,
+                _timeColumnNameIsDefined = timeColumnNameIsDefined
+            };
         }
     }
 }

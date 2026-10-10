@@ -75,25 +75,39 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningJobResourceConfiguration)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(DockerArgs))
+            if (_dockerArgsIsDefined || Optional.IsDefined(DockerArgs))
             {
-                writer.WritePropertyName("dockerArgs"u8);
-                writer.WriteStringValue(DockerArgs);
+                if (DockerArgs != null)
+                {
+                    writer.WritePropertyName("dockerArgs"u8);
+                    writer.WriteStringValue(DockerArgs);
+                }
+                else
+                {
+                    writer.WriteNull("dockerArgs"u8);
+                }
             }
             if (Optional.IsCollectionDefined(DockerArgsList))
             {
-                writer.WritePropertyName("dockerArgsList"u8);
-                writer.WriteStartArray();
-                foreach (string item in DockerArgsList)
+                if (DockerArgsList != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("dockerArgsList"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in DockerArgsList)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("dockerArgsList"u8);
+                }
             }
             if (Optional.IsDefined(ShmSize))
             {
@@ -128,11 +142,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             int? instanceCount = default;
+            bool instanceTypeIsDefined = false;
             string instanceType = default;
-            IDictionary<string, BinaryData> properties = default;
+            IDictionary<string, BinaryData> properties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool dockerArgsIsDefined = false;
             string dockerArgs = default;
-            IList<string> dockerArgsList = default;
+            IList<string> dockerArgsList = new ChangeTrackingList<string>();
             string shmSize = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,6 +163,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("instanceType"u8))
                 {
+                    instanceTypeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         instanceType = null;
@@ -159,6 +176,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
@@ -178,6 +196,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("dockerArgs"u8))
                 {
+                    dockerArgsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         dockerArgs = null;
@@ -190,6 +209,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        dockerArgsList = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -220,11 +240,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningJobResourceConfiguration(
                 instanceCount,
                 instanceType,
-                properties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                properties,
                 additionalBinaryDataProperties,
                 dockerArgs,
-                dockerArgsList ?? new ChangeTrackingList<string>(),
-                shmSize);
+                dockerArgsList,
+                shmSize)
+            {
+                _instanceTypeIsDefined = instanceTypeIsDefined,
+                _dockerArgsIsDefined = dockerArgsIsDefined
+            };
         }
     }
 }

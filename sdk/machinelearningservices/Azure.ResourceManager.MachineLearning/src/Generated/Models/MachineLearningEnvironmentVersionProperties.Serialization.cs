@@ -115,10 +115,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Stage))
+            if (_stageIsDefined || Optional.IsDefined(Stage))
             {
-                writer.WritePropertyName("stage"u8);
-                writer.WriteStringValue(Stage);
+                if (Stage != null)
+                {
+                    writer.WritePropertyName("stage"u8);
+                    writer.WriteStringValue(Stage);
+                }
+                else
+                {
+                    writer.WriteNull("stage"u8);
+                }
             }
         }
 
@@ -147,9 +154,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool descriptionIsDefined = false;
             string description = default;
-            IDictionary<string, string> properties = default;
-            IDictionary<string, string> tags = default;
+            IDictionary<string, string> properties = new ChangeTrackingDictionary<string, string>();
+            IDictionary<string, string> tags = new ChangeTrackingDictionary<string, string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             bool? isAnonymous = default;
             bool? isArchived = default;
@@ -161,11 +169,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MachineLearningInferenceContainerProperties inferenceConfig = default;
             MachineLearningOperatingSystemType? osType = default;
             RegistryAssetProvisioningState? provisioningState = default;
+            bool stageIsDefined = false;
             string stage = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -178,6 +188,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -199,6 +210,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        tags = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -300,6 +312,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("stage"u8))
                 {
+                    stageIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         stage = null;
@@ -315,8 +328,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             return new MachineLearningEnvironmentVersionProperties(
                 description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                properties,
+                tags,
                 additionalBinaryDataProperties,
                 isAnonymous,
                 isArchived,
@@ -328,7 +341,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 inferenceConfig,
                 osType,
                 provisioningState,
-                stage);
+                stage)
+            {
+                _descriptionIsDefined = descriptionIsDefined,
+                _stageIsDefined = stageIsDefined
+            };
         }
     }
 }

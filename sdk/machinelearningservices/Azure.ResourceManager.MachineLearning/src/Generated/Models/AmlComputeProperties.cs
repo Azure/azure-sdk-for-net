@@ -18,6 +18,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private VirtualMachineImage _virtualMachineImage;
+        internal bool _virtualMachineImageIsDefined;
+        private MachineLearningUserAccountCredentials _userAccountCredentials;
+        internal bool _userAccountCredentialsIsDefined;
+        private ResourceId _subnet;
+        internal bool _subnetIsDefined;
+        private int? _currentNodeCount;
+        internal bool _currentNodeCountIsDefined;
+        private int? _targetNodeCount;
+        internal bool _targetNodeCountIsDefined;
+        private MachineLearningNodeStateCounts _nodeStateCounts;
+        internal bool _nodeStateCountsIsDefined;
+        private bool? _enableNodePublicIP;
+        internal bool _enableNodePublicIPIsDefined;
+        private BinaryData _propertyBag;
+        internal bool _propertyBagIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AmlComputeProperties"/>. </summary>
         public AmlComputeProperties()
@@ -49,20 +65,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             OSType = osType;
             VmSize = vmSize;
             VmPriority = vmPriority;
-            VirtualMachineImage = virtualMachineImage;
+            _virtualMachineImage = virtualMachineImage;
             IsolatedNetwork = isolatedNetwork;
             ScaleSettings = scaleSettings;
-            UserAccountCredentials = userAccountCredentials;
-            Subnet = subnet;
+            _userAccountCredentials = userAccountCredentials;
+            _subnet = subnet;
             RemoteLoginPortPublicAccess = remoteLoginPortPublicAccess;
             AllocationState = allocationState;
             AllocationStateTransitionOn = allocationStateTransitionOn;
             Errors = errors;
-            CurrentNodeCount = currentNodeCount;
-            TargetNodeCount = targetNodeCount;
-            NodeStateCounts = nodeStateCounts;
-            EnableNodePublicIP = enableNodePublicIP;
-            PropertyBag = propertyBag;
+            _currentNodeCount = currentNodeCount;
+            _targetNodeCount = targetNodeCount;
+            _nodeStateCounts = nodeStateCounts;
+            _enableNodePublicIP = enableNodePublicIP;
+            _propertyBag = propertyBag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -80,7 +96,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Virtual Machine image for AML Compute - windows only. </summary>
         [WirePath("virtualMachineImage")]
-        internal VirtualMachineImage VirtualMachineImage { get; set; }
+        internal VirtualMachineImage VirtualMachineImage
+        {
+            get
+            {
+                return _virtualMachineImage;
+            }
+            set
+            {
+                _virtualMachineImage = value;
+                _virtualMachineImageIsDefined = true;
+            }
+        }
 
         /// <summary> Network is isolated or not. </summary>
         [WirePath("isolatedNetwork")]
@@ -92,11 +119,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Credentials for an administrator user account that will be created on each compute node. </summary>
         [WirePath("userAccountCredentials")]
-        public MachineLearningUserAccountCredentials UserAccountCredentials { get; set; }
+        public MachineLearningUserAccountCredentials UserAccountCredentials
+        {
+            get
+            {
+                return _userAccountCredentials;
+            }
+            set
+            {
+                _userAccountCredentials = value;
+                _userAccountCredentialsIsDefined = true;
+            }
+        }
 
         /// <summary> Virtual network subnet resource ID the compute nodes belong to. </summary>
         [WirePath("subnet")]
-        internal ResourceId Subnet { get; set; }
+        internal ResourceId Subnet
+        {
+            get
+            {
+                return _subnet;
+            }
+            set
+            {
+                _subnet = value;
+                _subnetIsDefined = true;
+            }
+        }
 
         /// <summary> State of the public SSH port. Possible values are: Disabled - Indicates that the public ssh port is closed on all nodes of the cluster. Enabled - Indicates that the public ssh port is open on all nodes of the cluster. NotSpecified - Indicates that the public ssh port is closed on all nodes of the cluster if VNet is defined, else is open all public nodes. It can be default only during cluster creation time, after creation it will be either enabled or disabled. </summary>
         [WirePath("remoteLoginPortPublicAccess")]
@@ -112,19 +161,48 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The number of compute nodes currently assigned to the compute. </summary>
         [WirePath("currentNodeCount")]
-        public int? CurrentNodeCount { get; }
+        public int? CurrentNodeCount
+        {
+            get
+            {
+                return _currentNodeCount;
+            }
+        }
 
         /// <summary> The target number of compute nodes for the compute. If the allocationState is resizing, this property denotes the target node count for the ongoing resize operation. If the allocationState is steady, this property denotes the target node count for the previous resize operation. </summary>
         [WirePath("targetNodeCount")]
-        public int? TargetNodeCount { get; }
+        public int? TargetNodeCount
+        {
+            get
+            {
+                return _targetNodeCount;
+            }
+        }
 
         /// <summary> Counts of various node states on the compute. </summary>
         [WirePath("nodeStateCounts")]
-        public MachineLearningNodeStateCounts NodeStateCounts { get; }
+        public MachineLearningNodeStateCounts NodeStateCounts
+        {
+            get
+            {
+                return _nodeStateCounts;
+            }
+        }
 
         /// <summary> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </summary>
         [WirePath("enableNodePublicIp")]
-        public bool? EnableNodePublicIP { get; set; }
+        public bool? EnableNodePublicIP
+        {
+            get
+            {
+                return _enableNodePublicIP;
+            }
+            set
+            {
+                _enableNodePublicIP = value;
+                _enableNodePublicIPIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// A property bag containing additional properties.
@@ -153,7 +231,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </para>
         /// </summary>
         [WirePath("propertyBag")]
-        public BinaryData PropertyBag { get; set; }
+        public BinaryData PropertyBag
+        {
+            get
+            {
+                return _propertyBag;
+            }
+            set
+            {
+                _propertyBag = value;
+                _propertyBagIsDefined = true;
+            }
+        }
 
         /// <summary> Virtual Machine image path. </summary>
         [WirePath("virtualMachineImage.id")]

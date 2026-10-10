@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Batch endpoint configuration. </summary>
     public partial class MachineLearningBatchEndpointProperties : MachineLearningEndpointProperties
     {
+        private BatchEndpointDefaults _defaults;
+        internal bool _defaultsIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningBatchEndpointProperties"/>. </summary>
         /// <param name="authMode"> [Required] The authentication method for invoking the endpoint (data plane operation). Use 'Key' for key-based authentication. Use 'AMLToken' for Azure Machine Learning token-based authentication. Use 'AADToken' for Microsoft Entra token-based authentication. </param>
         public MachineLearningBatchEndpointProperties(MachineLearningEndpointAuthMode authMode) : base(authMode)
@@ -35,13 +38,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="provisioningState"> Provisioning state for the endpoint. </param>
         internal MachineLearningBatchEndpointProperties(MachineLearningEndpointAuthMode authMode, string description, MachineLearningEndpointAuthKeys keys, IDictionary<string, string> properties, Uri scoringUri, Uri swaggerUri, IDictionary<string, BinaryData> additionalBinaryDataProperties, BatchEndpointDefaults defaults, MachineLearningEndpointProvisioningState? provisioningState) : base(authMode, description, keys, properties, scoringUri, swaggerUri, additionalBinaryDataProperties)
         {
-            Defaults = defaults;
+            _defaults = defaults;
             ProvisioningState = provisioningState;
         }
 
         /// <summary> Default values for Batch Endpoint. </summary>
         [WirePath("defaults")]
-        internal BatchEndpointDefaults Defaults { get; set; }
+        internal BatchEndpointDefaults Defaults
+        {
+            get
+            {
+                return _defaults;
+            }
+            set
+            {
+                _defaults = value;
+                _defaultsIsDefined = true;
+            }
+        }
 
         /// <summary> Provisioning state for the endpoint. </summary>
         [WirePath("provisioningState")]

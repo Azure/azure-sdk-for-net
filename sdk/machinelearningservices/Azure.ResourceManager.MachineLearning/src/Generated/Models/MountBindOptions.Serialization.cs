@@ -74,20 +74,41 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MountBindOptions)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Propagation))
+            if (_propagationIsDefined || Optional.IsDefined(Propagation))
             {
-                writer.WritePropertyName("propagation"u8);
-                writer.WriteStringValue(Propagation);
+                if (Propagation != null)
+                {
+                    writer.WritePropertyName("propagation"u8);
+                    writer.WriteStringValue(Propagation);
+                }
+                else
+                {
+                    writer.WriteNull("propagation"u8);
+                }
             }
-            if (Optional.IsDefined(ShouldCreateHostPath))
+            if (_shouldCreateHostPathIsDefined || Optional.IsDefined(ShouldCreateHostPath))
             {
-                writer.WritePropertyName("createHostPath"u8);
-                writer.WriteBooleanValue(ShouldCreateHostPath.Value);
+                if (ShouldCreateHostPath != null)
+                {
+                    writer.WritePropertyName("createHostPath"u8);
+                    writer.WriteBooleanValue(ShouldCreateHostPath.Value);
+                }
+                else
+                {
+                    writer.WriteNull("createHostPath"u8);
+                }
             }
-            if (Optional.IsDefined(Selinux))
+            if (_selinuxIsDefined || Optional.IsDefined(Selinux))
             {
-                writer.WritePropertyName("selinux"u8);
-                writer.WriteStringValue(Selinux);
+                if (Selinux != null)
+                {
+                    writer.WritePropertyName("selinux"u8);
+                    writer.WriteStringValue(Selinux);
+                }
+                else
+                {
+                    writer.WriteNull("selinux"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -131,14 +152,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool propagationIsDefined = false;
             string propagation = default;
+            bool shouldCreateHostPathIsDefined = false;
             bool? shouldCreateHostPath = default;
+            bool selinuxIsDefined = false;
             string selinux = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("propagation"u8))
                 {
+                    propagationIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         propagation = null;
@@ -149,6 +174,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("createHostPath"u8))
                 {
+                    shouldCreateHostPathIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         shouldCreateHostPath = null;
@@ -159,6 +185,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("selinux"u8))
                 {
+                    selinuxIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         selinux = null;
@@ -172,7 +199,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MountBindOptions(propagation, shouldCreateHostPath, selinux, additionalBinaryDataProperties);
+            return new MountBindOptions(propagation, shouldCreateHostPath, selinux, additionalBinaryDataProperties)
+            {
+                _propagationIsDefined = propagationIsDefined,
+                _shouldCreateHostPathIsDefined = shouldCreateHostPathIsDefined,
+                _selinuxIsDefined = selinuxIsDefined
+            };
         }
     }
 }

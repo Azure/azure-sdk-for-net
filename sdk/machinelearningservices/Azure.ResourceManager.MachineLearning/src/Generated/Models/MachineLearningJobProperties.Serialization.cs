@@ -87,20 +87,34 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("computeId"u8);
                 writer.WriteStringValue(ComputeId);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (_displayNameIsDefined || Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
+                if (DisplayName != null)
+                {
+                    writer.WritePropertyName("displayName"u8);
+                    writer.WriteStringValue(DisplayName);
+                }
+                else
+                {
+                    writer.WriteNull("displayName"u8);
+                }
             }
             if (Optional.IsDefined(ExperimentName))
             {
                 writer.WritePropertyName("experimentName"u8);
                 writer.WriteStringValue(ExperimentName);
             }
-            if (Optional.IsDefined(Identity))
+            if (_identityIsDefined || Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                if (Identity != null)
+                {
+                    writer.WritePropertyName("identity"u8);
+                    writer.WriteObjectValue(Identity, options);
+                }
+                else
+                {
+                    writer.WriteNull("identity"u8);
+                }
             }
             if (Optional.IsDefined(IsArchived))
             {
@@ -109,21 +123,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("jobType"u8);
             writer.WriteStringValue(JobType.ToString());
-            if (Optional.IsDefined(NotificationSetting))
+            if (_notificationSettingIsDefined || Optional.IsDefined(NotificationSetting))
             {
-                writer.WritePropertyName("notificationSetting"u8);
-                writer.WriteObjectValue(NotificationSetting, options);
+                if (NotificationSetting != null)
+                {
+                    writer.WritePropertyName("notificationSetting"u8);
+                    writer.WriteObjectValue(NotificationSetting, options);
+                }
+                else
+                {
+                    writer.WriteNull("notificationSetting"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Services))
             {
-                writer.WritePropertyName("services"u8);
-                writer.WriteStartObject();
-                foreach (var item in Services)
+                if (Services != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    writer.WritePropertyName("services"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Services)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteObjectValue(item.Value, options);
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("services"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {

@@ -77,23 +77,37 @@ namespace Azure.ResourceManager.MachineLearning.Models
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(IndexColumns))
             {
-                writer.WritePropertyName("indexColumns"u8);
-                writer.WriteStartArray();
-                foreach (IndexColumn item in IndexColumns)
+                if (IndexColumns != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("indexColumns"u8);
+                    writer.WriteStartArray();
+                    foreach (IndexColumn item in IndexColumns)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("indexColumns"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Stage))
+            if (_stageIsDefined || Optional.IsDefined(Stage))
             {
-                writer.WritePropertyName("stage"u8);
-                writer.WriteStringValue(Stage);
+                if (Stage != null)
+                {
+                    writer.WritePropertyName("stage"u8);
+                    writer.WriteStringValue(Stage);
+                }
+                else
+                {
+                    writer.WriteNull("stage"u8);
+                }
             }
         }
 
@@ -122,19 +136,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool descriptionIsDefined = false;
             string description = default;
-            IDictionary<string, string> properties = default;
-            IDictionary<string, string> tags = default;
+            IDictionary<string, string> properties = new ChangeTrackingDictionary<string, string>();
+            IDictionary<string, string> tags = new ChangeTrackingDictionary<string, string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             bool? isAnonymous = default;
             bool? isArchived = default;
-            IList<IndexColumn> indexColumns = default;
+            IList<IndexColumn> indexColumns = new ChangeTrackingList<IndexColumn>();
             RegistryAssetProvisioningState? provisioningState = default;
+            bool stageIsDefined = false;
             string stage = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -147,6 +164,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -168,6 +186,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        tags = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -207,6 +226,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        indexColumns = null;
                         continue;
                     }
                     List<IndexColumn> array = new List<IndexColumn>();
@@ -228,6 +248,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("stage"u8))
                 {
+                    stageIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         stage = null;
@@ -243,14 +264,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             return new MachineLearningFeatureStoreEntityVersionProperties(
                 description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                properties,
+                tags,
                 additionalBinaryDataProperties,
                 isAnonymous,
                 isArchived,
-                indexColumns ?? new ChangeTrackingList<IndexColumn>(),
+                indexColumns,
                 provisioningState,
-                stage);
+                stage)
+            {
+                _descriptionIsDefined = descriptionIsDefined,
+                _stageIsDefined = stageIsDefined
+            };
         }
     }
 }

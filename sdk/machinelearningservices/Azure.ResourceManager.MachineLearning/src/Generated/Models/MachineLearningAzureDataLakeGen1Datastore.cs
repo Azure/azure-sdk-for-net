@@ -14,6 +14,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Azure Data Lake Gen1 datastore configuration. </summary>
     public partial class MachineLearningAzureDataLakeGen1Datastore : MachineLearningDatastoreProperties
     {
+        private string _resourceGroup;
+        internal bool _resourceGroupIsDefined;
+        private string _subscriptionId;
+        internal bool _subscriptionIdIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningAzureDataLakeGen1Datastore"/>. </summary>
         /// <param name="credentials"> [Required] Account credentials. </param>
         /// <param name="storeName"> [Required] Azure Data Lake store name. </param>
@@ -40,19 +45,41 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="storeName"> [Required] Azure Data Lake store name. </param>
         internal MachineLearningAzureDataLakeGen1Datastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, string resourceGroup, string subscriptionId, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity, string storeName) : base(description, properties, tags, additionalBinaryDataProperties, credentials, datastoreType, isDefault)
         {
-            ResourceGroup = resourceGroup;
-            SubscriptionId = subscriptionId;
+            _resourceGroup = resourceGroup;
+            _subscriptionId = subscriptionId;
             ServiceDataAccessAuthIdentity = serviceDataAccessAuthIdentity;
             StoreName = storeName;
         }
 
         /// <summary> Azure Resource Group name. </summary>
         [WirePath("resourceGroup")]
-        public string ResourceGroup { get; set; }
+        public string ResourceGroup
+        {
+            get
+            {
+                return _resourceGroup;
+            }
+            set
+            {
+                _resourceGroup = value;
+                _resourceGroupIsDefined = true;
+            }
+        }
 
         /// <summary> Azure Subscription Id. </summary>
         [WirePath("subscriptionId")]
-        public string SubscriptionId { get; set; }
+        public string SubscriptionId
+        {
+            get
+            {
+                return _subscriptionId;
+            }
+            set
+            {
+                _subscriptionId = value;
+                _subscriptionIdIsDefined = true;
+            }
+        }
 
         /// <summary> Indicates which identity to use to authenticate service data access to customer's storage. </summary>
         [WirePath("serviceDataAccessAuthIdentity")]

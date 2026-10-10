@@ -18,6 +18,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class TextNer : AutoMLVertical
     {
+        private NlpVerticalFeaturizationSettings _featurizationSettings;
+        internal bool _featurizationSettingsIsDefined;
+        private NlpVerticalLimitSettings _limitSettings;
+        internal bool _limitSettingsIsDefined;
+        private MachineLearningTableJobInput _validationData;
+        internal bool _validationDataIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="TextNer"/>. </summary>
         /// <param name="trainingData"> [Required] Training data input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> is null. </exception>
@@ -45,23 +52,56 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         internal TextNer(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NlpVerticalFeaturizationSettings featurizationSettings, NlpVerticalLimitSettings limitSettings, MachineLearningTableJobInput validationData, ClassificationPrimaryMetric? primaryMetric) : base(logVerbosity, targetColumnName, taskType, trainingData, additionalBinaryDataProperties)
         {
-            FeaturizationSettings = featurizationSettings;
-            LimitSettings = limitSettings;
-            ValidationData = validationData;
+            _featurizationSettings = featurizationSettings;
+            _limitSettings = limitSettings;
+            _validationData = validationData;
             PrimaryMetric = primaryMetric;
         }
 
         /// <summary> Featurization inputs needed for AutoML job. </summary>
         [WirePath("featurizationSettings")]
-        internal NlpVerticalFeaturizationSettings FeaturizationSettings { get; set; }
+        internal NlpVerticalFeaturizationSettings FeaturizationSettings
+        {
+            get
+            {
+                return _featurizationSettings;
+            }
+            set
+            {
+                _featurizationSettings = value;
+                _featurizationSettingsIsDefined = true;
+            }
+        }
 
         /// <summary> Execution constraints for AutoMLJob. </summary>
         [WirePath("limitSettings")]
-        public NlpVerticalLimitSettings LimitSettings { get; set; }
+        public NlpVerticalLimitSettings LimitSettings
+        {
+            get
+            {
+                return _limitSettings;
+            }
+            set
+            {
+                _limitSettings = value;
+                _limitSettingsIsDefined = true;
+            }
+        }
 
         /// <summary> Validation data inputs. </summary>
         [WirePath("validationData")]
-        public MachineLearningTableJobInput ValidationData { get; set; }
+        public MachineLearningTableJobInput ValidationData
+        {
+            get
+            {
+                return _validationData;
+            }
+            set
+            {
+                _validationData = value;
+                _validationDataIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Primary metric for Text-NER task.

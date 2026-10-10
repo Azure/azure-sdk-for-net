@@ -74,20 +74,41 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningMarketplacePlan)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(OfferId))
+            if (options.Format != "W" && (_offerIdIsDefined || Optional.IsDefined(OfferId)))
             {
-                writer.WritePropertyName("offerId"u8);
-                writer.WriteStringValue(OfferId);
+                if (OfferId != null)
+                {
+                    writer.WritePropertyName("offerId"u8);
+                    writer.WriteStringValue(OfferId);
+                }
+                else
+                {
+                    writer.WriteNull("offerId"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(PlanId))
+            if (options.Format != "W" && (_planIdIsDefined || Optional.IsDefined(PlanId)))
             {
-                writer.WritePropertyName("planId"u8);
-                writer.WriteStringValue(PlanId);
+                if (PlanId != null)
+                {
+                    writer.WritePropertyName("planId"u8);
+                    writer.WriteStringValue(PlanId);
+                }
+                else
+                {
+                    writer.WriteNull("planId"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(PublisherId))
+            if (options.Format != "W" && (_publisherIdIsDefined || Optional.IsDefined(PublisherId)))
             {
-                writer.WritePropertyName("publisherId"u8);
-                writer.WriteStringValue(PublisherId);
+                if (PublisherId != null)
+                {
+                    writer.WritePropertyName("publisherId"u8);
+                    writer.WriteStringValue(PublisherId);
+                }
+                else
+                {
+                    writer.WriteNull("publisherId"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -131,14 +152,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool offerIdIsDefined = false;
             string offerId = default;
+            bool planIdIsDefined = false;
             string planId = default;
+            bool publisherIdIsDefined = false;
             string publisherId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("offerId"u8))
                 {
+                    offerIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         offerId = null;
@@ -149,6 +174,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("planId"u8))
                 {
+                    planIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         planId = null;
@@ -159,6 +185,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("publisherId"u8))
                 {
+                    publisherIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         publisherId = null;
@@ -172,7 +199,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MachineLearningMarketplacePlan(offerId, planId, publisherId, additionalBinaryDataProperties);
+            return new MachineLearningMarketplacePlan(offerId, planId, publisherId, additionalBinaryDataProperties)
+            {
+                _offerIdIsDefined = offerIdIsDefined,
+                _planIdIsDefined = planIdIsDefined,
+                _publisherIdIsDefined = publisherIdIsDefined
+            };
         }
     }
 }

@@ -83,141 +83,225 @@ namespace Azure.ResourceManager.MachineLearning.Models
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(Archives))
             {
-                writer.WritePropertyName("archives"u8);
-                writer.WriteStartArray();
-                foreach (string item in Archives)
+                if (Archives != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("archives"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in Archives)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("archives"u8);
+                }
             }
-            if (Optional.IsDefined(Args))
+            if (_argsIsDefined || Optional.IsDefined(Args))
             {
-                writer.WritePropertyName("args"u8);
-                writer.WriteStringValue(Args);
+                if (Args != null)
+                {
+                    writer.WritePropertyName("args"u8);
+                    writer.WriteStringValue(Args);
+                }
+                else
+                {
+                    writer.WriteNull("args"u8);
+                }
             }
             writer.WritePropertyName("codeId"u8);
             writer.WriteStringValue(CodeId);
             if (Optional.IsCollectionDefined(Conf))
             {
-                writer.WritePropertyName("conf"u8);
-                writer.WriteStartObject();
-                foreach (var item in Conf)
+                if (Conf != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("conf"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Conf)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("conf"u8);
+                }
             }
             writer.WritePropertyName("entry"u8);
             writer.WriteObjectValue(Entry, options);
-            if (Optional.IsDefined(EnvironmentId))
+            if (_environmentIdIsDefined || Optional.IsDefined(EnvironmentId))
             {
-                writer.WritePropertyName("environmentId"u8);
-                writer.WriteStringValue(EnvironmentId);
+                if (EnvironmentId != null)
+                {
+                    writer.WritePropertyName("environmentId"u8);
+                    writer.WriteStringValue(EnvironmentId);
+                }
+                else
+                {
+                    writer.WriteNull("environmentId"u8);
+                }
             }
             if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
-                writer.WritePropertyName("environmentVariables"u8);
-                writer.WriteStartObject();
-                foreach (var item in EnvironmentVariables)
+                if (EnvironmentVariables != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("environmentVariables"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in EnvironmentVariables)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("environmentVariables"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Files))
             {
-                writer.WritePropertyName("files"u8);
-                writer.WriteStartArray();
-                foreach (string item in Files)
+                if (Files != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("files"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in Files)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("files"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Inputs))
             {
-                writer.WritePropertyName("inputs"u8);
-                writer.WriteStartObject();
-                foreach (var item in Inputs)
+                if (Inputs != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    writer.WritePropertyName("inputs"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Inputs)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteObjectValue(item.Value, options);
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("inputs"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Jars))
             {
-                writer.WritePropertyName("jars"u8);
-                writer.WriteStartArray();
-                foreach (string item in Jars)
+                if (Jars != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("jars"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in Jars)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("jars"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Outputs))
             {
-                writer.WritePropertyName("outputs"u8);
-                writer.WriteStartObject();
-                foreach (var item in Outputs)
+                if (Outputs != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    writer.WritePropertyName("outputs"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Outputs)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteObjectValue(item.Value, options);
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("outputs"u8);
+                }
             }
             if (Optional.IsCollectionDefined(PyFiles))
             {
-                writer.WritePropertyName("pyFiles"u8);
-                writer.WriteStartArray();
-                foreach (string item in PyFiles)
+                if (PyFiles != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("pyFiles"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in PyFiles)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("pyFiles"u8);
+                }
             }
-            if (Optional.IsDefined(QueueSettings))
+            if (_queueSettingsIsDefined || Optional.IsDefined(QueueSettings))
             {
-                writer.WritePropertyName("queueSettings"u8);
-                writer.WriteObjectValue(QueueSettings, options);
+                if (QueueSettings != null)
+                {
+                    writer.WritePropertyName("queueSettings"u8);
+                    writer.WriteObjectValue(QueueSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("queueSettings"u8);
+                }
             }
-            if (Optional.IsDefined(Resources))
+            if (_resourcesIsDefined || Optional.IsDefined(Resources))
             {
-                writer.WritePropertyName("resources"u8);
-                writer.WriteObjectValue(Resources, options);
+                if (Resources != null)
+                {
+                    writer.WritePropertyName("resources"u8);
+                    writer.WriteObjectValue(Resources, options);
+                }
+                else
+                {
+                    writer.WriteNull("resources"u8);
+                }
             }
         }
 
@@ -246,38 +330,47 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool descriptionIsDefined = false;
             string description = default;
-            IDictionary<string, string> properties = default;
-            IDictionary<string, string> tags = default;
+            IDictionary<string, string> properties = new ChangeTrackingDictionary<string, string>();
+            IDictionary<string, string> tags = new ChangeTrackingDictionary<string, string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceIdentifier componentId = default;
             ResourceIdentifier computeId = default;
+            bool displayNameIsDefined = false;
             string displayName = default;
             string experimentName = default;
+            bool identityIsDefined = false;
             MachineLearningIdentityConfiguration identity = default;
             bool? isArchived = default;
             JobType jobType = default;
+            bool notificationSettingIsDefined = false;
             NotificationSetting notificationSetting = default;
-            IDictionary<string, MachineLearningJobService> services = default;
+            IDictionary<string, MachineLearningJobService> services = new ChangeTrackingDictionary<string, MachineLearningJobService>();
             MachineLearningJobStatus? status = default;
-            IList<string> archives = default;
+            IList<string> archives = new ChangeTrackingList<string>();
+            bool argsIsDefined = false;
             string args = default;
             ResourceIdentifier codeId = default;
-            IDictionary<string, string> conf = default;
+            IDictionary<string, string> conf = new ChangeTrackingDictionary<string, string>();
             SparkJobEntry entry = default;
+            bool environmentIdIsDefined = false;
             ResourceIdentifier environmentId = default;
-            IDictionary<string, string> environmentVariables = default;
-            IList<string> files = default;
-            IDictionary<string, MachineLearningJobInput> inputs = default;
-            IList<string> jars = default;
-            IDictionary<string, MachineLearningJobOutput> outputs = default;
-            IList<string> pyFiles = default;
+            IDictionary<string, string> environmentVariables = new ChangeTrackingDictionary<string, string>();
+            IList<string> files = new ChangeTrackingList<string>();
+            IDictionary<string, MachineLearningJobInput> inputs = new ChangeTrackingDictionary<string, MachineLearningJobInput>();
+            IList<string> jars = new ChangeTrackingList<string>();
+            IDictionary<string, MachineLearningJobOutput> outputs = new ChangeTrackingDictionary<string, MachineLearningJobOutput>();
+            IList<string> pyFiles = new ChangeTrackingList<string>();
+            bool queueSettingsIsDefined = false;
             QueueSettings queueSettings = default;
+            bool resourcesIsDefined = false;
             SparkResourceConfiguration resources = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -290,6 +383,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -311,6 +405,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        tags = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -348,6 +443,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("displayName"u8))
                 {
+                    displayNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         displayName = null;
@@ -363,6 +459,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("identity"u8))
                 {
+                    identityIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         identity = null;
@@ -387,6 +484,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("notificationSetting"u8))
                 {
+                    notificationSettingIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         notificationSetting = null;
@@ -399,6 +497,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        services = null;
                         continue;
                     }
                     Dictionary<string, MachineLearningJobService> dictionary = new Dictionary<string, MachineLearningJobService>();
@@ -422,6 +521,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        archives = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -441,6 +541,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("args"u8))
                 {
+                    argsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         args = null;
@@ -458,6 +559,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        conf = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -482,6 +584,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("environmentId"u8))
                 {
+                    environmentIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         environmentId = null;
@@ -494,6 +597,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        environmentVariables = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -515,6 +619,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        files = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -536,6 +641,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        inputs = null;
                         continue;
                     }
                     Dictionary<string, MachineLearningJobInput> dictionary = new Dictionary<string, MachineLearningJobInput>();
@@ -550,6 +656,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        jars = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -571,6 +678,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        outputs = null;
                         continue;
                     }
                     Dictionary<string, MachineLearningJobOutput> dictionary = new Dictionary<string, MachineLearningJobOutput>();
@@ -585,6 +693,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        pyFiles = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -604,6 +713,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("queueSettings"u8))
                 {
+                    queueSettingsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         queueSettings = null;
@@ -614,6 +724,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("resources"u8))
                 {
+                    resourcesIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         resources = null;
@@ -629,8 +740,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             return new SparkJob(
                 description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                properties,
+                tags,
                 additionalBinaryDataProperties,
                 componentId,
                 computeId,
@@ -640,22 +751,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 isArchived,
                 jobType,
                 notificationSetting,
-                services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
+                services,
                 status,
-                archives ?? new ChangeTrackingList<string>(),
+                archives,
                 args,
                 codeId,
-                conf ?? new ChangeTrackingDictionary<string, string>(),
+                conf,
                 entry,
                 environmentId,
-                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
-                files ?? new ChangeTrackingList<string>(),
-                inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(),
-                jars ?? new ChangeTrackingList<string>(),
-                outputs ?? new ChangeTrackingDictionary<string, MachineLearningJobOutput>(),
-                pyFiles ?? new ChangeTrackingList<string>(),
+                environmentVariables,
+                files,
+                inputs,
+                jars,
+                outputs,
+                pyFiles,
                 queueSettings,
-                resources);
+                resources)
+            {
+                _descriptionIsDefined = descriptionIsDefined,
+                _displayNameIsDefined = displayNameIsDefined,
+                _identityIsDefined = identityIsDefined,
+                _notificationSettingIsDefined = notificationSettingIsDefined,
+                _argsIsDefined = argsIsDefined,
+                _environmentIdIsDefined = environmentIdIsDefined,
+                _queueSettingsIsDefined = queueSettingsIsDefined,
+                _resourcesIsDefined = resourcesIsDefined
+            };
         }
     }
 }

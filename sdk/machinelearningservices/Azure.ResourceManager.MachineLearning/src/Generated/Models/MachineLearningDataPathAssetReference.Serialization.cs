@@ -75,15 +75,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningDataPathAssetReference)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(DatastoreId))
+            if (_datastoreIdIsDefined || Optional.IsDefined(DatastoreId))
             {
-                writer.WritePropertyName("datastoreId"u8);
-                writer.WriteStringValue(DatastoreId);
+                if (DatastoreId != null)
+                {
+                    writer.WritePropertyName("datastoreId"u8);
+                    writer.WriteStringValue(DatastoreId);
+                }
+                else
+                {
+                    writer.WriteNull("datastoreId"u8);
+                }
             }
-            if (Optional.IsDefined(Path))
+            if (_pathIsDefined || Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path"u8);
-                writer.WriteStringValue(Path);
+                if (Path != null)
+                {
+                    writer.WritePropertyName("path"u8);
+                    writer.WriteStringValue(Path);
+                }
+                else
+                {
+                    writer.WriteNull("path"u8);
+                }
             }
         }
 
@@ -114,7 +128,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             ReferenceType referenceType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool datastoreIdIsDefined = false;
             string datastoreId = default;
+            bool pathIsDefined = false;
             string path = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -125,6 +141,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("datastoreId"u8))
                 {
+                    datastoreIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         datastoreId = null;
@@ -135,6 +152,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("path"u8))
                 {
+                    pathIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         path = null;
@@ -148,7 +166,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MachineLearningDataPathAssetReference(referenceType, additionalBinaryDataProperties, datastoreId, path);
+            return new MachineLearningDataPathAssetReference(referenceType, additionalBinaryDataProperties, datastoreId, path)
+            {
+                _datastoreIdIsDefined = datastoreIdIsDefined,
+                _pathIsDefined = pathIsDefined
+            };
         }
     }
 }

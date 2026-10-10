@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _targetColumn;
+        internal bool _targetColumnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FeatureImportanceSettings"/>. </summary>
         public FeatureImportanceSettings()
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal FeatureImportanceSettings(FeatureImportanceMode? mode, string targetColumn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
-            TargetColumn = targetColumn;
+            _targetColumn = targetColumn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -39,6 +41,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The name of the target column within the input data asset. </summary>
         [WirePath("targetColumn")]
-        public string TargetColumn { get; set; }
+        public string TargetColumn
+        {
+            get
+            {
+                return _targetColumn;
+            }
+            set
+            {
+                _targetColumn = value;
+                _targetColumnIsDefined = true;
+            }
+        }
     }
 }

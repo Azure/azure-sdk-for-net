@@ -84,18 +84,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(JobIds))
             {
-                writer.WritePropertyName("jobIds"u8);
-                writer.WriteStartArray();
-                foreach (string item in JobIds)
+                if (JobIds != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("jobIds"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in JobIds)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("jobIds"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,7 +146,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            IReadOnlyList<string> jobIds = default;
+            IReadOnlyList<string> jobIds = new ChangeTrackingList<string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,6 +154,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        jobIds = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -169,7 +177,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FeaturesetVersionBackfillResponse(jobIds ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new FeaturesetVersionBackfillResponse(jobIds, additionalBinaryDataProperties);
         }
     }
 }

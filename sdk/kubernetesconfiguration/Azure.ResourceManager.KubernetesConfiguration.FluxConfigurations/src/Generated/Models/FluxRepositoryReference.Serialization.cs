@@ -74,25 +74,53 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 throw new FormatException($"The model {nameof(FluxRepositoryReference)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Branch))
+            if (_branchIsDefined || Optional.IsDefined(Branch))
             {
-                writer.WritePropertyName("branch"u8);
-                writer.WriteStringValue(Branch);
+                if (Branch != null)
+                {
+                    writer.WritePropertyName("branch"u8);
+                    writer.WriteStringValue(Branch);
+                }
+                else
+                {
+                    writer.WriteNull("branch"u8);
+                }
             }
-            if (Optional.IsDefined(Tag))
+            if (_tagIsDefined || Optional.IsDefined(Tag))
             {
-                writer.WritePropertyName("tag"u8);
-                writer.WriteStringValue(Tag);
+                if (Tag != null)
+                {
+                    writer.WritePropertyName("tag"u8);
+                    writer.WriteStringValue(Tag);
+                }
+                else
+                {
+                    writer.WriteNull("tag"u8);
+                }
             }
-            if (Optional.IsDefined(Semver))
+            if (_semverIsDefined || Optional.IsDefined(Semver))
             {
-                writer.WritePropertyName("semver"u8);
-                writer.WriteStringValue(Semver);
+                if (Semver != null)
+                {
+                    writer.WritePropertyName("semver"u8);
+                    writer.WriteStringValue(Semver);
+                }
+                else
+                {
+                    writer.WriteNull("semver"u8);
+                }
             }
-            if (Optional.IsDefined(Commit))
+            if (_commitIsDefined || Optional.IsDefined(Commit))
             {
-                writer.WritePropertyName("commit"u8);
-                writer.WriteStringValue(Commit);
+                if (Commit != null)
+                {
+                    writer.WritePropertyName("commit"u8);
+                    writer.WriteStringValue(Commit);
+                }
+                else
+                {
+                    writer.WriteNull("commit"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -136,15 +164,20 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 return null;
             }
+            bool branchIsDefined = false;
             string branch = default;
+            bool tagIsDefined = false;
             string tag = default;
+            bool semverIsDefined = false;
             string semver = default;
+            bool commitIsDefined = false;
             string commit = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("branch"u8))
                 {
+                    branchIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         branch = null;
@@ -155,6 +188,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("tag"u8))
                 {
+                    tagIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         tag = null;
@@ -165,6 +199,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("semver"u8))
                 {
+                    semverIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         semver = null;
@@ -175,6 +210,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("commit"u8))
                 {
+                    commitIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         commit = null;
@@ -188,7 +224,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FluxRepositoryReference(branch, tag, semver, commit, additionalBinaryDataProperties);
+            return new FluxRepositoryReference(branch, tag, semver, commit, additionalBinaryDataProperties)
+            {
+                _branchIsDefined = branchIsDefined,
+                _tagIsDefined = tagIsDefined,
+                _semverIsDefined = semverIsDefined,
+                _commitIsDefined = commitIsDefined
+            };
         }
     }
 }

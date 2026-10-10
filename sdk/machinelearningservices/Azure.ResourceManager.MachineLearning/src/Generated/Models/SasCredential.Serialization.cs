@@ -75,10 +75,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(SasCredential)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(SasUri))
+            if (_sasUriIsDefined || Optional.IsDefined(SasUri))
             {
-                writer.WritePropertyName("sasUri"u8);
-                writer.WriteStringValue(SasUri.AbsoluteUri);
+                if (SasUri != null)
+                {
+                    writer.WritePropertyName("sasUri"u8);
+                    writer.WriteStringValue(SasUri.AbsoluteUri);
+                }
+                else
+                {
+                    writer.WriteNull("sasUri"u8);
+                }
             }
         }
 
@@ -109,6 +116,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             DataReferenceCredentialType credentialType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool sasUriIsDefined = false;
             Uri sasUri = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -119,6 +127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("sasUri"u8))
                 {
+                    sasUriIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         sasUri = null;
@@ -132,7 +141,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SasCredential(credentialType, additionalBinaryDataProperties, sasUri);
+            return new SasCredential(credentialType, additionalBinaryDataProperties, sasUri)
+            {
+                _sasUriIsDefined = sasUriIsDefined
+            };
         }
     }
 }

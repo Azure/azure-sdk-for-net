@@ -15,6 +15,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Reference to an asset via its path in a job output. </summary>
     public partial class MachineLearningOutputPathAssetReference : MachineLearningAssetReferenceBase
     {
+        private string _path;
+        internal bool _pathIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningOutputPathAssetReference"/>. </summary>
         public MachineLearningOutputPathAssetReference() : base(ReferenceType.OutputPath)
         {
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal MachineLearningOutputPathAssetReference(ReferenceType referenceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier jobId, string path) : base(referenceType, additionalBinaryDataProperties)
         {
             JobId = jobId;
-            Path = path;
+            _path = path;
         }
 
         /// <summary> ARM resource ID of the job. </summary>
@@ -37,6 +40,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The path of the file/directory in the job output. </summary>
         [WirePath("path")]
-        public string Path { get; set; }
+        public string Path
+        {
+            get
+            {
+                return _path;
+            }
+            set
+            {
+                _path = value;
+                _pathIsDefined = true;
+            }
+        }
     }
 }

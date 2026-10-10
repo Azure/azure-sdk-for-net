@@ -85,15 +85,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(BlobReferenceSasContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AssetId))
+            if (_assetIdIsDefined || Optional.IsDefined(AssetId))
             {
-                writer.WritePropertyName("assetId"u8);
-                writer.WriteStringValue(AssetId);
+                if (AssetId != null)
+                {
+                    writer.WritePropertyName("assetId"u8);
+                    writer.WriteStringValue(AssetId);
+                }
+                else
+                {
+                    writer.WriteNull("assetId"u8);
+                }
             }
-            if (Optional.IsDefined(BlobUri))
+            if (_blobUriIsDefined || Optional.IsDefined(BlobUri))
             {
-                writer.WritePropertyName("blobUri"u8);
-                writer.WriteStringValue(BlobUri.AbsoluteUri);
+                if (BlobUri != null)
+                {
+                    writer.WritePropertyName("blobUri"u8);
+                    writer.WriteStringValue(BlobUri.AbsoluteUri);
+                }
+                else
+                {
+                    writer.WriteNull("blobUri"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -137,13 +151,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool assetIdIsDefined = false;
             string assetId = default;
+            bool blobUriIsDefined = false;
             Uri blobUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("assetId"u8))
                 {
+                    assetIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         assetId = null;
@@ -154,6 +171,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("blobUri"u8))
                 {
+                    blobUriIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         blobUri = null;
@@ -167,7 +185,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BlobReferenceSasContent(assetId, blobUri, additionalBinaryDataProperties);
+            return new BlobReferenceSasContent(assetId, blobUri, additionalBinaryDataProperties)
+            {
+                _assetIdIsDefined = assetIdIsDefined,
+                _blobUriIsDefined = blobUriIsDefined
+            };
         }
     }
 }

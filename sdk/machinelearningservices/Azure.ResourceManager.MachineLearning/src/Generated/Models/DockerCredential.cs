@@ -14,6 +14,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Credential for docker with username and password. </summary>
     public partial class DockerCredential : DataReferenceCredential
     {
+        private string _password;
+        internal bool _passwordIsDefined;
+        private string _userName;
+        internal bool _userNameIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="DockerCredential"/>. </summary>
         internal DockerCredential() : base(DataReferenceCredentialType.DockerCredentials)
         {
@@ -26,16 +31,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="userName"> DockerCredential user name. </param>
         internal DockerCredential(DataReferenceCredentialType credentialType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string password, string userName) : base(credentialType, additionalBinaryDataProperties)
         {
-            Password = password;
-            UserName = userName;
+            _password = password;
+            _userName = userName;
         }
 
         /// <summary> DockerCredential user password. </summary>
         [WirePath("password")]
-        public string Password { get; }
+        public string Password
+        {
+            get
+            {
+                return _password;
+            }
+        }
 
         /// <summary> DockerCredential user name. </summary>
         [WirePath("userName")]
-        public string UserName { get; }
+        public string UserName
+        {
+            get
+            {
+                return _userName;
+            }
+        }
     }
 }

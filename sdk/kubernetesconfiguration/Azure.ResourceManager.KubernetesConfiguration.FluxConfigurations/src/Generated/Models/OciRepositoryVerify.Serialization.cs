@@ -81,29 +81,43 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             }
             if (Optional.IsCollectionDefined(VerificationConfig))
             {
-                writer.WritePropertyName("verificationConfig"u8);
-                writer.WriteStartObject();
-                foreach (var item in VerificationConfig)
+                if (VerificationConfig != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("verificationConfig"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in VerificationConfig)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("verificationConfig"u8);
+                }
             }
             if (Optional.IsCollectionDefined(MatchOidcIdentity))
             {
-                writer.WritePropertyName("matchOidcIdentity"u8);
-                writer.WriteStartArray();
-                foreach (MatchOidcIdentity item in MatchOidcIdentity)
+                if (MatchOidcIdentity != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("matchOidcIdentity"u8);
+                    writer.WriteStartArray();
+                    foreach (MatchOidcIdentity item in MatchOidcIdentity)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("matchOidcIdentity"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -148,8 +162,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 return null;
             }
             string provider = default;
-            IDictionary<string, string> verificationConfig = default;
-            IList<MatchOidcIdentity> matchOidcIdentity = default;
+            IDictionary<string, string> verificationConfig = new ChangeTrackingDictionary<string, string>();
+            IList<MatchOidcIdentity> matchOidcIdentity = new ChangeTrackingList<MatchOidcIdentity>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -162,6 +176,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        verificationConfig = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -183,6 +198,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        matchOidcIdentity = null;
                         continue;
                     }
                     List<MatchOidcIdentity> array = new List<MatchOidcIdentity>();
@@ -198,7 +214,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new OciRepositoryVerify(provider, verificationConfig ?? new ChangeTrackingDictionary<string, string>(), matchOidcIdentity ?? new ChangeTrackingList<MatchOidcIdentity>(), additionalBinaryDataProperties);
+            return new OciRepositoryVerify(provider, verificationConfig, matchOidcIdentity, additionalBinaryDataProperties);
         }
     }
 }

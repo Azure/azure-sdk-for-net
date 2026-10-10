@@ -14,6 +14,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Forecasting task in AutoML Table vertical. </summary>
     public partial class MachineLearningForecasting : AutoMLVertical
     {
+        private TableVerticalFeaturizationSettings _featurizationSettings;
+        internal bool _featurizationSettingsIsDefined;
+        private TableVerticalLimitSettings _limitSettings;
+        internal bool _limitSettingsIsDefined;
+        private NCrossValidations _nCrossValidations;
+        internal bool _nCrossValidationsIsDefined;
+        private MachineLearningTableJobInput _testData;
+        internal bool _testDataIsDefined;
+        private double? _testDataSize;
+        internal bool _testDataSizeIsDefined;
+        private MachineLearningTableJobInput _validationData;
+        internal bool _validationDataIsDefined;
+        private double? _validationDataSize;
+        internal bool _validationDataSizeIsDefined;
+        private string _weightColumnName;
+        internal bool _weightColumnNameIsDefined;
+        private ForecastingSettings _forecastingSettings;
+        internal bool _forecastingSettingsIsDefined;
+        private ForecastingTrainingSettings _trainingSettings;
+        internal bool _trainingSettingsIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningForecasting"/>. </summary>
         /// <param name="trainingData"> [Required] Training data input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> is null. </exception>
@@ -59,17 +80,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal MachineLearningForecasting(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> cvSplitColumnNames, TableVerticalFeaturizationSettings featurizationSettings, TableVerticalLimitSettings limitSettings, NCrossValidations nCrossValidations, MachineLearningTableJobInput testData, double? testDataSize, MachineLearningTableJobInput validationData, double? validationDataSize, string weightColumnName, ForecastingSettings forecastingSettings, ForecastingPrimaryMetric? primaryMetric, ForecastingTrainingSettings trainingSettings) : base(logVerbosity, targetColumnName, taskType, trainingData, additionalBinaryDataProperties)
         {
             CvSplitColumnNames = cvSplitColumnNames;
-            FeaturizationSettings = featurizationSettings;
-            LimitSettings = limitSettings;
-            NCrossValidations = nCrossValidations;
-            TestData = testData;
-            TestDataSize = testDataSize;
-            ValidationData = validationData;
-            ValidationDataSize = validationDataSize;
-            WeightColumnName = weightColumnName;
-            ForecastingSettings = forecastingSettings;
+            _featurizationSettings = featurizationSettings;
+            _limitSettings = limitSettings;
+            _nCrossValidations = nCrossValidations;
+            _testData = testData;
+            _testDataSize = testDataSize;
+            _validationData = validationData;
+            _validationDataSize = validationDataSize;
+            _weightColumnName = weightColumnName;
+            _forecastingSettings = forecastingSettings;
             PrimaryMetric = primaryMetric;
-            TrainingSettings = trainingSettings;
+            _trainingSettings = trainingSettings;
         }
 
         /// <summary> Columns to use for CVSplit data. </summary>
@@ -78,22 +99,66 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Featurization inputs needed for AutoML job. </summary>
         [WirePath("featurizationSettings")]
-        public TableVerticalFeaturizationSettings FeaturizationSettings { get; set; }
+        public TableVerticalFeaturizationSettings FeaturizationSettings
+        {
+            get
+            {
+                return _featurizationSettings;
+            }
+            set
+            {
+                _featurizationSettings = value;
+                _featurizationSettingsIsDefined = true;
+            }
+        }
 
         /// <summary> Execution constraints for AutoMLJob. </summary>
         [WirePath("limitSettings")]
-        public TableVerticalLimitSettings LimitSettings { get; set; }
+        public TableVerticalLimitSettings LimitSettings
+        {
+            get
+            {
+                return _limitSettings;
+            }
+            set
+            {
+                _limitSettings = value;
+                _limitSettingsIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Number of cross validation folds to be applied on training dataset
         /// when validation dataset is not provided.
         /// </summary>
         [WirePath("nCrossValidations")]
-        public NCrossValidations NCrossValidations { get; set; }
+        public NCrossValidations NCrossValidations
+        {
+            get
+            {
+                return _nCrossValidations;
+            }
+            set
+            {
+                _nCrossValidations = value;
+                _nCrossValidationsIsDefined = true;
+            }
+        }
 
         /// <summary> Test data input. </summary>
         [WirePath("testData")]
-        public MachineLearningTableJobInput TestData { get; set; }
+        public MachineLearningTableJobInput TestData
+        {
+            get
+            {
+                return _testData;
+            }
+            set
+            {
+                _testData = value;
+                _testDataIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// The fraction of test dataset that needs to be set aside for validation purpose.
@@ -101,11 +166,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Applied when validation dataset is not provided.
         /// </summary>
         [WirePath("testDataSize")]
-        public double? TestDataSize { get; set; }
+        public double? TestDataSize
+        {
+            get
+            {
+                return _testDataSize;
+            }
+            set
+            {
+                _testDataSize = value;
+                _testDataSizeIsDefined = true;
+            }
+        }
 
         /// <summary> Validation data inputs. </summary>
         [WirePath("validationData")]
-        public MachineLearningTableJobInput ValidationData { get; set; }
+        public MachineLearningTableJobInput ValidationData
+        {
+            get
+            {
+                return _validationData;
+            }
+            set
+            {
+                _validationData = value;
+                _validationDataIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// The fraction of training dataset that needs to be set aside for validation purpose.
@@ -113,15 +200,48 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Applied when validation dataset is not provided.
         /// </summary>
         [WirePath("validationDataSize")]
-        public double? ValidationDataSize { get; set; }
+        public double? ValidationDataSize
+        {
+            get
+            {
+                return _validationDataSize;
+            }
+            set
+            {
+                _validationDataSize = value;
+                _validationDataSizeIsDefined = true;
+            }
+        }
 
         /// <summary> The name of the sample weight column. Automated ML supports a weighted column as an input, causing rows in the data to be weighted up or down. </summary>
         [WirePath("weightColumnName")]
-        public string WeightColumnName { get; set; }
+        public string WeightColumnName
+        {
+            get
+            {
+                return _weightColumnName;
+            }
+            set
+            {
+                _weightColumnName = value;
+                _weightColumnNameIsDefined = true;
+            }
+        }
 
         /// <summary> Forecasting task specific inputs. </summary>
         [WirePath("forecastingSettings")]
-        public ForecastingSettings ForecastingSettings { get; set; }
+        public ForecastingSettings ForecastingSettings
+        {
+            get
+            {
+                return _forecastingSettings;
+            }
+            set
+            {
+                _forecastingSettings = value;
+                _forecastingSettingsIsDefined = true;
+            }
+        }
 
         /// <summary> Primary metrics for Forecasting task. </summary>
         [WirePath("primaryMetric")]
@@ -129,6 +249,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Inputs for training phase for an AutoML Job. </summary>
         [WirePath("trainingSettings")]
-        public ForecastingTrainingSettings TrainingSettings { get; set; }
+        public ForecastingTrainingSettings TrainingSettings
+        {
+            get
+            {
+                return _trainingSettings;
+            }
+            set
+            {
+                _trainingSettings = value;
+                _trainingSettingsIsDefined = true;
+            }
+        }
     }
 }

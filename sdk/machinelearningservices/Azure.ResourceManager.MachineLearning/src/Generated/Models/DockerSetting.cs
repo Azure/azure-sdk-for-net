@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private bool? _privileged;
+        internal bool _privilegedIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DockerSetting"/>. </summary>
         public DockerSetting()
@@ -28,13 +30,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalProperties"></param>
         internal DockerSetting(bool? privileged, IDictionary<string, BinaryData> additionalProperties)
         {
-            Privileged = privileged;
+            _privileged = privileged;
             _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> Indicate whether container shall run in privileged or non-privileged mode. </summary>
         [WirePath("privileged")]
-        public bool? Privileged { get; set; }
+        public bool? Privileged
+        {
+            get
+            {
+                return _privileged;
+            }
+            set
+            {
+                _privileged = value;
+                _privilegedIsDefined = true;
+            }
+        }
 
         /// <summary> Gets the AdditionalProperties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;

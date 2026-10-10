@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Secrets related to a Machine Learning compute based on AKS. </summary>
     public partial class MachineLearningAksComputeSecrets : MachineLearningComputeSecrets
     {
+        private string _imagePullSecretName;
+        internal bool _imagePullSecretNameIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningAksComputeSecrets"/>. </summary>
         internal MachineLearningAksComputeSecrets() : base(ComputeType.AKS)
         {
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             UserKubeConfig = userKubeConfig;
             AdminKubeConfig = adminKubeConfig;
-            ImagePullSecretName = imagePullSecretName;
+            _imagePullSecretName = imagePullSecretName;
         }
 
         /// <summary> Content of kubeconfig file that can be used to connect to the Kubernetes cluster. </summary>
@@ -42,6 +45,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Image registry pull secret. </summary>
         [WirePath("imagePullSecretName")]
-        public string ImagePullSecretName { get; }
+        public string ImagePullSecretName
+        {
+            get
+            {
+                return _imagePullSecretName;
+            }
+        }
     }
 }

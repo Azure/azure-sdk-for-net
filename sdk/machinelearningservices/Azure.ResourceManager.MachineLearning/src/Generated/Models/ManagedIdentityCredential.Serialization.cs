@@ -75,30 +75,65 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(ManagedIdentityCredential)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(ManagedIdentityType))
+            if (_managedIdentityTypeIsDefined || Optional.IsDefined(ManagedIdentityType))
             {
-                writer.WritePropertyName("managedIdentityType"u8);
-                writer.WriteStringValue(ManagedIdentityType);
+                if (ManagedIdentityType != null)
+                {
+                    writer.WritePropertyName("managedIdentityType"u8);
+                    writer.WriteStringValue(ManagedIdentityType);
+                }
+                else
+                {
+                    writer.WriteNull("managedIdentityType"u8);
+                }
             }
-            if (Optional.IsDefined(UserManagedIdentityClientId))
+            if (_userManagedIdentityClientIdIsDefined || Optional.IsDefined(UserManagedIdentityClientId))
             {
-                writer.WritePropertyName("userManagedIdentityClientId"u8);
-                writer.WriteStringValue(UserManagedIdentityClientId);
+                if (UserManagedIdentityClientId != null)
+                {
+                    writer.WritePropertyName("userManagedIdentityClientId"u8);
+                    writer.WriteStringValue(UserManagedIdentityClientId);
+                }
+                else
+                {
+                    writer.WriteNull("userManagedIdentityClientId"u8);
+                }
             }
-            if (Optional.IsDefined(UserManagedIdentityPrincipalId))
+            if (_userManagedIdentityPrincipalIdIsDefined || Optional.IsDefined(UserManagedIdentityPrincipalId))
             {
-                writer.WritePropertyName("userManagedIdentityPrincipalId"u8);
-                writer.WriteStringValue(UserManagedIdentityPrincipalId);
+                if (UserManagedIdentityPrincipalId != null)
+                {
+                    writer.WritePropertyName("userManagedIdentityPrincipalId"u8);
+                    writer.WriteStringValue(UserManagedIdentityPrincipalId);
+                }
+                else
+                {
+                    writer.WriteNull("userManagedIdentityPrincipalId"u8);
+                }
             }
-            if (Optional.IsDefined(UserManagedIdentityResourceId))
+            if (_userManagedIdentityResourceIdIsDefined || Optional.IsDefined(UserManagedIdentityResourceId))
             {
-                writer.WritePropertyName("userManagedIdentityResourceId"u8);
-                writer.WriteStringValue(UserManagedIdentityResourceId);
+                if (UserManagedIdentityResourceId != null)
+                {
+                    writer.WritePropertyName("userManagedIdentityResourceId"u8);
+                    writer.WriteStringValue(UserManagedIdentityResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("userManagedIdentityResourceId"u8);
+                }
             }
-            if (Optional.IsDefined(UserManagedIdentityTenantId))
+            if (_userManagedIdentityTenantIdIsDefined || Optional.IsDefined(UserManagedIdentityTenantId))
             {
-                writer.WritePropertyName("userManagedIdentityTenantId"u8);
-                writer.WriteStringValue(UserManagedIdentityTenantId);
+                if (UserManagedIdentityTenantId != null)
+                {
+                    writer.WritePropertyName("userManagedIdentityTenantId"u8);
+                    writer.WriteStringValue(UserManagedIdentityTenantId);
+                }
+                else
+                {
+                    writer.WriteNull("userManagedIdentityTenantId"u8);
+                }
             }
         }
 
@@ -129,10 +164,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             DataReferenceCredentialType credentialType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool managedIdentityTypeIsDefined = false;
             string managedIdentityType = default;
+            bool userManagedIdentityClientIdIsDefined = false;
             string userManagedIdentityClientId = default;
+            bool userManagedIdentityPrincipalIdIsDefined = false;
             string userManagedIdentityPrincipalId = default;
+            bool userManagedIdentityResourceIdIsDefined = false;
             string userManagedIdentityResourceId = default;
+            bool userManagedIdentityTenantIdIsDefined = false;
             string userManagedIdentityTenantId = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -143,6 +183,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("managedIdentityType"u8))
                 {
+                    managedIdentityTypeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         managedIdentityType = null;
@@ -153,6 +194,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("userManagedIdentityClientId"u8))
                 {
+                    userManagedIdentityClientIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         userManagedIdentityClientId = null;
@@ -163,6 +205,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("userManagedIdentityPrincipalId"u8))
                 {
+                    userManagedIdentityPrincipalIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         userManagedIdentityPrincipalId = null;
@@ -173,6 +216,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("userManagedIdentityResourceId"u8))
                 {
+                    userManagedIdentityResourceIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         userManagedIdentityResourceId = null;
@@ -183,6 +227,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("userManagedIdentityTenantId"u8))
                 {
+                    userManagedIdentityTenantIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         userManagedIdentityTenantId = null;
@@ -203,7 +248,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 userManagedIdentityClientId,
                 userManagedIdentityPrincipalId,
                 userManagedIdentityResourceId,
-                userManagedIdentityTenantId);
+                userManagedIdentityTenantId)
+            {
+                _managedIdentityTypeIsDefined = managedIdentityTypeIsDefined,
+                _userManagedIdentityClientIdIsDefined = userManagedIdentityClientIdIsDefined,
+                _userManagedIdentityPrincipalIdIsDefined = userManagedIdentityPrincipalIdIsDefined,
+                _userManagedIdentityResourceIdIsDefined = userManagedIdentityResourceIdIsDefined,
+                _userManagedIdentityTenantIdIsDefined = userManagedIdentityTenantIdIsDefined
+            };
         }
     }
 }

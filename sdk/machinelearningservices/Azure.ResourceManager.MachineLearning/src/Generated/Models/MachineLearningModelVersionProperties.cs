@@ -14,6 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Model asset version details. </summary>
     public partial class MachineLearningModelVersionProperties : MachineLearningAssetBase
     {
+        private string _jobName;
+        internal bool _jobNameIsDefined;
+        private string _modelType;
+        internal bool _modelTypeIsDefined;
+        private string _stage;
+        internal bool _stageIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningModelVersionProperties"/>. </summary>
         public MachineLearningModelVersionProperties()
         {
@@ -38,11 +45,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal MachineLearningModelVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? isAnonymous, bool? isArchived, IDictionary<string, MachineLearningFlavorData> flavors, string jobName, string modelType, Uri modelUri, RegistryAssetProvisioningState? provisioningState, string stage, IList<DatasetReference> datasets) : base(description, properties, tags, additionalBinaryDataProperties, isAnonymous, isArchived)
         {
             Flavors = flavors;
-            JobName = jobName;
-            ModelType = modelType;
+            _jobName = jobName;
+            _modelType = modelType;
             ModelUri = modelUri;
             ProvisioningState = provisioningState;
-            Stage = stage;
+            _stage = stage;
             Datasets = datasets;
         }
 
@@ -52,11 +59,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Name of the training job which produced this model. </summary>
         [WirePath("jobName")]
-        public string JobName { get; set; }
+        public string JobName
+        {
+            get
+            {
+                return _jobName;
+            }
+            set
+            {
+                _jobName = value;
+                _jobNameIsDefined = true;
+            }
+        }
 
         /// <summary> The storage format for this entity. Used for NCD. </summary>
         [WirePath("modelType")]
-        public string ModelType { get; set; }
+        public string ModelType
+        {
+            get
+            {
+                return _modelType;
+            }
+            set
+            {
+                _modelType = value;
+                _modelTypeIsDefined = true;
+            }
+        }
 
         /// <summary> The URI path to the model contents. </summary>
         [WirePath("modelUri")]
@@ -68,7 +97,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Stage in the model lifecycle assigned to this model. </summary>
         [WirePath("stage")]
-        public string Stage { get; set; }
+        public string Stage
+        {
+            get
+            {
+                return _stage;
+            }
+            set
+            {
+                _stage = value;
+                _stageIsDefined = true;
+            }
+        }
 
         /// <summary> Array of dataset references. </summary>
         [WirePath("datasets")]

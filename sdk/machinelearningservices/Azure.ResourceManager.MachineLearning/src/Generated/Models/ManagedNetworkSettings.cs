@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _firewallPublicIPAddress;
+        internal bool _firewallPublicIPAddressIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkSettings"/>. </summary>
         public ManagedNetworkSettings()
@@ -42,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Status = status;
             FirewallSku = firewallSku;
             ManagedNetworkKind = managedNetworkKind;
-            FirewallPublicIPAddress = firewallPublicIPAddress;
+            _firewallPublicIPAddress = firewallPublicIPAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -76,6 +78,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Public IP address assigned to the Azure Firewall. </summary>
         [WirePath("firewallPublicIpAddress")]
-        public string FirewallPublicIPAddress { get; }
+        public string FirewallPublicIPAddress
+        {
+            get
+            {
+                return _firewallPublicIPAddress;
+            }
+        }
     }
 }

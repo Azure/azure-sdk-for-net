@@ -102,12 +102,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool datasetLanguageIsDefined = false;
             string datasetLanguage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("datasetLanguage"u8))
                 {
+                    datasetLanguageIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         datasetLanguage = null;
@@ -121,7 +123,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NlpVerticalFeaturizationSettings(datasetLanguage, additionalBinaryDataProperties);
+            return new NlpVerticalFeaturizationSettings(datasetLanguage, additionalBinaryDataProperties)
+            {
+                _datasetLanguageIsDefined = datasetLanguageIsDefined
+            };
         }
     }
 }

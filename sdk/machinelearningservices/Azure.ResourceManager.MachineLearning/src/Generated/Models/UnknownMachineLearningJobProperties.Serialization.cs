@@ -113,24 +113,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool descriptionIsDefined = false;
             string description = default;
-            IDictionary<string, string> properties = default;
-            IDictionary<string, string> tags = default;
+            IDictionary<string, string> properties = new ChangeTrackingDictionary<string, string>();
+            IDictionary<string, string> tags = new ChangeTrackingDictionary<string, string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceIdentifier componentId = default;
             ResourceIdentifier computeId = default;
+            bool displayNameIsDefined = false;
             string displayName = default;
             string experimentName = default;
+            bool identityIsDefined = false;
             MachineLearningIdentityConfiguration identity = default;
             bool? isArchived = default;
             JobType jobType = default;
+            bool notificationSettingIsDefined = false;
             NotificationSetting notificationSetting = default;
-            IDictionary<string, MachineLearningJobService> services = default;
+            IDictionary<string, MachineLearningJobService> services = new ChangeTrackingDictionary<string, MachineLearningJobService>();
             MachineLearningJobStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -143,6 +148,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -164,6 +170,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        tags = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -201,6 +208,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("displayName"u8))
                 {
+                    displayNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         displayName = null;
@@ -216,6 +224,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("identity"u8))
                 {
+                    identityIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         identity = null;
@@ -240,6 +249,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("notificationSetting"u8))
                 {
+                    notificationSettingIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         notificationSetting = null;
@@ -252,6 +262,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        services = null;
                         continue;
                     }
                     Dictionary<string, MachineLearningJobService> dictionary = new Dictionary<string, MachineLearningJobService>();
@@ -278,8 +289,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             return new UnknownMachineLearningJobProperties(
                 description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                properties,
+                tags,
                 additionalBinaryDataProperties,
                 componentId,
                 computeId,
@@ -289,8 +300,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 isArchived,
                 jobType,
                 notificationSetting,
-                services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
-                status);
+                services,
+                status)
+            {
+                _descriptionIsDefined = descriptionIsDefined,
+                _displayNameIsDefined = displayNameIsDefined,
+                _identityIsDefined = identityIsDefined,
+                _notificationSettingIsDefined = notificationSettingIsDefined
+            };
         }
     }
 }

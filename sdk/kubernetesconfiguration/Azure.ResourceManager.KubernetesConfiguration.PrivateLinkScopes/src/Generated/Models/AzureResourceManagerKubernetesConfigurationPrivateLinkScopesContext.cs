@@ -20,16 +20,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
     [ModelReaderWriterBuildable(typeof(KubernetesConfigurationPrivateLinkResource))]
     [ModelReaderWriterBuildable(typeof(KubernetesConfigurationPrivateLinkResourceData))]
     [ModelReaderWriterBuildable(typeof(KubernetesConfigurationPrivateLinkScopeData))]
-    [ModelReaderWriterBuildable(typeof(KubernetesConfigurationPrivateLinkScopeListResult))]
     [ModelReaderWriterBuildable(typeof(KubernetesConfigurationPrivateLinkScopePatch))]
     [ModelReaderWriterBuildable(typeof(KubernetesConfigurationPrivateLinkScopeProperties))]
     [ModelReaderWriterBuildable(typeof(KubernetesConfigurationPrivateLinkScopeResource))]
-    [ModelReaderWriterBuildable(typeof(KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionListResult))]
-    [ModelReaderWriterBuildable(typeof(KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceListResult))]
-    [ModelReaderWriterBuildable(typeof(KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(KubernetesConfigurationPrivateLinkScopesPrivateLinkServiceConnectionState))]
-    [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
-    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerKubernetesConfigurationPrivateLinkScopesContext : ModelReaderWriterContext
     {

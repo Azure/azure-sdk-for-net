@@ -79,17 +79,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MonitorDefinition)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AlertNotificationSettings))
+            if (_alertNotificationSettingsIsDefined || Optional.IsDefined(AlertNotificationSettings))
             {
-                writer.WritePropertyName("alertNotificationSettings"u8);
-                writer.WriteObjectValue(AlertNotificationSettings, options);
+                if (AlertNotificationSettings != null)
+                {
+                    writer.WritePropertyName("alertNotificationSettings"u8);
+                    writer.WriteObjectValue(AlertNotificationSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("alertNotificationSettings"u8);
+                }
             }
             writer.WritePropertyName("computeConfiguration"u8);
             writer.WriteObjectValue(ComputeConfiguration, options);
-            if (Optional.IsDefined(MonitoringTarget))
+            if (_monitoringTargetIsDefined || Optional.IsDefined(MonitoringTarget))
             {
-                writer.WritePropertyName("monitoringTarget"u8);
-                writer.WriteObjectValue(MonitoringTarget, options);
+                if (MonitoringTarget != null)
+                {
+                    writer.WritePropertyName("monitoringTarget"u8);
+                    writer.WriteObjectValue(MonitoringTarget, options);
+                }
+                else
+                {
+                    writer.WriteNull("monitoringTarget"u8);
+                }
             }
             writer.WritePropertyName("signals"u8);
             writer.WriteStartObject();
@@ -141,8 +155,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool alertNotificationSettingsIsDefined = false;
             MonitorNotificationSettings alertNotificationSettings = default;
             MonitorComputeConfigurationBase computeConfiguration = default;
+            bool monitoringTargetIsDefined = false;
             MonitoringTarget monitoringTarget = default;
             IDictionary<string, MonitoringSignalBase> signals = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -150,6 +166,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (prop.NameEquals("alertNotificationSettings"u8))
                 {
+                    alertNotificationSettingsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         alertNotificationSettings = null;
@@ -165,6 +182,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("monitoringTarget"u8))
                 {
+                    monitoringTargetIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         monitoringTarget = null;
@@ -188,7 +206,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MonitorDefinition(alertNotificationSettings, computeConfiguration, monitoringTarget, signals, additionalBinaryDataProperties);
+            return new MonitorDefinition(alertNotificationSettings, computeConfiguration, monitoringTarget, signals ?? new ChangeTrackingDictionary<string, MonitoringSignalBase>(), additionalBinaryDataProperties)
+            {
+                _alertNotificationSettingsIsDefined = alertNotificationSettingsIsDefined,
+                _monitoringTargetIsDefined = monitoringTargetIsDefined
+            };
         }
     }
 }

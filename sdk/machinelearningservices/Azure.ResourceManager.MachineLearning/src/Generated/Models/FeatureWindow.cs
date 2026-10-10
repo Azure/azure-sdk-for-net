@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DateTimeOffset? _featureWindowEnd;
+        internal bool _featureWindowEndIsDefined;
+        private DateTimeOffset? _featureWindowStart;
+        internal bool _featureWindowStartIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FeatureWindow"/>. </summary>
         public FeatureWindow()
@@ -28,17 +32,39 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal FeatureWindow(DateTimeOffset? featureWindowEnd, DateTimeOffset? featureWindowStart, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            FeatureWindowEnd = featureWindowEnd;
-            FeatureWindowStart = featureWindowStart;
+            _featureWindowEnd = featureWindowEnd;
+            _featureWindowStart = featureWindowStart;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the feature window end time. </summary>
         [WirePath("featureWindowEnd")]
-        public DateTimeOffset? FeatureWindowEnd { get; set; }
+        public DateTimeOffset? FeatureWindowEnd
+        {
+            get
+            {
+                return _featureWindowEnd;
+            }
+            set
+            {
+                _featureWindowEnd = value;
+                _featureWindowEndIsDefined = true;
+            }
+        }
 
         /// <summary> Specifies the feature window start time. </summary>
         [WirePath("featureWindowStart")]
-        public DateTimeOffset? FeatureWindowStart { get; set; }
+        public DateTimeOffset? FeatureWindowStart
+        {
+            get
+            {
+                return _featureWindowStart;
+            }
+            set
+            {
+                _featureWindowStart = value;
+                _featureWindowStartIsDefined = true;
+            }
+        }
     }
 }

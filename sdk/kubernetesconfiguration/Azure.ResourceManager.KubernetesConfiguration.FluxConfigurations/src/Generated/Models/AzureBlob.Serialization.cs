@@ -74,50 +74,99 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 throw new FormatException($"The model {nameof(AzureBlob)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Uri))
+            if (_uriIsDefined || Optional.IsDefined(Uri))
             {
-                writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Uri);
+                if (Uri != null)
+                {
+                    writer.WritePropertyName("url"u8);
+                    writer.WriteStringValue(Uri);
+                }
+                else
+                {
+                    writer.WriteNull("url"u8);
+                }
             }
-            if (Optional.IsDefined(ContainerName))
+            if (_containerNameIsDefined || Optional.IsDefined(ContainerName))
             {
-                writer.WritePropertyName("containerName"u8);
-                writer.WriteStringValue(ContainerName);
+                if (ContainerName != null)
+                {
+                    writer.WritePropertyName("containerName"u8);
+                    writer.WriteStringValue(ContainerName);
+                }
+                else
+                {
+                    writer.WriteNull("containerName"u8);
+                }
             }
-            if (Optional.IsDefined(TimeoutInSeconds))
+            if (_timeoutInSecondsIsDefined || Optional.IsDefined(TimeoutInSeconds))
             {
-                writer.WritePropertyName("timeoutInSeconds"u8);
-                writer.WriteNumberValue(TimeoutInSeconds.Value);
+                if (TimeoutInSeconds != null)
+                {
+                    writer.WritePropertyName("timeoutInSeconds"u8);
+                    writer.WriteNumberValue(TimeoutInSeconds.Value);
+                }
+                else
+                {
+                    writer.WriteNull("timeoutInSeconds"u8);
+                }
             }
-            if (Optional.IsDefined(SyncIntervalInSeconds))
+            if (_syncIntervalInSecondsIsDefined || Optional.IsDefined(SyncIntervalInSeconds))
             {
-                writer.WritePropertyName("syncIntervalInSeconds"u8);
-                writer.WriteNumberValue(SyncIntervalInSeconds.Value);
+                if (SyncIntervalInSeconds != null)
+                {
+                    writer.WritePropertyName("syncIntervalInSeconds"u8);
+                    writer.WriteNumberValue(SyncIntervalInSeconds.Value);
+                }
+                else
+                {
+                    writer.WriteNull("syncIntervalInSeconds"u8);
+                }
             }
             if (Optional.IsDefined(ServicePrincipal))
             {
                 writer.WritePropertyName("servicePrincipal"u8);
                 writer.WriteObjectValue(ServicePrincipal, options);
             }
-            if (Optional.IsDefined(AccountKey))
+            if (_accountKeyIsDefined || Optional.IsDefined(AccountKey))
             {
-                writer.WritePropertyName("accountKey"u8);
-                writer.WriteStringValue(AccountKey);
+                if (AccountKey != null)
+                {
+                    writer.WritePropertyName("accountKey"u8);
+                    writer.WriteStringValue(AccountKey);
+                }
+                else
+                {
+                    writer.WriteNull("accountKey"u8);
+                }
             }
-            if (Optional.IsDefined(SasToken))
+            if (_sasTokenIsDefined || Optional.IsDefined(SasToken))
             {
-                writer.WritePropertyName("sasToken"u8);
-                writer.WriteStringValue(SasToken);
+                if (SasToken != null)
+                {
+                    writer.WritePropertyName("sasToken"u8);
+                    writer.WriteStringValue(SasToken);
+                }
+                else
+                {
+                    writer.WriteNull("sasToken"u8);
+                }
             }
             if (Optional.IsDefined(ManagedIdentity))
             {
                 writer.WritePropertyName("managedIdentity"u8);
                 writer.WriteObjectValue(ManagedIdentity, options);
             }
-            if (Optional.IsDefined(LocalAuthRef))
+            if (_localAuthRefIsDefined || Optional.IsDefined(LocalAuthRef))
             {
-                writer.WritePropertyName("localAuthRef"u8);
-                writer.WriteStringValue(LocalAuthRef);
+                if (LocalAuthRef != null)
+                {
+                    writer.WritePropertyName("localAuthRef"u8);
+                    writer.WriteStringValue(LocalAuthRef);
+                }
+                else
+                {
+                    writer.WriteNull("localAuthRef"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -161,20 +210,28 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 return null;
             }
+            bool uriIsDefined = false;
             string uri = default;
+            bool containerNameIsDefined = false;
             string containerName = default;
+            bool timeoutInSecondsIsDefined = false;
             long? timeoutInSeconds = default;
+            bool syncIntervalInSecondsIsDefined = false;
             long? syncIntervalInSeconds = default;
             FluxServicePrincipal servicePrincipal = default;
+            bool accountKeyIsDefined = false;
             string accountKey = default;
+            bool sasTokenIsDefined = false;
             string sasToken = default;
             ManagedIdentityDefinition managedIdentity = default;
+            bool localAuthRefIsDefined = false;
             string localAuthRef = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("url"u8))
                 {
+                    uriIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         uri = null;
@@ -185,6 +242,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("containerName"u8))
                 {
+                    containerNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         containerName = null;
@@ -195,6 +253,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("timeoutInSeconds"u8))
                 {
+                    timeoutInSecondsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         timeoutInSeconds = null;
@@ -205,6 +264,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("syncIntervalInSeconds"u8))
                 {
+                    syncIntervalInSecondsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         syncIntervalInSeconds = null;
@@ -224,6 +284,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("accountKey"u8))
                 {
+                    accountKeyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         accountKey = null;
@@ -234,6 +295,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("sasToken"u8))
                 {
+                    sasTokenIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         sasToken = null;
@@ -253,6 +315,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("localAuthRef"u8))
                 {
+                    localAuthRefIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         localAuthRef = null;
@@ -276,7 +339,16 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 sasToken,
                 managedIdentity,
                 localAuthRef,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _uriIsDefined = uriIsDefined,
+                _containerNameIsDefined = containerNameIsDefined,
+                _timeoutInSecondsIsDefined = timeoutInSecondsIsDefined,
+                _syncIntervalInSecondsIsDefined = syncIntervalInSecondsIsDefined,
+                _accountKeyIsDefined = accountKeyIsDefined,
+                _sasTokenIsDefined = sasTokenIsDefined,
+                _localAuthRefIsDefined = localAuthRefIsDefined
+            };
         }
     }
 }

@@ -74,15 +74,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningContainerResourceRequirements)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ContainerResourceLimits))
+            if (_containerResourceLimitsIsDefined || Optional.IsDefined(ContainerResourceLimits))
             {
-                writer.WritePropertyName("containerResourceLimits"u8);
-                writer.WriteObjectValue(ContainerResourceLimits, options);
+                if (ContainerResourceLimits != null)
+                {
+                    writer.WritePropertyName("containerResourceLimits"u8);
+                    writer.WriteObjectValue(ContainerResourceLimits, options);
+                }
+                else
+                {
+                    writer.WriteNull("containerResourceLimits"u8);
+                }
             }
-            if (Optional.IsDefined(ContainerResourceRequests))
+            if (_containerResourceRequestsIsDefined || Optional.IsDefined(ContainerResourceRequests))
             {
-                writer.WritePropertyName("containerResourceRequests"u8);
-                writer.WriteObjectValue(ContainerResourceRequests, options);
+                if (ContainerResourceRequests != null)
+                {
+                    writer.WritePropertyName("containerResourceRequests"u8);
+                    writer.WriteObjectValue(ContainerResourceRequests, options);
+                }
+                else
+                {
+                    writer.WriteNull("containerResourceRequests"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -126,13 +140,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool containerResourceLimitsIsDefined = false;
             MachineLearningContainerResourceSettings containerResourceLimits = default;
+            bool containerResourceRequestsIsDefined = false;
             MachineLearningContainerResourceSettings containerResourceRequests = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("containerResourceLimits"u8))
                 {
+                    containerResourceLimitsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         containerResourceLimits = null;
@@ -143,6 +160,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("containerResourceRequests"u8))
                 {
+                    containerResourceRequestsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         containerResourceRequests = null;
@@ -156,7 +174,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MachineLearningContainerResourceRequirements(containerResourceLimits, containerResourceRequests, additionalBinaryDataProperties);
+            return new MachineLearningContainerResourceRequirements(containerResourceLimits, containerResourceRequests, additionalBinaryDataProperties)
+            {
+                _containerResourceLimitsIsDefined = containerResourceLimitsIsDefined,
+                _containerResourceRequestsIsDefined = containerResourceRequestsIsDefined
+            };
         }
     }
 }

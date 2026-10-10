@@ -92,10 +92,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("keyType"u8);
             writer.WriteStringValue(KeyType.ToString());
-            if (Optional.IsDefined(KeyValue))
+            if (_keyValueIsDefined || Optional.IsDefined(KeyValue))
             {
-                writer.WritePropertyName("keyValue"u8);
-                writer.WriteStringValue(KeyValue);
+                if (KeyValue != null)
+                {
+                    writer.WritePropertyName("keyValue"u8);
+                    writer.WriteStringValue(KeyValue);
+                }
+                else
+                {
+                    writer.WriteNull("keyValue"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -140,6 +147,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             MachineLearningKeyType keyType = default;
+            bool keyValueIsDefined = false;
             string keyValue = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -151,6 +159,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("keyValue"u8))
                 {
+                    keyValueIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         keyValue = null;
@@ -164,7 +173,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MachineLearningEndpointKeyRegenerateContent(keyType, keyValue, additionalBinaryDataProperties);
+            return new MachineLearningEndpointKeyRegenerateContent(keyType, keyValue, additionalBinaryDataProperties)
+            {
+                _keyValueIsDefined = keyValueIsDefined
+            };
         }
     }
 }

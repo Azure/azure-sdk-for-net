@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The CapabilityHostProperties. </summary>
     public partial class CapabilityHostProperties : MachineLearningResourceBase
     {
+        private string _customerSubnet;
+        internal bool _customerSubnetIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="CapabilityHostProperties"/>. </summary>
         public CapabilityHostProperties()
         {
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             AcaEnvironmentConnections = acaEnvironmentConnections;
             AiServicesConnections = aiServicesConnections;
             CapabilityHostKind = capabilityHostKind;
-            CustomerSubnet = customerSubnet;
+            _customerSubnet = customerSubnet;
             ProvisioningState = provisioningState;
             StorageConnections = storageConnections;
             ThreadStorageConnections = threadStorageConnections;
@@ -66,7 +69,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Customer subnet info to help set up this capability host. </summary>
         [WirePath("customerSubnet")]
-        public string CustomerSubnet { get; set; }
+        public string CustomerSubnet
+        {
+            get
+            {
+                return _customerSubnet;
+            }
+            set
+            {
+                _customerSubnet = value;
+                _customerSubnetIsDefined = true;
+            }
+        }
 
         /// <summary> Provisioning state for the CapabilityHost. </summary>
         [WirePath("provisioningState")]

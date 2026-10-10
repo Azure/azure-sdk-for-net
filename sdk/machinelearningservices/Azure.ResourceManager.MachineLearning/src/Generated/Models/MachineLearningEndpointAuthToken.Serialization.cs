@@ -82,10 +82,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningEndpointAuthToken)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AccessToken))
+            if (_accessTokenIsDefined || Optional.IsDefined(AccessToken))
             {
-                writer.WritePropertyName("accessToken"u8);
-                writer.WriteStringValue(AccessToken);
+                if (AccessToken != null)
+                {
+                    writer.WritePropertyName("accessToken"u8);
+                    writer.WriteStringValue(AccessToken);
+                }
+                else
+                {
+                    writer.WriteNull("accessToken"u8);
+                }
             }
             if (Optional.IsDefined(ExpiryTimeUtc))
             {
@@ -97,10 +104,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("refreshAfterTimeUtc"u8);
                 writer.WriteNumberValue(RefreshAfterTimeUtc.Value);
             }
-            if (Optional.IsDefined(TokenType))
+            if (_tokenTypeIsDefined || Optional.IsDefined(TokenType))
             {
-                writer.WritePropertyName("tokenType"u8);
-                writer.WriteStringValue(TokenType);
+                if (TokenType != null)
+                {
+                    writer.WritePropertyName("tokenType"u8);
+                    writer.WriteStringValue(TokenType);
+                }
+                else
+                {
+                    writer.WriteNull("tokenType"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -144,15 +158,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool accessTokenIsDefined = false;
             string accessToken = default;
             long? expiryTimeUtc = default;
             long? refreshAfterTimeUtc = default;
+            bool tokenTypeIsDefined = false;
             string tokenType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("accessToken"u8))
                 {
+                    accessTokenIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         accessToken = null;
@@ -181,6 +198,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("tokenType"u8))
                 {
+                    tokenTypeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         tokenType = null;
@@ -194,7 +212,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MachineLearningEndpointAuthToken(accessToken, expiryTimeUtc, refreshAfterTimeUtc, tokenType, additionalBinaryDataProperties);
+            return new MachineLearningEndpointAuthToken(accessToken, expiryTimeUtc, refreshAfterTimeUtc, tokenType, additionalBinaryDataProperties)
+            {
+                _accessTokenIsDefined = accessTokenIsDefined,
+                _tokenTypeIsDefined = tokenTypeIsDefined
+            };
         }
     }
 }

@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private BinaryData _stackMetaLearnerKWargs;
+        internal bool _stackMetaLearnerKWargsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningStackEnsembleSettings"/>. </summary>
         public MachineLearningStackEnsembleSettings()
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MachineLearningStackEnsembleSettings(BinaryData stackMetaLearnerKWargs, double? stackMetaLearnerTrainPercentage, MachineLearningStackMetaLearnerType? stackMetaLearnerType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StackMetaLearnerKWargs = stackMetaLearnerKWargs;
+            _stackMetaLearnerKWargs = stackMetaLearnerKWargs;
             StackMetaLearnerTrainPercentage = stackMetaLearnerTrainPercentage;
             StackMetaLearnerType = stackMetaLearnerType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -63,7 +65,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </para>
         /// </summary>
         [WirePath("stackMetaLearnerKWargs")]
-        public BinaryData StackMetaLearnerKWargs { get; set; }
+        public BinaryData StackMetaLearnerKWargs
+        {
+            get
+            {
+                return _stackMetaLearnerKWargs;
+            }
+            set
+            {
+                _stackMetaLearnerKWargs = value;
+                _stackMetaLearnerKWargsIsDefined = true;
+            }
+        }
 
         /// <summary> Specifies the proportion of the training set (when choosing train and validation type of training) to be reserved for training the meta-learner. Default value is 0.2. </summary>
         [WirePath("stackMetaLearnerTrainPercentage")]

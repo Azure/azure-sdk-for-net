@@ -74,10 +74,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MonitoringThreshold)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Value))
+            if (_valueIsDefined || Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteNumberValue(Value.Value);
+                if (Value != null)
+                {
+                    writer.WritePropertyName("value"u8);
+                    writer.WriteNumberValue(Value.Value);
+                }
+                else
+                {
+                    writer.WriteNull("value"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,12 +128,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool valueIsDefined = false;
             double? value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
+                    valueIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         value = null;
@@ -140,7 +149,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MonitoringThreshold(value, additionalBinaryDataProperties);
+            return new MonitoringThreshold(value, additionalBinaryDataProperties)
+            {
+                _valueIsDefined = valueIsDefined
+            };
         }
     }
 }

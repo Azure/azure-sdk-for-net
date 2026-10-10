@@ -16,6 +16,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _description;
+        internal bool _descriptionIsDefined;
+        private MachineLearningEndpointAuthKeys _keys;
+        internal bool _keysIsDefined;
+        private Uri _scoringUri;
+        internal bool _scoringUriIsDefined;
+        private Uri _swaggerUri;
+        internal bool _swaggerUriIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointProperties"/>. </summary>
         /// <param name="authMode"> [Required] The authentication method for invoking the endpoint (data plane operation). Use 'Key' for key-based authentication. Use 'AMLToken' for Azure Machine Learning token-based authentication. Use 'AADToken' for Microsoft Entra token-based authentication. </param>
@@ -39,11 +47,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal MachineLearningEndpointProperties(MachineLearningEndpointAuthMode authMode, string description, MachineLearningEndpointAuthKeys keys, IDictionary<string, string> properties, Uri scoringUri, Uri swaggerUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthMode = authMode;
-            Description = description;
-            Keys = keys;
+            _description = description;
+            _keys = keys;
             Properties = properties;
-            ScoringUri = scoringUri;
-            SwaggerUri = swaggerUri;
+            _scoringUri = scoringUri;
+            _swaggerUri = swaggerUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -53,14 +61,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Description of the inference endpoint. </summary>
         [WirePath("description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return _description;
+            }
+            set
+            {
+                _description = value;
+                _descriptionIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// EndpointAuthKeys to set initially on an Endpoint.
         /// This property will always be returned as null. AuthKey values must be retrieved using the ListKeys API.
         /// </summary>
         [WirePath("keys")]
-        public MachineLearningEndpointAuthKeys Keys { get; set; }
+        public MachineLearningEndpointAuthKeys Keys
+        {
+            get
+            {
+                return _keys;
+            }
+            set
+            {
+                _keys = value;
+                _keysIsDefined = true;
+            }
+        }
 
         /// <summary> Property dictionary. Properties can be added, but not removed or altered. </summary>
         [WirePath("properties")]
@@ -68,10 +98,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Endpoint URI. </summary>
         [WirePath("scoringUri")]
-        public Uri ScoringUri { get; }
+        public Uri ScoringUri
+        {
+            get
+            {
+                return _scoringUri;
+            }
+        }
 
         /// <summary> Endpoint Swagger URI. </summary>
         [WirePath("swaggerUri")]
-        public Uri SwaggerUri { get; }
+        public Uri SwaggerUri
+        {
+            get
+            {
+                return _swaggerUri;
+            }
+        }
     }
 }

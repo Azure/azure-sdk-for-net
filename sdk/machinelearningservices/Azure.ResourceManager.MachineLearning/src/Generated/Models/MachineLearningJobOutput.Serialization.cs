@@ -77,10 +77,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningJobOutput)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Description))
+            if (_descriptionIsDefined || Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
+                if (Description != null)
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+                else
+                {
+                    writer.WriteNull("description"u8);
+                }
             }
             writer.WritePropertyName("jobOutputType"u8);
             writer.WriteStringValue(JobOutputType.ToString());

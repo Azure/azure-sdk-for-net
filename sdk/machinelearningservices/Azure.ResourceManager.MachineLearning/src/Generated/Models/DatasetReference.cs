@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _name;
+        internal bool _nameIsDefined;
+        private string _id;
+        internal bool _idIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DatasetReference"/>. </summary>
         public DatasetReference()
@@ -28,17 +32,39 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal DatasetReference(string name, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Name = name;
-            Id = id;
+            _name = name;
+            _id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the dataset reference. </summary>
         [WirePath("name")]
-        public string Name { get; set; }
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+                _nameIsDefined = true;
+            }
+        }
 
         /// <summary> The fully qualified ARM id of the dataset reference. </summary>
         [WirePath("id")]
-        public string Id { get; set; }
+        public string Id
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                _id = value;
+                _idIsDefined = true;
+            }
+        }
     }
 }

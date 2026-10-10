@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _pendingUploadId;
+        internal bool _pendingUploadIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="PendingUploadRequestDto"/>. </summary>
         public PendingUploadRequestDto()
@@ -28,14 +30,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal PendingUploadRequestDto(string pendingUploadId, PendingUploadType? pendingUploadType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            PendingUploadId = pendingUploadId;
+            _pendingUploadId = pendingUploadId;
             PendingUploadType = pendingUploadType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> If PendingUploadId = null then random guid will be used. </summary>
         [WirePath("pendingUploadId")]
-        public string PendingUploadId { get; set; }
+        public string PendingUploadId
+        {
+            get
+            {
+                return _pendingUploadId;
+            }
+            set
+            {
+                _pendingUploadId = value;
+                _pendingUploadIdIsDefined = true;
+            }
+        }
 
         /// <summary> Type of storage to use for the pending upload location. </summary>
         [WirePath("pendingUploadType")]

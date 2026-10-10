@@ -18,6 +18,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class MachineLearningJobProperties : MachineLearningResourceBase
     {
+        private string _displayName;
+        internal bool _displayNameIsDefined;
+        private MachineLearningIdentityConfiguration _identity;
+        internal bool _identityIsDefined;
+        private NotificationSetting _notificationSetting;
+        internal bool _notificationSettingIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningJobProperties"/>. </summary>
         /// <param name="jobType"> [Required] Specifies the type of job. </param>
         public MachineLearningJobProperties(JobType jobType)
@@ -51,12 +58,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             ComponentId = componentId;
             ComputeId = computeId;
-            DisplayName = displayName;
+            _displayName = displayName;
             ExperimentName = experimentName;
-            Identity = identity;
+            _identity = identity;
             IsArchived = isArchived;
             JobType = jobType;
-            NotificationSetting = notificationSetting;
+            _notificationSetting = notificationSetting;
             Services = services;
             Status = status;
         }
@@ -71,7 +78,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Display name of job. </summary>
         [WirePath("displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return _displayName;
+            }
+            set
+            {
+                _displayName = value;
+                _displayNameIsDefined = true;
+            }
+        }
 
         /// <summary> The name of the experiment the job belongs to. If not set, the job is placed in the "Default" experiment. </summary>
         [WirePath("experimentName")]
@@ -82,7 +100,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Defaults to AmlToken if null.
         /// </summary>
         [WirePath("identity")]
-        public MachineLearningIdentityConfiguration Identity { get; set; }
+        public MachineLearningIdentityConfiguration Identity
+        {
+            get
+            {
+                return _identity;
+            }
+            set
+            {
+                _identity = value;
+                _identityIsDefined = true;
+            }
+        }
 
         /// <summary> Is the asset archived?. </summary>
         [WirePath("isArchived")]
@@ -94,7 +123,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Notification setting for the job. </summary>
         [WirePath("notificationSetting")]
-        public NotificationSetting NotificationSetting { get; set; }
+        public NotificationSetting NotificationSetting
+        {
+            get
+            {
+                return _notificationSetting;
+            }
+            set
+            {
+                _notificationSetting = value;
+                _notificationSettingIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// List of JobEndpoints.

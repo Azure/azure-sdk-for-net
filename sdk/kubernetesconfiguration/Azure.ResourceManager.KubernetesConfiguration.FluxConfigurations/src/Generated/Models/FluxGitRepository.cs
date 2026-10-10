@@ -15,6 +15,22 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _uri;
+        internal bool _uriIsDefined;
+        private long? _timeoutInSeconds;
+        internal bool _timeoutInSecondsIsDefined;
+        private long? _syncIntervalInSeconds;
+        internal bool _syncIntervalInSecondsIsDefined;
+        private string _sshKnownHosts;
+        internal bool _sshKnownHostsIsDefined;
+        private string _httpsUser;
+        internal bool _httpsUserIsDefined;
+        private string _httpsCACert;
+        internal bool _httpsCACertIsDefined;
+        private string _localAuthRef;
+        internal bool _localAuthRefIsDefined;
+        private FluxConfigurationProviderType? _provider;
+        internal bool _providerIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FluxGitRepository"/>. </summary>
         public FluxGitRepository()
@@ -34,43 +50,131 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal FluxGitRepository(string uri, long? timeoutInSeconds, long? syncIntervalInSeconds, FluxRepositoryReference repositoryRef, string sshKnownHosts, string httpsUser, string httpsCACert, string localAuthRef, FluxConfigurationProviderType? provider, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Uri = uri;
-            TimeoutInSeconds = timeoutInSeconds;
-            SyncIntervalInSeconds = syncIntervalInSeconds;
+            _uri = uri;
+            _timeoutInSeconds = timeoutInSeconds;
+            _syncIntervalInSeconds = syncIntervalInSeconds;
             RepositoryRef = repositoryRef;
-            SshKnownHosts = sshKnownHosts;
-            HttpsUser = httpsUser;
-            HttpsCACert = httpsCACert;
-            LocalAuthRef = localAuthRef;
-            Provider = provider;
+            _sshKnownHosts = sshKnownHosts;
+            _httpsUser = httpsUser;
+            _httpsCACert = httpsCACert;
+            _localAuthRef = localAuthRef;
+            _provider = provider;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The URL to sync for the flux configuration git repository. </summary>
-        public string Uri { get; set; }
+        public string Uri
+        {
+            get
+            {
+                return _uri;
+            }
+            set
+            {
+                _uri = value;
+                _uriIsDefined = true;
+            }
+        }
 
         /// <summary> The maximum time to attempt to reconcile the cluster git repository source with the remote. </summary>
-        public long? TimeoutInSeconds { get; set; }
+        public long? TimeoutInSeconds
+        {
+            get
+            {
+                return _timeoutInSeconds;
+            }
+            set
+            {
+                _timeoutInSeconds = value;
+                _timeoutInSecondsIsDefined = true;
+            }
+        }
 
         /// <summary> The interval at which to re-reconcile the cluster git repository source with the remote. </summary>
-        public long? SyncIntervalInSeconds { get; set; }
+        public long? SyncIntervalInSeconds
+        {
+            get
+            {
+                return _syncIntervalInSeconds;
+            }
+            set
+            {
+                _syncIntervalInSeconds = value;
+                _syncIntervalInSecondsIsDefined = true;
+            }
+        }
 
         /// <summary> The source reference for the GitRepository object. </summary>
         public FluxRepositoryReference RepositoryRef { get; set; }
 
         /// <summary> Base64-encoded known_hosts value containing public SSH keys required to access private git repositories over SSH. </summary>
-        public string SshKnownHosts { get; set; }
+        public string SshKnownHosts
+        {
+            get
+            {
+                return _sshKnownHosts;
+            }
+            set
+            {
+                _sshKnownHosts = value;
+                _sshKnownHostsIsDefined = true;
+            }
+        }
 
         /// <summary> Plaintext HTTPS username used to access private git repositories over HTTPS. </summary>
-        public string HttpsUser { get; set; }
+        public string HttpsUser
+        {
+            get
+            {
+                return _httpsUser;
+            }
+            set
+            {
+                _httpsUser = value;
+                _httpsUserIsDefined = true;
+            }
+        }
 
         /// <summary> Base64-encoded HTTPS certificate authority contents used to access git private git repositories over HTTPS. </summary>
-        public string HttpsCACert { get; set; }
+        public string HttpsCACert
+        {
+            get
+            {
+                return _httpsCACert;
+            }
+            set
+            {
+                _httpsCACert = value;
+                _httpsCACertIsDefined = true;
+            }
+        }
 
         /// <summary> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </summary>
-        public string LocalAuthRef { get; set; }
+        public string LocalAuthRef
+        {
+            get
+            {
+                return _localAuthRef;
+            }
+            set
+            {
+                _localAuthRef = value;
+                _localAuthRefIsDefined = true;
+            }
+        }
 
         /// <summary> Name of the provider used for authentication. </summary>
-        public FluxConfigurationProviderType? Provider { get; set; }
+        public FluxConfigurationProviderType? Provider
+        {
+            get
+            {
+                return _provider;
+            }
+            set
+            {
+                _provider = value;
+                _providerIsDefined = true;
+            }
+        }
     }
 }

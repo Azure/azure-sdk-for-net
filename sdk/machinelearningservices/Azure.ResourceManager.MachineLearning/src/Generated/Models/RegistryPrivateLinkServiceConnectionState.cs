@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _actionsRequired;
+        internal bool _actionsRequiredIsDefined;
+        private string _description;
+        internal bool _descriptionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="RegistryPrivateLinkServiceConnectionState"/>. </summary>
         public RegistryPrivateLinkServiceConnectionState()
@@ -29,19 +33,41 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal RegistryPrivateLinkServiceConnectionState(string actionsRequired, string description, EndpointServiceConnectionStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ActionsRequired = actionsRequired;
-            Description = description;
+            _actionsRequired = actionsRequired;
+            _description = description;
             Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Some RP chose "None". Other RPs use this for region expansion. </summary>
         [WirePath("actionsRequired")]
-        public string ActionsRequired { get; set; }
+        public string ActionsRequired
+        {
+            get
+            {
+                return _actionsRequired;
+            }
+            set
+            {
+                _actionsRequired = value;
+                _actionsRequiredIsDefined = true;
+            }
+        }
 
         /// <summary> User-defined message that, per NRP doc, may be used for approval-related message. </summary>
         [WirePath("description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return _description;
+            }
+            set
+            {
+                _description = value;
+                _descriptionIsDefined = true;
+            }
+        }
 
         /// <summary> Connection status of the service consumer with the service provider. </summary>
         [WirePath("status")]

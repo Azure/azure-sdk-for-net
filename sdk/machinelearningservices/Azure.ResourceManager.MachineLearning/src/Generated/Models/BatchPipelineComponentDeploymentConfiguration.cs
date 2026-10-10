@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Properties for a Batch Pipeline Component Deployment. </summary>
     public partial class BatchPipelineComponentDeploymentConfiguration : BatchDeploymentConfiguration
     {
+        private string _description;
+        internal bool _descriptionIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="BatchPipelineComponentDeploymentConfiguration"/>. </summary>
         public BatchPipelineComponentDeploymentConfiguration() : base(BatchDeploymentConfigurationType.PipelineComponent)
         {
@@ -31,14 +34,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal BatchPipelineComponentDeploymentConfiguration(BatchDeploymentConfigurationType deploymentConfigurationType, IDictionary<string, BinaryData> additionalBinaryDataProperties, MachineLearningIdAssetReference componentId, string description, IDictionary<string, string> settings, IDictionary<string, string> tags) : base(deploymentConfigurationType, additionalBinaryDataProperties)
         {
             ComponentId = componentId;
-            Description = description;
+            _description = description;
             Settings = settings;
             Tags = tags;
         }
 
         /// <summary> The description which will be applied to the job. </summary>
         [WirePath("description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return _description;
+            }
+            set
+            {
+                _description = value;
+                _descriptionIsDefined = true;
+            }
+        }
 
         /// <summary> Run-time settings for the pipeline job. </summary>
         [WirePath("settings")]

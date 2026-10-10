@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Defines a Sampling Algorithm that generates values randomly. </summary>
     public partial class RandomSamplingAlgorithm : SamplingAlgorithm
     {
+        private int? _seed;
+        internal bool _seedIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="RandomSamplingAlgorithm"/>. </summary>
         public RandomSamplingAlgorithm() : base(SamplingAlgorithmType.Random)
         {
@@ -27,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal RandomSamplingAlgorithm(SamplingAlgorithmType samplingAlgorithmType, IDictionary<string, BinaryData> additionalBinaryDataProperties, RandomSamplingAlgorithmRule? rule, int? seed) : base(samplingAlgorithmType, additionalBinaryDataProperties)
         {
             Rule = rule;
-            Seed = seed;
+            _seed = seed;
         }
 
         /// <summary> The specific type of random algorithm. </summary>
@@ -36,6 +39,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> An optional integer to use as the seed for random number generation. </summary>
         [WirePath("seed")]
-        public int? Seed { get; set; }
+        public int? Seed
+        {
+            get
+            {
+                return _seed;
+            }
+            set
+            {
+                _seed = value;
+                _seedIsDefined = true;
+            }
+        }
     }
 }

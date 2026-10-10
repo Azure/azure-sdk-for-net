@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private MachineLearningMarketplacePlan _marketplacePlan;
+        internal bool _marketplacePlanIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningMarketplaceSubscriptionProperties"/>. </summary>
         /// <param name="modelId"> [Required] Target Marketplace Model ID to create a Marketplace Subscription for. </param>
@@ -35,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MachineLearningMarketplaceSubscriptionProperties(MachineLearningMarketplacePlan marketplacePlan, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, string modelId, MarketplaceSubscriptionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            MarketplacePlan = marketplacePlan;
+            _marketplacePlan = marketplacePlan;
             MarketplaceSubscriptionStatus = marketplaceSubscriptionStatus;
             ModelId = modelId;
             ProvisioningState = provisioningState;
@@ -44,7 +46,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Marketplace Plan associated with the Marketplace Subscription. </summary>
         [WirePath("marketplacePlan")]
-        public MachineLearningMarketplacePlan MarketplacePlan { get; }
+        public MachineLearningMarketplacePlan MarketplacePlan
+        {
+            get
+            {
+                return _marketplacePlan;
+            }
+        }
 
         /// <summary> Current status of the Marketplace Subscription. </summary>
         [WirePath("marketplaceSubscriptionStatus")]

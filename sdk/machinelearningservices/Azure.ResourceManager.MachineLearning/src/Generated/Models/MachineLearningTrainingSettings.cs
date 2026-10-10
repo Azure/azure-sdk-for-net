@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private MachineLearningStackEnsembleSettings _stackEnsembleSettings;
+        internal bool _stackEnsembleSettingsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningTrainingSettings"/>. </summary>
         public MachineLearningTrainingSettings()
@@ -42,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             EnableStackEnsemble = enableStackEnsemble;
             EnableVoteEnsemble = enableVoteEnsemble;
             EnsembleModelDownloadTimeout = ensembleModelDownloadTimeout;
-            StackEnsembleSettings = stackEnsembleSettings;
+            _stackEnsembleSettings = stackEnsembleSettings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -75,6 +77,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Stack ensemble settings for stack ensemble run. </summary>
         [WirePath("stackEnsembleSettings")]
-        public MachineLearningStackEnsembleSettings StackEnsembleSettings { get; set; }
+        public MachineLearningStackEnsembleSettings StackEnsembleSettings
+        {
+            get
+            {
+                return _stackEnsembleSettings;
+            }
+            set
+            {
+                _stackEnsembleSettings = value;
+                _stackEnsembleSettingsIsDefined = true;
+            }
+        }
     }
 }

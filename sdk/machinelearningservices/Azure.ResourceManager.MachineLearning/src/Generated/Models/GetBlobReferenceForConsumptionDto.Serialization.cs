@@ -74,20 +74,41 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(GetBlobReferenceForConsumptionDto)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(BlobUri))
+            if (_blobUriIsDefined || Optional.IsDefined(BlobUri))
             {
-                writer.WritePropertyName("blobUri"u8);
-                writer.WriteStringValue(BlobUri.AbsoluteUri);
+                if (BlobUri != null)
+                {
+                    writer.WritePropertyName("blobUri"u8);
+                    writer.WriteStringValue(BlobUri.AbsoluteUri);
+                }
+                else
+                {
+                    writer.WriteNull("blobUri"u8);
+                }
             }
-            if (Optional.IsDefined(Credential))
+            if (_credentialIsDefined || Optional.IsDefined(Credential))
             {
-                writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue(Credential, options);
+                if (Credential != null)
+                {
+                    writer.WritePropertyName("credential"u8);
+                    writer.WriteObjectValue(Credential, options);
+                }
+                else
+                {
+                    writer.WriteNull("credential"u8);
+                }
             }
-            if (Optional.IsDefined(StorageAccountArmId))
+            if (_storageAccountArmIdIsDefined || Optional.IsDefined(StorageAccountArmId))
             {
-                writer.WritePropertyName("storageAccountArmId"u8);
-                writer.WriteStringValue(StorageAccountArmId);
+                if (StorageAccountArmId != null)
+                {
+                    writer.WritePropertyName("storageAccountArmId"u8);
+                    writer.WriteStringValue(StorageAccountArmId);
+                }
+                else
+                {
+                    writer.WriteNull("storageAccountArmId"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -131,14 +152,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool blobUriIsDefined = false;
             Uri blobUri = default;
+            bool credentialIsDefined = false;
             DataReferenceCredential credential = default;
+            bool storageAccountArmIdIsDefined = false;
             string storageAccountArmId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("blobUri"u8))
                 {
+                    blobUriIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         blobUri = null;
@@ -149,6 +174,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("credential"u8))
                 {
+                    credentialIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         credential = null;
@@ -159,6 +185,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("storageAccountArmId"u8))
                 {
+                    storageAccountArmIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         storageAccountArmId = null;
@@ -172,7 +199,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GetBlobReferenceForConsumptionDto(blobUri, credential, storageAccountArmId, additionalBinaryDataProperties);
+            return new GetBlobReferenceForConsumptionDto(blobUri, credential, storageAccountArmId, additionalBinaryDataProperties)
+            {
+                _blobUriIsDefined = blobUriIsDefined,
+                _credentialIsDefined = credentialIsDefined,
+                _storageAccountArmIdIsDefined = storageAccountArmIdIsDefined
+            };
         }
     }
 }

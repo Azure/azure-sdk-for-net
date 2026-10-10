@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningFlowModelJobOutput. </summary>
     public partial class MachineLearningFlowModelJobOutput : MachineLearningJobOutput
     {
+        private string _assetName;
+        internal bool _assetNameIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningFlowModelJobOutput"/>. </summary>
         public MachineLearningFlowModelJobOutput() : base(JobOutputType.MlflowModel)
         {
@@ -28,14 +31,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="uri"> Output Asset URI. </param>
         internal MachineLearningFlowModelJobOutput(string description, JobOutputType jobOutputType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string assetName, MachineLearningOutputDeliveryMode? mode, Uri uri) : base(description, jobOutputType, additionalBinaryDataProperties)
         {
-            AssetName = assetName;
+            _assetName = assetName;
             Mode = mode;
             Uri = uri;
         }
 
         /// <summary> Output Asset Name. </summary>
         [WirePath("assetName")]
-        public string AssetName { get; set; }
+        public string AssetName
+        {
+            get
+            {
+                return _assetName;
+            }
+            set
+            {
+                _assetName = value;
+                _assetNameIsDefined = true;
+            }
+        }
 
         /// <summary> Output data delivery mode enums. </summary>
         [WirePath("mode")]

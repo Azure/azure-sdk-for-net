@@ -18,6 +18,8 @@ namespace Azure.ResourceManager.MachineLearning
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private MachineLearningSku _sku;
+        internal bool _skuIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningComputeData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -33,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning
         internal MachineLearningComputeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MachineLearningComputeProperties properties, MachineLearningSku sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
-            Sku = sku;
+            _sku = sku;
             Identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -44,7 +46,18 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary> The sku of the workspace. </summary>
         [WirePath("sku")]
-        public MachineLearningSku Sku { get; set; }
+        public MachineLearningSku Sku
+        {
+            get
+            {
+                return _sku;
+            }
+            set
+            {
+                _sku = value;
+                _skuIsDefined = true;
+            }
+        }
 
         /// <summary> The identity of the resource. </summary>
         [WirePath("identity")]

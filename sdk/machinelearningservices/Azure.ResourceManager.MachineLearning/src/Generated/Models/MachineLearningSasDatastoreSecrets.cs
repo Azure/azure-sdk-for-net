@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Datastore SAS secrets. </summary>
     public partial class MachineLearningSasDatastoreSecrets : MachineLearningDatastoreSecrets
     {
+        private string _sasToken;
+        internal bool _sasTokenIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningSasDatastoreSecrets"/>. </summary>
         public MachineLearningSasDatastoreSecrets() : base(SecretsType.Sas)
         {
@@ -25,11 +28,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="sasToken"> Storage container SAS token. </param>
         internal MachineLearningSasDatastoreSecrets(SecretsType secretsType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string sasToken) : base(secretsType, additionalBinaryDataProperties)
         {
-            SasToken = sasToken;
+            _sasToken = sasToken;
         }
 
         /// <summary> Storage container SAS token. </summary>
         [WirePath("sasToken")]
-        public string SasToken { get; set; }
+        public string SasToken
+        {
+            get
+            {
+                return _sasToken;
+            }
+            set
+            {
+                _sasToken = value;
+                _sasTokenIsDefined = true;
+            }
+        }
     }
 }

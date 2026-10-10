@@ -81,30 +81,58 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("authMode"u8);
             writer.WriteStringValue(AuthMode.ToString());
-            if (Optional.IsDefined(ContentSafety))
+            if (_contentSafetyIsDefined || Optional.IsDefined(ContentSafety))
             {
-                writer.WritePropertyName("contentSafety"u8);
-                writer.WriteObjectValue(ContentSafety, options);
+                if (ContentSafety != null)
+                {
+                    writer.WritePropertyName("contentSafety"u8);
+                    writer.WriteObjectValue(ContentSafety, options);
+                }
+                else
+                {
+                    writer.WriteNull("contentSafety"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(EndpointState))
             {
                 writer.WritePropertyName("endpointState"u8);
                 writer.WriteStringValue(EndpointState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(InferenceEndpoint))
+            if (options.Format != "W" && (_inferenceEndpointIsDefined || Optional.IsDefined(InferenceEndpoint)))
             {
-                writer.WritePropertyName("inferenceEndpoint"u8);
-                writer.WriteObjectValue(InferenceEndpoint, options);
+                if (InferenceEndpoint != null)
+                {
+                    writer.WritePropertyName("inferenceEndpoint"u8);
+                    writer.WriteObjectValue(InferenceEndpoint, options);
+                }
+                else
+                {
+                    writer.WriteNull("inferenceEndpoint"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(MarketplaceSubscriptionId))
+            if (options.Format != "W" && (_marketplaceSubscriptionIdIsDefined || Optional.IsDefined(MarketplaceSubscriptionId)))
             {
-                writer.WritePropertyName("marketplaceSubscriptionId"u8);
-                writer.WriteStringValue(MarketplaceSubscriptionId);
+                if (MarketplaceSubscriptionId != null)
+                {
+                    writer.WritePropertyName("marketplaceSubscriptionId"u8);
+                    writer.WriteStringValue(MarketplaceSubscriptionId);
+                }
+                else
+                {
+                    writer.WriteNull("marketplaceSubscriptionId"u8);
+                }
             }
-            if (Optional.IsDefined(ModelSettings))
+            if (_modelSettingsIsDefined || Optional.IsDefined(ModelSettings))
             {
-                writer.WritePropertyName("modelSettings"u8);
-                writer.WriteObjectValue(ModelSettings, options);
+                if (ModelSettings != null)
+                {
+                    writer.WritePropertyName("modelSettings"u8);
+                    writer.WriteObjectValue(ModelSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("modelSettings"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -154,10 +182,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             ServerlessInferenceEndpointAuthMode authMode = default;
+            bool contentSafetyIsDefined = false;
             ContentSafety contentSafety = default;
             ServerlessEndpointState? endpointState = default;
+            bool inferenceEndpointIsDefined = false;
             ServerlessInferenceEndpoint inferenceEndpoint = default;
+            bool marketplaceSubscriptionIdIsDefined = false;
             string marketplaceSubscriptionId = default;
+            bool modelSettingsIsDefined = false;
             ModelSettings modelSettings = default;
             MachineLearningEndpointProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -170,6 +202,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("contentSafety"u8))
                 {
+                    contentSafetyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         contentSafety = null;
@@ -189,6 +222,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("inferenceEndpoint"u8))
                 {
+                    inferenceEndpointIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         inferenceEndpoint = null;
@@ -199,6 +233,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("marketplaceSubscriptionId"u8))
                 {
+                    marketplaceSubscriptionIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         marketplaceSubscriptionId = null;
@@ -209,6 +244,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("modelSettings"u8))
                 {
+                    modelSettingsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         modelSettings = null;
@@ -239,7 +275,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 marketplaceSubscriptionId,
                 modelSettings,
                 provisioningState,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _contentSafetyIsDefined = contentSafetyIsDefined,
+                _inferenceEndpointIsDefined = inferenceEndpointIsDefined,
+                _marketplaceSubscriptionIdIsDefined = marketplaceSubscriptionIdIsDefined,
+                _modelSettingsIsDefined = modelSettingsIsDefined
+            };
         }
     }
 }

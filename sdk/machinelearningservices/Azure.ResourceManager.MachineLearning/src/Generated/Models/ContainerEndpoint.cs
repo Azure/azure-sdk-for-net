@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private int? _published;
+        internal bool _publishedIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ContainerEndpoint"/>. </summary>
         public ContainerEndpoint()
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Protocol = protocol;
             Name = name;
             Target = target;
-            Published = published;
+            _published = published;
             HostIP = hostIP;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -53,6 +55,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Port over which the application is exposed from container. </summary>
         [WirePath("published")]
-        public int? Published { get; set; }
+        public int? Published
+        {
+            get
+            {
+                return _published;
+            }
+            set
+            {
+                _published = value;
+                _publishedIsDefined = true;
+            }
+        }
     }
 }

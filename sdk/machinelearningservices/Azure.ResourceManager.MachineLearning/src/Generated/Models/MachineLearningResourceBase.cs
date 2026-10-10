@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _description;
+        internal bool _descriptionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningResourceBase"/>. </summary>
         public MachineLearningResourceBase()
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MachineLearningResourceBase(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Description = description;
+            _description = description;
             Properties = properties;
             Tags = tags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -39,7 +41,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The asset description text. </summary>
         [WirePath("description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return _description;
+            }
+            set
+            {
+                _description = value;
+                _descriptionIsDefined = true;
+            }
+        }
 
         /// <summary> The asset property dictionary. </summary>
         [WirePath("properties")]

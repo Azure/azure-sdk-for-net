@@ -74,20 +74,41 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 throw new FormatException($"The model {nameof(OciRepository)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Uri))
+            if (_uriIsDefined || Optional.IsDefined(Uri))
             {
-                writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Uri.AbsoluteUri);
+                if (Uri != null)
+                {
+                    writer.WritePropertyName("url"u8);
+                    writer.WriteStringValue(Uri.AbsoluteUri);
+                }
+                else
+                {
+                    writer.WriteNull("url"u8);
+                }
             }
-            if (Optional.IsDefined(TimeoutInSeconds))
+            if (_timeoutInSecondsIsDefined || Optional.IsDefined(TimeoutInSeconds))
             {
-                writer.WritePropertyName("timeoutInSeconds"u8);
-                writer.WriteNumberValue(TimeoutInSeconds.Value);
+                if (TimeoutInSeconds != null)
+                {
+                    writer.WritePropertyName("timeoutInSeconds"u8);
+                    writer.WriteNumberValue(TimeoutInSeconds.Value);
+                }
+                else
+                {
+                    writer.WriteNull("timeoutInSeconds"u8);
+                }
             }
-            if (Optional.IsDefined(SyncIntervalInSeconds))
+            if (_syncIntervalInSecondsIsDefined || Optional.IsDefined(SyncIntervalInSeconds))
             {
-                writer.WritePropertyName("syncIntervalInSeconds"u8);
-                writer.WriteNumberValue(SyncIntervalInSeconds.Value);
+                if (SyncIntervalInSeconds != null)
+                {
+                    writer.WritePropertyName("syncIntervalInSeconds"u8);
+                    writer.WriteNumberValue(SyncIntervalInSeconds.Value);
+                }
+                else
+                {
+                    writer.WriteNull("syncIntervalInSeconds"u8);
+                }
             }
             if (Optional.IsDefined(RepositoryRef))
             {
@@ -114,20 +135,34 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 writer.WritePropertyName("useWorkloadIdentity"u8);
                 writer.WriteBooleanValue(UseWorkloadIdentity.Value);
             }
-            if (Optional.IsDefined(ServiceAccountName))
+            if (_serviceAccountNameIsDefined || Optional.IsDefined(ServiceAccountName))
             {
-                writer.WritePropertyName("serviceAccountName"u8);
-                writer.WriteStringValue(ServiceAccountName);
+                if (ServiceAccountName != null)
+                {
+                    writer.WritePropertyName("serviceAccountName"u8);
+                    writer.WriteStringValue(ServiceAccountName);
+                }
+                else
+                {
+                    writer.WriteNull("serviceAccountName"u8);
+                }
             }
             if (Optional.IsDefined(TlsConfig))
             {
                 writer.WritePropertyName("tlsConfig"u8);
                 writer.WriteObjectValue(TlsConfig, options);
             }
-            if (Optional.IsDefined(LocalAuthRef))
+            if (_localAuthRefIsDefined || Optional.IsDefined(LocalAuthRef))
             {
-                writer.WritePropertyName("localAuthRef"u8);
-                writer.WriteStringValue(LocalAuthRef);
+                if (LocalAuthRef != null)
+                {
+                    writer.WritePropertyName("localAuthRef"u8);
+                    writer.WriteStringValue(LocalAuthRef);
+                }
+                else
+                {
+                    writer.WriteNull("localAuthRef"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -171,22 +206,28 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 return null;
             }
+            bool uriIsDefined = false;
             Uri uri = default;
+            bool timeoutInSecondsIsDefined = false;
             long? timeoutInSeconds = default;
+            bool syncIntervalInSecondsIsDefined = false;
             long? syncIntervalInSeconds = default;
             OciRepositoryRef repositoryRef = default;
             FluxLayerSelector layerSelector = default;
             OciRepositoryVerify verify = default;
             bool? isInsecure = default;
             bool? useWorkloadIdentity = default;
+            bool serviceAccountNameIsDefined = false;
             string serviceAccountName = default;
             FluxTlsConfig tlsConfig = default;
+            bool localAuthRefIsDefined = false;
             string localAuthRef = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("url"u8))
                 {
+                    uriIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         uri = null;
@@ -197,6 +238,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("timeoutInSeconds"u8))
                 {
+                    timeoutInSecondsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         timeoutInSeconds = null;
@@ -207,6 +249,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("syncIntervalInSeconds"u8))
                 {
+                    syncIntervalInSecondsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         syncIntervalInSeconds = null;
@@ -262,6 +305,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("serviceAccountName"u8))
                 {
+                    serviceAccountNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         serviceAccountName = null;
@@ -281,6 +325,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("localAuthRef"u8))
                 {
+                    localAuthRefIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         localAuthRef = null;
@@ -306,7 +351,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 serviceAccountName,
                 tlsConfig,
                 localAuthRef,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _uriIsDefined = uriIsDefined,
+                _timeoutInSecondsIsDefined = timeoutInSecondsIsDefined,
+                _syncIntervalInSecondsIsDefined = syncIntervalInSecondsIsDefined,
+                _serviceAccountNameIsDefined = serviceAccountNameIsDefined,
+                _localAuthRefIsDefined = localAuthRefIsDefined
+            };
         }
     }
 }

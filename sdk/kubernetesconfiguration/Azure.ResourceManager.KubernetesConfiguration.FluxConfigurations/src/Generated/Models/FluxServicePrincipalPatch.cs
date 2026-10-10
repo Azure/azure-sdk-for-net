@@ -15,6 +15,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _clientId;
+        internal bool _clientIdIsDefined;
+        private string _tenantId;
+        internal bool _tenantIdIsDefined;
+        private string _clientSecret;
+        internal bool _clientSecretIsDefined;
+        private string _clientCertificatePassword;
+        internal bool _clientCertificatePasswordIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FluxServicePrincipalPatch"/>. </summary>
         public FluxServicePrincipalPatch()
@@ -31,29 +39,73 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal FluxServicePrincipalPatch(string clientId, string tenantId, string clientSecret, string clientCertificate, string clientCertificatePassword, bool? isClientCertificateSendChain, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ClientId = clientId;
-            TenantId = tenantId;
-            ClientSecret = clientSecret;
+            _clientId = clientId;
+            _tenantId = tenantId;
+            _clientSecret = clientSecret;
             ClientCertificate = clientCertificate;
-            ClientCertificatePassword = clientCertificatePassword;
+            _clientCertificatePassword = clientCertificatePassword;
             IsClientCertificateSendChain = isClientCertificateSendChain;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The client Id for authenticating a Service Principal. </summary>
-        public string ClientId { get; set; }
+        public string ClientId
+        {
+            get
+            {
+                return _clientId;
+            }
+            set
+            {
+                _clientId = value;
+                _clientIdIsDefined = true;
+            }
+        }
 
         /// <summary> The tenant Id for authenticating a Service Principal. </summary>
-        public string TenantId { get; set; }
+        public string TenantId
+        {
+            get
+            {
+                return _tenantId;
+            }
+            set
+            {
+                _tenantId = value;
+                _tenantIdIsDefined = true;
+            }
+        }
 
         /// <summary> The client secret for authenticating a Service Principal. </summary>
-        public string ClientSecret { get; set; }
+        public string ClientSecret
+        {
+            get
+            {
+                return _clientSecret;
+            }
+            set
+            {
+                _clientSecret = value;
+                _clientSecretIsDefined = true;
+            }
+        }
 
         /// <summary> Base64-encoded certificate used to authenticate a Service Principal. </summary>
         public string ClientCertificate { get; set; }
 
         /// <summary> The password for the certificate used to authenticate a Service Principal. </summary>
-        public string ClientCertificatePassword { get; set; }
+        public string ClientCertificatePassword
+        {
+            get
+            {
+                return _clientCertificatePassword;
+            }
+            set
+            {
+                _clientCertificatePassword = value;
+                _clientCertificatePasswordIsDefined = true;
+            }
+        }
 
         /// <summary> Specifies whether to include x5c header in client claims when acquiring a token to enable subject name / issuer based authentication for the Client Certificate. </summary>
         public bool? IsClientCertificateSendChain { get; set; }

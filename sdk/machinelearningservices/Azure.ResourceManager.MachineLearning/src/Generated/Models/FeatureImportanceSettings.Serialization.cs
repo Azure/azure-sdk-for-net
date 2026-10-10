@@ -79,10 +79,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsDefined(TargetColumn))
+            if (_targetColumnIsDefined || Optional.IsDefined(TargetColumn))
             {
-                writer.WritePropertyName("targetColumn"u8);
-                writer.WriteStringValue(TargetColumn);
+                if (TargetColumn != null)
+                {
+                    writer.WritePropertyName("targetColumn"u8);
+                    writer.WriteStringValue(TargetColumn);
+                }
+                else
+                {
+                    writer.WriteNull("targetColumn"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,6 +134,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             FeatureImportanceMode? mode = default;
+            bool targetColumnIsDefined = false;
             string targetColumn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -142,6 +150,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("targetColumn"u8))
                 {
+                    targetColumnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         targetColumn = null;
@@ -155,7 +164,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FeatureImportanceSettings(mode, targetColumn, additionalBinaryDataProperties);
+            return new FeatureImportanceSettings(mode, targetColumn, additionalBinaryDataProperties)
+            {
+                _targetColumnIsDefined = targetColumnIsDefined
+            };
         }
     }
 }

@@ -74,20 +74,41 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningContainerResourceSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Cpu))
+            if (_cpuIsDefined || Optional.IsDefined(Cpu))
             {
-                writer.WritePropertyName("cpu"u8);
-                writer.WriteStringValue(Cpu);
+                if (Cpu != null)
+                {
+                    writer.WritePropertyName("cpu"u8);
+                    writer.WriteStringValue(Cpu);
+                }
+                else
+                {
+                    writer.WriteNull("cpu"u8);
+                }
             }
-            if (Optional.IsDefined(Gpu))
+            if (_gpuIsDefined || Optional.IsDefined(Gpu))
             {
-                writer.WritePropertyName("gpu"u8);
-                writer.WriteStringValue(Gpu);
+                if (Gpu != null)
+                {
+                    writer.WritePropertyName("gpu"u8);
+                    writer.WriteStringValue(Gpu);
+                }
+                else
+                {
+                    writer.WriteNull("gpu"u8);
+                }
             }
-            if (Optional.IsDefined(Memory))
+            if (_memoryIsDefined || Optional.IsDefined(Memory))
             {
-                writer.WritePropertyName("memory"u8);
-                writer.WriteStringValue(Memory);
+                if (Memory != null)
+                {
+                    writer.WritePropertyName("memory"u8);
+                    writer.WriteStringValue(Memory);
+                }
+                else
+                {
+                    writer.WriteNull("memory"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -131,14 +152,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool cpuIsDefined = false;
             string cpu = default;
+            bool gpuIsDefined = false;
             string gpu = default;
+            bool memoryIsDefined = false;
             string memory = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("cpu"u8))
                 {
+                    cpuIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         cpu = null;
@@ -149,6 +174,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("gpu"u8))
                 {
+                    gpuIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         gpu = null;
@@ -159,6 +185,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("memory"u8))
                 {
+                    memoryIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         memory = null;
@@ -172,7 +199,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MachineLearningContainerResourceSettings(cpu, gpu, memory, additionalBinaryDataProperties);
+            return new MachineLearningContainerResourceSettings(cpu, gpu, memory, additionalBinaryDataProperties)
+            {
+                _cpuIsDefined = cpuIsDefined,
+                _gpuIsDefined = gpuIsDefined,
+                _memoryIsDefined = memoryIsDefined
+            };
         }
     }
 }

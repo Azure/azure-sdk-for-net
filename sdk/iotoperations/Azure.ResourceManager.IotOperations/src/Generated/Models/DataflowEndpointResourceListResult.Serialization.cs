@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DataflowEndpointResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DataflowEndpointResourceListResult(value ?? new ChangeTrackingList<IotOperationsDataflowEndpointData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -84,25 +84,39 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(ComponentId);
             if (Optional.IsCollectionDefined(InputAssets))
             {
-                writer.WritePropertyName("inputAssets"u8);
-                writer.WriteStartObject();
-                foreach (var item in InputAssets)
+                if (InputAssets != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    writer.WritePropertyName("inputAssets"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in InputAssets)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteObjectValue(item.Value, options);
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("inputAssets"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Inputs))
             {
-                writer.WritePropertyName("inputs"u8);
-                writer.WriteStartObject();
-                foreach (var item in Inputs)
+                if (Inputs != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    writer.WritePropertyName("inputs"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Inputs)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteObjectValue(item.Value, options);
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("inputs"u8);
+                }
             }
             writer.WritePropertyName("metricThresholds"u8);
             writer.WriteStartArray();
@@ -138,13 +152,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            IList<MonitoringNotificationType> notificationTypes = default;
-            IDictionary<string, string> properties = default;
+            IList<MonitoringNotificationType> notificationTypes = new ChangeTrackingList<MonitoringNotificationType>();
+            IDictionary<string, string> properties = new ChangeTrackingDictionary<string, string>();
             MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string componentId = default;
-            IDictionary<string, MonitoringInputDataBase> inputAssets = default;
-            IDictionary<string, MachineLearningJobInput> inputs = default;
+            IDictionary<string, MonitoringInputDataBase> inputAssets = new ChangeTrackingDictionary<string, MonitoringInputDataBase>();
+            IDictionary<string, MachineLearningJobInput> inputs = new ChangeTrackingDictionary<string, MachineLearningJobInput>();
             IList<CustomMetricThreshold> metricThresholds = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -152,6 +166,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        notificationTypes = null;
                         continue;
                     }
                     List<MonitoringNotificationType> array = new List<MonitoringNotificationType>();
@@ -166,6 +181,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -197,6 +213,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        inputAssets = null;
                         continue;
                     }
                     Dictionary<string, MonitoringInputDataBase> dictionary = new Dictionary<string, MonitoringInputDataBase>();
@@ -211,6 +228,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        inputs = null;
                         continue;
                     }
                     Dictionary<string, MachineLearningJobInput> dictionary = new Dictionary<string, MachineLearningJobInput>();
@@ -237,14 +255,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             return new CustomMonitoringSignal(
-                notificationTypes ?? new ChangeTrackingList<MonitoringNotificationType>(),
-                properties ?? new ChangeTrackingDictionary<string, string>(),
+                notificationTypes,
+                properties,
                 signalType,
                 additionalBinaryDataProperties,
                 componentId,
-                inputAssets ?? new ChangeTrackingDictionary<string, MonitoringInputDataBase>(),
-                inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(),
-                metricThresholds);
+                inputAssets,
+                inputs,
+                metricThresholds ?? new ChangeTrackingList<CustomMetricThreshold>());
         }
     }
 }

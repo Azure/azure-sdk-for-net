@@ -20,6 +20,66 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _advancedSettings;
+        internal bool _advancedSettingsIsDefined;
+        private bool? _amsGradient;
+        internal bool _amsGradientIsDefined;
+        private string _augmentations;
+        internal bool _augmentationsIsDefined;
+        private float? _beta1;
+        internal bool _beta1IsDefined;
+        private float? _beta2;
+        internal bool _beta2IsDefined;
+        private int? _checkpointFrequency;
+        internal bool _checkpointFrequencyIsDefined;
+        private MachineLearningFlowModelJobInput _checkpointModel;
+        internal bool _checkpointModelIsDefined;
+        private string _checkpointRunId;
+        internal bool _checkpointRunIdIsDefined;
+        private bool? _distributed;
+        internal bool _distributedIsDefined;
+        private bool? _earlyStopping;
+        internal bool _earlyStoppingIsDefined;
+        private int? _earlyStoppingDelay;
+        internal bool _earlyStoppingDelayIsDefined;
+        private int? _earlyStoppingPatience;
+        internal bool _earlyStoppingPatienceIsDefined;
+        private bool? _enableOnnxNormalization;
+        internal bool _enableOnnxNormalizationIsDefined;
+        private int? _evaluationFrequency;
+        internal bool _evaluationFrequencyIsDefined;
+        private int? _gradientAccumulationStep;
+        internal bool _gradientAccumulationStepIsDefined;
+        private int? _layersToFreeze;
+        internal bool _layersToFreezeIsDefined;
+        private float? _learningRate;
+        internal bool _learningRateIsDefined;
+        private string _modelName;
+        internal bool _modelNameIsDefined;
+        private float? _momentum;
+        internal bool _momentumIsDefined;
+        private bool? _nesterov;
+        internal bool _nesterovIsDefined;
+        private int? _numberOfEpochs;
+        internal bool _numberOfEpochsIsDefined;
+        private int? _numberOfWorkers;
+        internal bool _numberOfWorkersIsDefined;
+        private int? _randomSeed;
+        internal bool _randomSeedIsDefined;
+        private float? _stepLRGamma;
+        internal bool _stepLRGammaIsDefined;
+        private int? _stepLRStepSize;
+        internal bool _stepLRStepSizeIsDefined;
+        private int? _trainingBatchSize;
+        internal bool _trainingBatchSizeIsDefined;
+        private int? _validationBatchSize;
+        internal bool _validationBatchSizeIsDefined;
+        private float? _warmupCosineLRCycles;
+        internal bool _warmupCosineLRCyclesIsDefined;
+        private int? _warmupCosineLRWarmupEpochs;
+        internal bool _warmupCosineLRWarmupEpochsIsDefined;
+        private float? _weightDecay;
+        internal bool _weightDecayIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ImageModelSettings"/>. </summary>
         public ImageModelSettings()
@@ -81,102 +141,256 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ImageModelSettings(string advancedSettings, bool? amsGradient, string augmentations, float? beta1, float? beta2, int? checkpointFrequency, MachineLearningFlowModelJobInput checkpointModel, string checkpointRunId, bool? distributed, bool? earlyStopping, int? earlyStoppingDelay, int? earlyStoppingPatience, bool? enableOnnxNormalization, int? evaluationFrequency, int? gradientAccumulationStep, int? layersToFreeze, float? learningRate, LearningRateScheduler? learningRateScheduler, string modelName, float? momentum, bool? nesterov, int? numberOfEpochs, int? numberOfWorkers, StochasticOptimizer? optimizer, int? randomSeed, float? stepLRGamma, int? stepLRStepSize, int? trainingBatchSize, int? validationBatchSize, float? warmupCosineLRCycles, int? warmupCosineLRWarmupEpochs, float? weightDecay, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AdvancedSettings = advancedSettings;
-            AmsGradient = amsGradient;
-            Augmentations = augmentations;
-            Beta1 = beta1;
-            Beta2 = beta2;
-            CheckpointFrequency = checkpointFrequency;
-            CheckpointModel = checkpointModel;
-            CheckpointRunId = checkpointRunId;
-            Distributed = distributed;
-            EarlyStopping = earlyStopping;
-            EarlyStoppingDelay = earlyStoppingDelay;
-            EarlyStoppingPatience = earlyStoppingPatience;
-            EnableOnnxNormalization = enableOnnxNormalization;
-            EvaluationFrequency = evaluationFrequency;
-            GradientAccumulationStep = gradientAccumulationStep;
-            LayersToFreeze = layersToFreeze;
-            LearningRate = learningRate;
+            _advancedSettings = advancedSettings;
+            _amsGradient = amsGradient;
+            _augmentations = augmentations;
+            _beta1 = beta1;
+            _beta2 = beta2;
+            _checkpointFrequency = checkpointFrequency;
+            _checkpointModel = checkpointModel;
+            _checkpointRunId = checkpointRunId;
+            _distributed = distributed;
+            _earlyStopping = earlyStopping;
+            _earlyStoppingDelay = earlyStoppingDelay;
+            _earlyStoppingPatience = earlyStoppingPatience;
+            _enableOnnxNormalization = enableOnnxNormalization;
+            _evaluationFrequency = evaluationFrequency;
+            _gradientAccumulationStep = gradientAccumulationStep;
+            _layersToFreeze = layersToFreeze;
+            _learningRate = learningRate;
             LearningRateScheduler = learningRateScheduler;
-            ModelName = modelName;
-            Momentum = momentum;
-            Nesterov = nesterov;
-            NumberOfEpochs = numberOfEpochs;
-            NumberOfWorkers = numberOfWorkers;
+            _modelName = modelName;
+            _momentum = momentum;
+            _nesterov = nesterov;
+            _numberOfEpochs = numberOfEpochs;
+            _numberOfWorkers = numberOfWorkers;
             Optimizer = optimizer;
-            RandomSeed = randomSeed;
-            StepLRGamma = stepLRGamma;
-            StepLRStepSize = stepLRStepSize;
-            TrainingBatchSize = trainingBatchSize;
-            ValidationBatchSize = validationBatchSize;
-            WarmupCosineLRCycles = warmupCosineLRCycles;
-            WarmupCosineLRWarmupEpochs = warmupCosineLRWarmupEpochs;
-            WeightDecay = weightDecay;
+            _randomSeed = randomSeed;
+            _stepLRGamma = stepLRGamma;
+            _stepLRStepSize = stepLRStepSize;
+            _trainingBatchSize = trainingBatchSize;
+            _validationBatchSize = validationBatchSize;
+            _warmupCosineLRCycles = warmupCosineLRCycles;
+            _warmupCosineLRWarmupEpochs = warmupCosineLRWarmupEpochs;
+            _weightDecay = weightDecay;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Settings for advanced scenarios. </summary>
         [WirePath("advancedSettings")]
-        public string AdvancedSettings { get; set; }
+        public string AdvancedSettings
+        {
+            get
+            {
+                return _advancedSettings;
+            }
+            set
+            {
+                _advancedSettings = value;
+                _advancedSettingsIsDefined = true;
+            }
+        }
 
         /// <summary> Enable AMSGrad when optimizer is 'adam' or 'adamw'. </summary>
         [WirePath("amsGradient")]
-        public bool? AmsGradient { get; set; }
+        public bool? AmsGradient
+        {
+            get
+            {
+                return _amsGradient;
+            }
+            set
+            {
+                _amsGradient = value;
+                _amsGradientIsDefined = true;
+            }
+        }
 
         /// <summary> Settings for using Augmentations. </summary>
         [WirePath("augmentations")]
-        public string Augmentations { get; set; }
+        public string Augmentations
+        {
+            get
+            {
+                return _augmentations;
+            }
+            set
+            {
+                _augmentations = value;
+                _augmentationsIsDefined = true;
+            }
+        }
 
         /// <summary> Value of 'beta1' when optimizer is 'adam' or 'adamw'. Must be a float in the range [0, 1]. </summary>
         [WirePath("beta1")]
-        public float? Beta1 { get; set; }
+        public float? Beta1
+        {
+            get
+            {
+                return _beta1;
+            }
+            set
+            {
+                _beta1 = value;
+                _beta1IsDefined = true;
+            }
+        }
 
         /// <summary> Value of 'beta2' when optimizer is 'adam' or 'adamw'. Must be a float in the range [0, 1]. </summary>
         [WirePath("beta2")]
-        public float? Beta2 { get; set; }
+        public float? Beta2
+        {
+            get
+            {
+                return _beta2;
+            }
+            set
+            {
+                _beta2 = value;
+                _beta2IsDefined = true;
+            }
+        }
 
         /// <summary> Frequency to store model checkpoints. Must be a positive integer. </summary>
         [WirePath("checkpointFrequency")]
-        public int? CheckpointFrequency { get; set; }
+        public int? CheckpointFrequency
+        {
+            get
+            {
+                return _checkpointFrequency;
+            }
+            set
+            {
+                _checkpointFrequency = value;
+                _checkpointFrequencyIsDefined = true;
+            }
+        }
 
         /// <summary> The pretrained checkpoint model for incremental training. </summary>
         [WirePath("checkpointModel")]
-        public MachineLearningFlowModelJobInput CheckpointModel { get; set; }
+        public MachineLearningFlowModelJobInput CheckpointModel
+        {
+            get
+            {
+                return _checkpointModel;
+            }
+            set
+            {
+                _checkpointModel = value;
+                _checkpointModelIsDefined = true;
+            }
+        }
 
         /// <summary> The id of a previous run that has a pretrained checkpoint for incremental training. </summary>
         [WirePath("checkpointRunId")]
-        public string CheckpointRunId { get; set; }
+        public string CheckpointRunId
+        {
+            get
+            {
+                return _checkpointRunId;
+            }
+            set
+            {
+                _checkpointRunId = value;
+                _checkpointRunIdIsDefined = true;
+            }
+        }
 
         /// <summary> Whether to use distributed training. </summary>
         [WirePath("distributed")]
-        public bool? Distributed { get; set; }
+        public bool? Distributed
+        {
+            get
+            {
+                return _distributed;
+            }
+            set
+            {
+                _distributed = value;
+                _distributedIsDefined = true;
+            }
+        }
 
         /// <summary> Enable early stopping logic during training. </summary>
         [WirePath("earlyStopping")]
-        public bool? EarlyStopping { get; set; }
+        public bool? EarlyStopping
+        {
+            get
+            {
+                return _earlyStopping;
+            }
+            set
+            {
+                _earlyStopping = value;
+                _earlyStoppingIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Minimum number of epochs or validation evaluations to wait before primary metric improvement
         /// is tracked for early stopping. Must be a positive integer.
         /// </summary>
         [WirePath("earlyStoppingDelay")]
-        public int? EarlyStoppingDelay { get; set; }
+        public int? EarlyStoppingDelay
+        {
+            get
+            {
+                return _earlyStoppingDelay;
+            }
+            set
+            {
+                _earlyStoppingDelay = value;
+                _earlyStoppingDelayIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Minimum number of epochs or validation evaluations with no primary metric improvement before
         /// the run is stopped. Must be a positive integer.
         /// </summary>
         [WirePath("earlyStoppingPatience")]
-        public int? EarlyStoppingPatience { get; set; }
+        public int? EarlyStoppingPatience
+        {
+            get
+            {
+                return _earlyStoppingPatience;
+            }
+            set
+            {
+                _earlyStoppingPatience = value;
+                _earlyStoppingPatienceIsDefined = true;
+            }
+        }
 
         /// <summary> Enable normalization when exporting ONNX model. </summary>
         [WirePath("enableOnnxNormalization")]
-        public bool? EnableOnnxNormalization { get; set; }
+        public bool? EnableOnnxNormalization
+        {
+            get
+            {
+                return _enableOnnxNormalization;
+            }
+            set
+            {
+                _enableOnnxNormalization = value;
+                _enableOnnxNormalizationIsDefined = true;
+            }
+        }
 
         /// <summary> Frequency to evaluate validation dataset to get metric scores. Must be a positive integer. </summary>
         [WirePath("evaluationFrequency")]
-        public int? EvaluationFrequency { get; set; }
+        public int? EvaluationFrequency
+        {
+            get
+            {
+                return _evaluationFrequency;
+            }
+            set
+            {
+                _evaluationFrequency = value;
+                _evaluationFrequencyIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Gradient accumulation means running a configured number of "GradAccumulationStep" steps without
@@ -184,7 +398,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// the accumulated gradients to compute the weight updates. Must be a positive integer.
         /// </summary>
         [WirePath("gradientAccumulationStep")]
-        public int? GradientAccumulationStep { get; set; }
+        public int? GradientAccumulationStep
+        {
+            get
+            {
+                return _gradientAccumulationStep;
+            }
+            set
+            {
+                _gradientAccumulationStep = value;
+                _gradientAccumulationStepIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Number of layers to freeze for the model. Must be a positive integer.
@@ -193,11 +418,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// see: https://docs.microsoft.com/en-us/azure/machine-learning/how-to-auto-train-image-models.
         /// </summary>
         [WirePath("layersToFreeze")]
-        public int? LayersToFreeze { get; set; }
+        public int? LayersToFreeze
+        {
+            get
+            {
+                return _layersToFreeze;
+            }
+            set
+            {
+                _layersToFreeze = value;
+                _layersToFreezeIsDefined = true;
+            }
+        }
 
         /// <summary> Initial learning rate. Must be a float in the range [0, 1]. </summary>
         [WirePath("learningRate")]
-        public float? LearningRate { get; set; }
+        public float? LearningRate
+        {
+            get
+            {
+                return _learningRate;
+            }
+            set
+            {
+                _learningRate = value;
+                _learningRateIsDefined = true;
+            }
+        }
 
         /// <summary> Learning rate scheduler enum. </summary>
         [WirePath("learningRateScheduler")]
@@ -209,23 +456,78 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// https://docs.microsoft.com/en-us/azure/machine-learning/how-to-auto-train-image-models.
         /// </summary>
         [WirePath("modelName")]
-        public string ModelName { get; set; }
+        public string ModelName
+        {
+            get
+            {
+                return _modelName;
+            }
+            set
+            {
+                _modelName = value;
+                _modelNameIsDefined = true;
+            }
+        }
 
         /// <summary> Value of momentum when optimizer is 'sgd'. Must be a float in the range [0, 1]. </summary>
         [WirePath("momentum")]
-        public float? Momentum { get; set; }
+        public float? Momentum
+        {
+            get
+            {
+                return _momentum;
+            }
+            set
+            {
+                _momentum = value;
+                _momentumIsDefined = true;
+            }
+        }
 
         /// <summary> Enable nesterov when optimizer is 'sgd'. </summary>
         [WirePath("nesterov")]
-        public bool? Nesterov { get; set; }
+        public bool? Nesterov
+        {
+            get
+            {
+                return _nesterov;
+            }
+            set
+            {
+                _nesterov = value;
+                _nesterovIsDefined = true;
+            }
+        }
 
         /// <summary> Number of training epochs. Must be a positive integer. </summary>
         [WirePath("numberOfEpochs")]
-        public int? NumberOfEpochs { get; set; }
+        public int? NumberOfEpochs
+        {
+            get
+            {
+                return _numberOfEpochs;
+            }
+            set
+            {
+                _numberOfEpochs = value;
+                _numberOfEpochsIsDefined = true;
+            }
+        }
 
         /// <summary> Number of data loader workers. Must be a non-negative integer. </summary>
         [WirePath("numberOfWorkers")]
-        public int? NumberOfWorkers { get; set; }
+        public int? NumberOfWorkers
+        {
+            get
+            {
+                return _numberOfWorkers;
+            }
+            set
+            {
+                _numberOfWorkers = value;
+                _numberOfWorkersIsDefined = true;
+            }
+        }
 
         /// <summary> Stochastic optimizer for image models. </summary>
         [WirePath("optimizer")]
@@ -233,34 +535,122 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Random seed to be used when using deterministic training. </summary>
         [WirePath("randomSeed")]
-        public int? RandomSeed { get; set; }
+        public int? RandomSeed
+        {
+            get
+            {
+                return _randomSeed;
+            }
+            set
+            {
+                _randomSeed = value;
+                _randomSeedIsDefined = true;
+            }
+        }
 
         /// <summary> Value of gamma when learning rate scheduler is 'step'. Must be a float in the range [0, 1]. </summary>
         [WirePath("stepLRGamma")]
-        public float? StepLRGamma { get; set; }
+        public float? StepLRGamma
+        {
+            get
+            {
+                return _stepLRGamma;
+            }
+            set
+            {
+                _stepLRGamma = value;
+                _stepLRGammaIsDefined = true;
+            }
+        }
 
         /// <summary> Value of step size when learning rate scheduler is 'step'. Must be a positive integer. </summary>
         [WirePath("stepLRStepSize")]
-        public int? StepLRStepSize { get; set; }
+        public int? StepLRStepSize
+        {
+            get
+            {
+                return _stepLRStepSize;
+            }
+            set
+            {
+                _stepLRStepSize = value;
+                _stepLRStepSizeIsDefined = true;
+            }
+        }
 
         /// <summary> Training batch size. Must be a positive integer. </summary>
         [WirePath("trainingBatchSize")]
-        public int? TrainingBatchSize { get; set; }
+        public int? TrainingBatchSize
+        {
+            get
+            {
+                return _trainingBatchSize;
+            }
+            set
+            {
+                _trainingBatchSize = value;
+                _trainingBatchSizeIsDefined = true;
+            }
+        }
 
         /// <summary> Validation batch size. Must be a positive integer. </summary>
         [WirePath("validationBatchSize")]
-        public int? ValidationBatchSize { get; set; }
+        public int? ValidationBatchSize
+        {
+            get
+            {
+                return _validationBatchSize;
+            }
+            set
+            {
+                _validationBatchSize = value;
+                _validationBatchSizeIsDefined = true;
+            }
+        }
 
         /// <summary> Value of cosine cycle when learning rate scheduler is 'warmup_cosine'. Must be a float in the range [0, 1]. </summary>
         [WirePath("warmupCosineLRCycles")]
-        public float? WarmupCosineLRCycles { get; set; }
+        public float? WarmupCosineLRCycles
+        {
+            get
+            {
+                return _warmupCosineLRCycles;
+            }
+            set
+            {
+                _warmupCosineLRCycles = value;
+                _warmupCosineLRCyclesIsDefined = true;
+            }
+        }
 
         /// <summary> Value of warmup epochs when learning rate scheduler is 'warmup_cosine'. Must be a positive integer. </summary>
         [WirePath("warmupCosineLRWarmupEpochs")]
-        public int? WarmupCosineLRWarmupEpochs { get; set; }
+        public int? WarmupCosineLRWarmupEpochs
+        {
+            get
+            {
+                return _warmupCosineLRWarmupEpochs;
+            }
+            set
+            {
+                _warmupCosineLRWarmupEpochs = value;
+                _warmupCosineLRWarmupEpochsIsDefined = true;
+            }
+        }
 
         /// <summary> Value of weight decay when optimizer is 'sgd', 'adam', or 'adamw'. Must be a float in the range[0, 1]. </summary>
         [WirePath("weightDecay")]
-        public float? WeightDecay { get; set; }
+        public float? WeightDecay
+        {
+            get
+            {
+                return _weightDecay;
+            }
+            set
+            {
+                _weightDecay = value;
+                _weightDecayIsDefined = true;
+            }
+        }
     }
 }
