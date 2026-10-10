@@ -34,6 +34,10 @@ In a hosted Foundry environment, the one-line and `AgentHostBuilder` APIs bind t
 credential, project endpoint, and response options from the `ResponsesServer` configuration
 section. Response storage and resilient-task storage use that same bound identity and endpoint.
 
+Durable task execution is opt-in. Setting `ResponsesServerOptions.ResilientBackground` to
+`true` enables it automatically. Otherwise stored responses run in-process unless the host
+explicitly calls `SetResilientTasksEnabled()`.
+
 Alternatively, use `AgentHost.CreateBuilder()` for more control over service registration and middleware:
 
 ```C# Snippet:Responses_ReadMe_ConfigureServer_Manual

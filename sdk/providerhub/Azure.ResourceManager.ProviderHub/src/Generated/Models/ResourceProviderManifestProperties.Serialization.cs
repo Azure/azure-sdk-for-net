@@ -221,11 +221,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("resourceProviderAuthorizationRules"u8);
                 writer.WriteObjectValue(ResourceProviderAuthorizationRules, options);
             }
-            if (Optional.IsDefined(DstsConfiguration))
-            {
-                writer.WritePropertyName("dstsConfiguration"u8);
-                writer.WriteObjectValue(DstsConfiguration, options);
-            }
             if (Optional.IsDefined(NotificationOptions))
             {
                 writer.WritePropertyName("notificationOptions"u8);
@@ -306,6 +301,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("customManifestVersion"u8);
                 writer.WriteStringValue(CustomManifestVersion);
             }
+            if (Optional.IsDefined(DstsConfiguration))
+            {
+                writer.WritePropertyName("dstsConfiguration"u8);
+                writer.WriteObjectValue(DstsConfiguration, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -368,7 +368,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IList<ProviderNotification> notifications = default;
             IList<FanoutLinkedNotificationRule> linkedNotificationRules = default;
             ResourceProviderAuthorizationRules resourceProviderAuthorizationRules = default;
-            ProviderDstsConfiguration dstsConfiguration = default;
             ProviderNotificationOption? notificationOptions = default;
             IList<ResourceHydrationAccount> resourceHydrationAccounts = default;
             ResourceProviderManifestNotificationSettings notificationSettings = default;
@@ -379,6 +378,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             string legacyNamespace = default;
             IList<string> legacyRegistrations = default;
             string customManifestVersion = default;
+            ProviderDstsConfiguration dstsConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -593,15 +593,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     resourceProviderAuthorizationRules = ResourceProviderAuthorizationRules.DeserializeResourceProviderAuthorizationRules(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("dstsConfiguration"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    dstsConfiguration = ProviderDstsConfiguration.DeserializeProviderDstsConfiguration(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("notificationOptions"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -718,6 +709,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     customManifestVersion = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("dstsConfiguration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dstsConfiguration = ProviderDstsConfiguration.DeserializeProviderDstsConfiguration(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -744,7 +744,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 notifications ?? new ChangeTrackingList<ProviderNotification>(),
                 linkedNotificationRules ?? new ChangeTrackingList<FanoutLinkedNotificationRule>(),
                 resourceProviderAuthorizationRules,
-                dstsConfiguration,
                 notificationOptions,
                 resourceHydrationAccounts ?? new ChangeTrackingList<ResourceHydrationAccount>(),
                 notificationSettings,
@@ -755,6 +754,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 legacyNamespace,
                 legacyRegistrations ?? new ChangeTrackingList<string>(),
                 customManifestVersion,
+                dstsConfiguration,
                 additionalBinaryDataProperties);
         }
     }
