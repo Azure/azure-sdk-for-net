@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Purview.Models
         /// <returns> A new <see cref="Models.PurviewAccountStatus"/> instance for mocking. </returns>
         public static PurviewAccountStatus PurviewAccountStatus(PurviewAccountProvisioningState? accountProvisioningState = default, ResponseError errorDetails = default)
         {
-            return new PurviewAccountStatus(accountProvisioningState, errorDetails is null ? default : new ErrorResponse(errorDetails, default), default);
+            return new PurviewAccountStatus(accountProvisioningState, errorDetails is null ? default : new ErrorResult(errorDetails, default), default);
         }
 
         /// <summary> The account endpoints. </summary>

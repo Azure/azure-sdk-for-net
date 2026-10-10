@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new InMageRcmAddDisksContent(instanceType, additionalBinaryDataProperties, disks);
+            return new InMageRcmAddDisksContent(instanceType, additionalBinaryDataProperties, disks ?? new ChangeTrackingList<InMageRcmDiskContent>());
         }
     }
 }

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Redis.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RedisLinkedServerWithPropertiesList(value, nextLink, additionalBinaryDataProperties);
+            return new RedisLinkedServerWithPropertiesList(value ?? new ChangeTrackingList<RedisLinkedServerWithPropertyData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Quota.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new QuotaAllocationRequestStatusList(value, nextLink, additionalBinaryDataProperties);
+            return new QuotaAllocationRequestStatusList(value ?? new ChangeTrackingList<QuotaAllocationRequestStatusData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

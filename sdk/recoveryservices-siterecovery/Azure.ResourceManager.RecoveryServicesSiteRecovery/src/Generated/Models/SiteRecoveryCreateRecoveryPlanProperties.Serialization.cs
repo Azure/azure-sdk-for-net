@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 primaryFabricId,
                 recoveryFabricId,
                 failoverDeploymentModel,
-                groups,
+                groups ?? new ChangeTrackingList<SiteRecoveryPlanGroup>(),
                 providerSpecificContent ?? new ChangeTrackingList<RecoveryPlanProviderSpecificContent>(),
                 additionalBinaryDataProperties);
         }

@@ -191,10 +191,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EnableTenantLinkedNotification))
+            if (_enableTenantLinkedNotificationIsDefined || Optional.IsDefined(EnableTenantLinkedNotification))
             {
-                writer.WritePropertyName("enableTenantLinkedNotification"u8);
-                writer.WriteBooleanValue(EnableTenantLinkedNotification.Value);
+                if (EnableTenantLinkedNotification != null)
+                {
+                    writer.WritePropertyName("enableTenantLinkedNotification"u8);
+                    writer.WriteBooleanValue(EnableTenantLinkedNotification.Value);
+                }
+                else
+                {
+                    writer.WriteNull("enableTenantLinkedNotification"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Notifications))
             {
@@ -364,6 +371,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             BinaryData metadata = default;
             TemplateDeploymentOptions templateDeploymentOptions = default;
             IList<ResourceProviderEndpoint> globalNotificationEndpoints = default;
+            bool enableTenantLinkedNotificationIsDefined = false;
             bool? enableTenantLinkedNotification = default;
             IList<ProviderNotification> notifications = default;
             IList<FanoutLinkedNotificationRule> linkedNotificationRules = default;
@@ -548,6 +556,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 if (prop.NameEquals("enableTenantLinkedNotification"u8))
                 {
+                    enableTenantLinkedNotificationIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         enableTenantLinkedNotification = null;
@@ -755,7 +764,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 legacyNamespace,
                 legacyRegistrations ?? new ChangeTrackingList<string>(),
                 customManifestVersion,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _enableTenantLinkedNotificationIsDefined = enableTenantLinkedNotificationIsDefined
+            };
         }
     }
 }

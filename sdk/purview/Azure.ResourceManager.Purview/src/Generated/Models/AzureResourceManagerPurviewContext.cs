@@ -16,20 +16,11 @@ namespace Azure.ResourceManager.Purview
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(AccountList))]
-    [ModelReaderWriterBuildable(typeof(CloudConnectors))]
     [ModelReaderWriterBuildable(typeof(CollectionAdminUpdateContent))]
     [ModelReaderWriterBuildable(typeof(DefaultPurviewAccountPayload))]
-    [ModelReaderWriterBuildable(typeof(ErrorResponse))]
-    [ModelReaderWriterBuildable(typeof(KafkaConfigurationList))]
-    [ModelReaderWriterBuildable(typeof(KafkaConfigurationProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
-    [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
-    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionList))]
-    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionStatusUpdateContent))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionStatusUpdateResult))]
-    [ModelReaderWriterBuildable(typeof(PrivateLinkResourceList))]
     [ModelReaderWriterBuildable(typeof(PurviewAccountAccessKey))]
     [ModelReaderWriterBuildable(typeof(PurviewAccountData))]
     [ModelReaderWriterBuildable(typeof(PurviewAccountEndpoint))]
@@ -59,7 +50,6 @@ namespace Azure.ResourceManager.Purview
     [ModelReaderWriterBuildable(typeof(PurviewUsageName))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UsageList))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerPurviewContext : ModelReaderWriterContext
     {

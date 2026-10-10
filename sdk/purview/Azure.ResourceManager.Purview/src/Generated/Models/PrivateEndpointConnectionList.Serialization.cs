@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Purview.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PrivateEndpointConnectionList(value, nextLink, additionalBinaryDataProperties);
+            return new PrivateEndpointConnectionList(value ?? new ChangeTrackingList<PurviewPrivateEndpointConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
