@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Automation.Models
         public string Name { get; }
 
         /// <summary> Gets or sets the properties of the connection. </summary>
-        internal ConnectionCreateOrUpdateProperties Properties { get; }
+        internal ConnectionCreateOrUpdateProperties Properties { get; } = new ConnectionCreateOrUpdateProperties();
 
         /// <summary> Gets or sets the field definition properties of the connection. </summary>
         public IDictionary<string, string> FieldDefinitionValues
