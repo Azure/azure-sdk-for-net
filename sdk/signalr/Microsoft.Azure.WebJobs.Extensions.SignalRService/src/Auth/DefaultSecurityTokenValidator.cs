@@ -36,9 +36,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                     if (authHeaderValue.StartsWith(BearerPrefix, StringComparison.OrdinalIgnoreCase))
                     {
                         var token = authHeaderValue.Substring(BearerPrefix.Length);
-                        var principal = _handler.ValidateToken(token, _tokenValidationParameters, out _);
+                        var principal = _handler.ValidateToken(token, _tokenValidationParameters, out var validatedToken);
+                        var expiresOn = validatedToken.ValidTo == DateTime.MinValue
+                            ? (DateTimeOffset?)null
+                            : new DateTimeOffset(validatedToken.ValidTo.ToUniversalTime());
 
-                        return SecurityTokenResult.Success(principal);
+                        return SecurityTokenResult.Success(principal, expiresOn);
                     }
                 }
 
