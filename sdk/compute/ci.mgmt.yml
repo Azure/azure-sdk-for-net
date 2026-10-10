@@ -18,6 +18,8 @@ extends:
     BuildSnippets: false
     LimitForPullRequest: true
     Artifacts:
+    - name: Azure.ResourceManager.Compute.WorkloadManager
+      safeName: AzureResourceManagerComputeWorkloadManager
     - name: Azure.ResourceManager.Compute
       safeName: AzureResourceManagerCompute
     - name: Azure.Provisioning.Compute
