@@ -87,6 +87,7 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 throw new FormatException($"The model {nameof(PrivateDnsRecordData)} does not support writing '{format}' format.");
             }
+            base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
