@@ -10,7 +10,8 @@ templates.
 - This evaluator package's only dependency is `@microsoft/vally-cli`, pinned to the version CI should evaluate with.
 - `package-lock.json` must be committed so `npm ci` is deterministic.
 - Optional Blob publication is isolated in [publisher](publisher/), with
-  its own small package/lock and tests. Shard evaluator restores do not install it.
+  its own package/lock for **fflate only** and CLI/PowerShell tests. Shard evaluator
+  restores do not install it; publication adds no Node Azure SDK dependencies.
 
 ## Complete build results and direct Blob publishing
 
@@ -19,39 +20,52 @@ via [shard-results](lib/shard-results.ts), including failed evaluations.
 Summary checks the full Prepare matrix and selects each expected shard's highest
 attempt once for Markdown, the Tests tab and bundling. Missing, interrupted or
 corrupt results remain incomplete; later failed attempts never fall back to older
-successful artifacts. The selected-results path requires valid current-build
-timeline evidence, read during selection with three bounded transient retries.
+successful artifacts. A separate step reads the current-build timeline with
+`System.AccessToken` and three bounded transient retries, saving the latest attempt
+evidence beside the summary. Rendering reads that file and needs no token or network.
 Unverified or ambiguous attempts cannot authorize publication. The legacy JUnit-only
 summary remains supported. No historical build download or reconstruction is involved.
 
 The [publishing step](../../pipelines/templates/steps/eval-publish-results.yml) restores
-the publisher's small dependency lock, prepares one saved ZIP, and uploads it through
-`AzureCLI@2` using `eval-dashboard-sc`. There is no enterprise checkout, dashboard
-upload, evaluator rerun or container creation. The storage container and notification
-target are fixed in [storage.ts](publisher/storage.ts), not queue-time/environment inputs.
+the archive dependency from the **default JavaScript feed**, prepares one saved ZIP
+and a checksum/identity descriptor, then runs [Publish-EvalResults.ps1](publisher/Publish-EvalResults.ps1)
+under `AzureCLI@2` using `eval-dashboard-sc`. The script uses `az storage blob upload`,
+not a custom SDK transport. There is no enterprise checkout, dashboard file upload,
+evaluator rerun or container creation. Bundle metadata is passed explicitly by YAML;
+neither bundling nor upload interprets DevOps environment variables or publishing policy.
 
 | Control | Current use |
 | --- | --- |
-| `publishDashboardResults` | The only publishing switch; defaults to `true` in the three tools pipelines. Set `false` to disable both upload and Azure Storage egress |
+| `publishDashboardResults` | The only checkbox; defaults to `true` in the three tools entrypoints. Set `false` to disable both upload and Azure Storage egress |
+| `EvalStorageAccountName` | Pipeline-owner configuration. Upload is skipped when absent; set it to `evaltestsummary` for this dashboard |
 | `createDashboardBundle` | Shared-template artifact-only mode; enabled for all three tools entrypoints |
 
-Publication requires organization `https://dev.azure.com/azure-sdk/`,
-project `internal`, repository `Azure/azure-sdk-tools`, pipeline ID **8255** (workflow),
-**8256** (skill) or **8246** (live), exact `refs/heads/main`, and a CI, scheduled or
-manual reason. The switch does not bypass those checks. Feature branches, other
-repositories/definitions, PRs, pull refs and public-project runs do not publish through
-these entrypoints, even when the switch is enabled.
+The pipeline owner must set **`EvalStorageAccountName=evaltestsummary`** in each
+onboarded DevOps pipeline's variables, with **queue-time override disabled** and
+edit permissions restricted. This source change does not configure DevOps or grant
+access. The dashboard reads that account's existing `vally-results` container;
+publishing to another account does not redirect the reader. Service-connection
+authorization, approved branch checks and existing RBAC remain required.
+
+Publishing policy stays in YAML: organization `https://dev.azure.com/azure-sdk/`,
+project `internal`, repository `Azure/azure-sdk-tools`, exact `refs/heads/main`, and
+a CI, scheduled or manual reason. There is no hardcoded definition-ID allowlist or
+variable template in shared code. Feature branches, other repositories, PRs, pull
+refs and public-project runs do not get the credential-bearing task. At runtime it
+also requires a complete summary and a configured storage account.
 
 There is no separate automatic-publication, feature-branch override or network-access
 flag. Publication requests the documented
 [AzureStorage policy](https://aka.ms/1es/netiso/pipelinetemplates), which
 keeps `DefaultDeny, CFSClean, CFSClean2, CFSClean3` and allows Azure Storage egress
 for **all processes in that pipeline**, not just one container. It grants no RBAC
-access. Other synced consumers need matching `AllowAzureStorage` support in their
-repo-owned 1ES redirect and explicit main-branch onboarding; the shared archetype
-still defaults to no publication. Artifact-only runs request neither publishing
-credentials nor storage egress. Keep approvals, network restrictions and existing
-consumer defaults unchanged.
+access. DevOps pipeline-stored variables are runtime values and cannot select a
+compile-time 1ES policy: the checkbox and trusted-run checks select egress, while
+the account variable additionally gates upload. An enabled trusted run can therefore
+have storage egress even if the account variable is absent, but cannot upload.
+Set the checkbox to `false` for artifact-only runs with no added storage egress.
+Shared templates still default to no publication. Keep approvals, network restrictions
+and existing consumer defaults unchanged.
 
 These entrypoints run real evaluations and consume model quota; there is no synthetic
 pipeline mode. Completed failed evaluations publish before their existing test gate;
@@ -59,7 +73,7 @@ missing or incomplete results fail Summary and cannot publish.
 
 ### Archive and retry contract
 
-The fixed container is `https://evaltestsummary.blob.core.windows.net/vally-results`.
+For this dashboard, configure account `evaltestsummary`; the container remains `vally-results`.
 An archive uses `v1/<org>/<encoded-project>/<definition>/<build>/<Summary-attempt>/dashboard-bundle.zip`.
 It contains a schema-v1 manifest, executed plain-eval JSONL trials, Markdown and JUnit,
 never debug files, MCP binaries or unrelated workspace contents. Non-executed skips
@@ -70,8 +84,9 @@ Canonical identities, UTC calendar dates, safe entries and counts are validated
 before upload. Blob metadata records schema, SHA-256, hashed publisher identity and
 the original storage time; Azure RBAC remains the authorization boundary.
 
-Uploads use create-only `ifNoneMatch: *`, at most four attempts with the **same saved
-bytes**, honoring bounded backpressure. Existing archives must match metadata,
+Uploads use `--auth-mode login --overwrite false --if-none-match '*'` with the **same
+saved ZIP**; Azure CLI owns transport retries, without another script/task retry loop.
+Request/socket timeouts and the task deadline bound execution. Existing archives must match metadata,
 owner, checksum and size. Changed content needs a new Summary attempt, not an overwrite.
 The publisher never deletes archives; the dashboard's separate identity stays read-only.
 Local storage receipts are replaced atomically before any notification. Later
@@ -94,7 +109,8 @@ Do not replace viewer authentication or network restrictions to make a signal su
 ### Publisher tests and diagnostics
 
 Run `npm ci --ignore-scripts` and `npm test` from `publisher` (`npm.cmd` on Windows),
-then `npm test` from this directory. Tests use synthetic fixtures and fake transports;
+then `npm test` from this directory. Publisher tests require **PowerShell 7.4+ and
+Pester 5**; pipeline upload uses the agent's authenticated Azure CLI. Tests use synthetic fixtures and fake transports;
 they do not evaluate models or contact production services. A real-run test remains
 separate from local checks and should use an already approved evaluation run.
 

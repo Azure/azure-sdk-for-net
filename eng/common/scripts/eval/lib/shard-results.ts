@@ -253,11 +253,19 @@ export function selectSummaryResults({ resultsRoot, selectedRoot, expectedShards
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
     try {
         const { values } = parseArgs({ options: { "results-root": { type: "string" }, "output-directory": { type: "string" },
-            "shard-name": { type: "string" }, attempt: { type: "string" } } });
-        if (!values["results-root"] || !values["output-directory"]) throw new Error("Results and output directories are required.");
-        const result = stageShardResults({ resultsRoot: values["results-root"], outputDirectory: values["output-directory"],
-            shardName: values["shard-name"], attempt: Number(values.attempt) });
-        console.log(`Staged ${result.shard} attempt ${result.attempt}: ${result.trials} trials; ${result.complete ? "complete" : "incomplete"}.`);
-        if (!result.complete) console.log(`##vso[task.logissue type=warning]${result.reason}`);
+            "shard-name": { type: "string" }, attempt: { type: "string" }, "attempts-output": { type: "string" } } });
+        if (values["attempts-output"]) {
+            let result = { schemaVersion: 1, valid: false, attempts: {} };
+            try { result = await readShardAttempts(process.env); }
+            catch { console.log("##vso[task.logissue type=warning]Current build attempts could not be verified; no complete bundle will be published."); }
+            fs.mkdirSync(path.dirname(path.resolve(values["attempts-output"])), { recursive: true });
+            fs.writeFileSync(values["attempts-output"], JSON.stringify(result, null, 2) + "\n");
+        } else {
+            if (!values["results-root"] || !values["output-directory"]) throw new Error("Results and output directories are required.");
+            const result = stageShardResults({ resultsRoot: values["results-root"], outputDirectory: values["output-directory"],
+                shardName: values["shard-name"], attempt: Number(values.attempt) });
+            console.log(`Staged ${result.shard} attempt ${result.attempt}: ${result.trials} trials; ${result.complete ? "complete" : "incomplete"}.`);
+            if (!result.complete) console.log(`##vso[task.logissue type=warning]${result.reason}`);
+        }
     } catch (error) { console.error(error.message); process.exitCode = 1; }
 }

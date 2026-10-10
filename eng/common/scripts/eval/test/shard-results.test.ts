@@ -50,23 +50,11 @@ function runCli(scriptName, args, environment = {}, cwd = undefined) {
     if (scriptName === "build-eval-summary.ts" && args.includes("--selected-root")) {
         const root = path.dirname(args[args.indexOf("--results-root") + 1]);
         fs.mkdirSync(root, { recursive: true });
-        const mock = path.join(root, "timeline-fetch.mjs"), evidence = path.join(root, "job-attempts.json");
-        fs.writeFileSync(mock, `import { readFileSync } from "node:fs";
-            globalThis.fetch = async () => {
-                try {
-                    const evidence = JSON.parse(readFileSync(${JSON.stringify(evidence)}, "utf8"));
-                    if (evidence.valid !== true) return new Response("", { status: 403 });
-                    const records = Object.entries(JSON.parse(process.env.EVAL_EXPECTED_MATRIX)).flatMap(([key, value]) => {
-                        const item = evidence.attempts[value.shardName];
-                        return item ? [{ type: "Job", identifier: "Eval.RunShard." + key, attempt: item.attempt,
-                            state: "completed", result: item.complete ? "failed" : "canceled" }] : [];
-                    });
-                    return Response.json({ records });
-                } catch { return new Response("", { status: 403 }); }
-            };`);
-        Object.assign(env, { SYSTEM_COLLECTIONURI: "https://dev.azure.com/azure-sdk/",
-            SYSTEM_TEAMPROJECTID: "00000000-0000-4000-8000-000000000001", BUILD_BUILDID: "1001", SYSTEM_ACCESSTOKEN: "fixture-token" });
+        const mock = path.join(root, "rendering-offline.mjs");
+        fs.writeFileSync(mock, `globalThis.fetch = () => { throw new Error("Summary rendering cannot contact a service"); };`);
+        delete env.SYSTEM_ACCESSTOKEN;
         preload.push("--import", pathToFileURL(mock).href);
+        args = [...args, "--attempts-file", path.join(root, "job-attempts.json")];
     }
     const child = spawnSync(process.execPath, ["--experimental-strip-types", ...preload, script, ...args], {
         encoding: "utf8", env, cwd, timeout: 30_000, maxBuffer: 1024 * 1024,
@@ -403,7 +391,7 @@ test("summary cannot publish when timeline evidence is unavailable, invalid or c
         assert.equal(readJson(path.join(directory, "download", "shard-index.json")).complete, false);
         assert.equal(readJson(path.join(directory, "summary", "eval-summary.json")).totals.scenarios, 1);
         assert.match(fs.readFileSync(output, "utf8"), /timeline/);
-        assert.equal(readJson(path.join(directory, "summary", "job-attempts.json")).valid, false);
+        assert.equal(fs.existsSync(path.join(directory, "summary", "job-attempts.json")), false, "Rendering never fabricates timeline evidence");
     }
 });
 
