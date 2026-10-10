@@ -12,20 +12,20 @@ using Azure.ResourceManager.ApiManagement;
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> The response to be returned when a backend fails to respond. </summary>
-    internal partial class BackendFailureResponse
+    internal partial class BackendFailureResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BackendFailureResponse"/>. </summary>
-        public BackendFailureResponse()
+        /// <summary> Initializes a new instance of <see cref="BackendFailureResult"/>. </summary>
+        public BackendFailureResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BackendFailureResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackendFailureResult"/>. </summary>
         /// <param name="statusCode"> The status code of the response. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackendFailureResponse(int? statusCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackendFailureResult(int? statusCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StatusCode = statusCode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

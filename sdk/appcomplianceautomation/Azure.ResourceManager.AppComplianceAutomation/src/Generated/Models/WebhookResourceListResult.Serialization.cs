@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WebhookResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new WebhookResourceListResult(value ?? new ChangeTrackingList<AppComplianceReportWebhookData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -985,7 +985,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     tls,
                     circuitBreakerRules is null ? default : new BackendCircuitBreaker((circuitBreakerRules ?? new ChangeTrackingList<CircuitBreakerRule>()).ToList(), default),
                     azureRegion,
-                    poolServices is null && failureResponseStatusCode is null && sessionId is null ? default : new BackendBaseParametersPool((poolServices ?? new ChangeTrackingList<BackendPoolItem>()).ToList(), failureResponseStatusCode is null ? default : new BackendFailureResponse(failureResponseStatusCode, default), sessionId is null ? default : new BackendSessionAffinity(sessionId, default), default),
+                    poolServices is null && failureResponseStatusCode is null && sessionId is null ? default : new BackendBaseParametersPool((poolServices ?? new ChangeTrackingList<BackendPoolItem>()).ToList(), failureResponseStatusCode is null ? default : new BackendFailureResult(failureResponseStatusCode, default), sessionId is null ? default : new BackendSessionAffinity(sessionId, default), default),
                     typePropertiesType,
                     default,
                     uri,
@@ -1095,7 +1095,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 failureCondition,
                 tripDuration,
                 acceptRetryAfter,
-                failureResponseStatusCode is null ? default : new BackendFailureResponse(failureResponseStatusCode, default),
+                failureResponseStatusCode is null ? default : new BackendFailureResult(failureResponseStatusCode, default),
                 default);
         }
 
@@ -1177,7 +1177,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 tls,
                 circuitBreakerRules is null ? default : new BackendCircuitBreaker((circuitBreakerRules ?? new ChangeTrackingList<CircuitBreakerRule>()).ToList(), default),
                 azureRegion,
-                poolServices is null && failureResponseStatusCode is null && sessionId is null ? default : new BackendBaseParametersPool((poolServices ?? new ChangeTrackingList<BackendPoolItem>()).ToList(), failureResponseStatusCode is null ? default : new BackendFailureResponse(failureResponseStatusCode, default), sessionId is null ? default : new BackendSessionAffinity(sessionId, default), default),
+                poolServices is null && failureResponseStatusCode is null && sessionId is null ? default : new BackendBaseParametersPool((poolServices ?? new ChangeTrackingList<BackendPoolItem>()).ToList(), failureResponseStatusCode is null ? default : new BackendFailureResult(failureResponseStatusCode, default), sessionId is null ? default : new BackendSessionAffinity(sessionId, default), default),
                 typePropertiesType,
                 default,
                 uri,

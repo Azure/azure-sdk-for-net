@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GatewayHostnameBindingListResult(value, nextLink, additionalBinaryDataProperties);
+            return new GatewayHostnameBindingListResult(value ?? new ChangeTrackingList<GatewayHostnameBindingData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

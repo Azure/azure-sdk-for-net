@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             CircuitBreakerFailureCondition failureCondition = default;
             TimeSpan? tripDuration = default;
             bool? acceptRetryAfter = default;
-            BackendFailureResponse failureResponse = default;
+            BackendFailureResult failureResponse = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    failureResponse = BackendFailureResponse.DeserializeBackendFailureResponse(prop.Value, options);
+                    failureResponse = BackendFailureResult.DeserializeBackendFailureResult(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

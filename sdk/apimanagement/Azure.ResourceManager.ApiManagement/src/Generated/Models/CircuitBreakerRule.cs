@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="acceptRetryAfter"> flag to accept Retry-After header from the backend. </param>
         /// <param name="failureResponse"> The response of the backend when the circuit breaker gets open. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CircuitBreakerRule(string name, CircuitBreakerFailureCondition failureCondition, TimeSpan? tripDuration, bool? acceptRetryAfter, BackendFailureResponse failureResponse, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CircuitBreakerRule(string name, CircuitBreakerFailureCondition failureCondition, TimeSpan? tripDuration, bool? acceptRetryAfter, BackendFailureResult failureResponse, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             FailureCondition = failureCondition;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> The response of the backend when the circuit breaker gets open. </summary>
         [WirePath("failureResponse")]
-        internal BackendFailureResponse FailureResponse { get; set; }
+        internal BackendFailureResult FailureResponse { get; set; }
 
         /// <summary> The status code of the response. </summary>
         [WirePath("failureResponse.statusCode")]
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 if (FailureResponse is null)
                 {
-                    FailureResponse = new BackendFailureResponse();
+                    FailureResponse = new BackendFailureResult();
                 }
                 FailureResponse.StatusCode = value;
             }
