@@ -79,13 +79,13 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteObjectValue(Subnet, options);
             }
-            if (Optional.IsCollectionDefined(Type))
+            if (Optional.IsCollectionDefined(PropertiesType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStartArray();
-                foreach (NvaNicType item in Type)
+                foreach (NvaNicType item in PropertiesType)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             NvaInVnetSubnetReferenceProperties subnet = default;
-            IList<NvaNicType> @type = default;
+            IList<NvaNicType> propertiesType = default;
             string name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -160,9 +160,9 @@ namespace Azure.ResourceManager.Network.Models
                     List<NvaNicType> array = new List<NvaNicType>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new NvaNicType(item.GetString()));
+                        array.Add(item.GetString().ToNvaNicType());
                     }
-                    @type = array;
+                    propertiesType = array;
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NvaInterfaceConfigurationsProperties(subnet, @type ?? new ChangeTrackingList<NvaNicType>(), name, additionalBinaryDataProperties);
+            return new NvaInterfaceConfigurationsProperties(subnet, propertiesType ?? new ChangeTrackingList<NvaNicType>(), name, additionalBinaryDataProperties);
         }
     }
 }

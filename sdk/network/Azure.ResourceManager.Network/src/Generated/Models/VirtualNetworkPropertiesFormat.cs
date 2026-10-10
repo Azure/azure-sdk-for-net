@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="encryption"> Indicates if encryption is enabled on virtual network and if VM without encryption is allowed in encrypted VNet. </param>
         /// <param name="ipAllocations"> Array of IpAllocation which reference this VNET. </param>
         /// <param name="flowLogs"> A collection of references to flow log resources. </param>
-        /// <param name="privateEndpointVNetPolicies"> Private Endpoint VNet Policies. </param>
+        /// <param name="privateEndpointVnetPolicy"> Private Endpoint VNet Policies. </param>
         /// <param name="defaultPublicNatGateway"> A reference to the default public nat gateway being used by this virtual network resource. </param>
         /// <param name="summarizedGatewayPrefixes"> A configurable list of summarized gateway prefixes advertised for the virtual network. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkPropertiesFormat(VirtualNetworkAddressSpace addressSpace, DhcpOptions dhcpOptions, int? flowTimeoutInMinutes, IList<SubnetData> subnets, IList<VirtualNetworkPeeringData> virtualNetworkPeerings, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDdosProtection, bool? enableVmProtection, NetworkSubResource ddosProtectionPlan, VirtualNetworkBgpCommunities bgpCommunities, VirtualNetworkEncryption encryption, IList<NetworkSubResource> ipAllocations, IReadOnlyList<FlowLogData> flowLogs, PrivateEndpointVnetPolicy? privateEndpointVNetPolicies, NetworkSubResource defaultPublicNatGateway, VirtualNetworkAddressSpace summarizedGatewayPrefixes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkPropertiesFormat(VirtualNetworkAddressSpace addressSpace, DhcpOptions dhcpOptions, int? flowTimeoutInMinutes, IList<SubnetData> subnets, IList<VirtualNetworkPeeringData> virtualNetworkPeerings, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDdosProtection, bool? enableVmProtection, NetworkSubResource ddosProtectionPlan, VirtualNetworkBgpCommunities bgpCommunities, VirtualNetworkEncryption encryption, IList<NetworkSubResource> ipAllocations, IReadOnlyList<FlowLogData> flowLogs, PrivateEndpointVnetPolicy? privateEndpointVnetPolicy, NetworkSubResource defaultPublicNatGateway, VirtualNetworkAddressSpace summarizedGatewayPrefixes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AddressSpace = addressSpace;
             DhcpOptions = dhcpOptions;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
             Encryption = encryption;
             IPAllocations = ipAllocations;
             FlowLogs = flowLogs;
-            PrivateEndpointVNetPolicies = privateEndpointVNetPolicies;
+            PrivateEndpointVnetPolicy = privateEndpointVnetPolicy;
             DefaultPublicNatGateway = defaultPublicNatGateway;
             SummarizedGatewayPrefixes = summarizedGatewayPrefixes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Private Endpoint VNet Policies. </summary>
         [WirePath("privateEndpointVNetPolicies")]
-        public PrivateEndpointVnetPolicy? PrivateEndpointVNetPolicies { get; set; }
+        public PrivateEndpointVnetPolicy? PrivateEndpointVnetPolicy { get; set; }
 
         /// <summary> A reference to the default public nat gateway being used by this virtual network resource. </summary>
         [WirePath("defaultPublicNatGateway")]

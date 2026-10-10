@@ -79,24 +79,6 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        /// <summary> Connection timeout in seconds. Application Gateway will fail the request if response is not received within ConnectionTimeout. Acceptable values are from 1 second to 86400 seconds. </summary>
-        [WirePath("properties.timeout")]
-        public int? Timeout
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Timeout;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ApplicationGatewayBackendSettingsPropertiesFormat();
-                }
-                Properties.Timeout = value;
-            }
-        }
-
         /// <summary> Array of references to application gateway trusted root certificates. </summary>
         [WirePath("properties.trustedRootCertificates")]
         public IList<WritableSubResource> TrustedRootCertificates

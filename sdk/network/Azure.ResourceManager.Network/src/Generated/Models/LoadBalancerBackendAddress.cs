@@ -60,24 +60,6 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        /// <summary> Reference to the frontend ip address configuration defined in regional loadbalancer. </summary>
-        [WirePath("properties.loadBalancerFrontendIPConfiguration")]
-        public ResourceIdentifier LoadBalancerFrontendIPConfiguration
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LoadBalancerFrontendIPConfiguration;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancerBackendAddressPropertiesFormat();
-                }
-                Properties.LoadBalancerFrontendIPConfiguration = value;
-            }
-        }
-
         /// <summary> Collection of inbound NAT rule port mappings. </summary>
         [WirePath("properties.inboundNatRulesPortMapping")]
         public IReadOnlyList<NatRulePortMapping> InboundNatRulesPortMapping

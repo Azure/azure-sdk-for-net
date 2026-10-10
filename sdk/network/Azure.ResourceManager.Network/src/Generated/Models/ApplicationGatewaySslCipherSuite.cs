@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
         /// <summary> TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384. </summary>
-        private const string TLSECDHERSAWITHAES256CBCSHA384Value = "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384";
+        private const string TlsECDiffieHellmanRsaWithAes256CbcSha384Value = "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384";
         /// <summary> TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256. </summary>
-        private const string TLSECDHERSAWITHAES128CBCSHA256Value = "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256";
+        private const string TlsECDiffieHellmanRsaWithAes128CbcSha256Value = "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256";
         /// <summary> TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA. </summary>
-        private const string TLSECDHERSAWITHAES256CBCSHAValue = "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA";
+        private const string TlsECDiffieHellmanRsaWithAes256CbcShaValue = "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA";
         /// <summary> TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA. </summary>
-        private const string TLSECDHERSAWITHAES128CBCSHAValue = "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA";
+        private const string TlsECDiffieHellmanRsaWithAes128CbcShaValue = "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA";
         /// <summary> TLS_DHE_RSA_WITH_AES_256_GCM_SHA384. </summary>
         private const string TlsDHERsaWithAes256GcmSha384Value = "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384";
         /// <summary> TLS_DHE_RSA_WITH_AES_128_GCM_SHA256. </summary>
@@ -44,17 +44,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> TLS_RSA_WITH_AES_128_CBC_SHA. </summary>
         private const string TlsRsaWithAes128CbcShaValue = "TLS_RSA_WITH_AES_128_CBC_SHA";
         /// <summary> TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384. </summary>
-        private const string TLSECDHEECDSAWITHAES256GCMSHA384Value = "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384";
+        private const string TlsECDiffieHellmanECDsaWithAes256GcmSha384Value = "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384";
         /// <summary> TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256. </summary>
-        private const string TLSECDHEECDSAWITHAES128GCMSHA256Value = "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256";
+        private const string TlsECDiffieHellmanECDsaWithAes128GcmSha256Value = "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256";
         /// <summary> TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384. </summary>
-        private const string TLSECDHEECDSAWITHAES256CBCSHA384Value = "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384";
+        private const string TlsECDiffieHellmanECDsaWithAes256CbcSha384Value = "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384";
         /// <summary> TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256. </summary>
-        private const string TLSECDHEECDSAWITHAES128CBCSHA256Value = "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256";
+        private const string TlsECDiffieHellmanECDsaWithAes128CbcSha256Value = "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256";
         /// <summary> TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA. </summary>
-        private const string TLSECDHEECDSAWITHAES256CBCSHAValue = "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA";
+        private const string TlsECDiffieHellmanECDsaWithAes256CbcShaValue = "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA";
         /// <summary> TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA. </summary>
-        private const string TLSECDHEECDSAWITHAES128CBCSHAValue = "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA";
+        private const string TlsECDiffieHellmanECDsaWithAes128CbcShaValue = "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA";
         /// <summary> TLS_DHE_DSS_WITH_AES_256_CBC_SHA256. </summary>
         private const string TlsDheDssWithAes256CbcSha256Value = "TLS_DHE_DSS_WITH_AES_256_CBC_SHA256";
         /// <summary> TLS_DHE_DSS_WITH_AES_128_CBC_SHA256. </summary>
@@ -68,8 +68,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> TLS_DHE_DSS_WITH_3DES_EDE_CBC_SHA. </summary>
         private const string TlsDheDssWith3DesEdeCbcShaValue = "TLS_DHE_DSS_WITH_3DES_EDE_CBC_SHA";
         /// <summary> TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256. </summary>
-        private const string TLSECDHERSAWITHAES128GCMSHA256Value = "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256";
+        private const string TlsECDiffieHellmanRsaWithAes128GcmSha256Value = "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256";
         /// <summary> TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384. </summary>
+        private const string TlsECDiffieHellmanRsaWithAes256GcmSha384Value = "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384";
+        private const string TLSECDHERSAWITHAES256CBCSHA384Value = "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384";
+        private const string TLSECDHERSAWITHAES128CBCSHA256Value = "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256";
+        private const string TLSECDHERSAWITHAES256CBCSHAValue = "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA";
+        private const string TLSECDHERSAWITHAES128CBCSHAValue = "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA";
+        private const string TLSECDHEECDSAWITHAES256GCMSHA384Value = "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384";
+        private const string TLSECDHEECDSAWITHAES128GCMSHA256Value = "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256";
+        private const string TLSECDHEECDSAWITHAES256CBCSHA384Value = "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384";
+        private const string TLSECDHEECDSAWITHAES128CBCSHA256Value = "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256";
+        private const string TLSECDHEECDSAWITHAES256CBCSHAValue = "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA";
+        private const string TLSECDHEECDSAWITHAES128CBCSHAValue = "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA";
+        private const string TLSECDHERSAWITHAES128GCMSHA256Value = "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256";
         private const string TLSECDHERSAWITHAES256GCMSHA384Value = "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySslCipherSuite"/>. </summary>
@@ -81,18 +93,6 @@ namespace Azure.ResourceManager.Network.Models
 
             _value = value;
         }
-
-        /// <summary> TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384. </summary>
-        public static ApplicationGatewaySslCipherSuite TLSECDHERSAWITHAES256CBCSHA384 { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHERSAWITHAES256CBCSHA384Value);
-
-        /// <summary> TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256. </summary>
-        public static ApplicationGatewaySslCipherSuite TLSECDHERSAWITHAES128CBCSHA256 { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHERSAWITHAES128CBCSHA256Value);
-
-        /// <summary> TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA. </summary>
-        public static ApplicationGatewaySslCipherSuite TLSECDHERSAWITHAES256CBCSHA { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHERSAWITHAES256CBCSHAValue);
-
-        /// <summary> TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA. </summary>
-        public static ApplicationGatewaySslCipherSuite TLSECDHERSAWITHAES128CBCSHA { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHERSAWITHAES128CBCSHAValue);
 
         /// <summary> TLS_DHE_RSA_WITH_AES_256_GCM_SHA384. </summary>
         public static ApplicationGatewaySslCipherSuite TlsDHERsaWithAes256GcmSha384 { get; } = new ApplicationGatewaySslCipherSuite(TlsDHERsaWithAes256GcmSha384Value);
@@ -124,24 +124,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> TLS_RSA_WITH_AES_128_CBC_SHA. </summary>
         public static ApplicationGatewaySslCipherSuite TlsRsaWithAes128CbcSha { get; } = new ApplicationGatewaySslCipherSuite(TlsRsaWithAes128CbcShaValue);
 
-        /// <summary> TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384. </summary>
-        public static ApplicationGatewaySslCipherSuite TLSECDHEECDSAWITHAES256GCMSHA384 { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHEECDSAWITHAES256GCMSHA384Value);
-
-        /// <summary> TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256. </summary>
-        public static ApplicationGatewaySslCipherSuite TLSECDHEECDSAWITHAES128GCMSHA256 { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHEECDSAWITHAES128GCMSHA256Value);
-
-        /// <summary> TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384. </summary>
-        public static ApplicationGatewaySslCipherSuite TLSECDHEECDSAWITHAES256CBCSHA384 { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHEECDSAWITHAES256CBCSHA384Value);
-
-        /// <summary> TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256. </summary>
-        public static ApplicationGatewaySslCipherSuite TLSECDHEECDSAWITHAES128CBCSHA256 { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHEECDSAWITHAES128CBCSHA256Value);
-
-        /// <summary> TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA. </summary>
-        public static ApplicationGatewaySslCipherSuite TLSECDHEECDSAWITHAES256CBCSHA { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHEECDSAWITHAES256CBCSHAValue);
-
-        /// <summary> TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA. </summary>
-        public static ApplicationGatewaySslCipherSuite TLSECDHEECDSAWITHAES128CBCSHA { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHEECDSAWITHAES128CBCSHAValue);
-
         /// <summary> TLS_DHE_DSS_WITH_AES_256_CBC_SHA256. </summary>
         public static ApplicationGatewaySslCipherSuite TlsDheDssWithAes256CbcSha256 { get; } = new ApplicationGatewaySslCipherSuite(TlsDheDssWithAes256CbcSha256Value);
 
@@ -160,10 +142,40 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> TLS_DHE_DSS_WITH_3DES_EDE_CBC_SHA. </summary>
         public static ApplicationGatewaySslCipherSuite TlsDheDssWith3DesEdeCbcSha { get; } = new ApplicationGatewaySslCipherSuite(TlsDheDssWith3DesEdeCbcShaValue);
 
-        /// <summary> TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256. </summary>
+        /// <summary> Gets the TLSECDHERSAWITHAES256CBCSHA384. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSECDHERSAWITHAES256CBCSHA384 { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHERSAWITHAES256CBCSHA384Value);
+
+        /// <summary> Gets the TLSECDHERSAWITHAES128CBCSHA256. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSECDHERSAWITHAES128CBCSHA256 { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHERSAWITHAES128CBCSHA256Value);
+
+        /// <summary> Gets the TLSECDHERSAWITHAES256CBCSHA. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSECDHERSAWITHAES256CBCSHA { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHERSAWITHAES256CBCSHAValue);
+
+        /// <summary> Gets the TLSECDHERSAWITHAES128CBCSHA. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSECDHERSAWITHAES128CBCSHA { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHERSAWITHAES128CBCSHAValue);
+
+        /// <summary> Gets the TLSECDHEECDSAWITHAES256GCMSHA384. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSECDHEECDSAWITHAES256GCMSHA384 { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHEECDSAWITHAES256GCMSHA384Value);
+
+        /// <summary> Gets the TLSECDHEECDSAWITHAES128GCMSHA256. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSECDHEECDSAWITHAES128GCMSHA256 { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHEECDSAWITHAES128GCMSHA256Value);
+
+        /// <summary> Gets the TLSECDHEECDSAWITHAES256CBCSHA384. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSECDHEECDSAWITHAES256CBCSHA384 { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHEECDSAWITHAES256CBCSHA384Value);
+
+        /// <summary> Gets the TLSECDHEECDSAWITHAES128CBCSHA256. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSECDHEECDSAWITHAES128CBCSHA256 { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHEECDSAWITHAES128CBCSHA256Value);
+
+        /// <summary> Gets the TLSECDHEECDSAWITHAES256CBCSHA. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSECDHEECDSAWITHAES256CBCSHA { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHEECDSAWITHAES256CBCSHAValue);
+
+        /// <summary> Gets the TLSECDHEECDSAWITHAES128CBCSHA. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSECDHEECDSAWITHAES128CBCSHA { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHEECDSAWITHAES128CBCSHAValue);
+
+        /// <summary> Gets the TLSECDHERSAWITHAES128GCMSHA256. </summary>
         public static ApplicationGatewaySslCipherSuite TLSECDHERSAWITHAES128GCMSHA256 { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHERSAWITHAES128GCMSHA256Value);
 
-        /// <summary> TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384. </summary>
+        /// <summary> Gets the TLSECDHERSAWITHAES256GCMSHA384. </summary>
         public static ApplicationGatewaySslCipherSuite TLSECDHERSAWITHAES256GCMSHA384 { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHERSAWITHAES256GCMSHA384Value);
 
         /// <summary> Determines if two <see cref="ApplicationGatewaySslCipherSuite"/> values are the same. </summary>

@@ -94,24 +94,6 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> The ExpressRouteCircuit. </summary>
-        [WirePath("properties.expressRouteCircuit")]
-        public ResourceIdentifier ExpressRouteCircuit
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ExpressRouteCircuit;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExpressRouteCrossConnectionProperties();
-                }
-                Properties.ExpressRouteCircuit = value;
-            }
-        }
-
         /// <summary> The provisioning state of the circuit in the connectivity provider system. </summary>
         [WirePath("properties.serviceProviderProvisioningState")]
         public ServiceProviderProvisioningState? ServiceProviderProvisioningState

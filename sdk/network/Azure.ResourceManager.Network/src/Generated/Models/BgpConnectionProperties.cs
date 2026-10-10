@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="connectionState"> The current state of the VirtualHub to Peer. </param>
         /// <param name="routingConfiguration"> The routing configuration indicating the associated and propagated route tables for this connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BgpConnectionProperties(long? peerAsn, string peerIP, NetworkSubResource hubVirtualNetworkConnection, NetworkProvisioningState? provisioningState, HubBgpConnectionStatus? connectionState, RoutingConfigurationNfv routingConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BgpConnectionProperties(long? peerAsn, string peerIP, NetworkSubResource hubVirtualNetworkConnection, NetworkProvisioningState? provisioningState, HubBgpConnectionStatus? connectionState, RoutingConfiguration routingConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PeerAsn = peerAsn;
             PeerIP = peerIP;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The routing configuration indicating the associated and propagated route tables for this connection. </summary>
         [WirePath("routingConfiguration")]
-        public RoutingConfigurationNfv RoutingConfiguration { get; set; }
+        public RoutingConfiguration RoutingConfiguration { get; set; }
 
         /// <summary> Resource ID. </summary>
         [WirePath("hubVirtualNetworkConnection.id")]

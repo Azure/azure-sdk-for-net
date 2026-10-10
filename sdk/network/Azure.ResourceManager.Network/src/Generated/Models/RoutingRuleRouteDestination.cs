@@ -20,12 +20,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="RoutingRuleRouteDestination"/>. </summary>
         /// <param name="type"> Destination type. </param>
         /// <param name="destinationAddress"> Destination address. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="destinationAddress"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="type"/> or <paramref name="destinationAddress"/> is null. </exception>
         public RoutingRuleRouteDestination(RoutingRuleDestinationType @type, string destinationAddress)
         {
+            Argument.AssertNotNull(@type, nameof(@type));
             Argument.AssertNotNull(destinationAddress, nameof(destinationAddress));
 
-            Type = @type;
+            DestinationType = @type;
             DestinationAddress = destinationAddress;
         }
 
@@ -35,14 +36,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal RoutingRuleRouteDestination(RoutingRuleDestinationType @type, string destinationAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            DestinationType = @type;
             DestinationAddress = destinationAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Destination type. </summary>
-        [WirePath("type")]
-        public RoutingRuleDestinationType Type { get; set; }
 
         /// <summary> Destination address. </summary>
         [WirePath("destinationAddress")]

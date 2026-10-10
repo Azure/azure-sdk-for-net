@@ -45,24 +45,6 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> The ExpressRoute circuit peering. </summary>
-        [WirePath("properties.expressRouteCircuitPeering")]
-        public ResourceIdentifier ExpressRouteCircuitPeering
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ExpressRouteCircuitPeering;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExpressRouteConnectionProperties();
-                }
-                Properties.ExpressRouteCircuitPeering = value;
-            }
-        }
-
         /// <summary> Authorization key to establish the connection. </summary>
         [WirePath("properties.authorizationKey")]
         public string AuthorizationKey

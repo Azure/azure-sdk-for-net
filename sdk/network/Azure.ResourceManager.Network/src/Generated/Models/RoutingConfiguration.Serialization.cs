@@ -14,65 +14,46 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Routing Configuration indicating the associated and propagated route tables for this connection. </summary>
-    public partial class RoutingConfigurationNfv : IJsonModel<RoutingConfigurationNfv>
+    public partial class RoutingConfiguration : RoutingConfigurationNfv, IJsonModel<RoutingConfiguration>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RoutingConfigurationNfv PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RoutingConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoutingConfigurationNfv>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RoutingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRoutingConfigurationNfv(document.RootElement, options);
+                        return DeserializeRoutingConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoutingConfigurationNfv)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoutingConfigurationNfv>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RoutingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RoutingConfigurationNfv)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingConfiguration)} does not support writing '{options.Format}' format.");
             }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RoutingConfigurationNfv>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        RoutingConfigurationNfv IPersistableModel<RoutingConfigurationNfv>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RoutingConfigurationNfv>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RoutingConfigurationNfv>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoutingConfigurationNfv>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RoutingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingConfigurationNfv)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingConfiguration)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(AssociatedRouteTable))
             {
@@ -118,31 +99,27 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RoutingConfigurationNfv IJsonModel<RoutingConfigurationNfv>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RoutingConfigurationNfv JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RoutingConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoutingConfigurationNfv>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RoutingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingConfigurationNfv)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingConfiguration)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRoutingConfigurationNfv(document.RootElement, options);
+            return DeserializeRoutingConfiguration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RoutingConfigurationNfv DeserializeRoutingConfigurationNfv(JsonElement element, ModelReaderWriterOptions options)
+        internal static RoutingConfiguration DeserializeRoutingConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             NetworkSubResource associatedRouteTable = default;
-            PropagatedRouteTableNfv propagatedRouteTables = default;
+            PropagatedRouteTable propagatedRouteTables = default;
             VnetRoute vnetRoutes = default;
             NetworkSubResource inboundRouteMap = default;
             NetworkSubResource outboundRouteMap = default;
@@ -164,7 +141,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    propagatedRouteTables = PropagatedRouteTableNfv.DeserializePropagatedRouteTableNfv(prop.Value, options);
+                    propagatedRouteTables = PropagatedRouteTable.DeserializePropagatedRouteTable(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("vnetRoutes"u8))
@@ -199,7 +176,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RoutingConfigurationNfv(
+            return new RoutingConfiguration(
                 associatedRouteTable,
                 propagatedRouteTables,
                 vnetRoutes,

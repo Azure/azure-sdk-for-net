@@ -16,6 +16,11 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ExpressRouteServiceProvider : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ExpressRouteServiceProvider"/>. </summary>
+        public ExpressRouteServiceProvider()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteServiceProvider"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
@@ -28,14 +33,9 @@ namespace Azure.ResourceManager.Network.Models
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExpressRouteServiceProvider"/>. </summary>
-        public ExpressRouteServiceProvider() : this(default)
-        {
-        }
-
         /// <summary> Properties of the express route service provider. </summary>
         [WirePath("properties")]
-        internal ExpressRouteServiceProviderPropertiesFormat Properties { get; }
+        internal ExpressRouteServiceProviderPropertiesFormat Properties { get; set; }
 
         /// <summary> A list of peering locations. </summary>
         [WirePath("properties.peeringLocations")]
@@ -43,7 +43,11 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.PeeringLocations;
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteServiceProviderPropertiesFormat();
+                }
+                return Properties.PeeringLocations;
             }
         }
 
@@ -53,7 +57,11 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.BandwidthsOffered;
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteServiceProviderPropertiesFormat();
+                }
+                return Properties.BandwidthsOffered;
             }
         }
 
