@@ -37,7 +37,13 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
 
         private ClientDiagnostics LoadTestsClientDiagnostics => _loadTestsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.LoadTesting.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private LoadTests LoadTestsRestClient => _loadTestsRestClient ??= new LoadTests(LoadTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-12-01-preview");
+        private LoadTests LoadTestsRestClient => _loadTestsRestClient ??= new LoadTests(
+            LoadTestsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2024-12-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary> Gets a collection of LoadTestingQuota in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>

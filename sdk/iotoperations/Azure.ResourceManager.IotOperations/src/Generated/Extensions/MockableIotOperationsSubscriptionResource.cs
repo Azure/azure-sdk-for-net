@@ -36,7 +36,13 @@ namespace Azure.ResourceManager.IotOperations.Mocking
 
         private ClientDiagnostics InstanceClientDiagnostics => _instanceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.IotOperations.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Instance InstanceRestClient => _instanceRestClient ??= new Instance(InstanceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private Instance InstanceRestClient => _instanceRestClient ??= new Instance(
+            InstanceClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-07-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// List InstanceResource resources by subscription ID

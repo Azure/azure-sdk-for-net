@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
         {
             TryGetApiVersion(ResourceType, out string kubernetesConfigurationPrivateLinkScopeApiVersion);
             _privateLinkScopesOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes", ResourceType.Namespace, Diagnostics);
-            _privateLinkScopesOperationsRestClient = new PrivateLinkScopesOperations(_privateLinkScopesOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kubernetesConfigurationPrivateLinkScopeApiVersion ?? "2024-11-01-preview");
+            _privateLinkScopesOperationsRestClient = new PrivateLinkScopesOperations(
+                _privateLinkScopesOperationsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                kubernetesConfigurationPrivateLinkScopeApiVersion ?? "2024-11-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
