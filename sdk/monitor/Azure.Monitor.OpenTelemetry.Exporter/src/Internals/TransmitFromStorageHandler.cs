@@ -334,12 +334,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 return TransmitIndividually(batch);
             }
 
-            _transmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
-
             // No blob is passed because this batch may span many of them: a partial success
             // re-persists the retryable subset as a single new blob, after which every blob in the
             // batch has been superseded and is deleted here.
             var transmissionResult = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, _blobProvider, blob: null, _connectionVars, TelemetryItemOrigin.Storage, _isAadEnabled, telemetrySchemaTypeCounter, _networkSdkStatsManager);
+
+            // Only back off when telemetry is being kept for retry: a transient failure, or no response at all (the blobs stay leased).
+            // Telemetry that was permanently dropped (e.g., sampled out by ingestion) should not delay subsequent exports.
+            if (transmissionResult.WillRetry || !httpMessage.HasResponse)
+            {
+                _transmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
+            }
 
             if (statusCode == ResponseStatusCodes.PartialSuccess)
             {
