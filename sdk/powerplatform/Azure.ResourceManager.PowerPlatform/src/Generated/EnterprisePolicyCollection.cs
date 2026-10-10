@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.PowerPlatform
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EnterprisePolicyData, EnterprisePolicyResource>(new EnterprisePoliciesGetByResourceGroupAsyncCollectionResultOfT(_enterprisePoliciesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "EnterprisePolicyCollection.GetAll"), data => new EnterprisePolicyResource(Client, data));
+            return new AsyncPageableWrapper<EnterprisePolicyData, EnterprisePolicyResource>(new EnterprisePolicyDataAsyncCollectionResultOfT(_enterprisePoliciesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "EnterprisePolicyCollection.GetAll"), data => new EnterprisePolicyResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.PowerPlatform
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EnterprisePolicyData, EnterprisePolicyResource>(new EnterprisePoliciesGetByResourceGroupCollectionResultOfT(_enterprisePoliciesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "EnterprisePolicyCollection.GetAll"), data => new EnterprisePolicyResource(Client, data));
+            return new PageableWrapper<EnterprisePolicyData, EnterprisePolicyResource>(new EnterprisePolicyDataCollectionResultOfT(_enterprisePoliciesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "EnterprisePolicyCollection.GetAll"), data => new EnterprisePolicyResource(Client, data));
         }
 
         /// <summary>

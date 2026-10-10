@@ -114,7 +114,7 @@ namespace Azure.Storage.Files.Shares.Models
                 throw new FormatException($"The model {nameof(ShareFileRangeListSegment)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(Ranges))
+            if (Ranges != null && Optional.IsCollectionDefined(Ranges))
             {
                 foreach (FileRange item in Ranges)
                 {
@@ -123,7 +123,7 @@ namespace Azure.Storage.Files.Shares.Models
                     writer.WriteEndElement();
                 }
             }
-            if (Optional.IsCollectionDefined(ClearRanges))
+            if (ClearRanges != null && Optional.IsCollectionDefined(ClearRanges))
             {
                 foreach (ClearRange item in ClearRanges)
                 {

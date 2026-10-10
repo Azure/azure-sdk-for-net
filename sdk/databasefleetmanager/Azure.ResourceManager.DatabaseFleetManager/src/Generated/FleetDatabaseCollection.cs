@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FleetDatabaseData, FleetDatabaseResource>(new FleetDatabasesGetByFleetspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FleetDatabaseData, FleetDatabaseResource>(new FleetDatabaseDataAsyncCollectionResultOfT(
                 _fleetDatabasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FleetDatabaseData, FleetDatabaseResource>(new FleetDatabasesGetByFleetspaceCollectionResultOfT(
+            return new PageableWrapper<FleetDatabaseData, FleetDatabaseResource>(new FleetDatabaseDataCollectionResultOfT(
                 _fleetDatabasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

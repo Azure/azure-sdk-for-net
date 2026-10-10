@@ -41,6 +41,11 @@ namespace Azure.ResourceManager.CostManagement.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="BenefitUtilizationSummary"/>. </summary>
+        public BenefitUtilizationSummary() : this(default)
+        {
+        }
+
         /// <summary> Supported values: 'SavingsPlan'. </summary>
         internal BillingAccountBenefitKind Kind { get; set; }
     }

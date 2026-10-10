@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.FileShares
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FileSharePrivateEndpointConnectionData, FileSharePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByFileShareAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FileSharePrivateEndpointConnectionData, FileSharePrivateEndpointConnectionResource>(new FileSharePrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.FileShares
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FileSharePrivateEndpointConnectionData, FileSharePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByFileShareCollectionResultOfT(
+            return new PageableWrapper<FileSharePrivateEndpointConnectionData, FileSharePrivateEndpointConnectionResource>(new FileSharePrivateEndpointConnectionDataCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

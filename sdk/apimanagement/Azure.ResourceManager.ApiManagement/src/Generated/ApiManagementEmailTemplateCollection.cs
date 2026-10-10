@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementEmailTemplateData, ApiManagementEmailTemplateResource>(new EmailTemplateGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementEmailTemplateData, ApiManagementEmailTemplateResource>(new ApiManagementEmailTemplateDataAsyncCollectionResultOfT(
                 _emailTemplateRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementEmailTemplateData, ApiManagementEmailTemplateResource>(new EmailTemplateGetByServiceCollectionResultOfT(
+            return new PageableWrapper<ApiManagementEmailTemplateData, ApiManagementEmailTemplateResource>(new ApiManagementEmailTemplateDataCollectionResultOfT(
                 _emailTemplateRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

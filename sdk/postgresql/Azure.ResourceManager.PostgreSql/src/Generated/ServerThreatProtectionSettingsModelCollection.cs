@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServerThreatProtectionSettingsModelData, ServerThreatProtectionSettingsModelResource>(new AdvancedThreatProtectionSettingsGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ServerThreatProtectionSettingsModelData, ServerThreatProtectionSettingsModelResource>(new ServerThreatProtectionSettingsModelDataAsyncCollectionResultOfT(
                 _advancedThreatProtectionSettingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServerThreatProtectionSettingsModelData, ServerThreatProtectionSettingsModelResource>(new AdvancedThreatProtectionSettingsGetByServerCollectionResultOfT(
+            return new PageableWrapper<ServerThreatProtectionSettingsModelData, ServerThreatProtectionSettingsModelResource>(new ServerThreatProtectionSettingsModelDataCollectionResultOfT(
                 _advancedThreatProtectionSettingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

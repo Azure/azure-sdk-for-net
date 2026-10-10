@@ -79,20 +79,41 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method.Value.ToString());
             }
-            if (Optional.IsDefined(Unit))
+            if (_unitIsDefined || Optional.IsDefined(Unit))
             {
-                writer.WritePropertyName("unit"u8);
-                writer.WriteStringValue(Unit.Value.ToString());
+                if (Unit != null)
+                {
+                    writer.WritePropertyName("unit"u8);
+                    writer.WriteStringValue(Unit.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("unit"u8);
+                }
             }
-            if (Optional.IsDefined(MaximumLength))
+            if (_maximumLengthIsDefined || Optional.IsDefined(MaximumLength))
             {
-                writer.WritePropertyName("maximumLength"u8);
-                writer.WriteNumberValue(MaximumLength.Value);
+                if (MaximumLength != null)
+                {
+                    writer.WritePropertyName("maximumLength"u8);
+                    writer.WriteNumberValue(MaximumLength.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maximumLength"u8);
+                }
             }
-            if (Optional.IsDefined(OverlapLength))
+            if (_overlapLengthIsDefined || Optional.IsDefined(OverlapLength))
             {
-                writer.WritePropertyName("overlapLength"u8);
-                writer.WriteNumberValue(OverlapLength.Value);
+                if (OverlapLength != null)
+                {
+                    writer.WritePropertyName("overlapLength"u8);
+                    writer.WriteNumberValue(OverlapLength.Value);
+                }
+                else
+                {
+                    writer.WriteNull("overlapLength"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -137,8 +158,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             ContentUnderstandingSkillChunkingMethod? @method = default;
+            bool unitIsDefined = false;
             ContentUnderstandingSkillChunkingUnit? unit = default;
+            bool maximumLengthIsDefined = false;
             int? maximumLength = default;
+            bool overlapLengthIsDefined = false;
             int? overlapLength = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -154,6 +178,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("unit"u8))
                 {
+                    unitIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         unit = null;
@@ -164,6 +189,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("maximumLength"u8))
                 {
+                    maximumLengthIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         maximumLength = null;
@@ -174,6 +200,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("overlapLength"u8))
                 {
+                    overlapLengthIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         overlapLength = null;
@@ -187,7 +214,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ContentUnderstandingSkillChunkingProperties(@method, unit, maximumLength, overlapLength, additionalBinaryDataProperties);
+            return new ContentUnderstandingSkillChunkingProperties(@method, unit, maximumLength, overlapLength, additionalBinaryDataProperties)
+            {
+                _unitIsDefined = unitIsDefined,
+                _maximumLengthIsDefined = maximumLengthIsDefined,
+                _overlapLengthIsDefined = overlapLengthIsDefined
+            };
         }
     }
 }

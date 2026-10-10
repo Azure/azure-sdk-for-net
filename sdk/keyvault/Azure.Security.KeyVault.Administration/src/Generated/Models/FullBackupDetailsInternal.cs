@@ -14,6 +14,10 @@ namespace Azure.Security.KeyVault.Administration.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private KeyVaultServiceError _error;
+        internal bool _errorIsDefined;
+        private DateTimeOffset? _endsOn;
+        internal bool _endsOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FullBackupDetailsInternal"/>. </summary>
         internal FullBackupDetailsInternal()
@@ -33,9 +37,9 @@ namespace Azure.Security.KeyVault.Administration.Models
         {
             Status = status;
             StatusDetails = statusDetails;
-            Error = error;
+            _error = error;
             StartsOn = startsOn;
-            EndsOn = endsOn;
+            _endsOn = endsOn;
             JobId = jobId;
             AzureStorageBlobContainerUri = azureStorageBlobContainerUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -48,13 +52,25 @@ namespace Azure.Security.KeyVault.Administration.Models
         public string StatusDetails { get; }
 
         /// <summary> Error encountered, if any, during the full backup operation. </summary>
-        public KeyVaultServiceError Error { get; }
+        public KeyVaultServiceError Error
+        {
+            get
+            {
+                return _error;
+            }
+        }
 
         /// <summary> The start time of the backup operation in UTC. </summary>
         public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The end time of the backup operation in UTC. </summary>
-        public DateTimeOffset? EndsOn { get; }
+        public DateTimeOffset? EndsOn
+        {
+            get
+            {
+                return _endsOn;
+            }
+        }
 
         /// <summary> Identifier for the full backup operation. </summary>
         public string JobId { get; }

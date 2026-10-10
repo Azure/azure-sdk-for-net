@@ -21,6 +21,12 @@
 - Stored responses use Core durable tasks only when the resilient-task runtime is enabled.
   `ResilientBackground=true` enables it automatically; otherwise `store=true` requests execute
   in-process and are not recovered after an ungraceful crash.
+- The local file-backed response provider now uses a new `responses/partitions-v1` namespace.
+  Previously persisted responses and their history are not visible after upgrade, including
+  for anonymous requests and crash recovery. Legacy files remain unchanged; there is no
+  automatic migration or legacy read fallback. Restoring old data requires an explicit,
+  operator-controlled migration with independently verified ownership. Newly persisted
+  partitioned data continues to survive restarts.
 - Hosted registration now uses the `ClientSettings` pattern. The
   `AddResponsesServer(IServiceCollection, Action<ResponsesServerOptions>)` overload remains for
   local / non-hosted scenarios and now throws in a hosted Foundry environment (use the
@@ -41,6 +47,10 @@
   deletion wins after the compatibility probe, Responses starts the session-instance-scoped task
   instead of recreating the tombstoned legacy ID, including when the legacy chain is active and
   accepting steering input.
+- Scope local in-memory and file-backed response envelopes, items, history, and conversation
+  indexes to `PlatformContext.UserIdKey`. Anonymous requests use a separate local partition.
+- Require an existing response in the caller's partition for updates, and retain deletion
+  semantics without allowing updates to recreate deleted responses.
 - Changed the default history fetch limit from 100 to `-1` (unlimited), avoiding
   automatic truncation of conversation history. Positive limits remain supported.
 - Hosted `ResponsesServer.Run` and `AgentHostBuilder.AddResponses` now bind through the

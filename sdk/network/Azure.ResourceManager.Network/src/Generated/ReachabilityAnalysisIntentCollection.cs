@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ReachabilityAnalysisIntentData, ReachabilityAnalysisIntentResource>(new ReachabilityAnalysisIntentsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ReachabilityAnalysisIntentData, ReachabilityAnalysisIntentResource>(new ReachabilityAnalysisIntentDataAsyncCollectionResultOfT(
                 _reachabilityAnalysisIntentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ReachabilityAnalysisIntentData, ReachabilityAnalysisIntentResource>(new ReachabilityAnalysisIntentsGetAllCollectionResultOfT(
+            return new PageableWrapper<ReachabilityAnalysisIntentData, ReachabilityAnalysisIntentResource>(new ReachabilityAnalysisIntentDataCollectionResultOfT(
                 _reachabilityAnalysisIntentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -17,6 +17,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -1141,7 +1142,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualMachineScaleSetsGetOSUpgradeHistoryAsyncCollectionResultOfT(
+            return new UpgradeOperationHistoricalStatusInfoAsyncCollectionResultOfT(
                 _virtualMachineScaleSetsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1179,7 +1180,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualMachineScaleSetsGetOSUpgradeHistoryCollectionResultOfT(
+            return new UpgradeOperationHistoricalStatusInfoCollectionResultOfT(
                 _virtualMachineScaleSetsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1217,7 +1218,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualMachineScaleSetsGetSkusAsyncCollectionResultOfT(
+            return new VirtualMachineScaleSetSkuAsyncCollectionResultOfT(
                 _virtualMachineScaleSetsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1255,7 +1256,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualMachineScaleSetsGetSkusCollectionResultOfT(
+            return new VirtualMachineScaleSetSkuCollectionResultOfT(
                 _virtualMachineScaleSetsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -2794,10 +2795,9 @@ namespace Azure.ResourceManager.Compute
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -2837,10 +2837,9 @@ namespace Azure.ResourceManager.Compute
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -3201,5 +3200,39 @@ namespace Azure.ResourceManager.Compute
             return Update(waitUntil: waitUntil, patch: patch, matchConditions: default, cancellationToken: cancellationToken);
         }
 #pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary> Update a VM scale set. Request Path./subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}.Operation Id.VirtualMachineScaleSets_Update.Default Api Version.2026-03-01.Resource.<see cref="VirtualMachineScaleSetResource"/>. </summary>
+        /// <param name="waitUntil"></param>
+        /// <param name="patch"></param>
+        /// <param name="ifMatch"></param>
+        /// <param name="ifNoneMatch"></param>
+        /// <param name="cancellationToken"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<ArmOperation<VirtualMachineScaleSetResource>> UpdateAsync(WaitUntil waitUntil, VirtualMachineScaleSetPatch patch, string ifMatch, string ifNoneMatch = default, CancellationToken cancellationToken = default)
+        {
+            return UpdateAsync(waitUntil, patch, ifMatch == null && ifNoneMatch == null ? null : new MatchConditions
+            {
+                IfMatch = ifMatch != null ? new ETag(ifMatch) : null,
+                IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : null
+            }, cancellationToken);
+        }
+
+        /// <summary> Update a VM scale set. Request Path./subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}.Operation Id.VirtualMachineScaleSets_Update.Default Api Version.2026-03-01.Resource.<see cref="VirtualMachineScaleSetResource"/>. </summary>
+        /// <param name="waitUntil"></param>
+        /// <param name="patch"></param>
+        /// <param name="ifMatch"></param>
+        /// <param name="ifNoneMatch"></param>
+        /// <param name="cancellationToken"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual ArmOperation<VirtualMachineScaleSetResource> Update(WaitUntil waitUntil, VirtualMachineScaleSetPatch patch, string ifMatch, string ifNoneMatch = default, CancellationToken cancellationToken = default)
+        {
+            return Update(waitUntil, patch, ifMatch == null && ifNoneMatch == null ? null : new MatchConditions
+            {
+                IfMatch = ifMatch != null ? new ETag(ifMatch) : null,
+                IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : null
+            }, cancellationToken);
+        }
     }
 }

@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new ApplicationGatewaysGetAvailableSslPredefinedPoliciesAsyncCollectionResultOfT(_applicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "ApplicationGatewayAvailableSslOptionsInfoResource.GetAvailableSslPredefinedPolicies");
+            return new ApplicationGatewaySslPredefinedPolicyAsyncCollectionResultOfT(_applicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "ApplicationGatewayAvailableSslOptionsInfoResource.GetAvailableSslPredefinedPolicies");
         }
 
         /// <summary>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new ApplicationGatewaysGetAvailableSslPredefinedPoliciesCollectionResultOfT(_applicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "ApplicationGatewayAvailableSslOptionsInfoResource.GetAvailableSslPredefinedPolicies");
+            return new ApplicationGatewaySslPredefinedPolicyCollectionResultOfT(_applicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "ApplicationGatewayAvailableSslOptionsInfoResource.GetAvailableSslPredefinedPolicies");
         }
     }
 }

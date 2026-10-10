@@ -17,6 +17,16 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private IndexingSchedule _schedule;
+        internal bool _scheduleIsDefined;
+        private IndexingParameters _parameters;
+        internal bool _parametersIsDefined;
+        private bool? _isDisabled;
+        internal bool _isDisabledIsDefined;
+        private SearchResourceEncryptionKey _encryptionKey;
+        internal bool _encryptionKeyIsDefined;
+        private SearchIndexerCache _cache;
+        internal bool _cacheIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexer"/>. </summary>
         /// <param name="name"> The name of the indexer. </param>
@@ -58,14 +68,14 @@ namespace Azure.Search.Documents.Indexes.Models
             DataSourceName = dataSourceName;
             SkillsetName = skillsetName;
             TargetIndexName = targetIndexName;
-            Schedule = schedule;
-            Parameters = parameters;
+            _schedule = schedule;
+            _parameters = parameters;
             FieldMappings = fieldMappings;
             OutputFieldMappings = outputFieldMappings;
-            IsDisabled = isDisabled;
+            _isDisabled = isDisabled;
             ETag = eTag;
-            EncryptionKey = encryptionKey;
-            Cache = cache;
+            _encryptionKey = encryptionKey;
+            _cache = cache;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -85,10 +95,32 @@ namespace Azure.Search.Documents.Indexes.Models
         public string TargetIndexName { get; set; }
 
         /// <summary> The schedule for this indexer. </summary>
-        public IndexingSchedule Schedule { get; set; }
+        public IndexingSchedule Schedule
+        {
+            get
+            {
+                return _schedule;
+            }
+            set
+            {
+                _schedule = value;
+                _scheduleIsDefined = true;
+            }
+        }
 
         /// <summary> Parameters for indexer execution. </summary>
-        public IndexingParameters Parameters { get; set; }
+        public IndexingParameters Parameters
+        {
+            get
+            {
+                return _parameters;
+            }
+            set
+            {
+                _parameters = value;
+                _parametersIsDefined = true;
+            }
+        }
 
         /// <summary> Defines mappings between fields in the data source and corresponding target fields in the index. </summary>
         public IList<FieldMapping> FieldMappings { get; }
@@ -97,15 +129,48 @@ namespace Azure.Search.Documents.Indexes.Models
         public IList<FieldMapping> OutputFieldMappings { get; }
 
         /// <summary> A value indicating whether the indexer is disabled. Default is false. </summary>
-        public bool? IsDisabled { get; set; }
+        public bool? IsDisabled
+        {
+            get
+            {
+                return _isDisabled;
+            }
+            set
+            {
+                _isDisabled = value;
+                _isDisabledIsDefined = true;
+            }
+        }
 
         /// <summary> The ETag of the indexer. </summary>
         public ETag? ETag { get; set; }
 
         /// <summary> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your indexer definition (as well as indexer execution status) when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your indexer definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your indexer definition (and indexer execution status) will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </summary>
-        public SearchResourceEncryptionKey EncryptionKey { get; set; }
+        public SearchResourceEncryptionKey EncryptionKey
+        {
+            get
+            {
+                return _encryptionKey;
+            }
+            set
+            {
+                _encryptionKey = value;
+                _encryptionKeyIsDefined = true;
+            }
+        }
 
         /// <summary> Adds caching to an enrichment pipeline to allow for incremental modification steps without having to rebuild the index every time. </summary>
-        public SearchIndexerCache Cache { get; set; }
+        public SearchIndexerCache Cache
+        {
+            get
+            {
+                return _cache;
+            }
+            set
+            {
+                _cache = value;
+                _cacheIsDefined = true;
+            }
+        }
     }
 }

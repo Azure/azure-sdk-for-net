@@ -79,10 +79,17 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("text"u8);
                 writer.WriteStringValue(Text);
             }
-            if (options.Format != "W" && Optional.IsDefined(Highlights))
+            if (options.Format != "W" && (_highlightsIsDefined || Optional.IsDefined(Highlights)))
             {
-                writer.WritePropertyName("highlights"u8);
-                writer.WriteStringValue(Highlights);
+                if (Highlights != null)
+                {
+                    writer.WritePropertyName("highlights"u8);
+                    writer.WriteStringValue(Highlights);
+                }
+                else
+                {
+                    writer.WriteNull("highlights"u8);
+                }
             }
             foreach (var item in AdditionalProperties)
             {
@@ -117,6 +124,7 @@ namespace Azure.Search.Documents.Models
                 return null;
             }
             string text = default;
+            bool highlightsIsDefined = false;
             string highlights = default;
             ChangeTrackingDictionary<string, object> additionalProperties = new ChangeTrackingDictionary<string, object>();
             foreach (var prop in element.EnumerateObject())
@@ -128,6 +136,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (prop.NameEquals("highlights"u8))
                 {
+                    highlightsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         highlights = null;
@@ -138,7 +147,10 @@ namespace Azure.Search.Documents.Models
                 }
                 additionalProperties.Add(prop.Name, prop.Value.GetObject());
             }
-            return new QueryCaptionResult(text, highlights, new ReadOnlyDictionary<string, object>(additionalProperties));
+            return new QueryCaptionResult(text, highlights, new ReadOnlyDictionary<string, object>(additionalProperties))
+            {
+                _highlightsIsDefined = highlightsIsDefined
+            };
         }
     }
 }

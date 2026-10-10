@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CloudVmClusterDBNodeData, CloudVmClusterDBNodeResource>(new DbNodesGetByParentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CloudVmClusterDBNodeData, CloudVmClusterDBNodeResource>(new CloudVmClusterDBNodeDataAsyncCollectionResultOfT(
                 _dbNodesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CloudVmClusterDBNodeData, CloudVmClusterDBNodeResource>(new DbNodesGetByParentCollectionResultOfT(
+            return new PageableWrapper<CloudVmClusterDBNodeData, CloudVmClusterDBNodeResource>(new CloudVmClusterDBNodeDataCollectionResultOfT(
                 _dbNodesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

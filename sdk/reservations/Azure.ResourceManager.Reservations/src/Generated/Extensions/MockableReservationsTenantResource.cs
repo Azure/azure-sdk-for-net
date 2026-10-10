@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ReservationDetailData, ReservationDetailResource>(new ReservationGetReservationDetailsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ReservationDetailData, ReservationDetailResource>(new ReservationDetailDataAsync1CollectionResultOfT(
                 ReservationRestClient,
                 filter,
                 @orderby,
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ReservationDetailData, ReservationDetailResource>(new ReservationGetReservationDetailsCollectionResultOfT(
+            return new PageableWrapper<ReservationDetailData, ReservationDetailResource>(new ReservationDetailData1CollectionResultOfT(
                 ReservationRestClient,
                 filter,
                 @orderby,

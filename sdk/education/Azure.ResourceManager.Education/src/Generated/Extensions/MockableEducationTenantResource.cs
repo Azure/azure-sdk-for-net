@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Education.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GrantDetailsData, GrantDetailsResource>(new GrantsListAllAsyncCollectionResultOfT(GrantsRestClient, includeAllocatedBudget, context, "MockableEducationTenantResource.GetAll"), data => new GrantDetailsResource(Client, data));
+            return new AsyncPageableWrapper<GrantDetailsData, GrantDetailsResource>(new GrantDetailsDataAsync0CollectionResultOfT(GrantsRestClient, includeAllocatedBudget, context, "MockableEducationTenantResource.GetAll"), data => new GrantDetailsResource(Client, data));
         }
 
         /// <summary>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Education.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GrantDetailsData, GrantDetailsResource>(new GrantsListAllCollectionResultOfT(GrantsRestClient, includeAllocatedBudget, context, "MockableEducationTenantResource.GetAll"), data => new GrantDetailsResource(Client, data));
+            return new PageableWrapper<GrantDetailsData, GrantDetailsResource>(new GrantDetailsData0CollectionResultOfT(GrantsRestClient, includeAllocatedBudget, context, "MockableEducationTenantResource.GetAll"), data => new GrantDetailsResource(Client, data));
         }
     }
 }

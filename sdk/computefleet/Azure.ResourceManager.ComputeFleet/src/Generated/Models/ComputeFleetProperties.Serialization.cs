@@ -138,11 +138,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WritePropertyName("capacityType"u8);
                 writer.WriteStringValue(CapacityType.Value.ToString());
             }
-            if (Optional.IsDefined(ZoneAllocationPolicy))
-            {
-                writer.WritePropertyName("zoneAllocationPolicy"u8);
-                writer.WriteObjectValue(ZoneAllocationPolicy, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -197,7 +192,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             ComputeFleetMode? mode = default;
             string vmNamePrefix = default;
             ComputeFleetCapacityType? capacityType = default;
-            ComputeFleetZoneAllocationPolicy zoneAllocationPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -298,15 +292,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     capacityType = new ComputeFleetCapacityType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("zoneAllocationPolicy"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    zoneAllocationPolicy = ComputeFleetZoneAllocationPolicy.DeserializeComputeFleetZoneAllocationPolicy(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -325,7 +310,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 mode,
                 vmNamePrefix,
                 capacityType,
-                zoneAllocationPolicy,
                 additionalBinaryDataProperties);
         }
     }

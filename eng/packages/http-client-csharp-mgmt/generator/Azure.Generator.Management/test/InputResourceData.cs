@@ -1317,6 +1317,76 @@ namespace Azure.Generator.Management.Tests.Common
             return (mainClient, actionClient, [responseModel]);
         }
 
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithDynamicResourceTypes()
+        {
+            var model = InputFactory.Model("DynamicResource", usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true)], decorators: []);
+            const string path = "/providers/Microsoft.Tests/{kind}/{name}";
+            var operation = InputFactory.Operation("get", path: path, parameters:
+            [
+                InputFactory.PathParameter("kind", InputPrimitiveType.String, isRequired: true),
+                InputFactory.PathParameter("name", InputPrimitiveType.String, isRequired: true),
+            ], responses: [InputFactory.OperationResponse(bodytype: model)]);
+            var method = InputFactory.BasicServiceMethod("get", operation, parameters:
+            [
+                InputFactory.MethodParameter("kind", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true),
+                InputFactory.MethodParameter("name", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true),
+            ]);
+            var resources = new[] { "first", "second" }.Select(kind => new ResourceSchemaInput(
+                model,
+                [new ResourceMethod(ResourceOperationKind.Read, method, new RequestPathPattern(path),
+                    new ArmScopeInfo(ResourceScope.Tenant, new RequestPathPattern("/"), null), null!)],
+                $"/providers/Microsoft.Tests/{kind}/{{name}}", $"Microsoft.Tests/{kind}", null, ResourceScope.Tenant,
+                kind, null, "/")).ToArray();
+            var client = InputFactory.Client("DynamicClient", methods: [method], decorators: [BuildArmProviderSchemaMultiResource(resources)]);
+            return (client, [model]);
+        }
+
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithDynamicResourcePaging(string mode, string kindName = "kind", bool enumKind = false, bool reinjectScope = false)
+        {
+            var (originalClient, models) = ClientWithDynamicResourceTypes();
+            var read = originalClient.Methods.Single();
+            InputType kindType = enumKind ? InputFactory.StringEnum("DynamicKind", [("First", "first"), ("Second", "second")]) : InputPrimitiveType.String;
+            var kind = InputFactory.PathParameter(kindName, kindType, serializedName: "kind", isRequired: true);
+            var filter = InputFactory.QueryParameter("filter", InputPrimitiveType.String, serializedName: "$filter");
+            var pageSize = InputFactory.QueryParameter("maxPageSize", InputPrimitiveType.Int32);
+            var version = InputFactory.QueryParameter("apiVersion", InputPrimitiveType.String, isRequired: true, isApiVersion: true,
+                defaultValue: new InputConstant("opaque-page", InputPrimitiveType.String), serializedName: "api-version", scope: InputParameterScope.Client);
+            var page = InputFactory.Model("DynamicPage", usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json, properties:
+            [
+                InputFactory.Property("value", InputFactory.Array(models[0])),
+                InputFactory.Property("nextLink", InputPrimitiveType.Url)
+            ]);
+            var scope = InputFactory.PathParameter("resourceGroupName", InputPrimitiveType.String, isRequired: true);
+            var scopePrefix = reinjectScope ? "/resourceGroups/{resourceGroupName}" : string.Empty;
+            if (reinjectScope)
+            {
+                read.Operation.Update(path: scopePrefix + read.Operation.Path, parameters: [scope, .. read.Operation.Parameters]);
+                read.Update(parameters: [InputFactory.MethodParameter("resourceGroupName", InputPrimitiveType.String, isRequired: true, location: InputRequestLocation.Path), .. read.Parameters]);
+            }
+            var path = scopePrefix + "/providers/Microsoft.Tests/{kind}";
+            var operation = InputFactory.Operation("GetAll", path: path, parameters: [.. reinjectScope ? new[] { scope } : [], kind, filter, pageSize, version],
+                responses: [InputFactory.OperationResponse(bodytype: page)]);
+            var paging = new InputPagingServiceMetadata(["value"],
+                new InputNextLink(null, ["nextLink"], InputResponseLocation.Body,
+                    reinjectScope ? [scope, .. mode is "filter" or "both" ? new[] { filter } : []] : mode is "filter" or "both" ? [filter] : null),
+                null, mode is "page-size" or "both" ? ["maxPageSize"] : []);
+            var list = InputFactory.PagingServiceMethod("GetAll", operation, pagingMetadata: paging, parameters:
+            [
+                .. reinjectScope ? new[] { InputFactory.MethodParameter("resourceGroupName", InputPrimitiveType.String, isRequired: true, location: InputRequestLocation.Path) } : [],
+                InputFactory.MethodParameter(kindName, kindType, serializedName: "kind", isRequired: true, location: InputRequestLocation.Path),
+                InputFactory.MethodParameter("filter", InputPrimitiveType.String, serializedName: "$filter", location: InputRequestLocation.Query),
+                InputFactory.MethodParameter("maxPageSize", InputPrimitiveType.Int32, location: InputRequestLocation.Query)
+            ]);
+            var resources = new[] { "first", "second" }.Select(resourceKind => new ResourceSchemaInput(models[0],
+            [
+                new ResourceMethod(ResourceOperationKind.Read, read, new RequestPathPattern(read.Operation.Path), new ArmScopeInfo(ResourceScope.Tenant, new RequestPathPattern("/"), null), null!),
+                new ResourceMethod(ResourceOperationKind.List, list, new RequestPathPattern(path), new ArmScopeInfo(ResourceScope.Tenant, new RequestPathPattern("/"), null), null!)
+            ], $"{scopePrefix}/providers/Microsoft.Tests/{resourceKind}/{{name}}", $"Microsoft.Tests/{resourceKind}", null, ResourceScope.Tenant, resourceKind, null, "/")).ToArray();
+            var client = InputFactory.Client("DynamicPaging", methods: [read, list], decorators: [BuildArmProviderSchemaMultiResource(resources)]);
+            return (client, [.. models, page]);
+        }
+
         private static InputDecoratorInfo BuildArmProviderSchema(InputModelType resourceModel, IReadOnlyList<ResourceMethod> methods, RequestPathPattern resourceIdPattern, string resourceType, string? singletonResourceName, ResourceScope resourceScope, string? resourceName)
         {
             return BuildArmProviderSchemaMultiResource([

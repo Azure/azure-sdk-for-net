@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Discovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiscoveryStorageAssetData, DiscoveryStorageAssetResource>(new StorageAssetsGetByStorageContainerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DiscoveryStorageAssetData, DiscoveryStorageAssetResource>(new DiscoveryStorageAssetDataAsyncCollectionResultOfT(
                 _storageAssetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Discovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiscoveryStorageAssetData, DiscoveryStorageAssetResource>(new StorageAssetsGetByStorageContainerCollectionResultOfT(
+            return new PageableWrapper<DiscoveryStorageAssetData, DiscoveryStorageAssetResource>(new DiscoveryStorageAssetDataCollectionResultOfT(
                 _storageAssetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

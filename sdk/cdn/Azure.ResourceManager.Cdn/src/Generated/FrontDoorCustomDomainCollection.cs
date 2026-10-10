@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FrontDoorCustomDomainData, FrontDoorCustomDomainResource>(new AFDCustomDomainsGetByProfileAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FrontDoorCustomDomainData, FrontDoorCustomDomainResource>(new FrontDoorCustomDomainDataAsyncCollectionResultOfT(
                 _afdCustomDomainsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FrontDoorCustomDomainData, FrontDoorCustomDomainResource>(new AFDCustomDomainsGetByProfileCollectionResultOfT(
+            return new PageableWrapper<FrontDoorCustomDomainData, FrontDoorCustomDomainResource>(new FrontDoorCustomDomainDataCollectionResultOfT(
                 _afdCustomDomainsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

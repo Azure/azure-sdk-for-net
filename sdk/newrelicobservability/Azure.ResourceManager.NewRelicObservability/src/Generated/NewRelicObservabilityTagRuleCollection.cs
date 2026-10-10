@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NewRelicObservabilityTagRuleData, NewRelicObservabilityTagRuleResource>(new TagRulesGetByNewRelicMonitorResourceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NewRelicObservabilityTagRuleData, NewRelicObservabilityTagRuleResource>(new NewRelicObservabilityTagRuleDataAsyncCollectionResultOfT(
                 _tagRulesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NewRelicObservabilityTagRuleData, NewRelicObservabilityTagRuleResource>(new TagRulesGetByNewRelicMonitorResourceCollectionResultOfT(
+            return new PageableWrapper<NewRelicObservabilityTagRuleData, NewRelicObservabilityTagRuleResource>(new NewRelicObservabilityTagRuleDataCollectionResultOfT(
                 _tagRulesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

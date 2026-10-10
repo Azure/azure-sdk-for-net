@@ -84,10 +84,17 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.AbsoluteUri);
             }
-            if (Optional.IsDefined(OperationResult))
+            if (_operationResultIsDefined || Optional.IsDefined(OperationResult))
             {
-                writer.WritePropertyName("operationResult"u8);
-                writer.WriteStringValue(OperationResult.AbsoluteUri);
+                if (OperationResult != null)
+                {
+                    writer.WritePropertyName("operationResult"u8);
+                    writer.WriteStringValue(OperationResult.AbsoluteUri);
+                }
+                else
+                {
+                    writer.WriteNull("operationResult"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -132,6 +139,7 @@ namespace Azure.AI.Projects
                 return null;
             }
             Uri location = default;
+            bool operationResultIsDefined = false;
             Uri operationResult = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -147,6 +155,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("operationResult"u8))
                 {
+                    operationResultIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         operationResult = null;
@@ -160,7 +169,10 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CreateAsyncResult(location, operationResult, additionalBinaryDataProperties);
+            return new CreateAsyncResult(location, operationResult, additionalBinaryDataProperties)
+            {
+                _operationResultIsDefined = operationResultIsDefined
+            };
         }
     }
 }

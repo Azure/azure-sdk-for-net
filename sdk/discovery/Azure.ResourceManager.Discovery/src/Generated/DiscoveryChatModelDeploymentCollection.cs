@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Discovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiscoveryChatModelDeploymentData, DiscoveryChatModelDeploymentResource>(new ChatModelDeploymentsGetByWorkspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DiscoveryChatModelDeploymentData, DiscoveryChatModelDeploymentResource>(new DiscoveryChatModelDeploymentDataAsyncCollectionResultOfT(
                 _chatModelDeploymentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Discovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiscoveryChatModelDeploymentData, DiscoveryChatModelDeploymentResource>(new ChatModelDeploymentsGetByWorkspaceCollectionResultOfT(
+            return new PageableWrapper<DiscoveryChatModelDeploymentData, DiscoveryChatModelDeploymentResource>(new DiscoveryChatModelDeploymentDataCollectionResultOfT(
                 _chatModelDeploymentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

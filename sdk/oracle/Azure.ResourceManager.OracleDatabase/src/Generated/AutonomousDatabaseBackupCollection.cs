@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutonomousDatabaseBackupData, AutonomousDatabaseBackupResource>(new AutonomousDatabaseBackupsGetByParentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AutonomousDatabaseBackupData, AutonomousDatabaseBackupResource>(new AutonomousDatabaseBackupDataAsyncCollectionResultOfT(
                 _autonomousDatabaseBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutonomousDatabaseBackupData, AutonomousDatabaseBackupResource>(new AutonomousDatabaseBackupsGetByParentCollectionResultOfT(
+            return new PageableWrapper<AutonomousDatabaseBackupData, AutonomousDatabaseBackupResource>(new AutonomousDatabaseBackupDataCollectionResultOfT(
                 _autonomousDatabaseBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -21,6 +21,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 internal sealed class SseReplayResult : IResult
 {
     private readonly AgentEventStreamRegistry _eventStreamRegistry;
+    private readonly string _streamId;
     private readonly string _responseId;
     private readonly JsonSerializerOptions _jsonOptions;
     private readonly ILogger _logger;
@@ -29,6 +30,7 @@ internal sealed class SseReplayResult : IResult
 
     public SseReplayResult(
         AgentEventStreamRegistry eventStreamRegistry,
+        string streamId,
         string responseId,
         JsonSerializerOptions jsonOptions,
         ILogger logger,
@@ -36,6 +38,7 @@ internal sealed class SseReplayResult : IResult
         long? startingAfter = null)
     {
         _eventStreamRegistry = eventStreamRegistry;
+        _streamId = streamId;
         _responseId = responseId;
         _jsonOptions = jsonOptions;
         _logger = logger;
@@ -54,7 +57,7 @@ internal sealed class SseReplayResult : IResult
         AgentEventStream stream;
         try
         {
-            stream = await _eventStreamRegistry.GetAsync(_responseId, ct);
+            stream = await _eventStreamRegistry.GetAsync(_streamId, ct);
         }
         catch (AgentEventStreamNotFoundException ex)
         {
