@@ -38,11 +38,23 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Mocking
 
         private ClientDiagnostics AzureKeyVaultSecretProviderClassesClientDiagnostics => _azureKeyVaultSecretProviderClassesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecretsStoreExtension.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AzureKeyVaultSecretProviderClasses AzureKeyVaultSecretProviderClassesRestClient => _azureKeyVaultSecretProviderClassesRestClient ??= new AzureKeyVaultSecretProviderClasses(AzureKeyVaultSecretProviderClassesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-25-preview");
+        private AzureKeyVaultSecretProviderClasses AzureKeyVaultSecretProviderClassesRestClient => _azureKeyVaultSecretProviderClassesRestClient ??= new AzureKeyVaultSecretProviderClasses(
+            AzureKeyVaultSecretProviderClassesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-09-25-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics SecretSyncsClientDiagnostics => _secretSyncsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecretsStoreExtension.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SecretSyncs SecretSyncsRestClient => _secretSyncsRestClient ??= new SecretSyncs(SecretSyncsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-25-preview");
+        private SecretSyncs SecretSyncsRestClient => _secretSyncsRestClient ??= new SecretSyncs(
+            SecretSyncsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-09-25-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// Lists the AzureKeyVaultSecretProviderClass instances within an Azure subscription.

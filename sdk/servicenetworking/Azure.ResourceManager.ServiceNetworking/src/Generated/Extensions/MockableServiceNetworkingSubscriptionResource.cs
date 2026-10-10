@@ -35,7 +35,13 @@ namespace Azure.ResourceManager.ServiceNetworking.Mocking
 
         private ClientDiagnostics TrafficControllerInterfaceClientDiagnostics => _trafficControllerInterfaceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceNetworking.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private TrafficControllerInterface TrafficControllerInterfaceRestClient => _trafficControllerInterfaceRestClient ??= new TrafficControllerInterface(TrafficControllerInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01");
+        private TrafficControllerInterface TrafficControllerInterfaceRestClient => _trafficControllerInterfaceRestClient ??= new TrafficControllerInterface(
+            TrafficControllerInterfaceClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-03-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// List TrafficController resources by subscription ID

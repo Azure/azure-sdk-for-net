@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(PrivateLinkResource.ResourceType, out string privateLinkResourceApiVersion);
             _privateLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", PrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _privateLinksRestClient = new PrivateLinks(_privateLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, privateLinkResourceApiVersion ?? "2026-01-01");
+            _privateLinksRestClient = new PrivateLinks(
+                _privateLinksClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                privateLinkResourceApiVersion ?? "2026-01-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

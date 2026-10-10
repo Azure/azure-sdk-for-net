@@ -53,7 +53,13 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(ResourceType, out string securityConnectorApiVersion);
             _securityConnectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _securityConnectorsRestClient = new SecurityConnectors(_securityConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityConnectorApiVersion ?? "2024-08-01-preview");
+            _securityConnectorsRestClient = new SecurityConnectors(
+                _securityConnectorsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                securityConnectorApiVersion ?? "2024-08-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
