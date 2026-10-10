@@ -95,15 +95,29 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("driftCoefficient"u8);
                 writer.WriteNumberValue(DriftCoefficient.Value);
             }
-            if (Optional.IsDefined(StartTime))
+            if (_startTimeIsDefined || Optional.IsDefined(StartTime))
             {
-                writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartTime.Value, "O");
+                if (StartTime != null)
+                {
+                    writer.WritePropertyName("startTime"u8);
+                    writer.WriteStringValue(StartTime.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("startTime"u8);
+                }
             }
-            if (Optional.IsDefined(EndTime))
+            if (_endTimeIsDefined || Optional.IsDefined(EndTime))
             {
-                writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndTime.Value, "O");
+                if (EndTime != null)
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteStringValue(EndTime.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("endTime"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -153,7 +167,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string baseDatasetId = default;
             string targetDatasetId = default;
             double? driftCoefficient = default;
+            bool startTimeIsDefined = false;
             DateTimeOffset? startTime = default;
+            bool endTimeIsDefined = false;
             DateTimeOffset? endTime = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -194,6 +210,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
+                    startTimeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         startTime = null;
@@ -204,6 +221,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
+                    endTimeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         endTime = null;
@@ -226,7 +244,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 driftCoefficient,
                 startTime,
                 endTime,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _startTimeIsDefined = startTimeIsDefined,
+                _endTimeIsDefined = endTimeIsDefined
+            };
         }
 
         internal partial class MachineLearningServicesDatasetDriftDetectedEventDataConverter : JsonConverter<MachineLearningServicesDatasetDriftDetectedEventData>

@@ -74,10 +74,17 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 throw new FormatException($"The model {nameof(ScalarQuantizationParameters)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(QuantizedDataType))
+            if (_quantizedDataTypeIsDefined || Optional.IsDefined(QuantizedDataType))
             {
-                writer.WritePropertyName("quantizedDataType"u8);
-                writer.WriteStringValue(QuantizedDataType.Value.ToString());
+                if (QuantizedDataType != null)
+                {
+                    writer.WritePropertyName("quantizedDataType"u8);
+                    writer.WriteStringValue(QuantizedDataType.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("quantizedDataType"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,12 +128,14 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
+            bool quantizedDataTypeIsDefined = false;
             VectorSearchCompressionTarget? quantizedDataType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("quantizedDataType"u8))
                 {
+                    quantizedDataTypeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         quantizedDataType = null;
@@ -140,7 +149,10 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ScalarQuantizationParameters(quantizedDataType, additionalBinaryDataProperties);
+            return new ScalarQuantizationParameters(quantizedDataType, additionalBinaryDataProperties)
+            {
+                _quantizedDataTypeIsDefined = quantizedDataTypeIsDefined
+            };
         }
     }
 }

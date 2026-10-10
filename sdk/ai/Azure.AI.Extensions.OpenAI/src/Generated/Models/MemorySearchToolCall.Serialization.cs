@@ -76,13 +76,20 @@ namespace Azure.AI.Extensions.OpenAI
             writer.WriteStringValue(Status.ToSerialString());
             if (Optional.IsCollectionDefined(Memories))
             {
-                writer.WritePropertyName("memories"u8);
-                writer.WriteStartArray();
-                foreach (MemoryOutputItem item in Memories)
+                if (Memories != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("memories"u8);
+                    writer.WriteStartArray();
+                    foreach (MemoryOutputItem item in Memories)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("memories"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -131,7 +138,7 @@ namespace Azure.AI.Extensions.OpenAI
             AgentReference agentReference = default;
             string responseId = default;
             ToolCallStatus status = default;
-            IList<MemoryOutputItem> memories = default;
+            IList<MemoryOutputItem> memories = new ChangeTrackingList<MemoryOutputItem>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,6 +175,7 @@ namespace Azure.AI.Extensions.OpenAI
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        memories = null;
                         continue;
                     }
                     List<MemoryOutputItem> array = new List<MemoryOutputItem>();
@@ -189,7 +197,7 @@ namespace Azure.AI.Extensions.OpenAI
                 agentReference,
                 responseId,
                 status,
-                memories ?? new ChangeTrackingList<MemoryOutputItem>(),
+                memories,
                 additionalBinaryDataProperties);
         }
     }

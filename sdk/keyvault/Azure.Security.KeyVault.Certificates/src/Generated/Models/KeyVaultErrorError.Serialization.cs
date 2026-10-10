@@ -84,10 +84,17 @@ namespace Azure.Security.KeyVault.Certificates.Models
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Optional.IsDefined(InnerError))
+            if (options.Format != "W" && (_innerErrorIsDefined || Optional.IsDefined(InnerError)))
             {
-                writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue(InnerError, options);
+                if (InnerError != null)
+                {
+                    writer.WritePropertyName("innererror"u8);
+                    writer.WriteObjectValue(InnerError, options);
+                }
+                else
+                {
+                    writer.WriteNull("innererror"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,6 +140,7 @@ namespace Azure.Security.KeyVault.Certificates.Models
             }
             string code = default;
             string message = default;
+            bool innerErrorIsDefined = false;
             KeyVaultErrorError innerError = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -149,6 +157,7 @@ namespace Azure.Security.KeyVault.Certificates.Models
                 }
                 if (prop.NameEquals("innererror"u8))
                 {
+                    innerErrorIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         innerError = null;
@@ -162,7 +171,10 @@ namespace Azure.Security.KeyVault.Certificates.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new KeyVaultErrorError(code, message, innerError, additionalBinaryDataProperties);
+            return new KeyVaultErrorError(code, message, innerError, additionalBinaryDataProperties)
+            {
+                _innerErrorIsDefined = innerErrorIsDefined
+            };
         }
     }
 }
