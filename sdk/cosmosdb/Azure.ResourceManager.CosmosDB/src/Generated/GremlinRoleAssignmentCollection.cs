@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GremlinRoleAssignmentData, GremlinRoleAssignmentResource>(new GremlinResourcesGetGremlinRoleAssignmentsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<GremlinRoleAssignmentData, GremlinRoleAssignmentResource>(new GremlinRoleAssignmentDataAsyncCollectionResultOfT(
                 _gremlinResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GremlinRoleAssignmentData, GremlinRoleAssignmentResource>(new GremlinResourcesGetGremlinRoleAssignmentsCollectionResultOfT(
+            return new PageableWrapper<GremlinRoleAssignmentData, GremlinRoleAssignmentResource>(new GremlinRoleAssignmentDataCollectionResultOfT(
                 _gremlinResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

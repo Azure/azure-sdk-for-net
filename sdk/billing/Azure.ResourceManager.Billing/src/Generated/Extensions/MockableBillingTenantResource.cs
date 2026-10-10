@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Billing.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new OperationsGetAllAsyncCollectionResultOfT(OperationsRestClient, context, "MockableBillingTenantResource.GetAll");
+            return new BillingOperationInfoAsyncCollectionResultOfT(OperationsRestClient, context, "MockableBillingTenantResource.GetAll");
         }
 
         /// <summary>
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Billing.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new OperationsGetAllCollectionResultOfT(OperationsRestClient, context, "MockableBillingTenantResource.GetAll");
+            return new BillingOperationInfoCollectionResultOfT(OperationsRestClient, context, "MockableBillingTenantResource.GetAll");
         }
 
         /// <summary>

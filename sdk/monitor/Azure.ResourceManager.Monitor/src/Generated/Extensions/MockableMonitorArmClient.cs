@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MetricDefinitionsGetMonitorMetricDefinitionsAsyncCollectionResultOfT(MetricDefinitionsRestClient, scope.ToString(), metricnamespace, context, "MockableMonitorArmClient.GetMonitorMetricDefinitions");
+            return new MonitorMetricDefinitionAsyncCollectionResultOfT(MetricDefinitionsRestClient, scope.ToString(), metricnamespace, context, "MockableMonitorArmClient.GetMonitorMetricDefinitions");
         }
 
         /// <summary>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MetricDefinitionsGetMonitorMetricDefinitionsCollectionResultOfT(MetricDefinitionsRestClient, scope.ToString(), metricnamespace, context, "MockableMonitorArmClient.GetMonitorMetricDefinitions");
+            return new MonitorMetricDefinitionCollectionResultOfT(MetricDefinitionsRestClient, scope.ToString(), metricnamespace, context, "MockableMonitorArmClient.GetMonitorMetricDefinitions");
         }
 
         /// <summary>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MetricNamespacesGetMonitorMetricNamespacesAsyncCollectionResultOfT(MetricNamespacesRestClient, scope.ToString(), startTime, context, "MockableMonitorArmClient.GetMonitorMetricNamespaces");
+            return new MonitorMetricNamespaceAsyncCollectionResultOfT(MetricNamespacesRestClient, scope.ToString(), startTime, context, "MockableMonitorArmClient.GetMonitorMetricNamespaces");
         }
 
         /// <summary>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MetricNamespacesGetMonitorMetricNamespacesCollectionResultOfT(MetricNamespacesRestClient, scope.ToString(), startTime, context, "MockableMonitorArmClient.GetMonitorMetricNamespaces");
+            return new MonitorMetricNamespaceCollectionResultOfT(MetricNamespacesRestClient, scope.ToString(), startTime, context, "MockableMonitorArmClient.GetMonitorMetricNamespaces");
         }
 
         /// <summary>
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BaselinesGetMonitorMetricBaselinesAsyncCollectionResultOfT(
+            return new MonitorSingleMetricBaselineAsyncCollectionResultOfT(
                 BaselinesRestClient,
                 scope.ToString(),
                 metricnames,
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BaselinesGetMonitorMetricBaselinesCollectionResultOfT(
+            return new MonitorSingleMetricBaselineCollectionResultOfT(
                 BaselinesRestClient,
                 scope.ToString(),
                 metricnames,

@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualNetworkTapData, VirtualNetworkTapResource>(new VirtualNetworkTapsGetByResourceGroupAsyncCollectionResultOfT(_virtualNetworkTapsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualNetworkTapCollection.GetAll"), data => new VirtualNetworkTapResource(Client, data));
+            return new AsyncPageableWrapper<VirtualNetworkTapData, VirtualNetworkTapResource>(new VirtualNetworkTapDataAsyncCollectionResultOfT(_virtualNetworkTapsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualNetworkTapCollection.GetAll"), data => new VirtualNetworkTapResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualNetworkTapData, VirtualNetworkTapResource>(new VirtualNetworkTapsGetByResourceGroupCollectionResultOfT(_virtualNetworkTapsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualNetworkTapCollection.GetAll"), data => new VirtualNetworkTapResource(Client, data));
+            return new PageableWrapper<VirtualNetworkTapData, VirtualNetworkTapResource>(new VirtualNetworkTapDataCollectionResultOfT(_virtualNetworkTapsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualNetworkTapCollection.GetAll"), data => new VirtualNetworkTapResource(Client, data));
         }
 
         /// <summary>

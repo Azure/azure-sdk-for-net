@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PreparedImageSpecificationData, PreparedImageSpecificationResource>(new PreparedImageSpecificationsGetByResourceGroupAsyncCollectionResultOfT(_preparedImageSpecificationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PreparedImageSpecificationCollection.GetAll"), data => new PreparedImageSpecificationResource(Client, data));
+            return new AsyncPageableWrapper<PreparedImageSpecificationData, PreparedImageSpecificationResource>(new PreparedImageSpecificationDataAsyncCollectionResultOfT(_preparedImageSpecificationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PreparedImageSpecificationCollection.GetAll"), data => new PreparedImageSpecificationResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PreparedImageSpecificationData, PreparedImageSpecificationResource>(new PreparedImageSpecificationsGetByResourceGroupCollectionResultOfT(_preparedImageSpecificationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PreparedImageSpecificationCollection.GetAll"), data => new PreparedImageSpecificationResource(Client, data));
+            return new PageableWrapper<PreparedImageSpecificationData, PreparedImageSpecificationResource>(new PreparedImageSpecificationDataCollectionResultOfT(_preparedImageSpecificationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PreparedImageSpecificationCollection.GetAll"), data => new PreparedImageSpecificationResource(Client, data));
         }
 
         /// <summary>

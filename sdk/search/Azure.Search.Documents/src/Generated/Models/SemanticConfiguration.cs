@@ -16,6 +16,8 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private RankingOrder? _rankingOrder;
+        internal bool _rankingOrderIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SemanticConfiguration"/>. </summary>
         /// <param name="name"> The name of the semantic configuration. </param>
@@ -40,7 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             Name = name;
             PrioritizedFields = prioritizedFields;
-            RankingOrder = rankingOrder;
+            _rankingOrder = rankingOrder;
             FlightingOptIn = flightingOptIn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -52,7 +54,18 @@ namespace Azure.Search.Documents.Indexes.Models
         public SemanticPrioritizedFields PrioritizedFields { get; set; }
 
         /// <summary> Specifies the score type to be used for the sort order of the search results. </summary>
-        public RankingOrder? RankingOrder { get; set; }
+        public RankingOrder? RankingOrder
+        {
+            get
+            {
+                return _rankingOrder;
+            }
+            set
+            {
+                _rankingOrder = value;
+                _rankingOrderIsDefined = true;
+            }
+        }
 
         /// <summary> Determines which semantic or query rewrite models to use during model flighting/upgrades. </summary>
         public bool? FlightingOptIn { get; set; }

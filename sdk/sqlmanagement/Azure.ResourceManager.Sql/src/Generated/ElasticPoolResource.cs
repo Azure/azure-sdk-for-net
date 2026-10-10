@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticPoolOperationsGetElasticPoolOperationsAsyncCollectionResultOfT(
+            return new ElasticPoolOperationDataAsyncCollectionResultOfT(
                 _elasticPoolOperationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticPoolOperationsGetElasticPoolOperationsCollectionResultOfT(
+            return new ElasticPoolOperationDataCollectionResultOfT(
                 _elasticPoolOperationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlDatabaseData, SqlDatabaseResource>(new DatabasesGetDatabasesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SqlDatabaseData, SqlDatabaseResource>(new SqlDatabaseDataAsync1CollectionResultOfT(
                 _databasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlDatabaseData, SqlDatabaseResource>(new DatabasesGetDatabasesCollectionResultOfT(
+            return new PageableWrapper<SqlDatabaseData, SqlDatabaseResource>(new SqlDatabaseData1CollectionResultOfT(
                 _databasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

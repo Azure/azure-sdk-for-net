@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlVmData, SqlVmResource>(new SqlVirtualMachinesGetSqlVmsBySqlVmGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SqlVmData, SqlVmResource>(new SqlVmDataAsync1CollectionResultOfT(
                 _sqlVirtualMachinesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlVmData, SqlVmResource>(new SqlVirtualMachinesGetSqlVmsBySqlVmGroupCollectionResultOfT(
+            return new PageableWrapper<SqlVmData, SqlVmResource>(new SqlVmData1CollectionResultOfT(
                 _sqlVirtualMachinesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

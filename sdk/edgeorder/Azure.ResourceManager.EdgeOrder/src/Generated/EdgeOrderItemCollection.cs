@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeOrderItemData, EdgeOrderItemResource>(new OrderItemResourcesGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EdgeOrderItemData, EdgeOrderItemResource>(new EdgeOrderItemDataAsyncCollectionResultOfT(
                 _orderItemResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeOrderItemData, EdgeOrderItemResource>(new OrderItemResourcesGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<EdgeOrderItemData, EdgeOrderItemResource>(new EdgeOrderItemDataCollectionResultOfT(
                 _orderItemResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

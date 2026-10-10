@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProviderRegistrationData, ProviderRegistrationResource>(new ProviderRegistrationsGetAllAsyncCollectionResultOfT(_providerRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), context, "ProviderRegistrationCollection.GetAll"), data => new ProviderRegistrationResource(Client, data));
+            return new AsyncPageableWrapper<ProviderRegistrationData, ProviderRegistrationResource>(new ProviderRegistrationDataAsyncCollectionResultOfT(_providerRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), context, "ProviderRegistrationCollection.GetAll"), data => new ProviderRegistrationResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProviderRegistrationData, ProviderRegistrationResource>(new ProviderRegistrationsGetAllCollectionResultOfT(_providerRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), context, "ProviderRegistrationCollection.GetAll"), data => new ProviderRegistrationResource(Client, data));
+            return new PageableWrapper<ProviderRegistrationData, ProviderRegistrationResource>(new ProviderRegistrationDataCollectionResultOfT(_providerRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), context, "ProviderRegistrationCollection.GetAll"), data => new ProviderRegistrationResource(Client, data));
         }
 
         /// <summary>

@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="createdOn"> The certificate's create date and time. </param>
         /// <param name="updatedOn"> The certificate's last update date and time. </param>
         /// <param name="certificate"> The certificate content. </param>
-        /// <param name="policyResourceId"> The reference to policy stored in Azure Device Registry (ADR). </param>
+        /// <param name="certificateAuthorityResourceId"> Full certificate authority resource ID for ADR linked standard SKU hubs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IotHubCertificateProperties(string subject, DateTimeOffset? expireOn, string thumbprintString, bool? isVerified, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, BinaryData certificate, ResourceIdentifier policyResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IotHubCertificateProperties(string subject, DateTimeOffset? expireOn, string thumbprintString, bool? isVerified, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, BinaryData certificate, ResourceIdentifier certificateAuthorityResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Subject = subject;
             ExpireOn = expireOn;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.IotHub.Models
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
             Certificate = certificate;
-            PolicyResourceId = policyResourceId;
+            CertificateAuthorityResourceId = certificateAuthorityResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> The certificate content. </summary>
         public BinaryData Certificate { get; set; }
 
-        /// <summary> The reference to policy stored in Azure Device Registry (ADR). </summary>
-        public ResourceIdentifier PolicyResourceId { get; set; }
+        /// <summary> Full certificate authority resource ID for ADR linked standard SKU hubs. </summary>
+        public ResourceIdentifier CertificateAuthorityResourceId { get; set; }
     }
 }

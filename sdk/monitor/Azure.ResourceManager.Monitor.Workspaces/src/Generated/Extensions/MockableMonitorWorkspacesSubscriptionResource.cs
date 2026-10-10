@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MonitorWorkspaceData, MonitorWorkspaceResource>(new AzureMonitorWorkspacesGetBySubscriptionAsyncCollectionResultOfT(AzureMonitorWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorWorkspacesSubscriptionResource.GetMonitorWorkspaces"), data => new MonitorWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<MonitorWorkspaceData, MonitorWorkspaceResource>(new MonitorWorkspaceDataAsync0CollectionResultOfT(AzureMonitorWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorWorkspacesSubscriptionResource.GetMonitorWorkspaces"), data => new MonitorWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MonitorWorkspaceData, MonitorWorkspaceResource>(new AzureMonitorWorkspacesGetBySubscriptionCollectionResultOfT(AzureMonitorWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorWorkspacesSubscriptionResource.GetMonitorWorkspaces"), data => new MonitorWorkspaceResource(Client, data));
+            return new PageableWrapper<MonitorWorkspaceData, MonitorWorkspaceResource>(new MonitorWorkspaceData0CollectionResultOfT(AzureMonitorWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorWorkspacesSubscriptionResource.GetMonitorWorkspaces"), data => new MonitorWorkspaceResource(Client, data));
         }
     }
 }

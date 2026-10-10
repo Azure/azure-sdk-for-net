@@ -16,6 +16,18 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _modelName;
+        internal bool _modelNameIsDefined;
+        private double? _frequencyPenalty;
+        internal bool _frequencyPenaltyIsDefined;
+        private double? _presencePenalty;
+        internal bool _presencePenaltyIsDefined;
+        private int? _maxTokens;
+        internal bool _maxTokensIsDefined;
+        private double? _temperature;
+        internal bool _temperatureIsDefined;
+        private int? _seed;
+        internal bool _seedIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ChatCompletionCommonModelParameters"/>. </summary>
         public ChatCompletionCommonModelParameters()
@@ -34,33 +46,99 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ChatCompletionCommonModelParameters(string modelName, double? frequencyPenalty, double? presencePenalty, int? maxTokens, double? temperature, int? seed, IList<string> stop, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ModelName = modelName;
-            FrequencyPenalty = frequencyPenalty;
-            PresencePenalty = presencePenalty;
-            MaxTokens = maxTokens;
-            Temperature = temperature;
-            Seed = seed;
+            _modelName = modelName;
+            _frequencyPenalty = frequencyPenalty;
+            _presencePenalty = presencePenalty;
+            _maxTokens = maxTokens;
+            _temperature = temperature;
+            _seed = seed;
             Stop = stop;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the model to use (e.g., 'gpt-4o', etc.). Default is null if not specified. </summary>
-        public string ModelName { get; set; }
+        public string ModelName
+        {
+            get
+            {
+                return _modelName;
+            }
+            set
+            {
+                _modelName = value;
+                _modelNameIsDefined = true;
+            }
+        }
 
         /// <summary> A float in the range [-2,2] that reduces or increases likelihood of repeated tokens. Default is 0. </summary>
-        public double? FrequencyPenalty { get; set; }
+        public double? FrequencyPenalty
+        {
+            get
+            {
+                return _frequencyPenalty;
+            }
+            set
+            {
+                _frequencyPenalty = value;
+                _frequencyPenaltyIsDefined = true;
+            }
+        }
 
         /// <summary> A float in the range [-2,2] that penalizes new tokens based on their existing presence. Default is 0. </summary>
-        public double? PresencePenalty { get; set; }
+        public double? PresencePenalty
+        {
+            get
+            {
+                return _presencePenalty;
+            }
+            set
+            {
+                _presencePenalty = value;
+                _presencePenaltyIsDefined = true;
+            }
+        }
 
         /// <summary> Maximum number of tokens to generate. </summary>
-        public int? MaxTokens { get; set; }
+        public int? MaxTokens
+        {
+            get
+            {
+                return _maxTokens;
+            }
+            set
+            {
+                _maxTokens = value;
+                _maxTokensIsDefined = true;
+            }
+        }
 
         /// <summary> Sampling temperature. Default is 0.7. </summary>
-        public double? Temperature { get; set; }
+        public double? Temperature
+        {
+            get
+            {
+                return _temperature;
+            }
+            set
+            {
+                _temperature = value;
+                _temperatureIsDefined = true;
+            }
+        }
 
         /// <summary> Random seed for controlling deterministic outputs. If omitted, randomization is used. </summary>
-        public int? Seed { get; set; }
+        public int? Seed
+        {
+            get
+            {
+                return _seed;
+            }
+            set
+            {
+                _seed = value;
+                _seedIsDefined = true;
+            }
+        }
 
         /// <summary> List of stop sequences that will cut off text generation. Default is none. </summary>
         public IList<string> Stop { get; set; }

@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RegulatoryComplianceStandardData, RegulatoryComplianceStandardResource>(new RegulatoryComplianceStandardsGetAllAsyncCollectionResultOfT(_regulatoryComplianceStandardsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "RegulatoryComplianceStandardCollection.GetAll"), data => new RegulatoryComplianceStandardResource(Client, data));
+            return new AsyncPageableWrapper<RegulatoryComplianceStandardData, RegulatoryComplianceStandardResource>(new RegulatoryComplianceStandardDataAsyncCollectionResultOfT(_regulatoryComplianceStandardsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "RegulatoryComplianceStandardCollection.GetAll"), data => new RegulatoryComplianceStandardResource(Client, data));
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RegulatoryComplianceStandardData, RegulatoryComplianceStandardResource>(new RegulatoryComplianceStandardsGetAllCollectionResultOfT(_regulatoryComplianceStandardsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "RegulatoryComplianceStandardCollection.GetAll"), data => new RegulatoryComplianceStandardResource(Client, data));
+            return new PageableWrapper<RegulatoryComplianceStandardData, RegulatoryComplianceStandardResource>(new RegulatoryComplianceStandardDataCollectionResultOfT(_regulatoryComplianceStandardsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "RegulatoryComplianceStandardCollection.GetAll"), data => new RegulatoryComplianceStandardResource(Client, data));
         }
 
         /// <summary>

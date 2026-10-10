@@ -15,6 +15,20 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private int? _maxFieldsPerIndex;
+        internal bool _maxFieldsPerIndexIsDefined;
+        private int? _maxFieldNestingDepthPerIndex;
+        internal bool _maxFieldNestingDepthPerIndexIsDefined;
+        private int? _maxComplexCollectionFieldsPerIndex;
+        internal bool _maxComplexCollectionFieldsPerIndexIsDefined;
+        private int? _maxComplexObjectsInCollectionsPerDocument;
+        internal bool _maxComplexObjectsInCollectionsPerDocumentIsDefined;
+        private long? _maxStoragePerIndexInBytes;
+        internal bool _maxStoragePerIndexInBytesIsDefined;
+        private long? _maxCumulativeIndexerRuntimeSeconds;
+        internal bool _maxCumulativeIndexerRuntimeSecondsIsDefined;
+        private long? _maxVectorIndexSizePerIndexInBytes;
+        internal bool _maxVectorIndexSizePerIndexInBytesIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SearchServiceLimits"/>. </summary>
         internal SearchServiceLimits()
@@ -32,35 +46,77 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal SearchServiceLimits(int? maxFieldsPerIndex, int? maxFieldNestingDepthPerIndex, int? maxComplexCollectionFieldsPerIndex, int? maxComplexObjectsInCollectionsPerDocument, long? maxStoragePerIndexInBytes, long? maxCumulativeIndexerRuntimeSeconds, long? maxVectorIndexSizePerIndexInBytes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            MaxFieldsPerIndex = maxFieldsPerIndex;
-            MaxFieldNestingDepthPerIndex = maxFieldNestingDepthPerIndex;
-            MaxComplexCollectionFieldsPerIndex = maxComplexCollectionFieldsPerIndex;
-            MaxComplexObjectsInCollectionsPerDocument = maxComplexObjectsInCollectionsPerDocument;
-            MaxStoragePerIndexInBytes = maxStoragePerIndexInBytes;
-            MaxCumulativeIndexerRuntimeSeconds = maxCumulativeIndexerRuntimeSeconds;
-            MaxVectorIndexSizePerIndexInBytes = maxVectorIndexSizePerIndexInBytes;
+            _maxFieldsPerIndex = maxFieldsPerIndex;
+            _maxFieldNestingDepthPerIndex = maxFieldNestingDepthPerIndex;
+            _maxComplexCollectionFieldsPerIndex = maxComplexCollectionFieldsPerIndex;
+            _maxComplexObjectsInCollectionsPerDocument = maxComplexObjectsInCollectionsPerDocument;
+            _maxStoragePerIndexInBytes = maxStoragePerIndexInBytes;
+            _maxCumulativeIndexerRuntimeSeconds = maxCumulativeIndexerRuntimeSeconds;
+            _maxVectorIndexSizePerIndexInBytes = maxVectorIndexSizePerIndexInBytes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The maximum allowed fields per index. </summary>
-        public int? MaxFieldsPerIndex { get; }
+        public int? MaxFieldsPerIndex
+        {
+            get
+            {
+                return _maxFieldsPerIndex;
+            }
+        }
 
         /// <summary> The maximum depth which you can nest sub-fields in an index, including the top-level complex field. For example, a/b/c has a nesting depth of 3. </summary>
-        public int? MaxFieldNestingDepthPerIndex { get; }
+        public int? MaxFieldNestingDepthPerIndex
+        {
+            get
+            {
+                return _maxFieldNestingDepthPerIndex;
+            }
+        }
 
         /// <summary> The maximum number of fields of type Collection(Edm.ComplexType) allowed in an index. </summary>
-        public int? MaxComplexCollectionFieldsPerIndex { get; }
+        public int? MaxComplexCollectionFieldsPerIndex
+        {
+            get
+            {
+                return _maxComplexCollectionFieldsPerIndex;
+            }
+        }
 
         /// <summary> The maximum number of objects in complex collections allowed per document. </summary>
-        public int? MaxComplexObjectsInCollectionsPerDocument { get; }
+        public int? MaxComplexObjectsInCollectionsPerDocument
+        {
+            get
+            {
+                return _maxComplexObjectsInCollectionsPerDocument;
+            }
+        }
 
         /// <summary> The maximum amount of storage in bytes allowed per index. </summary>
-        public long? MaxStoragePerIndexInBytes { get; }
+        public long? MaxStoragePerIndexInBytes
+        {
+            get
+            {
+                return _maxStoragePerIndexInBytes;
+            }
+        }
 
         /// <summary> The maximum cumulative indexer runtime in seconds allowed for the service. </summary>
-        public long? MaxCumulativeIndexerRuntimeSeconds { get; }
+        public long? MaxCumulativeIndexerRuntimeSeconds
+        {
+            get
+            {
+                return _maxCumulativeIndexerRuntimeSeconds;
+            }
+        }
 
         /// <summary> The maximum vector index size (vector memory quota) allowed per index in bytes. </summary>
-        public long? MaxVectorIndexSizePerIndexInBytes { get; }
+        public long? MaxVectorIndexSizePerIndexInBytes
+        {
+            get
+            {
+                return _maxVectorIndexSizePerIndexInBytes;
+            }
+        }
     }
 }

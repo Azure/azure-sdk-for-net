@@ -760,29 +760,40 @@ namespace Azure.Core.Tests
         [TestCase("ALL_PROXY", "http://microsoft.com")]
         public async Task ProxySettingsAreReadFromEnvironment(string envVar, string url)
         {
-            try
+            using var proxyEnvironment = ClearProxyEnvironment();
+            using (TestServer testServer = new TestServer(async context =>
             {
-                using (TestServer testServer = new TestServer(async context =>
-                {
-                    context.Response.Headers["Via"] = "Test-Proxy";
-                    byte[] buffer = Encoding.UTF8.GetBytes("Hello");
-                    await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
-                }))
-                {
-                    Environment.SetEnvironmentVariable(envVar, testServer.Address.ToString());
+                context.Response.Headers["Via"] = "Test-Proxy";
+                byte[] buffer = Encoding.UTF8.GetBytes("Hello");
+                await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
+            }))
+            {
+                Environment.SetEnvironmentVariable(envVar, testServer.Address.ToString());
 
-                    var transport = GetTransport();
-                    Request request = transport.CreateRequest();
-                    request.Uri.Reset(new Uri(url));
-                    Response response = await ExecuteRequest(request, transport);
-                    Assert.True(response.Headers.TryGetValue("Via", out var via));
-                    Assert.AreEqual("Test-Proxy", via);
-                }
+                var transport = GetTransport();
+                Request request = transport.CreateRequest();
+                request.Uri.Reset(new Uri(url));
+                Response response = await ExecuteRequest(request, transport);
+                Assert.True(response.Headers.TryGetValue("Via", out var via));
+                Assert.AreEqual("Test-Proxy", via);
             }
-            finally
+        }
+
+        private static TestEnvVar ClearProxyEnvironment()
+        {
+            // CI proxy and bypass settings must not override the local proxy selected by these tests.
+            return new TestEnvVar(new Dictionary<string, string>
             {
-                Environment.SetEnvironmentVariable(envVar, null);
-            }
+                { "http_proxy", null },
+                { "HTTP_PROXY", null },
+                { "https_proxy", null },
+                { "HTTPS_PROXY", null },
+                { "all_proxy", null },
+                { "ALL_PROXY", null },
+                { "no_proxy", null },
+                { "NO_PROXY", null },
+                { "GATEWAY_INTERFACE", null }
+            });
         }
 
 #if NET462 // GlobalProxySelection.Select not supported on netcoreapp
@@ -793,6 +804,7 @@ namespace Azure.Core.Tests
 #pragma warning disable 618 // Use of obsolete symbol
             var oldGlobalProxySelection = GlobalProxySelection.Select;
 #pragma warning restore 618
+            using var proxyEnvironment = ClearProxyEnvironment();
             try
             {
                 using (TestServer testServer = new TestServer(async context =>

@@ -15,6 +15,8 @@ namespace Azure.Security.KeyVault.Certificates.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private KeyVaultErrorError _innerError;
+        internal bool _innerErrorIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultErrorError"/>. </summary>
         internal KeyVaultErrorError()
@@ -30,7 +32,7 @@ namespace Azure.Security.KeyVault.Certificates.Models
         {
             Code = code;
             Message = message;
-            InnerError = innerError;
+            _innerError = innerError;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,6 +43,12 @@ namespace Azure.Security.KeyVault.Certificates.Models
         public string Message { get; }
 
         /// <summary> The key vault server error. </summary>
-        public KeyVaultErrorError InnerError { get; }
+        public KeyVaultErrorError InnerError
+        {
+            get
+            {
+                return _innerError;
+            }
+        }
     }
 }

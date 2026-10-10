@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkMonitorData, NetworkMonitorResource>(new NetworkMonitorsGetByResourceGroupAsyncCollectionResultOfT(_networkMonitorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkMonitorCollection.GetAll"), data => new NetworkMonitorResource(Client, data));
+            return new AsyncPageableWrapper<NetworkMonitorData, NetworkMonitorResource>(new NetworkMonitorDataAsyncCollectionResultOfT(_networkMonitorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkMonitorCollection.GetAll"), data => new NetworkMonitorResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkMonitorData, NetworkMonitorResource>(new NetworkMonitorsGetByResourceGroupCollectionResultOfT(_networkMonitorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkMonitorCollection.GetAll"), data => new NetworkMonitorResource(Client, data));
+            return new PageableWrapper<NetworkMonitorData, NetworkMonitorResource>(new NetworkMonitorDataCollectionResultOfT(_networkMonitorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkMonitorCollection.GetAll"), data => new NetworkMonitorResource(Client, data));
         }
 
         /// <summary>

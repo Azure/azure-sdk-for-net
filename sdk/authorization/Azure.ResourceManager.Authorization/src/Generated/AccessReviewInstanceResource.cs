@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new AccessReviewInstanceContactedReviewersGetAllAsyncCollectionResultOfT(
+            return new AccessReviewContactedReviewerAsyncCollectionResultOfT(
                 _accessReviewInstanceContactedReviewersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new AccessReviewInstanceContactedReviewersGetAllCollectionResultOfT(
+            return new AccessReviewContactedReviewerCollectionResultOfT(
                 _accessReviewInstanceContactedReviewersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AccessReviewDecisionData, AccessReviewDecisionResource>(new AccessReviewInstanceDecisionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AccessReviewDecisionData, AccessReviewDecisionResource>(new AccessReviewDecisionDataAsyncCollectionResultOfT(
                 _accessReviewInstanceDecisionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AccessReviewDecisionData, AccessReviewDecisionResource>(new AccessReviewInstanceDecisionsGetAllCollectionResultOfT(
+            return new PageableWrapper<AccessReviewDecisionData, AccessReviewDecisionResource>(new AccessReviewDecisionDataCollectionResultOfT(
                 _accessReviewInstanceDecisionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,

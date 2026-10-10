@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new GalleriesGetSoftDeletedResourcesByArtifactNameAsyncCollectionResultOfT(
+            return new GallerySoftDeletedResourceDetailsAsyncCollectionResultOfT(
                 _galleriesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new GalleriesGetSoftDeletedResourcesByArtifactNameCollectionResultOfT(
+            return new GallerySoftDeletedResourceDetailsCollectionResultOfT(
                 _galleriesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TriggeredJobHistoryData, WebSiteSlotTriggeredWebJobHistoryResource>(new TriggeredJobHistoriesGetTriggeredWebJobHistorySlotAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<TriggeredJobHistoryData, WebSiteSlotTriggeredWebJobHistoryResource>(new TriggeredJobHistoryDataAsyncCollectionResultOfT(
                 _triggeredJobHistoriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TriggeredJobHistoryData, WebSiteSlotTriggeredWebJobHistoryResource>(new TriggeredJobHistoriesGetTriggeredWebJobHistorySlotCollectionResultOfT(
+            return new PageableWrapper<TriggeredJobHistoryData, WebSiteSlotTriggeredWebJobHistoryResource>(new TriggeredJobHistoryDataCollectionResultOfT(
                 _triggeredJobHistoriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

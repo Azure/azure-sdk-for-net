@@ -15,6 +15,8 @@ namespace Azure.AI.Agents.Persistent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private ToolResources _toolResources;
+        internal bool _toolResourcesIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CreateThreadRequest"/>. </summary>
         internal CreateThreadRequest()
@@ -35,7 +37,7 @@ namespace Azure.AI.Agents.Persistent
         internal CreateThreadRequest(IList<ThreadMessageOptions> messages, ToolResources toolResources, IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Messages = messages;
-            ToolResources = toolResources;
+            _toolResources = toolResources;
             Metadata = metadata;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -48,7 +50,13 @@ namespace Azure.AI.Agents.Persistent
         /// type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires
         /// a list of vector store IDs.
         /// </summary>
-        public ToolResources ToolResources { get; }
+        public ToolResources ToolResources
+        {
+            get
+            {
+                return _toolResources;
+            }
+        }
 
         /// <summary> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </summary>
         public IDictionary<string, string> Metadata { get; }

@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceHealthEventData, ResourceHealthEventResource>(new EventsGetBySubscriptionIdAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ResourceHealthEventData, ResourceHealthEventResource>(new ResourceHealthEventDataAsyncCollectionResultOfT(
                 _eventsRestClient,
                 Id.SubscriptionId,
                 filter,
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceHealthEventData, ResourceHealthEventResource>(new EventsGetBySubscriptionIdCollectionResultOfT(
+            return new PageableWrapper<ResourceHealthEventData, ResourceHealthEventResource>(new ResourceHealthEventDataCollectionResultOfT(
                 _eventsRestClient,
                 Id.SubscriptionId,
                 filter,

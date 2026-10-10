@@ -12,6 +12,8 @@ namespace Azure.AI.Projects
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private Uri _operationResult;
+        internal bool _operationResultIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CreateAsyncResult"/>. </summary>
         internal CreateAsyncResult()
@@ -25,7 +27,7 @@ namespace Azure.AI.Projects
         internal CreateAsyncResult(Uri location, Uri operationResult, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
-            OperationResult = operationResult;
+            _operationResult = operationResult;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -33,6 +35,12 @@ namespace Azure.AI.Projects
         public Uri Location { get; }
 
         /// <summary> URL to the operation result, or null if the operation is still in progress. </summary>
-        public Uri OperationResult { get; }
+        public Uri OperationResult
+        {
+            get
+            {
+                return _operationResult;
+            }
+        }
     }
 }

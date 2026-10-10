@@ -16,6 +16,14 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _synchronizationInterval;
+        internal bool _synchronizationIntervalIsDefined;
+        private SynchronizationState _currentSynchronizationState;
+        internal bool _currentSynchronizationStateIsDefined;
+        private CompletedSynchronizationState _lastSynchronizationState;
+        internal bool _lastSynchronizationStateIsDefined;
+        private KnowledgeSourceStatistics _statistics;
+        internal bool _statisticsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceStatus"/>. </summary>
         /// <param name="synchronizationStatus"> The current synchronization status. </param>
@@ -36,10 +44,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         {
             Kind = kind;
             SynchronizationStatus = synchronizationStatus;
-            SynchronizationInterval = synchronizationInterval;
-            CurrentSynchronizationState = currentSynchronizationState;
-            LastSynchronizationState = lastSynchronizationState;
-            Statistics = statistics;
+            _synchronizationInterval = synchronizationInterval;
+            _currentSynchronizationState = currentSynchronizationState;
+            _lastSynchronizationState = lastSynchronizationState;
+            _statistics = statistics;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -50,15 +58,59 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         public KnowledgeSourceSynchronizationStatus SynchronizationStatus { get; set; }
 
         /// <summary> The synchronization interval (e.g., '1d' for daily). Null if no schedule is configured. </summary>
-        public string SynchronizationInterval { get; set; }
+        public string SynchronizationInterval
+        {
+            get
+            {
+                return _synchronizationInterval;
+            }
+            set
+            {
+                _synchronizationInterval = value;
+                _synchronizationIntervalIsDefined = true;
+            }
+        }
 
         /// <summary> Current synchronization state that spans multiple indexer runs. </summary>
-        public SynchronizationState CurrentSynchronizationState { get; set; }
+        public SynchronizationState CurrentSynchronizationState
+        {
+            get
+            {
+                return _currentSynchronizationState;
+            }
+            set
+            {
+                _currentSynchronizationState = value;
+                _currentSynchronizationStateIsDefined = true;
+            }
+        }
 
         /// <summary> Details of the last completed synchronization. Null on first sync. </summary>
-        public CompletedSynchronizationState LastSynchronizationState { get; set; }
+        public CompletedSynchronizationState LastSynchronizationState
+        {
+            get
+            {
+                return _lastSynchronizationState;
+            }
+            set
+            {
+                _lastSynchronizationState = value;
+                _lastSynchronizationStateIsDefined = true;
+            }
+        }
 
         /// <summary> Statistical information about the knowledge source synchronization history. Null on first sync. </summary>
-        public KnowledgeSourceStatistics Statistics { get; set; }
+        public KnowledgeSourceStatistics Statistics
+        {
+            get
+            {
+                return _statistics;
+            }
+            set
+            {
+                _statistics = value;
+                _statisticsIsDefined = true;
+            }
+        }
     }
 }
