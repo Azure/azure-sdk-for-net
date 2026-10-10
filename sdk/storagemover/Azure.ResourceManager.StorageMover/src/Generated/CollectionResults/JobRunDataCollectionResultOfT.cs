@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> The pages of JobRunDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<JobRunData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

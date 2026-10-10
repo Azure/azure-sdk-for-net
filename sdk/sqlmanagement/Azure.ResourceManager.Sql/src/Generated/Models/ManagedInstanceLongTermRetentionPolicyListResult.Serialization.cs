@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ManagedInstanceLongTermRetentionPolicyListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ManagedInstanceLongTermRetentionPolicyListResult(value ?? new ChangeTrackingList<ManagedInstanceLongTermRetentionPolicyData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

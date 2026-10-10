@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WorkloadClassifierListResult(value, nextLink, additionalBinaryDataProperties);
+            return new WorkloadClassifierListResult(value ?? new ChangeTrackingList<WorkloadClassifierData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

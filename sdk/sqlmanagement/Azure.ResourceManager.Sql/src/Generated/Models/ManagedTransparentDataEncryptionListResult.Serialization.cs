@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ManagedTransparentDataEncryptionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ManagedTransparentDataEncryptionListResult(value ?? new ChangeTrackingList<ManagedTransparentDataEncryptionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

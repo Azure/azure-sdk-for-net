@@ -246,11 +246,11 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             return new StorageCorsRule(
-                allowedOrigins,
-                allowedMethods,
+                allowedOrigins ?? new ChangeTrackingList<string>(),
+                allowedMethods ?? new ChangeTrackingList<CorsRuleAllowedMethod>(),
                 maxAgeInSeconds,
-                exposedHeaders,
-                allowedHeaders,
+                exposedHeaders ?? new ChangeTrackingList<string>(),
+                allowedHeaders ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
     }

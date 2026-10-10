@@ -217,8 +217,8 @@ namespace Azure.ResourceManager.Storage.Models
                 dataShareIdentifier,
                 description,
                 dataShareUri,
-                accessPolicies,
-                assets,
+                accessPolicies ?? new ChangeTrackingList<StorageDataShareAccessPolicy>(),
+                assets ?? new ChangeTrackingList<StorageDataShareAsset>(),
                 provisioningState,
                 additionalBinaryDataProperties);
         }
