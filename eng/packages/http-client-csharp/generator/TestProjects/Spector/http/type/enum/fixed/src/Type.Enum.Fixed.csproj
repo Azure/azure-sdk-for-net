@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the Type.Enum.Fixed client library for developing .NET applications with rich experience.</Description>
+    <Description>The Type.Enum.Fixed client library provides access to Azure services from .NET applications, with support for authentication, retries, and diagnostics.</Description>
     <AssemblyTitle>SDK Code Generation Type.Enum.Fixed</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>_Type._Enum.Fixed</PackageTags>
