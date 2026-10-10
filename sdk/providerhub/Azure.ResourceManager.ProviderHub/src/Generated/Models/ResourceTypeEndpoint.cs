@@ -44,8 +44,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="apiVersion"> Api version. </param>
         /// <param name="zones"> List of zones. </param>
         /// <param name="dataBoundary"> The data boundary. </param>
+        /// <param name="dstsConfiguration"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceTypeEndpoint(ResourceTypeEndpointKind? kind, bool? isEnabled, IList<string> apiVersions, IList<AzureLocation> locations, IList<string> requiredFeatures, ProviderFeaturesRule featuresRule, IList<ResourceTypeExtension> extensions, TimeSpan? timeout, ProviderEndpointTypeResourceType? endpointType, TokenAuthConfiguration tokenAuthConfiguration, string skuLink, Uri endpointUri, string apiVersion, IList<string> zones, ResourceTypeDataBoundary? dataBoundary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceTypeEndpoint(ResourceTypeEndpointKind? kind, bool? isEnabled, IList<string> apiVersions, IList<AzureLocation> locations, IList<string> requiredFeatures, ProviderFeaturesRule featuresRule, IList<ResourceTypeExtension> extensions, TimeSpan? timeout, ProviderEndpointTypeResourceType? endpointType, TokenAuthConfiguration tokenAuthConfiguration, string skuLink, Uri endpointUri, string apiVersion, IList<string> zones, ResourceTypeDataBoundary? dataBoundary, ProviderDstsConfiguration dstsConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             IsEnabled = isEnabled;
@@ -62,6 +63,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ApiVersion = apiVersion;
             Zones = zones;
             DataBoundary = dataBoundary;
+            DstsConfiguration = dstsConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

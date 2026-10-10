@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ExpeditedRolloutSubmitters = new ChangeTrackingList<string>();
             CanaryManifestOwners = new ChangeTrackingList<string>();
             FeatureManagementOwners = new ChangeTrackingList<string>();
+            ServiceTreeInfos = new ChangeTrackingList<ServiceTreeInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceProviderManagement"/>. </summary>
@@ -45,8 +46,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="profitCenterCode"> The profit center code for the subscription. </param>
         /// <param name="profitCenterProgramId"> The profit center program id for the subscription. </param>
         /// <param name="featureManagementOwners"> List of feature management owners. </param>
+        /// <param name="serviceTreeInfos"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProviderManagement(IList<string> schemaOwners, IList<string> manifestOwners, IList<string> authorizationOwners, string incidentRoutingService, string incidentRoutingTeam, string incidentContactEmail, ResourceAccessPolicy? resourceAccessPolicy, IList<ResourceAccessRole> resourceAccessRoleList, IList<string> expeditedRolloutSubmitters, ResourceProviderErrorResponseMessageOptions errorResponseMessageOptions, ExpeditedRolloutMetadata expeditedRolloutMetadata, IList<string> canaryManifestOwners, string profitCenterCode, string profitCenterProgramId, IList<string> featureManagementOwners, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceProviderManagement(IList<string> schemaOwners, IList<string> manifestOwners, IList<string> authorizationOwners, string incidentRoutingService, string incidentRoutingTeam, string incidentContactEmail, ResourceAccessPolicy? resourceAccessPolicy, IList<ResourceAccessRole> resourceAccessRoleList, IList<string> expeditedRolloutSubmitters, ResourceProviderErrorResponseMessageOptions errorResponseMessageOptions, ExpeditedRolloutMetadata expeditedRolloutMetadata, IList<string> canaryManifestOwners, string profitCenterCode, string profitCenterProgramId, IList<string> featureManagementOwners, IList<ServiceTreeInfo> serviceTreeInfos, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SchemaOwners = schemaOwners;
             ManifestOwners = manifestOwners;
@@ -63,6 +65,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ProfitCenterCode = profitCenterCode;
             ProfitCenterProgramId = profitCenterProgramId;
             FeatureManagementOwners = featureManagementOwners;
+            ServiceTreeInfos = serviceTreeInfos;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

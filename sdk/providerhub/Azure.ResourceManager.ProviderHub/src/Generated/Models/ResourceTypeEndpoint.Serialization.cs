@@ -190,6 +190,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("dataBoundary"u8);
                 writer.WriteStringValue(DataBoundary.Value.ToString());
             }
+            if (Optional.IsDefined(DstsConfiguration))
+            {
+                writer.WritePropertyName("dstsConfiguration"u8);
+                writer.WriteObjectValue(DstsConfiguration, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -247,6 +252,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             string apiVersion = default;
             IList<string> zones = default;
             ResourceTypeDataBoundary? dataBoundary = default;
+            ProviderDstsConfiguration dstsConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -423,6 +429,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     dataBoundary = new ResourceTypeDataBoundary(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("dstsConfiguration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dstsConfiguration = ProviderDstsConfiguration.DeserializeProviderDstsConfiguration(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -444,6 +459,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 apiVersion,
                 zones ?? new ChangeTrackingList<string>(),
                 dataBoundary,
+                dstsConfiguration,
                 additionalBinaryDataProperties);
         }
     }

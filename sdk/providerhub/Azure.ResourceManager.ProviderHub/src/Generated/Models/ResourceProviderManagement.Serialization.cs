@@ -214,6 +214,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(ServiceTreeInfos))
+            {
+                writer.WritePropertyName("serviceTreeInfos"u8);
+                writer.WriteStartArray();
+                foreach (ServiceTreeInfo item in ServiceTreeInfos)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -271,6 +281,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             string profitCenterCode = default;
             string profitCenterProgramId = default;
             IList<string> featureManagementOwners = default;
+            IList<ServiceTreeInfo> serviceTreeInfos = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -466,6 +477,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     featureManagementOwners = array;
                     continue;
                 }
+                if (prop.NameEquals("serviceTreeInfos"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ServiceTreeInfo> array = new List<ServiceTreeInfo>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ServiceTreeInfo.DeserializeServiceTreeInfo(item, options));
+                    }
+                    serviceTreeInfos = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -487,6 +512,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 profitCenterCode,
                 profitCenterProgramId,
                 featureManagementOwners ?? new ChangeTrackingList<string>(),
+                serviceTreeInfos ?? new ChangeTrackingList<ServiceTreeInfo>(),
                 additionalBinaryDataProperties);
         }
     }

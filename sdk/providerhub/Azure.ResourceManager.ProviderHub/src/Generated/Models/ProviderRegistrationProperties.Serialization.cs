@@ -167,6 +167,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             string legacyNamespace = default;
             IList<string> legacyRegistrations = default;
             string customManifestVersion = default;
+            ProviderDstsConfiguration dstsConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ProviderHubMetadata providerHubMetadata = default;
             ProviderHubProvisioningState? provisioningState = default;
@@ -504,6 +505,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     customManifestVersion = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("dstsConfiguration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dstsConfiguration = ProviderDstsConfiguration.DeserializeProviderDstsConfiguration(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("providerHubMetadata"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -599,6 +609,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 legacyNamespace,
                 legacyRegistrations ?? new ChangeTrackingList<string>(),
                 customManifestVersion,
+                dstsConfiguration,
                 additionalBinaryDataProperties,
                 providerHubMetadata,
                 provisioningState,

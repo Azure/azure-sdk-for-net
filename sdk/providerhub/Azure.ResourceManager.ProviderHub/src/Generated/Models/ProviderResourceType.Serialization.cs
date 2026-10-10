@@ -326,6 +326,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("resourceProviderAuthorizationRules"u8);
                 writer.WriteObjectValue(ResourceProviderAuthorizationRules, options);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ServiceTreeInfos))
+            {
+                writer.WritePropertyName("serviceTreeInfos"u8);
+                writer.WriteStartArray();
+                foreach (ServiceTreeInfo item in ServiceTreeInfos)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -393,12 +403,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
             TemplateDeploymentPolicy templateDeploymentPolicy = default;
             IReadOnlyList<ProviderHubExtendedLocationOptions> extendedLocations = default;
             IReadOnlyList<LinkedOperationRule> linkedOperationRules = default;
-            Models.ManifestResourceDeletionPolicy? resourceDeletionPolicy = default;
+            ManifestResourceDeletionPolicy? resourceDeletionPolicy = default;
             IList<ResourceDeletionPolicyAndProperties> resourceDeletionPolicies = default;
             ProviderQuotaRule quotaRule = default;
             IReadOnlyList<ProviderNotification> notifications = default;
             IReadOnlyList<LinkedNotificationRule> linkedNotificationRules = default;
             ResourceProviderAuthorizationRules resourceProviderAuthorizationRules = default;
+            IReadOnlyList<ServiceTreeInfo> serviceTreeInfos = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -702,7 +713,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    resourceDeletionPolicy = new Models.ManifestResourceDeletionPolicy(prop.Value.GetString());
+                    resourceDeletionPolicy = new ManifestResourceDeletionPolicy(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("resourceDeletionPolicies"u8))
@@ -765,6 +776,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     resourceProviderAuthorizationRules = ResourceProviderAuthorizationRules.DeserializeResourceProviderAuthorizationRules(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("serviceTreeInfos"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ServiceTreeInfo> array = new List<ServiceTreeInfo>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ServiceTreeInfo.DeserializeServiceTreeInfo(item, options));
+                    }
+                    serviceTreeInfos = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -802,6 +827,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 notifications ?? new ChangeTrackingList<ProviderNotification>(),
                 linkedNotificationRules ?? new ChangeTrackingList<LinkedNotificationRule>(),
                 resourceProviderAuthorizationRules,
+                serviceTreeInfos ?? new ChangeTrackingList<ServiceTreeInfo>(),
                 additionalBinaryDataProperties);
         }
     }
