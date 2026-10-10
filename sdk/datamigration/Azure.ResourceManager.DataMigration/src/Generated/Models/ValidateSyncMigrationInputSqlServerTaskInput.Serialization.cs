@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ValidateSyncMigrationInputSqlServerTaskInput(sourceConnectionInfo, targetConnectionInfo, selectedDatabases, additionalBinaryDataProperties);
+            return new ValidateSyncMigrationInputSqlServerTaskInput(sourceConnectionInfo, targetConnectionInfo, selectedDatabases ?? new ChangeTrackingList<MigrateSqlServerSqlDBSyncDatabaseInput>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DataProtectionBackupSchedule(repeatingTimeIntervals, timeZone, additionalBinaryDataProperties);
+            return new DataProtectionBackupSchedule(repeatingTimeIntervals ?? new ChangeTrackingList<string>(), timeZone, additionalBinaryDataProperties);
         }
     }
 }

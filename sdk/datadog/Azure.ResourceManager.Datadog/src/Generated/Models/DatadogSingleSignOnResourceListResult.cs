@@ -13,23 +13,23 @@ using Azure.ResourceManager.Datadog;
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> Response of a list operation. </summary>
-    internal partial class DatadogSingleSignOnResourceListResponse
+    internal partial class DatadogSingleSignOnResourceListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DatadogSingleSignOnResourceListResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogSingleSignOnResourceListResult"/>. </summary>
         /// <param name="value"> The DatadogSingleSignOnResource items on this page. </param>
-        internal DatadogSingleSignOnResourceListResponse(IEnumerable<DatadogSingleSignOnData> value)
+        internal DatadogSingleSignOnResourceListResult(IEnumerable<DatadogSingleSignOnData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DatadogSingleSignOnResourceListResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogSingleSignOnResourceListResult"/>. </summary>
         /// <param name="value"> The DatadogSingleSignOnResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatadogSingleSignOnResourceListResponse(IList<DatadogSingleSignOnData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatadogSingleSignOnResourceListResult(IList<DatadogSingleSignOnData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;

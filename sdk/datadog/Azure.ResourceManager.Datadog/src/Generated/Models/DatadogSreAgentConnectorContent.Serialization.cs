@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DatadogSreAgentConnectorContent(mcpConnectorResourceIdList, action, additionalBinaryDataProperties);
+            return new DatadogSreAgentConnectorContent(mcpConnectorResourceIdList ?? new ChangeTrackingList<DatadogSreAgentConfiguration>(), action, additionalBinaryDataProperties);
         }
     }
 }

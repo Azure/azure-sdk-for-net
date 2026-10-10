@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ExposureControlBatchContent(exposureControlRequests, additionalBinaryDataProperties);
+            return new ExposureControlBatchContent(exposureControlRequests ?? new ChangeTrackingList<ExposureControlContent>(), additionalBinaryDataProperties);
         }
     }
 }

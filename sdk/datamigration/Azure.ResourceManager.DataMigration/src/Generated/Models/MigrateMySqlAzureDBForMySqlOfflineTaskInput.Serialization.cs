@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateMySqlAzureDBForMySqlOfflineTaskInput(
                 sourceConnectionInfo,
                 targetConnectionInfo,
-                selectedDatabases,
+                selectedDatabases ?? new ChangeTrackingList<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput>(),
                 shouldMakeSourceServerReadOnly,
                 startedOn,
                 optionalAgentSettings ?? new ChangeTrackingDictionary<string, string>(),

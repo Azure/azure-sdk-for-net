@@ -24,12 +24,8 @@ namespace Azure.ResourceManager.DependencyMap
     [ModelReaderWriterBuildable(typeof(DependencyMapDiscoverySourceResource))]
     [ModelReaderWriterBuildable(typeof(DependencyMapPatch))]
     [ModelReaderWriterBuildable(typeof(DependencyMapProcessNameFilter))]
-    [ModelReaderWriterBuildable(typeof(DependencyMapProperties))]
     [ModelReaderWriterBuildable(typeof(DependencyMapResource))]
     [ModelReaderWriterBuildable(typeof(DependencyMapVisualizationFilter))]
-    [ModelReaderWriterBuildable(typeof(DependencyProcessFilter))]
-    [ModelReaderWriterBuildable(typeof(DiscoverySourceResourceListResult))]
-    [ModelReaderWriterBuildable(typeof(ExportDependenciesAdditionalInfo))]
     [ModelReaderWriterBuildable(typeof(ExportDependenciesContent))]
     [ModelReaderWriterBuildable(typeof(ExportDependenciesOperationResult))]
     [ModelReaderWriterBuildable(typeof(ExportDependenciesResultProperties))]
@@ -37,13 +33,10 @@ namespace Azure.ResourceManager.DependencyMap
     [ModelReaderWriterBuildable(typeof(GetConnectionsWithConnectedMachineForFocusedMachineContent))]
     [ModelReaderWriterBuildable(typeof(GetDependencyViewForAllMachinesContent))]
     [ModelReaderWriterBuildable(typeof(GetDependencyViewForAllMachinesOperationResult))]
-    [ModelReaderWriterBuildable(typeof(GetDependencyViewForAllMachinesResultProperties))]
     [ModelReaderWriterBuildable(typeof(GetDependencyViewForFocusedMachineContent))]
-    [ModelReaderWriterBuildable(typeof(MapsResourceListResult))]
     [ModelReaderWriterBuildable(typeof(OffAzureDiscoverySourceProperties))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UnknownDependencyMapDiscoverySourceProperties))]
     public partial class AzureResourceManagerDependencyMapContext : ModelReaderWriterContext
     {
     }

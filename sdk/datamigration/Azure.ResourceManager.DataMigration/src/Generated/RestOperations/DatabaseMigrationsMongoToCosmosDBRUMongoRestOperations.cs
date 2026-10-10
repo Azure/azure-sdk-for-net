@@ -12,30 +12,30 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    internal partial class DatabaseMigrationsMongoToCosmosDbRUMongo
+    internal partial class DatabaseMigrationsMongoToCosmosDBRUMongo
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
 
-        /// <summary> Initializes a new instance of DatabaseMigrationsMongoToCosmosDbRUMongo for mocking. </summary>
-        protected DatabaseMigrationsMongoToCosmosDbRUMongo()
+        /// <summary> Initializes a new instance of DatabaseMigrationsMongoToCosmosDBRUMongo for mocking. </summary>
+        protected DatabaseMigrationsMongoToCosmosDBRUMongo()
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseMigrationsMongoToCosmosDbRUMongo. </summary>
+        /// <summary> Initializes a new instance of DatabaseMigrationsMongoToCosmosDBRUMongo. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal DatabaseMigrationsMongoToCosmosDbRUMongo(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        internal DatabaseMigrationsMongoToCosmosDBRUMongo(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
-            _userAgent = new TelemetryDetails(typeof(DatabaseMigrationsMongoToCosmosDbRUMongo).Assembly, applicationId);
+            _userAgent = new TelemetryDetails(typeof(DatabaseMigrationsMongoToCosmosDBRUMongo).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>

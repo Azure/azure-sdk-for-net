@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 additionalBinaryDataProperties,
                 description,
                 updateDescription,
-                organizations,
+                organizations ?? new ChangeTrackingList<DevOpsOrganization>(),
                 permissionProfile,
                 @alias);
         }

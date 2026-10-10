@@ -8,36 +8,35 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> Response of a list operation. </summary>
-    internal partial class MonitoringTagRulesListResponse
+    internal partial class DatadogAgreementResourceListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MonitoringTagRulesListResponse"/>. </summary>
-        /// <param name="value"> The MonitoringTagRules items on this page. </param>
-        internal MonitoringTagRulesListResponse(IEnumerable<DataMonitoringTagRuleData> value)
+        /// <summary> Initializes a new instance of <see cref="DatadogAgreementResourceListResult"/>. </summary>
+        /// <param name="value"> The DatadogAgreementResource items on this page. </param>
+        internal DatadogAgreementResourceListResult(IEnumerable<DatadogAgreement> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonitoringTagRulesListResponse"/>. </summary>
-        /// <param name="value"> The MonitoringTagRules items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="DatadogAgreementResourceListResult"/>. </summary>
+        /// <param name="value"> The DatadogAgreementResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoringTagRulesListResponse(IList<DataMonitoringTagRuleData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatadogAgreementResourceListResult(IList<DatadogAgreement> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The MonitoringTagRules items on this page. </summary>
-        public IList<DataMonitoringTagRuleData> Value { get; }
+        /// <summary> The DatadogAgreementResource items on this page. </summary>
+        public IList<DatadogAgreement> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

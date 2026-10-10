@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateOracleAzureDBForPostgreSqlSyncTaskProperties : DataMigrationProjectTaskProperties
     {
         /// <summary> Initializes a new instance of <see cref="MigrateOracleAzureDBForPostgreSqlSyncTaskProperties"/>. </summary>
-        public MigrateOracleAzureDBForPostgreSqlSyncTaskProperties() : base(DataMigrationTaskType.MigrateOracleAzureDbForPostgreSqlSync)
+        public MigrateOracleAzureDBForPostgreSqlSyncTaskProperties() : base(DataMigrationTaskType.MigrateOracleAzureDBForPostgreSqlSync)
         {
             Output = new ChangeTrackingList<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>();
         }

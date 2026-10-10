@@ -239,10 +239,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 tier,
                 size,
                 family,
-                locations,
-                locationInfo,
-                capabilities,
-                restrictions,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                locationInfo ?? new ChangeTrackingList<ResourceSkuLocationInfo>(),
+                capabilities ?? new ChangeTrackingList<ResourceSkuCapabilities>(),
+                restrictions ?? new ChangeTrackingList<ResourceSkuRestrictions>(),
                 additionalBinaryDataProperties);
         }
     }

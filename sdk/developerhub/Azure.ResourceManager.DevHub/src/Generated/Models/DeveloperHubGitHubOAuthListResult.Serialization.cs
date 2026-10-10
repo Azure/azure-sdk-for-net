@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DevHub.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (GitHubOAuthResponseData item in Value)
+                foreach (GitHubOAuthResultData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DevHub.Models
             {
                 return null;
             }
-            IList<GitHubOAuthResponseData> value = default;
+            IList<GitHubOAuthResultData> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.DevHub.Models
                     {
                         continue;
                     }
-                    List<GitHubOAuthResponseData> array = new List<GitHubOAuthResponseData>();
+                    List<GitHubOAuthResultData> array = new List<GitHubOAuthResultData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(GitHubOAuthResponseData.DeserializeGitHubOAuthResponseData(item, options));
+                        array.Add(GitHubOAuthResultData.DeserializeGitHubOAuthResultData(item, options));
                     }
                     value = array;
                     continue;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DeveloperHubGitHubOAuthListResult(value ?? new ChangeTrackingList<GitHubOAuthResponseData>(), additionalBinaryDataProperties);
+            return new DeveloperHubGitHubOAuthListResult(value ?? new ChangeTrackingList<GitHubOAuthResultData>(), additionalBinaryDataProperties);
         }
     }
 }

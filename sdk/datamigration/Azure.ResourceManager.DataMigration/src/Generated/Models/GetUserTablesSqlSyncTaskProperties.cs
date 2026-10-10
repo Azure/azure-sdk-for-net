@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class GetUserTablesSqlSyncTaskProperties : DataMigrationProjectTaskProperties
     {
         /// <summary> Initializes a new instance of <see cref="GetUserTablesSqlSyncTaskProperties"/>. </summary>
-        public GetUserTablesSqlSyncTaskProperties() : base(DataMigrationTaskType.GetUserTablesAzureSqlDbSync)
+        public GetUserTablesSqlSyncTaskProperties() : base(DataMigrationTaskType.GetUserTablesAzureSqlDBSync)
         {
             Output = new ChangeTrackingList<GetUserTablesSqlSyncTaskOutput>();
         }

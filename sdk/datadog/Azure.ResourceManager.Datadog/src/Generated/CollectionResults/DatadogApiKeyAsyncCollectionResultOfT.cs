@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Datadog
         /// <returns> The pages of DatadogApiKeyAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<DatadogApiKey>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Datadog
                 {
                     yield break;
                 }
-                DatadogApiKeyListResponse result = DatadogApiKeyListResponse.FromResponse(response);
+                DatadogApiKeyListResult result = DatadogApiKeyListResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<DatadogApiKey>.FromValues((IReadOnlyList<DatadogApiKey>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

@@ -15,63 +15,63 @@ using Azure.ResourceManager.Datadog;
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> Response of a list operation. </summary>
-    internal partial class DatadogSingleSignOnResourceListResponse : IJsonModel<DatadogSingleSignOnResourceListResponse>
+    internal partial class DatadogSingleSignOnResourceListResult : IJsonModel<DatadogSingleSignOnResourceListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="DatadogSingleSignOnResourceListResponse"/> for deserialization. </summary>
-        internal DatadogSingleSignOnResourceListResponse()
+        /// <summary> Initializes a new instance of <see cref="DatadogSingleSignOnResourceListResult"/> for deserialization. </summary>
+        internal DatadogSingleSignOnResourceListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DatadogSingleSignOnResourceListResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DatadogSingleSignOnResourceListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatadogSingleSignOnResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatadogSingleSignOnResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDatadogSingleSignOnResourceListResponse(document.RootElement, options);
+                        return DeserializeDatadogSingleSignOnResourceListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatadogSingleSignOnResourceListResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogSingleSignOnResourceListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatadogSingleSignOnResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatadogSingleSignOnResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDatadogContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DatadogSingleSignOnResourceListResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogSingleSignOnResourceListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DatadogSingleSignOnResourceListResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DatadogSingleSignOnResourceListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DatadogSingleSignOnResourceListResponse IPersistableModel<DatadogSingleSignOnResourceListResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DatadogSingleSignOnResourceListResult IPersistableModel<DatadogSingleSignOnResourceListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DatadogSingleSignOnResourceListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DatadogSingleSignOnResourceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DatadogSingleSignOnResourceListResponse"/> from. </param>
-        internal static DatadogSingleSignOnResourceListResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DatadogSingleSignOnResourceListResult"/> from. </param>
+        internal static DatadogSingleSignOnResourceListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDatadogSingleSignOnResourceListResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeDatadogSingleSignOnResourceListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DatadogSingleSignOnResourceListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DatadogSingleSignOnResourceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatadogSingleSignOnResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatadogSingleSignOnResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogSingleSignOnResourceListResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogSingleSignOnResourceListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
@@ -118,24 +118,24 @@ namespace Azure.ResourceManager.Datadog.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DatadogSingleSignOnResourceListResponse IJsonModel<DatadogSingleSignOnResourceListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DatadogSingleSignOnResourceListResult IJsonModel<DatadogSingleSignOnResourceListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DatadogSingleSignOnResourceListResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DatadogSingleSignOnResourceListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatadogSingleSignOnResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatadogSingleSignOnResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogSingleSignOnResourceListResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogSingleSignOnResourceListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDatadogSingleSignOnResourceListResponse(document.RootElement, options);
+            return DeserializeDatadogSingleSignOnResourceListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DatadogSingleSignOnResourceListResponse DeserializeDatadogSingleSignOnResourceListResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static DatadogSingleSignOnResourceListResult DeserializeDatadogSingleSignOnResourceListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DatadogSingleSignOnResourceListResponse(value, nextLink, additionalBinaryDataProperties);
+            return new DatadogSingleSignOnResourceListResult(value ?? new ChangeTrackingList<DatadogSingleSignOnData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

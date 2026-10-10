@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 startOn,
                 status,
                 subscriptionId,
-                supportedActions,
+                supportedActions ?? new ChangeTrackingList<string>(),
                 vaultName,
                 eTag,
                 sourceDataStoreName,
