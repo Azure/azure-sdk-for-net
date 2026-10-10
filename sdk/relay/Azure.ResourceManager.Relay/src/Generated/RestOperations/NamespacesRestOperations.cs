@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Relay
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
+        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of Namespaces for mocking. </summary>
         protected Namespaces()
@@ -29,12 +30,14 @@ namespace Azure.ResourceManager.Relay
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Namespaces(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
+        internal Namespaces(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _getApiVersion = getApiVersion;
             _userAgent = new TelemetryDetails(typeof(Namespaces).Assembly, applicationId);
         }
 
@@ -56,10 +59,7 @@ namespace Azure.ResourceManager.Relay
             uri.AppendPath(namespaceName, true);
             uri.AppendPath("/authorizationRules/", false);
             uri.AppendPath(authorizationRuleName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Relay/namespaces/authorizationRules") ?? "2026-07-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -81,10 +81,7 @@ namespace Azure.ResourceManager.Relay
             uri.AppendPath(namespaceName, true);
             uri.AppendPath("/authorizationRules/", false);
             uri.AppendPath(authorizationRuleName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Relay/namespaces/authorizationRules") ?? "2026-07-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -108,10 +105,7 @@ namespace Azure.ResourceManager.Relay
             uri.AppendPath(namespaceName, true);
             uri.AppendPath("/authorizationRules/", false);
             uri.AppendPath(authorizationRuleName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Relay/namespaces/authorizationRules") ?? "2026-07-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -131,10 +125,7 @@ namespace Azure.ResourceManager.Relay
             uri.AppendPath("/providers/Microsoft.Relay/namespaces/", false);
             uri.AppendPath(namespaceName, true);
             uri.AppendPath("/authorizationRules", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Relay/namespaces/authorizationRules") ?? "2026-07-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -155,10 +146,7 @@ namespace Azure.ResourceManager.Relay
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Relay/namespaces/authorizationRules") ?? "2026-07-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -181,10 +169,7 @@ namespace Azure.ResourceManager.Relay
             uri.AppendPath("/authorizationRules/", false);
             uri.AppendPath(authorizationRuleName, true);
             uri.AppendPath("/listKeys", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Relay/namespaces/authorizationRules") ?? "2026-07-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -207,10 +192,7 @@ namespace Azure.ResourceManager.Relay
             uri.AppendPath("/authorizationRules/", false);
             uri.AppendPath(authorizationRuleName, true);
             uri.AppendPath("/regenerateKeys", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Relay/namespaces/authorizationRules") ?? "2026-07-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -232,10 +214,7 @@ namespace Azure.ResourceManager.Relay
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Relay/namespaces/", false);
             uri.AppendPath(namespaceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Relay/namespaces") ?? "2026-07-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -255,10 +234,7 @@ namespace Azure.ResourceManager.Relay
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Relay/namespaces/", false);
             uri.AppendPath(namespaceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Relay/namespaces") ?? "2026-07-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -280,10 +256,7 @@ namespace Azure.ResourceManager.Relay
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Relay/namespaces/", false);
             uri.AppendPath(namespaceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Relay/namespaces") ?? "2026-07-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -305,10 +278,7 @@ namespace Azure.ResourceManager.Relay
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Relay/namespaces/", false);
             uri.AppendPath(namespaceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Relay/namespaces") ?? "2026-07-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -326,10 +296,7 @@ namespace Azure.ResourceManager.Relay
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Relay/namespaces", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Relay/namespaces") ?? "2026-07-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -350,10 +317,7 @@ namespace Azure.ResourceManager.Relay
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Relay/namespaces") ?? "2026-07-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -370,10 +334,7 @@ namespace Azure.ResourceManager.Relay
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Relay/namespaces", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Relay/namespaces") ?? "2026-07-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -394,10 +355,7 @@ namespace Azure.ResourceManager.Relay
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Relay/namespaces") ?? "2026-07-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -418,10 +376,7 @@ namespace Azure.ResourceManager.Relay
             uri.AppendPath("/providers/Microsoft.Relay/namespaces/", false);
             uri.AppendPath(namespaceName, true);
             uri.AppendPath("/networkRuleSets/default", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Relay/namespaces/networkRuleSets") ?? "2026-07-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -442,10 +397,7 @@ namespace Azure.ResourceManager.Relay
             uri.AppendPath("/providers/Microsoft.Relay/namespaces/", false);
             uri.AppendPath(namespaceName, true);
             uri.AppendPath("/networkRuleSets/default", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Relay/namespaces/networkRuleSets") ?? "2026-07-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

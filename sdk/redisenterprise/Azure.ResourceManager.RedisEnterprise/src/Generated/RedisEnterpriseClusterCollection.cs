@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.RedisEnterprise
         {
             TryGetApiVersion(RedisEnterpriseClusterResource.ResourceType, out string redisEnterpriseClusterApiVersion);
             _redisEnterpriseClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise", RedisEnterpriseClusterResource.ResourceType.Namespace, Diagnostics);
-            _redisEnterpriseClusterRestClient = new RedisEnterpriseCluster(_redisEnterpriseClusterClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, redisEnterpriseClusterApiVersion ?? "2026-06-01-preview");
+            _redisEnterpriseClusterRestClient = new RedisEnterpriseCluster(
+                _redisEnterpriseClusterClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                redisEnterpriseClusterApiVersion ?? "2026-06-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

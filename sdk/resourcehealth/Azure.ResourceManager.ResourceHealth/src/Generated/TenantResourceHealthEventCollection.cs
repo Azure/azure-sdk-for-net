@@ -45,7 +45,13 @@ namespace Azure.ResourceManager.ResourceHealth
             _eventClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", TenantResourceHealthEventResource.ResourceType.Namespace, Diagnostics);
             _eventRestClient = new Event(_eventClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, tenantResourceHealthEventApiVersion ?? "2025-05-01");
             _eventsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", TenantResourceHealthEventResource.ResourceType.Namespace, Diagnostics);
-            _eventsRestClient = new Events(_eventsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, tenantResourceHealthEventApiVersion ?? "2025-05-01");
+            _eventsRestClient = new Events(
+                _eventsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                tenantResourceHealthEventApiVersion ?? "2025-05-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
