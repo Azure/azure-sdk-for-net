@@ -64,18 +64,6 @@ export function validateManifest(value) {
     return value;
 }
 
-export function pipelineManifest(env, now = new Date()) {
-    const url = new URL(env.SYSTEM_COLLECTIONURI);
-    requireValue(url.protocol === "https:" && url.hostname === "dev.azure.com" && !url.username && !url.password &&
-        !url.port && !url.search && !url.hash && /^\/[a-z0-9][a-z0-9-]{0,99}\/?$/i.test(url.pathname), "Expected an Azure DevOps organization URL.");
-    return validateManifest({ schemaVersion: 1, adoOrganization: url.pathname.split("/")[1].toLowerCase(),
-        adoProject: env.SYSTEM_TEAMPROJECT, repo: env.BUILD_REPOSITORY_NAME,
-        pipeline: env.BUILD_DEFINITIONNAME,
-        pipelineDefinitionId: env.SYSTEM_DEFINITIONID, buildId: env.BUILD_BUILDID,
-        summaryAttempt: Number(env.SYSTEM_JOBATTEMPT), branch: env.BUILD_SOURCEBRANCH,
-        sourceVersion: env.BUILD_SOURCEVERSION, runTimestamp: now.toISOString() });
-}
-
 export function blobName(manifest) {
     validateManifest(manifest);
     const name = ["v1", manifest.adoOrganization, manifest.adoProject.toLowerCase(), manifest.pipelineDefinitionId,
@@ -189,10 +177,17 @@ export async function prepareBundle({ indexPath, summaryPath, outputPath, manife
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
     try {
-        const { values } = parseArgs({ options: { index: { type: "string" }, summary: { type: "string" }, output: { type: "string" } } });
+        const { values } = parseArgs({ options: { index: { type: "string" }, summary: { type: "string" }, output: { type: "string" },
+            organization: { type: "string" }, project: { type: "string" }, repository: { type: "string" }, pipeline: { type: "string" },
+            "definition-id": { type: "string" }, "build-id": { type: "string" }, attempt: { type: "string" },
+            branch: { type: "string" }, "source-version": { type: "string" } } });
         if (!values.index || !values.summary || !values.output) throw new PublicationError("invalid_arguments", "Provide --index, --summary and --output.");
         const result = await prepareBundle({ indexPath: values.index, summaryPath: values.summary, outputPath: values.output,
-            manifest: pipelineManifest(process.env) });
+            manifest: { schemaVersion: 1, adoOrganization: values.organization, adoProject: values.project, repo: values.repository,
+                pipeline: values.pipeline, pipelineDefinitionId: values["definition-id"], buildId: values["build-id"],
+                summaryAttempt: Number(values.attempt), branch: values.branch, sourceVersion: values["source-version"], runTimestamp: new Date().toISOString() } });
+        // Transport consumes this saved identity/checksum, not pipeline environment variables.
+        await writeFile(`${values.output}.json`, JSON.stringify(result, null, 2) + "\n", { flag: "wx" });
         console.log(`Prepared one build bundle: ${result.shards} selected shards, ${result.trials} trials, ${result.bytes} bytes.`);
         if (result.skipped) console.log(`${result.skipped} non-executed skipped records are retained in raw artifacts and JUnit/Markdown, not imported as dashboard outcomes.`);
     } catch (error) {

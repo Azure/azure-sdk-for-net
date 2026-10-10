@@ -18,7 +18,6 @@ trigger:
       - eng/common/pipelines/templates/steps/eval-mcp-setup.yml
       - eng/common/pipelines/templates/steps/eval-publish-results.yml
       - eng/common/pipelines/templates/stages/archetype-eval.yml
-      - eng/common/pipelines/templates/variables/eval-dashboard.yml
       - eng/common/scripts/eval/**
 
 pr: none
@@ -32,9 +31,6 @@ parameters:
 variables:
   # Defines LINUXPOOL + LINUXVMIMAGE used by the archetype's jobs.
   - template: /eng/pipelines/templates/variables/image.yml
-  - template: /eng/common/pipelines/templates/variables/eval-dashboard.yml
-    parameters:
-      publishDashboardResults: ${{ parameters.publishDashboardResults }}
   # Provides the secret azuresdk-copilot-github-pat, mapped into GITHUB_TOKEN in the invoke step.
   - group: AzSDK_Eval_Variable_group
 
@@ -42,7 +38,8 @@ extends:
   template: /eng/common/pipelines/templates/stages/archetype-eval.yml
   parameters:
     createDashboardBundle: true
-    publishDashboardResults: ${{ eq(variables['EvalDashboardPublicationEnabled'], 'true') }}
+    # EvalStorageAccountName is configured by the pipeline owner, not in synced YAML.
+    publishDashboardResults: ${{ parameters.publishDashboardResults }}
     # Shared mock/live builder; select the mock tier.
     mcpSetupTemplate: /eng/common/pipelines/templates/steps/eval-mcp-setup.yml
     TestType: mock

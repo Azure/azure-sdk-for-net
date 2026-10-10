@@ -6,7 +6,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { globFiles } from "./lib/glob.ts";
-import { expectedShardsFromMatrix, readShardAttempts, selectSummaryResults } from "./lib/shard-results.ts";
+import { expectedShardsFromMatrix, selectSummaryResults } from "./lib/shard-results.ts";
 
 // Maps a JUnit file path back to its shard and job attempt. Result artifacts download into
 // folders named `eval-result-<shardName>-<attempt>` (the attempt suffix keeps "Rerun failed
@@ -340,6 +340,9 @@ function parseArgs(argv) {
       case "--selected-root":
         options.selectedRoot = next();
         break;
+      case "--attempts-file":
+        options.attemptsFile = next();
+        break;
       default:
         throw new Error(`Unknown argument: ${arg}`);
     }
@@ -365,13 +368,16 @@ async function main(argv) {
     }
     // Even a failed Prepare must use an empty destination, not stale selected results.
     let jobAttempts = { schemaVersion: 1, valid: false, attempts: {} };
-    if (matrixValid) {
-      try { jobAttempts = await readShardAttempts(process.env); }
+    if (matrixValid && options.attemptsFile) {
+      try {
+        const stat = fs.lstatSync(options.attemptsFile);
+        if (!stat.isFile() || stat.size > 2 * 1024 * 1024) throw new Error("Invalid attempt evidence.");
+        jobAttempts = JSON.parse(fs.readFileSync(options.attemptsFile, "utf8"));
+      }
       catch {
         console.warn("##vso[task.logissue type=warning]Latest shard attempts could not be verified; Summary will retain diagnostics but refuse publication.");
       }
     }
-    fs.writeFileSync(path.join(path.dirname(options.outputPath), "job-attempts.json"), JSON.stringify(jobAttempts, null, 2) + "\n");
     selection = selectSummaryResults({ resultsRoot: options.resultsRoot,
       selectedRoot: options.selectedRoot, expectedShards, jobAttempts });
     if (!matrixValid) {

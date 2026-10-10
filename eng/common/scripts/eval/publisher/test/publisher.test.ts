@@ -1,15 +1,14 @@
-// Verifies immutable publication, retained receipts, bounded notification retries and pipeline trust gates.
+// Verifies the saved archive contract and pipeline-owned publication policy, without Azure requests.
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 import { mkdtemp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { dirname, join, resolve } from "node:path";
+import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { test } from "node:test";
 import { runInNewContext } from "node:vm";
 import { zipSync, strToU8 } from "fflate";
-import { blobName, boundedFile, isUtcTimestamp, pipelineManifest, prepareBundle, selectAttempts, sha256, validateBundle, validateManifest } from "../bundle.ts";
-import { STORAGE_CONTAINER_URL, DASHBOARD_NOTIFICATION_TARGET, publisherIdentity, publishBundle, notifyDashboard, publicationFailure, savePublicationResult } from "../storage.ts";
+import { blobName, boundedFile, isUtcTimestamp, prepareBundle, selectAttempts, sha256, validateBundle, validateManifest } from "../bundle.ts";
 
 const manifest = { schemaVersion: 1, adoOrganization: "azure-sdk", adoProject: "internal", repo: "Azure/azure-sdk-tools",
     pipeline: "synthetic", pipelineDefinitionId: "8255", buildId: "1001", summaryAttempt: 1, runTimestamp: "2026-09-21T00:00:00.000Z" };
@@ -17,27 +16,12 @@ const trial = { type: "trial-result", itemId: "synthetic", evalName: "synthetic"
 const entries = (extra = {}) => ({ "manifest.json": strToU8(JSON.stringify(manifest)), "results.jsonl": strToU8(JSON.stringify(trial)),
     "eval-summary.md": strToU8("# Synthetic test"), "junit/0.xml": strToU8('<testsuites><testsuite><testcase name="synthetic"/></testsuite></testsuites>'), ...extra });
 const zip = (extra) => zipSync(entries(extra), { mtime: new Date("2020-01-01T00:00:00Z") });
-const dashboardUrl = DASHBOARD_NOTIFICATION_TARGET.origin, dashboardAudience = DASHBOARD_NOTIFICATION_TARGET.audience;
 
 async function fixture(t) {
     const root = await mkdtemp(join(tmpdir(), "eval-publisher-"));
     t.after(() => rm(root, { recursive: true, force: true }));
     const path = join(root, "saved.zip"); await writeFile(path, zip());
-    const requests = [], objects = new Map(); let afterStore;
-    const client = { getBlockBlobClient(name) { return {
-        async uploadData(bytes, options) {
-            requests.push({ name, bytes: Buffer.from(bytes), options: structuredClone(options) });
-            assert.deepEqual(options.conditions, { ifNoneMatch: "*" });
-            if (objects.has(name)) throw Object.assign(new Error("Already exists"), { statusCode: 412 });
-            objects.set(name, { bytes: Buffer.from(bytes), metadata: { ...options.metadata }, contentLength: bytes.length });
-            await afterStore?.();
-        },
-        async getProperties() { return objects.get(name); },
-    }; } };
-    const notifications = [];
-    const options = { bundlePath: path, client, publisherId: "pipeline", onStored: async () => {},
-        notify: async target => { notifications.push(target); } };
-    return { root, path, client, requests, objects, options, notifications, failAfterStore(callback) { afterStore = callback; } };
+    return { root, path };
 }
 
 function run(script, args, env = {}, preload = []) {
@@ -49,74 +33,79 @@ function run(script, args, env = {}, preload = []) {
     return child;
 }
 
-test("full shared shard -> summary -> one schema-v1 ZIP -> immutable Blob flow", async (t) => {
+test("shared shards -> saved timeline evidence -> token-free summary -> one schema-v1 ZIP", async (t) => {
     const f = await fixture(t), scripts = resolve(import.meta.dirname, "../..");
     const downloads = join(f.root, "downloads"); await mkdir(downloads);
     for (const shard of ["shard_a", "shard_b"]) {
-        // Local unit fixture only; the production pipeline always runs evaluations.
         const source = join(f.root, shard), invocation = join(source, "invocation");
         await mkdir(invocation, { recursive: true });
         await writeFile(join(invocation, "results.jsonl"), [
-            { ...trial, itemId: shard },
-            { type: "run-summary", evals: [{ name: trial.evalName, stimuliRun: 1, passed: false }] },
+            { ...trial, itemId: shard }, { type: "run-summary", evals: [{ name: trial.evalName, stimuliRun: 1, passed: false }] },
         ].map(record => JSON.stringify(record)).join("\n") + "\n");
         await writeFile(join(invocation, "eval-results.junit.xml"),
             `<testsuites><testsuite><testcase name="${shard}"><failure message="Unit test result"/></testcase></testsuite></testsuites>`);
         run(join(scripts, "lib/shard-results.ts"), ["--results-root", source, "--output-directory", join(downloads, `eval-result-${shard}-1`), "--shard-name", shard, "--attempt", "1"]);
     }
-    const summary = join(f.root, "summary", "eval-summary.md");
+    const summary = join(f.root, "summary", "eval-summary.md"), attempts = join(f.root, "summary", "job-attempts.json");
     const mock = join(f.root, "timeline-fetch.mjs");
-    await writeFile(mock, `globalThis.fetch = async (url, options) => {
-        if (url.origin !== "https://dev.azure.com" || options.headers.authorization !== "Bearer fixture-token" || options.redirect !== "error") throw new Error("Unexpected timeline request");
-        return Response.json({ records: ["a", "b"].map(key => ({ type: "Job",
-            identifier: "Eval.RunShard." + key, attempt: 1, state: "completed", result: "failed" })) });
-    };`);
-    const summaryRun = run(join(scripts, "build-eval-summary.ts"), ["--results-root", downloads, "--selected-root", join(f.root, "selected"), "--output-path", summary], {
-        TF_BUILD: "true", EVAL_EXPECTED_MATRIX: JSON.stringify({ a: { shardName: "shard_a" }, b: { shardName: "shard_b" } }),
-        SYSTEM_COLLECTIONURI: "https://dev.azure.com/azure-sdk/", SYSTEM_TEAMPROJECTID: "00000000-0000-4000-8000-000000000001",
-        BUILD_BUILDID: "1001", SYSTEM_ACCESSTOKEN: "fixture-token",
+    await writeFile(mock, `import { Socket } from "node:net";
+        Socket.prototype.connect = function() { throw new Error("Network disabled"); };
+        globalThis.fetch = async (url, options) => {
+            if (url.origin !== "https://dev.azure.com" || options.headers.authorization !== "Bearer fixture-token" || options.redirect !== "error") throw new Error("Unexpected timeline request");
+            return Response.json({ records: ["a", "b"].map(key => ({ type: "Job", identifier: "Eval.RunShard." + key,
+                attempt: 1, state: "completed", result: "failed" })) });
+        };`);
+    const matrix = JSON.stringify({ a: { shardName: "shard_a" }, b: { shardName: "shard_b" } });
+    run(join(scripts, "lib/shard-results.ts"), ["--attempts-output", attempts], {
+        EVAL_EXPECTED_MATRIX: matrix, SYSTEM_COLLECTIONURI: "https://dev.azure.com/azure-sdk/",
+        SYSTEM_TEAMPROJECTID: "00000000-0000-4000-8000-000000000001", BUILD_BUILDID: "1001", SYSTEM_ACCESSTOKEN: "fixture-token",
     }, ["--import", pathToFileURL(mock).href]);
-    assert.match(summaryRun.stdout, /EvalSummaryComplete\]true/);
-    assert.equal(JSON.parse(await readFile(join(dirname(summary), "job-attempts.json"), "utf8")).valid, true);
-    const path = join(f.root, "build.zip");
-    const packed = await prepareBundle({ indexPath: join(downloads, "shard-index.json"), summaryPath: summary, outputPath: path, manifest });
+    assert.equal(JSON.parse(await readFile(attempts, "utf8")).valid, true);
+    const offline = join(f.root, "no-network.mjs");
+    await writeFile(offline, `globalThis.fetch = () => { throw new Error("Rendering cannot fetch"); }; delete process.env.SYSTEM_ACCESSTOKEN;`);
+    const result = run(join(scripts, "build-eval-summary.ts"), ["--results-root", downloads, "--selected-root", join(f.root, "selected"),
+        "--attempts-file", attempts, "--output-path", summary], { TF_BUILD: "true", EVAL_EXPECTED_MATRIX: matrix }, ["--import", pathToFileURL(offline).href]);
+    assert.match(result.stdout, /EvalSummaryComplete\]true/);
+    const output = join(f.root, "build.zip");
+    const packed = await prepareBundle({ indexPath: join(downloads, "shard-index.json"), summaryPath: summary, outputPath: output, manifest });
     assert.equal(packed.trials, 2); assert.equal(packed.shards, 2);
-    const checked = validateBundle(await readFile(path));
-    assert.deepEqual(checked.manifest, manifest);
+    assert.equal(packed.sha256, sha256(await readFile(output)));
+    assert.equal(packed.blobName, "v1/azure-sdk/internal/8255/1001/1/dashboard-bundle.zip");
+    const checked = validateBundle(await readFile(output)); assert.deepEqual(checked.manifest, manifest);
     assert.equal(Object.keys(checked.entries).length, 5);
     assert.doesNotMatch(Buffer.from(checked.entries["results.jsonl"]).toString("utf8"), /run-summary/);
     assert.match(Buffer.from(checked.entries["eval-summary.md"]).toString("utf8"), /FAILED/);
-    const options = { ...f.options, bundlePath: path };
-    const saved = await publishBundle(options);
-    assert.equal(saved.status, "stored"); assert.equal(saved.duplicate, false);
-    assert.equal(f.requests.length, 1, "Normal publication does not perform a verification upload");
-    const repeated = await publishBundle(options);
-    assert.equal(repeated.duplicate, true); assert.equal(f.objects.size, 1);
-    assert.deepEqual(f.requests[0].bytes, f.requests[1].bytes);
-    assert.equal(saved.blobName, "v1/azure-sdk/internal/8255/1001/1/dashboard-bundle.zip");
-    assert.equal(saved.notification.status, "succeeded");
-    assert.deepEqual(f.notifications, [saved, repeated].map(({ blobName, sha256 }) => ({ blobName, sha256 })));
-    assert.equal(f.requests[0].options.metadata.schema, "1");
-    assert.equal(f.requests[0].options.metadata.publisher, sha256(Buffer.from("pipeline")));
-    assert.equal(f.requests[0].options.metadata.sha256, sha256(await readFile(path)));
+    await assert.rejects(prepareBundle({ indexPath: join(downloads, "shard-index.json"), summaryPath: summary, outputPath: output, manifest }), { code: "EEXIST" });
 });
 
-test("lost storage response retries the identical saved ZIP and retains original metadata", async (t) => {
-    const f = await fixture(t); let calls = 0;
-    f.failAfterStore(() => { calls++; throw new Error("Lost response after storing"); });
-    const result = await publishBundle({ ...f.options, wait: async () => {} });
-    assert.equal(calls, 1); assert.equal(result.duplicate, true); assert.equal(f.objects.size, 1);
-    assert.equal(f.requests.length, 2); assert.deepEqual(f.requests[0].bytes, f.requests[1].bytes);
-    assert.deepEqual(f.requests[0].options.metadata, f.requests[1].options.metadata);
+test("bundle CLI takes explicit metadata, preserves the real pipeline name and saves transport identity", async (t) => {
+    const f = await fixture(t), artifact = join(f.root, "eval-result-a-1");
+    await mkdir(join(artifact, "junit"), { recursive: true });
+    await writeFile(join(artifact, "results.jsonl"), JSON.stringify(trial));
+    await writeFile(join(artifact, "shard.json"), JSON.stringify({ schemaVersion: 1, shard: "a", attempt: 1, complete: true, trials: 1 }));
+    await writeFile(join(artifact, "junit", "0.junit.xml"), '<testsuite><testcase name="a"/></testsuite>');
+    const index = join(f.root, "shard-index.json"), summary = join(f.root, "summary.md"), output = join(f.root, "explicit.zip");
+    await writeFile(index, JSON.stringify({ schemaVersion: 1, complete: true, expectedShards: ["a"], attempts: [{ shard: "a", attempt: 1, directory: "eval-result-a-1" }] }));
+    await writeFile(summary, "# Saved summary");
+    run(resolve(import.meta.dirname, "../bundle.ts"), ["--index", index, "--summary", summary, "--output", output,
+        "--organization", "azure-sdk", "--project", "Test Project", "--repository", "Azure/azure-sdk-tools", "--pipeline", "Real Pipeline Name",
+        "--definition-id", "9999", "--build-id", "1001", "--attempt", "2", "--branch", "refs/heads/main", "--source-version", "a".repeat(40)], {
+        SYSTEM_COLLECTIONURI: "https://attacker.example", SYSTEM_DEFINITIONID: "bad", BUILD_DEFINITIONNAME: "wrong",
+    });
+    const bytes = await readFile(output), checked = validateBundle(bytes), prepared = JSON.parse(await readFile(`${output}.json`, "utf8"));
+    assert.equal(checked.manifest.pipeline, "Real Pipeline Name"); assert.equal(checked.manifest.pipelineDefinitionId, "9999");
+    assert.equal(prepared.blobName, "v1/azure-sdk/test%20project/9999/1001/2/dashboard-bundle.zip");
+    assert.equal(prepared.sha256, sha256(bytes)); assert.equal(prepared.bytes, bytes.length);
+    assert.doesNotMatch(await readFile(resolve(import.meta.dirname, "../bundle.ts"), "utf8"), /process\.env|SYSTEM_|BUILD_|TF_BUILD/);
 });
 
-test("skipped executor-incompatible records do not reject a completed mixed-result shard", async (t) => {
+test("skips remain in raw artifacts/JUnit, not fabricated as dashboard executions", async (t) => {
     const f = await fixture(t), artifact = join(f.root, "eval-result-a-1");
     await mkdir(join(artifact, "junit"), { recursive: true });
     const skipped = { type: "trial-result", status: "skipped", itemId: "incompatible", skipReason: "Synthetic incompatible executor" };
     await writeFile(join(artifact, "results.jsonl"), [trial, skipped, { type: "run-summary", evals: [{ name: "synthetic" }] }].map(record => JSON.stringify(record)).join("\n"));
     await writeFile(join(artifact, "shard.json"), JSON.stringify({ schemaVersion: 1, shard: "a", attempt: 1, complete: true, trials: 1 }));
-    await writeFile(join(artifact, "junit", "0.junit.xml"), '<testsuites><testsuite><testcase name="executed"/><testcase name="incompatible"><skipped/></testcase></testsuite></testsuites>');
+    await writeFile(join(artifact, "junit", "0.junit.xml"), '<testsuite><testcase name="executed"/><testcase name="incompatible"><skipped/></testcase></testsuite>');
     const index = join(f.root, "shard-index.json"), summary = join(f.root, "summary.md"), output = join(f.root, "mixed.zip");
     await writeFile(index, JSON.stringify({ schemaVersion: 1, complete: true, expectedShards: ["a"], attempts: [{ shard: "a", attempt: 1, directory: "eval-result-a-1" }] }));
     await writeFile(summary, "# Mixed result\n1 executed, 1 skipped");
@@ -125,145 +114,6 @@ test("skipped executor-incompatible records do not reject a completed mixed-resu
     const checked = validateBundle(await readFile(output)); assert.equal(checked.trials, 1);
     assert.match(Buffer.from(checked.entries["junit/0-0.xml"]).toString(), /<skipped/);
     assert.match(await readFile(join(artifact, "results.jsonl"), "utf8"), /"status":"skipped"/);
-});
-
-test("storage result is persisted before notification; failed signal does not fail stored result", async (t) => {
-    const f = await fixture(t); let persisted;
-    const result = await publishBundle({ ...f.options,
-        onStored: async value => { persisted = structuredClone(value); }, notify: async target => {
-            assert.equal(persisted.status, "stored"); assert.equal(persisted.notification.status, "pending");
-            assert.deepEqual(Object.keys(target).sort(), ["blobName", "sha256"]); assert.equal(f.objects.size, 1);
-            throw new Error("Dashboard offline");
-        } });
-    assert.equal(result.status, "stored"); assert.equal(result.notification.status, "failed");
-});
-
-test("failed storage-result persistence never sends a notification", async (t) => {
-    const f = await fixture(t);
-    await assert.rejects(publishBundle({ ...f.options, onStored: async () => { throw new Error("Result artifact unavailable"); } }), /Result artifact unavailable/);
-    assert.equal(f.objects.size, 1); assert.equal(f.notifications.length, 0);
-});
-
-test("receipt updates are atomic and failed notification-status saves preserve stored evidence", async (t) => {
-    const f = await fixture(t), output = join(f.root, "publication.json");
-    const result = await publishBundle({ ...f.options, onStored: value => savePublicationResult(output, value),
-        notify: async () => { throw new Error("Dashboard offline"); } });
-    const saved = await readFile(output, "utf8");
-    assert.equal(JSON.parse(saved).status, "stored"); assert.equal(JSON.parse(saved).notification.status, "pending");
-    await mkdir(`${output}.tmp`);
-    await assert.rejects(savePublicationResult(output, result));
-    assert.equal(await readFile(output, "utf8"), saved);
-    await rm(`${output}.tmp`, { recursive: true });
-    await savePublicationResult(output, result);
-    assert.equal(JSON.parse(await readFile(output, "utf8")).notification.status, "failed");
-});
-
-test("real publisher CLI retains storage success if the final notification-status write fails", async (t) => {
-    const f = await fixture(t), output = join(f.root, "cli-receipt.json"), mock = join(f.root, "mock-publication.mjs");
-    await writeFile(mock, `import assert from "node:assert/strict";
-        import { mkdirSync, readFileSync } from "node:fs";
-        import { Socket } from "node:net";
-        import { AzureCliCredential } from ${JSON.stringify(import.meta.resolve("@azure/identity"))};
-        import { ContainerClient } from ${JSON.stringify(import.meta.resolve("@azure/storage-blob"))};
-        Socket.prototype.connect = function() { throw new Error("Network is disabled in this test"); };
-        AzureCliCredential.prototype.getToken = async function(scope) {
-            assert.ok(["https://storage.azure.com/.default", ${JSON.stringify(`${dashboardAudience}/.default`)}].includes(scope));
-            const claims = { tid: "11111111-1111-1111-1111-111111111111", oid: "22222222-2222-2222-2222-222222222222" };
-            return { token: "header." + Buffer.from(JSON.stringify(claims)).toString("base64url") + ".signature" };
-        };
-        ContainerClient.prototype.getBlockBlobClient = function(name) {
-            assert.equal(this.url, ${JSON.stringify(STORAGE_CONTAINER_URL)});
-            return { uploadData: async (bytes, options) => { assert.ok(bytes.length); assert.deepEqual(options.conditions, { ifNoneMatch: "*" }); } };
-        };
-        globalThis.fetch = async (url, options) => {
-            assert.equal(url.href, ${JSON.stringify(`${dashboardUrl}/api/refresh`)});
-            assert.equal(options.redirect, "error");
-            assert.equal(JSON.parse(readFileSync(${JSON.stringify(output)}, "utf8")).status, "stored");
-            mkdirSync(${JSON.stringify(`${output}.tmp`)});
-            return Response.json({ status: "succeeded", failureCount: 0 });
-        };`);
-    const child = run(resolve(import.meta.dirname, "../publish-bundle.ts"), ["--bundle", f.path, "--result", output], {
-        TF_BUILD: "true", SYSTEM_TEAMPROJECT: "internal", BUILD_REASON: "Manual", BUILD_SOURCEBRANCH: "refs/heads/main",
-        EVAL_STORAGE_CONTAINER_URL: "https://attacker.example/results", PATH: "",
-    }, ["--import", pathToFileURL(mock).href]);
-    assert.match(child.stdout, /Result archive stored:/);
-    assert.match(child.stderr, /original storage receipt is retained/);
-    const receipt = JSON.parse(await readFile(output, "utf8"));
-    assert.equal(receipt.status, "stored"); assert.equal(receipt.notification.status, "pending");
-    assert.equal(receipt.sha256, sha256(await readFile(f.path)));
-    assert.doesNotMatch(child.stderr, /Publication diagnostic|Bearer header/);
-});
-
-test("storage throttling honors Retry-After within the fixed retry budget", async (t) => {
-    const f = await fixture(t), original = f.client.getBlockBlobClient.bind(f.client), waits = []; let calls = 0;
-    const client = { getBlockBlobClient(name) { const blob = original(name); return { ...blob, async uploadData(bytes, options) {
-        if (++calls === 1) throw Object.assign(new Error("Throttled"), { statusCode: 429, response: { headers: new Headers({ "retry-after": "5" }) } });
-        return blob.uploadData(bytes, options);
-    } }; } };
-    const result = await publishBundle({ ...f.options, client, wait: async value => waits.push(value) });
-    assert.equal(result.status, "stored"); assert.equal(calls, 2); assert.deepEqual(waits, [5000]);
-});
-
-test("upload failures stop after four attempts without reporting success or notifying", async (t) => {
-    const f = await fixture(t), waits = [], bytes = [];
-    const client = { getBlockBlobClient() { return { async uploadData(value) {
-        bytes.push(Buffer.from(value)); throw Object.assign(new Error("Offline"), { statusCode: 503 });
-    } }; } };
-    await assert.rejects(publishBundle({ ...f.options, client, wait: async value => { waits.push(value); },
-        onStored: () => assert.fail("Failed uploads cannot be reported stored") }), { statusCode: 503 });
-    assert.equal(bytes.length, 4); assert.deepEqual(waits, [1000, 2000, 4000]);
-    for (const value of bytes) assert.deepEqual(value, await readFile(f.path));
-    assert.equal(f.notifications.length, 0);
-});
-
-test("transient properties failure after an upload collision stays inside the retry budget", async (t) => {
-    const f = await fixture(t); const original = f.client.getBlockBlobClient.bind(f.client);
-    await publishBundle(f.options);
-    let reads = 0;
-    const client = { getBlockBlobClient(name) { const blob = original(name); return { ...blob, async getProperties() {
-        reads++; if (reads === 1) throw Object.assign(new Error("Properties unavailable"), { statusCode: 503 });
-        return blob.getProperties();
-    } }; } };
-    const result = await publishBundle({ ...f.options, client, wait: async () => {} });
-    assert.equal(result.duplicate, true); assert.equal(reads, 2); assert.equal(f.objects.size, 1);
-});
-
-test("same identity cannot overwrite different content, size or publisher", async (t) => {
-    const f = await fixture(t);
-    const options = f.options;
-    const result = await publishBundle(options), original = f.objects.get(result.blobName);
-    await assert.rejects(publishBundle({ ...options, publisherId: "other" }), { code: "submission_conflict" });
-    const changed = join(f.root, "changed.zip"); await writeFile(changed, zip({ "eval-summary.md": strToU8("Different") }));
-    await assert.rejects(publishBundle({ ...options, bundlePath: changed }), { code: "submission_conflict" });
-    original.contentLength++;
-    await assert.rejects(publishBundle(options), { code: "submission_conflict" });
-    assert.equal(f.objects.size, 1); assert.deepEqual(original.bytes, await readFile(f.path));
-});
-
-test("existing archives without valid metadata are conflicts, never adopted or overwritten", async (t) => {
-    const f = await fixture(t);
-    const options = f.options;
-    const result = await publishBundle(options);
-    const saved = f.objects.get(result.blobName), original = structuredClone(saved.metadata);
-    for (const metadata of [undefined, null, {}, { ...original, schema: "2" },
-        { ...original, sha256: undefined }, { ...original, publisher: undefined },
-        ...[undefined, null, "invalid", "2026-02-30T00:00:00Z", "2026-01-01T24:00:00Z", "2026-01-01T00:00:00+00:00"]
-            .map(storedat => ({ ...original, storedat }))]) {
-        saved.metadata = metadata;
-        const attempts = f.requests.length;
-        await assert.rejects(publishBundle({ ...options, wait: () => assert.fail("Conflicts are not transient"),
-            onStored: () => assert.fail("Invalid archives cannot be reported stored"),
-            notify: () => assert.fail("Invalid archives cannot trigger refresh") }), { code: "submission_conflict" });
-        assert.equal(f.requests.length, attempts + 1);
-        assert.deepEqual(saved.bytes, await readFile(f.path));
-    }
-});
-
-test("permanent storage rejection does not retry, persist success or notify", async (t) => {
-    const f = await fixture(t); let calls = 0;
-    const client = { getBlockBlobClient() { return { async uploadData() { calls++; throw Object.assign(new Error("Forbidden"), { statusCode: 403 }); } }; } };
-    await assert.rejects(publishBundle({ ...f.options, client, onStored: () => assert.fail(), notify: () => assert.fail(), wait: () => assert.fail() }), { statusCode: 403 });
-    assert.equal(calls, 1);
 });
 
 test("latest attempts, missing inputs, duplicate attempts and unsafe paths fail closed", () => {
@@ -275,7 +125,7 @@ test("latest attempts, missing inputs, duplicate attempts and unsafe paths fail 
     }
 });
 
-test("ZIP allowlist, bounded records, experiments and extraction bombs are rejected", async (t) => {
+test("ZIP allowlist, corrupt records, experiments and extraction bombs are rejected without logging content", async (t) => {
     const f = await fixture(t);
     for (const extra of [{ "../escape": strToU8("no") }, { "manifest.JSON": strToU8("no") }, { "bin/mcp.dll": strToU8("no") },
         { "results.jsonl": strToU8('{"secret":"do not log"') }, { "results.jsonl": strToU8(JSON.stringify({ ...trial, experiment: { runId: "x" } })) },
@@ -287,288 +137,96 @@ test("ZIP allowlist, bounded records, experiments and extraction bombs are rejec
     assert.throws(() => validateBundle(bomb), { code: "invalid_bundle" });
     await assert.rejects(boundedFile(f.path, 1), { code: "invalid_bundle" });
     assert.throws(() => validateBundle(zip({ "results.jsonl": strToU8('{"secret":"do not log"') })), error => !error.message.includes("secret"));
+    assert.equal(validateBundle(zip({ "results.jsonl": strToU8(JSON.stringify(trial) + "\r\n") })).trials, 1);
 });
 
-test("manifest preserves canonical identity and the real pipeline name", () => {
-    const env = { SYSTEM_COLLECTIONURI: "https://dev.azure.com/azure-sdk/", SYSTEM_TEAMPROJECT: "internal", BUILD_REPOSITORY_NAME: "Azure/azure-sdk-tools",
-        BUILD_DEFINITIONNAME: "Azure-sdk-tools-workflow-eval", SYSTEM_DEFINITIONID: "8255", BUILD_BUILDID: "1001", SYSTEM_JOBATTEMPT: "2",
-        BUILD_SOURCEBRANCH: "refs/heads/pilot", BUILD_SOURCEVERSION: "a".repeat(40) };
-    const result = pipelineManifest(env, new Date("2026-09-21T00:00:00Z"));
-    assert.equal(result.pipeline, env.BUILD_DEFINITIONNAME); assert.equal(result.summaryAttempt, 2);
-    assert.equal(blobName({ ...result, adoProject: "Test Project" }), "v1/azure-sdk/test%20project/8255/1001/2/dashboard-bundle.zip");
-    const realNames = [
-        ["8255", "Azure-sdk-tools-workflow-eval"],
-        ["8256", "azure-sdk-tools - eval-skills"],
-        ["8246", "live-eval - azure-sdk-tools - nightly"],
-    ];
-    const names = new Set();
-    for (const [id, name] of realNames) {
-        const real = pipelineManifest({ ...env, SYSTEM_DEFINITIONID: id, BUILD_DEFINITIONNAME: name });
-        assert.equal(real.pipeline, name);
-        assert.equal(real.repo, "Azure/azure-sdk-tools");
-        assert.equal(real.sourceVersion, env.BUILD_SOURCEVERSION);
-        names.add(blobName(real));
-    }
-    assert.equal(names.size, 3, "Three real pipelines remain distinct within the same container");
-    for (const collection of ["http://dev.azure.com/org", "https://example.com/org", "https://dev.azure.com/org?sig=secret"]) assert.throws(() => pipelineManifest({ ...env, SYSTEM_COLLECTIONURI: collection }));
-});
-
-test("producer refuses identities that would produce a different canonical path in the reader", async (t) => {
+test("canonical identity and UTC calendar validation match the reader", () => {
     assert.equal(blobName({ ...manifest, adoProject: "Test Project" }), "v1/azure-sdk/test%20project/8255/1001/1/dashboard-bundle.zip");
-    for (const key of ["adoOrganization", "adoProject", "repo", "pipeline", "runTimestamp"]) {
-        for (const padded of [` ${manifest[key]}`, `${manifest[key]} `]) {
-            assert.throws(() => validateManifest({ ...manifest, [key]: padded }), { code: "invalid_bundle" });
-        }
+    for (const key of ["adoOrganization", "adoProject", "repo", "pipeline", "runTimestamp"]) for (const padded of [` ${manifest[key]}`, `${manifest[key]} `]) {
+        assert.throws(() => validateManifest({ ...manifest, [key]: padded }), { code: "invalid_bundle" });
     }
-    for (const branch of [" ", " refs/heads/main", "refs/heads/main "]) {
-        assert.throws(() => validateManifest({ ...manifest, branch }), { code: "invalid_bundle" });
-    }
+    for (const branch of [" ", " refs/heads/main", "refs/heads/main "]) assert.throws(() => validateManifest({ ...manifest, branch }), { code: "invalid_bundle" });
     assert.throws(() => blobName({ ...manifest, adoProject: "\u754c".repeat(200) }), { code: "invalid_bundle" });
-    const f = await fixture(t);
-    await writeFile(f.path, zip({ "manifest.json": strToU8(JSON.stringify({ ...manifest, adoProject: " Internal " })) }));
-    await assert.rejects(publishBundle({ ...f.options,
-        client: { getBlockBlobClient() { assert.fail("Invalid identity reached storage"); } } }), { code: "invalid_bundle" });
-});
-
-test("publication timestamps match the reader's UTC calendar validation", async (t) => {
-    for (const timestamp of ["2024-02-29T23:59:59Z", "2026-09-24T12:34:56.1234567Z", "2026-01-01T00:00:00Z"]) {
-        assert.equal(isUtcTimestamp(timestamp), true);
-        assert.equal(validateManifest({ ...manifest, runTimestamp: timestamp }).runTimestamp, timestamp);
-    }
-    const f = await fixture(t);
-    for (const timestamp of ["2026-02-30T00:00:00Z", "2026-02-29T00:00:00Z", "2026-04-31T00:00:00Z",
-        "2026-01-01T24:00:00Z", "2026-01-01T00:00:00+00:00", "2026-01-01T00:00:00", "not a date", null]) {
+    for (const timestamp of ["2024-02-29T23:59:59Z", "2026-09-24T12:34:56.1234567Z", "2026-01-01T00:00:00Z"]) assert.equal(isUtcTimestamp(timestamp), true);
+    for (const timestamp of ["2026-02-30T00:00:00Z", "2026-02-29T00:00:00Z", "2026-04-31T00:00:00Z", "2026-01-01T24:00:00Z", "2026-01-01T00:00:00+00:00", "2026-01-01T00:00:00", "not a date", null]) {
         assert.equal(isUtcTimestamp(timestamp), false);
-        await writeFile(f.path, zip({ "manifest.json": strToU8(JSON.stringify({ ...manifest, runTimestamp: timestamp })) }));
-        await assert.rejects(publishBundle({ ...f.options,
-            client: { getBlockBlobClient() { assert.fail("Invalid dates cannot reach storage"); } } }), { code: "invalid_bundle" });
-    }
-    assert.equal(f.notifications.length, 0);
-});
-
-test("storage destination is fixed and publisher provenance requires valid tenant/principal IDs", () => {
-    assert.equal(STORAGE_CONTAINER_URL, "https://evaltestsummary.blob.core.windows.net/vally-results");
-    assert.throws(() => publisherIdentity("invalid"), { code: "storage_identity" });
-    const claims = { tid: "11111111-1111-1111-1111-111111111111", oid: "22222222-2222-2222-2222-222222222222" };
-    const token = value => `header.${Buffer.from(JSON.stringify(value)).toString("base64url")}.signature`;
-    assert.equal(publisherIdentity(token(claims)), `${claims.tid}:${claims.oid}`);
-    assert.throws(() => publisherIdentity(token({ ...claims, tid: "-".repeat(36) })), { code: "storage_identity" });
-});
-
-test("notification destination and audience are fixed even when obsolete environment overrides exist", async () => {
-    const overrides = { EVAL_NOTIFY_DASHBOARD: "false", EVAL_DASHBOARD_URL: "https://attacker.example", EVAL_DASHBOARD_AUDIENCE: "api://other" };
-    const previous = Object.fromEntries(Object.keys(overrides).map(key => [key, process.env[key]]));
-    Object.assign(process.env, overrides);
-    let requests = 0;
-    try {
-        await notifyDashboard({ target: { blobName: blobName(manifest), sha256: "a".repeat(64) },
-            getToken: async audience => { assert.equal(audience, dashboardAudience); return "test-token"; },
-            fetchImpl: async (url, request) => {
-                requests++; assert.equal(url.href, `${dashboardUrl}/api/refresh`);
-                assert.equal(request.headers.authorization, "Bearer test-token"); assert.equal(request.redirect, "error");
-                return Response.json({ status: "succeeded", failureCount: 0 });
-            } });
-        assert.equal(requests, 1);
-    } finally {
-        for (const [key, value] of Object.entries(previous)) {
-            if (value === undefined) delete process.env[key]; else process.env[key] = value;
-        }
+        assert.throws(() => validateManifest({ ...manifest, runTimestamp: timestamp }), { code: "invalid_bundle" });
     }
 });
 
-test("notification retries small JSON only, honors backpressure and does not retry forbidden access", async () => {
-    const calls = [], waits = [], target = { blobName: blobName(manifest), sha256: "a".repeat(64) };
-    await notifyDashboard({ target, getToken: async audience => {
-        assert.equal(audience, dashboardAudience); return "test-token";
-    }, wait: async ms => waits.push(ms), fetchImpl: async (url, init) => {
-        calls.push(init); assert.equal(url.pathname, "/api/refresh");
-        if (calls.length === 1) return new Response("", { status: 429, headers: { "retry-after": "1" } });
-        return Response.json({ status: "succeeded", failureCount: 0 });
-    } });
-    assert.deepEqual(waits, [1000]); assert.equal(calls[0].body, calls[1].body); assert.ok(Buffer.byteLength(calls[0].body) < 2048);
-    assert.equal(calls[0].headers.authorization, "Bearer test-token"); assert.equal(calls[0].redirect, "error");
-    for (const status of [302, 401, 403]) {
-        let calls = 0;
-        await assert.rejects(notifyDashboard({ target, getToken: async () => "test-token", wait: () => assert.fail(),
-            fetchImpl: async () => { calls++; return new Response("", { status }); } }), { code: "notification_failed" });
-        assert.equal(calls, 1);
-    }
-});
-
-test("notification rejects oversized signals before acquiring a token", async () => {
-    await assert.rejects(notifyDashboard({ target: { blobName: "x".repeat(2048), sha256: "a".repeat(64) },
-        getToken: () => assert.fail("Oversized signals cannot acquire a token"),
-        fetchImpl: () => assert.fail("Oversized signals cannot send a request") }), { code: "invalid_signal" });
-});
-
-test("notification retries are bounded even when every response is transient", async () => {
-    let calls = 0; const waits = [];
-    await assert.rejects(notifyDashboard({ target: { blobName: blobName(manifest), sha256: "a".repeat(64) },
-        getToken: async () => "test-token", wait: async value => { waits.push(value); },
-        fetchImpl: async () => { calls++; return new Response("", { status: 503 }); } }), { code: "notification_failed" });
-    assert.equal(calls, 4); assert.deepEqual(waits, [1000, 2000, 4000]);
-});
-
-test("publisher dependency lock is portable with public URLs and SHA512 integrity", async () => {
+test("the archive package has one locked public dependency, not an Azure SDK transport", async () => {
+    const packageJson = JSON.parse(await readFile(resolve(import.meta.dirname, "../package.json"), "utf8"));
     const lock = JSON.parse(await readFile(resolve(import.meta.dirname, "../package-lock.json"), "utf8"));
-    const entries = Object.entries(lock.packages).filter(([path]) => path);
-    assert.ok(entries.length > 0);
-    for (const [path, entry] of entries) {
-        const name = path.slice(path.lastIndexOf("node_modules/") + "node_modules/".length);
-        assert.equal(entry.resolved, `https://registry.npmjs.org/${name}/-/${name.split("/").at(-1)}-${entry.version}.tgz`);
-        assert.match(entry.integrity, /^sha512-[A-Za-z0-9+/]{86}==$/);
-    }
+    assert.deepEqual(packageJson.dependencies, { fflate: "0.8.3" });
+    assert.deepEqual(Object.keys(lock.packages), ["", "node_modules/fflate"]);
+    assert.equal(lock.packages["node_modules/fflate"].resolved, "https://registry.npmjs.org/fflate/-/fflate-0.8.3.tgz");
+    assert.match(lock.packages["node_modules/fflate"].integrity, /^sha512-[A-Za-z0-9+/]{86}==$/);
 });
 
-test("real CLI blocks public projects, PRs and every non-main branch before requesting a credential", () => {
-    const script = resolve(import.meta.dirname, "../publish-bundle.ts");
-    for (const rejected of [{ SYSTEM_TEAMPROJECT: "public" }, { BUILD_REASON: "PullRequest" },
-        ...["refs/pull/1/merge", "refs/heads/feature", "refs/heads/feature/main", "refs/tags/main", ""].map(BUILD_SOURCEBRANCH => ({ BUILD_SOURCEBRANCH }))]) {
-        const env = { ...process.env, TF_BUILD: "true", SYSTEM_TEAMPROJECT: "internal", BUILD_REASON: "Manual",
-            BUILD_SOURCEBRANCH: "refs/heads/main", ...rejected, PATH: "" };
-        delete env.NODE_TEST_CONTEXT;
-        const child = spawnSync(process.execPath, ["--experimental-strip-types", script, "--bundle", "unused.zip", "--result", "unused.json"], { encoding: "utf8", env, timeout: 30_000 });
-        assert.ifError(child.error); assert.equal(child.status, 1); assert.match(child.stderr, /trusted internal main-branch/);
-        assert.doesNotMatch(child.stdout, /storage identity acquired/);
-    }
-});
-
-test("failure diagnostics retain operation/code/status but never arbitrary error payloads", () => {
-    assert.deepEqual(publicationFailure({ code: "AuthorizationPermissionMismatch", statusCode: 403,
-        message: "secret", request: { headers: { Authorization: "Bearer secret" } }, details: { requestId: "11111111-1111-1111-1111-111111111111" } }, "publish_blob"), {
-        status: "failed", operation: "publish_blob", errorCode: "AuthorizationPermissionMismatch", httpStatus: 403,
-        requestId: "11111111-1111-1111-1111-111111111111",
-    });
-    const failure = publicationFailure({ code: "https://secret.example?token=secret", statusCode: "403", details: { requestId: "secret" } }, "acquire_storage_token");
-    assert.deepEqual(failure, { status: "failed", operation: "acquire_storage_token", errorCode: "publication_failed" });
-    assert.doesNotMatch(JSON.stringify(failure), /secret/);
-});
-
-test("pipeline keeps publication opt-in, blocks PR credentials and shares the real Summary path", async () => {
+test("pipeline separates token-bearing attempt verification from rendering and uploads before the score gate", async () => {
     const root = resolve(import.meta.dirname, "../../../..");
-    const workflow = await readFile(join(root, "pipelines/workflow-eval.yml"), "utf8");
-    const steps = await readFile(join(root, "pipelines/templates/steps/eval-publish-results.yml"), "utf8");
     const summary = await readFile(join(root, "pipelines/templates/jobs/eval-summarize.yml"), "utf8");
-    const archetype = await readFile(join(root, "pipelines/templates/stages/archetype-eval.yml"), "utf8");
-    assert.match(workflow, /name: publishDashboardResults[\s\S]*?default: true/);
-    assert.match(workflow, /- group: AzSDK_Eval_Variable_group/);
-    assert.match(archetype, /template: \/eng\/common\/pipelines\/templates\/jobs\/build-mcp.yml/);
-    assert.match(archetype, /template: \/eng\/common\/pipelines\/templates\/jobs\/eval-shard.yml/);
-    for (const content of [steps, summary, archetype]) {
-        assert.match(content, /name: publishDashboardResults\s+type: boolean\s+default: false/);
-        assert.doesNotMatch(content, /notifyDashboard|summaryPool|storageServiceConnection|storageContainerUrl|dashboardUrl|dashboardAudience/);
-    }
-    assert.match(summary, /pool:\s+name: \$\(LINUXPOOL\)\s+image: \$\(LINUXVMIMAGE\)\s+os: linux/);
-    assert.match(steps, /if and\(parameters.publishDashboardResults.*System.TeamProject.*internal.*Build.SourceBranch.*refs\/heads\/main.*PullRequest/);
-    assert.match(steps, /azureSubscription: eval-dashboard-sc/);
-    assert.doesNotMatch(steps, /EVAL_STORAGE_CONTAINER_URL/);
-    assert.match(summary, /dependsOn:|EvalExpectedMatrix:.*stageDependencies.Prepare.generate_eval_matrix/);
-    assert.match(archetype, /dependsOn: \[Prepare, Eval\]/);
+    const verification = summary.slice(summary.indexOf("# Only attempt verification"), summary.indexOf('"$(Build.SourcesDirectory)/eng/common/scripts/eval/build-eval-summary.ts"'));
+    assert.match(verification, /--attempts-output/); assert.match(verification, /SYSTEM_ACCESSTOKEN: \$\(System.AccessToken\)/);
+    const rendering = summary.slice(summary.indexOf('"$(Build.SourcesDirectory)/eng/common/scripts/eval/build-eval-summary.ts"'));
+    assert.match(rendering, /--attempts-file/); assert.doesNotMatch(rendering, /SYSTEM_ACCESSTOKEN/);
     assert.ok(summary.indexOf("../steps/eval-publish-results.yml") < summary.indexOf("task: PublishTestResults@2"));
-    assert.match(summary, /condition: always\(\)/);
-    assert.doesNotMatch(workflow + steps + archetype, /githubenterprise|msft\.ghe\.com|dashboardRepositoryServiceConnection/);
+    const steps = await readFile(join(root, "pipelines/templates/steps/eval-publish-results.yml"), "utf8");
+    assert.doesNotMatch(steps, /registryUrl:|azure-sdk-tools\/npm\/registry/);
+    assert.match(steps, /scriptType: pscore[\s\S]*scriptLocation: scriptPath[\s\S]*Publish-EvalResults\.ps1/);
+    assert.match(steps, /azureSubscription: eval-dashboard-sc/);
+    assert.match(steps, /-StorageAccountName "\$\(EvalStorageAccountName\)"/);
+    assert.doesNotMatch(await readFile(resolve(import.meta.dirname, "../Publish-EvalResults.ps1"), "utf8"), /TF_BUILD|SYSTEM_|BUILD_|System\.DefinitionId/);
 });
 
-test("one publication flag gates both upload and Azure Storage egress on the same trusted runs", async () => {
+test("one checkbox gates trusted-run egress; owner configuration additionally gates runtime upload", async () => {
     const root = resolve(import.meta.dirname, "../../../..");
-    const workflow = await readFile(join(root, "pipelines/workflow-eval.yml"), "utf8");
     const archetype = await readFile(join(root, "pipelines/templates/stages/archetype-eval.yml"), "utf8");
     const steps = await readFile(join(root, "pipelines/templates/steps/eval-publish-results.yml"), "utf8");
-    assert.doesNotMatch(workflow + archetype, /allowAzureStorageNetworkAccess/);
-    assert.match(workflow, /Publish trusted main results to Blob \(includes pipeline-wide Azure Storage egress\)/);
     const gate = source => source.match(/\$\{\{ if (and\(parameters\.publishDashboardResults, .+\)) \}\}:/)?.[1];
     const networkGate = gate(archetype), uploadGate = gate(steps);
-    assert.ok(networkGate); assert.equal(networkGate, uploadGate, "One opt-in uses identical trust guards for upload and egress");
-    assert.equal((archetype.match(/AllowAzureStorage:/g) ?? []).length, 1, "No unconditional parameter forwarded to synced consumers");
-    const evaluate = (expression, variables, publishDashboardResults) => runInNewContext(expression, {
-        variables, parameters: { publishDashboardResults },
-        and: (...values) => values.every(Boolean),
-        eq: (left, right) => String(left ?? "").toLowerCase() === String(right ?? "").toLowerCase(),
-        ne: (left, right) => String(left ?? "").toLowerCase() !== String(right ?? "").toLowerCase(),
+    assert.ok(networkGate); assert.equal(networkGate, uploadGate);
+    assert.doesNotMatch(networkGate, /System.DefinitionId|EvalStorageAccountName/);
+    const runtime = steps.match(/      condition: (and\(.+\))/)?.[1]; assert.ok(runtime);
+    const evaluate = (expression, variables, enabled = true, succeeds = true) => runInNewContext(expression.replace(/\bin\(/g, "oneOf("), {
+        variables, parameters: { publishDashboardResults: enabled }, succeeded: () => succeeds,
+        and: (...values) => values.every(Boolean), eq: (a, b) => String(a ?? "").toLowerCase() === String(b ?? "").toLowerCase(),
+        ne: (a, b) => String(a ?? "").toLowerCase() !== String(b ?? "").toLowerCase(),
+        oneOf: (value, ...items) => items.some(item => String(value ?? "").toLowerCase() === String(item).toLowerCase()),
     });
-    for (const enabled of [false, true]) for (const project of ["internal", "public"]) {
-        for (const reason of ["IndividualCI", "Manual", "PullRequest"]) for (const branch of ["refs/heads/main", "refs/heads/feature", "refs/heads/feature/main", "refs/tags/main", "refs/pull/17084/merge", ""]) {
-            const variables = { "System.TeamProject": project, "Build.Reason": reason, "Build.SourceBranch": branch };
-            const expected = enabled && project === "internal" && reason !== "PullRequest" && branch === "refs/heads/main";
-            assert.equal(evaluate(networkGate, variables, enabled), expected);
-            assert.equal(evaluate(uploadGate, variables, enabled), expected);
-        }
+    const base = { "System.CollectionUri": "https://dev.azure.com/azure-sdk/", "System.TeamProject": "internal", "Build.Repository.Name": "Azure/azure-sdk-tools",
+        "Build.SourceBranch": "refs/heads/main", "Build.Reason": "Manual", "EvalSummaryComplete": "true", "EvalStorageAccountName": "evaltestsummary" };
+    assert.equal(evaluate(networkGate, base), true); assert.equal(evaluate(runtime, base), true);
+    assert.equal(evaluate(networkGate, base, false), false); assert.equal(evaluate(runtime, base, true, false), false);
+    for (const account of [undefined, ""]) assert.equal(evaluate(runtime, { ...base, EvalStorageAccountName: account }), false);
+    assert.equal(evaluate(runtime, { ...base, EvalSummaryComplete: "false" }), false);
+    for (const [key, value] of [["System.CollectionUri", "https://dev.azure.com/other/"], ["System.TeamProject", "public"],
+        ["Build.Repository.Name", "Azure/azure-rest-api-specs"], ["Build.Reason", "PullRequest"], ["Build.Reason", "ResourceTrigger"],
+        ...["refs/pull/1/merge", "refs/heads/feature", "refs/heads/feature/main", "refs/tags/main", ""].map(branch => ["Build.SourceBranch", branch])]) {
+        const variables = { ...base, [key]: value };
+        assert.equal(evaluate(networkGate, variables), false); assert.equal(evaluate(runtime, variables), false);
     }
+    for (const id of ["8255", "9999"]) assert.equal(evaluate(networkGate, { ...base, "System.DefinitionId": id }), true, "Definition IDs are archive identity, not shared policy");
 });
 
-test("opted-in redirect retains enforced Default Deny/CFS and preserves other pipeline defaults", async () => {
+test("redirect retains Default Deny/CFS and shared publication defaults stay off", async () => {
     const root = resolve(import.meta.dirname, "../../../..");
     const redirect = await readFile(join(root, "../pipelines/templates/stages/1es-redirect.yml"), "utf8");
-    assert.match(redirect, /- name: AllowAzureStorage\n(?:  [^\n]*\n)*?  type: boolean\n  default: false/);
-    const guarded = redirect.match(/\$\{\{ if and\(parameters.AllowAzureStorage, parameters.Use1ESOfficial, eq\(variables\['System.TeamProject'\], 'internal'\), ne\(variables\['Build.Reason'\], 'PullRequest'\), not\(startsWith\(variables\['Build.SourceBranch'\], 'refs\/pull\/'\)\)\) \}\}:([\s\S]*?)\$\{\{ elseif/);
-    assert.ok(guarded, "Storage egress must be guarded independently by the redirect");
-    assert.match(guarded[1], /networkIsolationPolicy: DefaultDeny, CFSClean, CFSClean2, CFSClean3, AzureStorage/);
-    assert.doesNotMatch(guarded[1], /Permissive|networkIsolationAdditionalDomainAllowList/);
-    assert.match(redirect, /elseif eq\(variables\['Build.DefinitionName'\], 'net - partner-release'\) \}\}:\s+networkIsolationPolicy: Permissive\s+\$\{\{ else \}\}:\s+networkIsolationPolicy: Permissive, CFSClean/);
+    assert.match(redirect, /networkIsolationPolicy: DefaultDeny, CFSClean, CFSClean2, CFSClean3, AzureStorage/);
+    assert.match(redirect, /parameters.AllowAzureStorage.*parameters.Use1ESOfficial.*System.TeamProject.*PullRequest.*refs\/pull\//);
+    for (const path of ["templates/steps/eval-publish-results.yml", "templates/jobs/eval-summarize.yml", "templates/stages/archetype-eval.yml"]) {
+        assert.match(await readFile(join(root, "pipelines", path), "utf8"), /name: publishDashboardResults\s+type: boolean\s+default: false/);
+    }
 });
 
-for (const tier of ["workflow", "skill", "live"]) {
-    test(`${tier} real eval consumer forwards opt-in publishing without changing its evaluation tier`, async () => {
-        const root = resolve(import.meta.dirname, "../../../..");
-        const content = await readFile(join(root, `pipelines/${tier}-eval.yml`), "utf8");
-        assert.match(content, /createDashboardBundle: true/);
-        assert.match(content, /- name: publishDashboardResults\n(?:    [^\n]*\n)*?    type: boolean\n    default: true/);
-        assert.doesNotMatch(content, /autoPublishDashboardResults|enableAutomaticPublication|EvalDashboardAutomaticPublication|allowAzureStorageNetworkAccess|notifyDashboard|summaryPool|storageServiceConnection|storageContainerUrl|pipelineDefinitionId|dashboardUrl|dashboardAudience/);
-        const inputs = content.slice(content.indexOf("\nparameters:\n"), content.indexOf("\nvariables:\n"));
-        assert.deepEqual([...inputs.matchAll(/- name: (\w+)/g)].map(match => match[1]), ["publishDashboardResults"]);
-        assert.match(content, /template: \/eng\/common\/pipelines\/templates\/variables\/eval-dashboard.yml/);
-        assert.ok(content.includes("publishDashboardResults: ${{ eq(variables['EvalDashboardPublicationEnabled'], 'true') }}"));
-        assert.match(content, /group: AzSDK_Eval_Variable_group/);
-        assert.match(content, new RegExp(`TestType: ${tier === "live" ? "live" : "mock"}`));
-        if (tier === "live") {
-            assert.match(content, /UseAzSdkAuthentication: true/);
-            assert.match(content, /failOnFailedTests: true/);
-            assert.match(content, /workflows\/live\/\*\.eval\.yaml/);
-        } else if (tier === "skill") {
-            assert.match(content, /vallyRoot: \.github\/skills/);
-            assert.match(content, /'\*\/evals\/\*\.eval\.yaml'/);
-        }
-        assert.ok(content.includes("publishDashboardResults: ${{ parameters.publishDashboardResults }}"));
-    });
-}
-
-test("the sole publishing switch is restricted to trusted tools main definitions and false always disables it", async () => {
-    const root = resolve(import.meta.dirname, "../../../..");
-    const source = await readFile(join(root, "pipelines/templates/variables/eval-dashboard.yml"), "utf8");
-    assert.match(source, /name: publishDashboardResults\s+type: boolean\s+default: false/);
-    assert.doesNotMatch(source, /pipelineDefinitionId|enableAutomaticPublication|EvalDashboardAutomaticPublication/);
-    const expression = source.match(/value: \$\{\{ (.+) \}\}/)?.[1];
-    assert.ok(expression);
-    // Exercise the actual YAML predicate with the same and/eq/in semantics.
-    // Azure DevOps expanded-YAML previews separately validate template behavior.
-    const evaluate = (variables, parameters) => runInNewContext(expression.replace(/\bin\(/g, "oneOf("), {
-        variables, parameters,
-        and: (...values) => values.every(Boolean),
-        eq: (left, right) => String(left).toLowerCase() === String(right).toLowerCase(),
-        oneOf: (value, ...values) => values.some(item => String(item).toLowerCase() === String(value).toLowerCase()),
-    });
-    for (const id of ["8255", "8256", "8246"]) {
-        const variables = { "System.CollectionUri": "https://dev.azure.com/azure-sdk/", "System.TeamProject": "internal",
-            "Build.Repository.Name": "Azure/azure-sdk-tools", "System.DefinitionId": id,
-            "Build.SourceBranch": "refs/heads/main", "Build.Reason": "Schedule" };
-        const parameters = { publishDashboardResults: true };
-        for (const reason of ["Schedule", "Manual", "IndividualCI", "BatchedCI"]) {
-            assert.equal(evaluate({ ...variables, "Build.Reason": reason }, parameters), true);
-            assert.equal(evaluate({ ...variables, "Build.Reason": reason }, { publishDashboardResults: false }), false);
-        }
-        assert.equal(evaluate(variables, { publishDashboardResults: false }), false);
-        for (const [key, value] of [["System.CollectionUri", "https://dev.azure.com/other/"], ["System.TeamProject", "public"],
-            ["Build.Repository.Name", "Azure/azure-rest-api-specs"], ["System.DefinitionId", "9999"],
-            ["System.DefinitionId", ""], ["System.DefinitionId", undefined],
-            ["Build.SourceBranch", "refs/heads/feature"], ["Build.SourceBranch", "refs/pull/17084/merge"],
-            ["Build.SourceBranch", "refs/tags/v1"], ["Build.SourceBranch", "refs/heads/main-copy"],
-            ["Build.Reason", "PullRequest"], ["Build.Reason", "ResourceTrigger"], ["System.CollectionUri", ""]]) {
-            assert.equal(evaluate({ ...variables, [key]: value }, parameters), false, `${id}: ${key}=${value}`);
-        }
-        for (const key of Object.keys(variables)) {
-            const missing = { ...variables }; delete missing[key];
-            assert.equal(evaluate(missing, parameters), false, `${id}: missing ${key} never enables publication`);
-        }
-        assert.equal(evaluate({}, parameters), false, "Missing identity never enables publication");
-    }
+for (const tier of ["workflow", "skill", "live"]) test(`${tier} forwards only the checkbox and preserves its evaluation tier`, async () => {
+    const root = resolve(import.meta.dirname, "../../../.."), content = await readFile(join(root, `pipelines/${tier}-eval.yml`), "utf8");
+    assert.match(content, /createDashboardBundle: true/); assert.match(content, /name: publishDashboardResults[\s\S]*default: true/);
+    assert.ok(content.includes("publishDashboardResults: ${{ parameters.publishDashboardResults }}"));
+    assert.doesNotMatch(content, /eval-dashboard\.yml|EvalDashboardPublicationEnabled|System.DefinitionId|autoPublishDashboardResults|allowAzureStorageNetworkAccess/);
+    const inputs = content.slice(content.indexOf("\nparameters:\n"), content.indexOf("\nvariables:\n"));
+    assert.deepEqual([...inputs.matchAll(/- name: (\w+)/g)].map(match => match[1]), ["publishDashboardResults"]);
+    assert.match(content, /group: AzSDK_Eval_Variable_group/); assert.match(content, new RegExp(`TestType: ${tier === "live" ? "live" : "mock"}`));
+    if (tier === "live") { assert.match(content, /UseAzSdkAuthentication: true/); assert.match(content, /failOnFailedTests: true/); }
+    if (tier === "skill") assert.match(content, /vallyRoot: \.github\/skills/);
 });

@@ -2,17 +2,15 @@
   "name": "@azure-tools/eval-result-publisher",
   "version": "1.0.0",
   "private": true,
-  "description": "Opt-in, data-only Vally result bundling and create-only Blob publication. No evaluator or dashboard runtime.",
+  "description": "Data-only Vally result bundling; Azure CLI performs publication. No evaluator or dashboard runtime.",
   "type": "module",
   "engines": {
     "node": ">=22.12.0"
   },
   "scripts": {
-    "test": "node --experimental-strip-types --test test/*.test.ts"
+    "test": "node --experimental-strip-types --test test/*.test.ts && pwsh -NoProfile -Command \"Invoke-Pester -Path test/Publish-EvalResults.Tests.ps1 -CI\""
   },
   "dependencies": {
-    "@azure/identity": "4.13.3",
-    "@azure/storage-blob": "12.33.0",
     "fflate": "0.8.3"
   }
 }

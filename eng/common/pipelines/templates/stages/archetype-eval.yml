@@ -74,8 +74,9 @@ extends:
   # 1es-redirect picks Official (internal) vs Unofficial; its Use1ESOfficial defaults true.
   template: /eng/pipelines/templates/stages/1es-redirect.yml
   parameters:
-    # Publication opts into egress on trusted main runs; artifact-only consumers stay unchanged.
-    ${{ if and(parameters.publishDashboardResults, eq(variables['System.TeamProject'], 'internal'), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables['Build.Reason'], 'PullRequest')) }}:
+    # The checkbox controls compile-time egress; the account variable gates upload at runtime.
+    # Keep trust policy in YAML, without hardcoding DevOps definition IDs in shared code.
+    ${{ if and(parameters.publishDashboardResults, eq(variables['System.CollectionUri'], 'https://dev.azure.com/azure-sdk/'), eq(variables['System.TeamProject'], 'internal'), eq(variables['Build.Repository.Name'], 'Azure/azure-sdk-tools'), eq(variables['Build.SourceBranch'], 'refs/heads/main'), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Schedule', 'Manual')) }}:
       AllowAzureStorage: true
     stages:
       - stage: Prepare
