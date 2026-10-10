@@ -44,23 +44,53 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
 
         private ClientDiagnostics CreditsClientDiagnostics => _creditsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Credits CreditsRestClient => _creditsRestClient ??= new Credits(CreditsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
+        private Credits CreditsRestClient => _creditsRestClient ??= new Credits(
+            CreditsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-12-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ConditionalCreditsClientDiagnostics => _conditionalCreditsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ConditionalCredits ConditionalCreditsRestClient => _conditionalCreditsRestClient ??= new ConditionalCredits(ConditionalCreditsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
+        private ConditionalCredits ConditionalCreditsRestClient => _conditionalCreditsRestClient ??= new ConditionalCredits(
+            ConditionalCreditsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-12-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics MaccsClientDiagnostics => _maccsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Maccs MaccsRestClient => _maccsRestClient ??= new Maccs(MaccsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
+        private Maccs MaccsRestClient => _maccsRestClient ??= new Maccs(
+            MaccsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-12-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics DiscountsClientDiagnostics => _discountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Discounts DiscountsRestClient => _discountsRestClient ??= new Discounts(DiscountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
+        private Discounts DiscountsRestClient => _discountsRestClient ??= new Discounts(
+            DiscountsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-12-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics FreeServicesClientDiagnostics => _freeServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FreeServices FreeServicesRestClient => _freeServicesRestClient ??= new FreeServices(FreeServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
+        private FreeServices FreeServicesRestClient => _freeServicesRestClient ??= new FreeServices(
+            FreeServicesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-12-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// List credits under a subscription from primary service tenant.

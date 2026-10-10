@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(ResourceType, out string cdnWebAgentApiVersion);
             _webAgentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            _webAgentsRestClient = new WebAgents(_webAgentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cdnWebAgentApiVersion ?? "2025-09-01-preview");
+            _webAgentsRestClient = new WebAgents(
+                _webAgentsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                cdnWebAgentApiVersion ?? "2025-09-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             TryGetApiVersion(ResourceType, out string maccApiVersion);
             _maccsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ResourceType.Namespace, Diagnostics);
-            _maccsRestClient = new Maccs(_maccsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, maccApiVersion ?? "2025-12-01-preview");
+            _maccsRestClient = new Maccs(
+                _maccsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                maccApiVersion ?? "2025-12-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

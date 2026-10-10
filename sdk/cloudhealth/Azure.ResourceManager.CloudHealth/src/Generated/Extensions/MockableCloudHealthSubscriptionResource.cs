@@ -36,7 +36,13 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
 
         private ClientDiagnostics HealthModelsClientDiagnostics => _healthModelsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CloudHealth.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private HealthModels HealthModelsRestClient => _healthModelsRestClient ??= new HealthModels(HealthModelsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-01-preview");
+        private HealthModels HealthModelsRestClient => _healthModelsRestClient ??= new HealthModels(
+            HealthModelsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-09-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// List HealthModel resources by subscription ID

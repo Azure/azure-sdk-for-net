@@ -44,7 +44,13 @@ namespace Azure.ResourceManager.BotService.Mocking
 
         private ClientDiagnostics BotsClientDiagnostics => _botsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BotService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Bots BotsRestClient => _botsRestClient ??= new Bots(BotsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-09-15-preview");
+        private Bots BotsRestClient => _botsRestClient ??= new Bots(
+            BotsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2023-09-15-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics BotConnectionOperationGroupClientDiagnostics => _botConnectionOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BotService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

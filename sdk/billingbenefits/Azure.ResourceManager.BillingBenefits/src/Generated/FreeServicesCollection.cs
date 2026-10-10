@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             TryGetApiVersion(FreeServicesResource.ResourceType, out string freeServicesApiVersion);
             _freeServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", FreeServicesResource.ResourceType.Namespace, Diagnostics);
-            _freeServicesRestClient = new FreeServices(_freeServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, freeServicesApiVersion ?? "2025-12-01-preview");
+            _freeServicesRestClient = new FreeServices(
+                _freeServicesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                freeServicesApiVersion ?? "2025-12-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
