@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.DomainRegistration
         {
             TryGetApiVersion(AppServiceDomainResource.ResourceType, out string appServiceDomainApiVersion);
             _domainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DomainRegistration", AppServiceDomainResource.ResourceType.Namespace, Diagnostics);
-            _domainsRestClient = new Domains(_domainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appServiceDomainApiVersion ?? "2024-11-01");
+            _domainsRestClient = new Domains(
+                _domainsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                appServiceDomainApiVersion ?? "2024-11-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

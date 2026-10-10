@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.Elastic
         {
             TryGetApiVersion(ElasticMonitorResource.ResourceType, out string elasticMonitorApiVersion);
             _elasticMonitorResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Elastic", ElasticMonitorResource.ResourceType.Namespace, Diagnostics);
-            _elasticMonitorResourcesRestClient = new ElasticMonitorResources(_elasticMonitorResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, elasticMonitorApiVersion ?? "2025-06-01");
+            _elasticMonitorResourcesRestClient = new ElasticMonitorResources(
+                _elasticMonitorResourcesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                elasticMonitorApiVersion ?? "2025-06-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

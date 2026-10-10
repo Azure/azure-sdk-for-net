@@ -40,7 +40,13 @@ namespace Azure.ResourceManager.DomainRegistration.Mocking
 
         private ClientDiagnostics DomainsClientDiagnostics => _domainsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DomainRegistration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Domains DomainsRestClient => _domainsRestClient ??= new Domains(DomainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-11-01");
+        private Domains DomainsRestClient => _domainsRestClient ??= new Domains(
+            DomainsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2024-11-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics DomainsOperationGroupClientDiagnostics => _domainsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DomainRegistration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

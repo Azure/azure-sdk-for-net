@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.DisconnectedOperations
         {
             TryGetApiVersion(ResourceType, out string disconnectedOperationApiVersion);
             _disconnectedClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DisconnectedOperations", ResourceType.Namespace, Diagnostics);
-            _disconnectedRestClient = new Disconnected(_disconnectedClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, disconnectedOperationApiVersion ?? "2026-03-15");
+            _disconnectedRestClient = new Disconnected(
+                _disconnectedClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                disconnectedOperationApiVersion ?? "2026-03-15",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

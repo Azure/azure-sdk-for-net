@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.Dynatrace
         {
             TryGetApiVersion(ResourceType, out string dynatraceMonitorApiVersion);
             _monitorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dynatrace", ResourceType.Namespace, Diagnostics);
-            _monitorsRestClient = new Monitors(_monitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dynatraceMonitorApiVersion ?? "2024-04-24");
+            _monitorsRestClient = new Monitors(
+                _monitorsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                dynatraceMonitorApiVersion ?? "2024-04-24",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.ElasticSan
         {
             TryGetApiVersion(ElasticSanResource.ResourceType, out string elasticSanApiVersion);
             _elasticSansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ElasticSanResource.ResourceType.Namespace, Diagnostics);
-            _elasticSansRestClient = new ElasticSans(_elasticSansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, elasticSanApiVersion ?? "2026-05-01-preview");
+            _elasticSansRestClient = new ElasticSans(
+                _elasticSansClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                elasticSanApiVersion ?? "2026-05-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.Discovery
         {
             TryGetApiVersion(DiscoveryStorageContainerResource.ResourceType, out string discoveryStorageContainerApiVersion);
             _storageContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", DiscoveryStorageContainerResource.ResourceType.Namespace, Diagnostics);
-            _storageContainersRestClient = new StorageContainers(_storageContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoveryStorageContainerApiVersion ?? "2026-06-01");
+            _storageContainersRestClient = new StorageContainers(
+                _storageContainersClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                discoveryStorageContainerApiVersion ?? "2026-06-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
