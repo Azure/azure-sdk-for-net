@@ -13,52 +13,52 @@ using Azure.ResourceManager.CommvaultContentStore;
 
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
-    /// <summary> The updatable properties of the CloudAccount. </summary>
-    public partial class CloudAccountPatchProperties : IJsonModel<CloudAccountPatchProperties>
+    /// <summary> Optional activate SaaS request parameters. </summary>
+    public partial class ActivateSaaSRequestParam : IJsonModel<ActivateSaaSRequestParam>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CloudAccountPatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ActivateSaaSRequestParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudAccountPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActivateSaaSRequestParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCloudAccountPatchProperties(document.RootElement, options);
+                        return DeserializeActivateSaaSRequestParam(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloudAccountPatchProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActivateSaaSRequestParam)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudAccountPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActivateSaaSRequestParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCommvaultContentStoreContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CloudAccountPatchProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActivateSaaSRequestParam)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CloudAccountPatchProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ActivateSaaSRequestParam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CloudAccountPatchProperties IPersistableModel<CloudAccountPatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ActivateSaaSRequestParam IPersistableModel<ActivateSaaSRequestParam>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CloudAccountPatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ActivateSaaSRequestParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CloudAccountPatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ActivateSaaSRequestParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,25 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudAccountPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActivateSaaSRequestParam>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudAccountPatchProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ActivateSaaSRequestParam)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Marketplace))
+            if (Optional.IsDefined(SaasResourceId))
             {
-                writer.WritePropertyName("marketplace"u8);
-                writer.WriteObjectValue(Marketplace, options);
+                writer.WritePropertyName("saasResourceId"u8);
+                writer.WriteStringValue(SaasResourceId);
             }
             if (Optional.IsDefined(User))
             {
                 writer.WritePropertyName("user"u8);
                 writer.WriteObjectValue(User, options);
+            }
+            if (Optional.IsDefined(Company))
+            {
+                writer.WritePropertyName("company"u8);
+                writer.WriteObjectValue(Company, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,41 +108,38 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CloudAccountPatchProperties IJsonModel<CloudAccountPatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ActivateSaaSRequestParam IJsonModel<ActivateSaaSRequestParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CloudAccountPatchProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ActivateSaaSRequestParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudAccountPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActivateSaaSRequestParam>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudAccountPatchProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ActivateSaaSRequestParam)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCloudAccountPatchProperties(document.RootElement, options);
+            return DeserializeActivateSaaSRequestParam(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CloudAccountPatchProperties DeserializeCloudAccountPatchProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ActivateSaaSRequestParam DeserializeActivateSaaSRequestParam(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            MarketplaceDetails marketplace = default;
+            string saasResourceId = default;
             CommvaultUserDetails user = default;
+            CompanyProfile company = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("marketplace"u8))
+                if (prop.NameEquals("saasResourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    marketplace = MarketplaceDetails.DeserializeMarketplaceDetails(prop.Value, options);
+                    saasResourceId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("user"u8))
@@ -149,12 +151,21 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     user = CommvaultUserDetails.DeserializeCommvaultUserDetails(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("company"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    company = CompanyProfile.DeserializeCompanyProfile(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CloudAccountPatchProperties(marketplace, user, additionalBinaryDataProperties);
+            return new ActivateSaaSRequestParam(saasResourceId, user, company, additionalBinaryDataProperties);
         }
     }
 }

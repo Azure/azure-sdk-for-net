@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
 
         private ClientDiagnostics CloudAccountsClientDiagnostics => _cloudAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CommvaultContentStore.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CloudAccounts CloudAccountsRestClient => _cloudAccountsRestClient ??= new CloudAccounts(CloudAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-03-preview");
+        private CloudAccounts CloudAccountsRestClient => _cloudAccountsRestClient ??= new CloudAccounts(CloudAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-30");
 
         private ClientDiagnostics SaaSOperationGroupClientDiagnostics => _saaSOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CommvaultContentStore.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SaaSOperationGroup SaaSOperationGroupRestClient => _saaSOperationGroupRestClient ??= new SaaSOperationGroup(SaaSOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-03-preview");
+        private SaaSOperationGroup SaaSOperationGroupRestClient => _saaSOperationGroupRestClient ??= new SaaSOperationGroup(SaaSOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-30");
 
         /// <summary>
         /// List CloudAccount resources by subscription ID
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-09-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-09-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-09-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-09-30. </description>
         /// </item>
         /// </list>
         /// </summary>

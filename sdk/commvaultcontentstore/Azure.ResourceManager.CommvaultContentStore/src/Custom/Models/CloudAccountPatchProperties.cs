@@ -10,6 +10,9 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
     // [SUFFIX006] "Update" is an avoid-suffix; PATCH-body property bags use "Patch".
     // The generator synthesizes this type from ResourceUpdateModel<CloudAccount, CloudAccountProperties>,
     // so it cannot be renamed via @clientName in the spec; rename it here via [CodeGenType].
+    /// <summary>
+    /// The updatable properties of the CloudAccount.
+    /// </summary>
     [CodeGenType("CloudAccountUpdateProperties")]
     public partial class CloudAccountPatchProperties
     {
