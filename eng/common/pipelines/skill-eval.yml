@@ -12,6 +12,7 @@ trigger:
       - eng/common/pipelines/skill-eval.yml
       - eng/common/pipelines/templates/jobs/**
       - eng/common/pipelines/templates/steps/eval-invoke.yml
+      - eng/pipelines/copilot-app-eval-invoke.yml
       - eng/common/pipelines/templates/steps/eval-mcp-setup.yml
       - eng/common/pipelines/templates/stages/archetype-eval.yml
       - eng/common/scripts/eval/**
@@ -21,8 +22,9 @@ pr: none
 variables:
   # Managed-pool image selection (LINUXPOOL/LINUXVMIMAGE). Repo-local.
   - template: /eng/pipelines/templates/variables/image.yml
-  # Provides the secret azuresdk-copilot-github-pat, mapped into GITHUB_TOKEN in the invoke step.
-  - group: AzSDK_Eval_Variable_group
+  # Synced repos still use the shared PAT-backed invoke template.
+  - ${{ if ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-tools') }}:
+    - group: AzSDK_Eval_Variable_group
 
 extends:
   template: /eng/common/pipelines/templates/stages/archetype-eval.yml
@@ -31,6 +33,8 @@ extends:
     mcpSetupTemplate: /eng/common/pipelines/templates/steps/eval-mcp-setup.yml
     TestType: mock
     vallyRoot: .github/skills
+    ${{ if eq(variables['Build.Repository.Name'], 'Azure/azure-sdk-tools') }}:
+      evalInvokeTemplate: /eng/pipelines/copilot-app-eval-invoke.yml
     # Single-level glob excludes azure-typespec-author/evaluate/ (its own benchmark pipeline).
     evalGlobs:
       - '*/evals/*.eval.yaml'
