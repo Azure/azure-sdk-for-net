@@ -3,6 +3,11 @@
 ## 1.0.0-beta.9 (Unreleased)
 
 ### Features Added
+- Hosted durable multi-turn task IDs are now scoped by `FOUNDRY_AGENT_SESSION_GUID`, preventing
+  recreated sessions from reusing name-derived IDs that refer to tombstoned tasks from an earlier
+  incarnation and can cause a service precondition failure (HTTP 412).
+  Public `ResponseContext.ConversationChainId` values and one-shot task IDs are unchanged, and
+  pending, in-progress, or suspended pre-rollout chains continue under their legacy task IDs.
 - Added `AddResponsesServer(IHostApplicationBuilder host, string sectionName)` and
   `AddResponsesServer(IHostApplicationBuilder host, string sectionName, Action<ResponsesServerSettings>)`,
   which bind a new `ResponsesServerSettings : ClientSettings` (the Foundry credential, `Endpoint`,
@@ -13,6 +18,9 @@
   `ResponseContext.Shutdown`, so an explicit client cancel is composable as a token.
 
 ### Breaking Changes
+- Stored responses use Core durable tasks only when the resilient-task runtime is enabled.
+  `ResilientBackground=true` enables it automatically; otherwise `store=true` requests execute
+  in-process and are not recovered after an ungraceful crash.
 - The local file-backed response provider now uses a new `responses/partitions-v1` namespace.
   Previously persisted responses and their history are not visible after upgrade, including
   for anonymous requests and crash recovery. Legacy files remain unchanged; there is no
@@ -35,6 +43,10 @@
 
 ### Bugs Fixed
 
+- Legacy-chain migration now atomically requires the selected legacy task to still exist. If
+  deletion wins after the compatibility probe, Responses starts the session-instance-scoped task
+  instead of recreating the tombstoned legacy ID, including when the legacy chain is active and
+  accepting steering input.
 - Scope local in-memory and file-backed response envelopes, items, history, and conversation
   indexes to `PlatformContext.UserIdKey`. Anonymous requests use a separate local partition.
 - Require an existing response in the caller's partition for updates, and retain deletion

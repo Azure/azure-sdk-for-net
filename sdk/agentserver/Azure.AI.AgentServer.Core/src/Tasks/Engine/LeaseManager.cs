@@ -116,6 +116,31 @@ internal sealed class LeaseManager
             cancellationToken);
 
     /// <summary>
+    /// Force-expires the lease only when the record is already <c>in_progress</c> under this
+    /// manager's exact owner and instance identity. A suspended record or a lease held by another
+    /// process is returned unchanged.
+    /// </summary>
+    public Task<TaskRecord> ReleaseIfOwnedAsync(
+        string taskId, string owner, CancellationToken cancellationToken = default)
+        => _serializer.UpdateAsync(
+            taskId,
+            current =>
+                current.Status == TaskWireKeys.StatusInProgress
+                && current.Lease is not null
+                && string.Equals(current.Lease.Owner, owner, StringComparison.Ordinal)
+                && string.Equals(current.Lease.InstanceId, InstanceId, StringComparison.Ordinal)
+                    ? new TaskPatchRequest
+                    {
+                        Status = TaskWireKeys.StatusInProgress,
+                        LeaseOwner = owner,
+                        LeaseInstanceId = InstanceId,
+                        LeaseDurationSeconds = 0,
+                    }
+                    : null,
+            WriteIntent.LeaseHeartbeat,
+            cancellationToken);
+
+    /// <summary>
     /// Reclaims an expired lease. A precondition failure during reclaim is treated as
     /// the race-loss signal and abandons quietly (SOT §25.3).
     /// </summary>
