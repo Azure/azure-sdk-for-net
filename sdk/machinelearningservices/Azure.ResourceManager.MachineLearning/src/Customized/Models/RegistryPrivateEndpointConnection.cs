@@ -30,14 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             set
             {
                 Properties ??= new RegistryPrivateEndpointConnectionProperties();
-                Properties.GroupIds.Clear();
-                if (value is not null)
-                {
-                    foreach (string item in value)
-                    {
-                        Properties.GroupIds.Add(item);
-                    }
-                }
+                Properties.GroupIds = value;
             }
         }
 
