@@ -394,7 +394,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <returns> A new <see cref="Models.LimitJsonObject"/> instance for mocking. </returns>
         public static LimitJsonObject LimitJsonObject(string limitObjectType = default)
         {
-            return new UnknownLimitJsonObject(new LimitType(limitObjectType), default);
+            return new UnknownLimitJsonObject(limitObjectType is null ? default : new LimitType(limitObjectType), default);
         }
 
         /// <summary> An Employee resource. </summary>

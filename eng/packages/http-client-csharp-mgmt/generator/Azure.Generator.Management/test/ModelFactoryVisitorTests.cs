@@ -20,6 +20,70 @@ namespace Azure.Generator.Mgmt.Tests
 {
     internal class ModelFactoryVisitorTests
     {
+        [Test]
+        public void ConstructorRepairPreservesDefaultEnumDiscriminator(
+            [Values(false, true)] bool isExtensible,
+            [Values(false, true)] bool isNullable,
+            [Values("visitor", "writer", "hidden")] string repairKind)
+        {
+            var discriminatorEnum = InputFactory.StringEnum(
+                "DiscriminatorKind", [("Known", "Known")], access: "internal",
+                isExtensible: isExtensible, clientNamespace: "Samples.Models");
+            var derivedModel = InputFactory.Model(
+                "KnownDiscriminatorModel", properties: [], discriminatedKind: "Known");
+            var baseModel = InputFactory.Model(
+                "DiscriminatorModel",
+                properties: [InputFactory.Property("kind",
+                    isNullable ? new InputNullableType(discriminatorEnum) : discriminatorEnum,
+                    isRequired: true, isDiscriminator: true)],
+                derivedModels: [derivedModel]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputEnums: () => [discriminatorEnum],
+                inputModels: () => [baseModel, derivedModel]);
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var method = modelFactory.Methods.Single(m => m.Signature.Name == "DiscriminatorModel");
+            var conversion = isExtensible
+                ? "new global::Samples.Models.DiscriminatorKind(kind)"
+                : "kind.ToDiscriminatorKind()";
+            Assert.That(method.BodyStatements!.ToDisplayString(), Does.Contain(conversion),
+                "Keep the supplied-input discriminator repair as a separate invariant.");
+
+            if (repairKind == "hidden")
+            {
+                var signature = method.Signature;
+                var hiddenSignature = new MethodSignature(
+                    signature.Name, signature.Description, signature.Modifiers, signature.ReturnType,
+                    signature.ReturnDescription,
+                    [.. signature.Parameters, new ParameterProvider("legacyValue", $"Legacy input.", typeof(string), Default)],
+                    [new AttributeStatement(typeof(System.ComponentModel.EditorBrowsableAttribute),
+                        FrameworkEnumValue(System.ComponentModel.EditorBrowsableState.Never))]);
+                method = new MethodProvider(hiddenSignature, method.BodyStatements!, modelFactory);
+                modelFactory.Update(methods: [.. modelFactory.Methods, method]);
+            }
+
+            if (repairKind == "visitor")
+            {
+                var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
+                    "VisitType", BindingFlags.NonPublic | BindingFlags.Instance)!;
+                visitType.Invoke(new Management.Visitors.ModelFactoryVisitor(), [modelFactory]);
+            }
+            else
+            {
+                _ = plugin.Object.GetWriter(modelFactory).Write();
+            }
+
+            var defaultValue = isNullable
+                ? "((global::Samples.Models.DiscriminatorKind?)default)"
+                : "((global::Samples.Models.DiscriminatorKind)default)";
+            Assert.That(method.BodyStatements!.ToDisplayString(),
+                Does.Contain($"(kind is null) ? {defaultValue} : {conversion}"),
+                "Omitted/null factory inputs must preserve the constructor's typed default, including null for nullable enums.");
+            var afterRepair = method.BodyStatements!.ToDisplayString();
+            _ = plugin.Object.GetWriter(modelFactory).Write();
+            Assert.That(method.BodyStatements!.ToDisplayString(), Is.EqualTo(afterRepair),
+                "Repeated repair must retain both the null guard and supplied-input conversion.");
+        }
+
         [TestCase("ExecutionIdentity", false)]
         [TestCase("ReferencedExecutionIdentity", false)]
         [TestCase("ExecutionIdentity", true)]

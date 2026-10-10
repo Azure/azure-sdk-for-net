@@ -216,7 +216,11 @@ namespace Azure.Generator.Management.Visitors
             if (constructorParameter.Type.IsEnum
                 && TryGetMethodParameter(method, constructorParameter.Name, constructorParameter.Type.UnderlyingEnumType, property, out parameter))
             {
-                argument = constructorParameter.Type.ToEnum(parameter);
+                var convertedArgument = constructorParameter.Type.ToEnum(parameter);
+                // Preserve omitted/null inputs, including a null nullable enum rather than an empty enum value.
+                argument = parameter.Type.IsValueType && !parameter.Type.IsNullable
+                    ? convertedArgument
+                    : new TernaryConditionalExpression(parameter.Is(Null), Default.CastTo(constructorParameter.Type), convertedArgument);
                 return true;
             }
 
