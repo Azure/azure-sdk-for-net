@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
+    /// <summary></summary>
     public partial class ResourceHealthMetadataEntityResource : IJsonModel<ResourceHealthMetadataEntityData>
     {
-        private static ResourceHealthMetadataEntityData s_dataDeserializationInstance;
-        private static ResourceHealthMetadataEntityData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ResourceHealthMetadataEntityData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ResourceHealthMetadataEntityData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ResourceHealthMetadataEntityData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResourceHealthMetadataEntityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ResourceHealthMetadataEntityData>)Data).Write(writer, options);
 
-        ResourceHealthMetadataEntityData IJsonModel<ResourceHealthMetadataEntityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceHealthMetadataEntityData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResourceHealthMetadataEntityData IJsonModel<ResourceHealthMetadataEntityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ResourceHealthMetadataEntityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ResourceHealthMetadataEntityData>(Data, options, AzureResourceManagerResourceHealthContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ResourceHealthMetadataEntityData IPersistableModel<ResourceHealthMetadataEntityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceHealthMetadataEntityData>(data, options, AzureResourceManagerResourceHealthContext.Default);
 
-        string IPersistableModel<ResourceHealthMetadataEntityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceHealthMetadataEntityData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ResourceHealthMetadataEntityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

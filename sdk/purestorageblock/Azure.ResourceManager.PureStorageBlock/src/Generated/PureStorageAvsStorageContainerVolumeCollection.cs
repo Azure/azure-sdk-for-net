@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             TryGetApiVersion(PureStorageAvsStorageContainerVolumeResource.ResourceType, out string pureStorageAvsStorageContainerVolumeApiVersion);
             _avsStorageContainerVolumesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock", PureStorageAvsStorageContainerVolumeResource.ResourceType.Namespace, Diagnostics);
-            _avsStorageContainerVolumesRestClient = new AvsStorageContainerVolumes(_avsStorageContainerVolumesClientDiagnostics, Pipeline, Endpoint, pureStorageAvsStorageContainerVolumeApiVersion ?? "2024-11-01");
+            _avsStorageContainerVolumesRestClient = new AvsStorageContainerVolumes(_avsStorageContainerVolumesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, pureStorageAvsStorageContainerVolumeApiVersion ?? "2024-11-01");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PureStorageAvsStorageContainerVolumeData, PureStorageAvsStorageContainerVolumeResource>(new AvsStorageContainerVolumesGetByAvsStorageContainerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PureStorageAvsStorageContainerVolumeData, PureStorageAvsStorageContainerVolumeResource>(new PureStorageAvsStorageContainerVolumeDataAsyncCollectionResultOfT(
                 _avsStorageContainerVolumesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PureStorageAvsStorageContainerVolumeData, PureStorageAvsStorageContainerVolumeResource>(new AvsStorageContainerVolumesGetByAvsStorageContainerCollectionResultOfT(
+            return new PageableWrapper<PureStorageAvsStorageContainerVolumeData, PureStorageAvsStorageContainerVolumeResource>(new PureStorageAvsStorageContainerVolumeDataCollectionResultOfT(
                 _avsStorageContainerVolumesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

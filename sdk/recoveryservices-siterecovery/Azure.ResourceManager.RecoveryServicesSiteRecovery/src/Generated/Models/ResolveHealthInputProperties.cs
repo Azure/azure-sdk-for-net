@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Health errors. </summary>
-        public IList<ResolveHealthError> HealthErrors { get; }
+        public IList<ResolveHealthError> HealthErrors { get; } = new ChangeTrackingList<ResolveHealthError>();
     }
 }

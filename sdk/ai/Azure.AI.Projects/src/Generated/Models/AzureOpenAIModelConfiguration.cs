@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Azure OpenAI model configuration. The API version would be selected by the service for querying the model. </summary>
+    [Experimental("AAIP001")]
     public partial class AzureOpenAIModelConfiguration : TargetConfig
     {
         /// <summary> Initializes a new instance of <see cref="AzureOpenAIModelConfiguration"/>. </summary>

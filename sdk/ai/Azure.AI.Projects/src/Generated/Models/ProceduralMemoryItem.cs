@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects.Memory;
 
 namespace Azure.AI.Projects
 {
     /// <summary> A memory item containing a procedure extracted from conversations. </summary>
+    [Experimental("AAIP001")]
     public partial class ProceduralMemoryItem : MemoryItem
     {
         /// <summary> Initializes a new instance of <see cref="ProceduralMemoryItem"/>. </summary>

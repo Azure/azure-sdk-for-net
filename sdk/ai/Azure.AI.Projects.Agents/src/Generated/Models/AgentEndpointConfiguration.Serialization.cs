@@ -75,15 +75,10 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("version_selector"u8);
                 writer.WriteObjectValue(VersionSelector, options);
             }
-            if (Optional.IsCollectionDefined(Protocols))
+            if (Optional.IsDefined(ProtocolConfiguration))
             {
-                writer.WritePropertyName("protocols"u8);
-                writer.WriteStartArray();
-                foreach (AgentEndpointProtocol item in Protocols)
-                {
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("protocol_configuration"u8);
+                writer.WriteObjectValue(ProtocolConfiguration, options);
             }
             if (Optional.IsCollectionDefined(AuthorizationSchemes))
             {
@@ -94,6 +89,11 @@ namespace Azure.AI.Projects.Agents
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(PublishApprovalStatus))
+            {
+                writer.WritePropertyName("publish_approval_status"u8);
+                writer.WriteStringValue(PublishApprovalStatus.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -138,8 +138,9 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             VersionSelector versionSelector = default;
-            IList<AgentEndpointProtocol> protocols = default;
+            ProtocolConfiguration protocolConfiguration = default;
             IList<AgentEndpointAuthorizationScheme> authorizationSchemes = default;
+            PublishApprovalStatus? publishApprovalStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -152,18 +153,13 @@ namespace Azure.AI.Projects.Agents
                     versionSelector = VersionSelector.DeserializeVersionSelector(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("protocols"u8))
+                if (prop.NameEquals("protocol_configuration"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<AgentEndpointProtocol> array = new List<AgentEndpointProtocol>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(new AgentEndpointProtocol(item.GetString()));
-                    }
-                    protocols = array;
+                    protocolConfiguration = ProtocolConfiguration.DeserializeProtocolConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("authorization_schemes"u8))
@@ -180,12 +176,21 @@ namespace Azure.AI.Projects.Agents
                     authorizationSchemes = array;
                     continue;
                 }
+                if (prop.NameEquals("publish_approval_status"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    publishApprovalStatus = new PublishApprovalStatus(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentEndpointConfiguration(versionSelector, protocols ?? new ChangeTrackingList<AgentEndpointProtocol>(), authorizationSchemes ?? new ChangeTrackingList<AgentEndpointAuthorizationScheme>(), additionalBinaryDataProperties);
+            return new AgentEndpointConfiguration(versionSelector, protocolConfiguration, authorizationSchemes ?? new ChangeTrackingList<AgentEndpointAuthorizationScheme>(), publishApprovalStatus, additionalBinaryDataProperties);
         }
     }
 }

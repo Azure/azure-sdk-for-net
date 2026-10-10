@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,65 +15,102 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct DataMigrationScenarioSource : IEquatable<DataMigrationScenarioSource>
     {
         private readonly string _value;
+        /// <summary> Access. </summary>
+        private const string AccessValue = "Access";
+        /// <summary> DB2. </summary>
+        private const string DB2Value = "DB2";
+        /// <summary> MySQL. </summary>
+        private const string MySqlValue = "MySQL";
+        /// <summary> Oracle. </summary>
+        private const string OracleValue = "Oracle";
+        /// <summary> SQL. </summary>
+        private const string SqlValue = "SQL";
+        /// <summary> Sybase. </summary>
+        private const string SybaseValue = "Sybase";
+        /// <summary> PostgreSQL. </summary>
+        private const string PostgreSqlValue = "PostgreSQL";
+        /// <summary> MongoDB. </summary>
+        private const string MongoDBValue = "MongoDB";
+        /// <summary> SQLRDS. </summary>
+        private const string SqlRdsValue = "SQLRDS";
+        /// <summary> MySQLRDS. </summary>
+        private const string MySqlRdsValue = "MySQLRDS";
+        /// <summary> PostgreSQLRDS. </summary>
+        private const string PostgreSqlRdsValue = "PostgreSQLRDS";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationScenarioSource"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationScenarioSource(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AccessValue = "Access";
-        private const string DB2Value = "DB2";
-        private const string MySqlValue = "MySQL";
-        private const string OracleValue = "Oracle";
-        private const string SqlValue = "SQL";
-        private const string SybaseValue = "Sybase";
-        private const string PostgreSqlValue = "PostgreSQL";
-        private const string MongoDBValue = "MongoDB";
-        private const string SqlRdsValue = "SQLRDS";
-        private const string MySqlRdsValue = "MySQLRDS";
-        private const string PostgreSqlRdsValue = "PostgreSQLRDS";
+            _value = value;
+        }
 
         /// <summary> Access. </summary>
         public static DataMigrationScenarioSource Access { get; } = new DataMigrationScenarioSource(AccessValue);
+
         /// <summary> DB2. </summary>
         public static DataMigrationScenarioSource DB2 { get; } = new DataMigrationScenarioSource(DB2Value);
+
         /// <summary> MySQL. </summary>
         public static DataMigrationScenarioSource MySql { get; } = new DataMigrationScenarioSource(MySqlValue);
+
         /// <summary> Oracle. </summary>
         public static DataMigrationScenarioSource Oracle { get; } = new DataMigrationScenarioSource(OracleValue);
+
         /// <summary> SQL. </summary>
         public static DataMigrationScenarioSource Sql { get; } = new DataMigrationScenarioSource(SqlValue);
+
         /// <summary> Sybase. </summary>
         public static DataMigrationScenarioSource Sybase { get; } = new DataMigrationScenarioSource(SybaseValue);
+
         /// <summary> PostgreSQL. </summary>
         public static DataMigrationScenarioSource PostgreSql { get; } = new DataMigrationScenarioSource(PostgreSqlValue);
+
         /// <summary> MongoDB. </summary>
         public static DataMigrationScenarioSource MongoDB { get; } = new DataMigrationScenarioSource(MongoDBValue);
+
         /// <summary> SQLRDS. </summary>
         public static DataMigrationScenarioSource SqlRds { get; } = new DataMigrationScenarioSource(SqlRdsValue);
+
         /// <summary> MySQLRDS. </summary>
         public static DataMigrationScenarioSource MySqlRds { get; } = new DataMigrationScenarioSource(MySqlRdsValue);
+
         /// <summary> PostgreSQLRDS. </summary>
         public static DataMigrationScenarioSource PostgreSqlRds { get; } = new DataMigrationScenarioSource(PostgreSqlRdsValue);
+
         /// <summary> Determines if two <see cref="DataMigrationScenarioSource"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationScenarioSource left, DataMigrationScenarioSource right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationScenarioSource"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationScenarioSource left, DataMigrationScenarioSource right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationScenarioSource"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationScenarioSource"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationScenarioSource(string value) => new DataMigrationScenarioSource(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationScenarioSource"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationScenarioSource?(string value) => value == null ? null : new DataMigrationScenarioSource(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationScenarioSource other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationScenarioSource other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

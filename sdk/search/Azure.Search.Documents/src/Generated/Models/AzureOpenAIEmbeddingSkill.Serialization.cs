@@ -105,10 +105,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("modelName"u8);
                 writer.WriteStringValue(ModelName.Value.ToString());
             }
-            if (Optional.IsDefined(Dimensions))
+            if (_dimensionsIsDefined || Optional.IsDefined(Dimensions))
             {
-                writer.WritePropertyName("dimensions"u8);
-                writer.WriteNumberValue(Dimensions.Value);
+                if (Dimensions != null)
+                {
+                    writer.WritePropertyName("dimensions"u8);
+                    writer.WriteNumberValue(Dimensions.Value);
+                }
+                else
+                {
+                    writer.WriteNull("dimensions"u8);
+                }
             }
         }
 
@@ -149,6 +156,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string apiKey = default;
             SearchIndexerDataIdentity authenticationIdentity = default;
             AzureOpenAIModelName? modelName = default;
+            bool dimensionsIsDefined = false;
             int? dimensions = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -231,6 +239,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("dimensions"u8))
                 {
+                    dimensionsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         dimensions = null;
@@ -241,7 +250,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AzureOpenAIEmbeddingSkill(
@@ -249,15 +258,18 @@ namespace Azure.Search.Documents.Indexes.Models
                 name,
                 description,
                 context,
-                inputs,
-                outputs,
+                inputs ?? new ChangeTrackingList<InputFieldMappingEntry>(),
+                outputs ?? new ChangeTrackingList<OutputFieldMappingEntry>(),
                 additionalBinaryDataProperties,
                 resourceUri,
                 deploymentName,
                 apiKey,
                 authenticationIdentity,
                 modelName,
-                dimensions);
+                dimensions)
+            {
+                _dimensionsIsDefined = dimensionsIsDefined
+            };
         }
     }
 }

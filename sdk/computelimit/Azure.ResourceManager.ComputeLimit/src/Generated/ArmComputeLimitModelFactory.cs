@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ComputeLimit;
 using Azure.ResourceManager.Models;
@@ -36,6 +35,23 @@ namespace Azure.ResourceManager.ComputeLimit.Models
                 default);
         }
 
+        /// <summary>
+        /// A host subscription that a guest subscription trusts for sharing compute limits.
+        /// A guest subscription can trust multiple host subscriptions; establishing trust does
+        /// not by itself associate the guest with a host. Guest-to-host association happens at
+        /// check-in time, where a subscription can be a guest of at most one host per region.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <returns> A new <see cref="ComputeLimit.TrustedHostSubscriptionData"/> instance for mocking. </returns>
+        public static TrustedHostSubscriptionData TrustedHostSubscriptionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default)
+        {
+            return new TrustedHostSubscriptionData(id, name, resourceType, systemData, default);
+        }
+
+        /// <summary> Compute limits shared by the subscription. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -53,6 +69,7 @@ namespace Azure.ResourceManager.ComputeLimit.Models
                 default);
         }
 
+        /// <summary> Properties of the compute shared limit. </summary>
         /// <param name="resourceName"> The limit name properties. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="unit"> The quota units, such as Count. </param>
@@ -63,6 +80,7 @@ namespace Azure.ResourceManager.ComputeLimit.Models
             return new ComputeLimitSharedLimitProperties(resourceName, limit, unit, provisioningState, default);
         }
 
+        /// <summary> Properties of the limit name. </summary>
         /// <param name="value"> The limit name. </param>
         /// <param name="localizedValue"> The localized limit name. </param>
         /// <returns> A new <see cref="Models.ComputeLimitLimitName"/> instance for mocking. </returns>
@@ -71,6 +89,7 @@ namespace Azure.ResourceManager.ComputeLimit.Models
             return new ComputeLimitLimitName(value, localizedValue, default);
         }
 
+        /// <summary> Compute limit feature. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -88,6 +107,7 @@ namespace Azure.ResourceManager.ComputeLimit.Models
                 default);
         }
 
+        /// <summary> Properties of the compute limit feature. </summary>
         /// <param name="state"> The current state of the feature (for example, Enabled, Disabled). </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.ComputeLimitFeatureProperties"/> instance for mocking. </returns>
@@ -96,6 +116,7 @@ namespace Azure.ResourceManager.ComputeLimit.Models
             return new ComputeLimitFeatureProperties(state, provisioningState, default);
         }
 
+        /// <summary> Request body for feature enable action. </summary>
         /// <param name="serviceTreeId"> The Service Tree identifier associated with this feature action. </param>
         /// <returns> A new <see cref="Models.ComputeLimitFeatureEnableContent"/> instance for mocking. </returns>
         public static ComputeLimitFeatureEnableContent ComputeLimitFeatureEnableContent(string serviceTreeId = default)
@@ -103,6 +124,7 @@ namespace Azure.ResourceManager.ComputeLimit.Models
             return new ComputeLimitFeatureEnableContent(serviceTreeId, default);
         }
 
+        /// <summary> VM family resource representing a virtual machine family and its category. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -120,12 +142,125 @@ namespace Azure.ResourceManager.ComputeLimit.Models
                 default);
         }
 
+        /// <summary> Properties of a VM family resource. </summary>
         /// <param name="category"> The category of the VM family (for example, GeneralPurpose, ComputeOptimized). </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.ComputeLimitVmFamilyProperties"/> instance for mocking. </returns>
         public static ComputeLimitVmFamilyProperties ComputeLimitVmFamilyProperties(string category = default, ComputeLimitResourceProvisioningState? provisioningState = default)
         {
             return new ComputeLimitVmFamilyProperties(category, provisioningState, default);
+        }
+
+        /// <summary>
+        /// Shared limit cap configuration for a VM family, owned by a host subscription
+        /// and propagated to its member subscriptions. The same resource type is
+        /// readable by host and member subscriptions, but write operations (PUT/DELETE)
+        /// are scoped to the caller's subscription as the host.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ComputeLimit.SharedLimitCapData"/> instance for mocking. </returns>
+        public static SharedLimitCapData SharedLimitCapData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SharedLimitCapProperties properties = default)
+        {
+            return new SharedLimitCapData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Properties of a shared limit cap resource. </summary>
+        /// <param name="defaultMemberCap">
+        /// The default member cap value (in count units).
+        /// Set to a non-negative integer to apply a cap to all member subscriptions
+        /// that do not have a per-member override. Omit the property to leave no
+        /// default cap in effect.
+        /// </param>
+        /// <param name="isBoundedCap">
+        /// Controls whether the service validates the aggregate cap against the
+        /// group limit for the VM family.
+        /// SUM(caps) is the sum of all per-member overrides' cap values plus
+        /// `defaultMemberCap` multiplied by the number of member subscriptions without an override.
+        /// When true, the service rejects any configuration where SUM(caps)
+        /// exceeds the group limit. When false, SUM(caps) is permitted to exceed
+        /// the group limit.
+        /// Enabling this flag is rejected if the current configuration already breaches the group limit;
+        /// reduce caps first, then enable.
+        /// </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.SharedLimitCapProperties"/> instance for mocking. </returns>
+        public static SharedLimitCapProperties SharedLimitCapProperties(int? defaultMemberCap = default, bool isBoundedCap = default, ComputeLimitResourceProvisioningState? provisioningState = default)
+        {
+            return new SharedLimitCapProperties(defaultMemberCap, isBoundedCap, provisioningState, default);
+        }
+
+        /// <summary> Request body for the `setMemberCapOverrides` action. </summary>
+        /// <param name="memberCapOverrides">
+        /// The full set of per-member cap overrides to persist for this resource.
+        /// This call replaces the existing set entirely; supply an empty array
+        /// (`[]`) to clear all overrides.
+        /// </param>
+        /// <returns> A new <see cref="Models.ComputeLimitSetMemberCapOverridesContent"/> instance for mocking. </returns>
+        public static ComputeLimitSetMemberCapOverridesContent ComputeLimitSetMemberCapOverridesContent(IEnumerable<MemberCap> memberCapOverrides = default)
+        {
+            memberCapOverrides ??= new ChangeTrackingList<MemberCap>();
+
+            return new ComputeLimitSetMemberCapOverridesContent((memberCapOverrides ?? new ChangeTrackingList<MemberCap>()).ToList(), default);
+        }
+
+        /// <summary> Per-member cap override. Pairs a member subscription with its cap value. </summary>
+        /// <param name="subscriptionId"> The member subscription identifier this cap applies to. </param>
+        /// <param name="cap"> The cap value in count units for this member subscription. </param>
+        /// <returns> A new <see cref="Models.MemberCap"/> instance for mocking. </returns>
+        public static MemberCap MemberCap(string subscriptionId = default, int cap = default)
+        {
+            return new MemberCap(subscriptionId, cap, default);
+        }
+
+        /// <summary> Response body for the `setMemberCapOverrides` action. </summary>
+        /// <param name="memberCapOverrides"> The per-member cap overrides as persisted after the action completed. </param>
+        /// <returns> A new <see cref="Models.SetMemberCapOverridesResult"/> instance for mocking. </returns>
+        public static SetMemberCapOverridesResult SetMemberCapOverridesResult(IEnumerable<MemberCap> memberCapOverrides = default)
+        {
+            memberCapOverrides ??= new ChangeTrackingList<MemberCap>();
+
+            return new SetMemberCapOverridesResult((memberCapOverrides ?? new ChangeTrackingList<MemberCap>()).ToList(), default);
+        }
+
+        /// <summary>
+        /// Member cap override as a standalone child resource of `SharedLimitCap`.
+        /// Use this resource to read or modify a single member's cap without
+        /// resending the entire `memberCapOverrides` array on the parent.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ComputeLimit.MemberCapOverrideData"/> instance for mocking. </returns>
+        public static MemberCapOverrideData MemberCapOverrideData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MemberCapOverrideProperties properties = default)
+        {
+            return new MemberCapOverrideData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Properties of a per-member cap override. </summary>
+        /// <param name="cap"> The cap value in count units for this member subscription. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.MemberCapOverrideProperties"/> instance for mocking. </returns>
+        public static MemberCapOverrideProperties MemberCapOverrideProperties(int cap = default, ComputeLimitResourceProvisioningState? provisioningState = default)
+        {
+            return new MemberCapOverrideProperties(cap, provisioningState, default);
         }
     }
 }

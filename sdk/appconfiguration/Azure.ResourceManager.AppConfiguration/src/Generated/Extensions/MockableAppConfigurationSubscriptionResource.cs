@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
 
         private ClientDiagnostics ConfigurationStoresClientDiagnostics => _configurationStoresClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppConfiguration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ConfigurationStores ConfigurationStoresRestClient => _configurationStoresRestClient ??= new ConfigurationStores(ConfigurationStoresClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
+        private ConfigurationStores ConfigurationStoresRestClient => _configurationStoresRestClient ??= new ConfigurationStores(ConfigurationStoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01-preview");
 
         private ClientDiagnostics OperationsClientDiagnostics => _operationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppConfiguration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Operations OperationsRestClient => _operationsRestClient ??= new Operations(OperationsClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
+        private Operations OperationsRestClient => _operationsRestClient ??= new Operations(OperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01-preview");
 
         /// <summary> Gets a collection of DeletedAppConfigurationStores in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of DeletedAppConfigurationStores and their operations over a DeletedAppConfigurationStoreResource. </returns>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppConfigurationStoreData, AppConfigurationStoreResource>(new ConfigurationStoresGetAllAsyncCollectionResultOfT(ConfigurationStoresRestClient, Guid.Parse(Id.SubscriptionId), skipToken, context, "MockableAppConfigurationSubscriptionResource.GetAppConfigurationStores"), data => new AppConfigurationStoreResource(Client, data));
+            return new AsyncPageableWrapper<AppConfigurationStoreData, AppConfigurationStoreResource>(new AppConfigurationStoreDataAsync0CollectionResultOfT(ConfigurationStoresRestClient, Guid.Parse(Id.SubscriptionId), skipToken, context, "MockableAppConfigurationSubscriptionResource.GetAppConfigurationStores"), data => new AppConfigurationStoreResource(Client, data));
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppConfigurationStoreData, AppConfigurationStoreResource>(new ConfigurationStoresGetAllCollectionResultOfT(ConfigurationStoresRestClient, Guid.Parse(Id.SubscriptionId), skipToken, context, "MockableAppConfigurationSubscriptionResource.GetAppConfigurationStores"), data => new AppConfigurationStoreResource(Client, data));
+            return new PageableWrapper<AppConfigurationStoreData, AppConfigurationStoreResource>(new AppConfigurationStoreData0CollectionResultOfT(ConfigurationStoresRestClient, Guid.Parse(Id.SubscriptionId), skipToken, context, "MockableAppConfigurationSubscriptionResource.GetAppConfigurationStores"), data => new AppConfigurationStoreResource(Client, data));
         }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeletedAppConfigurationStoreData, DeletedAppConfigurationStoreResource>(new ConfigurationStoresGetDeletedAppConfigurationStoresAsyncCollectionResultOfT(ConfigurationStoresRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppConfigurationSubscriptionResource.GetDeletedAppConfigurationStores"), data => new DeletedAppConfigurationStoreResource(Client, data));
+            return new AsyncPageableWrapper<DeletedAppConfigurationStoreData, DeletedAppConfigurationStoreResource>(new DeletedAppConfigurationStoreDataAsyncCollectionResultOfT(ConfigurationStoresRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppConfigurationSubscriptionResource.GetDeletedAppConfigurationStores"), data => new DeletedAppConfigurationStoreResource(Client, data));
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeletedAppConfigurationStoreData, DeletedAppConfigurationStoreResource>(new ConfigurationStoresGetDeletedAppConfigurationStoresCollectionResultOfT(ConfigurationStoresRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppConfigurationSubscriptionResource.GetDeletedAppConfigurationStores"), data => new DeletedAppConfigurationStoreResource(Client, data));
+            return new PageableWrapper<DeletedAppConfigurationStoreData, DeletedAppConfigurationStoreResource>(new DeletedAppConfigurationStoreDataCollectionResultOfT(ConfigurationStoresRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppConfigurationSubscriptionResource.GetDeletedAppConfigurationStores"), data => new DeletedAppConfigurationStoreResource(Client, data));
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

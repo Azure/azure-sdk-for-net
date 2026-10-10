@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Server properties for MySQL type source. </summary>
     public partial class DataMigrationMySqlServerProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationMySqlServerProperties"/>. </summary>
         internal DataMigrationMySqlServerProperties()
@@ -57,8 +28,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="serverEdition"> Edition of the database server. </param>
         /// <param name="serverOperatingSystemVersion"> Version of the operating system. </param>
         /// <param name="serverDatabaseCount"> Number of databases in the server. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataMigrationMySqlServerProperties(string serverPlatform, string serverName, string serverVersion, string serverEdition, string serverOperatingSystemVersion, int? serverDatabaseCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataMigrationMySqlServerProperties(string serverPlatform, string serverName, string serverVersion, string serverEdition, string serverOperatingSystemVersion, int? serverDatabaseCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServerPlatform = serverPlatform;
             ServerName = serverName;
@@ -66,19 +37,24 @@ namespace Azure.ResourceManager.DataMigration.Models
             ServerEdition = serverEdition;
             ServerOperatingSystemVersion = serverOperatingSystemVersion;
             ServerDatabaseCount = serverDatabaseCount;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the server platform. </summary>
         public string ServerPlatform { get; }
+
         /// <summary> Name of the server. </summary>
         public string ServerName { get; }
+
         /// <summary> Version of the database server. </summary>
         public string ServerVersion { get; }
+
         /// <summary> Edition of the database server. </summary>
         public string ServerEdition { get; }
+
         /// <summary> Version of the operating system. </summary>
         public string ServerOperatingSystemVersion { get; }
+
         /// <summary> Number of databases in the server. </summary>
         public int? ServerDatabaseCount { get; }
     }

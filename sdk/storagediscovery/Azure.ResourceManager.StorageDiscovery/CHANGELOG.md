@@ -3,12 +3,14 @@
 ## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
+ - Added support for configuring Azure Blob Storage capabilities on Storage Discovery workspaces with the 2026-10-01-preview API, including capacity-details status and prefix configurations.
 
-### Breaking Changes
-
-### Bugs Fixed
+## 1.0.1 (2026-06-30)
 
 ### Other Changes
+
+- Upgraded dependent Azure.Core to 1.59.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
 
 ## 1.0.0 (2025-10-13)
 

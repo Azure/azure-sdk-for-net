@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
 
         private ClientDiagnostics ScheduledActionsClientDiagnostics => _scheduledActionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ComputeSchedule.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ScheduledActions ScheduledActionsRestClient => _scheduledActionsRestClient ??= new ScheduledActions(ScheduledActionsClientDiagnostics, Pipeline, Endpoint, "2026-04-15-preview");
+        private ScheduledActions ScheduledActionsRestClient => _scheduledActionsRestClient ??= new ScheduledActions(ScheduledActionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-15-preview");
 
         /// <summary>
         /// List ScheduledAction resources by subscription ID
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionsGetBySubscriptionAsyncCollectionResultOfT(ScheduledActionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableComputeScheduleSubscriptionResource.GetScheduledActions"), data => new ScheduledActionResource(Client, data));
+            return new AsyncPageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionDataAsync0CollectionResultOfT(ScheduledActionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableComputeScheduleSubscriptionResource.GetScheduledActions"), data => new ScheduledActionResource(Client, data));
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionsGetBySubscriptionCollectionResultOfT(ScheduledActionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableComputeScheduleSubscriptionResource.GetScheduledActions"), data => new ScheduledActionResource(Client, data));
+            return new PageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionData0CollectionResultOfT(ScheduledActionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableComputeScheduleSubscriptionResource.GetScheduledActions"), data => new ScheduledActionResource(Client, data));
         }
 
         /// <summary>

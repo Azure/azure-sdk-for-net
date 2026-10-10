@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DurableTask
         {
             TryGetApiVersion(DurableTaskSchedulerResource.ResourceType, out string durableTaskSchedulerApiVersion);
             _schedulersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DurableTask", DurableTaskSchedulerResource.ResourceType.Namespace, Diagnostics);
-            _schedulersRestClient = new Schedulers(_schedulersClientDiagnostics, Pipeline, Endpoint, durableTaskSchedulerApiVersion ?? "2026-02-01");
+            _schedulersRestClient = new Schedulers(_schedulersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, durableTaskSchedulerApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DurableTask
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DurableTaskSchedulerData, DurableTaskSchedulerResource>(new SchedulersGetByResourceGroupAsyncCollectionResultOfT(_schedulersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DurableTaskSchedulerCollection.GetAll"), data => new DurableTaskSchedulerResource(Client, data));
+            return new AsyncPageableWrapper<DurableTaskSchedulerData, DurableTaskSchedulerResource>(new DurableTaskSchedulerDataAsyncCollectionResultOfT(_schedulersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DurableTaskSchedulerCollection.GetAll"), data => new DurableTaskSchedulerResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DurableTask
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DurableTaskSchedulerData, DurableTaskSchedulerResource>(new SchedulersGetByResourceGroupCollectionResultOfT(_schedulersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DurableTaskSchedulerCollection.GetAll"), data => new DurableTaskSchedulerResource(Client, data));
+            return new PageableWrapper<DurableTaskSchedulerData, DurableTaskSchedulerResource>(new DurableTaskSchedulerDataCollectionResultOfT(_schedulersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DurableTaskSchedulerCollection.GetAll"), data => new DurableTaskSchedulerResource(Client, data));
         }
 
         /// <summary>

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,20 +15,18 @@ namespace Azure.ResourceManager.EventGrid.Models
     public partial class StaticStringRoutingEnrichment : StaticRoutingEnrichment
     {
         /// <summary> Initializes a new instance of <see cref="StaticStringRoutingEnrichment"/>. </summary>
-        public StaticStringRoutingEnrichment()
+        public StaticStringRoutingEnrichment() : base(StaticRoutingEnrichmentType.String)
         {
-            ValueType = StaticRoutingEnrichmentType.String;
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticStringRoutingEnrichment"/>. </summary>
         /// <param name="key"> Static routing enrichment key. </param>
         /// <param name="valueType"> Static routing enrichment value type. For e.g. this property value can be 'String'. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> String type routing enrichment value. </param>
-        internal StaticStringRoutingEnrichment(string key, StaticRoutingEnrichmentType valueType, IDictionary<string, BinaryData> serializedAdditionalRawData, string value) : base(key, valueType, serializedAdditionalRawData)
+        internal StaticStringRoutingEnrichment(string key, StaticRoutingEnrichmentType valueType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string value) : base(key, valueType, additionalBinaryDataProperties)
         {
             Value = value;
-            ValueType = valueType;
         }
 
         /// <summary> String type routing enrichment value. </summary>

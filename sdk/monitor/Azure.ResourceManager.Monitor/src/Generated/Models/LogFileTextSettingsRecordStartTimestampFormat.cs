@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -14,59 +15,92 @@ namespace Azure.ResourceManager.Monitor.Models
     public readonly partial struct LogFileTextSettingsRecordStartTimestampFormat : IEquatable<LogFileTextSettingsRecordStartTimestampFormat>
     {
         private readonly string _value;
+        /// <summary> ISO 8601. </summary>
+        private const string ISO8601Value = "ISO 8601";
+        /// <summary> YYYY-MM-DD HH:MM:SS. </summary>
+        private const string YyyyMmDdHhMmSsValue = "YYYY-MM-DD HH:MM:SS";
+        /// <summary> M/D/YYYY HH:MM:SS AM/PM. </summary>
+        private const string MDYyyyHhMmSsAMPMValue = "M/D/YYYY HH:MM:SS AM/PM";
+        /// <summary> Mon DD, YYYY HH:MM:SS. </summary>
+        private const string MonDdYyyyHhMmSsValue = "Mon DD, YYYY HH:MM:SS";
+        /// <summary> yyMMdd HH:mm:ss. </summary>
+        private const string YyMMddHhMmSsValue = "yyMMdd HH:mm:ss";
+        /// <summary> ddMMyy HH:mm:ss. </summary>
+        private const string DdMMyyHhMmSsValue = "ddMMyy HH:mm:ss";
+        /// <summary> MMM d hh:mm:ss. </summary>
+        private const string MmmDHhMmSsValue = "MMM d hh:mm:ss";
+        /// <summary> dd/MMM/yyyy:HH:mm:ss zzz. </summary>
+        private const string DdMmmYyyyHhMmSsZzzValue = "dd/MMM/yyyy:HH:mm:ss zzz";
+        /// <summary> yyyy-MM-ddTHH:mm:ssK. </summary>
+        private const string YyyyMmDdTHHMmSsKValue = "yyyy-MM-ddTHH:mm:ssK";
 
         /// <summary> Initializes a new instance of <see cref="LogFileTextSettingsRecordStartTimestampFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LogFileTextSettingsRecordStartTimestampFormat(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ISO8601Value = "ISO 8601";
-        private const string YyyyMmDdHhMmSsValue = "YYYY-MM-DD HH:MM:SS";
-        private const string MDYyyyHhMmSsAMPMValue = "M/D/YYYY HH:MM:SS AM/PM";
-        private const string MonDdYyyyHhMmSsValue = "Mon DD, YYYY HH:MM:SS";
-        private const string YyMMddHhMmSsValue = "yyMMdd HH:mm:ss";
-        private const string DdMMyyHhMmSsValue = "ddMMyy HH:mm:ss";
-        private const string MmmDHhMmSsValue = "MMM d hh:mm:ss";
-        private const string DdMmmYyyyHhMmSsZzzValue = "dd/MMM/yyyy:HH:mm:ss zzz";
-        private const string YyyyMmDdTHHMmSsKValue = "yyyy-MM-ddTHH:mm:ssK";
+            _value = value;
+        }
 
         /// <summary> ISO 8601. </summary>
         public static LogFileTextSettingsRecordStartTimestampFormat ISO8601 { get; } = new LogFileTextSettingsRecordStartTimestampFormat(ISO8601Value);
+
         /// <summary> YYYY-MM-DD HH:MM:SS. </summary>
         public static LogFileTextSettingsRecordStartTimestampFormat YyyyMmDdHhMmSs { get; } = new LogFileTextSettingsRecordStartTimestampFormat(YyyyMmDdHhMmSsValue);
+
         /// <summary> M/D/YYYY HH:MM:SS AM/PM. </summary>
         public static LogFileTextSettingsRecordStartTimestampFormat MDYyyyHhMmSsAMPM { get; } = new LogFileTextSettingsRecordStartTimestampFormat(MDYyyyHhMmSsAMPMValue);
+
         /// <summary> Mon DD, YYYY HH:MM:SS. </summary>
         public static LogFileTextSettingsRecordStartTimestampFormat MonDdYyyyHhMmSs { get; } = new LogFileTextSettingsRecordStartTimestampFormat(MonDdYyyyHhMmSsValue);
+
         /// <summary> yyMMdd HH:mm:ss. </summary>
         public static LogFileTextSettingsRecordStartTimestampFormat YyMMddHhMmSs { get; } = new LogFileTextSettingsRecordStartTimestampFormat(YyMMddHhMmSsValue);
+
         /// <summary> ddMMyy HH:mm:ss. </summary>
         public static LogFileTextSettingsRecordStartTimestampFormat DdMMyyHhMmSs { get; } = new LogFileTextSettingsRecordStartTimestampFormat(DdMMyyHhMmSsValue);
+
         /// <summary> MMM d hh:mm:ss. </summary>
         public static LogFileTextSettingsRecordStartTimestampFormat MmmDHhMmSs { get; } = new LogFileTextSettingsRecordStartTimestampFormat(MmmDHhMmSsValue);
+
         /// <summary> dd/MMM/yyyy:HH:mm:ss zzz. </summary>
         public static LogFileTextSettingsRecordStartTimestampFormat DdMmmYyyyHhMmSsZzz { get; } = new LogFileTextSettingsRecordStartTimestampFormat(DdMmmYyyyHhMmSsZzzValue);
+
         /// <summary> yyyy-MM-ddTHH:mm:ssK. </summary>
         public static LogFileTextSettingsRecordStartTimestampFormat YyyyMmDdTHHMmSsK { get; } = new LogFileTextSettingsRecordStartTimestampFormat(YyyyMmDdTHHMmSsKValue);
+
         /// <summary> Determines if two <see cref="LogFileTextSettingsRecordStartTimestampFormat"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LogFileTextSettingsRecordStartTimestampFormat left, LogFileTextSettingsRecordStartTimestampFormat right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LogFileTextSettingsRecordStartTimestampFormat"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LogFileTextSettingsRecordStartTimestampFormat left, LogFileTextSettingsRecordStartTimestampFormat right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LogFileTextSettingsRecordStartTimestampFormat"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LogFileTextSettingsRecordStartTimestampFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LogFileTextSettingsRecordStartTimestampFormat(string value) => new LogFileTextSettingsRecordStartTimestampFormat(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LogFileTextSettingsRecordStartTimestampFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LogFileTextSettingsRecordStartTimestampFormat?(string value) => value == null ? null : new LogFileTextSettingsRecordStartTimestampFormat(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LogFileTextSettingsRecordStartTimestampFormat other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LogFileTextSettingsRecordStartTimestampFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

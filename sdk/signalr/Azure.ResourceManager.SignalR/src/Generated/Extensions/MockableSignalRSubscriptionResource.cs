@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.SignalR.Mocking
 
         private ClientDiagnostics SignalRResourcesClientDiagnostics => _signalRResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SignalR.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SignalRResources SignalRResourcesRestClient => _signalRResourcesRestClient ??= new SignalRResources(SignalRResourcesClientDiagnostics, Pipeline, Endpoint, "2025-01-01-preview");
+        private SignalRResources SignalRResourcesRestClient => _signalRResourcesRestClient ??= new SignalRResources(SignalRResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-01-01-preview");
 
         private ClientDiagnostics SignalROperationGroupClientDiagnostics => _signalROperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SignalR.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SignalROperationGroup SignalROperationGroupRestClient => _signalROperationGroupRestClient ??= new SignalROperationGroup(SignalROperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-01-01-preview");
+        private SignalROperationGroup SignalROperationGroupRestClient => _signalROperationGroupRestClient ??= new SignalROperationGroup(SignalROperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-01-01-preview");
 
         private ClientDiagnostics UsagesOperationGroupClientDiagnostics => _usagesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SignalR.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private UsagesOperationGroup UsagesOperationGroupRestClient => _usagesOperationGroupRestClient ??= new UsagesOperationGroup(UsagesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-01-01-preview");
+        private UsagesOperationGroup UsagesOperationGroupRestClient => _usagesOperationGroupRestClient ??= new UsagesOperationGroup(UsagesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-01-01-preview");
 
         /// <summary>
         /// Handles requests to list all resources in a subscription.
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SignalR.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SignalRData, SignalRResource>(new SignalRResourcesGetBySubscriptionAsyncCollectionResultOfT(SignalRResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSignalRSubscriptionResource.GetSignalRs"), data => new SignalRResource(Client, data));
+            return new AsyncPageableWrapper<SignalRData, SignalRResource>(new SignalRDataAsync0CollectionResultOfT(SignalRResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSignalRSubscriptionResource.GetSignalRs"), data => new SignalRResource(Client, data));
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SignalR.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SignalRData, SignalRResource>(new SignalRResourcesGetBySubscriptionCollectionResultOfT(SignalRResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSignalRSubscriptionResource.GetSignalRs"), data => new SignalRResource(Client, data));
+            return new PageableWrapper<SignalRData, SignalRResource>(new SignalRData0CollectionResultOfT(SignalRResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSignalRSubscriptionResource.GetSignalRs"), data => new SignalRResource(Client, data));
         }
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.SignalR.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesOperationGroupGetUsagesAsyncCollectionResultOfT(UsagesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableSignalRSubscriptionResource.GetUsages");
+            return new SignalRUsageAsyncCollectionResultOfT(UsagesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableSignalRSubscriptionResource.GetUsages");
         }
 
         /// <summary>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.SignalR.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesOperationGroupGetUsagesCollectionResultOfT(UsagesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableSignalRSubscriptionResource.GetUsages");
+            return new SignalRUsageCollectionResultOfT(UsagesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableSignalRSubscriptionResource.GetUsages");
         }
     }
 }

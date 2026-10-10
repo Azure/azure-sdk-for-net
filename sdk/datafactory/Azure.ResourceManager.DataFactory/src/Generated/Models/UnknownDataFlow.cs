@@ -10,7 +10,6 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Unknown version of DataFlow. </summary>
     internal partial class UnknownDataFlow : DataFactoryDataFlowProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDataFlow"/>. </summary>
@@ -18,14 +17,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> The description of the data flow. </param>
         /// <param name="annotations"> List of tags that can be used for describing the data flow. </param>
         /// <param name="folder"> The folder that this data flow is in. If not specified, Data flow will appear at the root level. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDataFlow(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(dataFlowType, description, annotations, folder, serializedAdditionalRawData)
-        {
-            DataFlowType = dataFlowType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownDataFlow"/> for deserialization. </summary>
-        internal UnknownDataFlow()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDataFlow(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(dataFlowType ?? "unknown", description, annotations, folder, additionalBinaryDataProperties)
         {
         }
     }

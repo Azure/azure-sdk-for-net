@@ -15,7 +15,7 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Parameters to create Data Transfer Job. </summary>
-    public partial class CosmosDBJobCreateContent : ArmProxyResource, IJsonModel<CosmosDBJobCreateContent>
+    public partial class CosmosDBJobCreateContent : CosmosDBProxyResource, IJsonModel<CosmosDBJobCreateContent>
     {
         /// <summary> Initializes a new instance of <see cref="CosmosDBJobCreateContent"/> for deserialization. </summary>
         internal CosmosDBJobCreateContent()
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ArmProxyResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override CosmosDBProxyResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<CosmosDBJobCreateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ArmProxyResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override CosmosDBProxyResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<CosmosDBJobCreateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CosmosDBJobCreateContent(id, name, @type, additionalBinaryDataProperties, properties);

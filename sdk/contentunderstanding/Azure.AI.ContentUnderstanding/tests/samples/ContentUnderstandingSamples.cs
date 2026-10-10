@@ -8,10 +8,21 @@ using Azure.Core.TestFramework.Models;
 namespace Azure.AI.ContentUnderstanding.Samples
 {
     [AsyncOnly] // Ensure that each sample will only run once.
+    [ClientTestFixture(
+        true,
+        ContentUnderstandingClientOptions.ServiceVersion.V2025_11_01,
+        ContentUnderstandingClientOptions.ServiceVersion.V2026_06_01_Preview)]
     public partial class ContentUnderstandingSamples : RecordedTestBase<ContentUnderstandingClientTestEnvironment>
     {
-        public ContentUnderstandingSamples(bool isAsync) : base(isAsync)
+        private readonly ContentUnderstandingClientOptions.ServiceVersion _serviceVersion;
+
+        private ContentUnderstandingModelProfile ModelProfile => TestEnvironment.GetModelProfile(_serviceVersion);
+
+        public ContentUnderstandingSamples(bool isAsync, ContentUnderstandingClientOptions.ServiceVersion serviceVersion = default)
+            : base(isAsync)
         {
+            _serviceVersion = serviceVersion;
+
             // Disable diagnostic validation for samples (they're for documentation, not full test coverage)
             TestDiagnostics = false;
 

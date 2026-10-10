@@ -15,6 +15,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Monitor.PipelineGroups
 {
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups
         {
             TryGetApiVersion(ResourceType, out string pipelineGroupApiVersion);
             _pipelineGroupOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor.PipelineGroups", ResourceType.Namespace, Diagnostics);
-            _pipelineGroupOperationsRestClient = new PipelineGroupOperations(_pipelineGroupOperationsClientDiagnostics, Pipeline, Endpoint, pipelineGroupApiVersion ?? "2026-04-01");
+            _pipelineGroupOperationsRestClient = new PipelineGroupOperations(_pipelineGroupOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, pipelineGroupApiVersion ?? "2026-04-01");
             ValidateResourceId(id);
         }
 
@@ -514,10 +515,9 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -557,10 +557,9 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

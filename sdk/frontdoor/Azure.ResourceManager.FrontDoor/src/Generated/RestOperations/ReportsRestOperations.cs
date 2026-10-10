@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.FrontDoor
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
 
         /// <summary> Initializes a new instance of Reports for mocking. </summary>
         protected Reports()
@@ -25,14 +26,16 @@ namespace Azure.ResourceManager.FrontDoor
         /// <summary> Initializes a new instance of Reports. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Reports(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal Reports(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _userAgent = new TelemetryDetails(typeof(Reports).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -41,7 +44,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetLatencyScorecardsReportRequest(string subscriptionId, string resourceGroupName, string profileName, string experimentName, string aggregationInterval, DateTimeOffset? endOn, string country, RequestContext context)
+        internal HttpMessage CreateGetLatencyScorecardsReportRequest(string subscriptionId, string resourceGroupName, string profileName, string experimentName, string aggregationInterval, DateTimeOffset? endsOn, string country, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -58,9 +61,9 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (endOn != null)
+            if (endsOn != null)
             {
-                uri.AppendQuery("endDateTimeUTC", TypeFormatters.ConvertToString(endOn, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("endDateTimeUTC", TypeFormatters.ConvertToString(endsOn, SerializationFormat.DateTime_RFC3339), true);
             }
             if (country != null)
             {
@@ -71,11 +74,12 @@ namespace Azure.ResourceManager.FrontDoor
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetTimeSeriesReportRequest(string subscriptionId, string resourceGroupName, string profileName, string experimentName, DateTimeOffset startOn, DateTimeOffset endOn, string aggregationInterval, string timeSeriesType, string endpoint, string country, RequestContext context)
+        internal HttpMessage CreateGetTimeSeriesReportRequest(string subscriptionId, string resourceGroupName, string profileName, string experimentName, DateTimeOffset startsOn, DateTimeOffset endsOn, string aggregationInterval, string timeSeriesType, string endpoint, string country, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -92,8 +96,8 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            uri.AppendQuery("startDateTimeUTC", TypeFormatters.ConvertToString(startOn, SerializationFormat.DateTime_RFC3339), true);
-            uri.AppendQuery("endDateTimeUTC", TypeFormatters.ConvertToString(endOn, SerializationFormat.DateTime_RFC3339), true);
+            uri.AppendQuery("startDateTimeUTC", TypeFormatters.ConvertToString(startsOn, SerializationFormat.DateTime_RFC3339), true);
+            uri.AppendQuery("endDateTimeUTC", TypeFormatters.ConvertToString(endsOn, SerializationFormat.DateTime_RFC3339), true);
             uri.AppendQuery("aggregationInterval", aggregationInterval, true);
             uri.AppendQuery("timeseriesType", timeSeriesType, true);
             if (endpoint != null)
@@ -108,6 +112,7 @@ namespace Azure.ResourceManager.FrontDoor
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

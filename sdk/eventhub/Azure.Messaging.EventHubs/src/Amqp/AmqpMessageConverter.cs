@@ -20,9 +20,6 @@ namespace Azure.Messaging.EventHubs.Amqp
     ///
     internal class AmqpMessageConverter
     {
-        /// <summary>The size, in bytes, to use as a buffer for stream operations.</summary>
-        private const int StreamBufferSizeInBytes = 512;
-
         /// <summary>
         ///   Converts a given <see cref="EventData" /> source into its corresponding
         ///   AMQP representation.
@@ -345,7 +342,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     message.Batchable = true;
 
                     using var messageStream = message.ToStream();
-                    messageData[count] = new Data { Value = ReadStreamToArraySegment(messageStream) };
+                    messageData[count] = new Data { Value = AmqpAnnotatedMessageConverter.ReadStreamToArraySegment(messageStream) };
 
                     ++count;
                 }
@@ -422,48 +419,6 @@ namespace Azure.Messaging.EventHubs.Amqp
             if (ownerLevel.HasValue)
             {
                 message.MessageAnnotations.Map[AmqpProperty.ProducerOwnerLevel] = ownerLevel;
-            }
-        }
-
-        /// <summary>
-        ///   Converts a stream to an <see cref="ArraySegment{T}" /> representation.
-        /// </summary>
-        ///
-        /// <param name="stream">The stream to read and capture in memory.</param>
-        ///
-        /// <returns>The <see cref="ArraySegment{T}" /> containing the stream data.</returns>
-        ///
-        private static ArraySegment<byte> ReadStreamToArraySegment(Stream stream)
-        {
-            switch (stream)
-            {
-                case { Length: < 1 }:
-                    return default;
-
-                case BufferListStream bufferListStream:
-                    return bufferListStream.ReadBytes((int)stream.Length);
-
-                case MemoryStream memStreamSource:
-                    {
-                        using var memStreamCopy = new MemoryStream((int)(memStreamSource.Length - memStreamSource.Position));
-                        memStreamSource.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
-                        if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
-                        {
-                            segment = new ArraySegment<byte>(memStreamCopy.ToArray());
-                        }
-                        return segment;
-                    }
-
-                default:
-                    {
-                        using var memStreamCopy = new MemoryStream(StreamBufferSizeInBytes);
-                        stream.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
-                        if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
-                        {
-                            segment = new ArraySegment<byte>(memStreamCopy.ToArray());
-                        }
-                        return segment;
-                    }
             }
         }
     }

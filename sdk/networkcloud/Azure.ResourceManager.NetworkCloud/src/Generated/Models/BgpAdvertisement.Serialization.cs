@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new BgpAdvertisement(advertiseToFabric, communities ?? new ChangeTrackingList<string>(), ipAddressPools, peers ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);

@@ -69,7 +69,8 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="source"> The root namespace instance to convert. </param>
         public static implicit operator MaintenanceConfigurationAssignmentData(Maintenance.MaintenanceConfigurationAssignmentData source)
         {
-            if (source == null) return null;
+            if (source == null)
+                return null;
             var data = ModelReaderWriter.Write(source, ModelSerializationExtensions.WireOptions, AzureResourceManagerMaintenanceContext.Default);
             return ModelReaderWriter.Read<MaintenanceConfigurationAssignmentData>(data, ModelSerializationExtensions.WireOptions, AzureResourceManagerMaintenanceContext.Default);
         }
@@ -81,7 +82,8 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="source"> The Models namespace instance to convert. </param>
         public static implicit operator Maintenance.MaintenanceConfigurationAssignmentData(MaintenanceConfigurationAssignmentData source)
         {
-            if (source == null) return null;
+            if (source == null)
+                return null;
             var data = ModelReaderWriter.Write(source, ModelSerializationExtensions.WireOptions, AzureResourceManagerMaintenanceContext.Default);
             return ModelReaderWriter.Read<Maintenance.MaintenanceConfigurationAssignmentData>(data, ModelSerializationExtensions.WireOptions, AzureResourceManagerMaintenanceContext.Default);
         }

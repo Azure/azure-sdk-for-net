@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DomainRegistration
         {
             TryGetApiVersion(AppServiceDomainResource.ResourceType, out string appServiceDomainApiVersion);
             _domainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DomainRegistration", AppServiceDomainResource.ResourceType.Namespace, Diagnostics);
-            _domainsRestClient = new Domains(_domainsClientDiagnostics, Pipeline, Endpoint, appServiceDomainApiVersion ?? "2024-11-01");
+            _domainsRestClient = new Domains(_domainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appServiceDomainApiVersion ?? "2024-11-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DomainRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppServiceDomainData, AppServiceDomainResource>(new DomainsGetByResourceGroupAsyncCollectionResultOfT(_domainsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AppServiceDomainCollection.GetAll"), data => new AppServiceDomainResource(Client, data));
+            return new AsyncPageableWrapper<AppServiceDomainData, AppServiceDomainResource>(new AppServiceDomainDataAsyncCollectionResultOfT(_domainsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AppServiceDomainCollection.GetAll"), data => new AppServiceDomainResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DomainRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppServiceDomainData, AppServiceDomainResource>(new DomainsGetByResourceGroupCollectionResultOfT(_domainsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AppServiceDomainCollection.GetAll"), data => new AppServiceDomainResource(Client, data));
+            return new PageableWrapper<AppServiceDomainData, AppServiceDomainResource>(new AppServiceDomainDataCollectionResultOfT(_domainsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AppServiceDomainCollection.GetAll"), data => new AppServiceDomainResource(Client, data));
         }
 
         /// <summary>

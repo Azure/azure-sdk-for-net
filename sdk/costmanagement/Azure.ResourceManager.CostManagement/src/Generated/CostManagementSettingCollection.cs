@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             TryGetApiVersion(CostManagementSettingResource.ResourceType, out string costManagementSettingApiVersion);
             _settingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", CostManagementSettingResource.ResourceType.Namespace, Diagnostics);
-            _settingsRestClient = new Settings(_settingsClientDiagnostics, Pipeline, Endpoint, costManagementSettingApiVersion ?? "2025-03-01");
+            _settingsRestClient = new Settings(_settingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, costManagementSettingApiVersion ?? "2025-03-01");
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CostManagementSettingData, CostManagementSettingResource>(new SettingsGetAllAsyncCollectionResultOfT(_settingsRestClient, Id.ToString(), context, "CostManagementSettingCollection.GetAll"), data => new CostManagementSettingResource(Client, data));
+            return new AsyncPageableWrapper<CostManagementSettingData, CostManagementSettingResource>(new CostManagementSettingDataAsyncCollectionResultOfT(_settingsRestClient, Id.ToString(), context, "CostManagementSettingCollection.GetAll"), data => new CostManagementSettingResource(Client, data));
         }
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CostManagementSettingData, CostManagementSettingResource>(new SettingsGetAllCollectionResultOfT(_settingsRestClient, Id.ToString(), context, "CostManagementSettingCollection.GetAll"), data => new CostManagementSettingResource(Client, data));
+            return new PageableWrapper<CostManagementSettingData, CostManagementSettingResource>(new CostManagementSettingDataCollectionResultOfT(_settingsRestClient, Id.ToString(), context, "CostManagementSettingCollection.GetAll"), data => new CostManagementSettingResource(Client, data));
         }
 
         /// <summary>

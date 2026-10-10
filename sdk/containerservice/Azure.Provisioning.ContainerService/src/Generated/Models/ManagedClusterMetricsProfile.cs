@@ -57,6 +57,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _costAnalysis = DefineModelProperty<ManagedClusterCostAnalysis>(nameof(CostAnalysis), new string[] { "costAnalysis" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterMetricsProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

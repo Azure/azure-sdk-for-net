@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct DataMigrationLoginType : IEquatable<DataMigrationLoginType>
     {
         private readonly string _value;
+        /// <summary> WindowsUser. </summary>
+        private const string WindowsUserValue = "WindowsUser";
+        /// <summary> WindowsGroup. </summary>
+        private const string WindowsGroupValue = "WindowsGroup";
+        /// <summary> SqlLogin. </summary>
+        private const string SqlLoginValue = "SqlLogin";
+        /// <summary> Certificate. </summary>
+        private const string CertificateValue = "Certificate";
+        /// <summary> AsymmetricKey. </summary>
+        private const string AsymmetricKeyValue = "AsymmetricKey";
+        /// <summary> ExternalUser. </summary>
+        private const string ExternalUserValue = "ExternalUser";
+        /// <summary> ExternalGroup. </summary>
+        private const string ExternalGroupValue = "ExternalGroup";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationLoginType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationLoginType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string WindowsUserValue = "WindowsUser";
-        private const string WindowsGroupValue = "WindowsGroup";
-        private const string SqlLoginValue = "SqlLogin";
-        private const string CertificateValue = "Certificate";
-        private const string AsymmetricKeyValue = "AsymmetricKey";
-        private const string ExternalUserValue = "ExternalUser";
-        private const string ExternalGroupValue = "ExternalGroup";
+            _value = value;
+        }
 
         /// <summary> WindowsUser. </summary>
         public static DataMigrationLoginType WindowsUser { get; } = new DataMigrationLoginType(WindowsUserValue);
+
         /// <summary> WindowsGroup. </summary>
         public static DataMigrationLoginType WindowsGroup { get; } = new DataMigrationLoginType(WindowsGroupValue);
+
         /// <summary> SqlLogin. </summary>
         public static DataMigrationLoginType SqlLogin { get; } = new DataMigrationLoginType(SqlLoginValue);
+
         /// <summary> Certificate. </summary>
         public static DataMigrationLoginType Certificate { get; } = new DataMigrationLoginType(CertificateValue);
+
         /// <summary> AsymmetricKey. </summary>
         public static DataMigrationLoginType AsymmetricKey { get; } = new DataMigrationLoginType(AsymmetricKeyValue);
+
         /// <summary> ExternalUser. </summary>
         public static DataMigrationLoginType ExternalUser { get; } = new DataMigrationLoginType(ExternalUserValue);
+
         /// <summary> ExternalGroup. </summary>
         public static DataMigrationLoginType ExternalGroup { get; } = new DataMigrationLoginType(ExternalGroupValue);
+
         /// <summary> Determines if two <see cref="DataMigrationLoginType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationLoginType left, DataMigrationLoginType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationLoginType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationLoginType left, DataMigrationLoginType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationLoginType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationLoginType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationLoginType(string value) => new DataMigrationLoginType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationLoginType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationLoginType?(string value) => value == null ? null : new DataMigrationLoginType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationLoginType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationLoginType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

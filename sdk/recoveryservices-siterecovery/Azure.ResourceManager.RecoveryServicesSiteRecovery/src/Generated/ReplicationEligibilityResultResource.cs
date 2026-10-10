@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             TryGetApiVersion(ResourceType, out string replicationEligibilityResultApiVersion);
             _replicationEligibilityResultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
-            _replicationEligibilityResultsRestClient = new ReplicationEligibilityResults(_replicationEligibilityResultsClientDiagnostics, Pipeline, Endpoint, replicationEligibilityResultApiVersion ?? "2026-02-01");
+            _replicationEligibilityResultsRestClient = new ReplicationEligibilityResults(_replicationEligibilityResultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, replicationEligibilityResultApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 

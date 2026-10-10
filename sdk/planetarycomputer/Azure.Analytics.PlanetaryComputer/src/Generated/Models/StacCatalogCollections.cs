@@ -23,7 +23,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="StacCatalogCollections"/>. </summary>
         /// <param name="links"> Links to related resources and endpoints. </param>
         /// <param name="collections"> Array of STAC collections available in the catalog. </param>
-        internal StacCatalogCollections(IEnumerable<StacLink> links, IEnumerable<StacCollectionResource> collections)
+        internal StacCatalogCollections(IEnumerable<StacLink> links, IEnumerable<StacCollection> collections)
         {
             Links = links.ToList();
             Collections = collections.ToList();
@@ -33,7 +33,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="links"> Links to related resources and endpoints. </param>
         /// <param name="collections"> Array of STAC collections available in the catalog. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StacCatalogCollections(IList<StacLink> links, IList<StacCollectionResource> collections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StacCatalogCollections(IList<StacLink> links, IList<StacCollection> collections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Links = links;
             Collections = collections;
@@ -44,6 +44,6 @@ namespace Azure.Analytics.PlanetaryComputer
         public IList<StacLink> Links { get; }
 
         /// <summary> Array of STAC collections available in the catalog. </summary>
-        public IList<StacCollectionResource> Collections { get; }
+        public IList<StacCollection> Collections { get; }
     }
 }

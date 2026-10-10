@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(ResourceType, out string projectCatalogEnvironmentDefinitionApiVersion);
             _environmentDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            _environmentDefinitionsRestClient = new EnvironmentDefinitions(_environmentDefinitionsClientDiagnostics, Pipeline, Endpoint, projectCatalogEnvironmentDefinitionApiVersion ?? "2026-01-01-preview");
+            _environmentDefinitionsRestClient = new EnvironmentDefinitions(_environmentDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, projectCatalogEnvironmentDefinitionApiVersion ?? "2026-01-01-preview");
             _projectCatalogEnvironmentDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            _projectCatalogEnvironmentDefinitionsRestClient = new ProjectCatalogEnvironmentDefinitions(_projectCatalogEnvironmentDefinitionsClientDiagnostics, Pipeline, Endpoint, projectCatalogEnvironmentDefinitionApiVersion ?? "2026-01-01-preview");
+            _projectCatalogEnvironmentDefinitionsRestClient = new ProjectCatalogEnvironmentDefinitions(_projectCatalogEnvironmentDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, projectCatalogEnvironmentDefinitionApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 

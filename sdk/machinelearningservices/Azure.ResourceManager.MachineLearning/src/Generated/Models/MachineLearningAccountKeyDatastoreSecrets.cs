@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,19 +15,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningAccountKeyDatastoreSecrets : MachineLearningDatastoreSecrets
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningAccountKeyDatastoreSecrets"/>. </summary>
-        public MachineLearningAccountKeyDatastoreSecrets()
+        public MachineLearningAccountKeyDatastoreSecrets() : base(SecretsType.AccountKey)
         {
-            SecretsType = SecretsType.AccountKey;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningAccountKeyDatastoreSecrets"/>. </summary>
         /// <param name="secretsType"> [Required] Credential type used to authentication with storage. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="key"> Storage account key. </param>
-        internal MachineLearningAccountKeyDatastoreSecrets(SecretsType secretsType, IDictionary<string, BinaryData> serializedAdditionalRawData, string key) : base(secretsType, serializedAdditionalRawData)
+        internal MachineLearningAccountKeyDatastoreSecrets(SecretsType secretsType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string key) : base(secretsType, additionalBinaryDataProperties)
         {
             Key = key;
-            SecretsType = secretsType;
         }
 
         /// <summary> Storage account key. </summary>

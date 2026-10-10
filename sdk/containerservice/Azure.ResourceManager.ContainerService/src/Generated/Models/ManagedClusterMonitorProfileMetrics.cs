@@ -27,11 +27,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="ManagedClusterMonitorProfileMetrics"/>. </summary>
         /// <param name="isEnabled"> Whether to enable or disable the Azure Managed Prometheus addon for Prometheus monitoring. See aka.ms/AzureManagedPrometheus-aks-enable for details on enabling and disabling. </param>
         /// <param name="kubeStateMetrics"> Kube State Metrics profile for the Azure Managed Prometheus addon. These optional settings are for the kube-state-metrics pod that is deployed with the addon. See aka.ms/AzureManagedPrometheus-optional-parameters for details. </param>
+        /// <param name="isControlPlane"> Control plane metrics collection profile for the Azure Managed Prometheus addon. Configures collection of operational runtime metrics from managed control plane components (kube-apiserver, etcd, etc). See aka.ms/aks/controlplane-metrics for an overview. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterMonitorProfileMetrics(bool isEnabled, ManagedClusterMonitorProfileKubeStateMetrics kubeStateMetrics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterMonitorProfileMetrics(bool isEnabled, ManagedClusterMonitorProfileKubeStateMetrics kubeStateMetrics, ManagedClusterAzureMonitorProfileMetricsControlPlane isControlPlane, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsEnabled = isEnabled;
             KubeStateMetrics = kubeStateMetrics;
+            IsControlPlane = isControlPlane;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,5 +44,27 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Kube State Metrics profile for the Azure Managed Prometheus addon. These optional settings are for the kube-state-metrics pod that is deployed with the addon. See aka.ms/AzureManagedPrometheus-optional-parameters for details. </summary>
         [WirePath("kubeStateMetrics")]
         public ManagedClusterMonitorProfileKubeStateMetrics KubeStateMetrics { get; set; }
+
+        /// <summary> Control plane metrics collection profile for the Azure Managed Prometheus addon. Configures collection of operational runtime metrics from managed control plane components (kube-apiserver, etcd, etc). See aka.ms/aks/controlplane-metrics for an overview. </summary>
+        [WirePath("controlPlane")]
+        internal ManagedClusterAzureMonitorProfileMetricsControlPlane IsControlPlane { get; set; }
+
+        /// <summary> Whether to enable or disable collection of control plane metrics by the Azure Managed Prometheus addon. Defaults to disabled. See aka.ms/aks/controlplane-metrics for details. </summary>
+        [WirePath("controlPlane.enabled")]
+        public bool? IsControlPlaneEnabled
+        {
+            get
+            {
+                return IsControlPlane is null ? default : IsControlPlane.Enabled;
+            }
+            set
+            {
+                if (IsControlPlane is null)
+                {
+                    IsControlPlane = new ManagedClusterAzureMonitorProfileMetricsControlPlane();
+                }
+                IsControlPlane.Enabled = value;
+            }
+        }
     }
 }

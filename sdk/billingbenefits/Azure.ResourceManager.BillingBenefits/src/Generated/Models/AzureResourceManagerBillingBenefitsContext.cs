@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.BillingBenefits.Models;
 using Azure.ResourceManager.Models;
 
@@ -123,7 +122,6 @@ namespace Azure.ResourceManager.BillingBenefits
     [ModelReaderWriterBuildable(typeof(ReservationOrderAliasResponseProperties))]
     [ModelReaderWriterBuildable(typeof(ReservationOrderAliasResponsePropertiesReservedResourceProperties))]
     [ModelReaderWriterBuildable(typeof(ResourceSku))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RoleAssignmentEntityProperties))]
     [ModelReaderWriterBuildable(typeof(SavingsPlanModelList))]
     [ModelReaderWriterBuildable(typeof(SavingsPlanModelListResult))]

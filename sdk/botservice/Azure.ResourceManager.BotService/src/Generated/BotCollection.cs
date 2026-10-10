@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.BotService
         {
             TryGetApiVersion(BotResource.ResourceType, out string botApiVersion);
             _botsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", BotResource.ResourceType.Namespace, Diagnostics);
-            _botsRestClient = new Bots(_botsClientDiagnostics, Pipeline, Endpoint, botApiVersion ?? "2023-09-15-preview");
+            _botsRestClient = new Bots(_botsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, botApiVersion ?? "2023-09-15-preview");
             ValidateResourceId(id);
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.BotService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BotData, BotResource>(new BotsGetByResourceGroupAsyncCollectionResultOfT(_botsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "BotCollection.GetAll"), data => new BotResource(Client, data));
+            return new AsyncPageableWrapper<BotData, BotResource>(new BotDataAsyncCollectionResultOfT(_botsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "BotCollection.GetAll"), data => new BotResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.BotService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BotData, BotResource>(new BotsGetByResourceGroupCollectionResultOfT(_botsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "BotCollection.GetAll"), data => new BotResource(Client, data));
+            return new PageableWrapper<BotData, BotResource>(new BotDataCollectionResultOfT(_botsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "BotCollection.GetAll"), data => new BotResource(Client, data));
         }
 
         /// <summary>

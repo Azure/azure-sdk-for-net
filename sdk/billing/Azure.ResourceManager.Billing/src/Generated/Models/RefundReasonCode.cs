@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct RefundReasonCode : IEquatable<RefundReasonCode>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> AccidentalConversion. </summary>
+        private const string AccidentalConversionValue = "AccidentalConversion";
+        /// <summary> UnclearPricing. </summary>
+        private const string UnclearPricingValue = "UnclearPricing";
+        /// <summary> AccidentalPurchase. </summary>
+        private const string AccidentalPurchaseValue = "AccidentalPurchase";
+        /// <summary> ForgotToCancel. </summary>
+        private const string ForgotToCancelValue = "ForgotToCancel";
+        /// <summary> UnclearDocumentation. </summary>
+        private const string UnclearDocumentationValue = "UnclearDocumentation";
 
         /// <summary> Initializes a new instance of <see cref="RefundReasonCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RefundReasonCode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string AccidentalConversionValue = "AccidentalConversion";
-        private const string UnclearPricingValue = "UnclearPricing";
-        private const string AccidentalPurchaseValue = "AccidentalPurchase";
-        private const string ForgotToCancelValue = "ForgotToCancel";
-        private const string UnclearDocumentationValue = "UnclearDocumentation";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static RefundReasonCode Other { get; } = new RefundReasonCode(OtherValue);
+
         /// <summary> AccidentalConversion. </summary>
         public static RefundReasonCode AccidentalConversion { get; } = new RefundReasonCode(AccidentalConversionValue);
+
         /// <summary> UnclearPricing. </summary>
         public static RefundReasonCode UnclearPricing { get; } = new RefundReasonCode(UnclearPricingValue);
+
         /// <summary> AccidentalPurchase. </summary>
         public static RefundReasonCode AccidentalPurchase { get; } = new RefundReasonCode(AccidentalPurchaseValue);
+
         /// <summary> ForgotToCancel. </summary>
         public static RefundReasonCode ForgotToCancel { get; } = new RefundReasonCode(ForgotToCancelValue);
+
         /// <summary> UnclearDocumentation. </summary>
         public static RefundReasonCode UnclearDocumentation { get; } = new RefundReasonCode(UnclearDocumentationValue);
+
         /// <summary> Determines if two <see cref="RefundReasonCode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RefundReasonCode left, RefundReasonCode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RefundReasonCode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RefundReasonCode left, RefundReasonCode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RefundReasonCode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RefundReasonCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RefundReasonCode(string value) => new RefundReasonCode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RefundReasonCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RefundReasonCode?(string value) => value == null ? null : new RefundReasonCode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RefundReasonCode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RefundReasonCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

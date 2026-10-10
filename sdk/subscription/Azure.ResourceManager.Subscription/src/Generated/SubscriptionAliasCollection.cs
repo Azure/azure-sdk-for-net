@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Subscription
         {
             TryGetApiVersion(SubscriptionAliasResource.ResourceType, out string subscriptionAliasApiVersion);
             _subscriptionAliasResponsesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Subscription", SubscriptionAliasResource.ResourceType.Namespace, Diagnostics);
-            _subscriptionAliasResponsesRestClient = new SubscriptionAliasResponses(_subscriptionAliasResponsesClientDiagnostics, Pipeline, Endpoint, subscriptionAliasApiVersion ?? "2025-11-01-preview");
+            _subscriptionAliasResponsesRestClient = new SubscriptionAliasResponses(_subscriptionAliasResponsesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionAliasApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Subscription
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SubscriptionAliasData, SubscriptionAliasResource>(new SubscriptionAliasResponsesGetAllAsyncCollectionResultOfT(_subscriptionAliasResponsesRestClient, context, "SubscriptionAliasCollection.GetAll"), data => new SubscriptionAliasResource(Client, data));
+            return new AsyncPageableWrapper<SubscriptionAliasData, SubscriptionAliasResource>(new SubscriptionAliasDataAsyncCollectionResultOfT(_subscriptionAliasResponsesRestClient, context, "SubscriptionAliasCollection.GetAll"), data => new SubscriptionAliasResource(Client, data));
         }
 
         /// <summary>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Subscription
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SubscriptionAliasData, SubscriptionAliasResource>(new SubscriptionAliasResponsesGetAllCollectionResultOfT(_subscriptionAliasResponsesRestClient, context, "SubscriptionAliasCollection.GetAll"), data => new SubscriptionAliasResource(Client, data));
+            return new PageableWrapper<SubscriptionAliasData, SubscriptionAliasResource>(new SubscriptionAliasDataCollectionResultOfT(_subscriptionAliasResponsesRestClient, context, "SubscriptionAliasCollection.GetAll"), data => new SubscriptionAliasResource(Client, data));
         }
 
         /// <summary>

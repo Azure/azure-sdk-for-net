@@ -17,9 +17,11 @@ public class FoundryEnvironmentTests
         Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT", null);
         Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ARM_ID", null);
         Environment.SetEnvironmentVariable("FOUNDRY_AGENT_SESSION_ID", null);
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_SESSION_GUID", null);
         Environment.SetEnvironmentVariable("PORT", null);
         Environment.SetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT", null);
         Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING", null);
+        Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_AUTH_MODE", null);
         Environment.SetEnvironmentVariable("SSE_KEEPALIVE_INTERVAL", null);
         Environment.SetEnvironmentVariable("WS_KEEPALIVE_INTERVAL", null);
         Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", null);
@@ -80,6 +82,54 @@ public class FoundryEnvironmentTests
         Environment.SetEnvironmentVariable("FOUNDRY_AGENT_SESSION_ID", "session-123");
         FoundryEnvironment.Reload();
         Assert.That(FoundryEnvironment.SessionId, Is.EqualTo("session-123"));
+    }
+
+    [Test]
+    public void SessionInstanceId_ReturnsHostedEnvVar_WhenValid()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", "production");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_SESSION_GUID", new string('a', 32));
+
+        FoundryEnvironment.Reload();
+
+        Assert.That(
+            FoundryEnvironment.SessionInstanceId,
+            Is.EqualTo(Guid.ParseExact(new string('a', 32), "N")));
+    }
+
+    [Test]
+    public void SessionInstanceId_ReturnsNull_WhenNotSet()
+    {
+        FoundryEnvironment.Reload();
+
+        Assert.That(FoundryEnvironment.SessionInstanceId, Is.Null);
+    }
+
+    [TestCase("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")]
+    [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+    [TestCase("gggggggggggggggggggggggggggggggg")]
+    [TestCase("not-a-guid")]
+    public void SessionInstanceId_Throws_WhenValueIsInvalid(string value)
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", "production");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_SESSION_GUID", value);
+
+        InvalidOperationException exception =
+            Assert.Throws<InvalidOperationException>(() => FoundryEnvironment.Reload())!;
+
+        Assert.That(exception.Message, Does.Contain("FOUNDRY_AGENT_SESSION_GUID"));
+    }
+
+    [Test]
+    public void SessionInstanceId_RejectsInvalidLocalValue()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", null);
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_SESSION_GUID", "local-value");
+
+        InvalidOperationException exception =
+            Assert.Throws<InvalidOperationException>(() => FoundryEnvironment.Reload())!;
+
+        Assert.That(exception.Message, Does.Contain("FOUNDRY_AGENT_SESSION_GUID"));
     }
 
     [Test]
@@ -349,5 +399,40 @@ public class FoundryEnvironmentTests
         Environment.SetEnvironmentVariable("FOUNDRY_AGENT365_TRACING_ENABLED", "false");
         FoundryEnvironment.Reload();
         Assert.That(FoundryEnvironment.IsAgent365TracingEnabled, Is.False);
+    }
+
+    // ---------------------------------------------------------------
+    // IsAppInsightsEntraAuth (driven by APPLICATIONINSIGHTS_AUTH_MODE env var)
+    // ---------------------------------------------------------------
+
+    [Test]
+    public void IsAppInsightsEntraAuth_ReturnsTrue_WhenAuthModeIsEntra()
+    {
+        Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_AUTH_MODE", "Entra");
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.IsAppInsightsEntraAuth, Is.True);
+    }
+
+    [Test]
+    public void IsAppInsightsEntraAuth_IsCaseInsensitive()
+    {
+        Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_AUTH_MODE", "entra");
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.IsAppInsightsEntraAuth, Is.True);
+    }
+
+    [Test]
+    public void IsAppInsightsEntraAuth_ReturnsFalse_WhenNotSet()
+    {
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.IsAppInsightsEntraAuth, Is.False);
+    }
+
+    [Test]
+    public void IsAppInsightsEntraAuth_ReturnsFalse_WhenOtherValue()
+    {
+        Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_AUTH_MODE", "ConnectionString");
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.IsAppInsightsEntraAuth, Is.False);
     }
 }

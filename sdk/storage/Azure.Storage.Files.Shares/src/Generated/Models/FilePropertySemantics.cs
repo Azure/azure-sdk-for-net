@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary> The FilePropertySemantics. </summary>
+    /// <summary> The file property semantics. </summary>
     public readonly partial struct FilePropertySemantics : IEquatable<FilePropertySemantics>
     {
         private readonly string _value;
+        /// <summary> New. </summary>
+        private const string NewValue = "New";
+        /// <summary> Restore. </summary>
+        private const string RestoreValue = "Restore";
 
         /// <summary> Initializes a new instance of <see cref="FilePropertySemantics"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FilePropertySemantics(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NewValue = "New";
-        private const string RestoreValue = "Restore";
+            _value = value;
+        }
 
         /// <summary> New. </summary>
         public static FilePropertySemantics New { get; } = new FilePropertySemantics(NewValue);
+
         /// <summary> Restore. </summary>
         public static FilePropertySemantics Restore { get; } = new FilePropertySemantics(RestoreValue);
+
         /// <summary> Determines if two <see cref="FilePropertySemantics"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FilePropertySemantics left, FilePropertySemantics right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FilePropertySemantics"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FilePropertySemantics left, FilePropertySemantics right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FilePropertySemantics"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FilePropertySemantics"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FilePropertySemantics(string value) => new FilePropertySemantics(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FilePropertySemantics"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FilePropertySemantics?(string value) => value == null ? null : new FilePropertySemantics(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FilePropertySemantics other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FilePropertySemantics other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

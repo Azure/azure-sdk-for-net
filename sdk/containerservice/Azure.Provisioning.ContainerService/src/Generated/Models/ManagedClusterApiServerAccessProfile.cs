@@ -143,6 +143,10 @@ namespace Azure.Provisioning.ContainerService
             _isRunCommandDisabled = DefineProperty<bool>(nameof(IsRunCommandDisabled), new string[] { "disableRunCommand" });
             _isVnetIntegrationEnabled = DefineProperty<bool>(nameof(IsVnetIntegrationEnabled), new string[] { "enableVnetIntegration" });
             _subnetId = DefineProperty<ResourceIdentifier>(nameof(SubnetId), new string[] { "subnetId" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterApiServerAccessProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

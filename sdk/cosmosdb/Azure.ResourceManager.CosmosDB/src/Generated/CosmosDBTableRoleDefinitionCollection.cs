@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(CosmosDBTableRoleDefinitionResource.ResourceType, out string cosmosDBTableRoleDefinitionApiVersion);
             _tableResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBTableRoleDefinitionResource.ResourceType.Namespace, Diagnostics);
-            _tableResourcesRestClient = new TableResources(_tableResourcesClientDiagnostics, Pipeline, Endpoint, cosmosDBTableRoleDefinitionApiVersion ?? "2026-04-01-preview");
+            _tableResourcesRestClient = new TableResources(_tableResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBTableRoleDefinitionApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBTableRoleDefinitionData, CosmosDBTableRoleDefinitionResource>(new TableResourcesGetTableRoleDefinitionsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CosmosDBTableRoleDefinitionData, CosmosDBTableRoleDefinitionResource>(new CosmosDBTableRoleDefinitionDataAsyncCollectionResultOfT(
                 _tableResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBTableRoleDefinitionData, CosmosDBTableRoleDefinitionResource>(new TableResourcesGetTableRoleDefinitionsCollectionResultOfT(
+            return new PageableWrapper<CosmosDBTableRoleDefinitionData, CosmosDBTableRoleDefinitionResource>(new CosmosDBTableRoleDefinitionDataCollectionResultOfT(
                 _tableResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

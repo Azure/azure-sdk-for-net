@@ -14,10 +14,10 @@ namespace Azure.Provisioning.ContainerInstance
     public enum ContainerGroupRestartPolicy
     {
         /// <summary> Always. </summary>
-        Always,
+        Always = 0,
         /// <summary> OnFailure. </summary>
-        OnFailure,
+        OnFailure = 1,
         /// <summary> Never. </summary>
-        Never
+        Never = 2
     }
 }

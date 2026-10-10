@@ -31,13 +31,12 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             // this example assumes you already have this DefenderForStorageSettingResource created on azure
             // for more information of creating DefenderForStorageSettingResource, please refer to the document of DefenderForStorageSettingResource
             string resourceId = "subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23/resourceGroups/SampleRG/providers/Microsoft.Storage/storageAccounts/samplestorageaccount";
-            DefenderForStorageSettingName settingName = DefenderForStorageSettingName.Current;
+            SettingName settingName = SettingName.Current;
             ResourceIdentifier defenderForStorageSettingResourceId = DefenderForStorageSettingResource.CreateResourceIdentifier(resourceId, settingName);
             DefenderForStorageSettingResource defenderForStorageSetting = client.GetDefenderForStorageSettingResource(defenderForStorageSettingResourceId);
 
             // invoke the operation
-            DefenderForStorageSettingName settingName0 = DefenderForStorageSettingName.Current;
-            DefenderForStorageSettingResource result = await defenderForStorageSetting.GetAsync(settingName0);
+            DefenderForStorageSettingResource result = await defenderForStorageSetting.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -61,22 +60,33 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             // this example assumes you already have this DefenderForStorageSettingResource created on azure
             // for more information of creating DefenderForStorageSettingResource, please refer to the document of DefenderForStorageSettingResource
             string resourceId = "subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23/resourceGroups/SampleRG/providers/Microsoft.Storage/storageAccounts/samplestorageaccount";
-            DefenderForStorageSettingName settingName = DefenderForStorageSettingName.Current;
+            SettingName settingName = SettingName.Current;
             ResourceIdentifier defenderForStorageSettingResourceId = DefenderForStorageSettingResource.CreateResourceIdentifier(resourceId, settingName);
             DefenderForStorageSettingResource defenderForStorageSetting = client.GetDefenderForStorageSettingResource(defenderForStorageSettingResourceId);
 
             // invoke the operation
-            DefenderForStorageSettingName settingName0 = DefenderForStorageSettingName.Current;
             DefenderForStorageSettingData data = new DefenderForStorageSettingData
             {
-                IsEnabled = true,
-                IsOverrideSubscriptionLevelSettingsEnabled = true,
-                IsSensitiveDataDiscoveryEnabled = true,
-                ScanResultsEventGridTopicResourceId = new ResourceIdentifier("/subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23/resourceGroups/SampleRG/providers/Microsoft.EventGrid/topics/sampletopic"),
-                IsMalwareScanningOnUploadEnabled = true,
-                CapGBPerMonth = -1,
+                Properties = new DefenderForStorageSettingProperties
+                {
+                    IsEnabled = true,
+                    IsOverrideSubscriptionLevelSettings = true,
+                    SensitiveDataDiscovery = new SensitiveDataDiscoveryProperties
+                    {
+                        IsEnabled = true,
+                    },
+                    MalwareScanning = new MalwareScanningProperties
+                    {
+                        ScanResultsEventGridTopicResourceId = new ResourceIdentifier("/subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23/resourceGroups/SampleRG/providers/Microsoft.EventGrid/topics/sampletopic"),
+                        OnUpload = new OnUploadProperties
+                        {
+                            IsEnabled = true,
+                            CapGBPerMonth = -1,
+                        },
+                    },
+                },
             };
-            ArmOperation<DefenderForStorageSettingResource> lro = await defenderForStorageSetting.UpdateAsync(WaitUntil.Completed, settingName0, data);
+            ArmOperation<DefenderForStorageSettingResource> lro = await defenderForStorageSetting.UpdateAsync(WaitUntil.Completed, data);
             DefenderForStorageSettingResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(ExascaleDBNodeResource.ResourceType, out string exascaleDBNodeApiVersion);
             _exascaleDbNodesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ExascaleDBNodeResource.ResourceType.Namespace, Diagnostics);
-            _exascaleDbNodesRestClient = new ExascaleDbNodes(_exascaleDbNodesClientDiagnostics, Pipeline, Endpoint, exascaleDBNodeApiVersion ?? "2025-09-01");
+            _exascaleDbNodesRestClient = new ExascaleDbNodes(_exascaleDbNodesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, exascaleDBNodeApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExascaleDBNodeData, ExascaleDBNodeResource>(new ExascaleDbNodesGetByParentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ExascaleDBNodeData, ExascaleDBNodeResource>(new ExascaleDBNodeDataAsyncCollectionResultOfT(
                 _exascaleDbNodesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExascaleDBNodeData, ExascaleDBNodeResource>(new ExascaleDbNodesGetByParentCollectionResultOfT(
+            return new PageableWrapper<ExascaleDBNodeData, ExascaleDBNodeResource>(new ExascaleDBNodeDataCollectionResultOfT(
                 _exascaleDbNodesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

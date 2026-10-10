@@ -21,7 +21,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             var client = new ConfidentialLedgerClient(TestEnvironment.ConfidentialLedgerUrl, TestEnvironment.Credential);
 #endif
 
-            #region Snippet:CreateLedgerEntryWithTags
+            #region Snippet:ConfidentialLedger_CreateLedgerEntryWithTags
             RequestContent content = RequestContent.Create(new { contents = "Hello world with tags!" });
             string collectionId = "my-collection";
             string tags = "tag1,tag2";
@@ -29,7 +29,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             Response result = await client.CreateLedgerEntryAsync(content, collectionId, tags);
             #endregion
 
-            #region Snippet:GetLedgerEntriesWithTags
+            #region Snippet:ConfidentialLedger_GetLedgerEntriesWithTags
             string collectionIdForQuery = "my-collection";
 
             // Specify collection ID and tag. Optionally add a range of transaction IDs.

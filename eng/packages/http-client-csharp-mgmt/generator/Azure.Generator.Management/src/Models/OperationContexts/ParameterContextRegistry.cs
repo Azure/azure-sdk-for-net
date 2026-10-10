@@ -63,6 +63,33 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
         return _parameters.TryGetValue(key, out value);
     }
 
+    public ParameterContextRegistry WithContextualParameterOverrides(IReadOnlyList<ParameterContextMapping> parameterOverrides)
+    {
+        if (parameterOverrides.Count == 0)
+        {
+            return this;
+        }
+
+        var merged = _parameters.ToDictionary(p => p.Key, p => p.Value);
+        var changed = false;
+        foreach (var parameterOverride in parameterOverrides)
+        {
+            if (parameterOverride.ContextualParameter is null)
+            {
+                continue;
+            }
+
+            if (merged.TryGetValue(parameterOverride.ParameterName, out var existing) &&
+                existing.ContextualParameter is null)
+            {
+                merged[parameterOverride.ParameterName] = parameterOverride;
+                changed = true;
+            }
+        }
+
+        return changed ? new ParameterContextRegistry([.. merged.Values]) : this;
+    }
+
     IEnumerator IEnumerable.GetEnumerator()
     {
         return GetEnumerator();

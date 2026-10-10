@@ -151,7 +151,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     List<FooData> array = new List<FooData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(FooData.DeserializeFooData(item, options));
+                        array.Add(FooData.DeserializeFooData(item, item.GetUtf8Bytes(), options));
                     }
                     value = array;
                     continue;
@@ -167,7 +167,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new FooListResult(value, nextLink, additionalBinaryDataProperties);

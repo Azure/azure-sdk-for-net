@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             TryGetApiVersion(AssociationResource.ResourceType, out string associationAssociationsInterfaceApiVersion);
             _associationAssociationsInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceNetworking", AssociationResource.ResourceType.Namespace, Diagnostics);
-            _associationAssociationsInterfaceRestClient = new AssociationsInterface(_associationAssociationsInterfaceClientDiagnostics, Pipeline, Endpoint, associationAssociationsInterfaceApiVersion ?? "2023-11-01");
+            _associationAssociationsInterfaceRestClient = new AssociationsInterface(_associationAssociationsInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, associationAssociationsInterfaceApiVersion ?? "2023-11-01");
             ValidateResourceId(id);
         }
 

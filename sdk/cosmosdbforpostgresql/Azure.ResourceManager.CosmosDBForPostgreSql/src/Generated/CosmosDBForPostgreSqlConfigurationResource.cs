@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         {
             TryGetApiVersion(ResourceType, out string cosmosDBForPostgreSqlConfigurationApiVersion);
             _configurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDBForPostgreSql", ResourceType.Namespace, Diagnostics);
-            _configurationsRestClient = new Configurations(_configurationsClientDiagnostics, Pipeline, Endpoint, cosmosDBForPostgreSqlConfigurationApiVersion ?? "2023-03-02-preview");
+            _configurationsRestClient = new Configurations(_configurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBForPostgreSqlConfigurationApiVersion ?? "2023-03-02-preview");
             ValidateResourceId(id);
         }
 

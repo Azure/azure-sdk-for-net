@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Batch
             base.DefineProvisionableProperties();
             _jobDefaultOrder = DefineProperty<BatchJobDefaultOrder>(nameof(JobDefaultOrder), new string[] { "jobDefaultOrder" });
             _nodeFillType = DefineProperty<BatchNodeFillType>(nameof(NodeFillType), new string[] { "nodeFillType" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchTaskSchedulingPolicy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

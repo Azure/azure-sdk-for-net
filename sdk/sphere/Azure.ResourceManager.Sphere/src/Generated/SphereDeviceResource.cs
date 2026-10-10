@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sphere
         {
             TryGetApiVersion(ResourceType, out string sphereDeviceApiVersion);
             _devicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sphere", ResourceType.Namespace, Diagnostics);
-            _devicesRestClient = new Devices(_devicesClientDiagnostics, Pipeline, Endpoint, sphereDeviceApiVersion ?? "2024-04-01");
+            _devicesRestClient = new Devices(_devicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sphereDeviceApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 

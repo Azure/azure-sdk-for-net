@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.Datadog
         {
             TryGetApiVersion(DatadogMonitorResource.ResourceType, out string datadogMonitorApiVersion);
             _monitorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Datadog", DatadogMonitorResource.ResourceType.Namespace, Diagnostics);
-            _monitorsRestClient = new Monitors(_monitorsClientDiagnostics, Pipeline, Endpoint, datadogMonitorApiVersion ?? "2025-12-26-preview");
+            _monitorsRestClient = new Monitors(_monitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, datadogMonitorApiVersion ?? "2025-12-26-preview");
             _datadogMonitorResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Datadog", DatadogMonitorResource.ResourceType.Namespace, Diagnostics);
-            _datadogMonitorResourcesRestClient = new DatadogMonitorResources(_datadogMonitorResourcesClientDiagnostics, Pipeline, Endpoint, datadogMonitorApiVersion ?? "2025-12-26-preview");
+            _datadogMonitorResourcesRestClient = new DatadogMonitorResources(_datadogMonitorResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, datadogMonitorApiVersion ?? "2025-12-26-preview");
             ValidateResourceId(id);
         }
 
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatadogMonitorData, DatadogMonitorResource>(new MonitorsGetByResourceGroupAsyncCollectionResultOfT(_monitorsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DatadogMonitorCollection.GetAll"), data => new DatadogMonitorResource(Client, data));
+            return new AsyncPageableWrapper<DatadogMonitorData, DatadogMonitorResource>(new DatadogMonitorDataAsync0CollectionResultOfT(_monitorsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DatadogMonitorCollection.GetAll"), data => new DatadogMonitorResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatadogMonitorData, DatadogMonitorResource>(new MonitorsGetByResourceGroupCollectionResultOfT(_monitorsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DatadogMonitorCollection.GetAll"), data => new DatadogMonitorResource(Client, data));
+            return new PageableWrapper<DatadogMonitorData, DatadogMonitorResource>(new DatadogMonitorData0CollectionResultOfT(_monitorsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DatadogMonitorCollection.GetAll"), data => new DatadogMonitorResource(Client, data));
         }
 
         /// <summary>

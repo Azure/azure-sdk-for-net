@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             TryGetApiVersion(KeyVaultSecretResource.ResourceType, out string keyVaultSecretApiVersion);
             _secretsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", KeyVaultSecretResource.ResourceType.Namespace, Diagnostics);
-            _secretsRestClient = new Secrets(_secretsClientDiagnostics, Pipeline, Endpoint, keyVaultSecretApiVersion ?? "2026-02-01");
+            _secretsRestClient = new Secrets(_secretsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, keyVaultSecretApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KeyVaultSecretData, KeyVaultSecretResource>(new SecretsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<KeyVaultSecretData, KeyVaultSecretResource>(new KeyVaultSecretDataAsyncCollectionResultOfT(
                 _secretsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KeyVaultSecretData, KeyVaultSecretResource>(new SecretsGetAllCollectionResultOfT(
+            return new PageableWrapper<KeyVaultSecretData, KeyVaultSecretResource>(new KeyVaultSecretDataCollectionResultOfT(
                 _secretsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

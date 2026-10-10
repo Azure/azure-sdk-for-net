@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.StorageCache.Models
     public readonly partial struct DomainJoinedType : IEquatable<DomainJoinedType>
     {
         private readonly string _value;
+        /// <summary> Yes. </summary>
+        private const string YesValue = "Yes";
+        /// <summary> No. </summary>
+        private const string NoValue = "No";
+        /// <summary> Error. </summary>
+        private const string ErrorValue = "Error";
 
         /// <summary> Initializes a new instance of <see cref="DomainJoinedType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DomainJoinedType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string YesValue = "Yes";
-        private const string NoValue = "No";
-        private const string ErrorValue = "Error";
+            _value = value;
+        }
 
         /// <summary> Yes. </summary>
         public static DomainJoinedType Yes { get; } = new DomainJoinedType(YesValue);
+
         /// <summary> No. </summary>
         public static DomainJoinedType No { get; } = new DomainJoinedType(NoValue);
+
         /// <summary> Error. </summary>
         public static DomainJoinedType Error { get; } = new DomainJoinedType(ErrorValue);
+
         /// <summary> Determines if two <see cref="DomainJoinedType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DomainJoinedType left, DomainJoinedType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DomainJoinedType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DomainJoinedType left, DomainJoinedType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DomainJoinedType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DomainJoinedType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DomainJoinedType(string value) => new DomainJoinedType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DomainJoinedType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DomainJoinedType?(string value) => value == null ? null : new DomainJoinedType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DomainJoinedType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DomainJoinedType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

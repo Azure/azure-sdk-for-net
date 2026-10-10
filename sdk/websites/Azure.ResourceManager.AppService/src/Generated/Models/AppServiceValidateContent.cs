@@ -8,60 +8,20 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Resource validation request content.
-    /// Serialized Name: ValidateRequest
-    /// </summary>
+    /// <summary> Resource validation request content. </summary>
     public partial class AppServiceValidateContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceValidateContent"/>. </summary>
-        /// <param name="name">
-        /// Resource name to verify.
-        /// Serialized Name: ValidateRequest.name
-        /// </param>
-        /// <param name="validateResourceType">
-        /// Resource type used for verification.
-        /// Serialized Name: ValidateRequest.type
-        /// </param>
-        /// <param name="location">
-        /// Expected location of the resource.
-        /// Serialized Name: ValidateRequest.location
-        /// </param>
+        /// <param name="name"> Resource name to verify. </param>
+        /// <param name="validateResourceType"> Resource type used for verification. </param>
+        /// <param name="location"> Expected location of the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AppServiceValidateContent(string name, ValidateResourceType validateResourceType, AzureLocation location)
         {
@@ -73,203 +33,286 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceValidateContent"/>. </summary>
-        /// <param name="name">
-        /// Resource name to verify.
-        /// Serialized Name: ValidateRequest.name
-        /// </param>
-        /// <param name="validateResourceType">
-        /// Resource type used for verification.
-        /// Serialized Name: ValidateRequest.type
-        /// </param>
-        /// <param name="location">
-        /// Expected location of the resource.
-        /// Serialized Name: ValidateRequest.location
-        /// </param>
-        /// <param name="serverFarmId">
-        /// ARM resource ID of an App Service plan that would host the app.
-        /// Serialized Name: ValidateRequest.properties.serverFarmId
-        /// </param>
-        /// <param name="skuName">
-        /// Name of the target SKU for the App Service plan.
-        /// Serialized Name: ValidateRequest.properties.skuName
-        /// </param>
-        /// <param name="needLinuxWorkers">
-        /// &lt;code&gt;true&lt;/code&gt; if App Service plan is for Linux workers; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: ValidateRequest.properties.needLinuxWorkers
-        /// </param>
-        /// <param name="isSpot">
-        /// &lt;code&gt;true&lt;/code&gt; if App Service plan is for Spot instances; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: ValidateRequest.properties.isSpot
-        /// </param>
-        /// <param name="capacity">
-        /// Target capacity of the App Service plan (number of VMs).
-        /// Serialized Name: ValidateRequest.properties.capacity
-        /// </param>
-        /// <param name="hostingEnvironment">
-        /// Name of App Service Environment where app or App Service plan should be created.
-        /// Serialized Name: ValidateRequest.properties.hostingEnvironment
-        /// </param>
-        /// <param name="isXenon">
-        /// &lt;code&gt;true&lt;/code&gt; if App Service plan is running as a windows container
-        /// Serialized Name: ValidateRequest.properties.isXenon
-        /// </param>
-        /// <param name="containerRegistryBaseUri">
-        /// Base URL of the container registry
-        /// Serialized Name: ValidateRequest.properties.containerRegistryBaseUrl
-        /// </param>
-        /// <param name="containerRegistryUsername">
-        /// Username for to access the container registry
-        /// Serialized Name: ValidateRequest.properties.containerRegistryUsername
-        /// </param>
-        /// <param name="containerRegistryPassword">
-        /// Password for to access the container registry
-        /// Serialized Name: ValidateRequest.properties.containerRegistryPassword
-        /// </param>
-        /// <param name="containerImageRepository">
-        /// Repository name (image name)
-        /// Serialized Name: ValidateRequest.properties.containerImageRepository
-        /// </param>
-        /// <param name="containerImageTag">
-        /// Image tag
-        /// Serialized Name: ValidateRequest.properties.containerImageTag
-        /// </param>
-        /// <param name="containerImagePlatform">
-        /// Platform (windows or linux)
-        /// Serialized Name: ValidateRequest.properties.containerImagePlatform
-        /// </param>
-        /// <param name="appServiceEnvironment">
-        /// App Service Environment Properties
-        /// Serialized Name: ValidateRequest.properties.appServiceEnvironment
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceValidateContent(string name, ValidateResourceType validateResourceType, AzureLocation location, ResourceIdentifier serverFarmId, string skuName, bool? needLinuxWorkers, bool? isSpot, int? capacity, string hostingEnvironment, bool? isXenon, Uri containerRegistryBaseUri, string containerRegistryUsername, string containerRegistryPassword, string containerImageRepository, string containerImageTag, string containerImagePlatform, AppServiceEnvironmentProperties appServiceEnvironment, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="name"> Resource name to verify. </param>
+        /// <param name="validateResourceType"> Resource type used for verification. </param>
+        /// <param name="location"> Expected location of the resource. </param>
+        /// <param name="properties"> Properties of the resource to validate. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceValidateContent(string name, ValidateResourceType validateResourceType, AzureLocation location, ValidateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ValidateResourceType = validateResourceType;
             Location = location;
-            ServerFarmId = serverFarmId;
-            SkuName = skuName;
-            NeedLinuxWorkers = needLinuxWorkers;
-            IsSpot = isSpot;
-            Capacity = capacity;
-            HostingEnvironment = hostingEnvironment;
-            IsXenon = isXenon;
-            ContainerRegistryBaseUri = containerRegistryBaseUri;
-            ContainerRegistryUsername = containerRegistryUsername;
-            ContainerRegistryPassword = containerRegistryPassword;
-            ContainerImageRepository = containerImageRepository;
-            ContainerImageTag = containerImageTag;
-            ContainerImagePlatform = containerImagePlatform;
-            AppServiceEnvironment = appServiceEnvironment;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppServiceValidateContent"/> for deserialization. </summary>
-        internal AppServiceValidateContent()
-        {
-        }
-
-        /// <summary>
-        /// Resource name to verify.
-        /// Serialized Name: ValidateRequest.name
-        /// </summary>
+        /// <summary> Resource name to verify. </summary>
         [WirePath("name")]
-        public string Name { get; }
-        /// <summary>
-        /// Resource type used for verification.
-        /// Serialized Name: ValidateRequest.type
-        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary> Resource type used for verification. </summary>
         [WirePath("type")]
-        public ValidateResourceType ValidateResourceType { get; }
-        /// <summary>
-        /// Expected location of the resource.
-        /// Serialized Name: ValidateRequest.location
-        /// </summary>
+        public ValidateResourceType ValidateResourceType { get; set; }
+
+        /// <summary> Expected location of the resource. </summary>
         [WirePath("location")]
-        public AzureLocation Location { get; }
-        /// <summary>
-        /// ARM resource ID of an App Service plan that would host the app.
-        /// Serialized Name: ValidateRequest.properties.serverFarmId
-        /// </summary>
+        public AzureLocation Location { get; set; }
+
+        /// <summary> Properties of the resource to validate. </summary>
+        [WirePath("properties")]
+        internal ValidateProperties Properties { get; set; }
+
+        /// <summary> ARM resource ID of an App Service plan that would host the app. </summary>
         [WirePath("properties.serverFarmId")]
-        public ResourceIdentifier ServerFarmId { get; set; }
-        /// <summary>
-        /// Name of the target SKU for the App Service plan.
-        /// Serialized Name: ValidateRequest.properties.skuName
-        /// </summary>
+        public ResourceIdentifier ServerFarmId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServerFarmId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ValidateProperties();
+                }
+                Properties.ServerFarmId = value;
+            }
+        }
+
+        /// <summary> Name of the target SKU for the App Service plan. </summary>
         [WirePath("properties.skuName")]
-        public string SkuName { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if App Service plan is for Linux workers; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: ValidateRequest.properties.needLinuxWorkers
-        /// </summary>
+        public string SkuName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SkuName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ValidateProperties();
+                }
+                Properties.SkuName = value;
+            }
+        }
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if App Service plan is for Linux workers; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("properties.needLinuxWorkers")]
-        public bool? NeedLinuxWorkers { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if App Service plan is for Spot instances; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: ValidateRequest.properties.isSpot
-        /// </summary>
+        public bool? NeedLinuxWorkers
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NeedLinuxWorkers;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ValidateProperties();
+                }
+                Properties.NeedLinuxWorkers = value;
+            }
+        }
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if App Service plan is for Spot instances; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("properties.isSpot")]
-        public bool? IsSpot { get; set; }
-        /// <summary>
-        /// Target capacity of the App Service plan (number of VMs).
-        /// Serialized Name: ValidateRequest.properties.capacity
-        /// </summary>
+        public bool? IsSpot
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsSpot;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ValidateProperties();
+                }
+                Properties.IsSpot = value;
+            }
+        }
+
+        /// <summary> Target capacity of the App Service plan (number of VMs). </summary>
         [WirePath("properties.capacity")]
-        public int? Capacity { get; set; }
-        /// <summary>
-        /// Name of App Service Environment where app or App Service plan should be created.
-        /// Serialized Name: ValidateRequest.properties.hostingEnvironment
-        /// </summary>
+        public int? Capacity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Capacity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ValidateProperties();
+                }
+                Properties.Capacity = value;
+            }
+        }
+
+        /// <summary> Name of App Service Environment where app or App Service plan should be created. </summary>
         [WirePath("properties.hostingEnvironment")]
-        public string HostingEnvironment { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if App Service plan is running as a windows container
-        /// Serialized Name: ValidateRequest.properties.isXenon
-        /// </summary>
+        public string HostingEnvironment
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostingEnvironment;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ValidateProperties();
+                }
+                Properties.HostingEnvironment = value;
+            }
+        }
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if App Service plan is running as a windows container. </summary>
         [WirePath("properties.isXenon")]
-        public bool? IsXenon { get; set; }
-        /// <summary>
-        /// Base URL of the container registry
-        /// Serialized Name: ValidateRequest.properties.containerRegistryBaseUrl
-        /// </summary>
+        public bool? IsXenon
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsXenon;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ValidateProperties();
+                }
+                Properties.IsXenon = value;
+            }
+        }
+
+        /// <summary> Base URL of the container registry. </summary>
         [WirePath("properties.containerRegistryBaseUrl")]
-        public Uri ContainerRegistryBaseUri { get; set; }
-        /// <summary>
-        /// Username for to access the container registry
-        /// Serialized Name: ValidateRequest.properties.containerRegistryUsername
-        /// </summary>
+        public Uri ContainerRegistryBaseUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ContainerRegistryBaseUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ValidateProperties();
+                }
+                Properties.ContainerRegistryBaseUri = value;
+            }
+        }
+
+        /// <summary> Username for to access the container registry. </summary>
         [WirePath("properties.containerRegistryUsername")]
-        public string ContainerRegistryUsername { get; set; }
-        /// <summary>
-        /// Password for to access the container registry
-        /// Serialized Name: ValidateRequest.properties.containerRegistryPassword
-        /// </summary>
+        public string ContainerRegistryUsername
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ContainerRegistryUsername;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ValidateProperties();
+                }
+                Properties.ContainerRegistryUsername = value;
+            }
+        }
+
+        /// <summary> Password for to access the container registry. </summary>
         [WirePath("properties.containerRegistryPassword")]
-        public string ContainerRegistryPassword { get; set; }
-        /// <summary>
-        /// Repository name (image name)
-        /// Serialized Name: ValidateRequest.properties.containerImageRepository
-        /// </summary>
+        public string ContainerRegistryPassword
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ContainerRegistryPassword;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ValidateProperties();
+                }
+                Properties.ContainerRegistryPassword = value;
+            }
+        }
+
+        /// <summary> Repository name (image name). </summary>
         [WirePath("properties.containerImageRepository")]
-        public string ContainerImageRepository { get; set; }
-        /// <summary>
-        /// Image tag
-        /// Serialized Name: ValidateRequest.properties.containerImageTag
-        /// </summary>
+        public string ContainerImageRepository
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ContainerImageRepository;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ValidateProperties();
+                }
+                Properties.ContainerImageRepository = value;
+            }
+        }
+
+        /// <summary> Image tag. </summary>
         [WirePath("properties.containerImageTag")]
-        public string ContainerImageTag { get; set; }
-        /// <summary>
-        /// Platform (windows or linux)
-        /// Serialized Name: ValidateRequest.properties.containerImagePlatform
-        /// </summary>
+        public string ContainerImageTag
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ContainerImageTag;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ValidateProperties();
+                }
+                Properties.ContainerImageTag = value;
+            }
+        }
+
+        /// <summary> Platform (windows or linux). </summary>
         [WirePath("properties.containerImagePlatform")]
-        public string ContainerImagePlatform { get; set; }
-        /// <summary>
-        /// App Service Environment Properties
-        /// Serialized Name: ValidateRequest.properties.appServiceEnvironment
-        /// </summary>
+        public string ContainerImagePlatform
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ContainerImagePlatform;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ValidateProperties();
+                }
+                Properties.ContainerImagePlatform = value;
+            }
+        }
+
+        /// <summary> App Service Environment Properties. </summary>
         [WirePath("properties.appServiceEnvironment")]
-        public AppServiceEnvironmentProperties AppServiceEnvironment { get; set; }
+        public AppServiceEnvironmentProperties AppServiceEnvironment
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AppServiceEnvironment;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ValidateProperties();
+                }
+                Properties.AppServiceEnvironment = value;
+            }
+        }
     }
 }

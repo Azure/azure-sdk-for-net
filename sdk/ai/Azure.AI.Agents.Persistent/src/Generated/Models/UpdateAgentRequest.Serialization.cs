@@ -89,20 +89,41 @@ namespace Azure.AI.Agents.Persistent
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
             }
-            if (Optional.IsDefined(Name))
+            if (_nameIsDefined || Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                if (Name != null)
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+                else
+                {
+                    writer.WriteNull("name"u8);
+                }
             }
-            if (Optional.IsDefined(Description))
+            if (_descriptionIsDefined || Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
+                if (Description != null)
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+                else
+                {
+                    writer.WriteNull("description"u8);
+                }
             }
-            if (Optional.IsDefined(Instructions))
+            if (_instructionsIsDefined || Optional.IsDefined(Instructions))
             {
-                writer.WritePropertyName("instructions"u8);
-                writer.WriteStringValue(Instructions);
+                if (Instructions != null)
+                {
+                    writer.WritePropertyName("instructions"u8);
+                    writer.WriteStringValue(Instructions);
+                }
+                else
+                {
+                    writer.WriteNull("instructions"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Tools))
             {
@@ -119,43 +140,71 @@ namespace Azure.AI.Agents.Persistent
                 writer.WritePropertyName("tool_resources"u8);
                 writer.WriteObjectValue(ToolResources, options);
             }
-            if (Optional.IsDefined(Temperature))
+            if (_temperatureIsDefined || Optional.IsDefined(Temperature))
             {
-                writer.WritePropertyName("temperature"u8);
-                writer.WriteNumberValue(Temperature.Value);
-            }
-            if (Optional.IsDefined(TopP))
-            {
-                writer.WritePropertyName("top_p"u8);
-                writer.WriteNumberValue(TopP.Value);
-            }
-            if (Optional.IsDefined(ResponseFormat))
-            {
-                writer.WritePropertyName("response_format"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(ResponseFormat);
-#else
-                using (JsonDocument document = JsonDocument.Parse(ResponseFormat))
+                if (Temperature != null)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    writer.WritePropertyName("temperature"u8);
+                    writer.WriteNumberValue(Temperature.Value);
                 }
+                else
+                {
+                    writer.WriteNull("temperature"u8);
+                }
+            }
+            if (_topPIsDefined || Optional.IsDefined(TopP))
+            {
+                if (TopP != null)
+                {
+                    writer.WritePropertyName("top_p"u8);
+                    writer.WriteNumberValue(TopP.Value);
+                }
+                else
+                {
+                    writer.WriteNull("top_p"u8);
+                }
+            }
+            if (_responseFormatIsDefined || Optional.IsDefined(ResponseFormat))
+            {
+                if (ResponseFormat != null)
+                {
+                    writer.WritePropertyName("response_format"u8);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(ResponseFormat);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(ResponseFormat))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                else
+                {
+                    writer.WriteNull("response_format"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Metadata))
             {
-                writer.WritePropertyName("metadata"u8);
-                writer.WriteStartObject();
-                foreach (var item in Metadata)
+                if (Metadata != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("metadata"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Metadata)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("metadata"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -200,15 +249,21 @@ namespace Azure.AI.Agents.Persistent
                 return null;
             }
             string model = default;
+            bool nameIsDefined = false;
             string name = default;
+            bool descriptionIsDefined = false;
             string description = default;
+            bool instructionsIsDefined = false;
             string instructions = default;
             IList<ToolDefinition> tools = default;
             ToolResources toolResources = default;
+            bool temperatureIsDefined = false;
             float? temperature = default;
+            bool topPIsDefined = false;
             float? topP = default;
+            bool responseFormatIsDefined = false;
             BinaryData responseFormat = default;
-            IDictionary<string, string> metadata = default;
+            IDictionary<string, string> metadata = new ChangeTrackingDictionary<string, string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -219,6 +274,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("name"u8))
                 {
+                    nameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         name = null;
@@ -229,6 +285,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -239,6 +296,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("instructions"u8))
                 {
+                    instructionsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         instructions = null;
@@ -272,6 +330,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("temperature"u8))
                 {
+                    temperatureIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         temperature = null;
@@ -282,6 +341,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("top_p"u8))
                 {
+                    topPIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         topP = null;
@@ -292,18 +352,20 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("response_format"u8))
                 {
+                    responseFormatIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         responseFormat = null;
                         continue;
                     }
-                    responseFormat = BinaryData.FromString(prop.Value.GetRawText());
+                    responseFormat = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("metadata"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        metadata = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -323,7 +385,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new UpdateAgentRequest(
@@ -336,8 +398,16 @@ namespace Azure.AI.Agents.Persistent
                 temperature,
                 topP,
                 responseFormat,
-                metadata ?? new ChangeTrackingDictionary<string, string>(),
-                additionalBinaryDataProperties);
+                metadata,
+                additionalBinaryDataProperties)
+            {
+                _nameIsDefined = nameIsDefined,
+                _descriptionIsDefined = descriptionIsDefined,
+                _instructionsIsDefined = instructionsIsDefined,
+                _temperatureIsDefined = temperatureIsDefined,
+                _topPIsDefined = topPIsDefined,
+                _responseFormatIsDefined = responseFormatIsDefined
+            };
         }
     }
 }

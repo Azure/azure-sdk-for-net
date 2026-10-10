@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     public readonly partial struct MySqlFlexibleServerVersion : IEquatable<MySqlFlexibleServerVersion>
     {
         private readonly string _value;
-        private const string Five7Value = "5.7";
-        private const string Eight021Value = "8.0.21";
+        private const string Ver5_7Value = "5.7";
+        private const string Ver8_0_21Value = "8.0.21";
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerVersion"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -27,6 +27,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
             _value = value;
         }
+
+        /// <summary> Gets the Ver5_7. </summary>
+        public static MySqlFlexibleServerVersion Ver5_7 { get; } = new MySqlFlexibleServerVersion(Ver5_7Value);
+
+        /// <summary> Gets the Ver8_0_21. </summary>
+        public static MySqlFlexibleServerVersion Ver8_0_21 { get; } = new MySqlFlexibleServerVersion(Ver8_0_21Value);
 
         /// <summary> Determines if two <see cref="MySqlFlexibleServerVersion"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

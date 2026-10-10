@@ -14,57 +14,44 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Represents properties related to the Azure Device Registry (ADR). </summary>
     public partial class IotHubDeviceRegistry
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IotHubDeviceRegistry"/>. </summary>
-        public IotHubDeviceRegistry()
+        internal IotHubDeviceRegistry()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="IotHubDeviceRegistry"/>. </summary>
-        /// <param name="namespaceResourceId"> The identifier of the Azure Device Registry namespace associated with the GEN2 SKU hub. </param>
-        /// <param name="identityResourceId"> The identity used to manage the ADR namespace from the data plane. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IotHubDeviceRegistry(ResourceIdentifier namespaceResourceId, ResourceIdentifier identityResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="namespaceResourceId"> The identifier of the Azure Device Registry namespace. </param>
+        /// <param name="namespaceUuid"> The UUID of the associated Azure Device Registry namespace. </param>
+        /// <param name="dataPlaneHostName"> The host name for the data plane endpoint of the associated Azure Device Registry. </param>
+        /// <param name="identity"> The identity used to manage the ADR namespace from the data plane. </param>
+        /// <param name="linkingProperties"> The properties related to linking the IoT Hub with the Azure Device Registry. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubDeviceRegistry(ResourceIdentifier namespaceResourceId, string namespaceUuid, string dataPlaneHostName, DeviceRegistryIdentity identity, DeviceRegistryLinkingProperties linkingProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NamespaceResourceId = namespaceResourceId;
-            IdentityResourceId = identityResourceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            NamespaceUuid = namespaceUuid;
+            DataPlaneHostName = dataPlaneHostName;
+            Identity = identity;
+            LinkingProperties = linkingProperties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The identifier of the Azure Device Registry namespace associated with the GEN2 SKU hub. </summary>
-        public ResourceIdentifier NamespaceResourceId { get; set; }
+        /// <summary> The identifier of the Azure Device Registry namespace. </summary>
+        public ResourceIdentifier NamespaceResourceId { get; }
+
+        /// <summary> The UUID of the associated Azure Device Registry namespace. </summary>
+        public string NamespaceUuid { get; }
+
+        /// <summary> The host name for the data plane endpoint of the associated Azure Device Registry. </summary>
+        public string DataPlaneHostName { get; }
+
         /// <summary> The identity used to manage the ADR namespace from the data plane. </summary>
-        public ResourceIdentifier IdentityResourceId { get; set; }
+        public DeviceRegistryIdentity Identity { get; }
+
+        /// <summary> The properties related to linking the IoT Hub with the Azure Device Registry. </summary>
+        public DeviceRegistryLinkingProperties LinkingProperties { get; }
     }
 }

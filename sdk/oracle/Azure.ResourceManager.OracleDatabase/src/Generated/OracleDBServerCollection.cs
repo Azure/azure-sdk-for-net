@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(OracleDBServerResource.ResourceType, out string oracleDBServerApiVersion);
             _dbServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleDBServerResource.ResourceType.Namespace, Diagnostics);
-            _dbServersRestClient = new DbServers(_dbServersClientDiagnostics, Pipeline, Endpoint, oracleDBServerApiVersion ?? "2025-09-01");
+            _dbServersRestClient = new DbServers(_dbServersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDBServerApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OracleDBServerData, OracleDBServerResource>(new DbServersGetByParentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<OracleDBServerData, OracleDBServerResource>(new OracleDBServerDataAsyncCollectionResultOfT(
                 _dbServersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OracleDBServerData, OracleDBServerResource>(new DbServersGetByParentCollectionResultOfT(
+            return new PageableWrapper<OracleDBServerData, OracleDBServerResource>(new OracleDBServerDataCollectionResultOfT(
                 _dbServersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

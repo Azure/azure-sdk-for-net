@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             TryGetApiVersion(DeviceRegistryBillingContainerResource.ResourceType, out string deviceRegistryBillingContainerApiVersion);
             _billingContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistryBillingContainerResource.ResourceType.Namespace, Diagnostics);
-            _billingContainersRestClient = new BillingContainers(_billingContainersClientDiagnostics, Pipeline, Endpoint, deviceRegistryBillingContainerApiVersion ?? "2026-03-01-preview");
+            _billingContainersRestClient = new BillingContainers(_billingContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceRegistryBillingContainerApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceRegistryBillingContainerData, DeviceRegistryBillingContainerResource>(new BillingContainersGetBySubscriptionAsyncCollectionResultOfT(_billingContainersRestClient, Guid.Parse(Id.SubscriptionId), context, "DeviceRegistryBillingContainerCollection.GetAll"), data => new DeviceRegistryBillingContainerResource(Client, data));
+            return new AsyncPageableWrapper<DeviceRegistryBillingContainerData, DeviceRegistryBillingContainerResource>(new DeviceRegistryBillingContainerDataAsyncCollectionResultOfT(_billingContainersRestClient, Guid.Parse(Id.SubscriptionId), context, "DeviceRegistryBillingContainerCollection.GetAll"), data => new DeviceRegistryBillingContainerResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceRegistryBillingContainerData, DeviceRegistryBillingContainerResource>(new BillingContainersGetBySubscriptionCollectionResultOfT(_billingContainersRestClient, Guid.Parse(Id.SubscriptionId), context, "DeviceRegistryBillingContainerCollection.GetAll"), data => new DeviceRegistryBillingContainerResource(Client, data));
+            return new PageableWrapper<DeviceRegistryBillingContainerData, DeviceRegistryBillingContainerResource>(new DeviceRegistryBillingContainerDataCollectionResultOfT(_billingContainersRestClient, Guid.Parse(Id.SubscriptionId), context, "DeviceRegistryBillingContainerCollection.GetAll"), data => new DeviceRegistryBillingContainerResource(Client, data));
         }
 
         /// <summary>

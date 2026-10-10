@@ -1,5 +1,4 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
-
 parameters:
   - name: ReleaseToDevOpsOnly
     displayName: 'Release package to DevOps feed instead of Nuget.org'
@@ -19,13 +18,6 @@ trigger:
   paths:
     include:
     - sdk/template/
-#if (false)
-    # The following paths should only be included in template/ci.yml, and removed from any other SDKs which copy this file.
-    # The surrounding conditions should accomplish that when installed with `dotnet new azsdk`.
-    # eng/common code changes trigger template pipeline for basic checking.
-    - eng/common/
-#endif
-
 #if (false)
     # The following paths should only be included in template/ci.yml, and removed from any other SDKs which copy this file.
     # The surrounding conditions should accomplish that when installed with `dotnet new azsdk`.

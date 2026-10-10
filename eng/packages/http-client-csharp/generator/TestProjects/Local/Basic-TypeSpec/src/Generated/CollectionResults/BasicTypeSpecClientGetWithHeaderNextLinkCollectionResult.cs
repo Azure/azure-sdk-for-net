@@ -37,7 +37,7 @@ namespace BasicTypeSpec
         /// <returns> The pages of BasicTypeSpecClientGetWithHeaderNextLinkCollectionResult as an enumerable collection. </returns>
         public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -45,18 +45,22 @@ namespace BasicTypeSpec
                 {
                     yield break;
                 }
-                ListWithHeaderNextLinkResponse result = (ListWithHeaderNextLinkResponse)response;
-                List<BinaryData> items = new List<BinaryData>();
-                foreach (var item in result.Things)
-                {
-                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default));
-                }
-                yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                ListWithHeaderNextLinkResult result = (ListWithHeaderNextLinkResult)response;
                 if (response.Headers.TryGetValue("next", out string value) && !string.IsNullOrEmpty(value))
                 {
                     nextPage = new Uri(value, UriKind.RelativeOrAbsolute);
                 }
                 else
+                {
+                    nextPage = null;
+                }
+                List<BinaryData> items = new List<BinaryData>();
+                foreach (var item in result.Things)
+                {
+                    items.Add(ModelReaderWriter.Write(item, ModelReaderWriterOptions.Json, BasicTypeSpecContext.Default));
+                }
+                yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                if (nextPage == null)
                 {
                     yield break;
                 }

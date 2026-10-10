@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.3 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,30 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0 (2026-10-08)
+
+### Features Added
+
+- Added support for the stable Traffic Manager service API version `2026-09-01`.
+- Added endpoint-specific resource and collection APIs for Azure, External, and Nested Traffic Manager endpoints.
+- Added support for ahead-of-time (AOT) compilation.
+
+### Other Changes
+
+- Deprecated the generic `TrafficManagerEndpointResource` and `TrafficManagerEndpointCollection` APIs. Use the endpoint-specific APIs instead.
+
+## 1.2.0-beta.4 (2026-07-09)
+
+### Other Changes
+
+- Deprecated the generic `TrafficManagerEndpointResource` and `TrafficManagerEndpointCollection` APIs. Use the endpoint-specific Azure, External, or Nested Traffic Manager endpoint resource and collection APIs instead.
+
+## 1.2.0-beta.3 (2026-06-30)
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.59.0.
 
 ## 1.2.0-beta.2 (2026-06-04)
 

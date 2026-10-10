@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(CdnOriginResource.ResourceType, out string cdnOriginApiVersion);
             _originsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnOriginResource.ResourceType.Namespace, Diagnostics);
-            _originsRestClient = new Origins(_originsClientDiagnostics, Pipeline, Endpoint, cdnOriginApiVersion ?? "2025-09-01-preview");
+            _originsRestClient = new Origins(_originsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cdnOriginApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CdnOriginData, CdnOriginResource>(new OriginsGetByEndpointAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CdnOriginData, CdnOriginResource>(new CdnOriginDataAsyncCollectionResultOfT(
                 _originsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CdnOriginData, CdnOriginResource>(new OriginsGetByEndpointCollectionResultOfT(
+            return new PageableWrapper<CdnOriginData, CdnOriginResource>(new CdnOriginDataCollectionResultOfT(
                 _originsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

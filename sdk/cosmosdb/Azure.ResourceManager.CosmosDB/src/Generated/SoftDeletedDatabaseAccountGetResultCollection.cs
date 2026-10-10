@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(SoftDeletedDatabaseAccountGetResultResource.ResourceType, out string softDeletedDatabaseAccountGetResultApiVersion);
             _softDeletedDatabaseAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", SoftDeletedDatabaseAccountGetResultResource.ResourceType.Namespace, Diagnostics);
-            _softDeletedDatabaseAccountsRestClient = new SoftDeletedDatabaseAccounts(_softDeletedDatabaseAccountsClientDiagnostics, Pipeline, Endpoint, softDeletedDatabaseAccountGetResultApiVersion ?? "2026-04-01-preview");
+            _softDeletedDatabaseAccountsRestClient = new SoftDeletedDatabaseAccounts(_softDeletedDatabaseAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, softDeletedDatabaseAccountGetResultApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 

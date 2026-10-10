@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The SecurityCenterConnectionType. </summary>
+    /// <summary></summary>
     public readonly partial struct SecurityCenterConnectionType : IEquatable<SecurityCenterConnectionType>
     {
         private readonly string _value;
+        /// <summary> Internal. </summary>
+        private const string InternalValue = "Internal";
+        /// <summary> External. </summary>
+        private const string ExternalValue = "External";
 
         /// <summary> Initializes a new instance of <see cref="SecurityCenterConnectionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityCenterConnectionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InternalValue = "Internal";
-        private const string ExternalValue = "External";
+            _value = value;
+        }
 
         /// <summary> Internal. </summary>
         public static SecurityCenterConnectionType Internal { get; } = new SecurityCenterConnectionType(InternalValue);
+
         /// <summary> External. </summary>
         public static SecurityCenterConnectionType External { get; } = new SecurityCenterConnectionType(ExternalValue);
+
         /// <summary> Determines if two <see cref="SecurityCenterConnectionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityCenterConnectionType left, SecurityCenterConnectionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityCenterConnectionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityCenterConnectionType left, SecurityCenterConnectionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityCenterConnectionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityCenterConnectionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityCenterConnectionType(string value) => new SecurityCenterConnectionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityCenterConnectionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityCenterConnectionType?(string value) => value == null ? null : new SecurityCenterConnectionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityCenterConnectionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityCenterConnectionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

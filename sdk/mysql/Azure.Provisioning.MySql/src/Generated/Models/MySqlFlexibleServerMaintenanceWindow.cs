@@ -108,6 +108,10 @@ namespace Azure.Provisioning.MySql
             _startMinute = DefineProperty<int>(nameof(StartMinute), new string[] { "startMinute" });
             _dayOfWeek = DefineProperty<int>(nameof(DayOfWeek), new string[] { "dayOfWeek" });
             _batchOfMaintenance = DefineProperty<MySqlFlexibleServerBatchOfMaintenance>(nameof(BatchOfMaintenance), new string[] { "batchOfMaintenance" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for MySqlFlexibleServerMaintenanceWindow that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

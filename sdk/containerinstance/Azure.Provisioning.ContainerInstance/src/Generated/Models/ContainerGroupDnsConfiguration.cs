@@ -74,6 +74,10 @@ namespace Azure.Provisioning.ContainerInstance
             _nameServers = DefineListProperty<string>(nameof(NameServers), new string[] { "nameServers" }, isRequired: true);
             _searchDomains = DefineProperty<string>(nameof(SearchDomains), new string[] { "searchDomains" });
             _options = DefineProperty<string>(nameof(Options), new string[] { "options" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerGroupDnsConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

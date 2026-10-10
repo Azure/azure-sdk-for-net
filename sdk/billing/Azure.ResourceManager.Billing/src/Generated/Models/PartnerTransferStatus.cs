@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct PartnerTransferStatus : IEquatable<PartnerTransferStatus>
     {
         private readonly string _value;
+        /// <summary> Expired. </summary>
+        private const string ExpiredValue = "Expired";
+        /// <summary> Pending. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> InProgress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> Completed. </summary>
+        private const string CompletedValue = "Completed";
+        /// <summary> CompletedWithErrors. </summary>
+        private const string CompletedWithErrorsValue = "CompletedWithErrors";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Declined. </summary>
+        private const string DeclinedValue = "Declined";
 
         /// <summary> Initializes a new instance of <see cref="PartnerTransferStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PartnerTransferStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ExpiredValue = "Expired";
-        private const string PendingValue = "Pending";
-        private const string InProgressValue = "InProgress";
-        private const string CompletedValue = "Completed";
-        private const string CompletedWithErrorsValue = "CompletedWithErrors";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string DeclinedValue = "Declined";
+            _value = value;
+        }
 
         /// <summary> Expired. </summary>
         public static PartnerTransferStatus Expired { get; } = new PartnerTransferStatus(ExpiredValue);
+
         /// <summary> Pending. </summary>
         public static PartnerTransferStatus Pending { get; } = new PartnerTransferStatus(PendingValue);
+
         /// <summary> InProgress. </summary>
         public static PartnerTransferStatus InProgress { get; } = new PartnerTransferStatus(InProgressValue);
+
         /// <summary> Completed. </summary>
         public static PartnerTransferStatus Completed { get; } = new PartnerTransferStatus(CompletedValue);
+
         /// <summary> CompletedWithErrors. </summary>
         public static PartnerTransferStatus CompletedWithErrors { get; } = new PartnerTransferStatus(CompletedWithErrorsValue);
+
         /// <summary> Failed. </summary>
         public static PartnerTransferStatus Failed { get; } = new PartnerTransferStatus(FailedValue);
+
         /// <summary> Canceled. </summary>
         public static PartnerTransferStatus Canceled { get; } = new PartnerTransferStatus(CanceledValue);
+
         /// <summary> Declined. </summary>
         public static PartnerTransferStatus Declined { get; } = new PartnerTransferStatus(DeclinedValue);
+
         /// <summary> Determines if two <see cref="PartnerTransferStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PartnerTransferStatus left, PartnerTransferStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PartnerTransferStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PartnerTransferStatus left, PartnerTransferStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PartnerTransferStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PartnerTransferStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PartnerTransferStatus(string value) => new PartnerTransferStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PartnerTransferStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PartnerTransferStatus?(string value) => value == null ? null : new PartnerTransferStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PartnerTransferStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PartnerTransferStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

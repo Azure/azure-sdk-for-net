@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Communication
         {
             TryGetApiVersion(SenderUsernameResource.ResourceType, out string senderUsernameResourceApiVersion);
             _senderUsernamesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Communication", SenderUsernameResource.ResourceType.Namespace, Diagnostics);
-            _senderUsernamesRestClient = new SenderUsernames(_senderUsernamesClientDiagnostics, Pipeline, Endpoint, senderUsernameResourceApiVersion ?? "2026-03-18");
+            _senderUsernamesRestClient = new SenderUsernames(_senderUsernamesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, senderUsernameResourceApiVersion ?? "2026-03-18");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Communication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SenderUsernameResourceData, SenderUsernameResource>(new SenderUsernamesGetByDomainsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SenderUsernameResourceData, SenderUsernameResource>(new SenderUsernameResourceDataAsyncCollectionResultOfT(
                 _senderUsernamesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Communication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SenderUsernameResourceData, SenderUsernameResource>(new SenderUsernamesGetByDomainsCollectionResultOfT(
+            return new PageableWrapper<SenderUsernameResourceData, SenderUsernameResource>(new SenderUsernameResourceDataCollectionResultOfT(
                 _senderUsernamesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

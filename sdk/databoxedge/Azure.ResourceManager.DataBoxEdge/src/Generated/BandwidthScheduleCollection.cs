@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             TryGetApiVersion(BandwidthScheduleResource.ResourceType, out string bandwidthScheduleApiVersion);
             _bandwidthSchedulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", BandwidthScheduleResource.ResourceType.Namespace, Diagnostics);
-            _bandwidthSchedulesRestClient = new BandwidthSchedules(_bandwidthSchedulesClientDiagnostics, Pipeline, Endpoint, bandwidthScheduleApiVersion ?? "2023-12-01");
+            _bandwidthSchedulesRestClient = new BandwidthSchedules(_bandwidthSchedulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, bandwidthScheduleApiVersion ?? "2023-12-01");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BandwidthScheduleData, BandwidthScheduleResource>(new BandwidthSchedulesGetByDataBoxEdgeDeviceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BandwidthScheduleData, BandwidthScheduleResource>(new BandwidthScheduleDataAsyncCollectionResultOfT(
                 _bandwidthSchedulesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BandwidthScheduleData, BandwidthScheduleResource>(new BandwidthSchedulesGetByDataBoxEdgeDeviceCollectionResultOfT(
+            return new PageableWrapper<BandwidthScheduleData, BandwidthScheduleResource>(new BandwidthScheduleDataCollectionResultOfT(
                 _bandwidthSchedulesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(ResourceType, out string projectCatalogImageDefinitionApiVersion);
             _projectCatalogImageDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            _projectCatalogImageDefinitionsRestClient = new ProjectCatalogImageDefinitions(_projectCatalogImageDefinitionsClientDiagnostics, Pipeline, Endpoint, projectCatalogImageDefinitionApiVersion ?? "2026-01-01-preview");
+            _projectCatalogImageDefinitionsRestClient = new ProjectCatalogImageDefinitions(_projectCatalogImageDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, projectCatalogImageDefinitionApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 

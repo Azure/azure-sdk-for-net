@@ -75,10 +75,17 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Status))
+            if (Optional.IsDefined(StatusInternal))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(StatusInternal);
+#else
+                using (JsonDocument document = JsonDocument.Parse(StatusInternal))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Phase))
             {
@@ -94,6 +101,29 @@ namespace Azure.AI.Projects
             {
                 writer.WritePropertyName("trigger_name"u8);
                 writer.WriteStringValue(TriggerName);
+            }
+            if (Optional.IsCollectionDefined(TriggerEventPayload))
+            {
+                writer.WritePropertyName("trigger_event_payload"u8);
+                writer.WriteStartObject();
+                foreach (var item in TriggerEventPayload)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(AttemptSource))
             {
@@ -125,25 +155,25 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("session_id"u8);
                 writer.WriteStringValue(SessionId);
             }
-            if (Optional.IsDefined(TriggeredAt))
+            if (Optional.IsDefined(TriggeredOn))
             {
                 writer.WritePropertyName("triggered_at"u8);
-                writer.WriteNumberValue(TriggeredAt.Value, "U");
+                writer.WriteNumberValue(TriggeredOn.Value, "U");
             }
-            if (Optional.IsDefined(ScheduledFireAt))
+            if (Optional.IsDefined(ScheduledFireOn))
             {
                 writer.WritePropertyName("scheduled_fire_at"u8);
-                writer.WriteNumberValue(ScheduledFireAt.Value, "U");
+                writer.WriteNumberValue(ScheduledFireOn.Value, "U");
             }
-            if (Optional.IsDefined(StartedAt))
+            if (Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("started_at"u8);
-                writer.WriteNumberValue(StartedAt.Value, "U");
+                writer.WriteNumberValue(StartedOn.Value, "U");
             }
-            if (Optional.IsDefined(EndedAt))
+            if (Optional.IsDefined(EndedOn))
             {
                 writer.WritePropertyName("ended_at"u8);
-                writer.WriteNumberValue(EndedAt.Value, "U");
+                writer.WriteNumberValue(EndedOn.Value, "U");
             }
             if (Optional.IsDefined(DispatchId))
             {
@@ -223,20 +253,21 @@ namespace Azure.AI.Projects
                 return null;
             }
             string id = default;
-            string status = default;
+            BinaryData statusInternal = default;
             RoutineRunPhase? phase = default;
-            RoutineTriggerType? triggerType = default;
+            RoutineTriggerKind? triggerType = default;
             string triggerName = default;
+            IDictionary<string, BinaryData> triggerEventPayload = default;
             RoutineAttemptSource? attemptSource = default;
-            RoutineActionType? actionType = default;
+            RoutineActionKind? actionType = default;
             string agentId = default;
             string agentEndpointId = default;
             string conversationId = default;
             string sessionId = default;
-            DateTimeOffset? triggeredAt = default;
-            DateTimeOffset? scheduledFireAt = default;
-            DateTimeOffset? startedAt = default;
-            DateTimeOffset? endedAt = default;
+            DateTimeOffset? triggeredOn = default;
+            DateTimeOffset? scheduledFireOn = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
             string dispatchId = default;
             string actionCorrelationId = default;
             string responseId = default;
@@ -254,7 +285,11 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    statusInternal = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("phase"u8))
@@ -272,12 +307,33 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    triggerType = new RoutineTriggerType(prop.Value.GetString());
+                    triggerType = new RoutineTriggerKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("trigger_name"u8))
                 {
                     triggerName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("trigger_event_payload"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
+                        }
+                    }
+                    triggerEventPayload = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("attempt_source"u8))
@@ -295,7 +351,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    actionType = new RoutineActionType(prop.Value.GetString());
+                    actionType = new RoutineActionKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("agent_id"u8))
@@ -324,7 +380,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    triggeredAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    triggeredOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("scheduled_fire_at"u8))
@@ -333,7 +389,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    scheduledFireAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    scheduledFireOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("started_at"u8))
@@ -342,7 +398,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    startedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    startedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("ended_at"u8))
@@ -351,7 +407,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    endedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    endedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("dispatch_id"u8))
@@ -395,25 +451,26 @@ namespace Azure.AI.Projects
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new RoutineRun(
                 id,
-                status,
+                statusInternal,
                 phase,
                 triggerType,
                 triggerName,
+                triggerEventPayload ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 attemptSource,
                 actionType,
                 agentId,
                 agentEndpointId,
                 conversationId,
                 sessionId,
-                triggeredAt,
-                scheduledFireAt,
-                startedAt,
-                endedAt,
+                triggeredOn,
+                scheduledFireOn,
+                startedOn,
+                endedOn,
                 dispatchId,
                 actionCorrelationId,
                 responseId,

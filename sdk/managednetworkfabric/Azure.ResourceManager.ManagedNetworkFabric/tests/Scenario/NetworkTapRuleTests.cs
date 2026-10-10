@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -31,16 +31,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            NetworkTapRuleData data = new NetworkTapRuleData(new AzureLocation("eastus"))
+            NetworkTapRuleData data = new NetworkTapRuleData(new AzureLocation("eastus"), NetworkFabricConfigurationType.File)
             {
                 Annotation = "annotation",
-                ConfigurationType = NetworkFabricConfigurationType.File,
                 TapRulesUri = new Uri("https://microsoft.com/a"),
                 MatchConfigurations =
                     {
                         new NetworkTapRuleMatchConfiguration()
                         {
-                             MatchConfigurationName = "config1",
+                            MatchConfigurationName = "config1",
                             SequenceNumber = 10,
                             IPAddressType = NetworkFabricIPAddressType.IPv4,
                             MatchConditions =
@@ -155,7 +154,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                             },
                         }
                     },
-                PollingIntervalInSeconds = PollingIntervalInSecond.Thirty,
+                PollingIntervalInSecond = 30,
                 Tags =
                     {
                         ["keyID"] = "keyValue",
@@ -181,13 +180,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     {
                         MatchConfigurationName = "ModifiedConfigName",
                         SequenceNumber = 10,
-                        IPAddressType = NetworkFabricIPAddressType.IPv4,
+                        IpAddressType = NetworkFabricIPAddressType.IPv4,
                         MatchConditions =
                         {
                             new NetworkTapRuleMatchCondition()
                             {
                                 EncapsulationType = NetworkTapEncapsulationType.None,
-                                PortCondition = new NetworkFabricPortCondition(Layer4Protocol.Tcp)
+                                PortCondition = new NetworkFabricPortCondition(Layer4Protocol.TCP)
                                 {
                                     PortType = NetworkFabricPortType.SourcePort,
                                     Ports =
@@ -218,15 +217,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                                         "exmaple-vlanGroup"
                                         },
                                 },
-                                IPCondition = new IPMatchCondition()
+                                IpCondition = new IPMatchCondition()
                                 {
-                                    SourceDestinationType = SourceDestinationType.SourceIP,
+                                    Type = SourceDestinationType.SourceIP,
                                     PrefixType = IPMatchConditionPrefixType.Prefix,
-                                    IPPrefixValues =
+                                    IpPrefixValues =
                                         {
                                         "10.10.10.10/20"
                                         },
-                                    IPGroupNames =
+                                    IpGroupNames =
                                         {
                                         "example-ipGroup"
                                         },
@@ -237,7 +236,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                         {
                             new NetworkTapRuleAction()
                             {
-                                TapRuleActionType = TapRuleActionType.Goto,
+                                Type = TapRuleActionType.Goto,
                                 Truncate = "100",
                                 IsTimestampEnabled = NetworkFabricBooleanValue.True,
                                 DestinationId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/neighborGroups/example-neighborGroup"),
@@ -250,13 +249,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 {
                     new CommonDynamicMatchConfiguration()
                     {
-                        IPGroups =
+                        IpGroups =
                         {
                             new MatchConfigurationIPGroupProperties()
                             {
                                 Name = "example-ipGroup1",
-                                IPAddressType = NetworkFabricIPAddressType.IPv4,
-                                IPPrefixes =
+                                IpAddressType = NetworkFabricIPAddressType.IPv4,
+                                IpPrefixes =
                                     {
                                     "10.10.10.10/30"
                                     },

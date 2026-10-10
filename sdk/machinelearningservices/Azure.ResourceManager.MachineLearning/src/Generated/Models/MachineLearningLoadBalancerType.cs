@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct MachineLearningLoadBalancerType : IEquatable<MachineLearningLoadBalancerType>
     {
         private readonly string _value;
+        private const string PublicIpValue = "PublicIp";
+        private const string InternalLoadBalancerValue = "InternalLoadBalancer";
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningLoadBalancerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MachineLearningLoadBalancerType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string PublicIPValue = "PublicIp";
-        private const string InternalLoadBalancerValue = "InternalLoadBalancer";
+        /// <summary> Gets the PublicIp. </summary>
+        public static MachineLearningLoadBalancerType PublicIp { get; } = new MachineLearningLoadBalancerType(PublicIpValue);
 
-        /// <summary> PublicIp. </summary>
-        public static MachineLearningLoadBalancerType PublicIP { get; } = new MachineLearningLoadBalancerType(PublicIPValue);
-        /// <summary> InternalLoadBalancer. </summary>
+        /// <summary> Gets the InternalLoadBalancer. </summary>
         public static MachineLearningLoadBalancerType InternalLoadBalancer { get; } = new MachineLearningLoadBalancerType(InternalLoadBalancerValue);
+
         /// <summary> Determines if two <see cref="MachineLearningLoadBalancerType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningLoadBalancerType left, MachineLearningLoadBalancerType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningLoadBalancerType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningLoadBalancerType left, MachineLearningLoadBalancerType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningLoadBalancerType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningLoadBalancerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningLoadBalancerType(string value) => new MachineLearningLoadBalancerType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningLoadBalancerType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningLoadBalancerType?(string value) => value == null ? null : new MachineLearningLoadBalancerType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningLoadBalancerType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningLoadBalancerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

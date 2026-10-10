@@ -6,13 +6,18 @@
 #nullable disable
 
 using System;
+using System.Buffers;
+using System.Buffers.Text;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 
+#pragma warning disable SCME0004 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 namespace Azure.AI.Translation.Document
 {
     internal static partial class ModelSerializationExtensions
@@ -161,6 +166,59 @@ namespace Azure.AI.Translation.Document
             }
         }
 
+        public static void WriteBase64StringValue(this Utf8JsonWriter writer, BinaryData value, string format)
+        {
+            if (value == null)
+            {
+                writer.WriteNullValue();
+                return;
+            }
+            switch (format)
+            {
+                case "U":
+                    writer.WriteBase64UrlStringValue(value.ToMemory().Span);
+                    break;
+                case "D":
+                    writer.WriteBase64StringValue(value.ToMemory().Span);
+                    break;
+                default:
+                    throw new ArgumentException($"Format is not supported: '{format}'", nameof(format));
+            }
+        }
+
+        public static void WriteBase64UrlStringValue(this Utf8JsonWriter writer, ReadOnlySpan<byte> source)
+        {
+            byte[] encoded = new byte[Base64.GetMaxEncodedToUtf8Length(source.Length)];
+            OperationStatus status = Base64.EncodeToUtf8(source, encoded, out int bytesConsumed, out int bytesWritten);
+            if (status != OperationStatus.Done || bytesConsumed != source.Length)
+            {
+                throw new InvalidOperationException("Base64Url encoding did not complete.");
+            }
+            for (int index = 0; index < bytesWritten; index++)
+            {
+                if (encoded[index] == (byte)'+')
+                {
+                    encoded[index] = (byte)'-';
+                }
+                else
+                {
+                    if (encoded[index] == (byte)'/')
+                    {
+                        encoded[index] = (byte)'_';
+                    }
+                    else
+                    {
+                        if (encoded[index] == (byte)'=')
+                        {
+                            bytesWritten = index;
+                            break;
+                        }
+                    }
+                }
+            }
+            writer.WriteStringValue(encoded.AsSpan(0, bytesWritten));
+        }
+
         public static void WriteNumberValue(this Utf8JsonWriter writer, DateTimeOffset value, string format)
         {
             if (format != "U")
@@ -246,6 +304,9 @@ namespace Azure.AI.Translation.Document
                 case TimeSpan timeSpan:
                     writer.WriteStringValue(timeSpan, "P");
                     break;
+                case FileBinaryContent fileBinaryContent:
+                    writer.WriteFileBinaryContent(fileBinaryContent);
+                    break;
                 default:
                     throw new NotSupportedException($"Not supported type {value.GetType()}");
             }
@@ -264,5 +325,14 @@ namespace Azure.AI.Translation.Document
             return BinaryData.FromString(element.GetRawText());
 #endif
         }
+
+        public static void WriteFileBinaryContent(this Utf8JsonWriter writer, FileBinaryContent value)
+        {
+            int capacity = value.TryComputeLength(out long length) && length <= int.MaxValue ? (int)length : 0;
+            using MemoryStream stream = new MemoryStream(capacity);
+            value.WriteTo(stream);
+            writer.WriteBase64StringValue(stream.GetBuffer().AsSpan(0, (int)stream.Position));
+        }
     }
 }
+#pragma warning restore SCME0004 // Type is for evaluation purposes only and is subject to change or removal in future updates.

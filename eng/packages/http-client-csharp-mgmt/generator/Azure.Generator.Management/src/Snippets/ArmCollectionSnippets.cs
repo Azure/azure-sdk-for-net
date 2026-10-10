@@ -19,8 +19,8 @@ namespace Azure.Generator.Management.Snippets
         public static ScopedApi<ArmClient> Client(this ScopedApi<ArmCollection> collection)
             => collection.Property("Client").As<ArmClient>();
 
-        public static ScopedApi<ClientDiagnostics> Diagnostics(this ScopedApi<ArmCollection> collection)
-            => collection.Property("Diagnostics").As<ClientDiagnostics>();
+        public static ScopedApi<DiagnosticsOptions> Diagnostics(this ScopedApi<ArmCollection> collection)
+            => collection.Property("Diagnostics").As<DiagnosticsOptions>();
 
         public static ScopedApi<HttpPipeline> Pipeline(this ScopedApi<ArmCollection> collection)
             => collection.Property("Pipeline").As<HttpPipeline>();

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
         {
             TryGetApiVersion(SapDatabaseInstanceResource.ResourceType, out string sapDatabaseInstanceApiVersion);
             _sapDatabaseInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadsSapVirtualInstance", SapDatabaseInstanceResource.ResourceType.Namespace, Diagnostics);
-            _sapDatabaseInstancesRestClient = new SapDatabaseInstances(_sapDatabaseInstancesClientDiagnostics, Pipeline, Endpoint, sapDatabaseInstanceApiVersion ?? "2024-09-01");
+            _sapDatabaseInstancesRestClient = new SapDatabaseInstances(_sapDatabaseInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sapDatabaseInstanceApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SapDatabaseInstanceData, SapDatabaseInstanceResource>(new SapDatabaseInstancesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SapDatabaseInstanceData, SapDatabaseInstanceResource>(new SapDatabaseInstanceDataAsyncCollectionResultOfT(
                 _sapDatabaseInstancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SapDatabaseInstanceData, SapDatabaseInstanceResource>(new SapDatabaseInstancesGetAllCollectionResultOfT(
+            return new PageableWrapper<SapDatabaseInstanceData, SapDatabaseInstanceResource>(new SapDatabaseInstanceDataCollectionResultOfT(
                 _sapDatabaseInstancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

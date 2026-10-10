@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(CdnProfileAgentResource.ResourceType, out string cdnProfileAgentApiVersion);
             _profileAgentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnProfileAgentResource.ResourceType.Namespace, Diagnostics);
-            _profileAgentsRestClient = new ProfileAgents(_profileAgentsClientDiagnostics, Pipeline, Endpoint, cdnProfileAgentApiVersion ?? "2025-09-01-preview");
+            _profileAgentsRestClient = new ProfileAgents(_profileAgentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cdnProfileAgentApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CdnProfileAgentData, CdnProfileAgentResource>(new ProfileAgentsGetByProfileAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CdnProfileAgentData, CdnProfileAgentResource>(new CdnProfileAgentDataAsyncCollectionResultOfT(
                 _profileAgentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CdnProfileAgentData, CdnProfileAgentResource>(new ProfileAgentsGetByProfileCollectionResultOfT(
+            return new PageableWrapper<CdnProfileAgentData, CdnProfileAgentResource>(new CdnProfileAgentDataCollectionResultOfT(
                 _profileAgentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

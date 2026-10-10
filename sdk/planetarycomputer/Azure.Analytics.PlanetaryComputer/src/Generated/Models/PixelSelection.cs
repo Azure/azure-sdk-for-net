@@ -35,6 +35,8 @@ namespace Azure.Analytics.PlanetaryComputer
         private const string LastBandLowValue = "lastbandlow";
         /// <summary> Select image with highest value in the last band. </summary>
         private const string LastBandHighValue = "lastbandhigh";
+        /// <summary> Count available pixels across sources. </summary>
+        private const string CountValue = "count";
 
         /// <summary> Initializes a new instance of <see cref="PixelSelection"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -69,6 +71,9 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Select image with highest value in the last band. </summary>
         public static PixelSelection LastBandHigh { get; } = new PixelSelection(LastBandHighValue);
+
+        /// <summary> Count available pixels across sources. </summary>
+        public static PixelSelection Count { get; } = new PixelSelection(CountValue);
 
         /// <summary> Determines if two <see cref="PixelSelection"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

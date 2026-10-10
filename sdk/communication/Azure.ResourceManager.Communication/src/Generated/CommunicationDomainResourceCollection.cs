@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Communication
         {
             TryGetApiVersion(CommunicationDomainResource.ResourceType, out string communicationDomainResourceApiVersion);
             _domainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Communication", CommunicationDomainResource.ResourceType.Namespace, Diagnostics);
-            _domainsRestClient = new Domains(_domainsClientDiagnostics, Pipeline, Endpoint, communicationDomainResourceApiVersion ?? "2026-03-18");
+            _domainsRestClient = new Domains(_domainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, communicationDomainResourceApiVersion ?? "2026-03-18");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Communication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CommunicationDomainResourceData, CommunicationDomainResource>(new DomainsGetByEmailServiceResourceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CommunicationDomainResourceData, CommunicationDomainResource>(new CommunicationDomainResourceDataAsyncCollectionResultOfT(
                 _domainsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Communication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CommunicationDomainResourceData, CommunicationDomainResource>(new DomainsGetByEmailServiceResourceCollectionResultOfT(
+            return new PageableWrapper<CommunicationDomainResourceData, CommunicationDomainResource>(new CommunicationDomainResourceDataCollectionResultOfT(
                 _domainsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

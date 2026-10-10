@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             TryGetApiVersion(HciVmLoadBalancerResource.ResourceType, out string hciVmLoadBalancerApiVersion);
             _loadBalancersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmLoadBalancerResource.ResourceType.Namespace, Diagnostics);
-            _loadBalancersRestClient = new LoadBalancers(_loadBalancersClientDiagnostics, Pipeline, Endpoint, hciVmLoadBalancerApiVersion ?? "2025-09-01-preview");
+            _loadBalancersRestClient = new LoadBalancers(_loadBalancersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmLoadBalancerApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmLoadBalancerData, HciVmLoadBalancerResource>(new LoadBalancersGetByResourceGroupAsyncCollectionResultOfT(_loadBalancersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmLoadBalancerCollection.GetAll"), data => new HciVmLoadBalancerResource(Client, data));
+            return new AsyncPageableWrapper<HciVmLoadBalancerData, HciVmLoadBalancerResource>(new HciVmLoadBalancerDataAsyncCollectionResultOfT(_loadBalancersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmLoadBalancerCollection.GetAll"), data => new HciVmLoadBalancerResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmLoadBalancerData, HciVmLoadBalancerResource>(new LoadBalancersGetByResourceGroupCollectionResultOfT(_loadBalancersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmLoadBalancerCollection.GetAll"), data => new HciVmLoadBalancerResource(Client, data));
+            return new PageableWrapper<HciVmLoadBalancerData, HciVmLoadBalancerResource>(new HciVmLoadBalancerDataCollectionResultOfT(_loadBalancersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmLoadBalancerCollection.GetAll"), data => new HciVmLoadBalancerResource(Client, data));
         }
 
         /// <summary>

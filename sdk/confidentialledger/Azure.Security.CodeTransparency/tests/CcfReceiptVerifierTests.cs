@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Azure.Core.TestFramework;
-using Azure.Security.CodeTransparency.Receipt;
 using NUnit.Framework;
 
 namespace Azure.Security.CodeTransparency.Tests
@@ -61,16 +60,16 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
+                IdentityClientEndpoint = new Uri("https://foo.bar.com")
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
 
             byte[] receiptBytes = readFileBytes("receipt.cose");
             byte[] inputSignedPayloadBytes = readFileBytes("input_signed_claims");
 
-            Response<JwksDocument> key = client.GetPublicKeys();
+            Response<CodeTransparencyVerificationKeySet> key = client.GetPublicKeys();
 
-            var exception = Assert.Throws<InvalidOperationException>(() => CcfReceiptVerifier.VerifyTransparentStatementReceipt(key.Value.Keys[0], receiptBytes, inputSignedPayloadBytes));
+            var exception = Assert.Throws<InvalidOperationException>(() => CcfReceiptVerifier.Verify(receiptBytes, inputSignedPayloadBytes, key.Value.Keys[0]));
             StringAssert.Contains(expected: "KID mismatch", exception.Message);
 #endif
         }
@@ -94,18 +93,36 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
+                IdentityClientEndpoint = new Uri("https://foo.bar.com")
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
 
             byte[] receiptBytes = readFileBytes("receipt.cose");
             byte[] inputSignedPayloadBytes = readFileBytes("input_signed_claims");
 
-            Response<JwksDocument> key = client.GetPublicKeys();
+            Response<CodeTransparencyVerificationKeySet> key = client.GetPublicKeys();
 
-            var exception = Assert.Throws<InvalidOperationException>(() => CcfReceiptVerifier.VerifyTransparentStatementReceipt(key.Value.Keys[0], receiptBytes, inputSignedPayloadBytes));
+            var exception = Assert.Throws<InvalidOperationException>(() => CcfReceiptVerifier.Verify(receiptBytes, inputSignedPayloadBytes, key.Value.Keys[0]));
             StringAssert.Contains(expected: "Claim digest mismatch", exception.Message);
 #endif
+        }
+
+        [Test]
+        public void GetRegistrationTransactionId_ReturnsEntryIdFromReceipt()
+        {
+            byte[] receiptBytes = readFileBytes("receipt.cose");
+
+            string entryId = CcfReceipt.GetRegistrationTransactionId(receiptBytes);
+
+            Assert.AreEqual("8.198", entryId);
+        }
+
+        [Test]
+        public void GetRegistrationTransactionId_ReturnsNullForInvalidInput()
+        {
+            Assert.IsNull(CcfReceipt.GetRegistrationTransactionId(null));
+            Assert.IsNull(CcfReceipt.GetRegistrationTransactionId(Array.Empty<byte>()));
+            Assert.IsNull(CcfReceipt.GetRegistrationTransactionId(new byte[] { 0x01, 0x02, 0x03 }));
         }
     }
 }

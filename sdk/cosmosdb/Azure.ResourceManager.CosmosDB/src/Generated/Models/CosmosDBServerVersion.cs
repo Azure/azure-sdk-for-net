@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public readonly partial struct CosmosDBServerVersion : IEquatable<CosmosDBServerVersion>
     {
         private readonly string _value;
-        private const string Three2Value = "3.2";
-        private const string Three6Value = "3.6";
-        private const string Four0Value = "4.0";
-        private const string Four2Value = "4.2";
+        private const string V3_2Value = "3.2";
+        private const string V3_6Value = "3.6";
+        private const string V4_0Value = "4.0";
+        private const string V4_2Value = "4.2";
         private const string Five0Value = "5.0";
         private const string Six0Value = "6.0";
         private const string Seven0Value = "7.0";
@@ -32,6 +32,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
             _value = value;
         }
+
+        /// <summary> Gets the V3_2. </summary>
+        public static CosmosDBServerVersion V3_2 { get; } = new CosmosDBServerVersion(V3_2Value);
+
+        /// <summary> Gets the V3_6. </summary>
+        public static CosmosDBServerVersion V3_6 { get; } = new CosmosDBServerVersion(V3_6Value);
+
+        /// <summary> Gets the V4_0. </summary>
+        public static CosmosDBServerVersion V4_0 { get; } = new CosmosDBServerVersion(V4_0Value);
+
+        /// <summary> Gets the V4_2. </summary>
+        public static CosmosDBServerVersion V4_2 { get; } = new CosmosDBServerVersion(V4_2Value);
 
         /// <summary> Gets the Five0. </summary>
         public static CosmosDBServerVersion Five0 { get; } = new CosmosDBServerVersion(Five0Value);

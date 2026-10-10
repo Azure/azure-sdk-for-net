@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(CdnDeploymentVersionResource.ResourceType, out string cdnDeploymentVersionApiVersion);
             _deploymentVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnDeploymentVersionResource.ResourceType.Namespace, Diagnostics);
-            _deploymentVersionsRestClient = new DeploymentVersions(_deploymentVersionsClientDiagnostics, Pipeline, Endpoint, cdnDeploymentVersionApiVersion ?? "2025-09-01-preview");
+            _deploymentVersionsRestClient = new DeploymentVersions(_deploymentVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cdnDeploymentVersionApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CdnDeploymentVersionData, CdnDeploymentVersionResource>(new DeploymentVersionsGetByProfileAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CdnDeploymentVersionData, CdnDeploymentVersionResource>(new CdnDeploymentVersionDataAsyncCollectionResultOfT(
                 _deploymentVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CdnDeploymentVersionData, CdnDeploymentVersionResource>(new DeploymentVersionsGetByProfileCollectionResultOfT(
+            return new PageableWrapper<CdnDeploymentVersionData, CdnDeploymentVersionResource>(new CdnDeploymentVersionDataCollectionResultOfT(
                 _deploymentVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

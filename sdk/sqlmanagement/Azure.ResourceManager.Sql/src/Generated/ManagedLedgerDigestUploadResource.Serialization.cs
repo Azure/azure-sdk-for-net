@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class ManagedLedgerDigestUploadResource : IJsonModel<ManagedLedgerDigestUploadData>
     {
-        private static ManagedLedgerDigestUploadData s_dataDeserializationInstance;
-        private static ManagedLedgerDigestUploadData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ManagedLedgerDigestUploadData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ManagedLedgerDigestUploadData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ManagedLedgerDigestUploadData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedLedgerDigestUploadData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedLedgerDigestUploadData>)Data).Write(writer, options);
 
-        ManagedLedgerDigestUploadData IJsonModel<ManagedLedgerDigestUploadData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedLedgerDigestUploadData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedLedgerDigestUploadData IJsonModel<ManagedLedgerDigestUploadData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ManagedLedgerDigestUploadData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedLedgerDigestUploadData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ManagedLedgerDigestUploadData IPersistableModel<ManagedLedgerDigestUploadData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedLedgerDigestUploadData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<ManagedLedgerDigestUploadData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedLedgerDigestUploadData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedLedgerDigestUploadData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

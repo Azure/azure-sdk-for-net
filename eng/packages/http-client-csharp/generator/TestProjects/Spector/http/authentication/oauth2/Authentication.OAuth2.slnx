@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="src/Authentication.OAuth2.csproj" />
+  <Project Path="tests/Authentication.OAuth2.Tests.csproj" />
 </Solution>

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             TryGetApiVersion(DataBoxEdgeStorageAccountResource.ResourceType, out string dataBoxEdgeStorageAccountApiVersion);
             _storageAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", DataBoxEdgeStorageAccountResource.ResourceType.Namespace, Diagnostics);
-            _storageAccountsRestClient = new StorageAccounts(_storageAccountsClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeStorageAccountApiVersion ?? "2023-12-01");
+            _storageAccountsRestClient = new StorageAccounts(_storageAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeStorageAccountApiVersion ?? "2023-12-01");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataBoxEdgeStorageAccountData, DataBoxEdgeStorageAccountResource>(new StorageAccountsGetByDataBoxEdgeDeviceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataBoxEdgeStorageAccountData, DataBoxEdgeStorageAccountResource>(new DataBoxEdgeStorageAccountDataAsyncCollectionResultOfT(
                 _storageAccountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataBoxEdgeStorageAccountData, DataBoxEdgeStorageAccountResource>(new StorageAccountsGetByDataBoxEdgeDeviceCollectionResultOfT(
+            return new PageableWrapper<DataBoxEdgeStorageAccountData, DataBoxEdgeStorageAccountResource>(new DataBoxEdgeStorageAccountDataCollectionResultOfT(
                 _storageAccountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

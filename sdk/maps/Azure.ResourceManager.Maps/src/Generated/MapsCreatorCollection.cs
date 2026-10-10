@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Maps
         {
             TryGetApiVersion(MapsCreatorResource.ResourceType, out string mapsCreatorApiVersion);
             _creatorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maps", MapsCreatorResource.ResourceType.Namespace, Diagnostics);
-            _creatorsRestClient = new Creators(_creatorsClientDiagnostics, Pipeline, Endpoint, mapsCreatorApiVersion ?? "2025-10-01-preview");
+            _creatorsRestClient = new Creators(_creatorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mapsCreatorApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Maps
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MapsCreatorData, MapsCreatorResource>(new CreatorsGetByAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MapsCreatorData, MapsCreatorResource>(new MapsCreatorDataAsyncCollectionResultOfT(
                 _creatorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Maps
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MapsCreatorData, MapsCreatorResource>(new CreatorsGetByAccountCollectionResultOfT(
+            return new PageableWrapper<MapsCreatorData, MapsCreatorResource>(new MapsCreatorDataCollectionResultOfT(
                 _creatorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

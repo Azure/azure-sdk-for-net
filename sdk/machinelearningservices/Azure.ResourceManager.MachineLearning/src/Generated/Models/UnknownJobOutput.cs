@@ -10,20 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Unknown version of JobOutput. </summary>
     internal partial class UnknownJobOutput : MachineLearningJobOutput
     {
         /// <summary> Initializes a new instance of <see cref="UnknownJobOutput"/>. </summary>
-        /// <param name="jobOutputType"> [Required] Specifies the type of job. </param>
         /// <param name="description"> Description for the output. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownJobOutput(JobOutputType jobOutputType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(jobOutputType, description, serializedAdditionalRawData)
-        {
-            JobOutputType = jobOutputType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownJobOutput"/> for deserialization. </summary>
-        internal UnknownJobOutput()
+        /// <param name="jobOutputType"> [Required] Specifies the type of job. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownJobOutput(string description, JobOutputType jobOutputType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(description, jobOutputType != default ? jobOutputType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

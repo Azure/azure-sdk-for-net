@@ -126,14 +126,8 @@ public class BasicKeyVaultTests
               name: take('kv-${uniqueString(resourceGroup().id)}', 24)
               location: location
               properties: {
-                tenantId: tenantId
-                sku: {
-                  family: 'A'
-                  name: skuName
-                }
                 accessPolicies: [
                   {
-                    tenantId: tenantId
                     objectId: objectId
                     permissions: {
                       keys: [
@@ -143,23 +137,29 @@ public class BasicKeyVaultTests
                         'list'
                       ]
                     }
+                    tenantId: tenantId
                   }
                 ]
                 enableSoftDelete: true
-                softDeleteRetentionInDays: 90
                 networkAcls: {
                   bypass: 'AzureServices'
                   defaultAction: 'Allow'
                 }
+                sku: {
+                  family: 'A'
+                  name: skuName
+                }
+                softDeleteRetentionInDays: 90
+                tenantId: tenantId
               }
             }
 
             resource secret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
               name: 'myDarkNecessities'
+              parent: kv
               properties: {
                 value: secretValue
               }
-              parent: kv
             }
 
             output name string = kv.name

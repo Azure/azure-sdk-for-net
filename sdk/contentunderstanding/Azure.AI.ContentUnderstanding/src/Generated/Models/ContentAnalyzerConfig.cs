@@ -43,8 +43,17 @@ namespace Azure.AI.ContentUnderstanding
         /// Omit the content for this analyzer from analyze result.
         /// Only return content(s) from additional analyzers specified in contentCategories, if any.
         /// </param>
+        /// <param name="workflow"> Workflow used for content analysis. </param>
+        /// <param name="allowInputTruncation">
+        /// When true, input that exceeds the service's processable-unit limit is truncated to the limit and returned as a
+        /// partial result with a warning, instead of failing. Field extraction and segmentation, where configured, run over
+        /// the processed content and may be inaccurate. Defaults to false. Overridable per request by the allowInputTruncation
+        /// query parameter.
+        /// </param>
+        /// <param name="allowInPageSegments"> Enable sub-page segmentation. When true, segments may cover a portion of a page instead of full pages. </param>
+        /// <param name="chunkingStrategy"> Strategy for chunking document content into smaller units for RAG scenarios. When omitted, chunking is disabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContentAnalyzerConfig(bool? shouldReturnDetails, IList<string> locales, bool? enableOcr, bool? enableLayout, bool? enableFigureDescription, bool? enableFigureAnalysis, bool? enableFormula, TableFormat? tableFormat, ChartFormat? chartFormat, AnnotationFormat? annotationFormat, bool? disableFaceBlurring, bool? estimateFieldSourceAndConfidence, IDictionary<string, ContentCategoryDefinition> contentCategories, bool? enableSegment, bool? segmentPerPage, bool? shouldOmitContent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContentAnalyzerConfig(bool? shouldReturnDetails, IList<string> locales, bool? enableOcr, bool? enableLayout, bool? enableFigureDescription, bool? enableFigureAnalysis, bool? enableFormula, TableFormat? tableFormat, ChartFormat? chartFormat, AnnotationFormat? annotationFormat, bool? disableFaceBlurring, bool? estimateFieldSourceAndConfidence, IDictionary<string, ContentCategoryDefinition> contentCategories, bool? enableSegment, bool? segmentPerPage, bool? shouldOmitContent, ContentAnalyzerWorkflow? workflow, bool? allowInputTruncation, bool? allowInPageSegments, ChunkingStrategy chunkingStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ShouldReturnDetails = shouldReturnDetails;
             Locales = locales;
@@ -62,6 +71,10 @@ namespace Azure.AI.ContentUnderstanding
             EnableSegment = enableSegment;
             SegmentPerPage = segmentPerPage;
             ShouldOmitContent = shouldOmitContent;
+            Workflow = workflow;
+            AllowInputTruncation = allowInputTruncation;
+            AllowInPageSegments = allowInPageSegments;
+            ChunkingStrategy = chunkingStrategy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -115,5 +128,22 @@ namespace Azure.AI.ContentUnderstanding
         /// Only return content(s) from additional analyzers specified in contentCategories, if any.
         /// </summary>
         public bool? ShouldOmitContent { get; set; }
+
+        /// <summary> Workflow used for content analysis. </summary>
+        public ContentAnalyzerWorkflow? Workflow { get; set; }
+
+        /// <summary>
+        /// When true, input that exceeds the service's processable-unit limit is truncated to the limit and returned as a
+        /// partial result with a warning, instead of failing. Field extraction and segmentation, where configured, run over
+        /// the processed content and may be inaccurate. Defaults to false. Overridable per request by the allowInputTruncation
+        /// query parameter.
+        /// </summary>
+        public bool? AllowInputTruncation { get; set; }
+
+        /// <summary> Enable sub-page segmentation. When true, segments may cover a portion of a page instead of full pages. </summary>
+        public bool? AllowInPageSegments { get; set; }
+
+        /// <summary> Strategy for chunking document content into smaller units for RAG scenarios. When omitted, chunking is disabled. </summary>
+        public ChunkingStrategy ChunkingStrategy { get; set; }
     }
 }

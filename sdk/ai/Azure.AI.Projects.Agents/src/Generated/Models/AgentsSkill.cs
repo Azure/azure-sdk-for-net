@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A skill resource. </summary>
+    [Experimental("AAIP001")]
     public partial class AgentsSkill
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -17,15 +19,15 @@ namespace Azure.AI.Projects.Agents
         /// <param name="id"> The unique identifier of the skill. </param>
         /// <param name="name"> The unique name of the skill. </param>
         /// <param name="description"> A human-readable description of the skill. </param>
-        /// <param name="createdAt"> The Unix timestamp (seconds) when the skill was created. </param>
+        /// <param name="createdOn"> The Unix timestamp (seconds) when the skill was created. </param>
         /// <param name="defaultVersion"> The default version for the skill. Can be changed via updateSkill. </param>
         /// <param name="latestVersion"> The latest version for the skill. </param>
-        internal AgentsSkill(string id, string name, string description, DateTimeOffset createdAt, string defaultVersion, string latestVersion)
+        internal AgentsSkill(string id, string name, string description, DateTimeOffset createdOn, string defaultVersion, string latestVersion)
         {
             Id = id;
             Name = name;
             Description = description;
-            CreatedAt = createdAt;
+            CreatedOn = createdOn;
             DefaultVersion = defaultVersion;
             LatestVersion = latestVersion;
         }
@@ -34,16 +36,16 @@ namespace Azure.AI.Projects.Agents
         /// <param name="id"> The unique identifier of the skill. </param>
         /// <param name="name"> The unique name of the skill. </param>
         /// <param name="description"> A human-readable description of the skill. </param>
-        /// <param name="createdAt"> The Unix timestamp (seconds) when the skill was created. </param>
+        /// <param name="createdOn"> The Unix timestamp (seconds) when the skill was created. </param>
         /// <param name="defaultVersion"> The default version for the skill. Can be changed via updateSkill. </param>
         /// <param name="latestVersion"> The latest version for the skill. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentsSkill(string id, string name, string description, DateTimeOffset createdAt, string defaultVersion, string latestVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentsSkill(string id, string name, string description, DateTimeOffset createdOn, string defaultVersion, string latestVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
             Description = description;
-            CreatedAt = createdAt;
+            CreatedOn = createdOn;
             DefaultVersion = defaultVersion;
             LatestVersion = latestVersion;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -59,7 +61,7 @@ namespace Azure.AI.Projects.Agents
         public string Description { get; }
 
         /// <summary> The Unix timestamp (seconds) when the skill was created. </summary>
-        public DateTimeOffset CreatedAt { get; }
+        public DateTimeOffset CreatedOn { get; }
 
         /// <summary> The default version for the skill. Can be changed via updateSkill. </summary>
         public string DefaultVersion { get; }

@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.HDInsight.Mocking
 
         private ClientDiagnostics HDInsightClusterClientDiagnostics => _hdInsightClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HDInsight.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private HDInsightCluster HDInsightClusterRestClient => _hdInsightClusterRestClient ??= new HDInsightCluster(HDInsightClusterClientDiagnostics, Pipeline, Endpoint, "2025-01-15-preview");
+        private HDInsightCluster HDInsightClusterRestClient => _hdInsightClusterRestClient ??= new HDInsightCluster(HDInsightClusterClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-01-15-preview");
 
         private ClientDiagnostics LocationsClientDiagnostics => _locationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HDInsight.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Locations LocationsRestClient => _locationsRestClient ??= new Locations(LocationsClientDiagnostics, Pipeline, Endpoint, "2025-01-15-preview");
+        private Locations LocationsRestClient => _locationsRestClient ??= new Locations(LocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-01-15-preview");
 
         /// <summary>
         /// Lists all the HDInsight clusters under the subscription.
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HDInsightClusterData, HDInsightClusterResource>(new HDInsightClusterGetAllAsyncCollectionResultOfT(HDInsightClusterRestClient, Id.SubscriptionId, context, "MockableHDInsightSubscriptionResource.GetHDInsightClusters"), data => new HDInsightClusterResource(Client, data));
+            return new AsyncPageableWrapper<HDInsightClusterData, HDInsightClusterResource>(new HDInsightClusterDataAsync0CollectionResultOfT(HDInsightClusterRestClient, Id.SubscriptionId, context, "MockableHDInsightSubscriptionResource.GetHDInsightClusters"), data => new HDInsightClusterResource(Client, data));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HDInsightClusterData, HDInsightClusterResource>(new HDInsightClusterGetAllCollectionResultOfT(HDInsightClusterRestClient, Id.SubscriptionId, context, "MockableHDInsightSubscriptionResource.GetHDInsightClusters"), data => new HDInsightClusterResource(Client, data));
+            return new PageableWrapper<HDInsightClusterData, HDInsightClusterResource>(new HDInsightClusterData0CollectionResultOfT(HDInsightClusterRestClient, Id.SubscriptionId, context, "MockableHDInsightSubscriptionResource.GetHDInsightClusters"), data => new HDInsightClusterResource(Client, data));
         }
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationsGetHDInsightUsagesAsyncCollectionResultOfT(LocationsRestClient, Id.SubscriptionId, location, context, "MockableHDInsightSubscriptionResource.GetHDInsightUsages");
+            return new HDInsightUsageAsyncCollectionResultOfT(LocationsRestClient, Id.SubscriptionId, location, context, "MockableHDInsightSubscriptionResource.GetHDInsightUsages");
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationsGetHDInsightUsagesCollectionResultOfT(LocationsRestClient, Id.SubscriptionId, location, context, "MockableHDInsightSubscriptionResource.GetHDInsightUsages");
+            return new HDInsightUsageCollectionResultOfT(LocationsRestClient, Id.SubscriptionId, location, context, "MockableHDInsightSubscriptionResource.GetHDInsightUsages");
         }
 
         /// <summary>

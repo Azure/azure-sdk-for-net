@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sphere
         {
             TryGetApiVersion(SphereDeviceGroupResource.ResourceType, out string sphereDeviceGroupApiVersion);
             _deviceGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sphere", SphereDeviceGroupResource.ResourceType.Namespace, Diagnostics);
-            _deviceGroupsRestClient = new DeviceGroups(_deviceGroupsClientDiagnostics, Pipeline, Endpoint, sphereDeviceGroupApiVersion ?? "2024-04-01");
+            _deviceGroupsRestClient = new DeviceGroups(_deviceGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sphereDeviceGroupApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 

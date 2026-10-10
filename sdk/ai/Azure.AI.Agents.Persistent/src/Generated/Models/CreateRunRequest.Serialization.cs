@@ -91,99 +91,190 @@ namespace Azure.AI.Agents.Persistent
             }
             writer.WritePropertyName("assistant_id"u8);
             writer.WriteStringValue(AssistantId);
-            if (Optional.IsDefined(OverrideModelName))
+            if (_overrideModelNameIsDefined || Optional.IsDefined(OverrideModelName))
             {
-                writer.WritePropertyName("model"u8);
-                writer.WriteStringValue(OverrideModelName);
+                if (OverrideModelName != null)
+                {
+                    writer.WritePropertyName("model"u8);
+                    writer.WriteStringValue(OverrideModelName);
+                }
+                else
+                {
+                    writer.WriteNull("model"u8);
+                }
             }
-            if (Optional.IsDefined(OverrideInstructions))
+            if (_overrideInstructionsIsDefined || Optional.IsDefined(OverrideInstructions))
             {
-                writer.WritePropertyName("instructions"u8);
-                writer.WriteStringValue(OverrideInstructions);
+                if (OverrideInstructions != null)
+                {
+                    writer.WritePropertyName("instructions"u8);
+                    writer.WriteStringValue(OverrideInstructions);
+                }
+                else
+                {
+                    writer.WriteNull("instructions"u8);
+                }
             }
-            if (Optional.IsDefined(AdditionalInstructions))
+            if (_additionalInstructionsIsDefined || Optional.IsDefined(AdditionalInstructions))
             {
-                writer.WritePropertyName("additional_instructions"u8);
-                writer.WriteStringValue(AdditionalInstructions);
+                if (AdditionalInstructions != null)
+                {
+                    writer.WritePropertyName("additional_instructions"u8);
+                    writer.WriteStringValue(AdditionalInstructions);
+                }
+                else
+                {
+                    writer.WriteNull("additional_instructions"u8);
+                }
             }
             if (Optional.IsCollectionDefined(AdditionalMessages))
             {
-                writer.WritePropertyName("additional_messages"u8);
-                writer.WriteStartArray();
-                foreach (ThreadMessageOptions item in AdditionalMessages)
+                if (AdditionalMessages != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("additional_messages"u8);
+                    writer.WriteStartArray();
+                    foreach (ThreadMessageOptions item in AdditionalMessages)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("additional_messages"u8);
+                }
             }
             if (Optional.IsCollectionDefined(OverrideTools))
             {
-                writer.WritePropertyName("tools"u8);
-                writer.WriteStartArray();
-                foreach (ToolDefinition item in OverrideTools)
+                if (OverrideTools != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("tools"u8);
+                    writer.WriteStartArray();
+                    foreach (ToolDefinition item in OverrideTools)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("tools"u8);
+                }
             }
-            if (Optional.IsDefined(ToolResources))
+            if (_toolResourcesIsDefined || Optional.IsDefined(ToolResources))
             {
-                writer.WritePropertyName("tool_resources"u8);
-                writer.WriteObjectValue(ToolResources, options);
+                if (ToolResources != null)
+                {
+                    writer.WritePropertyName("tool_resources"u8);
+                    writer.WriteObjectValue(ToolResources, options);
+                }
+                else
+                {
+                    writer.WriteNull("tool_resources"u8);
+                }
             }
             if (Optional.IsDefined(Stream))
             {
                 writer.WritePropertyName("stream"u8);
                 writer.WriteBooleanValue(Stream.Value);
             }
-            if (Optional.IsDefined(Temperature))
+            if (_temperatureIsDefined || Optional.IsDefined(Temperature))
             {
-                writer.WritePropertyName("temperature"u8);
-                writer.WriteNumberValue(Temperature.Value);
-            }
-            if (Optional.IsDefined(TopP))
-            {
-                writer.WritePropertyName("top_p"u8);
-                writer.WriteNumberValue(TopP.Value);
-            }
-            if (Optional.IsDefined(MaxPromptTokens))
-            {
-                writer.WritePropertyName("max_prompt_tokens"u8);
-                writer.WriteNumberValue(MaxPromptTokens.Value);
-            }
-            if (Optional.IsDefined(MaxCompletionTokens))
-            {
-                writer.WritePropertyName("max_completion_tokens"u8);
-                writer.WriteNumberValue(MaxCompletionTokens.Value);
-            }
-            if (Optional.IsDefined(TruncationStrategy))
-            {
-                writer.WritePropertyName("truncation_strategy"u8);
-                writer.WriteObjectValue(TruncationStrategy, options);
-            }
-            if (Optional.IsDefined(ToolChoice))
-            {
-                writer.WritePropertyName("tool_choice"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(ToolChoice);
-#else
-                using (JsonDocument document = JsonDocument.Parse(ToolChoice))
+                if (Temperature != null)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    writer.WritePropertyName("temperature"u8);
+                    writer.WriteNumberValue(Temperature.Value);
                 }
-#endif
-            }
-            if (Optional.IsDefined(ResponseFormat))
-            {
-                writer.WritePropertyName("response_format"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(ResponseFormat);
-#else
-                using (JsonDocument document = JsonDocument.Parse(ResponseFormat))
+                else
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    writer.WriteNull("temperature"u8);
                 }
+            }
+            if (_topPIsDefined || Optional.IsDefined(TopP))
+            {
+                if (TopP != null)
+                {
+                    writer.WritePropertyName("top_p"u8);
+                    writer.WriteNumberValue(TopP.Value);
+                }
+                else
+                {
+                    writer.WriteNull("top_p"u8);
+                }
+            }
+            if (_maxPromptTokensIsDefined || Optional.IsDefined(MaxPromptTokens))
+            {
+                if (MaxPromptTokens != null)
+                {
+                    writer.WritePropertyName("max_prompt_tokens"u8);
+                    writer.WriteNumberValue(MaxPromptTokens.Value);
+                }
+                else
+                {
+                    writer.WriteNull("max_prompt_tokens"u8);
+                }
+            }
+            if (_maxCompletionTokensIsDefined || Optional.IsDefined(MaxCompletionTokens))
+            {
+                if (MaxCompletionTokens != null)
+                {
+                    writer.WritePropertyName("max_completion_tokens"u8);
+                    writer.WriteNumberValue(MaxCompletionTokens.Value);
+                }
+                else
+                {
+                    writer.WriteNull("max_completion_tokens"u8);
+                }
+            }
+            if (_truncationStrategyIsDefined || Optional.IsDefined(TruncationStrategy))
+            {
+                if (TruncationStrategy != null)
+                {
+                    writer.WritePropertyName("truncation_strategy"u8);
+                    writer.WriteObjectValue(TruncationStrategy, options);
+                }
+                else
+                {
+                    writer.WriteNull("truncation_strategy"u8);
+                }
+            }
+            if (_toolChoiceIsDefined || Optional.IsDefined(ToolChoice))
+            {
+                if (ToolChoice != null)
+                {
+                    writer.WritePropertyName("tool_choice"u8);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(ToolChoice);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(ToolChoice))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                else
+                {
+                    writer.WriteNull("tool_choice"u8);
+                }
+            }
+            if (_responseFormatIsDefined || Optional.IsDefined(ResponseFormat))
+            {
+                if (ResponseFormat != null)
+                {
+                    writer.WritePropertyName("response_format"u8);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(ResponseFormat);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(ResponseFormat))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                else
+                {
+                    writer.WriteNull("response_format"u8);
+                }
             }
             if (Optional.IsDefined(ParallelToolCalls))
             {
@@ -192,19 +283,26 @@ namespace Azure.AI.Agents.Persistent
             }
             if (Optional.IsCollectionDefined(Metadata))
             {
-                writer.WritePropertyName("metadata"u8);
-                writer.WriteStartObject();
-                foreach (var item in Metadata)
+                if (Metadata != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("metadata"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Metadata)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("metadata"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -249,22 +347,33 @@ namespace Azure.AI.Agents.Persistent
                 return null;
             }
             string assistantId = default;
+            bool overrideModelNameIsDefined = false;
             string overrideModelName = default;
+            bool overrideInstructionsIsDefined = false;
             string overrideInstructions = default;
+            bool additionalInstructionsIsDefined = false;
             string additionalInstructions = default;
-            IList<ThreadMessageOptions> additionalMessages = default;
-            IList<ToolDefinition> overrideTools = default;
+            IList<ThreadMessageOptions> additionalMessages = new ChangeTrackingList<ThreadMessageOptions>();
+            IList<ToolDefinition> overrideTools = new ChangeTrackingList<ToolDefinition>();
+            bool toolResourcesIsDefined = false;
             ToolResources toolResources = default;
             bool? stream = default;
+            bool temperatureIsDefined = false;
             float? temperature = default;
+            bool topPIsDefined = false;
             float? topP = default;
+            bool maxPromptTokensIsDefined = false;
             int? maxPromptTokens = default;
+            bool maxCompletionTokensIsDefined = false;
             int? maxCompletionTokens = default;
+            bool truncationStrategyIsDefined = false;
             Truncation truncationStrategy = default;
+            bool toolChoiceIsDefined = false;
             BinaryData toolChoice = default;
+            bool responseFormatIsDefined = false;
             BinaryData responseFormat = default;
             bool? parallelToolCalls = default;
-            IDictionary<string, string> metadata = default;
+            IDictionary<string, string> metadata = new ChangeTrackingDictionary<string, string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -275,6 +384,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("model"u8))
                 {
+                    overrideModelNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         overrideModelName = null;
@@ -285,6 +395,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("instructions"u8))
                 {
+                    overrideInstructionsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         overrideInstructions = null;
@@ -295,6 +406,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("additional_instructions"u8))
                 {
+                    additionalInstructionsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         additionalInstructions = null;
@@ -307,6 +419,7 @@ namespace Azure.AI.Agents.Persistent
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        additionalMessages = null;
                         continue;
                     }
                     List<ThreadMessageOptions> array = new List<ThreadMessageOptions>();
@@ -321,6 +434,7 @@ namespace Azure.AI.Agents.Persistent
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        overrideTools = null;
                         continue;
                     }
                     List<ToolDefinition> array = new List<ToolDefinition>();
@@ -333,6 +447,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("tool_resources"u8))
                 {
+                    toolResourcesIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         toolResources = null;
@@ -352,6 +467,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("temperature"u8))
                 {
+                    temperatureIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         temperature = null;
@@ -362,6 +478,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("top_p"u8))
                 {
+                    topPIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         topP = null;
@@ -372,6 +489,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("max_prompt_tokens"u8))
                 {
+                    maxPromptTokensIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         maxPromptTokens = null;
@@ -382,6 +500,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("max_completion_tokens"u8))
                 {
+                    maxCompletionTokensIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         maxCompletionTokens = null;
@@ -392,6 +511,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("truncation_strategy"u8))
                 {
+                    truncationStrategyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         truncationStrategy = null;
@@ -402,22 +522,24 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("tool_choice"u8))
                 {
+                    toolChoiceIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         toolChoice = null;
                         continue;
                     }
-                    toolChoice = BinaryData.FromString(prop.Value.GetRawText());
+                    toolChoice = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("response_format"u8))
                 {
+                    responseFormatIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         responseFormat = null;
                         continue;
                     }
-                    responseFormat = BinaryData.FromString(prop.Value.GetRawText());
+                    responseFormat = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("parallel_tool_calls"u8))
@@ -433,6 +555,7 @@ namespace Azure.AI.Agents.Persistent
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        metadata = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -452,7 +575,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CreateRunRequest(
@@ -460,8 +583,8 @@ namespace Azure.AI.Agents.Persistent
                 overrideModelName,
                 overrideInstructions,
                 additionalInstructions,
-                additionalMessages ?? new ChangeTrackingList<ThreadMessageOptions>(),
-                overrideTools ?? new ChangeTrackingList<ToolDefinition>(),
+                additionalMessages,
+                overrideTools,
                 toolResources,
                 stream,
                 temperature,
@@ -472,8 +595,21 @@ namespace Azure.AI.Agents.Persistent
                 toolChoice,
                 responseFormat,
                 parallelToolCalls,
-                metadata ?? new ChangeTrackingDictionary<string, string>(),
-                additionalBinaryDataProperties);
+                metadata,
+                additionalBinaryDataProperties)
+            {
+                _overrideModelNameIsDefined = overrideModelNameIsDefined,
+                _overrideInstructionsIsDefined = overrideInstructionsIsDefined,
+                _additionalInstructionsIsDefined = additionalInstructionsIsDefined,
+                _toolResourcesIsDefined = toolResourcesIsDefined,
+                _temperatureIsDefined = temperatureIsDefined,
+                _topPIsDefined = topPIsDefined,
+                _maxPromptTokensIsDefined = maxPromptTokensIsDefined,
+                _maxCompletionTokensIsDefined = maxCompletionTokensIsDefined,
+                _truncationStrategyIsDefined = truncationStrategyIsDefined,
+                _toolChoiceIsDefined = toolChoiceIsDefined,
+                _responseFormatIsDefined = responseFormatIsDefined
+            };
         }
     }
 }

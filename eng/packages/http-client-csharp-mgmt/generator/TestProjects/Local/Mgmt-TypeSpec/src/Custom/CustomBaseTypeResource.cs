@@ -4,11 +4,13 @@
 #nullable disable
 
 using Azure.ResourceManager;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     // Real resource custom code may extend ArmResource on the pre-Data resource name.
     // Resource data generation must ignore this custom base type after appending "Data".
+    [CodeGenResourceData(typeof(CustomBaseTypeResourceCustomData))]
     public partial class CustomBaseTypeResource : ArmResource
     { }
 }

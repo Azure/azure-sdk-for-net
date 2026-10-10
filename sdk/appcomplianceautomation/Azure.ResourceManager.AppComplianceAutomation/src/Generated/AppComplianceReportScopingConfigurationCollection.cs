@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             TryGetApiVersion(AppComplianceReportScopingConfigurationResource.ResourceType, out string appComplianceReportScopingConfigurationApiVersion);
             _scopingConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation", AppComplianceReportScopingConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _scopingConfigurationRestClient = new ScopingConfiguration(_scopingConfigurationClientDiagnostics, Pipeline, Endpoint, appComplianceReportScopingConfigurationApiVersion ?? "2024-06-27");
+            _scopingConfigurationRestClient = new ScopingConfiguration(_scopingConfigurationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appComplianceReportScopingConfigurationApiVersion ?? "2024-06-27");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppComplianceReportScopingConfigurationData, AppComplianceReportScopingConfigurationResource>(new ScopingConfigurationGetAllAsyncCollectionResultOfT(_scopingConfigurationRestClient, Id.Name, context, "AppComplianceReportScopingConfigurationCollection.GetAll"), data => new AppComplianceReportScopingConfigurationResource(Client, data));
+            return new AsyncPageableWrapper<AppComplianceReportScopingConfigurationData, AppComplianceReportScopingConfigurationResource>(new AppComplianceReportScopingConfigurationDataAsyncCollectionResultOfT(_scopingConfigurationRestClient, Id.Name, context, "AppComplianceReportScopingConfigurationCollection.GetAll"), data => new AppComplianceReportScopingConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppComplianceReportScopingConfigurationData, AppComplianceReportScopingConfigurationResource>(new ScopingConfigurationGetAllCollectionResultOfT(_scopingConfigurationRestClient, Id.Name, context, "AppComplianceReportScopingConfigurationCollection.GetAll"), data => new AppComplianceReportScopingConfigurationResource(Client, data));
+            return new PageableWrapper<AppComplianceReportScopingConfigurationData, AppComplianceReportScopingConfigurationResource>(new AppComplianceReportScopingConfigurationDataCollectionResultOfT(_scopingConfigurationRestClient, Id.Name, context, "AppComplianceReportScopingConfigurationCollection.GetAll"), data => new AppComplianceReportScopingConfigurationResource(Client, data));
         }
 
         /// <summary>

@@ -7,45 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The AutomationRulePropertyArrayConditionSupportedArrayType. </summary>
+    /// <summary></summary>
     public readonly partial struct AutomationRulePropertyArrayConditionSupportedArrayType : IEquatable<AutomationRulePropertyArrayConditionSupportedArrayType>
     {
         private readonly string _value;
+        /// <summary> Evaluate the condition on the custom detail keys. </summary>
+        private const string CustomDetailsValue = "CustomDetails";
+        /// <summary> Evaluate the condition on a custom detail's values. </summary>
+        private const string CustomDetailValuesValue = "CustomDetailValues";
+        /// <summary> Evaluate the condition on the incident labels. </summary>
+        private const string IncidentLabelsValue = "IncidentLabels";
 
         /// <summary> Initializes a new instance of <see cref="AutomationRulePropertyArrayConditionSupportedArrayType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutomationRulePropertyArrayConditionSupportedArrayType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CustomDetailsValue = "CustomDetails";
-        private const string CustomDetailValuesValue = "CustomDetailValues";
+            _value = value;
+        }
 
         /// <summary> Evaluate the condition on the custom detail keys. </summary>
         public static AutomationRulePropertyArrayConditionSupportedArrayType CustomDetails { get; } = new AutomationRulePropertyArrayConditionSupportedArrayType(CustomDetailsValue);
+
         /// <summary> Evaluate the condition on a custom detail's values. </summary>
         public static AutomationRulePropertyArrayConditionSupportedArrayType CustomDetailValues { get; } = new AutomationRulePropertyArrayConditionSupportedArrayType(CustomDetailValuesValue);
+
+        /// <summary> Evaluate the condition on the incident labels. </summary>
+        public static AutomationRulePropertyArrayConditionSupportedArrayType IncidentLabels { get; } = new AutomationRulePropertyArrayConditionSupportedArrayType(IncidentLabelsValue);
+
         /// <summary> Determines if two <see cref="AutomationRulePropertyArrayConditionSupportedArrayType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutomationRulePropertyArrayConditionSupportedArrayType left, AutomationRulePropertyArrayConditionSupportedArrayType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutomationRulePropertyArrayConditionSupportedArrayType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutomationRulePropertyArrayConditionSupportedArrayType left, AutomationRulePropertyArrayConditionSupportedArrayType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutomationRulePropertyArrayConditionSupportedArrayType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutomationRulePropertyArrayConditionSupportedArrayType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutomationRulePropertyArrayConditionSupportedArrayType(string value) => new AutomationRulePropertyArrayConditionSupportedArrayType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AutomationRulePropertyArrayConditionSupportedArrayType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutomationRulePropertyArrayConditionSupportedArrayType?(string value) => value == null ? null : new AutomationRulePropertyArrayConditionSupportedArrayType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutomationRulePropertyArrayConditionSupportedArrayType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutomationRulePropertyArrayConditionSupportedArrayType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

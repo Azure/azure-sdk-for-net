@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Compute node information related to a AmlCompute. </summary>
     public partial class AmlComputeNodeInformation
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AmlComputeNodeInformation"/>. </summary>
         internal AmlComputeNodeInformation()
@@ -58,8 +30,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="port"> SSH port number of the node. </param>
         /// <param name="nodeState"> State of the compute node. Values are idle, running, preparing, unusable, leaving and preempted. </param>
         /// <param name="runId"> ID of the Experiment running on the node, if any else null. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AmlComputeNodeInformation(string nodeId, IPAddress privateIPAddress, IPAddress publicIPAddress, int? port, MachineLearningNodeState? nodeState, string runId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AmlComputeNodeInformation(string nodeId, IPAddress privateIPAddress, IPAddress publicIPAddress, int? port, MachineLearningNodeState? nodeState, string runId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NodeId = nodeId;
             PrivateIPAddress = privateIPAddress;
@@ -67,24 +39,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Port = port;
             NodeState = nodeState;
             RunId = runId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> ID of the compute node. </summary>
         [WirePath("nodeId")]
         public string NodeId { get; }
-        /// <summary> Private IP address of the compute node. </summary>
-        [WirePath("privateIpAddress")]
-        public IPAddress PrivateIPAddress { get; }
-        /// <summary> Public IP address of the compute node. </summary>
-        [WirePath("publicIpAddress")]
-        public IPAddress PublicIPAddress { get; }
+
         /// <summary> SSH port number of the node. </summary>
         [WirePath("port")]
         public int? Port { get; }
+
         /// <summary> State of the compute node. Values are idle, running, preparing, unusable, leaving and preempted. </summary>
         [WirePath("nodeState")]
         public MachineLearningNodeState? NodeState { get; }
+
         /// <summary> ID of the Experiment running on the node, if any else null. </summary>
         [WirePath("runId")]
         public string RunId { get; }

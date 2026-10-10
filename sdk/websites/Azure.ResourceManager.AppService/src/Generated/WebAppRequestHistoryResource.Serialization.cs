@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class WebAppRequestHistoryResource : IJsonModel<WebAppRequestHistoryData>
     {
-        private static WebAppRequestHistoryData s_dataDeserializationInstance;
-        private static WebAppRequestHistoryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<WebAppRequestHistoryData> s_dataDeserializationInstance;
 
+        private static IJsonModel<WebAppRequestHistoryData> DataDeserializationInstance => s_dataDeserializationInstance ??= new WebAppRequestHistoryData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WebAppRequestHistoryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WebAppRequestHistoryData>)Data).Write(writer, options);
 
-        WebAppRequestHistoryData IJsonModel<WebAppRequestHistoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WebAppRequestHistoryData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WebAppRequestHistoryData IJsonModel<WebAppRequestHistoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<WebAppRequestHistoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WebAppRequestHistoryData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         WebAppRequestHistoryData IPersistableModel<WebAppRequestHistoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WebAppRequestHistoryData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<WebAppRequestHistoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WebAppRequestHistoryData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WebAppRequestHistoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

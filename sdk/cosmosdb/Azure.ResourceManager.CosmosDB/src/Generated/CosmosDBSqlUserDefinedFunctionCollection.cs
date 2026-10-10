@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(CosmosDBSqlUserDefinedFunctionResource.ResourceType, out string cosmosDBSqlUserDefinedFunctionApiVersion);
             _sqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBSqlUserDefinedFunctionResource.ResourceType.Namespace, Diagnostics);
-            _sqlResourcesRestClient = new SqlResources(_sqlResourcesClientDiagnostics, Pipeline, Endpoint, cosmosDBSqlUserDefinedFunctionApiVersion ?? "2026-04-01-preview");
+            _sqlResourcesRestClient = new SqlResources(_sqlResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBSqlUserDefinedFunctionApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBSqlUserDefinedFunctionData, CosmosDBSqlUserDefinedFunctionResource>(new SqlResourcesGetSqlUserDefinedFunctionsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CosmosDBSqlUserDefinedFunctionData, CosmosDBSqlUserDefinedFunctionResource>(new CosmosDBSqlUserDefinedFunctionDataAsyncCollectionResultOfT(
                 _sqlResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBSqlUserDefinedFunctionData, CosmosDBSqlUserDefinedFunctionResource>(new SqlResourcesGetSqlUserDefinedFunctionsCollectionResultOfT(
+            return new PageableWrapper<CosmosDBSqlUserDefinedFunctionData, CosmosDBSqlUserDefinedFunctionResource>(new CosmosDBSqlUserDefinedFunctionDataCollectionResultOfT(
                 _sqlResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

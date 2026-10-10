@@ -7,63 +7,95 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The AutomationRulePropertyConditionSupportedOperator. </summary>
+    /// <summary></summary>
     public readonly partial struct AutomationRulePropertyConditionSupportedOperator : IEquatable<AutomationRulePropertyConditionSupportedOperator>
     {
         private readonly string _value;
+        /// <summary> Evaluates if the property equals at least one of the condition values. </summary>
+        private const string EqualsValueValue = "Equals";
+        /// <summary> Evaluates if the property does not equal any of the condition values. </summary>
+        private const string NotEqualsValue = "NotEquals";
+        /// <summary> Evaluates if the property contains at least one of the condition values. </summary>
+        private const string ContainsValue = "Contains";
+        /// <summary> Evaluates if the property does not contain any of the condition values. </summary>
+        private const string NotContainsValue = "NotContains";
+        /// <summary> Evaluates if the property starts with any of the condition values. </summary>
+        private const string StartsWithValue = "StartsWith";
+        /// <summary> Evaluates if the property does not start with any of the condition values. </summary>
+        private const string NotStartsWithValue = "NotStartsWith";
+        /// <summary> Evaluates if the property ends with any of the condition values. </summary>
+        private const string EndsWithValue = "EndsWith";
+        /// <summary> Evaluates if the property does not end with any of the condition values. </summary>
+        private const string NotEndsWithValue = "NotEndsWith";
 
         /// <summary> Initializes a new instance of <see cref="AutomationRulePropertyConditionSupportedOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutomationRulePropertyConditionSupportedOperator(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EqualsValueValue = "Equals";
-        private const string NotEqualsValue = "NotEquals";
-        private const string ContainsValue = "Contains";
-        private const string NotContainsValue = "NotContains";
-        private const string StartsWithValue = "StartsWith";
-        private const string NotStartsWithValue = "NotStartsWith";
-        private const string EndsWithValue = "EndsWith";
-        private const string NotEndsWithValue = "NotEndsWith";
+            _value = value;
+        }
 
         /// <summary> Evaluates if the property equals at least one of the condition values. </summary>
         public static AutomationRulePropertyConditionSupportedOperator EqualsValue { get; } = new AutomationRulePropertyConditionSupportedOperator(EqualsValueValue);
+
         /// <summary> Evaluates if the property does not equal any of the condition values. </summary>
         public static AutomationRulePropertyConditionSupportedOperator NotEquals { get; } = new AutomationRulePropertyConditionSupportedOperator(NotEqualsValue);
+
         /// <summary> Evaluates if the property contains at least one of the condition values. </summary>
         public static AutomationRulePropertyConditionSupportedOperator Contains { get; } = new AutomationRulePropertyConditionSupportedOperator(ContainsValue);
+
         /// <summary> Evaluates if the property does not contain any of the condition values. </summary>
         public static AutomationRulePropertyConditionSupportedOperator NotContains { get; } = new AutomationRulePropertyConditionSupportedOperator(NotContainsValue);
+
         /// <summary> Evaluates if the property starts with any of the condition values. </summary>
         public static AutomationRulePropertyConditionSupportedOperator StartsWith { get; } = new AutomationRulePropertyConditionSupportedOperator(StartsWithValue);
+
         /// <summary> Evaluates if the property does not start with any of the condition values. </summary>
         public static AutomationRulePropertyConditionSupportedOperator NotStartsWith { get; } = new AutomationRulePropertyConditionSupportedOperator(NotStartsWithValue);
+
         /// <summary> Evaluates if the property ends with any of the condition values. </summary>
         public static AutomationRulePropertyConditionSupportedOperator EndsWith { get; } = new AutomationRulePropertyConditionSupportedOperator(EndsWithValue);
+
         /// <summary> Evaluates if the property does not end with any of the condition values. </summary>
         public static AutomationRulePropertyConditionSupportedOperator NotEndsWith { get; } = new AutomationRulePropertyConditionSupportedOperator(NotEndsWithValue);
+
         /// <summary> Determines if two <see cref="AutomationRulePropertyConditionSupportedOperator"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutomationRulePropertyConditionSupportedOperator left, AutomationRulePropertyConditionSupportedOperator right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutomationRulePropertyConditionSupportedOperator"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutomationRulePropertyConditionSupportedOperator left, AutomationRulePropertyConditionSupportedOperator right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutomationRulePropertyConditionSupportedOperator"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutomationRulePropertyConditionSupportedOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutomationRulePropertyConditionSupportedOperator(string value) => new AutomationRulePropertyConditionSupportedOperator(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AutomationRulePropertyConditionSupportedOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutomationRulePropertyConditionSupportedOperator?(string value) => value == null ? null : new AutomationRulePropertyConditionSupportedOperator(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutomationRulePropertyConditionSupportedOperator other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutomationRulePropertyConditionSupportedOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

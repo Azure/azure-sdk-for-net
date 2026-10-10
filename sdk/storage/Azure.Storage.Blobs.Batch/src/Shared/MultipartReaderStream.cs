@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.Http.Multipart
 {
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     internal sealed class MultipartReaderStream : Stream
     {
         private readonly MultipartBoundary _boundary;

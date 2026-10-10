@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(FrontDoorRouteResource.ResourceType, out string frontDoorRouteApiVersion);
             _routesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", FrontDoorRouteResource.ResourceType.Namespace, Diagnostics);
-            _routesRestClient = new Routes(_routesClientDiagnostics, Pipeline, Endpoint, frontDoorRouteApiVersion ?? "2025-09-01-preview");
+            _routesRestClient = new Routes(_routesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorRouteApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FrontDoorRouteData, FrontDoorRouteResource>(new RoutesGetByEndpointAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FrontDoorRouteData, FrontDoorRouteResource>(new FrontDoorRouteDataAsyncCollectionResultOfT(
                 _routesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FrontDoorRouteData, FrontDoorRouteResource>(new RoutesGetByEndpointCollectionResultOfT(
+            return new PageableWrapper<FrontDoorRouteData, FrontDoorRouteResource>(new FrontDoorRouteDataCollectionResultOfT(
                 _routesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

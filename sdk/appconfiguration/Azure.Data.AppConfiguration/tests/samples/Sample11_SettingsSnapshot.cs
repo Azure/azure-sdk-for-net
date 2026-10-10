@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Samples
@@ -14,8 +15,8 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void CreateSnapshotAutomaticPolling()
         {
-            var connectionString = TestEnvironment.ConnectionString;
-            var client = new ConfigurationClient(connectionString);
+            var endpoint = TestEnvironment.Endpoint;
+            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
             var setting = new ConfigurationSetting("some_key", "some_value");
 
             try
@@ -50,8 +51,8 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void CreateSnapshotAutomaticPollingLater()
         {
-            var connectionString = TestEnvironment.ConnectionString;
-            var client = new ConfigurationClient(connectionString);
+            var endpoint = TestEnvironment.Endpoint;
+            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
             var setting = new ConfigurationSetting("some_key", "some_value");
 
             try
@@ -88,8 +89,8 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public async Task CreateSnapshotManualPolling()
         {
-            var connectionString = TestEnvironment.ConnectionString;
-            var client = new ConfigurationClient(connectionString);
+            var endpoint = TestEnvironment.Endpoint;
+            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
             var setting = new ConfigurationSetting("some_key", "some_value");
 
             try
@@ -132,8 +133,8 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void GetSnapshot()
         {
-            var connectionString = TestEnvironment.ConnectionString;
-            var client = new ConfigurationClient(connectionString);
+            var endpoint = TestEnvironment.Endpoint;
+            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
             var setting = new ConfigurationSetting("some_key", "some_value");
 
             try
@@ -169,8 +170,8 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void ArchiveSnapshot()
         {
-            var connectionString = TestEnvironment.ConnectionString;
-            var client = new ConfigurationClient(connectionString);
+            var endpoint = TestEnvironment.Endpoint;
+            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
             var setting = new ConfigurationSetting("some_key", "some_value");
 
             try
@@ -211,8 +212,8 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void RecoverSnapshot()
         {
-            var connectionString = TestEnvironment.ConnectionString;
-            var client = new ConfigurationClient(connectionString);
+            var endpoint = TestEnvironment.Endpoint;
+            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
             var setting = new ConfigurationSetting("some_key", "some_value");
 
             try
@@ -258,8 +259,8 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void GetSnapshots()
         {
-            var connectionString = TestEnvironment.ConnectionString;
-            var client = new ConfigurationClient(connectionString);
+            var endpoint = TestEnvironment.Endpoint;
+            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
 
             var firstSetting = new ConfigurationSetting("first_key", "first_value");
             var secondSetting = new ConfigurationSetting("second_key", "second_value");
@@ -309,8 +310,8 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void GetConfigurationSettingsForSnapshot()
         {
-            var connectionString = TestEnvironment.ConnectionString;
-            var client = new ConfigurationClient(connectionString);
+            var endpoint = TestEnvironment.Endpoint;
+            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
 
             try
             {

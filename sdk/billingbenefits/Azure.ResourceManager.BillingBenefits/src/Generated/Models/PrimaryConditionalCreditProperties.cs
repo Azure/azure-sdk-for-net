@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="billingAccountResourceId"> The billing account resource ID. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="status"> The status of the conditional credit. </param>
-        /// <param name="startOn"> Start date of the conditional credit. </param>
-        /// <param name="endOn"> End date of the conditional credit (derived from last milestone). </param>
+        /// <param name="startsOn"> Start date of the conditional credit. </param>
+        /// <param name="endsOn"> End date of the conditional credit (derived from last milestone). </param>
         /// <param name="productCode"> Product code for the conditional credit. </param>
         /// <param name="benefitResourceId"> Fully-qualified identifier of the benefit under applicable benefit list. </param>
         /// <param name="resourceId"> Fully-qualified resource identifier of the resource. Format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BillingBenefits/{benefitType}/{benefitName}. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="systemId"> System identifier shared between primary and contributor conditional credits representing the same conditional credit program. </param>
         /// <param name="allowContributors"> Whether this conditional credit allows contributor billing accounts. </param>
         /// <param name="milestones"> List of milestones for this conditional credit (must include awards). </param>
-        internal PrimaryConditionalCreditProperties(ConditionalCreditEntityType entityType, string displayName, ResourceIdentifier billingAccountResourceId, ConditionalCreditsProvisioningState? provisioningState, ConditionalCreditStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, string productCode, ResourceIdentifier benefitResourceId, ResourceIdentifier resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string systemId, EnablementMode? allowContributors, IList<ConditionalCreditMilestone> milestones) : base(entityType, displayName, billingAccountResourceId, provisioningState, status, startOn, endOn, productCode, benefitResourceId, resourceId, additionalBinaryDataProperties)
+        internal PrimaryConditionalCreditProperties(ConditionalCreditEntityType entityType, string displayName, ResourceIdentifier billingAccountResourceId, ConditionalCreditsProvisioningState? provisioningState, ConditionalCreditStatus? status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, string productCode, ResourceIdentifier benefitResourceId, ResourceIdentifier resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string systemId, EnablementMode? allowContributors, IList<ConditionalCreditMilestone> milestones) : base(entityType, displayName, billingAccountResourceId, provisioningState, status, startsOn, endsOn, productCode, benefitResourceId, resourceId, additionalBinaryDataProperties)
         {
             SystemId = systemId;
             AllowContributors = allowContributors;

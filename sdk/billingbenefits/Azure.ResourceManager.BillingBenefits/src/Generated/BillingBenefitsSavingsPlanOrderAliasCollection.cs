@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             TryGetApiVersion(BillingBenefitsSavingsPlanOrderAliasResource.ResourceType, out string billingBenefitsSavingsPlanOrderAliasApiVersion);
             _savingsPlanOrderAliasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", BillingBenefitsSavingsPlanOrderAliasResource.ResourceType.Namespace, Diagnostics);
-            _savingsPlanOrderAliasRestClient = new SavingsPlanOrderAlias(_savingsPlanOrderAliasClientDiagnostics, Pipeline, Endpoint, billingBenefitsSavingsPlanOrderAliasApiVersion ?? "2025-12-01-preview");
+            _savingsPlanOrderAliasRestClient = new SavingsPlanOrderAlias(_savingsPlanOrderAliasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingBenefitsSavingsPlanOrderAliasApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 

@@ -2,13 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
-using Microsoft.Extensions.Options;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.DataCollection;
 using NUnit.Framework;
 
 #pragma warning disable AAIP001
@@ -40,9 +36,7 @@ public class Sample_AgentsEndpoint : SamplesBase
         var containerImage = TestEnvironment.FOUNDRY_AGENT_CONTAINER_IMAGE;
         var hostedAgentVersion = TestEnvironment.HOSTED_AGENT_VERSION;
 #endif
-        AgentAdministrationClientOptions options = new();
-        options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview"), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         ProjectAgentSkills skillsClient = agentsClient.GetAgentSkills();
         DeleteSkillMaybe(skillsClient, "simpleSkill");
 
@@ -71,8 +65,11 @@ public class Sample_AgentsEndpoint : SamplesBase
         #region Snippet:Sample_CreateEndpoint_AgentsEndpoint_Async
         AgentEndpointConfiguration config = new()
         {
-            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
-            Protocols = {AgentEndpointProtocol.Responses}
+            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74)]),
+            ProtocolConfiguration = new()
+            {
+                Responses = new()
+            }
         };
         AgentCard card = new(version: "1", [new AgentCardSkill(id: simpleSkill.Id, name: SKILL)]);
         PatchAgentOptions patchOptions = new()
@@ -80,7 +77,7 @@ public class Sample_AgentsEndpoint : SamplesBase
             AgentEndpoint = config,
             AgentCard = card
         };
-        ProjectsAgentRecord patchedRecord = await agentsClient.PatchAgentObjectAsync(
+        ProjectsAgentRecord patchedRecord = await agentsClient.PatchAgentAsync(
             agentName: hostedAgentName,
             patchAgentOptions: patchOptions);
         Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
@@ -102,9 +99,7 @@ public class Sample_AgentsEndpoint : SamplesBase
         var containerImage = TestEnvironment.FOUNDRY_AGENT_CONTAINER_IMAGE;
         var hostedAgentVersion = TestEnvironment.HOSTED_AGENT_VERSION;
 #endif
-        AgentAdministrationClientOptions options = new();
-        options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview"), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         ProjectAgentSkills skillsClient = agentsClient.GetAgentSkills();
         DeleteSkillMaybe(skillsClient, "simpleSkill");
 
@@ -127,8 +122,11 @@ public class Sample_AgentsEndpoint : SamplesBase
 
         AgentEndpointConfiguration config = new()
         {
-            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
-            Protocols = { AgentEndpointProtocol.Responses }
+            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74)]),
+            ProtocolConfiguration = new()
+            {
+                Responses = new()
+            }
         };
         AgentCard card = new(version: "1", [new AgentCardSkill(id: simpleSkill.SkillId, name: SKILL)]);
         PatchAgentOptions patchOptions = new()
@@ -136,7 +134,7 @@ public class Sample_AgentsEndpoint : SamplesBase
             AgentEndpoint = config,
             AgentCard = card
         };
-        ProjectsAgentRecord patchedRecord = agentsClient.PatchAgentObject(
+        ProjectsAgentRecord patchedRecord = agentsClient.PatchAgent(
             agentName: hostedAgentName,
             patchAgentOptions: patchOptions);
         Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");

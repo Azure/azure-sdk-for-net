@@ -111,7 +111,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            RoutineTriggerType @type = default;
+            RoutineTriggerKind @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string connectionId = default;
             string owner = default;
@@ -121,7 +121,7 @@ namespace Azure.AI.Projects
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new RoutineTriggerType(prop.Value.GetString());
+                    @type = new RoutineTriggerKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("connection_id"u8))
@@ -146,7 +146,7 @@ namespace Azure.AI.Projects
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new GitHubIssueRoutineTrigger(

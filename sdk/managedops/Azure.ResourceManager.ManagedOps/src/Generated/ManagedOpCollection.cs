@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedOps
         {
             TryGetApiVersion(ManagedOpResource.ResourceType, out string managedOpApiVersion);
             _managedOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedOps", ManagedOpResource.ResourceType.Namespace, Diagnostics);
-            _managedOperationsRestClient = new ManagedOperations(_managedOperationsClientDiagnostics, Pipeline, Endpoint, managedOpApiVersion ?? "2025-07-28-preview");
+            _managedOperationsRestClient = new ManagedOperations(_managedOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedOpApiVersion ?? "2025-07-28-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ManagedOps
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedOpData, ManagedOpResource>(new ManagedOperationsGetAllAsyncCollectionResultOfT(_managedOperationsRestClient, Guid.Parse(Id.SubscriptionId), context, "ManagedOpCollection.GetAll"), data => new ManagedOpResource(Client, data));
+            return new AsyncPageableWrapper<ManagedOpData, ManagedOpResource>(new ManagedOpDataAsyncCollectionResultOfT(_managedOperationsRestClient, Guid.Parse(Id.SubscriptionId), context, "ManagedOpCollection.GetAll"), data => new ManagedOpResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ManagedOps
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedOpData, ManagedOpResource>(new ManagedOperationsGetAllCollectionResultOfT(_managedOperationsRestClient, Guid.Parse(Id.SubscriptionId), context, "ManagedOpCollection.GetAll"), data => new ManagedOpResource(Client, data));
+            return new PageableWrapper<ManagedOpData, ManagedOpResource>(new ManagedOpDataCollectionResultOfT(_managedOperationsRestClient, Guid.Parse(Id.SubscriptionId), context, "ManagedOpCollection.GetAll"), data => new ManagedOpResource(Client, data));
         }
 
         /// <summary>

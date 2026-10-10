@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Usage details. </summary>
-    internal partial class UsageDetails
+    public partial class UsageDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -35,19 +35,36 @@ namespace Azure.AI.ContentUnderstanding
         /// The number of document pages processed at the standard level.
         /// For documents without explicit pages (ex. txt, html), every 3000 UTF-16 characters is counted as one page.
         /// </param>
+        /// <param name="documentPagesMinimalInline">
+        /// The number of document pages processed at the minimal level by an inline analyze operation.
+        /// For documents without explicit pages (ex. txt, html), every 3000 UTF-16 characters is counted as one page.
+        /// </param>
+        /// <param name="documentPagesBasicInline">
+        /// The number of document pages processed at the basic level by an inline analyze operation.
+        /// For documents without explicit pages (ex. txt, html), every 3000 UTF-16 characters is counted as one page.
+        /// </param>
+        /// <param name="documentPagesStandardInline">
+        /// The number of document pages processed at the standard level by an inline analyze operation.
+        /// For documents without explicit pages (ex. txt, html), every 3000 UTF-16 characters is counted as one page.
+        /// </param>
         /// <param name="audioHours"> The hours of audio processed. </param>
         /// <param name="videoHours"> The hours of video processed. </param>
         /// <param name="contextualizationTokens"> The number of contextualization tokens consumed for preparing context, generating confidence scores, source grounding, and output formatting. </param>
+        /// <param name="advancedContextualizationTokens"> The number of advanced contextualization tokens consumed for preparing context, generating confidence scores, source grounding, and output formatting. </param>
         /// <param name="tokens"> The number of LLM and embedding tokens consumed, grouped by model (ex. GTP 4.1) and type (ex. input, cached input, output). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UsageDetails(int? documentPagesMinimal, int? documentPagesBasic, int? documentPagesStandard, float? audioHours, float? videoHours, int? contextualizationTokens, IDictionary<string, int> tokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UsageDetails(int? documentPagesMinimal, int? documentPagesBasic, int? documentPagesStandard, int? documentPagesMinimalInline, int? documentPagesBasicInline, int? documentPagesStandardInline, float? audioHours, float? videoHours, int? contextualizationTokens, int? advancedContextualizationTokens, IDictionary<string, int> tokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DocumentPagesMinimal = documentPagesMinimal;
             DocumentPagesBasic = documentPagesBasic;
             DocumentPagesStandard = documentPagesStandard;
+            DocumentPagesMinimalInline = documentPagesMinimalInline;
+            DocumentPagesBasicInline = documentPagesBasicInline;
+            DocumentPagesStandardInline = documentPagesStandardInline;
             AudioHours = audioHours;
             VideoHours = videoHours;
             ContextualizationTokens = contextualizationTokens;
+            AdvancedContextualizationTokens = advancedContextualizationTokens;
             Tokens = tokens;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -70,6 +87,24 @@ namespace Azure.AI.ContentUnderstanding
         /// </summary>
         public int? DocumentPagesStandard { get; }
 
+        /// <summary>
+        /// The number of document pages processed at the minimal level by an inline analyze operation.
+        /// For documents without explicit pages (ex. txt, html), every 3000 UTF-16 characters is counted as one page.
+        /// </summary>
+        public int? DocumentPagesMinimalInline { get; }
+
+        /// <summary>
+        /// The number of document pages processed at the basic level by an inline analyze operation.
+        /// For documents without explicit pages (ex. txt, html), every 3000 UTF-16 characters is counted as one page.
+        /// </summary>
+        public int? DocumentPagesBasicInline { get; }
+
+        /// <summary>
+        /// The number of document pages processed at the standard level by an inline analyze operation.
+        /// For documents without explicit pages (ex. txt, html), every 3000 UTF-16 characters is counted as one page.
+        /// </summary>
+        public int? DocumentPagesStandardInline { get; }
+
         /// <summary> The hours of audio processed. </summary>
         public float? AudioHours { get; }
 
@@ -78,6 +113,9 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary> The number of contextualization tokens consumed for preparing context, generating confidence scores, source grounding, and output formatting. </summary>
         public int? ContextualizationTokens { get; }
+
+        /// <summary> The number of advanced contextualization tokens consumed for preparing context, generating confidence scores, source grounding, and output formatting. </summary>
+        public int? AdvancedContextualizationTokens { get; }
 
         /// <summary> The number of LLM and embedding tokens consumed, grouped by model (ex. GTP 4.1) and type (ex. input, cached input, output). </summary>
         public IDictionary<string, int> Tokens { get; }

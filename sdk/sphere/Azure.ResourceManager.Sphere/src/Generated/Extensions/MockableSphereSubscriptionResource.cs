@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Sphere.Mocking
 
         private ClientDiagnostics CatalogsClientDiagnostics => _catalogsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sphere.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Catalogs CatalogsRestClient => _catalogsRestClient ??= new Catalogs(CatalogsClientDiagnostics, Pipeline, Endpoint, "2024-04-01");
+        private Catalogs CatalogsRestClient => _catalogsRestClient ??= new Catalogs(CatalogsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-04-01");
 
         /// <summary>
         /// List Catalog resources by subscription ID
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sphere.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SphereCatalogData, SphereCatalogResource>(new CatalogsGetBySubscriptionAsyncCollectionResultOfT(CatalogsRestClient, Id.SubscriptionId, context, "MockableSphereSubscriptionResource.GetSphereCatalogs"), data => new SphereCatalogResource(Client, data));
+            return new AsyncPageableWrapper<SphereCatalogData, SphereCatalogResource>(new SphereCatalogDataAsync0CollectionResultOfT(CatalogsRestClient, Id.SubscriptionId, context, "MockableSphereSubscriptionResource.GetSphereCatalogs"), data => new SphereCatalogResource(Client, data));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Sphere.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SphereCatalogData, SphereCatalogResource>(new CatalogsGetBySubscriptionCollectionResultOfT(CatalogsRestClient, Id.SubscriptionId, context, "MockableSphereSubscriptionResource.GetSphereCatalogs"), data => new SphereCatalogResource(Client, data));
+            return new PageableWrapper<SphereCatalogData, SphereCatalogResource>(new SphereCatalogData0CollectionResultOfT(CatalogsRestClient, Id.SubscriptionId, context, "MockableSphereSubscriptionResource.GetSphereCatalogs"), data => new SphereCatalogResource(Client, data));
         }
     }
 }

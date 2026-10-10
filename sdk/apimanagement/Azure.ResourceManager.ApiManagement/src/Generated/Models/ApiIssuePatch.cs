@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Issue update Parameters. </summary>
     public partial class ApiIssuePatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiIssuePatch"/>. </summary>
         public ApiIssuePatch()
@@ -52,41 +24,124 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiIssuePatch"/>. </summary>
-        /// <param name="createdOn"> Date and time when the issue was created. </param>
-        /// <param name="state"> Status of the issue. </param>
-        /// <param name="apiId"> A resource identifier for the API the issue was created for. </param>
-        /// <param name="title"> The issue title. </param>
-        /// <param name="description"> Text describing the issue. </param>
-        /// <param name="userId"> A resource identifier for the user created the issue. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiIssuePatch(DateTimeOffset? createdOn, IssueState? state, ResourceIdentifier apiId, string title, string description, string userId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Issue entity Update contract properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApiIssuePatch(IssueUpdateContractProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            CreatedOn = createdOn;
-            State = state;
-            ApiId = apiId;
-            Title = title;
-            Description = description;
-            UserId = userId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Issue entity Update contract properties. </summary>
+        [WirePath("properties")]
+        internal IssueUpdateContractProperties Properties { get; set; }
 
         /// <summary> Date and time when the issue was created. </summary>
         [WirePath("properties.createdDate")]
-        public DateTimeOffset? CreatedOn { get; set; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IssueUpdateContractProperties();
+                }
+                Properties.CreatedOn = value;
+            }
+        }
+
         /// <summary> Status of the issue. </summary>
         [WirePath("properties.state")]
-        public IssueState? State { get; set; }
+        public IssueState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IssueUpdateContractProperties();
+                }
+                Properties.State = value;
+            }
+        }
+
         /// <summary> A resource identifier for the API the issue was created for. </summary>
         [WirePath("properties.apiId")]
-        public ResourceIdentifier ApiId { get; set; }
+        public ResourceIdentifier ApiId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApiId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IssueUpdateContractProperties();
+                }
+                Properties.ApiId = value;
+            }
+        }
+
         /// <summary> The issue title. </summary>
         [WirePath("properties.title")]
-        public string Title { get; set; }
+        public string Title
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Title;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IssueUpdateContractProperties();
+                }
+                Properties.Title = value;
+            }
+        }
+
         /// <summary> Text describing the issue. </summary>
         [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IssueUpdateContractProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> A resource identifier for the user created the issue. </summary>
         [WirePath("properties.userId")]
-        public string UserId { get; set; }
+        public string UserId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UserId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IssueUpdateContractProperties();
+                }
+                Properties.UserId = value;
+            }
+        }
     }
 }

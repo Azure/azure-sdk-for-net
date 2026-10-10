@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(CdnWebAgentResource.ResourceType, out string cdnWebAgentApiVersion);
             _webAgentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnWebAgentResource.ResourceType.Namespace, Diagnostics);
-            _webAgentsRestClient = new WebAgents(_webAgentsClientDiagnostics, Pipeline, Endpoint, cdnWebAgentApiVersion ?? "2025-09-01-preview");
+            _webAgentsRestClient = new WebAgents(_webAgentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cdnWebAgentApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CdnWebAgentData, CdnWebAgentResource>(new WebAgentsGetByResourceGroupAsyncCollectionResultOfT(_webAgentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CdnWebAgentCollection.GetAll"), data => new CdnWebAgentResource(Client, data));
+            return new AsyncPageableWrapper<CdnWebAgentData, CdnWebAgentResource>(new CdnWebAgentDataAsyncCollectionResultOfT(_webAgentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CdnWebAgentCollection.GetAll"), data => new CdnWebAgentResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CdnWebAgentData, CdnWebAgentResource>(new WebAgentsGetByResourceGroupCollectionResultOfT(_webAgentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CdnWebAgentCollection.GetAll"), data => new CdnWebAgentResource(Client, data));
+            return new PageableWrapper<CdnWebAgentData, CdnWebAgentResource>(new CdnWebAgentDataCollectionResultOfT(_webAgentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CdnWebAgentCollection.GetAll"), data => new CdnWebAgentResource(Client, data));
         }
 
         /// <summary>

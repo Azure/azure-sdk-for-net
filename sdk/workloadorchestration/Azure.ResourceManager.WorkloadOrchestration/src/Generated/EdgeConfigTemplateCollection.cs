@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             TryGetApiVersion(EdgeConfigTemplateResource.ResourceType, out string edgeConfigTemplateApiVersion);
             _configTemplatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeConfigTemplateResource.ResourceType.Namespace, Diagnostics);
-            _configTemplatesRestClient = new ConfigTemplates(_configTemplatesClientDiagnostics, Pipeline, Endpoint, edgeConfigTemplateApiVersion ?? "2025-06-01");
+            _configTemplatesRestClient = new ConfigTemplates(_configTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeConfigTemplateApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeConfigTemplateData, EdgeConfigTemplateResource>(new ConfigTemplatesGetByResourceGroupAsyncCollectionResultOfT(_configTemplatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeConfigTemplateCollection.GetAll"), data => new EdgeConfigTemplateResource(Client, data));
+            return new AsyncPageableWrapper<EdgeConfigTemplateData, EdgeConfigTemplateResource>(new EdgeConfigTemplateDataAsyncCollectionResultOfT(_configTemplatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeConfigTemplateCollection.GetAll"), data => new EdgeConfigTemplateResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeConfigTemplateData, EdgeConfigTemplateResource>(new ConfigTemplatesGetByResourceGroupCollectionResultOfT(_configTemplatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeConfigTemplateCollection.GetAll"), data => new EdgeConfigTemplateResource(Client, data));
+            return new PageableWrapper<EdgeConfigTemplateData, EdgeConfigTemplateResource>(new EdgeConfigTemplateDataCollectionResultOfT(_configTemplatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeConfigTemplateCollection.GetAll"), data => new EdgeConfigTemplateResource(Client, data));
         }
 
         /// <summary>

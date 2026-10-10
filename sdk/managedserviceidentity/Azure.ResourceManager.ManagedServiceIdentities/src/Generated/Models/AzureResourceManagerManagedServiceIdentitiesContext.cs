@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.ManagedServiceIdentities.Models;
 using Azure.ResourceManager.Models;
 
@@ -21,6 +22,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
     [ModelReaderWriterBuildable(typeof(FederatedIdentityCredentialProperties))]
     [ModelReaderWriterBuildable(typeof(FederatedIdentityCredentialResource))]
     [ModelReaderWriterBuildable(typeof(FederatedIdentityCredentialsListResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemAssignedIdentityData))]
     [ModelReaderWriterBuildable(typeof(SystemAssignedIdentityProperties))]
     [ModelReaderWriterBuildable(typeof(SystemAssignedIdentityResource))]

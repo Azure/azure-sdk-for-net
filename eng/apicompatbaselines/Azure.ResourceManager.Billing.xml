@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- https://learn.microsoft.com/dotnet/fundamentals/package-validation/diagnostic-ids -->
+<Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Suppression>
+    <DiagnosticId>CP0015</DiagnosticId>
+    <Target>P:Azure.ResourceManager.Billing.BillingReservationData.Aggregates:[T:Azure.ResourceManager.Billing.WirePathAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0015</DiagnosticId>
+    <Target>P:Azure.ResourceManager.Billing.BillingReservationData.Trend:[T:Azure.ResourceManager.Billing.WirePathAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0015</DiagnosticId>
+    <Target>P:Azure.ResourceManager.Billing.BillingSubscriptionAliasData.EnrollmentAccountStartOn:[T:Azure.ResourceManager.Billing.WirePathAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0015</DiagnosticId>
+    <Target>P:Azure.ResourceManager.Billing.BillingSubscriptionAliasData.SubscriptionEnrollmentAccountStatus:[T:Azure.ResourceManager.Billing.WirePathAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0015</DiagnosticId>
+    <Target>P:Azure.ResourceManager.Billing.BillingSubscriptionData.EnrollmentAccountStartOn:[T:Azure.ResourceManager.Billing.WirePathAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0015</DiagnosticId>
+    <Target>P:Azure.ResourceManager.Billing.BillingSubscriptionData.SubscriptionEnrollmentAccountStatus:[T:Azure.ResourceManager.Billing.WirePathAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0015</DiagnosticId>
+    <Target>P:Azure.ResourceManager.Billing.Models.BillingReservationPatch.PurchaseProperties:[T:Azure.ResourceManager.Billing.WirePathAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0015</DiagnosticId>
+    <Target>P:Azure.ResourceManager.Billing.Models.BillingSubscriptionPatch.EnrollmentAccountStartOn:[T:Azure.ResourceManager.Billing.WirePathAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0015</DiagnosticId>
+    <Target>P:Azure.ResourceManager.Billing.Models.BillingSubscriptionPatch.SubscriptionEnrollmentAccountStatus:[T:Azure.ResourceManager.Billing.WirePathAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0015</DiagnosticId>
+    <Target>P:Azure.ResourceManager.Billing.Models.ReservationPurchaseRequest.InstanceFlexibilityPropertiesReservedResourcePropertiesInstanceFlexibility:[T:Azure.ResourceManager.Billing.WirePathAttribute]</Target>
+  </Suppression>
+</Suppressions>

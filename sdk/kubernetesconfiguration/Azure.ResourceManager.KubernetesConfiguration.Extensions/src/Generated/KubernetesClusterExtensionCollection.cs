@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions
         {
             TryGetApiVersion(KubernetesClusterExtensionResource.ResourceType, out string kubernetesClusterExtensionApiVersion);
             _extensionsInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration.Extensions", KubernetesClusterExtensionResource.ResourceType.Namespace, Diagnostics);
-            _extensionsInterfaceRestClient = new ExtensionsInterface(_extensionsInterfaceClientDiagnostics, Pipeline, Endpoint, kubernetesClusterExtensionApiVersion ?? "2025-03-01");
+            _extensionsInterfaceRestClient = new ExtensionsInterface(_extensionsInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kubernetesClusterExtensionApiVersion ?? "2025-03-01");
         }
 
         /// <summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KubernetesClusterExtensionData, KubernetesClusterExtensionResource>(new ExtensionsInterfaceGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<KubernetesClusterExtensionData, KubernetesClusterExtensionResource>(new KubernetesClusterExtensionDataAsyncCollectionResultOfT(
                 _extensionsInterfaceRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KubernetesClusterExtensionData, KubernetesClusterExtensionResource>(new ExtensionsInterfaceGetAllCollectionResultOfT(
+            return new PageableWrapper<KubernetesClusterExtensionData, KubernetesClusterExtensionResource>(new KubernetesClusterExtensionDataCollectionResultOfT(
                 _extensionsInterfaceRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

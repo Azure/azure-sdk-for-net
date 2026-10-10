@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EdgeActions
         {
             TryGetApiVersion(EdgeActionVersionResource.ResourceType, out string edgeActionVersionApiVersion);
             _edgeActionVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeActions", EdgeActionVersionResource.ResourceType.Namespace, Diagnostics);
-            _edgeActionVersionsRestClient = new EdgeActionVersions(_edgeActionVersionsClientDiagnostics, Pipeline, Endpoint, edgeActionVersionApiVersion ?? "2025-12-01-preview");
+            _edgeActionVersionsRestClient = new EdgeActionVersions(_edgeActionVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeActionVersionApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.EdgeActions
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeActionVersionData, EdgeActionVersionResource>(new EdgeActionVersionsGetByEdgeActionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EdgeActionVersionData, EdgeActionVersionResource>(new EdgeActionVersionDataAsyncCollectionResultOfT(
                 _edgeActionVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.EdgeActions
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeActionVersionData, EdgeActionVersionResource>(new EdgeActionVersionsGetByEdgeActionCollectionResultOfT(
+            return new PageableWrapper<EdgeActionVersionData, EdgeActionVersionResource>(new EdgeActionVersionDataCollectionResultOfT(
                 _edgeActionVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -10,6 +10,7 @@ using System.Text;
 
 namespace Azure.Core.Http.Multipart
 {
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     internal class MultipartBoundary
     {
         private readonly int[] _skipTable = new int[256];

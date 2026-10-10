@@ -99,6 +99,10 @@ namespace Azure.Provisioning.KeyVault
             _attributes = DefineModelProperty<SecretAttributes>(nameof(Attributes), new string[] { "attributes" });
             _secretUri = DefineProperty<Uri>(nameof(SecretUri), new string[] { "secretUri" }, isOutput: true);
             _secretUriWithVersion = DefineProperty<string>(nameof(SecretUriWithVersion), new string[] { "secretUriWithVersion" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SecretProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

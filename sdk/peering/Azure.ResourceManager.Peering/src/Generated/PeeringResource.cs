@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Peering.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Peering
 {
@@ -57,11 +58,11 @@ namespace Azure.ResourceManager.Peering
         {
             TryGetApiVersion(ResourceType, out string peeringApiVersion);
             _peeringsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Peering", ResourceType.Namespace, Diagnostics);
-            _peeringsRestClient = new Peerings(_peeringsClientDiagnostics, Pipeline, Endpoint, peeringApiVersion ?? "2025-05-01");
+            _peeringsRestClient = new Peerings(_peeringsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, peeringApiVersion ?? "2025-05-01");
             _rpUnbilledPrefixesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Peering", ResourceType.Namespace, Diagnostics);
-            _rpUnbilledPrefixesRestClient = new RpUnbilledPrefixes(_rpUnbilledPrefixesClientDiagnostics, Pipeline, Endpoint, peeringApiVersion ?? "2025-05-01");
+            _rpUnbilledPrefixesRestClient = new RpUnbilledPrefixes(_rpUnbilledPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, peeringApiVersion ?? "2025-05-01");
             _receivedRoutesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Peering", ResourceType.Namespace, Diagnostics);
-            _receivedRoutesRestClient = new ReceivedRoutes(_receivedRoutesClientDiagnostics, Pipeline, Endpoint, peeringApiVersion ?? "2025-05-01");
+            _receivedRoutesRestClient = new ReceivedRoutes(_receivedRoutesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, peeringApiVersion ?? "2025-05-01");
             ValidateResourceId(id);
         }
 
@@ -433,7 +434,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new RpUnbilledPrefixesGetRpUnbilledPrefixesAsyncCollectionResultOfT(
+            return new RoutingPreferenceUnbilledPrefixAsyncCollectionResultOfT(
                 _rpUnbilledPrefixesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -473,7 +474,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new RpUnbilledPrefixesGetRpUnbilledPrefixesCollectionResultOfT(
+            return new RoutingPreferenceUnbilledPrefixCollectionResultOfT(
                 _rpUnbilledPrefixesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -517,7 +518,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new ReceivedRoutesGetReceivedRoutesAsyncCollectionResultOfT(
+            return new PeeringReceivedRouteAsyncCollectionResultOfT(
                 _receivedRoutesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -565,7 +566,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new ReceivedRoutesGetReceivedRoutesCollectionResultOfT(
+            return new PeeringReceivedRouteCollectionResultOfT(
                 _receivedRoutesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -689,10 +690,9 @@ namespace Azure.ResourceManager.Peering
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -732,10 +732,9 @@ namespace Azure.ResourceManager.Peering
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

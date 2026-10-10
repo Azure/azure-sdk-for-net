@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,50 +15,75 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct MachineLearningOperationName : IEquatable<MachineLearningOperationName>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningOperationName"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MachineLearningOperationName(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CreateValue = "Create";
         private const string StartValue = "Start";
         private const string StopValue = "Stop";
         private const string RestartValue = "Restart";
+        private const string ResizeValue = "Resize";
         private const string ReimageValue = "Reimage";
         private const string DeleteValue = "Delete";
 
-        /// <summary> Create. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOperationName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MachineLearningOperationName(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Create. </summary>
         public static MachineLearningOperationName Create { get; } = new MachineLearningOperationName(CreateValue);
-        /// <summary> Start. </summary>
+
+        /// <summary> Gets the Start. </summary>
         public static MachineLearningOperationName Start { get; } = new MachineLearningOperationName(StartValue);
-        /// <summary> Stop. </summary>
+
+        /// <summary> Gets the Stop. </summary>
         public static MachineLearningOperationName Stop { get; } = new MachineLearningOperationName(StopValue);
-        /// <summary> Restart. </summary>
+
+        /// <summary> Gets the Restart. </summary>
         public static MachineLearningOperationName Restart { get; } = new MachineLearningOperationName(RestartValue);
-        /// <summary> Reimage. </summary>
+
+        /// <summary> Gets the Resize. </summary>
+        public static MachineLearningOperationName Resize { get; } = new MachineLearningOperationName(ResizeValue);
+
+        /// <summary> Gets the Reimage. </summary>
         public static MachineLearningOperationName Reimage { get; } = new MachineLearningOperationName(ReimageValue);
-        /// <summary> Delete. </summary>
+
+        /// <summary> Gets the Delete. </summary>
         public static MachineLearningOperationName Delete { get; } = new MachineLearningOperationName(DeleteValue);
+
         /// <summary> Determines if two <see cref="MachineLearningOperationName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningOperationName left, MachineLearningOperationName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningOperationName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningOperationName left, MachineLearningOperationName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningOperationName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningOperationName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningOperationName(string value) => new MachineLearningOperationName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningOperationName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningOperationName?(string value) => value == null ? null : new MachineLearningOperationName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningOperationName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningOperationName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

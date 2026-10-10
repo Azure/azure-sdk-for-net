@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-07-31. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-07-31. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,6 +97,74 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
             Argument.AssertNotNullOrEmpty(guestSubscriptionId, nameof(guestSubscriptionId));
 
             return GetComputeLimitGuestSubscriptions(location).Get(guestSubscriptionId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of TrustedHostSubscriptions in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of TrustedHostSubscriptions and their operations over a TrustedHostSubscriptionResource. </returns>
+        public virtual TrustedHostSubscriptionCollection GetTrustedHostSubscriptions(AzureLocation location)
+        {
+            return GetCachedClient(client => new TrustedHostSubscriptionCollection(client, Id, location));
+        }
+
+        /// <summary>
+        /// Gets a host subscription that the guest subscription trusts.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/trustedHostSubscriptions/{hostSubscriptionId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TrustedHostSubscriptions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-31. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="hostSubscriptionId"> The name of the TrustedHostSubscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="hostSubscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hostSubscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<TrustedHostSubscriptionResource>> GetTrustedHostSubscriptionAsync(AzureLocation location, string hostSubscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(hostSubscriptionId, nameof(hostSubscriptionId));
+
+            return await GetTrustedHostSubscriptions(location).GetAsync(hostSubscriptionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a host subscription that the guest subscription trusts.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/trustedHostSubscriptions/{hostSubscriptionId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TrustedHostSubscriptions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-31. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="hostSubscriptionId"> The name of the TrustedHostSubscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="hostSubscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hostSubscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<TrustedHostSubscriptionResource> GetTrustedHostSubscription(AzureLocation location, string hostSubscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(hostSubscriptionId, nameof(hostSubscriptionId));
+
+            return GetTrustedHostSubscriptions(location).Get(hostSubscriptionId, cancellationToken);
         }
 
         /// <summary> Gets a collection of ComputeLimitSharedLimits in the <see cref="SubscriptionResource"/>. </summary>
@@ -120,7 +188,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-07-31. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -150,7 +218,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-07-31. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -188,7 +256,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-07-31. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,7 +286,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-07-31. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -256,7 +324,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-07-31. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,7 +354,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-07-31. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -301,6 +369,74 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
             Argument.AssertNotNullOrEmpty(vmFamilyName, nameof(vmFamilyName));
 
             return GetComputeLimitVmFamilies(location).Get(vmFamilyName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SharedLimitCaps in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of SharedLimitCaps and their operations over a SharedLimitCapResource. </returns>
+        public virtual SharedLimitCapCollection GetSharedLimitCaps(AzureLocation location)
+        {
+            return GetCachedClient(client => new SharedLimitCapCollection(client, Id, location));
+        }
+
+        /// <summary>
+        /// Gets the shared limit cap configuration for a VM family, as visible to the caller's subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimitCaps/{vmFamilyName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SharedLimitCaps_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-31. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="vmFamilyName"> The name of the SharedLimitCap. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmFamilyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SharedLimitCapResource>> GetSharedLimitCapAsync(AzureLocation location, string vmFamilyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vmFamilyName, nameof(vmFamilyName));
+
+            return await GetSharedLimitCaps(location).GetAsync(vmFamilyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the shared limit cap configuration for a VM family, as visible to the caller's subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimitCaps/{vmFamilyName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SharedLimitCaps_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-31. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="vmFamilyName"> The name of the SharedLimitCap. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmFamilyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SharedLimitCapResource> GetSharedLimitCap(AzureLocation location, string vmFamilyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vmFamilyName, nameof(vmFamilyName));
+
+            return GetSharedLimitCaps(location).Get(vmFamilyName, cancellationToken);
         }
     }
 }

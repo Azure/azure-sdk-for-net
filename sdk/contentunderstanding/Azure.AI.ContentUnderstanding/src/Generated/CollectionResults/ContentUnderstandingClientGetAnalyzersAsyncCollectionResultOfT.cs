@@ -37,7 +37,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <returns> The pages of ContentUnderstandingClientGetAnalyzersAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<ContentAnalyzer>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
@@ -46,8 +46,8 @@ namespace Azure.AI.ContentUnderstanding
                     yield break;
                 }
                 PagedContentAnalyzer result = (PagedContentAnalyzer)response;
-                yield return Page<ContentAnalyzer>.FromValues((IReadOnlyList<ContentAnalyzer>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ContentAnalyzer>.FromValues((IReadOnlyList<ContentAnalyzer>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

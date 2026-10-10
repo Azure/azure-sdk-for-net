@@ -16,7 +16,7 @@ namespace Azure.Analytics.Defender.Easm
         private readonly string _value;
         private const string DomainValue = "domain";
         private const string HostValue = "host";
-        private const string IpAddressValue = "ipAddress";
+        private const string IPAddressValue = "ipAddress";
 
         /// <summary> Initializes a new instance of <see cref="ReportBillableAssetBreakdownKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,8 +34,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the Host. </summary>
         public static ReportBillableAssetBreakdownKind Host { get; } = new ReportBillableAssetBreakdownKind(HostValue);
 
-        /// <summary> Gets the IpAddress. </summary>
-        public static ReportBillableAssetBreakdownKind IpAddress { get; } = new ReportBillableAssetBreakdownKind(IpAddressValue);
+        /// <summary> Gets the IPAddress. </summary>
+        public static ReportBillableAssetBreakdownKind IPAddress { get; } = new ReportBillableAssetBreakdownKind(IPAddressValue);
 
         /// <summary> Determines if two <see cref="ReportBillableAssetBreakdownKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             TryGetApiVersion(LoadTestProfileMappingResource.ResourceType, out string loadTestProfileMappingApiVersion);
             _loadTestProfileMappingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LoadTesting", LoadTestProfileMappingResource.ResourceType.Namespace, Diagnostics);
-            _loadTestProfileMappingsRestClient = new LoadTestProfileMappings(_loadTestProfileMappingsClientDiagnostics, Pipeline, Endpoint, loadTestProfileMappingApiVersion ?? "2024-12-01-preview");
+            _loadTestProfileMappingsRestClient = new LoadTestProfileMappings(_loadTestProfileMappingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, loadTestProfileMappingApiVersion ?? "2024-12-01-preview");
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LoadTestProfileMappingData, LoadTestProfileMappingResource>(new LoadTestProfileMappingsGetAllAsyncCollectionResultOfT(_loadTestProfileMappingsRestClient, Id.ToString(), context, "LoadTestProfileMappingCollection.GetAll"), data => new LoadTestProfileMappingResource(Client, data));
+            return new AsyncPageableWrapper<LoadTestProfileMappingData, LoadTestProfileMappingResource>(new LoadTestProfileMappingDataAsyncCollectionResultOfT(_loadTestProfileMappingsRestClient, Id.ToString(), context, "LoadTestProfileMappingCollection.GetAll"), data => new LoadTestProfileMappingResource(Client, data));
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LoadTestProfileMappingData, LoadTestProfileMappingResource>(new LoadTestProfileMappingsGetAllCollectionResultOfT(_loadTestProfileMappingsRestClient, Id.ToString(), context, "LoadTestProfileMappingCollection.GetAll"), data => new LoadTestProfileMappingResource(Client, data));
+            return new PageableWrapper<LoadTestProfileMappingData, LoadTestProfileMappingResource>(new LoadTestProfileMappingDataCollectionResultOfT(_loadTestProfileMappingsRestClient, Id.ToString(), context, "LoadTestProfileMappingCollection.GetAll"), data => new LoadTestProfileMappingResource(Client, data));
         }
 
         /// <summary>

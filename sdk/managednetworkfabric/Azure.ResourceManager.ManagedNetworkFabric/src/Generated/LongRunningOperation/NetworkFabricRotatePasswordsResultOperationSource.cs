@@ -8,23 +8,36 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class NetworkFabricRotatePasswordsResultOperationSource : IOperationSource<NetworkFabricRotatePasswordsResult>
+    /// <summary></summary>
+    internal partial class NetworkFabricRotatePasswordsResultOperationSource : IOperationSource<NetworkFabricRotatePasswordsResult>
     {
-        NetworkFabricRotatePasswordsResult IOperationSource<NetworkFabricRotatePasswordsResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal NetworkFabricRotatePasswordsResultOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return NetworkFabricRotatePasswordsResult.DeserializeNetworkFabricRotatePasswordsResult(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        NetworkFabricRotatePasswordsResult IOperationSource<NetworkFabricRotatePasswordsResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return NetworkFabricRotatePasswordsResult.DeserializeNetworkFabricRotatePasswordsResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NetworkFabricRotatePasswordsResult> IOperationSource<NetworkFabricRotatePasswordsResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return NetworkFabricRotatePasswordsResult.DeserializeNetworkFabricRotatePasswordsResult(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return NetworkFabricRotatePasswordsResult.DeserializeNetworkFabricRotatePasswordsResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

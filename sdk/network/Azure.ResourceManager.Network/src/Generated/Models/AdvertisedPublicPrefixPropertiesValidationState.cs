@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,62 +15,97 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct AdvertisedPublicPrefixPropertiesValidationState : IEquatable<AdvertisedPublicPrefixPropertiesValidationState>
     {
         private readonly string _value;
+        /// <summary> NotConfigured. </summary>
+        private const string NotConfiguredValue = "NotConfigured";
+        /// <summary> Configuring. </summary>
+        private const string ConfiguringValue = "Configuring";
+        /// <summary> Configured. </summary>
+        private const string ConfiguredValue = "Configured";
+        /// <summary> ValidationNeeded. </summary>
+        private const string ValidationNeededValue = "ValidationNeeded";
+        /// <summary> ValidationFailed. </summary>
+        private const string ValidationFailedValue = "ValidationFailed";
+        /// <summary> ManualValidationNeeded. </summary>
+        private const string ManualValidationNeededValue = "ManualValidationNeeded";
+        /// <summary> AsnValidationFailed. </summary>
+        private const string AsnValidationFailedValue = "AsnValidationFailed";
+        /// <summary> CertificateMissingInRoutingRegistry. </summary>
+        private const string CertificateMissingInRoutingRegistryValue = "CertificateMissingInRoutingRegistry";
+        /// <summary> InvalidSignatureEncoding. </summary>
+        private const string InvalidSignatureEncodingValue = "InvalidSignatureEncoding";
+        /// <summary> SignatureVerificationFailed. </summary>
+        private const string SignatureVerificationFailedValue = "SignatureVerificationFailed";
 
         /// <summary> Initializes a new instance of <see cref="AdvertisedPublicPrefixPropertiesValidationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AdvertisedPublicPrefixPropertiesValidationState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotConfiguredValue = "NotConfigured";
-        private const string ConfiguringValue = "Configuring";
-        private const string ConfiguredValue = "Configured";
-        private const string ValidationNeededValue = "ValidationNeeded";
-        private const string ValidationFailedValue = "ValidationFailed";
-        private const string ManualValidationNeededValue = "ManualValidationNeeded";
-        private const string AsnValidationFailedValue = "AsnValidationFailed";
-        private const string CertificateMissingInRoutingRegistryValue = "CertificateMissingInRoutingRegistry";
-        private const string InvalidSignatureEncodingValue = "InvalidSignatureEncoding";
-        private const string SignatureVerificationFailedValue = "SignatureVerificationFailed";
+            _value = value;
+        }
 
         /// <summary> NotConfigured. </summary>
         public static AdvertisedPublicPrefixPropertiesValidationState NotConfigured { get; } = new AdvertisedPublicPrefixPropertiesValidationState(NotConfiguredValue);
+
         /// <summary> Configuring. </summary>
         public static AdvertisedPublicPrefixPropertiesValidationState Configuring { get; } = new AdvertisedPublicPrefixPropertiesValidationState(ConfiguringValue);
+
         /// <summary> Configured. </summary>
         public static AdvertisedPublicPrefixPropertiesValidationState Configured { get; } = new AdvertisedPublicPrefixPropertiesValidationState(ConfiguredValue);
+
         /// <summary> ValidationNeeded. </summary>
         public static AdvertisedPublicPrefixPropertiesValidationState ValidationNeeded { get; } = new AdvertisedPublicPrefixPropertiesValidationState(ValidationNeededValue);
+
         /// <summary> ValidationFailed. </summary>
         public static AdvertisedPublicPrefixPropertiesValidationState ValidationFailed { get; } = new AdvertisedPublicPrefixPropertiesValidationState(ValidationFailedValue);
+
         /// <summary> ManualValidationNeeded. </summary>
         public static AdvertisedPublicPrefixPropertiesValidationState ManualValidationNeeded { get; } = new AdvertisedPublicPrefixPropertiesValidationState(ManualValidationNeededValue);
+
         /// <summary> AsnValidationFailed. </summary>
         public static AdvertisedPublicPrefixPropertiesValidationState AsnValidationFailed { get; } = new AdvertisedPublicPrefixPropertiesValidationState(AsnValidationFailedValue);
+
         /// <summary> CertificateMissingInRoutingRegistry. </summary>
         public static AdvertisedPublicPrefixPropertiesValidationState CertificateMissingInRoutingRegistry { get; } = new AdvertisedPublicPrefixPropertiesValidationState(CertificateMissingInRoutingRegistryValue);
+
         /// <summary> InvalidSignatureEncoding. </summary>
         public static AdvertisedPublicPrefixPropertiesValidationState InvalidSignatureEncoding { get; } = new AdvertisedPublicPrefixPropertiesValidationState(InvalidSignatureEncodingValue);
+
         /// <summary> SignatureVerificationFailed. </summary>
         public static AdvertisedPublicPrefixPropertiesValidationState SignatureVerificationFailed { get; } = new AdvertisedPublicPrefixPropertiesValidationState(SignatureVerificationFailedValue);
+
         /// <summary> Determines if two <see cref="AdvertisedPublicPrefixPropertiesValidationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AdvertisedPublicPrefixPropertiesValidationState left, AdvertisedPublicPrefixPropertiesValidationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AdvertisedPublicPrefixPropertiesValidationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AdvertisedPublicPrefixPropertiesValidationState left, AdvertisedPublicPrefixPropertiesValidationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AdvertisedPublicPrefixPropertiesValidationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AdvertisedPublicPrefixPropertiesValidationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AdvertisedPublicPrefixPropertiesValidationState(string value) => new AdvertisedPublicPrefixPropertiesValidationState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AdvertisedPublicPrefixPropertiesValidationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AdvertisedPublicPrefixPropertiesValidationState?(string value) => value == null ? null : new AdvertisedPublicPrefixPropertiesValidationState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AdvertisedPublicPrefixPropertiesValidationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AdvertisedPublicPrefixPropertiesValidationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

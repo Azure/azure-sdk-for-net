@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.NetApp
             TryGetApiVersion(NetAppSubscriptionQuotaItemResource.ResourceType, out string netAppSubscriptionQuotaItemApiVersion);
             _location = location;
             _netAppSubscriptionQuotaItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppSubscriptionQuotaItemResource.ResourceType.Namespace, Diagnostics);
-            _netAppSubscriptionQuotaItemsRestClient = new NetAppSubscriptionQuotaItems(_netAppSubscriptionQuotaItemsClientDiagnostics, Pipeline, Endpoint, netAppSubscriptionQuotaItemApiVersion ?? "2026-01-15-preview");
+            _netAppSubscriptionQuotaItemsRestClient = new NetAppSubscriptionQuotaItems(_netAppSubscriptionQuotaItemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, netAppSubscriptionQuotaItemApiVersion ?? "2026-06-15-preview");
             ValidateResourceId(id);
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetAppSubscriptionQuotaItemData, NetAppSubscriptionQuotaItemResource>(new NetAppSubscriptionQuotaItemsGetAllAsyncCollectionResultOfT(_netAppSubscriptionQuotaItemsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "NetAppSubscriptionQuotaItemCollection.GetAll"), data => new NetAppSubscriptionQuotaItemResource(Client, data));
+            return new AsyncPageableWrapper<NetAppSubscriptionQuotaItemData, NetAppSubscriptionQuotaItemResource>(new NetAppSubscriptionQuotaItemDataAsync0CollectionResultOfT(_netAppSubscriptionQuotaItemsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "NetAppSubscriptionQuotaItemCollection.GetAll"), data => new NetAppSubscriptionQuotaItemResource(Client, data));
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetAppSubscriptionQuotaItemData, NetAppSubscriptionQuotaItemResource>(new NetAppSubscriptionQuotaItemsGetAllCollectionResultOfT(_netAppSubscriptionQuotaItemsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "NetAppSubscriptionQuotaItemCollection.GetAll"), data => new NetAppSubscriptionQuotaItemResource(Client, data));
+            return new PageableWrapper<NetAppSubscriptionQuotaItemData, NetAppSubscriptionQuotaItemResource>(new NetAppSubscriptionQuotaItemData0CollectionResultOfT(_netAppSubscriptionQuotaItemsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "NetAppSubscriptionQuotaItemCollection.GetAll"), data => new NetAppSubscriptionQuotaItemResource(Client, data));
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

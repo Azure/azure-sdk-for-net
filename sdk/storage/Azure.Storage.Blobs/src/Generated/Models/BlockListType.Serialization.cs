@@ -11,6 +11,7 @@ namespace Azure.Storage.Blobs.Models
 {
     internal static partial class BlockListTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BlockListType value) => value switch
         {
             BlockListType.Committed => "committed",
@@ -19,11 +20,21 @@ namespace Azure.Storage.Blobs.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BlockListType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BlockListType ToBlockListType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "committed")) return BlockListType.Committed;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "uncommitted")) return BlockListType.Uncommitted;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "all")) return BlockListType.All;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "committed"))
+            {
+                return BlockListType.Committed;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "uncommitted"))
+            {
+                return BlockListType.Uncommitted;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "all"))
+            {
+                return BlockListType.All;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BlockListType value.");
         }
     }

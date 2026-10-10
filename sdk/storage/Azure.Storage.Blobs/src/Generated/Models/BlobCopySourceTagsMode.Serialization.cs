@@ -11,6 +11,7 @@ namespace Azure.Storage.Blobs.Models
 {
     internal static partial class BlobCopySourceTagsModeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BlobCopySourceTagsMode value) => value switch
         {
             BlobCopySourceTagsMode.Replace => "REPLACE",
@@ -18,10 +19,17 @@ namespace Azure.Storage.Blobs.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BlobCopySourceTagsMode value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BlobCopySourceTagsMode ToBlobCopySourceTagsMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "REPLACE")) return BlobCopySourceTagsMode.Replace;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "COPY")) return BlobCopySourceTagsMode.Copy;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "REPLACE"))
+            {
+                return BlobCopySourceTagsMode.Replace;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "COPY"))
+            {
+                return BlobCopySourceTagsMode.Copy;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BlobCopySourceTagsMode value.");
         }
     }

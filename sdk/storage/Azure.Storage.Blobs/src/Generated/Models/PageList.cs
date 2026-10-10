@@ -6,11 +6,11 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Storage.Common;
+using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> the list of pages. </summary>
+    /// <summary> The result of the Get Pages API. </summary>
     internal partial class PageList
     {
         /// <summary> Initializes a new instance of <see cref="PageList"/>. </summary>
@@ -21,21 +21,23 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PageList"/>. </summary>
-        /// <param name="pageRange"></param>
-        /// <param name="clearRange"></param>
-        /// <param name="nextMarker"></param>
-        internal PageList(IReadOnlyList<PageRange> pageRange, IReadOnlyList<ClearRange> clearRange, string nextMarker)
+        /// <param name="pageRange"> The page ranges. </param>
+        /// <param name="clearRange"> The clear ranges. </param>
+        /// <param name="nextMarker"> An opaque string value that identifies the portion of the result set to be returned with the next operation. Use this value in the next request to continue the listing operation. </param>
+        internal PageList(IList<PageRange> pageRange, IList<ClearRange> clearRange, string nextMarker)
         {
             PageRange = pageRange;
             ClearRange = clearRange;
             NextMarker = nextMarker;
         }
 
-        /// <summary> Gets the page range. </summary>
-        public IReadOnlyList<PageRange> PageRange { get; }
-        /// <summary> Gets the clear range. </summary>
-        public IReadOnlyList<ClearRange> ClearRange { get; }
-        /// <summary> Gets the next marker. </summary>
+        /// <summary> The page ranges. </summary>
+        public IList<PageRange> PageRange { get; }
+
+        /// <summary> The clear ranges. </summary>
+        public IList<ClearRange> ClearRange { get; }
+
+        /// <summary> An opaque string value that identifies the portion of the result set to be returned with the next operation. Use this value in the next request to continue the listing operation. </summary>
         public string NextMarker { get; }
     }
 }

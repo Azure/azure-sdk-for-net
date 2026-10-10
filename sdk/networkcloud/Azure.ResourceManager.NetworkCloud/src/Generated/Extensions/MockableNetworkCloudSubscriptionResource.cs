@@ -63,59 +63,59 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
 
         private ClientDiagnostics AccessBridgesClientDiagnostics => _accessBridgesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AccessBridges AccessBridgesRestClient => _accessBridgesRestClient ??= new AccessBridges(AccessBridgesClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private AccessBridges AccessBridgesRestClient => _accessBridgesRestClient ??= new AccessBridges(AccessBridgesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics BareMetalMachinesClientDiagnostics => _bareMetalMachinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BareMetalMachines BareMetalMachinesRestClient => _bareMetalMachinesRestClient ??= new BareMetalMachines(BareMetalMachinesClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private BareMetalMachines BareMetalMachinesRestClient => _bareMetalMachinesRestClient ??= new BareMetalMachines(BareMetalMachinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics CloudServicesNetworksClientDiagnostics => _cloudServicesNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CloudServicesNetworks CloudServicesNetworksRestClient => _cloudServicesNetworksRestClient ??= new CloudServicesNetworks(CloudServicesNetworksClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private CloudServicesNetworks CloudServicesNetworksRestClient => _cloudServicesNetworksRestClient ??= new CloudServicesNetworks(CloudServicesNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics ClusterManagersClientDiagnostics => _clusterManagersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ClusterManagers ClusterManagersRestClient => _clusterManagersRestClient ??= new ClusterManagers(ClusterManagersClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private ClusterManagers ClusterManagersRestClient => _clusterManagersRestClient ??= new ClusterManagers(ClusterManagersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics ClustersClientDiagnostics => _clustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics KubernetesClustersClientDiagnostics => _kubernetesClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private KubernetesClusters KubernetesClustersRestClient => _kubernetesClustersRestClient ??= new KubernetesClusters(KubernetesClustersClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private KubernetesClusters KubernetesClustersRestClient => _kubernetesClustersRestClient ??= new KubernetesClusters(KubernetesClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics KubernetesVersionsClientDiagnostics => _kubernetesVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private KubernetesVersions KubernetesVersionsRestClient => _kubernetesVersionsRestClient ??= new KubernetesVersions(KubernetesVersionsClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private KubernetesVersions KubernetesVersionsRestClient => _kubernetesVersionsRestClient ??= new KubernetesVersions(KubernetesVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics L2NetworksClientDiagnostics => _l2NetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private L2Networks L2NetworksRestClient => _l2NetworksRestClient ??= new L2Networks(L2NetworksClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private L2Networks L2NetworksRestClient => _l2NetworksRestClient ??= new L2Networks(L2NetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics L3NetworksClientDiagnostics => _l3NetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private L3Networks L3NetworksRestClient => _l3NetworksRestClient ??= new L3Networks(L3NetworksClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private L3Networks L3NetworksRestClient => _l3NetworksRestClient ??= new L3Networks(L3NetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics RacksClientDiagnostics => _racksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Racks RacksRestClient => _racksRestClient ??= new Racks(RacksClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private Racks RacksRestClient => _racksRestClient ??= new Racks(RacksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics StorageAppliancesClientDiagnostics => _storageAppliancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StorageAppliances StorageAppliancesRestClient => _storageAppliancesRestClient ??= new StorageAppliances(StorageAppliancesClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private StorageAppliances StorageAppliancesRestClient => _storageAppliancesRestClient ??= new StorageAppliances(StorageAppliancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics TrunkedNetworksClientDiagnostics => _trunkedNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private TrunkedNetworks TrunkedNetworksRestClient => _trunkedNetworksRestClient ??= new TrunkedNetworks(TrunkedNetworksClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private TrunkedNetworks TrunkedNetworksRestClient => _trunkedNetworksRestClient ??= new TrunkedNetworks(TrunkedNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics VirtualMachinesClientDiagnostics => _virtualMachinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachines VirtualMachinesRestClient => _virtualMachinesRestClient ??= new VirtualMachines(VirtualMachinesClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private VirtualMachines VirtualMachinesRestClient => _virtualMachinesRestClient ??= new VirtualMachines(VirtualMachinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics VolumesClientDiagnostics => _volumesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Volumes VolumesRestClient => _volumesRestClient ??= new Volumes(VolumesClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private Volumes VolumesRestClient => _volumesRestClient ??= new Volumes(VolumesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         /// <summary> Gets a collection of NetworkCloudRackSkus in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of NetworkCloudRackSkus and their operations over a NetworkCloudRackSkuResource. </returns>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudAccessBridgeData, NetworkCloudAccessBridgeResource>(new AccessBridgesGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkCloudAccessBridgeData, NetworkCloudAccessBridgeResource>(new NetworkCloudAccessBridgeDataAsync0CollectionResultOfT(
                 AccessBridgesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudAccessBridgeData, NetworkCloudAccessBridgeResource>(new AccessBridgesGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<NetworkCloudAccessBridgeData, NetworkCloudAccessBridgeResource>(new NetworkCloudAccessBridgeData0CollectionResultOfT(
                 AccessBridgesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudBareMetalMachineData, NetworkCloudBareMetalMachineResource>(new BareMetalMachinesGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkCloudBareMetalMachineData, NetworkCloudBareMetalMachineResource>(new NetworkCloudBareMetalMachineDataAsync0CollectionResultOfT(
                 BareMetalMachinesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudBareMetalMachineData, NetworkCloudBareMetalMachineResource>(new BareMetalMachinesGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<NetworkCloudBareMetalMachineData, NetworkCloudBareMetalMachineResource>(new NetworkCloudBareMetalMachineData0CollectionResultOfT(
                 BareMetalMachinesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudCloudServicesNetworkData, NetworkCloudCloudServicesNetworkResource>(new CloudServicesNetworksGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkCloudCloudServicesNetworkData, NetworkCloudCloudServicesNetworkResource>(new NetworkCloudCloudServicesNetworkDataAsync0CollectionResultOfT(
                 CloudServicesNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudCloudServicesNetworkData, NetworkCloudCloudServicesNetworkResource>(new CloudServicesNetworksGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<NetworkCloudCloudServicesNetworkData, NetworkCloudCloudServicesNetworkResource>(new NetworkCloudCloudServicesNetworkData0CollectionResultOfT(
                 CloudServicesNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudClusterManagerData, NetworkCloudClusterManagerResource>(new ClusterManagersGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkCloudClusterManagerData, NetworkCloudClusterManagerResource>(new NetworkCloudClusterManagerDataAsync0CollectionResultOfT(
                 ClusterManagersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudClusterManagerData, NetworkCloudClusterManagerResource>(new ClusterManagersGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<NetworkCloudClusterManagerData, NetworkCloudClusterManagerResource>(new NetworkCloudClusterManagerData0CollectionResultOfT(
                 ClusterManagersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudClusterData, NetworkCloudClusterResource>(new ClustersGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkCloudClusterData, NetworkCloudClusterResource>(new NetworkCloudClusterDataAsync0CollectionResultOfT(
                 ClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudClusterData, NetworkCloudClusterResource>(new ClustersGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<NetworkCloudClusterData, NetworkCloudClusterResource>(new NetworkCloudClusterData0CollectionResultOfT(
                 ClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudKubernetesClusterData, NetworkCloudKubernetesClusterResource>(new KubernetesClustersGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkCloudKubernetesClusterData, NetworkCloudKubernetesClusterResource>(new NetworkCloudKubernetesClusterDataAsync0CollectionResultOfT(
                 KubernetesClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudKubernetesClusterData, NetworkCloudKubernetesClusterResource>(new KubernetesClustersGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<NetworkCloudKubernetesClusterData, NetworkCloudKubernetesClusterResource>(new NetworkCloudKubernetesClusterData0CollectionResultOfT(
                 KubernetesClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudKubernetesVersionData, NetworkCloudKubernetesVersionResource>(new KubernetesVersionsGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkCloudKubernetesVersionData, NetworkCloudKubernetesVersionResource>(new NetworkCloudKubernetesVersionDataAsync0CollectionResultOfT(
                 KubernetesVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudKubernetesVersionData, NetworkCloudKubernetesVersionResource>(new KubernetesVersionsGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<NetworkCloudKubernetesVersionData, NetworkCloudKubernetesVersionResource>(new NetworkCloudKubernetesVersionData0CollectionResultOfT(
                 KubernetesVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudL2NetworkData, NetworkCloudL2NetworkResource>(new L2NetworksGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkCloudL2NetworkData, NetworkCloudL2NetworkResource>(new NetworkCloudL2NetworkDataAsync0CollectionResultOfT(
                 L2NetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -749,7 +749,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudL2NetworkData, NetworkCloudL2NetworkResource>(new L2NetworksGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<NetworkCloudL2NetworkData, NetworkCloudL2NetworkResource>(new NetworkCloudL2NetworkData0CollectionResultOfT(
                 L2NetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudL3NetworkData, NetworkCloudL3NetworkResource>(new L3NetworksGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkCloudL3NetworkData, NetworkCloudL3NetworkResource>(new NetworkCloudL3NetworkDataAsync0CollectionResultOfT(
                 L3NetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -807,7 +807,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -821,7 +821,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudL3NetworkData, NetworkCloudL3NetworkResource>(new L3NetworksGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<NetworkCloudL3NetworkData, NetworkCloudL3NetworkResource>(new NetworkCloudL3NetworkData0CollectionResultOfT(
                 L3NetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -843,7 +843,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -857,7 +857,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudRackData, NetworkCloudRackResource>(new RacksGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkCloudRackData, NetworkCloudRackResource>(new NetworkCloudRackDataAsync0CollectionResultOfT(
                 RacksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -879,7 +879,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -893,7 +893,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudRackData, NetworkCloudRackResource>(new RacksGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<NetworkCloudRackData, NetworkCloudRackResource>(new NetworkCloudRackData0CollectionResultOfT(
                 RacksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -915,7 +915,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -929,7 +929,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudStorageApplianceData, NetworkCloudStorageApplianceResource>(new StorageAppliancesGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkCloudStorageApplianceData, NetworkCloudStorageApplianceResource>(new NetworkCloudStorageApplianceDataAsync0CollectionResultOfT(
                 StorageAppliancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -951,7 +951,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -965,7 +965,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudStorageApplianceData, NetworkCloudStorageApplianceResource>(new StorageAppliancesGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<NetworkCloudStorageApplianceData, NetworkCloudStorageApplianceResource>(new NetworkCloudStorageApplianceData0CollectionResultOfT(
                 StorageAppliancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -987,7 +987,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1001,7 +1001,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudTrunkedNetworkData, NetworkCloudTrunkedNetworkResource>(new TrunkedNetworksGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkCloudTrunkedNetworkData, NetworkCloudTrunkedNetworkResource>(new NetworkCloudTrunkedNetworkDataAsync0CollectionResultOfT(
                 TrunkedNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -1023,7 +1023,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1037,7 +1037,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudTrunkedNetworkData, NetworkCloudTrunkedNetworkResource>(new TrunkedNetworksGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<NetworkCloudTrunkedNetworkData, NetworkCloudTrunkedNetworkResource>(new NetworkCloudTrunkedNetworkData0CollectionResultOfT(
                 TrunkedNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -1059,7 +1059,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1073,7 +1073,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudVirtualMachineData, NetworkCloudVirtualMachineResource>(new VirtualMachinesGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkCloudVirtualMachineData, NetworkCloudVirtualMachineResource>(new NetworkCloudVirtualMachineDataAsync0CollectionResultOfT(
                 VirtualMachinesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -1095,7 +1095,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1109,7 +1109,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudVirtualMachineData, NetworkCloudVirtualMachineResource>(new VirtualMachinesGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<NetworkCloudVirtualMachineData, NetworkCloudVirtualMachineResource>(new NetworkCloudVirtualMachineData0CollectionResultOfT(
                 VirtualMachinesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -1131,7 +1131,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1145,7 +1145,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudVolumeData, NetworkCloudVolumeResource>(new VolumesGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkCloudVolumeData, NetworkCloudVolumeResource>(new NetworkCloudVolumeDataAsync0CollectionResultOfT(
                 VolumesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -1167,7 +1167,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1181,7 +1181,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudVolumeData, NetworkCloudVolumeResource>(new VolumesGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<NetworkCloudVolumeData, NetworkCloudVolumeResource>(new NetworkCloudVolumeData0CollectionResultOfT(
                 VolumesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,

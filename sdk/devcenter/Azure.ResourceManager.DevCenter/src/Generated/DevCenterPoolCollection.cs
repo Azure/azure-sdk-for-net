@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(DevCenterPoolResource.ResourceType, out string devCenterPoolApiVersion);
             _poolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterPoolResource.ResourceType.Namespace, Diagnostics);
-            _poolsRestClient = new Pools(_poolsClientDiagnostics, Pipeline, Endpoint, devCenterPoolApiVersion ?? "2026-01-01-preview");
+            _poolsRestClient = new Pools(_poolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterPoolApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevCenterPoolData, DevCenterPoolResource>(new PoolsGetByProjectAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevCenterPoolData, DevCenterPoolResource>(new DevCenterPoolDataAsyncCollectionResultOfT(
                 _poolsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevCenterPoolData, DevCenterPoolResource>(new PoolsGetByProjectCollectionResultOfT(
+            return new PageableWrapper<DevCenterPoolData, DevCenterPoolResource>(new DevCenterPoolDataCollectionResultOfT(
                 _poolsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

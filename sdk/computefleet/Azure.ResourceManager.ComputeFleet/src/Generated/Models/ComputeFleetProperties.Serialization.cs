@@ -128,15 +128,15 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
+            if (Optional.IsDefined(VmNamePrefix))
+            {
+                writer.WritePropertyName("vmNamePrefix"u8);
+                writer.WriteStringValue(VmNamePrefix);
+            }
             if (Optional.IsDefined(CapacityType))
             {
                 writer.WritePropertyName("capacityType"u8);
                 writer.WriteStringValue(CapacityType.Value.ToString());
-            }
-            if (Optional.IsDefined(ZoneAllocationPolicy))
-            {
-                writer.WritePropertyName("zoneAllocationPolicy"u8);
-                writer.WriteObjectValue(ZoneAllocationPolicy, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -190,8 +190,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             DateTimeOffset? createdOn = default;
             string uniqueId = default;
             ComputeFleetMode? mode = default;
+            string vmNamePrefix = default;
             ComputeFleetCapacityType? capacityType = default;
-            ComputeFleetZoneAllocationPolicy zoneAllocationPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -278,6 +278,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     mode = new ComputeFleetMode(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("vmNamePrefix"u8))
+                {
+                    vmNamePrefix = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("capacityType"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -287,18 +292,9 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     capacityType = new ComputeFleetCapacityType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("zoneAllocationPolicy"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    zoneAllocationPolicy = ComputeFleetZoneAllocationPolicy.DeserializeComputeFleetZoneAllocationPolicy(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ComputeFleetProperties(
@@ -312,8 +308,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 createdOn,
                 uniqueId,
                 mode,
+                vmNamePrefix,
                 capacityType,
-                zoneAllocationPolicy,
                 additionalBinaryDataProperties);
         }
     }

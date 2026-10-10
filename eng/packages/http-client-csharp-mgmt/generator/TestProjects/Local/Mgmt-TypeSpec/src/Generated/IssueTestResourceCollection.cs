@@ -41,7 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(IssueTestResource.ResourceType, out string issueTestResourceApiVersion);
             _issueTestResourcesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", IssueTestResource.ResourceType.Namespace, Diagnostics);
-            _issueTestResourcesRestClient = new IssueTestResources(_issueTestResourcesClientDiagnostics, Pipeline, Endpoint, issueTestResourceApiVersion ?? "2024-05-01");
+            _issueTestResourcesRestClient = new IssueTestResources(_issueTestResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, issueTestResourceApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -296,7 +296,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IssueTestResourceData, IssueTestResource>(new IssueTestResourcesGetByResourceGroupAsyncCollectionResultOfT(_issueTestResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IssueTestResourceCollection.GetAll"), data => new IssueTestResource(Client, data));
+            return new AsyncPageableWrapper<IssueTestResourceData, IssueTestResource>(new IssueTestResourceDataAsyncCollectionResultOfT(_issueTestResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IssueTestResourceCollection.GetAll"), data => new IssueTestResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IssueTestResourceData, IssueTestResource>(new IssueTestResourcesGetByResourceGroupCollectionResultOfT(_issueTestResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IssueTestResourceCollection.GetAll"), data => new IssueTestResource(Client, data));
+            return new PageableWrapper<IssueTestResourceData, IssueTestResource>(new IssueTestResourceDataCollectionResultOfT(_issueTestResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IssueTestResourceCollection.GetAll"), data => new IssueTestResource(Client, data));
         }
 
         /// <summary>

@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Gets the Certificates. </summary>
         [WirePath("certificates")]
-        public IList<string> Certificates { get; }
+        public IList<string> Certificates { get; } = new ChangeTrackingList<string>();
     }
 }

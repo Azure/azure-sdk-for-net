@@ -11,8 +11,8 @@ using System.ComponentModel;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// Determines the sub-type of the recognize operation.
-    /// In case of cancel operation the this field is not set and is returned empty
+    /// Recognition type determines the sub-type of the recognition operation
+    /// Possible values will be Dtmf, Speech, or Choices
     /// </summary>
     public readonly partial struct CallMediaRecognitionType : IEquatable<CallMediaRecognitionType>
     {

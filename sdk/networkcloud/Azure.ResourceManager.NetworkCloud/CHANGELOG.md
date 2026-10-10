@@ -1,15 +1,37 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
-- Added support for API version `2026-01-01-preview`.
+### Breaking Changes
+
+### Bugs Fixed
 
 ### Other Changes
 
-- Upgraded dependent Azure.Core to 1.52.0.
-- Upgraded Azure.ResourceManager from 1.14.0.
+## 1.4.0 (2026-10-08)
+
+### Features Added
+
+- Added `AdministrativeCredentialsPatch`, `BareMetalMachineConfigurationPatch`, `ClusterSecretArchivePatch`, `ClusterUpdateStrategyPatch`, `ImageRepositoryCredentialsPatch`, `NetworkCloudRackDefinitionPatch`, `NetworkCloudSshPublicKeyPatch`, `RuntimeProtectionConfigurationPatch`, `ServicePrincipalInformationPatch`, `StorageApplianceConfigurationPatch`, and `ValidationThresholdPatch` models to align the update/patch payloads with their corresponding patch semantics.
+
+## 1.4.0-beta.1 (2026-06-16)
+
+### Features Added
+
+- Added support for API version `2026-05-01-preview`.
+- Added `BareMetalMachineReimageContent` with `SafeguardMode` property for the Reimage operation.
+- Added `ClusterRotateCredentialContent` for cluster credential rotation operations.
+- Added `BareMetalMachineMonitoringConfigurationStatus` and `StorageApplianceMonitoringConfigurationStatus` models.
+- Added `ClusterContinueUpdateVersionContent` and associated `ClusterContinueUpdateVersionSafeguardMode` for cluster update operations.
+- Added `NetworkCloudAccessBridge` resource.
+- Added `NetworkCloudKubernetesVersion` resource.
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.59.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
 
 ## 1.3.0 (2026-01-26)
 

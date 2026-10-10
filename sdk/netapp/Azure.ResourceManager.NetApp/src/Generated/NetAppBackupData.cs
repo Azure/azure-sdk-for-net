@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.NetApp
         {
             get
             {
-                return Properties is null ? default : Properties.SnapshotCreationOn;
+                return Properties is null ? default : Properties.SnapshotCreatedOn;
             }
         }
 

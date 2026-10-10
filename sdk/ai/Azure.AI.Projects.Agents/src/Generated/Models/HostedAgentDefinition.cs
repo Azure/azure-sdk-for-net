@@ -19,7 +19,6 @@ namespace Azure.AI.Projects.Agents
             Argument.AssertNotNull(cpu, nameof(cpu));
             Argument.AssertNotNull(memory, nameof(memory));
 
-            Tools = new ChangeTrackingList<ProjectsAgentTool>();
             Cpu = cpu;
             Memory = memory;
             EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
@@ -30,10 +29,6 @@ namespace Azure.AI.Projects.Agents
         /// <param name="kind"></param>
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tools">
-        /// An array of tools the hosted agent's model may call while generating a response. You
-        /// can specify which tool to use by setting the `tool_choice` parameter.
-        /// </param>
         /// <param name="cpu"> The CPU configuration for the hosted agent. </param>
         /// <param name="memory"> The memory configuration for the hosted agent. </param>
         /// <param name="environmentVariables"> Environment variables to set in the hosted agent container. </param>
@@ -41,9 +36,9 @@ namespace Azure.AI.Projects.Agents
         /// <param name="versions"> The protocols that the agent supports for ingress communication. </param>
         /// <param name="codeConfiguration"> Code-based deployment configuration. Provide this for code-based deployments. Mutually exclusive with container_configuration — the service validates that exactly one is set. </param>
         /// <param name="telemetryConfig"> Optional customer-supplied telemetry configuration for exporting container logs, traces, and metrics. </param>
-        internal HostedAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ProjectsAgentTool> tools, string cpu, string memory, IDictionary<string, string> environmentVariables, ContainerConfiguration containerConfiguration, IList<ProtocolVersionRecord> versions, CodeConfiguration codeConfiguration, TelemetryConfig telemetryConfig) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
+        /// <param name="sessionConfiguration"> Optional session defaults (for example, the idle timeout) applied to sessions created for this agent version. </param>
+        internal HostedAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string cpu, string memory, IDictionary<string, string> environmentVariables, ContainerConfiguration containerConfiguration, IList<ProtocolVersionRecord> versions, CodeConfiguration codeConfiguration, TelemetryConfig telemetryConfig, SessionConfiguration sessionConfiguration) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
         {
-            Tools = tools;
             Cpu = cpu;
             Memory = memory;
             EnvironmentVariables = environmentVariables;
@@ -51,13 +46,8 @@ namespace Azure.AI.Projects.Agents
             Versions = versions;
             CodeConfiguration = codeConfiguration;
             TelemetryConfig = telemetryConfig;
+            SessionConfiguration = sessionConfiguration;
         }
-
-        /// <summary>
-        /// An array of tools the hosted agent's model may call while generating a response. You
-        /// can specify which tool to use by setting the `tool_choice` parameter.
-        /// </summary>
-        public IList<ProjectsAgentTool> Tools { get; }
 
         /// <summary> The CPU configuration for the hosted agent. </summary>
         public string Cpu { get; set; }
@@ -79,5 +69,8 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Optional customer-supplied telemetry configuration for exporting container logs, traces, and metrics. </summary>
         public TelemetryConfig TelemetryConfig { get; set; }
+
+        /// <summary> Optional session defaults (for example, the idle timeout) applied to sessions created for this agent version. </summary>
+        public SessionConfiguration SessionConfiguration { get; set; }
     }
 }

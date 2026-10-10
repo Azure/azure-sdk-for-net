@@ -82,18 +82,32 @@ namespace Azure.Search.Documents.Indexes.Models
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(ExtractionOptions))
             {
-                writer.WritePropertyName("extractionOptions"u8);
-                writer.WriteStartArray();
-                foreach (ContentUnderstandingSkillExtractionOptions item in ExtractionOptions)
+                if (ExtractionOptions != null)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WritePropertyName("extractionOptions"u8);
+                    writer.WriteStartArray();
+                    foreach (ContentUnderstandingSkillExtractionOptions item in ExtractionOptions)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("extractionOptions"u8);
+                }
             }
-            if (Optional.IsDefined(ChunkingProperties))
+            if (_chunkingPropertiesIsDefined || Optional.IsDefined(ChunkingProperties))
             {
-                writer.WritePropertyName("chunkingProperties"u8);
-                writer.WriteObjectValue(ChunkingProperties, options);
+                if (ChunkingProperties != null)
+                {
+                    writer.WritePropertyName("chunkingProperties"u8);
+                    writer.WriteObjectValue(ChunkingProperties, options);
+                }
+                else
+                {
+                    writer.WriteNull("chunkingProperties"u8);
+                }
             }
         }
 
@@ -129,7 +143,8 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<ContentUnderstandingSkillExtractionOptions> extractionOptions = default;
+            IList<ContentUnderstandingSkillExtractionOptions> extractionOptions = new ChangeTrackingList<ContentUnderstandingSkillExtractionOptions>();
+            bool chunkingPropertiesIsDefined = false;
             ContentUnderstandingSkillChunkingProperties chunkingProperties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -177,6 +192,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        extractionOptions = null;
                         continue;
                     }
                     List<ContentUnderstandingSkillExtractionOptions> array = new List<ContentUnderstandingSkillExtractionOptions>();
@@ -189,6 +205,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("chunkingProperties"u8))
                 {
+                    chunkingPropertiesIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         chunkingProperties = null;
@@ -199,7 +216,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ContentUnderstandingSkill(
@@ -207,11 +224,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 name,
                 description,
                 context,
-                inputs,
-                outputs,
+                inputs ?? new ChangeTrackingList<InputFieldMappingEntry>(),
+                outputs ?? new ChangeTrackingList<OutputFieldMappingEntry>(),
                 additionalBinaryDataProperties,
-                extractionOptions ?? new ChangeTrackingList<ContentUnderstandingSkillExtractionOptions>(),
-                chunkingProperties);
+                extractionOptions,
+                chunkingProperties)
+            {
+                _chunkingPropertiesIsDefined = chunkingPropertiesIsDefined
+            };
         }
     }
 }

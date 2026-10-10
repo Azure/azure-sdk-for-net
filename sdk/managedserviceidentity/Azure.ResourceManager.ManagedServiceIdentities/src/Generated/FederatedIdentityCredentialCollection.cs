@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         {
             TryGetApiVersion(FederatedIdentityCredentialResource.ResourceType, out string federatedIdentityCredentialApiVersion);
             _federatedIdentityCredentialsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedServiceIdentities", FederatedIdentityCredentialResource.ResourceType.Namespace, Diagnostics);
-            _federatedIdentityCredentialsRestClient = new FederatedIdentityCredentials(_federatedIdentityCredentialsClientDiagnostics, Pipeline, Endpoint, federatedIdentityCredentialApiVersion ?? "2025-05-31-preview");
+            _federatedIdentityCredentialsRestClient = new FederatedIdentityCredentials(_federatedIdentityCredentialsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, federatedIdentityCredentialApiVersion ?? "2025-05-31-preview");
             ValidateResourceId(id);
         }
 
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FederatedIdentityCredentialData, FederatedIdentityCredentialResource>(new FederatedIdentityCredentialsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FederatedIdentityCredentialData, FederatedIdentityCredentialResource>(new FederatedIdentityCredentialDataAsyncCollectionResultOfT(
                 _federatedIdentityCredentialsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FederatedIdentityCredentialData, FederatedIdentityCredentialResource>(new FederatedIdentityCredentialsGetAllCollectionResultOfT(
+            return new PageableWrapper<FederatedIdentityCredentialData, FederatedIdentityCredentialResource>(new FederatedIdentityCredentialDataCollectionResultOfT(
                 _federatedIdentityCredentialsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

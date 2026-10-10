@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class ProbeResource : IJsonModel<ProbeData>
     {
-        private static ProbeData s_dataDeserializationInstance;
-        private static ProbeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ProbeData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ProbeData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ProbeData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ProbeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ProbeData>)Data).Write(writer, options);
 
-        ProbeData IJsonModel<ProbeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProbeData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ProbeData IJsonModel<ProbeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ProbeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProbeData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ProbeData IPersistableModel<ProbeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProbeData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<ProbeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProbeData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ProbeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

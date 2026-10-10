@@ -1,6 +1,22 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0 (2026-08-25)
+
+### Features Added
+
+This is the first stable release of ARM deployments library, api-version 2025-04-01.
+
+## 1.0.0-beta.1 (2026-06-30)
 
 This is first release of ARM deployments library.
 

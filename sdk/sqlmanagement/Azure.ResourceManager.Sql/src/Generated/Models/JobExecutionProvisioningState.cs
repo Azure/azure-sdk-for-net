@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct JobExecutionProvisioningState : IEquatable<JobExecutionProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Created. </summary>
+        private const string CreatedValue = "Created";
+        /// <summary> InProgress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="JobExecutionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JobExecutionProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CreatedValue = "Created";
-        private const string InProgressValue = "InProgress";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
+            _value = value;
+        }
 
         /// <summary> Created. </summary>
         public static JobExecutionProvisioningState Created { get; } = new JobExecutionProvisioningState(CreatedValue);
+
         /// <summary> InProgress. </summary>
         public static JobExecutionProvisioningState InProgress { get; } = new JobExecutionProvisioningState(InProgressValue);
+
         /// <summary> Succeeded. </summary>
         public static JobExecutionProvisioningState Succeeded { get; } = new JobExecutionProvisioningState(SucceededValue);
+
         /// <summary> Failed. </summary>
         public static JobExecutionProvisioningState Failed { get; } = new JobExecutionProvisioningState(FailedValue);
+
         /// <summary> Canceled. </summary>
         public static JobExecutionProvisioningState Canceled { get; } = new JobExecutionProvisioningState(CanceledValue);
+
         /// <summary> Determines if two <see cref="JobExecutionProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(JobExecutionProvisioningState left, JobExecutionProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="JobExecutionProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(JobExecutionProvisioningState left, JobExecutionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="JobExecutionProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="JobExecutionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator JobExecutionProvisioningState(string value) => new JobExecutionProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="JobExecutionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator JobExecutionProvisioningState?(string value) => value == null ? null : new JobExecutionProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is JobExecutionProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(JobExecutionProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

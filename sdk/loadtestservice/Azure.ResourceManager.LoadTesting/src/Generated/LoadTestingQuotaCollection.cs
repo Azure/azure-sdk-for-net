@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.LoadTesting
             TryGetApiVersion(LoadTestingQuotaResource.ResourceType, out string loadTestingQuotaApiVersion);
             _location = location;
             _quotasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LoadTesting", LoadTestingQuotaResource.ResourceType.Namespace, Diagnostics);
-            _quotasRestClient = new Quotas(_quotasClientDiagnostics, Pipeline, Endpoint, loadTestingQuotaApiVersion ?? "2024-12-01-preview");
+            _quotasRestClient = new Quotas(_quotasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, loadTestingQuotaApiVersion ?? "2024-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LoadTestingQuotaData, LoadTestingQuotaResource>(new QuotasGetAllAsyncCollectionResultOfT(_quotasRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "LoadTestingQuotaCollection.GetAll"), data => new LoadTestingQuotaResource(Client, data));
+            return new AsyncPageableWrapper<LoadTestingQuotaData, LoadTestingQuotaResource>(new LoadTestingQuotaDataAsyncCollectionResultOfT(_quotasRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "LoadTestingQuotaCollection.GetAll"), data => new LoadTestingQuotaResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LoadTestingQuotaData, LoadTestingQuotaResource>(new QuotasGetAllCollectionResultOfT(_quotasRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "LoadTestingQuotaCollection.GetAll"), data => new LoadTestingQuotaResource(Client, data));
+            return new PageableWrapper<LoadTestingQuotaData, LoadTestingQuotaResource>(new LoadTestingQuotaDataCollectionResultOfT(_quotasRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "LoadTestingQuotaCollection.GetAll"), data => new LoadTestingQuotaResource(Client, data));
         }
 
         /// <summary>

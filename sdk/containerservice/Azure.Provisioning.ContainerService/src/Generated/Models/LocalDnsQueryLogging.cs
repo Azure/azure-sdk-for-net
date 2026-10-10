@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerService
     public enum LocalDnsQueryLogging
     {
         /// <summary> Enables error logging in localDNS. See [errors plugin](https://coredns.io/plugins/errors) for more information. </summary>
-        Error,
+        Error = 0,
         /// <summary> Enables query logging in localDNS. See [log plugin](https://coredns.io/plugins/log) for more information. </summary>
-        Log
+        Log = 1
     }
 }

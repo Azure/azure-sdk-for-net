@@ -1,0 +1,118 @@
+# Base artifact step for API Review Hub. Language-specific templates provide the
+# generation steps and this template enforces the shared artifact contract.
+parameters:
+  - name: requestMode
+    type: string
+  - name: operationId
+    type: string
+  - name: packageName
+    type: string
+  - name: ref
+    type: string
+  - name: kind
+    type: string
+  - name: outputDir
+    type: string
+  - name: workingDir
+    type: string
+  - name: sourceDir
+    type: string
+  - name: language
+    type: string
+  - name: repositoryFullName
+    type: string
+  - name: generationSteps
+    type: stepList
+    default: []
+
+steps:
+  - pwsh: |
+      $ErrorActionPreference = 'Stop'
+
+      New-Item -ItemType Directory -Force -Path $env:OUTPUT_DIR | Out-Null
+      New-Item -ItemType Directory -Force -Path $env:WORKING_DIR | Out-Null
+      New-Item -ItemType Directory -Force -Path (Join-Path $env:WORKING_DIR 'state') | Out-Null
+    env:
+      OUTPUT_DIR: ${{ parameters.outputDir }}
+      WORKING_DIR: ${{ parameters.workingDir }}
+    displayName: 'Prepare ${{ parameters.kind }} API review bundle directories'
+
+  - bash: |
+      set -Eeuo pipefail
+
+      source_repo="$SOURCE_DIR"
+      ref="$REF"
+
+      if [ ! -d "$source_repo/.git" ]; then
+        echo "Expected API review source repository was not cloned at $source_repo" >&2
+        exit 1
+      fi
+
+      # API Review Hub must provide a fully-qualified Git ref (for example refs/heads/* or refs/tags/*).
+      # Keeping this explicit avoids ambiguous fetch behavior across remote refspec configurations.
+      if [[ -z "$ref" || "$ref" != refs/* ]]; then
+        echo "Expected a fully-qualified git ref (refs/*), but received: '$ref'" >&2
+        exit 1
+      fi
+
+      echo "Checking out $KIND API review source ref $ref in $source_repo"
+      git -C "$source_repo" fetch --depth=1 origin "$ref"
+      git -C "$source_repo" checkout --force FETCH_HEAD
+      git -C "$source_repo" clean -ffd
+    env:
+      SOURCE_DIR: ${{ parameters.sourceDir }}
+      REF: ${{ parameters.ref }}
+      KIND: ${{ parameters.kind }}
+    displayName: 'Checkout ${{ parameters.kind }} API review source'
+
+  - ${{ parameters.generationSteps }}
+
+  - pwsh: |
+      $ErrorActionPreference = 'Stop'
+
+      $outputDir = $env:OUTPUT_DIR
+      $stateDir = Join-Path $env:WORKING_DIR 'state'
+      $apiMdPath = Join-Path $outputDir 'api.md'
+      $apiMetadataPath = Join-Path $outputDir 'api.metadata.yml'
+      $packageRelativePathPath = Join-Path $stateDir 'package-relative-path.txt'
+      $versionPath = Join-Path $stateDir 'version.txt'
+      if (!(Test-Path -Path $apiMdPath -PathType Leaf)) {
+        Write-Error "Expected api.md was not produced at $apiMdPath."
+      }
+      if (!(Test-Path -Path $apiMetadataPath -PathType Leaf)) {
+        Write-Error "Expected api.metadata.yml was not produced at $apiMetadataPath."
+      }
+      if (!(Test-Path -Path $packageRelativePathPath -PathType Leaf)) {
+        Write-Error "Expected package-relative-path.txt was not produced at $packageRelativePathPath."
+      }
+      if (!(Test-Path -Path $versionPath -PathType Leaf)) {
+        Write-Error "Expected version.txt was not produced at $versionPath."
+      }
+
+      $packageRelativePath = Get-Content -Raw -Path $packageRelativePathPath
+      $version = Get-Content -Raw -Path $versionPath
+
+      $metadata = [ordered]@{
+        operationId = $env:OPERATION_ID
+        mode = $env:REQUEST_MODE
+        language = $env:LANGUAGE
+        repositoryFullName = $env:REPOSITORY_FULL_NAME
+        packageName = $env:PACKAGE_NAME
+        packageRelativePath = $packageRelativePath.Trim()
+        ref = $env:REF
+        version = $version.Trim()
+        kind = $env:KIND
+      }
+      $metadata | ConvertTo-Json -Depth 10 | Set-Content -Path (Join-Path $outputDir 'artifact-metadata.json') -Encoding utf8
+      Get-Content -Path (Join-Path $outputDir 'artifact-metadata.json')
+    env:
+      OUTPUT_DIR: ${{ parameters.outputDir }}
+      WORKING_DIR: ${{ parameters.workingDir }}
+      OPERATION_ID: ${{ parameters.operationId }}
+      REQUEST_MODE: ${{ parameters.requestMode }}
+      LANGUAGE: ${{ parameters.language }}
+      REPOSITORY_FULL_NAME: ${{ parameters.repositoryFullName }}
+      PACKAGE_NAME: ${{ parameters.packageName }}
+      REF: ${{ parameters.ref }}
+      KIND: ${{ parameters.kind }}
+    displayName: 'Validate and write ${{ parameters.kind }} API review bundle metadata'

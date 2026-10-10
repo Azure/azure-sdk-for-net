@@ -38,7 +38,7 @@ namespace Samples
         /// <returns> The pages of CatClientGetCatsCollectionResult as an enumerable collection. </returns>
         public override global::System.Collections.Generic.IEnumerable<global::Azure.Page<global::System.BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken, global::System.UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 global::Azure.Response response = this.GetNextResponse(pageSizeHint, nextPage);
@@ -47,18 +47,18 @@ namespace Samples
                     yield break;
                 }
                 global::Samples.Models.Page result = ((global::Samples.Models.Page)response);
+                string nextPageString = result.NextCat;
+                nextPage = string.IsNullOrEmpty(nextPageString) ? null : new global::System.Uri(nextPageString, global::System.UriKind.RelativeOrAbsolute);
                 global::System.Collections.Generic.List<global::System.BinaryData> items = new global::System.Collections.Generic.List<global::System.BinaryData>();
                 foreach (var item in result.Cats)
                 {
-                    items.Add(global::System.ClientModel.Primitives.ModelReaderWriter.Write(item, global::Samples.ModelSerializationExtensions.WireOptions, global::Samples.SamplesContext.Default));
+                    items.Add(global::System.ClientModel.Primitives.ModelReaderWriter.Write(item, global::System.ClientModel.Primitives.ModelReaderWriterOptions.Json, global::Samples.SamplesContext.Default));
                 }
                 yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
-                string nextPageString = result.NextCat;
-                if (string.IsNullOrEmpty(nextPageString))
+                if ((nextPage == null))
                 {
                     yield break;
                 }
-                nextPage = new global::System.Uri(nextPageString, global::System.UriKind.RelativeOrAbsolute);
             }
         }
 

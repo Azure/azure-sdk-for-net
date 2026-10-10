@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         {
             TryGetApiVersion(ConnectedClusterBgpPeerResource.ResourceType, out string connectedClusterBgpPeerApiVersion);
             _bgpPeersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerOrchestratorRuntime", ConnectedClusterBgpPeerResource.ResourceType.Namespace, Diagnostics);
-            _bgpPeersRestClient = new BgpPeers(_bgpPeersClientDiagnostics, Pipeline, Endpoint, connectedClusterBgpPeerApiVersion ?? "2024-03-01");
+            _bgpPeersRestClient = new BgpPeers(_bgpPeersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, connectedClusterBgpPeerApiVersion ?? "2024-03-01");
         }
 
         /// <summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConnectedClusterBgpPeerData, ConnectedClusterBgpPeerResource>(new BgpPeersGetAllAsyncCollectionResultOfT(_bgpPeersRestClient, Id.ToString(), context, "ConnectedClusterBgpPeerCollection.GetAll"), data => new ConnectedClusterBgpPeerResource(Client, data));
+            return new AsyncPageableWrapper<ConnectedClusterBgpPeerData, ConnectedClusterBgpPeerResource>(new ConnectedClusterBgpPeerDataAsyncCollectionResultOfT(_bgpPeersRestClient, Id.ToString(), context, "ConnectedClusterBgpPeerCollection.GetAll"), data => new ConnectedClusterBgpPeerResource(Client, data));
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConnectedClusterBgpPeerData, ConnectedClusterBgpPeerResource>(new BgpPeersGetAllCollectionResultOfT(_bgpPeersRestClient, Id.ToString(), context, "ConnectedClusterBgpPeerCollection.GetAll"), data => new ConnectedClusterBgpPeerResource(Client, data));
+            return new PageableWrapper<ConnectedClusterBgpPeerData, ConnectedClusterBgpPeerResource>(new ConnectedClusterBgpPeerDataCollectionResultOfT(_bgpPeersRestClient, Id.ToString(), context, "ConnectedClusterBgpPeerCollection.GetAll"), data => new ConnectedClusterBgpPeerResource(Client, data));
         }
 
         /// <summary>

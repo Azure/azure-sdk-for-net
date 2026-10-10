@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             TryGetApiVersion(WebPubSubReplicaResource.ResourceType, out string webPubSubReplicaApiVersion);
             _replicasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", WebPubSubReplicaResource.ResourceType.Namespace, Diagnostics);
-            _replicasRestClient = new Replicas(_replicasClientDiagnostics, Pipeline, Endpoint, webPubSubReplicaApiVersion ?? "2025-08-01-preview");
+            _replicasRestClient = new Replicas(_replicasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webPubSubReplicaApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WebPubSubReplicaData, WebPubSubReplicaResource>(new ReplicasGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WebPubSubReplicaData, WebPubSubReplicaResource>(new WebPubSubReplicaDataAsyncCollectionResultOfT(
                 _replicasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WebPubSubReplicaData, WebPubSubReplicaResource>(new ReplicasGetAllCollectionResultOfT(
+            return new PageableWrapper<WebPubSubReplicaData, WebPubSubReplicaResource>(new WebPubSubReplicaDataCollectionResultOfT(
                 _replicasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

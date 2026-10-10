@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -16,12 +15,6 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="ElasticExportPolicyRule"/>. </summary>
-        public ElasticExportPolicyRule()
-        {
-            AllowedClients = new ChangeTrackingList<string>();
-        }
 
         /// <summary> Initializes a new instance of <see cref="ElasticExportPolicyRule"/>. </summary>
         /// <param name="ruleIndex"> Controls the priority of the export policy rule. When connecting to the volume the rule with the lowest index that applies to the connecting client is used. </param>
@@ -41,23 +34,5 @@ namespace Azure.ResourceManager.NetApp.Models
             RootAccess = rootAccess;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Controls the priority of the export policy rule. When connecting to the volume the rule with the lowest index that applies to the connecting client is used. </summary>
-        public int? RuleIndex { get; set; }
-
-        /// <summary> Specifies the Unix file access level for the volume. It encompasses both read-only and read-write permissions. Additionally, NoAccess can be set to block all access to the volume. </summary>
-        public ElasticUnixAccessRule? UnixAccessRule { get; set; }
-
-        /// <summary> Allows clients to access the volume with the NFSv3 protocol. Enable only for NFSv3 type volumes. </summary>
-        public ElasticNfsv3Access? Nfsv3 { get; set; }
-
-        /// <summary> Allows clients to access the volume with at least NFSv4.1 protocol. </summary>
-        public ElasticNfsv4Access? Nfsv4 { get; set; }
-
-        /// <summary> Client ingress specification for the export policy as list of IPv4 CIDRs, IPv4 host addresses and host names. </summary>
-        public IList<string> AllowedClients { get; }
-
-        /// <summary> Indicates whether root access to the volume is granted to clients affected by this rule. </summary>
-        public ElasticRootAccess? RootAccess { get; set; }
     }
 }

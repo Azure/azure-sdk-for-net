@@ -14,9 +14,9 @@ namespace Azure.Provisioning.Batch
     {
         /// <summary> No dynamic VNet assignment is enabled. </summary>
         [DataMember(Name = "none")]
-        None,
+        None = 0,
         /// <summary> Dynamic VNet assignment is done per-job. If this value is set, the network configuration subnet ID must also be set. This feature requires approval before use, please contact support. </summary>
         [DataMember(Name = "job")]
-        Job
+        Job = 1
     }
 }

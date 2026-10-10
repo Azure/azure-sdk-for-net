@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(FrontDoorSecretResource.ResourceType, out string frontDoorSecretApiVersion);
             _secretsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", FrontDoorSecretResource.ResourceType.Namespace, Diagnostics);
-            _secretsRestClient = new Secrets(_secretsClientDiagnostics, Pipeline, Endpoint, frontDoorSecretApiVersion ?? "2025-09-01-preview");
+            _secretsRestClient = new Secrets(_secretsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorSecretApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FrontDoorSecretData, FrontDoorSecretResource>(new SecretsGetByProfileAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FrontDoorSecretData, FrontDoorSecretResource>(new FrontDoorSecretDataAsyncCollectionResultOfT(
                 _secretsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FrontDoorSecretData, FrontDoorSecretResource>(new SecretsGetByProfileCollectionResultOfT(
+            return new PageableWrapper<FrontDoorSecretData, FrontDoorSecretResource>(new FrontDoorSecretDataCollectionResultOfT(
                 _secretsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

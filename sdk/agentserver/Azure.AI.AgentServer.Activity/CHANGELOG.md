@@ -1,0 +1,34 @@
+# Release History
+
+## 1.0.0-beta.1 (Unreleased)
+
+### Features Added
+
+- Initial release of `Azure.AI.AgentServer.Activity` — a .NET library for hosting a Microsoft 365
+  Agents SDK `AgentApplication` as an Azure AI Foundry hosted agent that speaks the **activity
+  protocol** (`POST /activity/messages`).
+- `ActivityServer.Run(...)` one-liner startup that wires Kestrel, health probes, OpenTelemetry, and
+  the activity endpoint, with overloads for the way your agent is constructed:
+  - `Run<TAgent>()` — host an `AgentApplication` subclass by type.
+  - `Run(app => ...)` — register handlers inline on the built `AgentApplication` (no agent class).
+  - `Run(agentApp)` — host a pre-built `AgentApplication` instance.
+  - `Run(Func<IServiceProvider, AgentApplication>)` — factory registration with access to DI.
+  - `Run(RequestDelegate)` — own the raw request pipeline (the Microsoft 365 Agents SDK is not
+    initialized).
+- Composition on the shared Core host builder via `AgentHostBuilder.AddActivity<TAgent>()`,
+  `AddActivity(agentApp)`, and `AddActivity(Func<IServiceProvider, AgentApplication>)`.
+- Self-hosting on your own `WebApplication` via `AddFoundryActivity()` / `MapFoundryActivity()`
+  (aliased as `AddActivityServer()` / `MapActivityServer()`), including a `RequestDelegate` overload
+  of `MapFoundryActivity` for owning the request pipeline in a self-hosted app. This is also the
+  two-line conversion path for an existing Microsoft 365 Agents SDK application.
+- `ActivityServerOptions` for configuring the built stack: outbound-auth model (`DigitalWorker`),
+  turn-state `Storage`, the outbound `Connections` provider, the `Connections:*`
+  `ConnectionConfiguration` mapping, and a `ConfigureServices` hook.
+- Foundry outbound-auth is configuration-driven: `ActivityEnvironment` derives the M365
+  `Connections:*` settings from the Foundry-native identity (managed identity for the **simple**
+  agent-instance model, `IdentityProxyManager` for the **digital worker** blueprint + FMI exchange
+  model) and the SDK-native connection provider mints the outbound reply token. No process
+  environment is mutated.
+- Session resolution (`agent_session_id` query / `x-agent-session-id` header / environment /
+  generated), sanitized session-id response header, `x-platform-error-source` error classification
+  (`user` / `platform` / `upstream`), and distributed tracing via `ActivityProtocolActivitySource`.

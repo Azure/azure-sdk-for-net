@@ -37,6 +37,7 @@ namespace Azure.Core.Diagnostics
         private const int PipelineTransportOptionsNotAppliedEvent = 23;
         private const int FailedToDecodeCaeChallengeClaimsEvent = 24;
         private const int FailedToUpdateTransportEvent = 25;
+        private const int TokenBindingEvent = 26;
 
         private AzureCoreEventSource() : base(EventSourceName) { }
 
@@ -154,6 +155,22 @@ namespace Azure.Core.Diagnostics
             }
         }
 
+        [NonEvent]
+        public void ResponseContentBlock(string requestId, int blockNumber, byte[] content, int offset, int count, Encoding? textEncoding)
+        {
+            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            {
+                if (textEncoding is not null)
+                {
+                    ResponseContentTextBlock(requestId, blockNumber, textEncoding.GetString(content, offset, count));
+                }
+                else
+                {
+                    ResponseContentBlock(requestId, blockNumber, ToExactSizedArray(content, offset, count));
+                }
+            }
+        }
+
         [Event(ResponseContentBlockEvent, Level = EventLevel.Verbose, Message = "Response [{0}] content block {1}: {2}")]
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "WriteEvent is used with an array with primitive type elements.")]
         public void ResponseContentBlock(string requestId, int blockNumber, byte[] content)
@@ -227,6 +244,43 @@ namespace Azure.Core.Diagnostics
                     ErrorResponseContentBlock(requestId, blockNumber, content);
                 }
             }
+        }
+
+        [NonEvent]
+        public void ErrorResponseContentBlock(string requestId, int blockNumber, byte[] content, int offset, int count, Encoding? textEncoding)
+        {
+            if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+            {
+                if (textEncoding is not null)
+                {
+                    ErrorResponseContentTextBlock(requestId, blockNumber, textEncoding.GetString(content, offset, count));
+                }
+                else
+                {
+                    ErrorResponseContentBlock(requestId, blockNumber, ToExactSizedArray(content, offset, count));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Copies the slice that was actually read into an array whose length is exactly the
+        /// payload length. The binary content events serialize the entire array they are given,
+        /// so passing the caller's buffer directly would publish its unwritten remainder - which,
+        /// for buffers rented from <see cref="System.Buffers.ArrayPool{T}"/>, is unrelated recycled
+        /// content. See https://github.com/Azure/azure-sdk-for-net/issues/61399.
+        /// </summary>
+        [NonEvent]
+        private static byte[] ToExactSizedArray(byte[] content, int offset, int count)
+        {
+            // The array is only safe to pass through when it provably holds nothing but the payload.
+            if (offset == 0 && content.Length == count)
+            {
+                return content;
+            }
+
+            byte[] bytes = new byte[count];
+            Array.Copy(content, offset, bytes, 0, count);
+            return bytes;
         }
 
         [Event(ErrorResponseContentBlockEvent, Level = EventLevel.Informational, Message = "Error response [{0}] content block {1}: {2}")]
@@ -341,6 +395,15 @@ namespace Azure.Core.Diagnostics
             if (IsEnabled(EventLevel.Error, EventKeywords.None))
             {
                 WriteEvent(FailedToUpdateTransportEvent, reason);
+            }
+        }
+
+        [Event(TokenBindingEvent, Level = EventLevel.Verbose, Message = "TokenBinding: {0}")]
+        public void TokenBinding(string reason)
+        {
+            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            {
+                WriteEvent(TokenBindingEvent, reason);
             }
         }
     }

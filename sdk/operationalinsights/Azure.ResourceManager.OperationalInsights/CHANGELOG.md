@@ -1,14 +1,24 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0 (2026-10-08)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Upgraded the API version to 2026-03-01.
 
 ### Other Changes
+
+- Upgraded dependent Azure.Core to 1.62.0.
+
+- Corrected the names of Summary Logs enum types. The previous names remain available as obsolete compatibility APIs.
+
+## 1.3.2 (2026-06-23)
+
+### Other Changes
+
+- Migrated SDK generation from Swagger/AutoRest to TypeSpec.
+- Upgraded dependent Azure.Core to 1.59.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
 
 ## 1.3.1 (2025-07-28)
 

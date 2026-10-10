@@ -213,6 +213,7 @@
       "$id": "25",
       "kind": "model",
       "name": "Animal",
+      "apiVersions": [],
       "namespace": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding",
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.Animal",
       "usage": "Input,Output,Json",
@@ -227,6 +228,7 @@
         "$id": "26",
         "kind": "property",
         "name": "kind",
+        "apiVersions": [],
         "serializedName": "kind",
         "doc": "The kind of animal",
         "type": {
@@ -258,6 +260,7 @@
           "$id": "28",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "doc": "Name of the animal",
           "type": {
@@ -287,6 +290,7 @@
           "$id": "30",
           "kind": "model",
           "name": "Pet",
+          "apiVersions": [],
           "namespace": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding",
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.Pet",
           "usage": "Input,Output,Json",
@@ -302,6 +306,7 @@
             "$id": "31",
             "kind": "property",
             "name": "kind",
+            "apiVersions": [],
             "serializedName": "kind",
             "type": {
               "$ref": "1"
@@ -331,6 +336,7 @@
               "$id": "32",
               "kind": "property",
               "name": "trained",
+              "apiVersions": [],
               "serializedName": "trained",
               "doc": "Whether the pet is trained",
               "type": {
@@ -360,6 +366,7 @@
               "$id": "34",
               "kind": "model",
               "name": "Dog",
+              "apiVersions": [],
               "namespace": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding",
               "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.Dog",
               "usage": "Input,Output,Json",
@@ -379,6 +386,7 @@
                   "$id": "35",
                   "kind": "property",
                   "name": "kind",
+                  "apiVersions": [],
                   "serializedName": "kind",
                   "type": {
                     "$ref": "3"
@@ -401,6 +409,7 @@
                   "$id": "36",
                   "kind": "property",
                   "name": "breed",
+                  "apiVersions": [],
                   "serializedName": "breed",
                   "doc": "The breed of the dog",
                   "type": {

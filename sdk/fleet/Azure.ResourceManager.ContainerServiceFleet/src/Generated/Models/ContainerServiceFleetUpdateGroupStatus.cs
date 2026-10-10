@@ -28,15 +28,19 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateGroupStatus"/>. </summary>
         /// <param name="status"> The status of the UpdateGroup. </param>
         /// <param name="name"> The name of the UpdateGroup. </param>
+        /// <param name="failureCount"> The total member upgrade failures within the group. </param>
+        /// <param name="maxAllowedFailures"> The max number of member upgrade failures allowed within this group, resolved from the UpdateStrategy.UpdateGroup.maxAllowedFailures value. </param>
         /// <param name="maxConcurrency">   The max number of upgrades that can run concurrently in this group, resolved from the UpdateStrategy.UpdateGroup.maxConcurrency value. If no value was provided, this value defaults to "1". </param>
         /// <param name="members"> The list of member this UpdateGroup updates. </param>
         /// <param name="beforeGates"> The list of Gates that will run before this UpdateGroup. </param>
         /// <param name="afterGates"> The list of Gates that will run after this UpdateGroup. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetUpdateGroupStatus(ContainerServiceFleetUpdateStatus status, string name, int? maxConcurrency, IReadOnlyList<MemberUpdateStatus> members, IReadOnlyList<ContainerServiceFleetUpdateRunGateStatus> beforeGates, IReadOnlyList<ContainerServiceFleetUpdateRunGateStatus> afterGates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceFleetUpdateGroupStatus(ContainerServiceFleetUpdateStatus status, string name, int? failureCount, int? maxAllowedFailures, int? maxConcurrency, IReadOnlyList<MemberUpdateStatus> members, IReadOnlyList<ContainerServiceFleetUpdateRunGateStatus> beforeGates, IReadOnlyList<ContainerServiceFleetUpdateRunGateStatus> afterGates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Name = name;
+            FailureCount = failureCount;
+            MaxAllowedFailures = maxAllowedFailures;
             MaxConcurrency = maxConcurrency;
             Members = members;
             BeforeGates = beforeGates;
@@ -49,6 +53,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> The name of the UpdateGroup. </summary>
         public string Name { get; }
+
+        /// <summary> The total member upgrade failures within the group. </summary>
+        public int? FailureCount { get; }
+
+        /// <summary> The max number of member upgrade failures allowed within this group, resolved from the UpdateStrategy.UpdateGroup.maxAllowedFailures value. </summary>
+        public int? MaxAllowedFailures { get; }
 
         /// <summary>   The max number of upgrades that can run concurrently in this group, resolved from the UpdateStrategy.UpdateGroup.maxConcurrency value. If no value was provided, this value defaults to "1". </summary>
         public int? MaxConcurrency { get; }

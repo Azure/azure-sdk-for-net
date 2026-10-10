@@ -383,6 +383,7 @@
       "$id": "45",
       "kind": "model",
       "name": "InnerModel",
+      "apiVersions": [],
       "namespace": "Type.Dictionary",
       "crossLanguageDefinitionId": "Type.Dictionary.InnerModel",
       "usage": "Input,Output,Json",
@@ -399,6 +400,7 @@
           "$id": "46",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Required string property",
           "type": {
@@ -426,6 +428,7 @@
           "$id": "48",
           "kind": "property",
           "name": "children",
+          "apiVersions": [],
           "serializedName": "children",
           "type": {
             "$id": "49",

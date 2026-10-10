@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         }
 
         /// <summary> List of access rights. </summary>
-        public IList<AuthorizationRuleAccessRightExt> AccessRights { get; }
+        public IList<AuthorizationRuleAccessRightExt> AccessRights { get; } = new ChangeTrackingList<AuthorizationRuleAccessRightExt>();
     }
 }

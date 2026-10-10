@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             TryGetApiVersion(ResourceType, out string billingBenefitsReservationOrderAliasApiVersion);
             _reservationOrderAliasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ResourceType.Namespace, Diagnostics);
-            _reservationOrderAliasRestClient = new ReservationOrderAlias(_reservationOrderAliasClientDiagnostics, Pipeline, Endpoint, billingBenefitsReservationOrderAliasApiVersion ?? "2025-12-01-preview");
+            _reservationOrderAliasRestClient = new ReservationOrderAlias(_reservationOrderAliasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingBenefitsReservationOrderAliasApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 

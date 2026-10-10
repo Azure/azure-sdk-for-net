@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Marketplace
         {
             TryGetApiVersion(PrivateStoreCollectionInfoResource.ResourceType, out string privateStoreCollectionInfoApiVersion);
             _privateStoreCollectionInfoClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", PrivateStoreCollectionInfoResource.ResourceType.Namespace, Diagnostics);
-            _privateStoreCollectionInfoRestClient = new PrivateStoreCollectionInfo(_privateStoreCollectionInfoClientDiagnostics, Pipeline, Endpoint, privateStoreCollectionInfoApiVersion ?? "2025-01-01");
+            _privateStoreCollectionInfoRestClient = new PrivateStoreCollectionInfo(_privateStoreCollectionInfoClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, privateStoreCollectionInfoApiVersion ?? "2025-01-01");
             ValidateResourceId(id);
         }
 
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PrivateStoreCollectionInfoData, PrivateStoreCollectionInfoResource>(new PrivateStoreCollectionInfoGetAllAsyncCollectionResultOfT(_privateStoreCollectionInfoRestClient, Guid.Parse(Id.Name), context, "PrivateStoreCollectionInfoCollection.GetAll"), data => new PrivateStoreCollectionInfoResource(Client, data));
+            return new AsyncPageableWrapper<PrivateStoreCollectionInfoData, PrivateStoreCollectionInfoResource>(new PrivateStoreCollectionInfoDataAsyncCollectionResultOfT(_privateStoreCollectionInfoRestClient, Guid.Parse(Id.Name), context, "PrivateStoreCollectionInfoCollection.GetAll"), data => new PrivateStoreCollectionInfoResource(Client, data));
         }
 
         /// <summary>
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PrivateStoreCollectionInfoData, PrivateStoreCollectionInfoResource>(new PrivateStoreCollectionInfoGetAllCollectionResultOfT(_privateStoreCollectionInfoRestClient, Guid.Parse(Id.Name), context, "PrivateStoreCollectionInfoCollection.GetAll"), data => new PrivateStoreCollectionInfoResource(Client, data));
+            return new PageableWrapper<PrivateStoreCollectionInfoData, PrivateStoreCollectionInfoResource>(new PrivateStoreCollectionInfoDataCollectionResultOfT(_privateStoreCollectionInfoRestClient, Guid.Parse(Id.Name), context, "PrivateStoreCollectionInfoCollection.GetAll"), data => new PrivateStoreCollectionInfoResource(Client, data));
         }
 
         /// <summary>

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiCenter
         {
             TryGetApiVersion(ApiCenterServiceResource.ResourceType, out string apiCenterServiceApiVersion);
             _servicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ApiCenterServiceResource.ResourceType.Namespace, Diagnostics);
-            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Endpoint, apiCenterServiceApiVersion ?? "2024-06-01-preview");
+            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiCenterServiceApiVersion ?? "2024-06-01-preview");
             ValidateResourceId(id);
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ApiCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiCenterServiceData, ApiCenterServiceResource>(new ServicesGetByResourceGroupAsyncCollectionResultOfT(_servicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApiCenterServiceCollection.GetAll"), data => new ApiCenterServiceResource(Client, data));
+            return new AsyncPageableWrapper<ApiCenterServiceData, ApiCenterServiceResource>(new ApiCenterServiceDataAsyncCollectionResultOfT(_servicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApiCenterServiceCollection.GetAll"), data => new ApiCenterServiceResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.ApiCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiCenterServiceData, ApiCenterServiceResource>(new ServicesGetByResourceGroupCollectionResultOfT(_servicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApiCenterServiceCollection.GetAll"), data => new ApiCenterServiceResource(Client, data));
+            return new PageableWrapper<ApiCenterServiceData, ApiCenterServiceResource>(new ApiCenterServiceDataCollectionResultOfT(_servicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApiCenterServiceCollection.GetAll"), data => new ApiCenterServiceResource(Client, data));
         }
 
         /// <summary>

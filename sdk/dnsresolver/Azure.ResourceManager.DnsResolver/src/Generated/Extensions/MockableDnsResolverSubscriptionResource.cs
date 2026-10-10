@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
 
         private ClientDiagnostics DnsResolversClientDiagnostics => _dnsResolversClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DnsResolvers DnsResolversRestClient => _dnsResolversRestClient ??= new DnsResolvers(DnsResolversClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
+        private DnsResolvers DnsResolversRestClient => _dnsResolversRestClient ??= new DnsResolvers(DnsResolversClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
 
         private ClientDiagnostics DnsForwardingRulesetsClientDiagnostics => _dnsForwardingRulesetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DnsForwardingRulesets DnsForwardingRulesetsRestClient => _dnsForwardingRulesetsRestClient ??= new DnsForwardingRulesets(DnsForwardingRulesetsClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
+        private DnsForwardingRulesets DnsForwardingRulesetsRestClient => _dnsForwardingRulesetsRestClient ??= new DnsForwardingRulesets(DnsForwardingRulesetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
 
         private ClientDiagnostics DnsResolverPoliciesClientDiagnostics => _dnsResolverPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DnsResolverPolicies DnsResolverPoliciesRestClient => _dnsResolverPoliciesRestClient ??= new DnsResolverPolicies(DnsResolverPoliciesClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
+        private DnsResolverPolicies DnsResolverPoliciesRestClient => _dnsResolverPoliciesRestClient ??= new DnsResolverPolicies(DnsResolverPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
 
         private ClientDiagnostics DnsResolverDomainListsClientDiagnostics => _dnsResolverDomainListsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DnsResolverDomainLists DnsResolverDomainListsRestClient => _dnsResolverDomainListsRestClient ??= new DnsResolverDomainLists(DnsResolverDomainListsClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
+        private DnsResolverDomainLists DnsResolverDomainListsRestClient => _dnsResolverDomainListsRestClient ??= new DnsResolverDomainLists(DnsResolverDomainListsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
 
         /// <summary>
         /// Lists DNS resolvers in all resource groups of a subscription.
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DnsResolverData, DnsResolverResource>(new DnsResolversGetAllAsyncCollectionResultOfT(DnsResolversRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableDnsResolverSubscriptionResource.GetDnsResolvers"), data => new DnsResolverResource(Client, data));
+            return new AsyncPageableWrapper<DnsResolverData, DnsResolverResource>(new DnsResolverDataAsync0CollectionResultOfT(DnsResolversRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableDnsResolverSubscriptionResource.GetDnsResolvers"), data => new DnsResolverResource(Client, data));
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DnsResolverData, DnsResolverResource>(new DnsResolversGetAllCollectionResultOfT(DnsResolversRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableDnsResolverSubscriptionResource.GetDnsResolvers"), data => new DnsResolverResource(Client, data));
+            return new PageableWrapper<DnsResolverData, DnsResolverResource>(new DnsResolverData0CollectionResultOfT(DnsResolversRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableDnsResolverSubscriptionResource.GetDnsResolvers"), data => new DnsResolverResource(Client, data));
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DnsForwardingRulesetData, DnsForwardingRulesetResource>(new DnsForwardingRulesetsGetAllAsyncCollectionResultOfT(DnsForwardingRulesetsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableDnsResolverSubscriptionResource.GetDnsForwardingRulesets"), data => new DnsForwardingRulesetResource(Client, data));
+            return new AsyncPageableWrapper<DnsForwardingRulesetData, DnsForwardingRulesetResource>(new DnsForwardingRulesetDataAsync0CollectionResultOfT(DnsForwardingRulesetsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableDnsResolverSubscriptionResource.GetDnsForwardingRulesets"), data => new DnsForwardingRulesetResource(Client, data));
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DnsForwardingRulesetData, DnsForwardingRulesetResource>(new DnsForwardingRulesetsGetAllCollectionResultOfT(DnsForwardingRulesetsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableDnsResolverSubscriptionResource.GetDnsForwardingRulesets"), data => new DnsForwardingRulesetResource(Client, data));
+            return new PageableWrapper<DnsForwardingRulesetData, DnsForwardingRulesetResource>(new DnsForwardingRulesetData0CollectionResultOfT(DnsForwardingRulesetsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableDnsResolverSubscriptionResource.GetDnsForwardingRulesets"), data => new DnsForwardingRulesetResource(Client, data));
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DnsResolverPolicyData, DnsResolverPolicyResource>(new DnsResolverPoliciesGetAllAsyncCollectionResultOfT(DnsResolverPoliciesRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableDnsResolverSubscriptionResource.GetDnsResolverPolicies"), data => new DnsResolverPolicyResource(Client, data));
+            return new AsyncPageableWrapper<DnsResolverPolicyData, DnsResolverPolicyResource>(new DnsResolverPolicyDataAsync0CollectionResultOfT(DnsResolverPoliciesRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableDnsResolverSubscriptionResource.GetDnsResolverPolicies"), data => new DnsResolverPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DnsResolverPolicyData, DnsResolverPolicyResource>(new DnsResolverPoliciesGetAllCollectionResultOfT(DnsResolverPoliciesRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableDnsResolverSubscriptionResource.GetDnsResolverPolicies"), data => new DnsResolverPolicyResource(Client, data));
+            return new PageableWrapper<DnsResolverPolicyData, DnsResolverPolicyResource>(new DnsResolverPolicyData0CollectionResultOfT(DnsResolverPoliciesRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableDnsResolverSubscriptionResource.GetDnsResolverPolicies"), data => new DnsResolverPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DnsResolverDomainListData, DnsResolverDomainListResource>(new DnsResolverDomainListsGetAllAsyncCollectionResultOfT(DnsResolverDomainListsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableDnsResolverSubscriptionResource.GetDnsResolverDomainLists"), data => new DnsResolverDomainListResource(Client, data));
+            return new AsyncPageableWrapper<DnsResolverDomainListData, DnsResolverDomainListResource>(new DnsResolverDomainListDataAsync0CollectionResultOfT(DnsResolverDomainListsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableDnsResolverSubscriptionResource.GetDnsResolverDomainLists"), data => new DnsResolverDomainListResource(Client, data));
         }
 
         /// <summary>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DnsResolverDomainListData, DnsResolverDomainListResource>(new DnsResolverDomainListsGetAllCollectionResultOfT(DnsResolverDomainListsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableDnsResolverSubscriptionResource.GetDnsResolverDomainLists"), data => new DnsResolverDomainListResource(Client, data));
+            return new PageableWrapper<DnsResolverDomainListData, DnsResolverDomainListResource>(new DnsResolverDomainListData0CollectionResultOfT(DnsResolverDomainListsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableDnsResolverSubscriptionResource.GetDnsResolverDomainLists"), data => new DnsResolverDomainListResource(Client, data));
         }
     }
 }

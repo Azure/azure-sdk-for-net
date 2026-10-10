@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
 
         private ClientDiagnostics FabricCapacitiesClientDiagnostics => _fabricCapacitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Fabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FabricCapacities FabricCapacitiesRestClient => _fabricCapacitiesRestClient ??= new FabricCapacities(FabricCapacitiesClientDiagnostics, Pipeline, Endpoint, "2025-01-15-preview");
+        private FabricCapacities FabricCapacitiesRestClient => _fabricCapacitiesRestClient ??= new FabricCapacities(FabricCapacitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-01-preview");
 
         /// <summary>
         /// List FabricCapacity resources by subscription ID
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FabricCapacityData, FabricCapacityResource>(new FabricCapacitiesGetBySubscriptionAsyncCollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableFabricSubscriptionResource.GetFabricCapacities"), data => new FabricCapacityResource(Client, data));
+            return new AsyncPageableWrapper<FabricCapacityData, FabricCapacityResource>(new FabricCapacityDataAsync0CollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableFabricSubscriptionResource.GetFabricCapacities"), data => new FabricCapacityResource(Client, data));
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FabricCapacityData, FabricCapacityResource>(new FabricCapacitiesGetBySubscriptionCollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableFabricSubscriptionResource.GetFabricCapacities"), data => new FabricCapacityResource(Client, data));
+            return new PageableWrapper<FabricCapacityData, FabricCapacityResource>(new FabricCapacityData0CollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableFabricSubscriptionResource.GetFabricCapacities"), data => new FabricCapacityResource(Client, data));
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new FabricCapacitiesGetSkusFabricCapacitiesAsyncCollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableFabricSubscriptionResource.GetSkusFabricCapacities");
+            return new FabricSkuDetailsForNewCapacityAsyncCollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableFabricSubscriptionResource.GetSkusFabricCapacities");
         }
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new FabricCapacitiesGetSkusFabricCapacitiesCollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableFabricSubscriptionResource.GetSkusFabricCapacities");
+            return new FabricSkuDetailsForNewCapacityCollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableFabricSubscriptionResource.GetSkusFabricCapacities");
         }
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new FabricCapacitiesGetUsagesAsyncCollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableFabricSubscriptionResource.GetUsages");
+            return new FabricCapacitiesQuotaAsyncCollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableFabricSubscriptionResource.GetUsages");
         }
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new FabricCapacitiesGetUsagesCollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableFabricSubscriptionResource.GetUsages");
+            return new FabricCapacitiesQuotaCollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableFabricSubscriptionResource.GetUsages");
         }
     }
 }

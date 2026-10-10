@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             TryGetApiVersion(DevTestLabSecretResource.ResourceType, out string devTestLabSecretApiVersion);
             _secretsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabSecretResource.ResourceType.Namespace, Diagnostics);
-            _secretsRestClient = new Secrets(_secretsClientDiagnostics, Pipeline, Endpoint, devTestLabSecretApiVersion ?? "2018-09-15");
+            _secretsRestClient = new Secrets(_secretsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabSecretApiVersion ?? "2018-09-15");
             ValidateResourceId(id);
         }
 
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevTestLabSecretData, DevTestLabSecretResource>(new SecretsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevTestLabSecretData, DevTestLabSecretResource>(new DevTestLabSecretDataAsyncCollectionResultOfT(
                 _secretsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevTestLabSecretData, DevTestLabSecretResource>(new SecretsGetAllCollectionResultOfT(
+            return new PageableWrapper<DevTestLabSecretData, DevTestLabSecretResource>(new DevTestLabSecretDataCollectionResultOfT(
                 _secretsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

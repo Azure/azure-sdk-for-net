@@ -57,6 +57,10 @@ namespace Azure.Provisioning.KeyVault
             base.DefineProvisionableProperties();
             _family = DefineProperty<ManagedHsmSkuFamily>(nameof(Family), new string[] { "family" }, isRequired: true);
             _name = DefineProperty<ManagedHsmSkuName>(nameof(Name), new string[] { "name" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedHsmSku that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

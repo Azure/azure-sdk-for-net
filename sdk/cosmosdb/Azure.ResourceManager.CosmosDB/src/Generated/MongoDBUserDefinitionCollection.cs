@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(MongoDBUserDefinitionResource.ResourceType, out string mongoDBUserDefinitionApiVersion);
             _mongoDBResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", MongoDBUserDefinitionResource.ResourceType.Namespace, Diagnostics);
-            _mongoDBResourcesRestClient = new MongoDBResources(_mongoDBResourcesClientDiagnostics, Pipeline, Endpoint, mongoDBUserDefinitionApiVersion ?? "2026-04-01-preview");
+            _mongoDBResourcesRestClient = new MongoDBResources(_mongoDBResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mongoDBUserDefinitionApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MongoDBUserDefinitionData, MongoDBUserDefinitionResource>(new MongoDBResourcesGetMongoUserDefinitionsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MongoDBUserDefinitionData, MongoDBUserDefinitionResource>(new MongoDBUserDefinitionDataAsyncCollectionResultOfT(
                 _mongoDBResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MongoDBUserDefinitionData, MongoDBUserDefinitionResource>(new MongoDBResourcesGetMongoUserDefinitionsCollectionResultOfT(
+            return new PageableWrapper<MongoDBUserDefinitionData, MongoDBUserDefinitionResource>(new MongoDBUserDefinitionDataCollectionResultOfT(
                 _mongoDBResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

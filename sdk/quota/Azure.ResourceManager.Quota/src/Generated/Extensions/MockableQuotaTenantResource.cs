@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Quota.Mocking
 
         private ClientDiagnostics QuotaOperationClientDiagnostics => _quotaOperationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Quota.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private QuotaOperation QuotaOperationRestClient => _quotaOperationRestClient ??= new QuotaOperation(QuotaOperationClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private QuotaOperation QuotaOperationRestClient => _quotaOperationRestClient ??= new QuotaOperation(QuotaOperationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         /// <summary>
         /// List the operations for the provider
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Quota.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new QuotaOperationGetAllAsyncCollectionResultOfT(QuotaOperationRestClient, context, "MockableQuotaTenantResource.GetAll");
+            return new QuotaOperationResultAsyncCollectionResultOfT(QuotaOperationRestClient, context, "MockableQuotaTenantResource.GetAll");
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Quota.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new QuotaOperationGetAllCollectionResultOfT(QuotaOperationRestClient, context, "MockableQuotaTenantResource.GetAll");
+            return new QuotaOperationResultCollectionResultOfT(QuotaOperationRestClient, context, "MockableQuotaTenantResource.GetAll");
         }
     }
 }

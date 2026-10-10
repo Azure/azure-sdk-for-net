@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sphere
         {
             TryGetApiVersion(SphereCatalogResource.ResourceType, out string sphereCatalogApiVersion);
             _catalogsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sphere", SphereCatalogResource.ResourceType.Namespace, Diagnostics);
-            _catalogsRestClient = new Catalogs(_catalogsClientDiagnostics, Pipeline, Endpoint, sphereCatalogApiVersion ?? "2024-04-01");
+            _catalogsRestClient = new Catalogs(_catalogsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sphereCatalogApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Sphere
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SphereCatalogData, SphereCatalogResource>(new CatalogsGetByResourceGroupAsyncCollectionResultOfT(_catalogsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SphereCatalogCollection.GetAll"), data => new SphereCatalogResource(Client, data));
+            return new AsyncPageableWrapper<SphereCatalogData, SphereCatalogResource>(new SphereCatalogDataAsyncCollectionResultOfT(_catalogsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SphereCatalogCollection.GetAll"), data => new SphereCatalogResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Sphere
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SphereCatalogData, SphereCatalogResource>(new CatalogsGetByResourceGroupCollectionResultOfT(_catalogsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SphereCatalogCollection.GetAll"), data => new SphereCatalogResource(Client, data));
+            return new PageableWrapper<SphereCatalogData, SphereCatalogResource>(new SphereCatalogDataCollectionResultOfT(_catalogsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SphereCatalogCollection.GetAll"), data => new SphereCatalogResource(Client, data));
         }
 
         /// <summary>

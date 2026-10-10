@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Redis
         {
             TryGetApiVersion(RedisResource.ResourceType, out string redisApiVersion);
             _redisResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Redis", RedisResource.ResourceType.Namespace, Diagnostics);
-            _redisResourcesRestClient = new RedisResources(_redisResourcesClientDiagnostics, Pipeline, Endpoint, redisApiVersion ?? "2025-08-01-preview");
+            _redisResourcesRestClient = new RedisResources(_redisResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, redisApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Redis
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RedisData, RedisResource>(new RedisResourcesGetByResourceGroupAsyncCollectionResultOfT(_redisResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "RedisCollection.GetAll"), data => new RedisResource(Client, data));
+            return new AsyncPageableWrapper<RedisData, RedisResource>(new RedisDataAsyncCollectionResultOfT(_redisResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "RedisCollection.GetAll"), data => new RedisResource(Client, data));
         }
 
         /// <summary>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Redis
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RedisData, RedisResource>(new RedisResourcesGetByResourceGroupCollectionResultOfT(_redisResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "RedisCollection.GetAll"), data => new RedisResource(Client, data));
+            return new PageableWrapper<RedisData, RedisResource>(new RedisDataCollectionResultOfT(_redisResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "RedisCollection.GetAll"), data => new RedisResource(Client, data));
         }
 
         /// <summary>

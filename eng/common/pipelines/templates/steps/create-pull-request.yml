@@ -22,7 +22,7 @@ parameters:
   SkipCheckingForChanges: false
   CloseAfterOpenForTesting: false
   OpenAsDraft: false
-  AuthToken: $(azuresdk-github-pat)
+  AuthToken: ''
   # PushAuthToken: for cross-org pushes (pushing to PROwner's fork in a different org).
   # Defaults to AuthToken when not specified.
   PushAuthToken: ''

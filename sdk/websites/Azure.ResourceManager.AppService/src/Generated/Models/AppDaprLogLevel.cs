@@ -7,66 +7,71 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Sets the log level for the Dapr sidecar. Allowed values are debug, info, warn, error. Default is info.
-    /// Serialized Name: DaprLogLevel
-    /// </summary>
+    /// <summary> Sets the log level for the Dapr sidecar. Allowed values are debug, info, warn, error. Default is info. </summary>
     public readonly partial struct AppDaprLogLevel : IEquatable<AppDaprLogLevel>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AppDaprLogLevel"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AppDaprLogLevel(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InfoValue = "info";
         private const string DebugValue = "debug";
         private const string WarnValue = "warn";
         private const string ErrorValue = "error";
 
-        /// <summary>
-        /// info
-        /// Serialized Name: DaprLogLevel.info
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="AppDaprLogLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AppDaprLogLevel(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Info. </summary>
         public static AppDaprLogLevel Info { get; } = new AppDaprLogLevel(InfoValue);
-        /// <summary>
-        /// debug
-        /// Serialized Name: DaprLogLevel.debug
-        /// </summary>
+
+        /// <summary> Gets the Debug. </summary>
         public static AppDaprLogLevel Debug { get; } = new AppDaprLogLevel(DebugValue);
-        /// <summary>
-        /// warn
-        /// Serialized Name: DaprLogLevel.warn
-        /// </summary>
+
+        /// <summary> Gets the Warn. </summary>
         public static AppDaprLogLevel Warn { get; } = new AppDaprLogLevel(WarnValue);
-        /// <summary>
-        /// error
-        /// Serialized Name: DaprLogLevel.error
-        /// </summary>
+
+        /// <summary> Gets the Error. </summary>
         public static AppDaprLogLevel Error { get; } = new AppDaprLogLevel(ErrorValue);
+
         /// <summary> Determines if two <see cref="AppDaprLogLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AppDaprLogLevel left, AppDaprLogLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AppDaprLogLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AppDaprLogLevel left, AppDaprLogLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AppDaprLogLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AppDaprLogLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AppDaprLogLevel(string value) => new AppDaprLogLevel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AppDaprLogLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AppDaprLogLevel?(string value) => value == null ? null : new AppDaprLogLevel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AppDaprLogLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AppDaprLogLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

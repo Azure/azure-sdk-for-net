@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             TryGetApiVersion(SiteRecoveryNetworkResource.ResourceType, out string siteRecoveryNetworkApiVersion);
             _replicationNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", SiteRecoveryNetworkResource.ResourceType.Namespace, Diagnostics);
-            _replicationNetworksRestClient = new ReplicationNetworks(_replicationNetworksClientDiagnostics, Pipeline, Endpoint, siteRecoveryNetworkApiVersion ?? "2026-02-01");
+            _replicationNetworksRestClient = new ReplicationNetworks(_replicationNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteRecoveryNetworkApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SiteRecoveryNetworkData, SiteRecoveryNetworkResource>(new ReplicationNetworksGetByReplicationFabricsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SiteRecoveryNetworkData, SiteRecoveryNetworkResource>(new SiteRecoveryNetworkDataAsyncCollectionResultOfT(
                 _replicationNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SiteRecoveryNetworkData, SiteRecoveryNetworkResource>(new ReplicationNetworksGetByReplicationFabricsCollectionResultOfT(
+            return new PageableWrapper<SiteRecoveryNetworkData, SiteRecoveryNetworkResource>(new SiteRecoveryNetworkDataCollectionResultOfT(
                 _replicationNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <summary> Managed-On-Behalf-Of broker resources. </summary>
         [WirePath("moboBrokerResources")]
-        public IReadOnlyList<AppConfigurationMoboBrokerResourceInfo> MoboBrokerResources { get; }
+        public IReadOnlyList<AppConfigurationMoboBrokerResourceInfo> MoboBrokerResources { get; } = new ChangeTrackingList<AppConfigurationMoboBrokerResourceInfo>();
     }
 }

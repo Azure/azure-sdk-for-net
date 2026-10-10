@@ -10,6 +10,7 @@ namespace Azure.AI.OpenAI;
 [CodeGenType("AzureContentFilterResultForChoiceProtectedMaterialCodeCitation")]
 public partial class ContentFilterProtectedMaterialCitationResult
 {
+    /// <summary> Gets the URI of the citation source for detected protected material. </summary>
     // CUSTOM: Renamed for Uri type.
     [CodeGenMember("URL")]
     public Uri Uri { get; }

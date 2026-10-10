@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> The list of pools of IP addresses that can be allocated to load balancer services. </summary>
-        public IList<IPAddressPool> L2ServiceLoadBalancerIPAddressPools { get; }
+        public IList<IPAddressPool> L2ServiceLoadBalancerIPAddressPools { get; } = new ChangeTrackingList<IPAddressPool>();
     }
 }

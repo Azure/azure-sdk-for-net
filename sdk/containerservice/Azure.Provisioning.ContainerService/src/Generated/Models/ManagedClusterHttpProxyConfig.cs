@@ -108,6 +108,10 @@ namespace Azure.Provisioning.ContainerService
             _noProxy = DefineListProperty<string>(nameof(NoProxy), new string[] { "noProxy" });
             _trustedCA = DefineProperty<string>(nameof(TrustedCA), new string[] { "trustedCa" });
             _isHttpProxyEnabled = DefineProperty<bool>(nameof(IsHttpProxyEnabled), new string[] { "enabled" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterHttpProxyConfig that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

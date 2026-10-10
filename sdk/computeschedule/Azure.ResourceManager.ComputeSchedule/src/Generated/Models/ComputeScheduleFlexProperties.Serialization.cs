@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
             writer.WriteEndArray();
             writer.WritePropertyName("osType"u8);
-            writer.WriteStringValue(OsType.ToString());
+            writer.WriteStringValue(OSType.ToString());
             writer.WritePropertyName("priorityProfile"u8);
             writer.WriteObjectValue(PriorityProfile, options);
             if (Optional.IsDefined(ZoneAllocationPolicy))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ComputeScheduleFlexProperties(vmSizeProfiles, osType, priorityProfile, zoneAllocationPolicy, additionalBinaryDataProperties);

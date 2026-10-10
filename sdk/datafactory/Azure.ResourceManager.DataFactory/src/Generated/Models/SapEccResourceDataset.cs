@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,13 +19,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="path"> The path of the SAP ECC OData entity. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="path"/> is null. </exception>
-        public SapEccResourceDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> path) : base(linkedServiceName)
+        public SapEccResourceDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> path) : base("SapEccResource", linkedServiceName)
         {
             Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
             Argument.AssertNotNull(path, nameof(path));
 
-            Path = path;
-            DatasetType = "SapEccResource";
+            TypeProperties = new SapEccResourceDatasetTypeProperties(path);
         }
 
         /// <summary> Initializes a new instance of <see cref="SapEccResourceDataset"/>. </summary>
@@ -36,20 +36,31 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="path"> The path of the SAP ECC OData entity. Type: string (or Expression with resultType string). </param>
-        internal SapEccResourceDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> path) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> SAP ECC OData resource dataset properties. </param>
+        internal SapEccResourceDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, SapEccResourceDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
-            Path = path;
-            DatasetType = datasetType ?? "SapEccResource";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SapEccResourceDataset"/> for deserialization. </summary>
-        internal SapEccResourceDataset()
-        {
-        }
+        /// <summary> SAP ECC OData resource dataset properties. </summary>
+        internal SapEccResourceDatasetTypeProperties TypeProperties { get; set; }
 
         /// <summary> The path of the SAP ECC OData entity. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Path { get; set; }
+        public DataFactoryElement<string> Path
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Path;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapEccResourceDatasetTypeProperties();
+                }
+                TypeProperties.Path = value;
+            }
+        }
     }
 }

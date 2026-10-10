@@ -41,7 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(SampleDataResource.ResourceType, out string sampleDataApiVersion);
             _sampleDatasClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", SampleDataResource.ResourceType.Namespace, Diagnostics);
-            _sampleDatasRestClient = new SampleDatas(_sampleDatasClientDiagnostics, Pipeline, Endpoint, sampleDataApiVersion ?? "2024-05-01");
+            _sampleDatasRestClient = new SampleDatas(_sampleDatasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sampleDataApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -296,7 +296,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SampleData, SampleDataResource>(new SampleDatasGetAllAsyncCollectionResultOfT(_sampleDatasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SampleDataCollection.GetAll"), data => new SampleDataResource(Client, data));
+            return new AsyncPageableWrapper<SampleData, SampleDataResource>(new SampleDataAsyncCollectionResultOfT(_sampleDatasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SampleDataCollection.GetAll"), data => new SampleDataResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SampleData, SampleDataResource>(new SampleDatasGetAllCollectionResultOfT(_sampleDatasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SampleDataCollection.GetAll"), data => new SampleDataResource(Client, data));
+            return new PageableWrapper<SampleData, SampleDataResource>(new SampleDataCollectionResultOfT(_sampleDatasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SampleDataCollection.GetAll"), data => new SampleDataResource(Client, data));
         }
 
         /// <summary>

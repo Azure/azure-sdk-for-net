@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="updateName"> The name of the update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual new Response<UpdateResource> Get(string updateName, CancellationToken cancellationToken)
+        public virtual new Response<UpdateResource> Get(string updateName, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdateCollection instead.");
         }
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="updateName"> The name of the update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual new async Task<Response<UpdateResource>> GetAsync(string updateName, CancellationToken cancellationToken)
+        public virtual new async Task<Response<UpdateResource>> GetAsync(string updateName, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdateCollection instead.");
         }
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> List all Updates. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual new Pageable<UpdateResource> GetAll(CancellationToken cancellationToken)
+        public virtual new Pageable<UpdateResource> GetAll(CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdateCollection instead.");
         }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> List all Updates. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual new AsyncPageable<UpdateResource> GetAllAsync(CancellationToken cancellationToken)
+        public virtual new AsyncPageable<UpdateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdateCollection instead.");
         }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="updateName"> The name of the update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual new NullableResponse<UpdateResource> GetIfExists(string updateName, CancellationToken cancellationToken)
+        public virtual new NullableResponse<UpdateResource> GetIfExists(string updateName, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdateCollection instead.");
         }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="updateName"> The name of the update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual new async Task<NullableResponse<UpdateResource>> GetIfExistsAsync(string updateName, CancellationToken cancellationToken)
+        public virtual new async Task<NullableResponse<UpdateResource>> GetIfExistsAsync(string updateName, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdateCollection instead.");
         }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="data"> The update data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<UpdateResource> CreateOrUpdate(WaitUntil waitUntil, string updateName, UpdateData data, CancellationToken cancellationToken)
+        public virtual ArmOperation<UpdateResource> CreateOrUpdate(WaitUntil waitUntil, string updateName, UpdateData data, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdateCollection instead.");
         }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="data"> The update data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<UpdateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string updateName, UpdateData data, CancellationToken cancellationToken)
+        public virtual async Task<ArmOperation<UpdateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string updateName, UpdateData data, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdateCollection instead.");
         }

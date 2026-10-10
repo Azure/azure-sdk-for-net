@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         }
 
         /// <summary> Describes what are the supported resource types for a diagnostic. </summary>
-        public IList<string> SupportedResourceTypes { get; }
+        public IList<string> SupportedResourceTypes { get; } = new ChangeTrackingList<string>();
     }
 }

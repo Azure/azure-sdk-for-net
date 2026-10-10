@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             TryGetApiVersion(DiscountResource.ResourceType, out string discountApiVersion);
             _discountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", DiscountResource.ResourceType.Namespace, Diagnostics);
-            _discountsRestClient = new Discounts(_discountsClientDiagnostics, Pipeline, Endpoint, discountApiVersion ?? "2025-12-01-preview");
+            _discountsRestClient = new Discounts(_discountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discountApiVersion ?? "2025-12-01-preview");
             _discountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", DiscountResource.ResourceType.Namespace, Diagnostics);
-            _discountRestClient = new Discount(_discountClientDiagnostics, Pipeline, Endpoint, discountApiVersion ?? "2025-12-01-preview");
+            _discountRestClient = new Discount(_discountClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discountApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiscountData, DiscountResource>(new DiscountsResourceGroupListAsyncCollectionResultOfT(_discountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscountCollection.GetAll"), data => new DiscountResource(Client, data));
+            return new AsyncPageableWrapper<DiscountData, DiscountResource>(new DiscountDataAsyncCollectionResultOfT(_discountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscountCollection.GetAll"), data => new DiscountResource(Client, data));
         }
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiscountData, DiscountResource>(new DiscountsResourceGroupListCollectionResultOfT(_discountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscountCollection.GetAll"), data => new DiscountResource(Client, data));
+            return new PageableWrapper<DiscountData, DiscountResource>(new DiscountDataCollectionResultOfT(_discountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscountCollection.GetAll"), data => new DiscountResource(Client, data));
         }
 
         /// <summary>

@@ -16,6 +16,8 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private SearchIndexerDataIdentity _authIdentity;
+        internal bool _authIdentityIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AIServicesVisionParameters"/>. </summary>
         /// <param name="modelVersion"> The version of the model to use when calling the AI Services Vision service. It will default to the latest available when not specified. </param>
@@ -40,7 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
             ModelVersion = modelVersion;
             ResourceUri = resourceUri;
             ApiKey = apiKey;
-            AuthIdentity = authIdentity;
+            _authIdentity = authIdentity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -54,6 +56,17 @@ namespace Azure.Search.Documents.Indexes.Models
         public string ApiKey { get; set; }
 
         /// <summary> The user-assigned managed identity used for outbound connections. If an authResourceId is provided and it's not specified, the system-assigned managed identity is used. On updates to the index, if the identity is unspecified, the value remains unchanged. If set to "none", the value of this property is cleared. </summary>
-        public SearchIndexerDataIdentity AuthIdentity { get; set; }
+        public SearchIndexerDataIdentity AuthIdentity
+        {
+            get
+            {
+                return _authIdentity;
+            }
+            set
+            {
+                _authIdentity = value;
+                _authIdentityIsDefined = true;
+            }
+        }
     }
 }

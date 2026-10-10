@@ -30,6 +30,14 @@ ResponsesServer.Run<EchoHandler>();
 
 This starts a Kestrel server with OpenTelemetry, health checks, server version header, inbound request logging, and your handler mapped to the Responses API endpoints. The `Azure.AI.AgentServer.Core` package is included as a transitive dependency.
 
+In a hosted Foundry environment, the one-line and `AgentHostBuilder` APIs bind the Foundry
+credential, project endpoint, and response options from the `ResponsesServer` configuration
+section. Response storage and resilient-task storage use that same bound identity and endpoint.
+
+Durable task execution is opt-in. Setting `ResponsesServerOptions.ResilientBackground` to
+`true` enables it automatically. Otherwise stored responses run in-process unless the host
+explicitly calls `SetResilientTasksEnabled()`.
+
 Alternatively, use `AgentHost.CreateBuilder()` for more control over service registration and middleware:
 
 ```C# Snippet:Responses_ReadMe_ConfigureServer_Manual
@@ -146,7 +154,7 @@ Injected into every `CreateAsync` call, `ResponseContext` provides access to the
 
 - **`GetInputItemsAsync(resolveReferences, cancellationToken)`** — returns the resolved input items from the request. Item references are resolved to their content by default; pass `resolveReferences: false` to receive them as-is. Computed once and cached.
 - **`GetInputTextAsync(resolveReferences, cancellationToken)`** — shorthand that resolves input items and concatenates all text content from `ItemMessage` entries.
-- **`GetHistoryAsync(cancellationToken)`** — returns output items from previous responses in the conversation chain (oldest-first). Uses `previous_response_id` to walk the conversation and resolves items via the provider. Limit controlled by `ResponsesServerOptions.DefaultFetchHistoryCount` (default: 100).
+- **`GetHistoryAsync(cancellationToken)`** — returns output items from previous responses in the conversation chain (oldest-first). Uses `previous_response_id` to walk the conversation and resolves items via the provider. Limit controlled by `ResponsesServerOptions.DefaultFetchHistoryCount` (default: `-1`, unlimited). Positive values retain only the newest items.
 - **`ResponseId`** — the unique ID for this response, used to construct child item IDs.
 - **`ClientHeaders`** — forwarded HTTP headers from the original client request.
 - **`QueryParameters`** — query parameters from the original request.
@@ -213,11 +221,11 @@ Every response includes an `x-request-id` header (set by Core's `RequestIdMiddle
 
 All error responses (4xx/5xx) include the `x-platform-error-source` header classifying the error origin as `user`, `platform`, or `upstream`. See the [Core README](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Core#error-source-classification) for the full classification table.
 
-### Chat isolation and session ID
+### Platform context headers and session ID
 
-When the platform injects `x-agent-user-isolation-key` and `x-agent-chat-isolation-key` request headers, the library forwards them to the storage provider so that responses are scoped to the correct tenant and conversation. The resolved session ID is returned on every response via the `x-agent-session-id` header.
+When the platform injects `x-agent-user-id` and `x-agent-foundry-call-id` request headers, the library reads them into the platform context and forwards the per-request call ID to the storage provider so that responses resolve the correct caller context server-side. The resolved session ID is returned on every response via the `x-agent-session-id` header.
 
-Handlers can access the isolation context through `ResponseContext.Isolation` for custom partitioning logic.
+Handlers can access the platform context through `ResponseContext.PlatformContext` for custom partitioning logic.
 
 ### Persistence resilience
 
@@ -237,7 +245,87 @@ All service instances registered via `AddResponsesServer()` are thread-safe. Han
 
 You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples).
 
+### Multi-user session (per-request call ID)
+
+On container protocol `2.0.0` a single agent session can serve **multiple users**. Forwarding the per-request `x-agent-foundry-call-id` on outbound toolbox calls lets the tool server resolve *which* user made this request and act on their behalf — so user A's and user B's requests to the same session each get a user-scoped result. (`x-agent-user-id` is never forwarded; the tool resolves the user from the call ID server-side. Use `context.PlatformContext.UserIdKey` only for the container's own per-user state.)
+
+Register `FoundryCallIdHandler` on the Foundry `HttpClient` so the current request's call ID is echoed on every outbound call:
+
+```C# Snippet:Responses_ReadMe_MultiUser_Startup
+builder.Services.AddAgentServerCore();
+
+// Any HttpClient with FoundryCallIdHandler echoes the CURRENT request's
+// x-agent-foundry-call-id — never bake one call's ID into static headers.
+builder.Services.AddHttpClient("foundry", c => c.BaseAddress = new Uri(projectEndpoint))
+    .AddHttpMessageHandler<FoundryCallIdHandler>();
+```
+
+```C# Snippet:Responses_ReadMe_MultiUser
+// One agent session can serve many users. Forwarding the per-request call ID on the
+// outbound toolbox call lets the tool server resolve which user made this request and
+// act on their behalf. x-agent-user-id is never forwarded; use
+// context.PlatformContext.UserIdKey only for the container's own per-user state.
+public class MultiUserHandler : ResponseHandler
+{
+    private readonly IHttpClientFactory _httpClientFactory;
+
+    public MultiUserHandler(IHttpClientFactory httpClientFactory) =>
+        _httpClientFactory = httpClientFactory;
+
+    public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+        CreateResponse request,
+        ResponseContext context,
+        CancellationToken cancellationToken)
+    {
+        return new TextResponse(context, request,
+            createText: async ct =>
+            {
+                var query = await context.GetInputTextAsync(cancellationToken: ct);
+
+                // The "foundry" client is registered with FoundryCallIdHandler, so this
+                // request's x-agent-foundry-call-id rides the toolbox tools/call.
+                var foundry = _httpClientFactory.CreateClient("foundry");
+                using var resp = await foundry.PostAsJsonAsync(
+                    "/toolboxes/github/mcp",
+                    new
+                    {
+                        jsonrpc = "2.0",
+                        method = "tools/call",
+                        @params = new { name = "list_my_assigned_issues", arguments = new { filter = query } },
+                    },
+                    ct);
+
+                // The toolbox resolved the caller from the call ID and returned THIS user's issues.
+                return await resp.Content.ReadAsStringAsync(ct);
+            });
+    }
+}
+```
+
 ## Troubleshooting
+
+### Local response storage and upgrades
+
+The built-in local response providers partition response envelopes, items, history, and
+conversation indexes by `PlatformContext.UserIdKey`. Requests without a user ID use a
+separate anonymous partition; a named user (including one named `anonymous`) does not
+share that partition. The per-request call ID does not change the storage partition.
+User IDs must come from the trusted hosting boundary; this partitioning is not a
+replacement for authentication.
+
+File-backed response state is stored under
+`{AGENTSERVER_STATE_ROOT}/responses/partitions-v1` (default root: `~/.agentserver`).
+Named-user directory names and record filenames use deterministic hashes, not raw IDs.
+New partitioned state survives restarts.
+
+**Upgrade compatibility:** the provider starts with a new namespace. Previously persisted
+global responses, items, and history are not visible after upgrade, even to anonymous
+requests or crash recovery. The old files remain untouched. There is no automatic copying,
+deletion, ownership inference, or legacy read fallback. To restore old data, operators must
+perform an explicit migration with independently verified ownership; no migration tool is
+included. Back up legacy state before any operator-controlled migration.
+
+This describes the local response store, not isolation of every process-wide service.
 
 ### Common errors
 

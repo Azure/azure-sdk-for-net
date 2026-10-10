@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.MongoDBAtlas;
@@ -19,6 +18,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
     public static partial class ArmMongoDBAtlasModelFactory
     {
 
+        /// <summary> The resource model definition for an Azure Organization. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -44,6 +44,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                 default);
         }
 
+        /// <summary> Properties specific to Organization. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
@@ -54,6 +55,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             return new MongoDBAtlasOrganizationProperties(marketplace, user, provisioningState, partnerProperties, default);
         }
 
+        /// <summary> Marketplace details for an organization. </summary>
         /// <param name="subscriptionId"> Azure subscription id for the the marketplace offer is purchased from. </param>
         /// <param name="subscriptionStatus"> Marketplace subscription status. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
@@ -63,6 +65,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             return new MongoDBAtlasMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, default);
         }
 
+        /// <summary> Offer details for the marketplace that is selected by the user. </summary>
         /// <param name="publisherId"> Publisher Id for the marketplace offer. </param>
         /// <param name="offerId"> Offer Id for the marketplace offer. </param>
         /// <param name="planId"> Plan Id for the marketplace offer. </param>
@@ -82,6 +85,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                 default);
         }
 
+        /// <summary> User details for an organization. </summary>
         /// <param name="firstName"> First name of the user. </param>
         /// <param name="lastName"> Last name of the user. </param>
         /// <param name="emailAddress"> Email address of the user. </param>
@@ -101,6 +105,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                 default);
         }
 
+        /// <summary> MongoDB specific Properties. </summary>
         /// <param name="organizationId"> Organization Id in MongoDB system. </param>
         /// <param name="redirectUri"> Redirect URL for the MongoDB. </param>
         /// <param name="organizationName"> Organization name in MongoDB system. </param>
@@ -110,6 +115,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             return new MongoDBAtlasPartnerProperties(organizationId, redirectUri, organizationName, default);
         }
 
+        /// <summary> The type used for update operations of the OrganizationResource. </summary>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
@@ -121,12 +127,133 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             return new MongoDBAtlasOrganizationPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
+        /// <summary> The updatable properties of the OrganizationResource. </summary>
         /// <param name="user"> Details of the user. </param>
         /// <param name="partnerProperties"> MongoDB properties. </param>
         /// <returns> A new <see cref="Models.MongoDBAtlasOrganizationUpdateProperties"/> instance for mocking. </returns>
         public static MongoDBAtlasOrganizationUpdateProperties MongoDBAtlasOrganizationUpdateProperties(MongoDBAtlasUserDetails user = default, MongoDBAtlasPartnerProperties partnerProperties = default)
         {
             return new MongoDBAtlasOrganizationUpdateProperties(user, partnerProperties, default);
+        }
+
+        /// <summary> The MongoDB Atlas Project resource type. A project is a logical grouping of clusters within an organization. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="MongoDBAtlas.MongoDBAtlasProjectData"/> instance for mocking. </returns>
+        public static MongoDBAtlasProjectData MongoDBAtlasProjectData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MongoDBAtlasProjectProperties properties = default)
+        {
+            return new MongoDBAtlasProjectData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Properties specific to a MongoDB Atlas Project. </summary>
+        /// <param name="projectId"> Atlas project id. </param>
+        /// <param name="projectName"> Atlas project name. </param>
+        /// <param name="organizationId"> Atlas organization id. </param>
+        /// <param name="clusterCount"> Number of clusters in the project. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.MongoDBAtlasProjectProperties"/> instance for mocking. </returns>
+        public static MongoDBAtlasProjectProperties MongoDBAtlasProjectProperties(string projectId = default, string projectName = default, string organizationId = default, long? clusterCount = default, MongoDBAtlasResourceProvisioningState? provisioningState = default)
+        {
+            return new MongoDBAtlasProjectProperties(
+                projectId,
+                projectName,
+                organizationId,
+                clusterCount,
+                provisioningState,
+                default);
+        }
+
+        /// <summary> Response for tier limit check. </summary>
+        /// <param name="limits"> List of project limit statuses. </param>
+        /// <returns> A new <see cref="Models.MongoDBAtlasTierLimitReachedResult"/> instance for mocking. </returns>
+        public static MongoDBAtlasTierLimitReachedResult MongoDBAtlasTierLimitReachedResult(IEnumerable<MongoDBAtlasProjectLimitStatus> limits = default)
+        {
+            limits ??= new ChangeTrackingList<MongoDBAtlasProjectLimitStatus>();
+
+            return new MongoDBAtlasTierLimitReachedResult((limits ?? new ChangeTrackingList<MongoDBAtlasProjectLimitStatus>()).ToList(), default);
+        }
+
+        /// <summary> Usage and limit status for a resource quota in a MongoDB Atlas project. </summary>
+        /// <param name="type"> Type of the limit. </param>
+        /// <param name="maximum"> Maximum allowed value. </param>
+        /// <param name="current"> Current value. </param>
+        /// <param name="isReached"> Whether the limit has been reached. </param>
+        /// <returns> A new <see cref="Models.MongoDBAtlasProjectLimitStatus"/> instance for mocking. </returns>
+        public static MongoDBAtlasProjectLimitStatus MongoDBAtlasProjectLimitStatus(MongoDBAtlasClusterTier @type = default, int maximum = default, int current = default, bool isReached = default)
+        {
+            return new MongoDBAtlasProjectLimitStatus(@type, maximum, current, isReached, default);
+        }
+
+        /// <summary> Response for regions by cluster tier. </summary>
+        /// <param name="organizationId"> Atlas organization id. </param>
+        /// <param name="projectId"> Atlas project id. </param>
+        /// <param name="regionsByTier"> List of cluster tiers and their supported regions. </param>
+        /// <returns> A new <see cref="Models.MongoDBAtlasRegionsByTierResult"/> instance for mocking. </returns>
+        public static MongoDBAtlasRegionsByTierResult MongoDBAtlasRegionsByTierResult(string organizationId = default, string projectId = default, IEnumerable<MongoDBAtlasTierRegions> regionsByTier = default)
+        {
+            regionsByTier ??= new ChangeTrackingList<MongoDBAtlasTierRegions>();
+
+            return new MongoDBAtlasRegionsByTierResult(organizationId, projectId, (regionsByTier ?? new ChangeTrackingList<MongoDBAtlasTierRegions>()).ToList(), default);
+        }
+
+        /// <summary> Cluster tier and its supported regions. </summary>
+        /// <param name="tier"> Cluster tier name. </param>
+        /// <param name="regions"> Supported region names. </param>
+        /// <returns> A new <see cref="Models.MongoDBAtlasTierRegions"/> instance for mocking. </returns>
+        public static MongoDBAtlasTierRegions MongoDBAtlasTierRegions(MongoDBAtlasClusterTier tier = default, IEnumerable<string> regions = default)
+        {
+            regions ??= new ChangeTrackingList<string>();
+
+            return new MongoDBAtlasTierRegions(tier, (regions ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <summary> The MongoDB Atlas Cluster resource type. A cluster is a managed database deployment within a project. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="MongoDBAtlas.MongoDBAtlasClusterData"/> instance for mocking. </returns>
+        public static MongoDBAtlasClusterData MongoDBAtlasClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MongoDBAtlasClusterProperties properties = default)
+        {
+            return new MongoDBAtlasClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Properties specific to a MongoDB Atlas Cluster. </summary>
+        /// <param name="clusterName"> Name of the MongoDB Atlas Cluster. </param>
+        /// <param name="clusterTier"> Cluster tier (FREE, FLEX, M10, M30). </param>
+        /// <param name="regionName"> Azure region where the cluster is deployed. </param>
+        /// <param name="mongoDBVersion"> MongoDB version running on the cluster. </param>
+        /// <param name="isBackupsEnabled"> Whether backups are active for the cluster; null if undetermined. </param>
+        /// <param name="state"> Current state of the cluster. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.MongoDBAtlasClusterProperties"/> instance for mocking. </returns>
+        public static MongoDBAtlasClusterProperties MongoDBAtlasClusterProperties(string clusterName = default, MongoDBAtlasClusterTier clusterTier = default, string regionName = default, string mongoDBVersion = default, bool? isBackupsEnabled = default, string state = default, MongoDBAtlasResourceProvisioningState? provisioningState = default)
+        {
+            return new MongoDBAtlasClusterProperties(
+                clusterName,
+                clusterTier,
+                regionName,
+                mongoDBVersion,
+                isBackupsEnabled,
+                state,
+                provisioningState,
+                default);
         }
     }
 }

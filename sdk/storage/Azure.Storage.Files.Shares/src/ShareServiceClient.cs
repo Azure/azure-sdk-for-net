@@ -341,8 +341,29 @@ namespace Azure.Storage.Files.Shares
             => new ServiceRestClient(
                 _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
-                _uri.AbsoluteUri,
-                _clientConfiguration.ClientOptions.Version.ToVersionString());
+                _uri,
+                _clientConfiguration.ClientOptions.Version.ToVersionString(),
+                fileRequestIntent: null);
+
+        /// <summary>
+        /// Returns the shared key credential associated with this client so that derived
+        /// classes in other assemblies (e.g., Files Change Feed) can propagate
+        /// authentication without needing <c>InternalsVisibleTo</c>.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected static StorageSharedKeyCredential GetSharedKeyCredential(
+            ShareServiceClient client)
+            => client._clientConfiguration?.SharedKeyCredential;
+
+        /// <summary>
+        /// Returns the token credential associated with this client so that derived
+        /// classes in other assemblies (e.g., Files Change Feed) can propagate
+        /// authentication without needing <c>InternalsVisibleTo</c>.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected static TokenCredential GetTokenCredential(
+            ShareServiceClient client)
+            => client._clientConfiguration?.TokenCredential;
         #endregion ctors
 
         /// <summary>
@@ -517,13 +538,13 @@ namespace Azure.Storage.Files.Shares
 
                 try
                 {
-                    ResponseWithHeaders<ListSharesResponse, ServiceListSharesSegmentHeaders> response;
+                    Response<ListSharesResponse> response;
 
                     scope.Start();
 
                     if (async)
                     {
-                        response = await ServiceRestClient.ListSharesSegmentAsync(
+                        response = await ServiceRestClient.GetSharesSegmentAsync(
                             prefix: prefix,
                             marker: marker,
                             maxresults: pageSizeHint,
@@ -533,7 +554,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     else
                     {
-                        response = ServiceRestClient.ListSharesSegment(
+                        response = ServiceRestClient.GetSharesSegment(
                             prefix: prefix,
                             marker: marker,
                             maxresults: pageSizeHint,
@@ -682,7 +703,7 @@ namespace Azure.Storage.Files.Shares
 
                 try
                 {
-                    ResponseWithHeaders<ShareServiceProperties, ServiceGetPropertiesHeaders> response;
+                    Response<ShareServiceProperties> response;
 
                     scope.Start();
 
@@ -834,25 +855,26 @@ namespace Azure.Storage.Files.Shares
 
                 try
                 {
-                    ResponseWithHeaders<ServiceSetPropertiesHeaders> response;
+                    Response response;
 
                     scope.Start();
+                    Argument.AssertNotNull(properties, nameof(properties));
 
                     if (async)
                     {
                         response = await ServiceRestClient.SetPropertiesAsync(
-                            shareServiceProperties: properties,
+                            storageServiceProperties: properties,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = ServiceRestClient.SetProperties(
-                            shareServiceProperties: properties,
+                            storageServiceProperties: properties,
                             cancellationToken: cancellationToken);
                     }
 
-                    return response.GetRawResponse();
+                    return response;
                 }
                 catch (Exception ex)
                 {
@@ -1399,7 +1421,7 @@ namespace Azure.Storage.Files.Shares
                     scope.Start();
                     ShareClient shareClient = GetShareClient(deletedShareName);
 
-                    ResponseWithHeaders<ShareRestoreHeaders> response;
+                    Response response;
 
                     if (async)
                     {
@@ -1417,7 +1439,7 @@ namespace Azure.Storage.Files.Shares
                             cancellationToken: cancellationToken);
                     }
 
-                    return Response.FromValue(shareClient, response.GetRawResponse());
+                    return Response.FromValue(shareClient, response);
                 }
                 catch (Exception ex)
                 {
@@ -1676,7 +1698,7 @@ namespace Azure.Storage.Files.Shares
                         DelegatedUserTid = delegatedUserTenantId
                     };
 
-                    ResponseWithHeaders<UserDelegationKey, ServiceGetUserDelegationKeyHeaders> response;
+                    Response<UserDelegationKey> response;
 
                     if (async)
                     {

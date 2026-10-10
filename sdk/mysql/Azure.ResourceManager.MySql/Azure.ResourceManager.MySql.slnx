@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.MySql.csproj" />
+  <Project Path="tests/Azure.ResourceManager.MySql.Tests.csproj" />
+</Solution>

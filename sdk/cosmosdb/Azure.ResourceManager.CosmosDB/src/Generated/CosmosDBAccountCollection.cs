@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(CosmosDBAccountResource.ResourceType, out string cosmosDBAccountApiVersion);
             _databaseAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBAccountResource.ResourceType.Namespace, Diagnostics);
-            _databaseAccountsRestClient = new DatabaseAccounts(_databaseAccountsClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
+            _databaseAccountsRestClient = new DatabaseAccounts(_databaseAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBAccountData, CosmosDBAccountResource>(new DatabaseAccountsGetByResourceGroupAsyncCollectionResultOfT(_databaseAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CosmosDBAccountCollection.GetAll"), data => new CosmosDBAccountResource(Client, data));
+            return new AsyncPageableWrapper<CosmosDBAccountData, CosmosDBAccountResource>(new CosmosDBAccountDataAsyncCollectionResultOfT(_databaseAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CosmosDBAccountCollection.GetAll"), data => new CosmosDBAccountResource(Client, data));
         }
 
         /// <summary>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBAccountData, CosmosDBAccountResource>(new DatabaseAccountsGetByResourceGroupCollectionResultOfT(_databaseAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CosmosDBAccountCollection.GetAll"), data => new CosmosDBAccountResource(Client, data));
+            return new PageableWrapper<CosmosDBAccountData, CosmosDBAccountResource>(new CosmosDBAccountDataCollectionResultOfT(_databaseAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CosmosDBAccountCollection.GetAll"), data => new CosmosDBAccountResource(Client, data));
         }
 
         /// <summary>

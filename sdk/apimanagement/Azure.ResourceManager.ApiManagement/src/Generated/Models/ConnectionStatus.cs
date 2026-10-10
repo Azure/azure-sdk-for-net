@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct ConnectionStatus : IEquatable<ConnectionStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ConnectionStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ConnectionStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string ConnectedValue = "Connected";
         private const string DisconnectedValue = "Disconnected";
         private const string DegradedValue = "Degraded";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ConnectionStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static ConnectionStatus Unknown { get; } = new ConnectionStatus(UnknownValue);
-        /// <summary> Connected. </summary>
+
+        /// <summary> Gets the Connected. </summary>
         public static ConnectionStatus Connected { get; } = new ConnectionStatus(ConnectedValue);
-        /// <summary> Disconnected. </summary>
+
+        /// <summary> Gets the Disconnected. </summary>
         public static ConnectionStatus Disconnected { get; } = new ConnectionStatus(DisconnectedValue);
-        /// <summary> Degraded. </summary>
+
+        /// <summary> Gets the Degraded. </summary>
         public static ConnectionStatus Degraded { get; } = new ConnectionStatus(DegradedValue);
+
         /// <summary> Determines if two <see cref="ConnectionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConnectionStatus left, ConnectionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConnectionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConnectionStatus left, ConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConnectionStatus(string value) => new ConnectionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConnectionStatus?(string value) => value == null ? null : new ConnectionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConnectionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConnectionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

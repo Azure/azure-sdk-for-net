@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Artifact profile of the model. </summary>
-    internal partial class ArtifactProfile : IJsonModel<ArtifactProfile>
+    public partial class ArtifactProfile : IJsonModel<ArtifactProfile>
     {
         /// <summary> Initializes a new instance of <see cref="ArtifactProfile"/> for deserialization. </summary>
         internal ArtifactProfile()
@@ -155,7 +155,7 @@ namespace Azure.AI.Projects
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ArtifactProfile(category, signals ?? new ChangeTrackingList<FoundryModelArtifactProfileSignal>(), additionalBinaryDataProperties);

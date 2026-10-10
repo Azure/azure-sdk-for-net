@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(FrontDoorSecurityPolicyResource.ResourceType, out string frontDoorSecurityPolicyApiVersion);
             _securityPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", FrontDoorSecurityPolicyResource.ResourceType.Namespace, Diagnostics);
-            _securityPoliciesRestClient = new SecurityPolicies(_securityPoliciesClientDiagnostics, Pipeline, Endpoint, frontDoorSecurityPolicyApiVersion ?? "2025-09-01-preview");
+            _securityPoliciesRestClient = new SecurityPolicies(_securityPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorSecurityPolicyApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FrontDoorSecurityPolicyData, FrontDoorSecurityPolicyResource>(new SecurityPoliciesGetByProfileAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FrontDoorSecurityPolicyData, FrontDoorSecurityPolicyResource>(new FrontDoorSecurityPolicyDataAsyncCollectionResultOfT(
                 _securityPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FrontDoorSecurityPolicyData, FrontDoorSecurityPolicyResource>(new SecurityPoliciesGetByProfileCollectionResultOfT(
+            return new PageableWrapper<FrontDoorSecurityPolicyData, FrontDoorSecurityPolicyResource>(new FrontDoorSecurityPolicyDataCollectionResultOfT(
                 _securityPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

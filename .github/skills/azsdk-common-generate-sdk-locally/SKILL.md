@@ -4,25 +4,39 @@ license: MIT
 metadata:
   version: "1.1.0"
   distribution: shared
-description: "Generate, build, and test Azure SDKs locally from TypeSpec with automatic customization. WHEN: \"generate SDK locally\", \"build SDK\", \"run SDK tests\", \"run CI checks\", \"validate package\", \"run checks\", \"update changelog\", \"fix SDK build errors\", \"fix breaking changes\", \"resolve SDK generation errors\", \"customize TypeSpec\", \"rename SDK client\", \"rename SDK model\", \"hide operation from SDK\", \"fix analyzer errors\", \"resolve customization drift\", \"create subclient\", \"update metadata\", \"update version\". DO NOT USE FOR: publishing to package registries, CI pipeline configuration, API design review. INVOKES: azsdk_verify_setup, azsdk_package_generate_code, azsdk_package_build_code, azsdk_package_run_check, azsdk_package_run_tests, azsdk_customized_code_update, azsdk_package_update_changelog_content, azsdk_package_update_metadata, azsdk_package_update_version."
+description: 'Generate, build, and test Azure SDKs locally from TypeSpec with automatic customization. WHEN: "generate SDK locally", "build SDK", "run SDK tests", "run CI checks", "validate package", "run checks", "update changelog", "fix SDK build errors", "fix breaking changes", "resolve SDK generation errors", "customize TypeSpec", "rename SDK client", "rename SDK model", "hide operation from SDK", "fix analyzer errors", "resolve customization drift", "create subclient", "update metadata", "update version". DO NOT USE FOR: publishing to package registries, CI pipeline configuration, API design review. INVOKES: azsdk_verify_setup, azsdk_package_generate_code, azsdk_package_build_code, azsdk_package_run_check, azsdk_package_run_tests, azsdk_customized_code_update, azsdk_package_update_changelog_content, azsdk_package_update_metadata, azsdk_package_update_version.'
 compatibility: "azure-sdk-mcp server, local azure-sdk-for-{language} clone, language build tools"
 ---
 
 # Generate SDK Locally
 
+This skill generates, builds, and tests Azure SDKs locally from TypeSpec with automatic customization support, covering the end-to-end workflow for fixing generation issues, applying SDK-specific updates, and refreshing package metadata when needed.
+
+## Triggers
+
+USE FOR: generate, build, and test Azure SDKs locally from TypeSpec with automatic customization; update changelog; fix SDK build errors; fix breaking changes; resolve SDK generation errors; customize TypeSpec; rename SDK client or model; hide operation from SDK; fix analyzer errors; resolve customization drift; create subclient; update metadata; update version
+WHEN: "generate SDK locally", "build SDK", "run SDK tests", "update changelog", "fix SDK build errors", "fix breaking changes", "resolve SDK generation errors", "customize TypeSpec", "rename SDK client", "rename SDK model", "hide operation from SDK", "fix analyzer errors", "resolve customization drift", "create subclient", "update metadata", "update version"
+DO NOT USE FOR: publishing to package registries, CI pipeline configuration, API design review
+
+## Rules
+
+- Requires the `azure-sdk-mcp` server for the MCP workflow; without MCP, use `npm exec --prefix eng/common/tsp-client -- tsp-client` CLI.
+- Verify the target language repo and the correct TypeSpec configuration file before generation.
+- After generation or customization, run the check and test steps before updating metadata or finalizing changes.
+
 ## MCP Tools
 
-| Tool | Purpose |
-|------|---------|
-| `azure-sdk-mcp:azsdk_verify_setup` | Verify environment |
-| `azure-sdk-mcp:azsdk_package_generate_code` | Generate SDK |
-| `azure-sdk-mcp:azsdk_package_build_code` | Build package |
-| `azure-sdk-mcp:azsdk_package_run_check` | Validate package |
-| `azure-sdk-mcp:azsdk_package_run_tests` | Run tests |
-| `azure-sdk-mcp:azsdk_customized_code_update` | Apply customizations (includes regeneration and build) |
-| `azure-sdk-mcp:azsdk_package_update_changelog_content` | Update changelog |
-| `azure-sdk-mcp:azsdk_package_update_metadata` | Update metadata including ci.yml |
-| `azure-sdk-mcp:azsdk_package_update_version` | Update version |
+| Tool                                                   | Purpose                                                |
+| ------------------------------------------------------ | ------------------------------------------------------ |
+| `azure-sdk-mcp:azsdk_verify_setup`                     | Verify environment                                     |
+| `azure-sdk-mcp:azsdk_package_generate_code`            | Generate SDK                                           |
+| `azure-sdk-mcp:azsdk_package_build_code`               | Build package                                          |
+| `azure-sdk-mcp:azsdk_package_run_check`                | Validate package                                       |
+| `azure-sdk-mcp:azsdk_package_run_tests`                | Run tests                                              |
+| `azure-sdk-mcp:azsdk_customized_code_update`           | Apply customizations (includes regeneration and build) |
+| `azure-sdk-mcp:azsdk_package_update_changelog_content` | Update changelog                                       |
+| `azure-sdk-mcp:azsdk_package_update_metadata`          | Update metadata including ci.yml                       |
+| `azure-sdk-mcp:azsdk_package_update_version`           | Update version                                         |
 
 Prerequisites: azure-sdk-mcp server must be running. Without MCP, use `npx tsp-client` CLI.
 

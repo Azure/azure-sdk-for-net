@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct DataFlowDebugCommandType : IEquatable<DataFlowDebugCommandType>
     {
         private readonly string _value;
+        /// <summary> executePreviewQuery. </summary>
+        private const string ExecutePreviewQueryValue = "executePreviewQuery";
+        /// <summary> executeStatisticsQuery. </summary>
+        private const string ExecuteStatisticsQueryValue = "executeStatisticsQuery";
+        /// <summary> executeExpressionQuery. </summary>
+        private const string ExecuteExpressionQueryValue = "executeExpressionQuery";
 
         /// <summary> Initializes a new instance of <see cref="DataFlowDebugCommandType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataFlowDebugCommandType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ExecutePreviewQueryValue = "executePreviewQuery";
-        private const string ExecuteStatisticsQueryValue = "executeStatisticsQuery";
-        private const string ExecuteExpressionQueryValue = "executeExpressionQuery";
+            _value = value;
+        }
 
         /// <summary> executePreviewQuery. </summary>
         public static DataFlowDebugCommandType ExecutePreviewQuery { get; } = new DataFlowDebugCommandType(ExecutePreviewQueryValue);
+
         /// <summary> executeStatisticsQuery. </summary>
         public static DataFlowDebugCommandType ExecuteStatisticsQuery { get; } = new DataFlowDebugCommandType(ExecuteStatisticsQueryValue);
+
         /// <summary> executeExpressionQuery. </summary>
         public static DataFlowDebugCommandType ExecuteExpressionQuery { get; } = new DataFlowDebugCommandType(ExecuteExpressionQueryValue);
+
         /// <summary> Determines if two <see cref="DataFlowDebugCommandType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataFlowDebugCommandType left, DataFlowDebugCommandType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataFlowDebugCommandType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataFlowDebugCommandType left, DataFlowDebugCommandType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataFlowDebugCommandType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataFlowDebugCommandType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataFlowDebugCommandType(string value) => new DataFlowDebugCommandType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataFlowDebugCommandType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataFlowDebugCommandType?(string value) => value == null ? null : new DataFlowDebugCommandType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataFlowDebugCommandType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataFlowDebugCommandType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

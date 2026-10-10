@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             TryGetApiVersion(DevTestLabVirtualNetworkResource.ResourceType, out string devTestLabVirtualNetworkApiVersion);
             _virtualNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabVirtualNetworkResource.ResourceType.Namespace, Diagnostics);
-            _virtualNetworksRestClient = new VirtualNetworks(_virtualNetworksClientDiagnostics, Pipeline, Endpoint, devTestLabVirtualNetworkApiVersion ?? "2018-09-15");
+            _virtualNetworksRestClient = new VirtualNetworks(_virtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabVirtualNetworkApiVersion ?? "2018-09-15");
             ValidateResourceId(id);
         }
 
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevTestLabVirtualNetworkData, DevTestLabVirtualNetworkResource>(new VirtualNetworksGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevTestLabVirtualNetworkData, DevTestLabVirtualNetworkResource>(new DevTestLabVirtualNetworkDataAsyncCollectionResultOfT(
                 _virtualNetworksRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevTestLabVirtualNetworkData, DevTestLabVirtualNetworkResource>(new VirtualNetworksGetAllCollectionResultOfT(
+            return new PageableWrapper<DevTestLabVirtualNetworkData, DevTestLabVirtualNetworkResource>(new DevTestLabVirtualNetworkDataCollectionResultOfT(
                 _virtualNetworksRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

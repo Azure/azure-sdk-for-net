@@ -217,11 +217,23 @@ namespace Azure.Storage.Blobs.Test
         /// </summary>
         /// <param name="blob">Encrypted blob to download.</param>
         /// <returns>Ciphertext.</returns>
-        private async Task<byte[]> DownloadBypassDecryption(BlobClient blob)
+        private async Task<(byte[] Ciphertext, string EncryptionMetadata)> DownloadBypassDecryption(BlobClient blob)
         {
             var encryptedDataStream = new MemoryStream();
-            await InstrumentClient(new BlobClient(blob.Uri, Tenants.GetNewSharedKeyCredentials())).DownloadToAsync(encryptedDataStream, cancellationToken: s_cancellationToken);
-            return encryptedDataStream.ToArray();
+            var response = await InstrumentClient(new BlobClient(blob.Uri, Tenants.GetNewSharedKeyCredentials())).DownloadToAsync(encryptedDataStream, cancellationToken: s_cancellationToken);
+            response.Headers.TryGetValue("x-ms-meta-encryptiondata", out string encryptionMetadataRaw);
+            return (encryptedDataStream.ToArray(), encryptionMetadataRaw);
+        }
+        private async Task UploadBypassEncryption(BlobClient blob, ReadOnlyMemory<byte> ciphertext, string rawEncryptionMetadata)
+        {
+            await InstrumentClient(new BlobClient(blob.Uri, Tenants.GetNewSharedKeyCredentials()))
+                .UploadAsync(BinaryData.FromBytes(ciphertext), new BlobUploadOptions()
+                {
+                    Metadata = new Dictionary<string, string>
+                    {
+                        { "encryptiondata", rawEncryptionMetadata }
+                    }
+                }, s_cancellationToken);
         }
 
         private async Task<EncryptionData> GetMockEncryptionDataAsync(byte[] cek, IKeyEncryptionKey kek)
@@ -319,7 +331,7 @@ namespace Azure.Storage.Blobs.Test
                 // upload with encryption
                 await blob.UploadAsync(new MemoryStream(plaintext), cancellationToken: s_cancellationToken);
 
-                var encryptedData = await DownloadBypassDecryption(blob);
+                var (encryptedData, _) = await DownloadBypassDecryption(blob);
                 byte[] expectedEncryptedData = await ReplicateEncryption(plaintext, await blob.GetPropertiesAsync(), mockKey);
 
                 // compare data
@@ -369,7 +381,7 @@ namespace Azure.Storage.Blobs.Test
                     }
                 }
 
-                var encryptedData = await DownloadBypassDecryption(blob);
+                var (encryptedData, _) = await DownloadBypassDecryption(blob);
                 byte[] expectedEncryptedData = await ReplicateEncryption(plaintext, await blob.GetPropertiesAsync(), mockKey);
 
                 // compare data
@@ -422,7 +434,7 @@ namespace Azure.Storage.Blobs.Test
                     }
                 }
 
-                var encryptedData = await DownloadBypassDecryption(blob);
+                var (encryptedData, _) = await DownloadBypassDecryption(blob);
                 byte[] expectedEncryptedData = await ReplicateEncryption(plaintext, await blob.GetPropertiesAsync(), mockKey);
 
                 // compare data
@@ -456,7 +468,7 @@ namespace Azure.Storage.Blobs.Test
                 plaintext = GetRandomBuffer(Constants.KB);
                 await blob.UploadAsync(BinaryData.FromBytes(plaintext), cancellationToken: s_cancellationToken, overwrite: true);
 
-                var encryptedData = await DownloadBypassDecryption(blob);
+                var (encryptedData, _) = await DownloadBypassDecryption(blob);
                 byte[] expectedEncryptedData = await ReplicateEncryption(plaintext, await blob.GetPropertiesAsync(), mockKey);
 
                 // compare data
@@ -499,7 +511,7 @@ namespace Azure.Storage.Blobs.Test
                     },
                     cancellationToken: s_cancellationToken);
 
-                var encryptedData = await DownloadBypassDecryption(blob);
+                var (encryptedData, _) = await DownloadBypassDecryption(blob);
                 byte[] expectedEncryptedData = await ReplicateEncryption(plaintext, await blob.GetPropertiesAsync(), mockKey);
 
                 // compare data
@@ -1624,6 +1636,53 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsTrue(data.Span.SequenceEqual(downloadedContent.Span));
+        }
+
+        [Test]
+        [LiveOnly]
+        public async Task DetectV2RegionReorder()
+        {
+            // Upload a blob normally using CSEv2. Blob must be large enough to contain multiple regions. We'll use 4.
+            const int dataLen = 4 * V2.EncryptionRegionDataSize;
+            byte[] plaintext = GetRandomBuffer(dataLen);
+            var mockKey = this.GetIKeyEncryptionKey(s_cancellationToken).Object;
+
+            await using (var disposable = await GetTestContainerEncryptionAsync(
+                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V2_0)
+                {
+                    KeyEncryptionKey = mockKey,
+                    KeyWrapAlgorithm = s_algorithmName
+                }))
+            {
+                var blobName = GetNewBlobName();
+                var blob = InstrumentClient(disposable.Container.GetBlobClient(blobName));
+
+                // upload with encryption
+                await blob.UploadAsync(new MemoryStream(plaintext), cancellationToken: s_cancellationToken);
+
+                void Swap(byte[] buf, int i, int j)
+                {
+                    byte temp = buf[i];
+                    buf[i] = buf[j];
+                    buf[j] = temp;
+                }
+                void SwapRegions(byte[] buf, int leftRegion, int rightRegion, int regionLen)
+                {
+                    int leftOffset = leftRegion * regionLen;
+                    int rightOffset = rightRegion * regionLen;
+                    foreach (int i in Enumerable.Range(0, regionLen))
+                    {
+                        Swap(buf, leftOffset + i, rightOffset + i);
+                    }
+                }
+
+                var (encryptedData, rawEncryptionMetadata) = await DownloadBypassDecryption(blob);
+                SwapRegions(encryptedData, 2, 3, V2.EncryptionRegionTotalSize);
+                await UploadBypassEncryption(blob, encryptedData, rawEncryptionMetadata);
+
+                MemoryStream dst = new();
+                Assert.ThrowsAsync<CryptographicException>(async () => await blob.DownloadToAsync(dst, s_cancellationToken));
+            }
         }
 
         /// <summary>

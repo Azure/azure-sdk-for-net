@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -45,9 +44,7 @@ public class Sample_Skills_CRUD : SamplesBase
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
-        AgentAdministrationClientOptions options = new();
-        options.AddPolicy(new FeaturePolicy("Skills=V1Preview"), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         ProjectAgentSkills skillsClient = agentsClient.GetAgentSkills();
         #endregion
         DeleteSkillMaybe(skillsClient, "roll-dice");
@@ -97,7 +94,7 @@ public class Sample_Skills_CRUD : SamplesBase
             """
         );
         SkillVersion newVersion = await skillsClient.CreateSkillVersionAsync(name: "simple-skill", inlineContent: content);
-        skill = await skillsClient.UpdateSkillAsync(name: "simple-skill", defaultVersion: newVersion.Version);
+        skill = await skillsClient.UpdateDefaultVersionAsync(name: "simple-skill", defaultVersion: newVersion.Version);
         Console.WriteLine($"The skill {skill.Name} now has the following description: {skill.Description}");
         #endregion
 
@@ -127,9 +124,7 @@ public class Sample_Skills_CRUD : SamplesBase
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
-        AgentAdministrationClientOptions options = new();
-        options.AddPolicy(new FeaturePolicy("Skills=V1Preview"), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         ProjectAgentSkills skillsClient = agentsClient.GetAgentSkills();
         DeleteSkillMaybe(skillsClient, "roll-dice");
         DeleteSkillMaybe(skillsClient, "simpleSkill");
@@ -178,7 +173,7 @@ public class Sample_Skills_CRUD : SamplesBase
             """
         );
         SkillVersion newVersion = skillsClient.CreateSkillVersion(name: "simple-skill", inlineContent: content);
-        skill = skillsClient.UpdateSkill(name: "simple-skill", defaultVersion: newVersion.Version);
+        skill = skillsClient.UpdateDefaultVersion(name: "simple-skill", defaultVersion: newVersion.Version);
         Console.WriteLine($"The skill {skill.Name} now has the following description: {skill.Description}");
         #endregion
 

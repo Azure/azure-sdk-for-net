@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> The supported operating systems property list. </summary>
-        public IList<SiteRecoverySupportedOSProperty> SupportedOSList { get; }
+        public IList<SiteRecoverySupportedOSProperty> SupportedOSList { get; } = new ChangeTrackingList<SiteRecoverySupportedOSProperty>();
     }
 }

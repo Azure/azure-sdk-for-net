@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             TryGetApiVersion(ServiceBusDisasterRecoveryAuthorizationRuleResource.ResourceType, out string serviceBusDisasterRecoveryAuthorizationRuleApiVersion);
             _disasterRecoveryConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ServiceBusDisasterRecoveryAuthorizationRuleResource.ResourceType.Namespace, Diagnostics);
-            _disasterRecoveryConfigsRestClient = new DisasterRecoveryConfigs(_disasterRecoveryConfigsClientDiagnostics, Pipeline, Endpoint, serviceBusDisasterRecoveryAuthorizationRuleApiVersion ?? "2025-05-01-preview");
+            _disasterRecoveryConfigsRestClient = new DisasterRecoveryConfigs(_disasterRecoveryConfigsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceBusDisasterRecoveryAuthorizationRuleApiVersion ?? "2026-07-01-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceBusAuthorizationRuleData, ServiceBusDisasterRecoveryAuthorizationRuleResource>(new DisasterRecoveryConfigsGetAuthorizationRulesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ServiceBusAuthorizationRuleData, ServiceBusDisasterRecoveryAuthorizationRuleResource>(new ServiceBusAuthorizationRuleDataAsyncCollectionResultOfT(
                 _disasterRecoveryConfigsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceBusAuthorizationRuleData, ServiceBusDisasterRecoveryAuthorizationRuleResource>(new DisasterRecoveryConfigsGetAuthorizationRulesCollectionResultOfT(
+            return new PageableWrapper<ServiceBusAuthorizationRuleData, ServiceBusDisasterRecoveryAuthorizationRuleResource>(new ServiceBusAuthorizationRuleDataCollectionResultOfT(
                 _disasterRecoveryConfigsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

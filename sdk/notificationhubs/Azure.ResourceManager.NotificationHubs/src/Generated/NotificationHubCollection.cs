@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             TryGetApiVersion(NotificationHubResource.ResourceType, out string notificationHubApiVersion);
             _notificationHubResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", NotificationHubResource.ResourceType.Namespace, Diagnostics);
-            _notificationHubResourcesRestClient = new NotificationHubResources(_notificationHubResourcesClientDiagnostics, Pipeline, Endpoint, notificationHubApiVersion ?? "2023-10-01-preview");
+            _notificationHubResourcesRestClient = new NotificationHubResources(_notificationHubResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, notificationHubApiVersion ?? "2023-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NotificationHubData, NotificationHubResource>(new NotificationHubResourcesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NotificationHubData, NotificationHubResource>(new NotificationHubDataAsyncCollectionResultOfT(
                 _notificationHubResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NotificationHubData, NotificationHubResource>(new NotificationHubResourcesGetAllCollectionResultOfT(
+            return new PageableWrapper<NotificationHubData, NotificationHubResource>(new NotificationHubDataCollectionResultOfT(
                 _notificationHubResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

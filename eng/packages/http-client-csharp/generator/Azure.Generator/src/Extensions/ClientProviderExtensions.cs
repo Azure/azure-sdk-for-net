@@ -14,7 +14,17 @@ namespace Azure.Generator.Extensions
     {
         public static ClientProvider GetClient(this ScmMethodProvider method) => (ClientProvider)method.EnclosingType;
 
-        public static string GetScopeName(this ScmMethodProvider method) => $"{method.EnclosingType.Name}.{method.Signature.Name}";
+        public static string GetScopeName(this ScmMethodProvider method)
+        {
+            const string asyncSuffix = "Async";
+            var methodName = method.Signature.Name;
+            if (methodName.EndsWith(asyncSuffix, System.StringComparison.Ordinal))
+            {
+                methodName = methodName[..^asyncSuffix.Length];
+            }
+
+            return $"{method.EnclosingType.Name}.{methodName}";
+        }
 
         public static string GetScopeName(this ClientProvider client, InputOperation operation) => $"{client.Name}.{operation.Name.ToIdentifierName()}";
 

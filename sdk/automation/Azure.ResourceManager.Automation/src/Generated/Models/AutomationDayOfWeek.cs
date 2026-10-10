@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.Automation.Models
     public readonly partial struct AutomationDayOfWeek : IEquatable<AutomationDayOfWeek>
     {
         private readonly string _value;
+        /// <summary> Monday. </summary>
+        private const string MondayValue = "Monday";
+        /// <summary> Tuesday. </summary>
+        private const string TuesdayValue = "Tuesday";
+        /// <summary> Wednesday. </summary>
+        private const string WednesdayValue = "Wednesday";
+        /// <summary> Thursday. </summary>
+        private const string ThursdayValue = "Thursday";
+        /// <summary> Friday. </summary>
+        private const string FridayValue = "Friday";
+        /// <summary> Saturday. </summary>
+        private const string SaturdayValue = "Saturday";
+        /// <summary> Sunday. </summary>
+        private const string SundayValue = "Sunday";
 
         /// <summary> Initializes a new instance of <see cref="AutomationDayOfWeek"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutomationDayOfWeek(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MondayValue = "Monday";
-        private const string TuesdayValue = "Tuesday";
-        private const string WednesdayValue = "Wednesday";
-        private const string ThursdayValue = "Thursday";
-        private const string FridayValue = "Friday";
-        private const string SaturdayValue = "Saturday";
-        private const string SundayValue = "Sunday";
+            _value = value;
+        }
 
         /// <summary> Monday. </summary>
         public static AutomationDayOfWeek Monday { get; } = new AutomationDayOfWeek(MondayValue);
+
         /// <summary> Tuesday. </summary>
         public static AutomationDayOfWeek Tuesday { get; } = new AutomationDayOfWeek(TuesdayValue);
+
         /// <summary> Wednesday. </summary>
         public static AutomationDayOfWeek Wednesday { get; } = new AutomationDayOfWeek(WednesdayValue);
+
         /// <summary> Thursday. </summary>
         public static AutomationDayOfWeek Thursday { get; } = new AutomationDayOfWeek(ThursdayValue);
+
         /// <summary> Friday. </summary>
         public static AutomationDayOfWeek Friday { get; } = new AutomationDayOfWeek(FridayValue);
+
         /// <summary> Saturday. </summary>
         public static AutomationDayOfWeek Saturday { get; } = new AutomationDayOfWeek(SaturdayValue);
+
         /// <summary> Sunday. </summary>
         public static AutomationDayOfWeek Sunday { get; } = new AutomationDayOfWeek(SundayValue);
+
         /// <summary> Determines if two <see cref="AutomationDayOfWeek"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutomationDayOfWeek left, AutomationDayOfWeek right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutomationDayOfWeek"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutomationDayOfWeek left, AutomationDayOfWeek right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutomationDayOfWeek"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutomationDayOfWeek"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutomationDayOfWeek(string value) => new AutomationDayOfWeek(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AutomationDayOfWeek"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutomationDayOfWeek?(string value) => value == null ? null : new AutomationDayOfWeek(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutomationDayOfWeek other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutomationDayOfWeek other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -46,23 +46,23 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
 
         private ClientDiagnostics FrontDoorsClientDiagnostics => _frontDoorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FrontDoors FrontDoorsRestClient => _frontDoorsRestClient ??= new FrontDoors(FrontDoorsClientDiagnostics, Pipeline, Endpoint, "2025-11-01");
+        private FrontDoors FrontDoorsRestClient => _frontDoorsRestClient ??= new FrontDoors(FrontDoorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-11-01");
 
         private ClientDiagnostics PoliciesClientDiagnostics => _policiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Policies PoliciesRestClient => _policiesRestClient ??= new Policies(PoliciesClientDiagnostics, Pipeline, Endpoint, "2025-11-01");
+        private Policies PoliciesRestClient => _policiesRestClient ??= new Policies(PoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-11-01");
 
         private ClientDiagnostics NetworkExperimentProfilesClientDiagnostics => _networkExperimentProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkExperimentProfiles NetworkExperimentProfilesRestClient => _networkExperimentProfilesRestClient ??= new NetworkExperimentProfiles(NetworkExperimentProfilesClientDiagnostics, Pipeline, Endpoint, "2025-11-01");
+        private NetworkExperimentProfiles NetworkExperimentProfilesRestClient => _networkExperimentProfilesRestClient ??= new NetworkExperimentProfiles(NetworkExperimentProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-11-01");
 
         private ClientDiagnostics ManagedRuleSetsClientDiagnostics => _managedRuleSetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ManagedRuleSets ManagedRuleSetsRestClient => _managedRuleSetsRestClient ??= new ManagedRuleSets(ManagedRuleSetsClientDiagnostics, Pipeline, Endpoint, "2025-11-01");
+        private ManagedRuleSets ManagedRuleSetsRestClient => _managedRuleSetsRestClient ??= new ManagedRuleSets(ManagedRuleSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-11-01");
 
         private ClientDiagnostics FrontDoorNameAvailabilityWithSubscriptionClientDiagnostics => _frontDoorNameAvailabilityWithSubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FrontDoorNameAvailabilityWithSubscription FrontDoorNameAvailabilityWithSubscriptionRestClient => _frontDoorNameAvailabilityWithSubscriptionRestClient ??= new FrontDoorNameAvailabilityWithSubscription(FrontDoorNameAvailabilityWithSubscriptionClientDiagnostics, Pipeline, Endpoint, "2025-11-01");
+        private FrontDoorNameAvailabilityWithSubscription FrontDoorNameAvailabilityWithSubscriptionRestClient => _frontDoorNameAvailabilityWithSubscriptionRestClient ??= new FrontDoorNameAvailabilityWithSubscription(FrontDoorNameAvailabilityWithSubscriptionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-11-01");
 
         /// <summary>
         /// Lists all of the Front Doors within an Azure subscription.
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FrontDoorData, FrontDoorResource>(new FrontDoorsGetAllAsyncCollectionResultOfT(FrontDoorsRestClient, Id.SubscriptionId, context, "MockableFrontDoorSubscriptionResource.GetFrontDoors"), data => new FrontDoorResource(Client, data));
+            return new AsyncPageableWrapper<FrontDoorData, FrontDoorResource>(new FrontDoorDataAsync0CollectionResultOfT(FrontDoorsRestClient, Id.SubscriptionId, context, "MockableFrontDoorSubscriptionResource.GetFrontDoors"), data => new FrontDoorResource(Client, data));
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FrontDoorData, FrontDoorResource>(new FrontDoorsGetAllCollectionResultOfT(FrontDoorsRestClient, Id.SubscriptionId, context, "MockableFrontDoorSubscriptionResource.GetFrontDoors"), data => new FrontDoorResource(Client, data));
+            return new PageableWrapper<FrontDoorData, FrontDoorResource>(new FrontDoorData0CollectionResultOfT(FrontDoorsRestClient, Id.SubscriptionId, context, "MockableFrontDoorSubscriptionResource.GetFrontDoors"), data => new FrontDoorResource(Client, data));
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FrontDoorWebApplicationFirewallPolicyData, FrontDoorWebApplicationFirewallPolicyResource>(new PoliciesGetFrontDoorWebApplicationFirewallPoliciesByFrontDoorWebApplicationFirewallPolicyAsyncCollectionResultOfT(PoliciesRestClient, Id.SubscriptionId, context, "MockableFrontDoorSubscriptionResource.GetFrontDoorWebApplicationFirewallPoliciesByFrontDoorWebApplicationFirewallPolicy"), data => new FrontDoorWebApplicationFirewallPolicyResource(Client, data));
+            return new AsyncPageableWrapper<FrontDoorWebApplicationFirewallPolicyData, FrontDoorWebApplicationFirewallPolicyResource>(new FrontDoorWebApplicationFirewallPolicyDataAsync0CollectionResultOfT(PoliciesRestClient, Id.SubscriptionId, context, "MockableFrontDoorSubscriptionResource.GetFrontDoorWebApplicationFirewallPoliciesByFrontDoorWebApplicationFirewallPolicy"), data => new FrontDoorWebApplicationFirewallPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FrontDoorWebApplicationFirewallPolicyData, FrontDoorWebApplicationFirewallPolicyResource>(new PoliciesGetFrontDoorWebApplicationFirewallPoliciesByFrontDoorWebApplicationFirewallPolicyCollectionResultOfT(PoliciesRestClient, Id.SubscriptionId, context, "MockableFrontDoorSubscriptionResource.GetFrontDoorWebApplicationFirewallPoliciesByFrontDoorWebApplicationFirewallPolicy"), data => new FrontDoorWebApplicationFirewallPolicyResource(Client, data));
+            return new PageableWrapper<FrontDoorWebApplicationFirewallPolicyData, FrontDoorWebApplicationFirewallPolicyResource>(new FrontDoorWebApplicationFirewallPolicyData0CollectionResultOfT(PoliciesRestClient, Id.SubscriptionId, context, "MockableFrontDoorSubscriptionResource.GetFrontDoorWebApplicationFirewallPoliciesByFrontDoorWebApplicationFirewallPolicy"), data => new FrontDoorWebApplicationFirewallPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FrontDoorNetworkExperimentProfileData, FrontDoorNetworkExperimentProfileResource>(new NetworkExperimentProfilesGetAllAsyncCollectionResultOfT(NetworkExperimentProfilesRestClient, Id.SubscriptionId, context, "MockableFrontDoorSubscriptionResource.GetFrontDoorNetworkExperimentProfiles"), data => new FrontDoorNetworkExperimentProfileResource(Client, data));
+            return new AsyncPageableWrapper<FrontDoorNetworkExperimentProfileData, FrontDoorNetworkExperimentProfileResource>(new FrontDoorNetworkExperimentProfileDataAsync0CollectionResultOfT(NetworkExperimentProfilesRestClient, Id.SubscriptionId, context, "MockableFrontDoorSubscriptionResource.GetFrontDoorNetworkExperimentProfiles"), data => new FrontDoorNetworkExperimentProfileResource(Client, data));
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FrontDoorNetworkExperimentProfileData, FrontDoorNetworkExperimentProfileResource>(new NetworkExperimentProfilesGetAllCollectionResultOfT(NetworkExperimentProfilesRestClient, Id.SubscriptionId, context, "MockableFrontDoorSubscriptionResource.GetFrontDoorNetworkExperimentProfiles"), data => new FrontDoorNetworkExperimentProfileResource(Client, data));
+            return new PageableWrapper<FrontDoorNetworkExperimentProfileData, FrontDoorNetworkExperimentProfileResource>(new FrontDoorNetworkExperimentProfileData0CollectionResultOfT(NetworkExperimentProfilesRestClient, Id.SubscriptionId, context, "MockableFrontDoorSubscriptionResource.GetFrontDoorNetworkExperimentProfiles"), data => new FrontDoorNetworkExperimentProfileResource(Client, data));
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedRuleSetsGetManagedRuleSetsAsyncCollectionResultOfT(ManagedRuleSetsRestClient, Id.SubscriptionId, context, "MockableFrontDoorSubscriptionResource.GetManagedRuleSets");
+            return new ManagedRuleSetDefinitionAsyncCollectionResultOfT(ManagedRuleSetsRestClient, Id.SubscriptionId, context, "MockableFrontDoorSubscriptionResource.GetManagedRuleSets");
         }
 
         /// <summary>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedRuleSetsGetManagedRuleSetsCollectionResultOfT(ManagedRuleSetsRestClient, Id.SubscriptionId, context, "MockableFrontDoorSubscriptionResource.GetManagedRuleSets");
+            return new ManagedRuleSetDefinitionCollectionResultOfT(ManagedRuleSetsRestClient, Id.SubscriptionId, context, "MockableFrontDoorSubscriptionResource.GetManagedRuleSets");
         }
 
         /// <summary>

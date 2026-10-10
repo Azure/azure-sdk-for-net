@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Batch
             _displayName = DefineProperty<string>(nameof(DisplayName), new string[] { "displayName" });
             _allowUpdates = DefineProperty<bool>(nameof(AllowUpdates), new string[] { "allowUpdates" });
             _defaultVersion = DefineProperty<string>(nameof(DefaultVersion), new string[] { "defaultVersion" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ApplicationProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

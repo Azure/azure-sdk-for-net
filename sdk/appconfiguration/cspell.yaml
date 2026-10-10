@@ -3,4 +3,5 @@ import:
 overrides:
   - filename: '**/sdk/appconfiguration/**/*.cs'
     words:
+      - AZPROVISION
       - Mobo

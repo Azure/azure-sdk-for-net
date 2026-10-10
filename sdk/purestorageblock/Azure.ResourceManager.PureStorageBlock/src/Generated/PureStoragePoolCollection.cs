@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             TryGetApiVersion(PureStoragePoolResource.ResourceType, out string pureStoragePoolApiVersion);
             _storagePoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock", PureStoragePoolResource.ResourceType.Namespace, Diagnostics);
-            _storagePoolsRestClient = new StoragePools(_storagePoolsClientDiagnostics, Pipeline, Endpoint, pureStoragePoolApiVersion ?? "2024-11-01");
+            _storagePoolsRestClient = new StoragePools(_storagePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, pureStoragePoolApiVersion ?? "2024-11-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PureStoragePoolData, PureStoragePoolResource>(new StoragePoolsGetByResourceGroupAsyncCollectionResultOfT(_storagePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PureStoragePoolCollection.GetAll"), data => new PureStoragePoolResource(Client, data));
+            return new AsyncPageableWrapper<PureStoragePoolData, PureStoragePoolResource>(new PureStoragePoolDataAsyncCollectionResultOfT(_storagePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PureStoragePoolCollection.GetAll"), data => new PureStoragePoolResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PureStoragePoolData, PureStoragePoolResource>(new StoragePoolsGetByResourceGroupCollectionResultOfT(_storagePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PureStoragePoolCollection.GetAll"), data => new PureStoragePoolResource(Client, data));
+            return new PageableWrapper<PureStoragePoolData, PureStoragePoolResource>(new PureStoragePoolDataCollectionResultOfT(_storagePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PureStoragePoolCollection.GetAll"), data => new PureStoragePoolResource(Client, data));
         }
 
         /// <summary>

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(CloudVmClusterVirtualNetworkAddressResource.ResourceType, out string cloudVmClusterVirtualNetworkAddressApiVersion);
             _virtualNetworkAddressesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", CloudVmClusterVirtualNetworkAddressResource.ResourceType.Namespace, Diagnostics);
-            _virtualNetworkAddressesRestClient = new VirtualNetworkAddresses(_virtualNetworkAddressesClientDiagnostics, Pipeline, Endpoint, cloudVmClusterVirtualNetworkAddressApiVersion ?? "2025-09-01");
+            _virtualNetworkAddressesRestClient = new VirtualNetworkAddresses(_virtualNetworkAddressesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudVmClusterVirtualNetworkAddressApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CloudVmClusterVirtualNetworkAddressData, CloudVmClusterVirtualNetworkAddressResource>(new VirtualNetworkAddressesGetByParentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CloudVmClusterVirtualNetworkAddressData, CloudVmClusterVirtualNetworkAddressResource>(new CloudVmClusterVirtualNetworkAddressDataAsyncCollectionResultOfT(
                 _virtualNetworkAddressesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CloudVmClusterVirtualNetworkAddressData, CloudVmClusterVirtualNetworkAddressResource>(new VirtualNetworkAddressesGetByParentCollectionResultOfT(
+            return new PageableWrapper<CloudVmClusterVirtualNetworkAddressData, CloudVmClusterVirtualNetworkAddressResource>(new CloudVmClusterVirtualNetworkAddressDataCollectionResultOfT(
                 _virtualNetworkAddressesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

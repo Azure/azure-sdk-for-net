@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.TypeSpec.Generator.Customizations;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Translation.Document
 {
@@ -80,10 +80,11 @@ namespace Azure.AI.Translation.Document
         }
 
         /// <summary> Initializes a new instance of DocumentTranslation. </summary>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. When not specified, the API version configured on this client (via <see cref="DocumentTranslationClientOptions"/>) is used. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        internal virtual DocumentTranslationClient GetDocumentTranslationClient(string apiVersion = "2024-05-01")
+        internal virtual DocumentTranslationClient GetDocumentTranslationClient(string apiVersion = null)
         {
+            apiVersion ??= _apiVersion;
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
             return new DocumentTranslationClient(ClientDiagnostics, Pipeline, _endpoint, apiVersion);
@@ -207,6 +208,149 @@ namespace Azure.AI.Translation.Document
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Starts a translation operation which translates the document(s) in your source container
+        /// to your <see cref="TranslationTarget"/>(s) in the given language.
+        /// <para>For document length limits, maximum batch size, and supported document formats, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.</para>
+        /// </summary>
+        /// <param name="inputs">Sets the inputs for the translation operation
+        /// including source and target containers for documents to be translated. </param>
+        /// <param name="translateTextWithinImage">Whether to translate text embedded within images in the documents.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">Service returned a non-success status code. </exception>
+        public virtual DocumentTranslationOperation StartTranslation(IEnumerable<DocumentTranslationInput> inputs, bool? translateTextWithinImage, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            var startTranslationDetails = CreateBatch(inputs, translateTextWithinImage);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(StartTranslation)}");
+            scope.Start();
+
+            try
+            {
+                var operation = GetDocumentTranslationClient().StartTranslation(WaitUntil.Started, startTranslationDetails, cancellationToken);
+                operation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string operationLocation);
+                return new DocumentTranslationOperation(this, ClientDiagnostics, operationLocation);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts a translation operation which translates the document(s) in your source container
+        /// to your <see cref="TranslationTarget"/>(s) in the given language.
+        /// <para>For document length limits, maximum batch size, and supported document formats, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.</para>
+        /// </summary>
+        /// <param name="inputs">Sets the inputs for the translation operation
+        /// including source and target containers for documents to be translated. </param>
+        /// <param name="translateTextWithinImage">Whether to translate text embedded within images in the documents.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">Service returned a non-success status code. </exception>
+        public virtual async Task<DocumentTranslationOperation> StartTranslationAsync(IEnumerable<DocumentTranslationInput> inputs, bool? translateTextWithinImage, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            var startTranslationDetails = CreateBatch(inputs, translateTextWithinImage);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(StartTranslation)}");
+            scope.Start();
+
+            try
+            {
+                var operation = await GetDocumentTranslationClient().StartTranslationAsync(WaitUntil.Started, startTranslationDetails, cancellationToken).ConfigureAwait(false);
+                operation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string operationLocation);
+                return new DocumentTranslationOperation(this, ClientDiagnostics, operationLocation);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private static TranslationBatch CreateBatch(IEnumerable<DocumentTranslationInput> inputs, bool? translateTextWithinImage)
+        {
+            var batch = new TranslationBatch(inputs);
+            if (translateTextWithinImage.HasValue)
+            {
+                batch.Options = new BatchOptions { TranslateTextWithinImage = translateTextWithinImage };
+            }
+
+            return batch;
+        }
+
+        /// <summary>
+        /// Get the list of formats supported by the Document Translation service.
+        /// </summary>
+        /// <param name="fileFormatType">The type of format to retrieve. Specify
+        /// <see cref="FileFormatType.Document"/> or <see cref="FileFormatType.Glossary"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">Service returned a non-success status code.</exception>
+        public virtual Response<SupportedFileFormats> GetSupportedFormats(FileFormatType fileFormatType, CancellationToken cancellationToken = default)
+        {
+            Response result = GetSupportedFormats(fileFormatType.ToString(), cancellationToken.ToRequestContext());
+            return Response.FromValue((SupportedFileFormats)result, result);
+        }
+
+        /// <summary>
+        /// Get the list of formats supported by the Document Translation service.
+        /// </summary>
+        /// <param name="fileFormatType">The type of format to retrieve. Specify
+        /// <see cref="FileFormatType.Document"/> or <see cref="FileFormatType.Glossary"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">Service returned a non-success status code.</exception>
+        public virtual async Task<Response<SupportedFileFormats>> GetSupportedFormatsAsync(FileFormatType fileFormatType, CancellationToken cancellationToken = default)
+        {
+            Response result = await GetSupportedFormatsAsync(fileFormatType.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((SupportedFileFormats)result, result);
+        }
+
+        /// <summary>
+        /// Get the list of formats supported by the Document Translation service.
+        /// </summary>
+        /// <param name="type">The type of format to retrieve. This value is required; specify
+        /// <see cref="FileFormatType.Document"/> or <see cref="FileFormatType.Glossary"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// This overload is retained for backwards compatibility. The service requires <paramref name="type"/>,
+        /// so calling it without a type (or with <c>null</c>) throws <see cref="NotSupportedException"/>.
+        /// Use the <c>GetSupportedFormats</c> overload that takes a required <see cref="FileFormatType"/> instead.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<SupportedFileFormats> GetSupportedFormats(FileFormatType? type = default, CancellationToken cancellationToken = default)
+        {
+            if (type is null)
+            {
+                throw new NotSupportedException("The 'type' parameter is required. Specify FileFormatType.Document or FileFormatType.Glossary.");
+            }
+
+            return GetSupportedFormats(type.Value, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the list of formats supported by the Document Translation service.
+        /// </summary>
+        /// <param name="type">The type of format to retrieve. This value is required; specify
+        /// <see cref="FileFormatType.Document"/> or <see cref="FileFormatType.Glossary"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// This overload is retained for backwards compatibility. The service requires <paramref name="type"/>,
+        /// so calling it without a type (or with <c>null</c>) throws <see cref="NotSupportedException"/>.
+        /// Use the <c>GetSupportedFormatsAsync</c> overload that takes a required <see cref="FileFormatType"/> instead.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<SupportedFileFormats>> GetSupportedFormatsAsync(FileFormatType? type = default, CancellationToken cancellationToken = default)
+        {
+            if (type is null)
+            {
+                throw new NotSupportedException("The 'type' parameter is required. Specify FileFormatType.Document or FileFormatType.Glossary.");
+            }
+
+            return await GetSupportedFormatsAsync(type.Value, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

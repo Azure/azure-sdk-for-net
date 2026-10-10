@@ -30,12 +30,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="nodePublicIPTags"> IPTags of instance-level public IPs. </param>
         /// <param name="allowedHostPorts"> The port ranges that are allowed to access. The specified ranges are allowed to overlap. </param>
         /// <param name="applicationSecurityGroups"> The IDs of the application security groups which agent pool will associate when created. </param>
+        /// <param name="dranet"> DRANET settings of an agent pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentPoolNetworkProfile(IList<ContainerServiceIPTag> nodePublicIPTags, IList<AgentPoolNetworkPortRange> allowedHostPorts, IList<ResourceIdentifier> applicationSecurityGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentPoolNetworkProfile(IList<ContainerServiceIPTag> nodePublicIPTags, IList<AgentPoolNetworkPortRange> allowedHostPorts, IList<ResourceIdentifier> applicationSecurityGroups, DRANETProfile dranet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NodePublicIPTags = nodePublicIPTags;
             AllowedHostPorts = allowedHostPorts;
             ApplicationSecurityGroups = applicationSecurityGroups;
+            Dranet = dranet;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -50,5 +52,27 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> The IDs of the application security groups which agent pool will associate when created. </summary>
         [WirePath("applicationSecurityGroups")]
         public IList<ResourceIdentifier> ApplicationSecurityGroups { get; }
+
+        /// <summary> DRANET settings of an agent pool. </summary>
+        [WirePath("dranet")]
+        internal DRANETProfile Dranet { get; set; }
+
+        /// <summary> The DRANET mode for the agent pool. </summary>
+        [WirePath("dranet.mode")]
+        public DranetMode? DranetMode
+        {
+            get
+            {
+                return Dranet is null ? default : Dranet.Mode;
+            }
+            set
+            {
+                if (Dranet is null)
+                {
+                    Dranet = new DRANETProfile();
+                }
+                Dranet.Mode = value;
+            }
+        }
     }
 }

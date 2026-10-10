@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         [SetUp]
         public void TestSetUp()
         {
-            _pricingCollection = DefaultSubscription.GetSecurityCenterPricings();
+            _pricingCollection = Client.GetSecurityCenterPricings(DefaultSubscription.Id);
         }
 
         [RecordedTest]

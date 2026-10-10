@@ -13,6 +13,10 @@ using Azure.AI.Agents.Persistent.Telemetry;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
+// This file groups the ContinuationTokenPageable implementation with its async counterpart
+// and shared helper types; splitting them would separate tightly coupled pagination logic.
+#pragma warning disable SA1402 // File may only contain a single type
+
 namespace Azure.AI.Agents.Persistent
 {
     // Enum to specify the type of items in the pageable

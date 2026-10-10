@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="source"> Source Mongo (RU) collection. </param>
         /// <param name="destination"> Destination Mongo (vCore) collection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="destination"/> is null. </exception>
-        public MongoRUToMongoVCoreCopyJobTask(CosmosDBMongoCollection source, CosmosDBMongoVCoreCollection destination)
+        public MongoRUToMongoVCoreCopyJobTask(CosmosDBMongoCollectionInfo source, CosmosDBMongoVCoreCollectionInfo destination)
         {
             Argument.AssertNotNull(source, nameof(source));
             Argument.AssertNotNull(destination, nameof(destination));
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="source"> Source Mongo (RU) collection. </param>
         /// <param name="destination"> Destination Mongo (vCore) collection. </param>
-        internal MongoRUToMongoVCoreCopyJobTask(long? totalCount, long? processedCount, IDictionary<string, BinaryData> additionalBinaryDataProperties, CosmosDBMongoCollection source, CosmosDBMongoVCoreCollection destination) : base(totalCount, processedCount, additionalBinaryDataProperties)
+        internal MongoRUToMongoVCoreCopyJobTask(long? totalCount, long? processedCount, IDictionary<string, BinaryData> additionalBinaryDataProperties, CosmosDBMongoCollectionInfo source, CosmosDBMongoVCoreCollectionInfo destination) : base(totalCount, processedCount, additionalBinaryDataProperties)
         {
             Source = source;
             Destination = destination;
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Source Mongo (RU) collection. </summary>
         [WirePath("source")]
-        public CosmosDBMongoCollection Source { get; set; }
+        public CosmosDBMongoCollectionInfo Source { get; set; }
 
         /// <summary> Destination Mongo (vCore) collection. </summary>
         [WirePath("destination")]
-        public CosmosDBMongoVCoreCollection Destination { get; set; }
+        public CosmosDBMongoVCoreCollectionInfo Destination { get; set; }
     }
 }

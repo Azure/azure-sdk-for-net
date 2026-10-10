@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Adapter-specific metadata for LoRA models. Drives serving engine configuration at deployment time. </summary>
-    internal partial class LoraConfig : IJsonModel<LoraConfig>
+    public partial class LoraConfig : IJsonModel<LoraConfig>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -199,7 +199,7 @@ namespace Azure.AI.Projects
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new LoraConfig(rank, alpha, targetModules ?? new ChangeTrackingList<string>(), dropout, additionalBinaryDataProperties);

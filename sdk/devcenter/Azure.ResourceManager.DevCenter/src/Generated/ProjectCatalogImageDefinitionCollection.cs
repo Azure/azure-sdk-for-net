@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(ProjectCatalogImageDefinitionResource.ResourceType, out string projectCatalogImageDefinitionApiVersion);
             _projectCatalogImageDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProjectCatalogImageDefinitionResource.ResourceType.Namespace, Diagnostics);
-            _projectCatalogImageDefinitionsRestClient = new ProjectCatalogImageDefinitions(_projectCatalogImageDefinitionsClientDiagnostics, Pipeline, Endpoint, projectCatalogImageDefinitionApiVersion ?? "2026-01-01-preview");
+            _projectCatalogImageDefinitionsRestClient = new ProjectCatalogImageDefinitions(_projectCatalogImageDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, projectCatalogImageDefinitionApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ImageDefinitionData, ProjectCatalogImageDefinitionResource>(new ProjectCatalogImageDefinitionsGetByProjectCatalogAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ImageDefinitionData, ProjectCatalogImageDefinitionResource>(new ImageDefinitionDataAsync0CollectionResultOfT(
                 _projectCatalogImageDefinitionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ImageDefinitionData, ProjectCatalogImageDefinitionResource>(new ProjectCatalogImageDefinitionsGetByProjectCatalogCollectionResultOfT(
+            return new PageableWrapper<ImageDefinitionData, ProjectCatalogImageDefinitionResource>(new ImageDefinitionData0CollectionResultOfT(
                 _projectCatalogImageDefinitionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

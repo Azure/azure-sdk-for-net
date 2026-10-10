@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ImpactReporting
         {
             TryGetApiVersion(ImpactConnectorResource.ResourceType, out string impactConnectorApiVersion);
             _connectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ImpactReporting", ImpactConnectorResource.ResourceType.Namespace, Diagnostics);
-            _connectorsRestClient = new Connectors(_connectorsClientDiagnostics, Pipeline, Endpoint, impactConnectorApiVersion ?? "2024-05-01-preview");
+            _connectorsRestClient = new Connectors(_connectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, impactConnectorApiVersion ?? "2024-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ImpactReporting
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ImpactConnectorData, ImpactConnectorResource>(new ConnectorsGetBySubscriptionAsyncCollectionResultOfT(_connectorsRestClient, Id.SubscriptionId, context, "ImpactConnectorCollection.GetAll"), data => new ImpactConnectorResource(Client, data));
+            return new AsyncPageableWrapper<ImpactConnectorData, ImpactConnectorResource>(new ImpactConnectorDataAsyncCollectionResultOfT(_connectorsRestClient, Id.SubscriptionId, context, "ImpactConnectorCollection.GetAll"), data => new ImpactConnectorResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ImpactReporting
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ImpactConnectorData, ImpactConnectorResource>(new ConnectorsGetBySubscriptionCollectionResultOfT(_connectorsRestClient, Id.SubscriptionId, context, "ImpactConnectorCollection.GetAll"), data => new ImpactConnectorResource(Client, data));
+            return new PageableWrapper<ImpactConnectorData, ImpactConnectorResource>(new ImpactConnectorDataCollectionResultOfT(_connectorsRestClient, Id.SubscriptionId, context, "ImpactConnectorCollection.GetAll"), data => new ImpactConnectorResource(Client, data));
         }
 
         /// <summary>

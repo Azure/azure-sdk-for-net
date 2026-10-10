@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="status"> Status of the Provisioning for the managed network of a cognitive services account. </param>
         /// <param name="firewallSku"> Firewall Sku used for FQDN Rules. </param>
         /// <param name="managedNetworkKind"> The Kind of the managed network. Users can switch from V1 to V2 for granular access controls, but cannot switch back to V1 once V2 is enabled. </param>
-        /// <param name="firewallPublicIpAddress"> Public IP address assigned to the Azure Firewall. </param>
+        /// <param name="firewallPublicIPAddress"> Public IP address assigned to the Azure Firewall. </param>
         /// <param name="provisioningState"> The provisioning state of the managed network settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="changeableIsolationModes"></param>
-        internal CognitiveServicesManagedNetworkConfigurationExtended(CognitiveServicesIsolationMode? isolationMode, string networkId, IDictionary<string, CognitiveServicesOutboundRuleBasicProperties> outboundRules, CognitiveServicesManagedNetworkProvisionStatus status, CognitiveServicesFirewallSku? firewallSku, CognitiveServicesManagedNetworkKind? managedNetworkKind, string firewallPublicIpAddress, CognitiveServicesManagedNetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<CognitiveServicesIsolationMode> changeableIsolationModes) : base(isolationMode, networkId, outboundRules, status, firewallSku, managedNetworkKind, firewallPublicIpAddress, provisioningState, additionalBinaryDataProperties)
+        internal CognitiveServicesManagedNetworkConfigurationExtended(CognitiveServicesIsolationMode? isolationMode, string networkId, IDictionary<string, CognitiveServicesOutboundRuleBasicProperties> outboundRules, CognitiveServicesManagedNetworkProvisionStatus status, CognitiveServicesFirewallSku? firewallSku, CognitiveServicesManagedNetworkKind? managedNetworkKind, string firewallPublicIPAddress, CognitiveServicesManagedNetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<CognitiveServicesIsolationMode> changeableIsolationModes) : base(isolationMode, networkId, outboundRules, status, firewallSku, managedNetworkKind, firewallPublicIPAddress, provisioningState, additionalBinaryDataProperties)
         {
             ChangeableIsolationModes = changeableIsolationModes;
         }

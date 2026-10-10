@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(ExascaleDBStorageVaultResource.ResourceType, out string exascaleDBStorageVaultApiVersion);
             _exascaleDbStorageVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ExascaleDBStorageVaultResource.ResourceType.Namespace, Diagnostics);
-            _exascaleDbStorageVaultsRestClient = new ExascaleDbStorageVaults(_exascaleDbStorageVaultsClientDiagnostics, Pipeline, Endpoint, exascaleDBStorageVaultApiVersion ?? "2025-09-01");
+            _exascaleDbStorageVaultsRestClient = new ExascaleDbStorageVaults(_exascaleDbStorageVaultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, exascaleDBStorageVaultApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExascaleDBStorageVaultData, ExascaleDBStorageVaultResource>(new ExascaleDbStorageVaultsGetByResourceGroupAsyncCollectionResultOfT(_exascaleDbStorageVaultsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExascaleDBStorageVaultCollection.GetAll"), data => new ExascaleDBStorageVaultResource(Client, data));
+            return new AsyncPageableWrapper<ExascaleDBStorageVaultData, ExascaleDBStorageVaultResource>(new ExascaleDBStorageVaultDataAsyncCollectionResultOfT(_exascaleDbStorageVaultsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExascaleDBStorageVaultCollection.GetAll"), data => new ExascaleDBStorageVaultResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExascaleDBStorageVaultData, ExascaleDBStorageVaultResource>(new ExascaleDbStorageVaultsGetByResourceGroupCollectionResultOfT(_exascaleDbStorageVaultsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExascaleDBStorageVaultCollection.GetAll"), data => new ExascaleDBStorageVaultResource(Client, data));
+            return new PageableWrapper<ExascaleDBStorageVaultData, ExascaleDBStorageVaultResource>(new ExascaleDBStorageVaultDataCollectionResultOfT(_exascaleDbStorageVaultsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExascaleDBStorageVaultCollection.GetAll"), data => new ExascaleDBStorageVaultResource(Client, data));
         }
 
         /// <summary>

@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
 
         private ClientDiagnostics PoolsClientDiagnostics => _poolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Pools PoolsRestClient => _poolsRestClient ??= new Pools(PoolsClientDiagnostics, Pipeline, Endpoint, "2025-09-20");
+        private Pools PoolsRestClient => _poolsRestClient ??= new Pools(PoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-03-preview");
 
         private ClientDiagnostics SkuClientDiagnostics => _skuClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Sku SkuRestClient => _skuRestClient ??= new Sku(SkuClientDiagnostics, Pipeline, Endpoint, "2025-09-20");
+        private Sku SkuRestClient => _skuRestClient ??= new Sku(SkuClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-03-preview");
 
         private ClientDiagnostics SubscriptionUsagesClientDiagnostics => _subscriptionUsagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SubscriptionUsages SubscriptionUsagesRestClient => _subscriptionUsagesRestClient ??= new SubscriptionUsages(SubscriptionUsagesClientDiagnostics, Pipeline, Endpoint, "2025-09-20");
+        private SubscriptionUsages SubscriptionUsagesRestClient => _subscriptionUsagesRestClient ??= new SubscriptionUsages(SubscriptionUsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-03-preview");
 
         /// <summary>
         /// List Pool resources by subscription ID
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevOpsPoolData, DevOpsPoolResource>(new PoolsGetBySubscriptionAsyncCollectionResultOfT(PoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDevOpsInfrastructureSubscriptionResource.GetDevOpsPools"), data => new DevOpsPoolResource(Client, data));
+            return new AsyncPageableWrapper<DevOpsPoolData, DevOpsPoolResource>(new DevOpsPoolDataAsync0CollectionResultOfT(PoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDevOpsInfrastructureSubscriptionResource.GetDevOpsPools"), data => new DevOpsPoolResource(Client, data));
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevOpsPoolData, DevOpsPoolResource>(new PoolsGetBySubscriptionCollectionResultOfT(PoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDevOpsInfrastructureSubscriptionResource.GetDevOpsPools"), data => new DevOpsPoolResource(Client, data));
+            return new PageableWrapper<DevOpsPoolData, DevOpsPoolResource>(new DevOpsPoolData0CollectionResultOfT(PoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDevOpsInfrastructureSubscriptionResource.GetDevOpsPools"), data => new DevOpsPoolResource(Client, data));
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SkuGetSkusByLocationAsyncCollectionResultOfT(SkuRestClient, Guid.Parse(Id.SubscriptionId), locationName, context, "MockableDevOpsInfrastructureSubscriptionResource.GetSkusByLocation");
+            return new DevOpsResourceSkuAsyncCollectionResultOfT(SkuRestClient, Guid.Parse(Id.SubscriptionId), locationName, context, "MockableDevOpsInfrastructureSubscriptionResource.GetSkusByLocation");
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SkuGetSkusByLocationCollectionResultOfT(SkuRestClient, Guid.Parse(Id.SubscriptionId), locationName, context, "MockableDevOpsInfrastructureSubscriptionResource.GetSkusByLocation");
+            return new DevOpsResourceSkuCollectionResultOfT(SkuRestClient, Guid.Parse(Id.SubscriptionId), locationName, context, "MockableDevOpsInfrastructureSubscriptionResource.GetSkusByLocation");
         }
 
         /// <summary>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SubscriptionUsagesGetUsagesAsyncCollectionResultOfT(SubscriptionUsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableDevOpsInfrastructureSubscriptionResource.GetUsages");
+            return new DevOpsResourceQuotaAsyncCollectionResultOfT(SubscriptionUsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableDevOpsInfrastructureSubscriptionResource.GetUsages");
         }
 
         /// <summary>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SubscriptionUsagesGetUsagesCollectionResultOfT(SubscriptionUsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableDevOpsInfrastructureSubscriptionResource.GetUsages");
+            return new DevOpsResourceQuotaCollectionResultOfT(SubscriptionUsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableDevOpsInfrastructureSubscriptionResource.GetUsages");
         }
     }
 }

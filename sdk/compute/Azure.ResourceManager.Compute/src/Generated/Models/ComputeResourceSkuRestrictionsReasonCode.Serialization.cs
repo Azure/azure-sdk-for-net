@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal static partial class ComputeResourceSkuRestrictionsReasonCodeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ComputeResourceSkuRestrictionsReasonCode value) => value switch
         {
             ComputeResourceSkuRestrictionsReasonCode.QuotaId => "QuotaId",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Compute.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ComputeResourceSkuRestrictionsReasonCode value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ComputeResourceSkuRestrictionsReasonCode ToComputeResourceSkuRestrictionsReasonCode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "QuotaId")) return ComputeResourceSkuRestrictionsReasonCode.QuotaId;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotAvailableForSubscription")) return ComputeResourceSkuRestrictionsReasonCode.NotAvailableForSubscription;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "QuotaId"))
+            {
+                return ComputeResourceSkuRestrictionsReasonCode.QuotaId;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotAvailableForSubscription"))
+            {
+                return ComputeResourceSkuRestrictionsReasonCode.NotAvailableForSubscription;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ComputeResourceSkuRestrictionsReasonCode value.");
         }
     }

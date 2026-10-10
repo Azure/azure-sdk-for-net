@@ -116,10 +116,10 @@ namespace Azure.AI.Projects.Agents
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("created_at"u8);
-            writer.WriteNumberValue(CreatedAt, "U");
+            writer.WriteNumberValue(CreatedOn, "U");
             writer.WritePropertyName("tools"u8);
             writer.WriteStartArray();
-            foreach (ProjectsAgentTool item in Tools)
+            foreach (ToolboxTool item in Tools)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -186,8 +186,8 @@ namespace Azure.AI.Projects.Agents
             string name = default;
             string version = default;
             string description = default;
-            DateTimeOffset createdAt = default;
-            IList<ProjectsAgentTool> tools = default;
+            DateTimeOffset createdOn = default;
+            IList<ToolboxTool> tools = default;
             IList<ToolboxSkill> skills = default;
             ToolboxPolicies policies = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -237,15 +237,15 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("created_at"u8))
                 {
-                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    createdOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("tools"u8))
                 {
-                    List<ProjectsAgentTool> array = new List<ProjectsAgentTool>();
+                    List<ToolboxTool> array = new List<ToolboxTool>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ProjectsAgentTool.DeserializeProjectsAgentTool(item, options));
+                        array.Add(ToolboxTool.DeserializeToolboxTool(item, options));
                     }
                     tools = array;
                     continue;
@@ -275,7 +275,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ToolboxVersion(
@@ -284,8 +284,8 @@ namespace Azure.AI.Projects.Agents
                 name,
                 version,
                 description,
-                createdAt,
-                tools,
+                createdOn,
+                tools ?? new ChangeTrackingList<ToolboxTool>(),
                 skills ?? new ChangeTrackingList<ToolboxSkill>(),
                 policies,
                 additionalBinaryDataProperties);

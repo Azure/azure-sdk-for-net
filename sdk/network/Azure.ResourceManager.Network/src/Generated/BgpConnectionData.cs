@@ -7,16 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the BgpConnection data model.
-    /// Virtual Appliance Site resource.
-    /// </summary>
+    /// <summary> Virtual Appliance Site resource. </summary>
     public partial class BgpConnectionData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="BgpConnectionData"/>. </summary>
@@ -26,54 +23,115 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="BgpConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="peerAsn"> Peer ASN. </param>
-        /// <param name="peerIP"> Peer IP. </param>
-        /// <param name="hubVirtualNetworkConnection"> The reference to the HubVirtualNetworkConnection resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="connectionState"> The current state of the VirtualHub to Peer. </param>
-        internal BgpConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, long? peerAsn, string peerIP, WritableSubResource hubVirtualNetworkConnection, NetworkProvisioningState? provisioningState, HubBgpConnectionStatus? connectionState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> The properties of the Bgp connections. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal BgpConnectionData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, BgpConnectionProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            PeerAsn = peerAsn;
-            PeerIP = peerIP;
-            HubVirtualNetworkConnection = hubVirtualNetworkConnection;
-            ProvisioningState = provisioningState;
-            ConnectionState = connectionState;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> The properties of the Bgp connections. </summary>
+        [WirePath("properties")]
+        internal BgpConnectionProperties Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> Peer ASN. </summary>
         [WirePath("properties.peerAsn")]
-        public long? PeerAsn { get; set; }
-        /// <summary> Peer IP. </summary>
-        [WirePath("properties.peerIp")]
-        public string PeerIP { get; set; }
-        /// <summary> The reference to the HubVirtualNetworkConnection resource. </summary>
-        internal WritableSubResource HubVirtualNetworkConnection { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.hubVirtualNetworkConnection.id")]
-        public ResourceIdentifier HubVirtualNetworkConnectionId
+        public long? PeerAsn
         {
-            get => HubVirtualNetworkConnection is null ? default : HubVirtualNetworkConnection.Id;
+            get
+            {
+                return Properties is null ? default : Properties.PeerAsn;
+            }
             set
             {
-                if (HubVirtualNetworkConnection is null)
-                    HubVirtualNetworkConnection = new WritableSubResource();
-                HubVirtualNetworkConnection.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new BgpConnectionProperties();
+                }
+                Properties.PeerAsn = value;
+            }
+        }
+
+        /// <summary> Peer IP. </summary>
+        [WirePath("properties.peerIp")]
+        public string PeerIP
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PeerIP;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BgpConnectionProperties();
+                }
+                Properties.PeerIP = value;
             }
         }
 
         /// <summary> The provisioning state of the resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The current state of the VirtualHub to Peer. </summary>
         [WirePath("properties.connectionState")]
-        public HubBgpConnectionStatus? ConnectionState { get; }
+        public HubBgpConnectionStatus? ConnectionState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionState;
+            }
+        }
+
+        /// <summary> The routing configuration indicating the associated and propagated route tables for this connection. </summary>
+        [WirePath("properties.routingConfiguration")]
+        public RoutingConfigurationNfv RoutingConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RoutingConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BgpConnectionProperties();
+                }
+                Properties.RoutingConfiguration = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.hubVirtualNetworkConnection.id")]
+        public ResourceIdentifier HubVirtualNetworkConnectionId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HubVirtualNetworkConnectionId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BgpConnectionProperties();
+                }
+                Properties.HubVirtualNetworkConnectionId = value;
+            }
+        }
     }
 }

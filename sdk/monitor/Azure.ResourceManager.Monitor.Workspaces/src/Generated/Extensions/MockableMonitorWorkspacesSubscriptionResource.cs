@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
 
         private ClientDiagnostics AzureMonitorWorkspacesClientDiagnostics => _azureMonitorWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Workspaces.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AzureMonitorWorkspaces AzureMonitorWorkspacesRestClient => _azureMonitorWorkspacesRestClient ??= new AzureMonitorWorkspaces(AzureMonitorWorkspacesClientDiagnostics, Pipeline, Endpoint, "2025-10-03");
+        private AzureMonitorWorkspaces AzureMonitorWorkspacesRestClient => _azureMonitorWorkspacesRestClient ??= new AzureMonitorWorkspaces(AzureMonitorWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-03");
 
         /// <summary>
         /// Lists all Azure Monitor Workspaces in the specified subscription
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MonitorWorkspaceData, MonitorWorkspaceResource>(new AzureMonitorWorkspacesGetBySubscriptionAsyncCollectionResultOfT(AzureMonitorWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorWorkspacesSubscriptionResource.GetMonitorWorkspaces"), data => new MonitorWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<MonitorWorkspaceData, MonitorWorkspaceResource>(new MonitorWorkspaceDataAsync0CollectionResultOfT(AzureMonitorWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorWorkspacesSubscriptionResource.GetMonitorWorkspaces"), data => new MonitorWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MonitorWorkspaceData, MonitorWorkspaceResource>(new AzureMonitorWorkspacesGetBySubscriptionCollectionResultOfT(AzureMonitorWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorWorkspacesSubscriptionResource.GetMonitorWorkspaces"), data => new MonitorWorkspaceResource(Client, data));
+            return new PageableWrapper<MonitorWorkspaceData, MonitorWorkspaceResource>(new MonitorWorkspaceData0CollectionResultOfT(AzureMonitorWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorWorkspacesSubscriptionResource.GetMonitorWorkspaces"), data => new MonitorWorkspaceResource(Client, data));
         }
     }
 }

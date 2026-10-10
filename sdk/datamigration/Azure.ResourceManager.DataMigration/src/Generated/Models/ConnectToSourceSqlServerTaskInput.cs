@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Input for the task that validates connection to SQL Server and also validates source server requirements. </summary>
     public partial class ConnectToSourceSqlServerTaskInput
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Connection information for Source SQL Server. </param>
@@ -64,8 +36,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="shouldCollectTdeCertificateInfo"> Flag for whether to collect TDE Certificate names from source server. </param>
         /// <param name="shouldValidateSsisCatalogOnly"> Flag for whether to validate SSIS catalog is reachable on the source server. </param>
         /// <param name="encryptedKeyForSecureFields"> encrypted key for secure fields. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectToSourceSqlServerTaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo, ServerLevelPermissionsGroup? checkPermissionsGroup, bool? shouldCollectDatabases, bool? shouldCollectLogins, bool? shouldCollectAgentJobs, bool? shouldCollectTdeCertificateInfo, bool? shouldValidateSsisCatalogOnly, string encryptedKeyForSecureFields, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectToSourceSqlServerTaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo, ServerLevelPermissionsGroup? checkPermissionsGroup, bool? shouldCollectDatabases, bool? shouldCollectLogins, bool? shouldCollectAgentJobs, bool? shouldCollectTdeCertificateInfo, bool? shouldValidateSsisCatalogOnly, string encryptedKeyForSecureFields, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceConnectionInfo = sourceConnectionInfo;
             CheckPermissionsGroup = checkPermissionsGroup;
@@ -75,28 +47,30 @@ namespace Azure.ResourceManager.DataMigration.Models
             ShouldCollectTdeCertificateInfo = shouldCollectTdeCertificateInfo;
             ShouldValidateSsisCatalogOnly = shouldValidateSsisCatalogOnly;
             EncryptedKeyForSecureFields = encryptedKeyForSecureFields;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskInput"/> for deserialization. </summary>
-        internal ConnectToSourceSqlServerTaskInput()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Connection information for Source SQL Server. </summary>
         public DataMigrationSqlConnectionInfo SourceConnectionInfo { get; set; }
+
         /// <summary> Permission group for validations. </summary>
         public ServerLevelPermissionsGroup? CheckPermissionsGroup { get; set; }
+
         /// <summary> Flag for whether to collect databases from source server. </summary>
         public bool? ShouldCollectDatabases { get; set; }
+
         /// <summary> Flag for whether to collect logins from source server. </summary>
         public bool? ShouldCollectLogins { get; set; }
+
         /// <summary> Flag for whether to collect agent jobs from source server. </summary>
         public bool? ShouldCollectAgentJobs { get; set; }
+
         /// <summary> Flag for whether to collect TDE Certificate names from source server. </summary>
         public bool? ShouldCollectTdeCertificateInfo { get; set; }
+
         /// <summary> Flag for whether to validate SSIS catalog is reachable on the source server. </summary>
         public bool? ShouldValidateSsisCatalogOnly { get; set; }
+
         /// <summary> encrypted key for secure fields. </summary>
         public string EncryptedKeyForSecureFields { get; set; }
     }

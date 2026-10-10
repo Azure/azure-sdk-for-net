@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         }
 
         /// <summary> KeyValue pair representing status of inbound endpoints. </summary>
-        public IReadOnlyDictionary<string, DeviceStatusEndpoint> Inbound { get; }
+        public IReadOnlyDictionary<string, DeviceStatusEndpoint> Inbound { get; } = new ChangeTrackingDictionary<string, DeviceStatusEndpoint>();
     }
 }

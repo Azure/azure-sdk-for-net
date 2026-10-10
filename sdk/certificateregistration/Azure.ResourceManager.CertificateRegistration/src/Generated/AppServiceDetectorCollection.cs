@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CertificateRegistration
         {
             TryGetApiVersion(AppServiceDetectorResource.ResourceType, out string appServiceDetectorApiVersion);
             _certificateOrdersDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CertificateRegistration", AppServiceDetectorResource.ResourceType.Namespace, Diagnostics);
-            _certificateOrdersDiagnosticsRestClient = new CertificateOrdersDiagnostics(_certificateOrdersDiagnosticsClientDiagnostics, Pipeline, Endpoint, appServiceDetectorApiVersion ?? "2024-11-01");
+            _certificateOrdersDiagnosticsRestClient = new CertificateOrdersDiagnostics(_certificateOrdersDiagnosticsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appServiceDetectorApiVersion ?? "2024-11-01");
             ValidateResourceId(id);
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppServiceDetectorData, AppServiceDetectorResource>(new CertificateOrdersDiagnosticsGetAppServiceCertificateOrderDetectorResponseAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AppServiceDetectorData, AppServiceDetectorResource>(new AppServiceDetectorDataAsyncCollectionResultOfT(
                 _certificateOrdersDiagnosticsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppServiceDetectorData, AppServiceDetectorResource>(new CertificateOrdersDiagnosticsGetAppServiceCertificateOrderDetectorResponseCollectionResultOfT(
+            return new PageableWrapper<AppServiceDetectorData, AppServiceDetectorResource>(new AppServiceDetectorDataCollectionResultOfT(
                 _certificateOrdersDiagnosticsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

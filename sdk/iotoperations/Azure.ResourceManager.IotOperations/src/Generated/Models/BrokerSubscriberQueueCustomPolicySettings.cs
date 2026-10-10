@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         {
             get
             {
-                return Dynamic is null ? default : Dynamic.Mode;
+                return Dynamic is null ? (IotOperationsOperationalMode?)default : Dynamic.Mode;
             }
             set
             {

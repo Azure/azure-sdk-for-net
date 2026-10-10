@@ -71,6 +71,10 @@ namespace Azure.Provisioning.ContainerInstance
             _currentState = DefineModelProperty<ContainerState>(nameof(CurrentState), new string[] { "currentState" }, isOutput: true);
             _previousState = DefineModelProperty<ContainerState>(nameof(PreviousState), new string[] { "previousState" }, isOutput: true);
             _events = DefineListProperty<ContainerEvent>(nameof(Events), new string[] { "events" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for InitContainerPropertiesDefinitionInstanceView that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

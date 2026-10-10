@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
 
         private ClientDiagnostics StandbyVirtualMachinePoolsClientDiagnostics => _standbyVirtualMachinePoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StandbyPool.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StandbyVirtualMachinePools StandbyVirtualMachinePoolsRestClient => _standbyVirtualMachinePoolsRestClient ??= new StandbyVirtualMachinePools(StandbyVirtualMachinePoolsClientDiagnostics, Pipeline, Endpoint, "2025-10-01");
+        private StandbyVirtualMachinePools StandbyVirtualMachinePoolsRestClient => _standbyVirtualMachinePoolsRestClient ??= new StandbyVirtualMachinePools(StandbyVirtualMachinePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01");
 
         private ClientDiagnostics StandbyContainerGroupPoolsClientDiagnostics => _standbyContainerGroupPoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StandbyPool.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StandbyContainerGroupPools StandbyContainerGroupPoolsRestClient => _standbyContainerGroupPoolsRestClient ??= new StandbyContainerGroupPools(StandbyContainerGroupPoolsClientDiagnostics, Pipeline, Endpoint, "2025-10-01");
+        private StandbyContainerGroupPools StandbyContainerGroupPoolsRestClient => _standbyContainerGroupPoolsRestClient ??= new StandbyContainerGroupPools(StandbyContainerGroupPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01");
 
         /// <summary>
         /// List StandbyVirtualMachinePoolResource resources by subscription ID
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StandbyVirtualMachinePoolData, StandbyVirtualMachinePoolResource>(new StandbyVirtualMachinePoolsGetBySubscriptionAsyncCollectionResultOfT(StandbyVirtualMachinePoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableStandbyPoolSubscriptionResource.GetStandbyVirtualMachinePools"), data => new StandbyVirtualMachinePoolResource(Client, data));
+            return new AsyncPageableWrapper<StandbyVirtualMachinePoolData, StandbyVirtualMachinePoolResource>(new StandbyVirtualMachinePoolDataAsync0CollectionResultOfT(StandbyVirtualMachinePoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableStandbyPoolSubscriptionResource.GetStandbyVirtualMachinePools"), data => new StandbyVirtualMachinePoolResource(Client, data));
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StandbyVirtualMachinePoolData, StandbyVirtualMachinePoolResource>(new StandbyVirtualMachinePoolsGetBySubscriptionCollectionResultOfT(StandbyVirtualMachinePoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableStandbyPoolSubscriptionResource.GetStandbyVirtualMachinePools"), data => new StandbyVirtualMachinePoolResource(Client, data));
+            return new PageableWrapper<StandbyVirtualMachinePoolData, StandbyVirtualMachinePoolResource>(new StandbyVirtualMachinePoolData0CollectionResultOfT(StandbyVirtualMachinePoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableStandbyPoolSubscriptionResource.GetStandbyVirtualMachinePools"), data => new StandbyVirtualMachinePoolResource(Client, data));
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StandbyContainerGroupPoolData, StandbyContainerGroupPoolResource>(new StandbyContainerGroupPoolsGetBySubscriptionAsyncCollectionResultOfT(StandbyContainerGroupPoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableStandbyPoolSubscriptionResource.GetStandbyContainerGroupPools"), data => new StandbyContainerGroupPoolResource(Client, data));
+            return new AsyncPageableWrapper<StandbyContainerGroupPoolData, StandbyContainerGroupPoolResource>(new StandbyContainerGroupPoolDataAsync0CollectionResultOfT(StandbyContainerGroupPoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableStandbyPoolSubscriptionResource.GetStandbyContainerGroupPools"), data => new StandbyContainerGroupPoolResource(Client, data));
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StandbyContainerGroupPoolData, StandbyContainerGroupPoolResource>(new StandbyContainerGroupPoolsGetBySubscriptionCollectionResultOfT(StandbyContainerGroupPoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableStandbyPoolSubscriptionResource.GetStandbyContainerGroupPools"), data => new StandbyContainerGroupPoolResource(Client, data));
+            return new PageableWrapper<StandbyContainerGroupPoolData, StandbyContainerGroupPoolResource>(new StandbyContainerGroupPoolData0CollectionResultOfT(StandbyContainerGroupPoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableStandbyPoolSubscriptionResource.GetStandbyContainerGroupPools"), data => new StandbyContainerGroupPoolResource(Client, data));
         }
     }
 }

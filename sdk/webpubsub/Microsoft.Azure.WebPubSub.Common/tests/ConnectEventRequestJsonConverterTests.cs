@@ -21,19 +21,19 @@ namespace Microsoft.Azure.WebPubSub.Common.Tests
 
             ConnectEventRequest request = JsonSerializer.Deserialize<ConnectEventRequest>(payload, JsonSerializationOptions);
 
-            Assert.NotNull(request);
-            Assert.AreEqual("user1", request.Claims["sub"].Single());
-            Assert.AreEqual("token", request.Query["access_token"].Single());
-            CollectionAssert.AreEqual(new[] { "protocol1", "protocol2" }, request.Subprotocols);
-            Assert.AreEqual("tp1", request.ClientCertificates.Single().Thumbprint);
+            Assert.That(request, Is.Not.Null);
+            Assert.That(request.Claims["sub"].Single(), Is.EqualTo("user1"));
+            Assert.That(request.Query["access_token"].Single(), Is.EqualTo("token"));
+            Assert.That(request.Subprotocols, Is.EqualTo(new[] { "protocol1", "protocol2" }));
+            Assert.That(request.ClientCertificates.Single().Thumbprint, Is.EqualTo("tp1"));
 
             string serialized = JsonSerializer.Serialize(request, JsonSerializationOptions);
             ConnectEventRequest converted = JsonSerializer.Deserialize<ConnectEventRequest>(serialized, JsonSerializationOptions);
 
-            Assert.NotNull(converted);
-            Assert.AreEqual(request.Claims["sub"].Single(), converted.Claims["sub"].Single());
-            CollectionAssert.AreEqual(request.Subprotocols, converted.Subprotocols);
-            Assert.AreEqual(request.ClientCertificates.Single().Thumbprint, converted.ClientCertificates.Single().Thumbprint);
+            Assert.That(converted, Is.Not.Null);
+            Assert.That(converted.Claims["sub"].Single(), Is.EqualTo(request.Claims["sub"].Single()));
+            Assert.That(converted.Subprotocols, Is.EqualTo(request.Subprotocols));
+            Assert.That(converted.ClientCertificates.Single().Thumbprint, Is.EqualTo(request.ClientCertificates.Single().Thumbprint));
         }
 
         [Test]
@@ -43,18 +43,18 @@ namespace Microsoft.Azure.WebPubSub.Common.Tests
 
             ConnectEventRequest request = JsonSerializer.Deserialize<ConnectEventRequest>(payload, JsonSerializationOptions);
 
-            Assert.NotNull(request);
-            Assert.IsNull(request.Claims);
-            Assert.IsNull(request.Query);
-            Assert.IsNull(request.Subprotocols);
-            Assert.IsNull(request.ClientCertificates);
+            Assert.That(request, Is.Not.Null);
+            Assert.That(request.Claims, Is.Null);
+            Assert.That(request.Query, Is.Null);
+            Assert.That(request.Subprotocols, Is.Null);
+            Assert.That(request.ClientCertificates, Is.Null);
 
             string serialized = JsonSerializer.Serialize(request, JsonSerializationOptions);
             ConnectEventRequest converted = JsonSerializer.Deserialize<ConnectEventRequest>(serialized, JsonSerializationOptions);
 
-            Assert.NotNull(converted);
-            Assert.IsNull(converted.Claims);
-            Assert.IsNull(converted.Query);
+            Assert.That(converted, Is.Not.Null);
+            Assert.That(converted.Claims, Is.Null);
+            Assert.That(converted.Query, Is.Null);
         }
 
         [Test]
@@ -64,14 +64,14 @@ namespace Microsoft.Azure.WebPubSub.Common.Tests
 
             ConnectEventRequest request = JsonSerializer.Deserialize<ConnectEventRequest>(payload, JsonSerializationOptions);
 
-            Assert.NotNull(request);
-            CollectionAssert.AreEqual(new[] { "admin", "reader" }, request.Claims["role"]);
+            Assert.That(request, Is.Not.Null);
+            Assert.That(request.Claims["role"], Is.EqualTo(new[] { "admin", "reader" }));
 
             string serialized = JsonSerializer.Serialize(request, JsonSerializationOptions);
             ConnectEventRequest converted = JsonSerializer.Deserialize<ConnectEventRequest>(serialized, JsonSerializationOptions);
 
-            Assert.NotNull(converted);
-            CollectionAssert.AreEqual(new[] { "admin", "reader" }, converted.Claims["role"]);
+            Assert.That(converted, Is.Not.Null);
+            Assert.That(converted.Claims["role"], Is.EqualTo(new[] { "admin", "reader" }));
         }
 
         [Test]
@@ -81,22 +81,22 @@ namespace Microsoft.Azure.WebPubSub.Common.Tests
 
             ConnectEventRequest request = JsonSerializer.Deserialize<ConnectEventRequest>(payload, JsonSerializationOptions);
 
-            Assert.NotNull(request);
-            Assert.AreEqual(2, request.ClientCertificates.Count);
-            Assert.AreEqual("t1", request.ClientCertificates[0].Thumbprint);
-            Assert.AreEqual("c1", request.ClientCertificates[0].Content);
-            Assert.AreEqual("t2", request.ClientCertificates[1].Thumbprint);
-            Assert.IsNull(request.ClientCertificates[1].Content);
+            Assert.That(request, Is.Not.Null);
+            Assert.That(request.ClientCertificates.Count, Is.EqualTo(2));
+            Assert.That(request.ClientCertificates[0].Thumbprint, Is.EqualTo("t1"));
+            Assert.That(request.ClientCertificates[0].Content, Is.EqualTo("c1"));
+            Assert.That(request.ClientCertificates[1].Thumbprint, Is.EqualTo("t2"));
+            Assert.That(request.ClientCertificates[1].Content, Is.Null);
 
             string serialized = JsonSerializer.Serialize(request, JsonSerializationOptions);
             ConnectEventRequest converted = JsonSerializer.Deserialize<ConnectEventRequest>(serialized, JsonSerializationOptions);
 
-            Assert.NotNull(converted);
-            Assert.AreEqual(2, converted.ClientCertificates.Count);
-            Assert.AreEqual("t1", converted.ClientCertificates[0].Thumbprint);
-            Assert.AreEqual("c1", converted.ClientCertificates[0].Content);
-            Assert.AreEqual("t2", converted.ClientCertificates[1].Thumbprint);
-            Assert.IsNull(converted.ClientCertificates[1].Content);
+            Assert.That(converted, Is.Not.Null);
+            Assert.That(converted.ClientCertificates.Count, Is.EqualTo(2));
+            Assert.That(converted.ClientCertificates[0].Thumbprint, Is.EqualTo("t1"));
+            Assert.That(converted.ClientCertificates[0].Content, Is.EqualTo("c1"));
+            Assert.That(converted.ClientCertificates[1].Thumbprint, Is.EqualTo("t2"));
+            Assert.That(converted.ClientCertificates[1].Content, Is.Null);
         }
 
         [Test]
@@ -134,7 +134,7 @@ namespace Microsoft.Azure.WebPubSub.Common.Tests
             JsonElement connectionContext = document.RootElement.GetProperty("connectionContext");
             string state = connectionContext.GetProperty("states").GetProperty("counter").GetString();
 
-            Assert.AreEqual(Convert.ToBase64String(new byte[] { 1, 2, 3 }), state);
+            Assert.That(state, Is.EqualTo(Convert.ToBase64String(new byte[] { 1, 2, 3 })));
         }
     }
 }

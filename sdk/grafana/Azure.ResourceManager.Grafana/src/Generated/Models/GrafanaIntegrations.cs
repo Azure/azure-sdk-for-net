@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Grafana.Models
         }
 
         /// <summary> Gets the MonitorWorkspaceIntegrations. </summary>
-        public IList<MonitorWorkspaceIntegration> MonitorWorkspaceIntegrations { get; }
+        public IList<MonitorWorkspaceIntegration> MonitorWorkspaceIntegrations { get; } = new ChangeTrackingList<MonitorWorkspaceIntegration>();
     }
 }

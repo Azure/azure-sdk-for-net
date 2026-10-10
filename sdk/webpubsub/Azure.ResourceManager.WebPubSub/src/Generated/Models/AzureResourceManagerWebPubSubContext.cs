@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.WebPubSub.Models;
 
@@ -36,7 +35,6 @@ namespace Azure.ResourceManager.WebPubSub
     [ModelReaderWriterBuildable(typeof(ResourceLogCategory))]
     [ModelReaderWriterBuildable(typeof(ResourceLogConfiguration))]
     [ModelReaderWriterBuildable(typeof(ResourceReference))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ShareablePrivateLinkProperties))]
     [ModelReaderWriterBuildable(typeof(ShareablePrivateLinkType))]
     [ModelReaderWriterBuildable(typeof(SharedPrivateLinkResourceList))]

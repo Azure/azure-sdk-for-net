@@ -155,17 +155,24 @@ namespace Azure.AI.Agents.Persistent
             {
                 writer.WriteNull("top_p"u8);
             }
-            if (Optional.IsDefined(ResponseFormat))
+            if (_responseFormatIsDefined || Optional.IsDefined(ResponseFormat))
             {
-                writer.WritePropertyName("response_format"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(ResponseFormat);
-#else
-                using (JsonDocument document = JsonDocument.Parse(ResponseFormat))
+                if (ResponseFormat != null)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    writer.WritePropertyName("response_format"u8);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(ResponseFormat);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(ResponseFormat))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                else
+                {
+                    writer.WriteNull("response_format"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Metadata))
             {
@@ -240,6 +247,7 @@ namespace Azure.AI.Agents.Persistent
             ToolResources toolResources = default;
             float? temperature = default;
             float? topP = default;
+            bool responseFormatIsDefined = false;
             BinaryData responseFormat = default;
             IReadOnlyDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -337,12 +345,13 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("response_format"u8))
                 {
+                    responseFormatIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         responseFormat = null;
                         continue;
                     }
-                    responseFormat = BinaryData.FromString(prop.Value.GetRawText());
+                    responseFormat = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("metadata"u8))
@@ -369,7 +378,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new PersistentAgent(
@@ -380,13 +389,16 @@ namespace Azure.AI.Agents.Persistent
                 description,
                 model,
                 instructions,
-                tools,
+                tools ?? new ChangeTrackingList<ToolDefinition>(),
                 toolResources,
                 temperature,
                 topP,
                 responseFormat,
                 metadata,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _responseFormatIsDefined = responseFormatIsDefined
+            };
         }
     }
 }

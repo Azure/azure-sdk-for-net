@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Mocking
 
         private ClientDiagnostics CustomLocationsClientDiagnostics => _customLocationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ExtendedLocations.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CustomLocations CustomLocationsRestClient => _customLocationsRestClient ??= new CustomLocations(CustomLocationsClientDiagnostics, Pipeline, Endpoint, "2021-08-31-preview");
+        private CustomLocations CustomLocationsRestClient => _customLocationsRestClient ??= new CustomLocations(CustomLocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2021-08-31-preview");
 
         /// <summary>
         /// Lists all available Custom Locations operations.
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CustomLocationsGetOperationsAsyncCollectionResultOfT(CustomLocationsRestClient, context, "MockableExtendedLocationsTenantResource.GetOperations");
+            return new CustomLocationOperationInfoAsyncCollectionResultOfT(CustomLocationsRestClient, context, "MockableExtendedLocationsTenantResource.GetOperations");
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CustomLocationsGetOperationsCollectionResultOfT(CustomLocationsRestClient, context, "MockableExtendedLocationsTenantResource.GetOperations");
+            return new CustomLocationOperationInfoCollectionResultOfT(CustomLocationsRestClient, context, "MockableExtendedLocationsTenantResource.GetOperations");
         }
     }
 }

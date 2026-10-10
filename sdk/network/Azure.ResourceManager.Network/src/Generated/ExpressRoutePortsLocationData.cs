@@ -12,48 +12,69 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the ExpressRoutePortsLocation data model.
-    /// Definition of the ExpressRoutePorts peering location resource.
-    /// </summary>
+    /// <summary> ExpressRoutePorts Peering Location. </summary>
     public partial class ExpressRoutePortsLocationData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ExpressRoutePortsLocationData"/>. </summary>
-        public ExpressRoutePortsLocationData()
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> ExpressRoutePort peering location properties. </param>
+        internal ExpressRoutePortsLocationData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExpressRoutePortsLocationPropertiesFormat properties) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
-            AvailableBandwidths = new ChangeTrackingList<ExpressRoutePortsLocationBandwidths>();
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="ExpressRoutePortsLocationData"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="address"> Address of peering location. </param>
-        /// <param name="contact"> Contact details of peering locations. </param>
-        /// <param name="availableBandwidths"> The inventory of available ExpressRoutePort bandwidths. </param>
-        /// <param name="provisioningState"> The provisioning state of the express route port location resource. </param>
-        internal ExpressRoutePortsLocationData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string address, string contact, IList<ExpressRoutePortsLocationBandwidths> availableBandwidths, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        public ExpressRoutePortsLocationData() : this(default)
         {
-            Address = address;
-            Contact = contact;
-            AvailableBandwidths = availableBandwidths;
-            ProvisioningState = provisioningState;
         }
+
+        /// <summary> ExpressRoutePort peering location properties. </summary>
+        [WirePath("properties")]
+        internal ExpressRoutePortsLocationPropertiesFormat Properties { get; }
 
         /// <summary> Address of peering location. </summary>
         [WirePath("properties.address")]
-        public string Address { get; }
+        public string Address
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Address;
+            }
+        }
+
         /// <summary> Contact details of peering locations. </summary>
         [WirePath("properties.contact")]
-        public string Contact { get; }
+        public string Contact
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Contact;
+            }
+        }
+
         /// <summary> The inventory of available ExpressRoutePort bandwidths. </summary>
         [WirePath("properties.availableBandwidths")]
-        public IList<ExpressRoutePortsLocationBandwidths> AvailableBandwidths { get; }
+        public IList<ExpressRoutePortsLocationBandwidths> AvailableBandwidths
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AvailableBandwidths;
+            }
+        }
+
         /// <summary> The provisioning state of the express route port location resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

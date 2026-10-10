@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
 
         private ClientDiagnostics GetPrivateDnsZoneSuffixClientDiagnostics => _getPrivateDnsZoneSuffixClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GetPrivateDnsZoneSuffix GetPrivateDnsZoneSuffixRestClient => _getPrivateDnsZoneSuffixRestClient ??= new GetPrivateDnsZoneSuffix(GetPrivateDnsZoneSuffixClientDiagnostics, Pipeline, Endpoint, "2024-12-30");
+        private GetPrivateDnsZoneSuffix GetPrivateDnsZoneSuffixRestClient => _getPrivateDnsZoneSuffixRestClient ??= new GetPrivateDnsZoneSuffix(GetPrivateDnsZoneSuffixClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-12-30");
 
         /// <summary>
         /// Get private DNS zone suffix in the cloud.

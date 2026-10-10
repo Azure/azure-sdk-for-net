@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ScVmm;
 
 namespace Azure.ResourceManager.ScVmm.Models
 {
-    /// <summary> Gets a value indicating whether the vm template is customizable or not. </summary>
+    /// <summary> Customizable. </summary>
     public readonly partial struct IsCustomizable : IEquatable<IsCustomizable>
     {
         private readonly string _value;
+        /// <summary> Enable customizable. </summary>
+        private const string TrueValue = "true";
+        /// <summary> Disable customizable. </summary>
+        private const string FalseValue = "false";
 
         /// <summary> Initializes a new instance of <see cref="IsCustomizable"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IsCustomizable(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string FalseValue = "false";
-        private const string TrueValue = "true";
-
-        /// <summary> false. </summary>
-        public static IsCustomizable False { get; } = new IsCustomizable(FalseValue);
-        /// <summary> true. </summary>
+        /// <summary> Enable customizable. </summary>
         public static IsCustomizable True { get; } = new IsCustomizable(TrueValue);
+
+        /// <summary> Disable customizable. </summary>
+        public static IsCustomizable False { get; } = new IsCustomizable(FalseValue);
+
         /// <summary> Determines if two <see cref="IsCustomizable"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IsCustomizable left, IsCustomizable right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IsCustomizable"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IsCustomizable left, IsCustomizable right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IsCustomizable"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IsCustomizable"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IsCustomizable(string value) => new IsCustomizable(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IsCustomizable"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IsCustomizable?(string value) => value == null ? null : new IsCustomizable(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IsCustomizable other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IsCustomizable other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

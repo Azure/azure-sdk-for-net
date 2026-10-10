@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
 
         private ClientDiagnostics AttestationProvidersClientDiagnostics => _attestationProvidersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Attestation.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AttestationProviders AttestationProvidersRestClient => _attestationProvidersRestClient ??= new AttestationProviders(AttestationProvidersClientDiagnostics, Pipeline, Endpoint, "2021-06-01");
+        private AttestationProviders AttestationProvidersRestClient => _attestationProvidersRestClient ??= new AttestationProviders(AttestationProvidersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2021-06-01");
 
         /// <summary>
         /// Returns a list of attestation providers in a subscription.
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetAllAsyncCollectionResultOfT(AttestationProvidersRestClient, Id.SubscriptionId, context, "MockableAttestationSubscriptionResource.GetAttestationProviders"), data => new AttestationProviderResource(Client, data));
+            return new AsyncPageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProviderDataAsync0CollectionResultOfT(AttestationProvidersRestClient, Id.SubscriptionId, context, "MockableAttestationSubscriptionResource.GetAttestationProviders"), data => new AttestationProviderResource(Client, data));
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetAllCollectionResultOfT(AttestationProvidersRestClient, Id.SubscriptionId, context, "MockableAttestationSubscriptionResource.GetAttestationProviders"), data => new AttestationProviderResource(Client, data));
+            return new PageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProviderData0CollectionResultOfT(AttestationProvidersRestClient, Id.SubscriptionId, context, "MockableAttestationSubscriptionResource.GetAttestationProviders"), data => new AttestationProviderResource(Client, data));
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetDefaultAttestationProviderAsyncCollectionResultOfT(AttestationProvidersRestClient, Id.SubscriptionId, context, "MockableAttestationSubscriptionResource.GetDefaultAttestationProvider"), data => new AttestationProviderResource(Client, data));
+            return new AsyncPageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProviderDataAsync1CollectionResultOfT(AttestationProvidersRestClient, Id.SubscriptionId, context, "MockableAttestationSubscriptionResource.GetDefaultAttestationProvider"), data => new AttestationProviderResource(Client, data));
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetDefaultAttestationProviderCollectionResultOfT(AttestationProvidersRestClient, Id.SubscriptionId, context, "MockableAttestationSubscriptionResource.GetDefaultAttestationProvider"), data => new AttestationProviderResource(Client, data));
+            return new PageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProviderData1CollectionResultOfT(AttestationProvidersRestClient, Id.SubscriptionId, context, "MockableAttestationSubscriptionResource.GetDefaultAttestationProvider"), data => new AttestationProviderResource(Client, data));
         }
 
         /// <summary>

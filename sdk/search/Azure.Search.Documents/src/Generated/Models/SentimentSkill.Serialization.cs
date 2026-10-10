@@ -80,20 +80,34 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new FormatException($"The model {nameof(SentimentSkill)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(DefaultLanguageCode))
+            if (_defaultLanguageCodeIsDefined || Optional.IsDefined(DefaultLanguageCode))
             {
-                writer.WritePropertyName("defaultLanguageCode"u8);
-                writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
+                if (DefaultLanguageCode != null)
+                {
+                    writer.WritePropertyName("defaultLanguageCode"u8);
+                    writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("defaultLanguageCode"u8);
+                }
             }
             if (Optional.IsDefined(IncludeOpinionMining))
             {
                 writer.WritePropertyName("includeOpinionMining"u8);
                 writer.WriteBooleanValue(IncludeOpinionMining.Value);
             }
-            if (Optional.IsDefined(ModelVersion))
+            if (_modelVersionIsDefined || Optional.IsDefined(ModelVersion))
             {
-                writer.WritePropertyName("modelVersion"u8);
-                writer.WriteStringValue(ModelVersion);
+                if (ModelVersion != null)
+                {
+                    writer.WritePropertyName("modelVersion"u8);
+                    writer.WriteStringValue(ModelVersion);
+                }
+                else
+                {
+                    writer.WriteNull("modelVersion"u8);
+                }
             }
         }
 
@@ -129,8 +143,10 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool defaultLanguageCodeIsDefined = false;
             SentimentSkillLanguage? defaultLanguageCode = default;
             bool? includeOpinionMining = default;
+            bool modelVersionIsDefined = false;
             string modelVersion = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -176,6 +192,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("defaultLanguageCode"u8))
                 {
+                    defaultLanguageCodeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         defaultLanguageCode = null;
@@ -195,6 +212,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("modelVersion"u8))
                 {
+                    modelVersionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         modelVersion = null;
@@ -205,7 +223,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SentimentSkill(
@@ -213,12 +231,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 name,
                 description,
                 context,
-                inputs,
-                outputs,
+                inputs ?? new ChangeTrackingList<InputFieldMappingEntry>(),
+                outputs ?? new ChangeTrackingList<OutputFieldMappingEntry>(),
                 additionalBinaryDataProperties,
                 defaultLanguageCode,
                 includeOpinionMining,
-                modelVersion);
+                modelVersion)
+            {
+                _defaultLanguageCodeIsDefined = defaultLanguageCodeIsDefined,
+                _modelVersionIsDefined = modelVersionIsDefined
+            };
         }
     }
 }

@@ -19,9 +19,9 @@ namespace Microsoft.Azure.WebPubSub.Common.Tests
 
             UserEventResponse response = JsonSerializer.Deserialize<UserEventResponse>(payload, JsonSerializationOptions);
 
-            Assert.NotNull(response);
-            CollectionAssert.AreEqual(new byte[] { 65, 66, 67 }, response.Data.ToArray());
-            Assert.AreEqual(WebPubSubDataType.Binary, response.DataType);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Data.ToArray(), Is.EqualTo(new byte[] { 65, 66, 67 }));
+            Assert.That(response.DataType, Is.EqualTo(WebPubSubDataType.Binary));
         }
 
         [Test]
@@ -31,8 +31,8 @@ namespace Microsoft.Azure.WebPubSub.Common.Tests
 
             UserEventResponse response = JsonSerializer.Deserialize<UserEventResponse>(payload, JsonSerializationOptions);
 
-            Assert.NotNull(response);
-            Assert.AreEqual("hello world", response.Data.ToString());
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Data.ToString(), Is.EqualTo("hello world"));
         }
 
         [Test]
@@ -42,8 +42,8 @@ namespace Microsoft.Azure.WebPubSub.Common.Tests
 
             UserEventResponse response = JsonSerializer.Deserialize<UserEventResponse>(payload, JsonSerializationOptions);
 
-            Assert.NotNull(response);
-            CollectionAssert.AreEqual(new byte[] { 72, 101, 108, 108, 111 }, response.Data.ToArray());
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Data.ToArray(), Is.EqualTo(new byte[] { 72, 101, 108, 108, 111 }));
         }
 
         [Test]
@@ -53,8 +53,8 @@ namespace Microsoft.Azure.WebPubSub.Common.Tests
 
             UserEventResponse response = JsonSerializer.Deserialize<UserEventResponse>(payload, JsonSerializationOptions);
 
-            Assert.NotNull(response);
-            Assert.AreEqual(0, response.Data.ToArray().Length);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Data.ToArray().Length, Is.EqualTo(0));
         }
 
         [Test]
@@ -65,8 +65,8 @@ namespace Microsoft.Azure.WebPubSub.Common.Tests
             string serialized = JsonSerializer.Serialize(response, JsonSerializationOptions);
             UserEventResponse converted = JsonSerializer.Deserialize<UserEventResponse>(serialized, JsonSerializationOptions);
 
-            Assert.NotNull(converted);
-            Assert.AreEqual("test message", converted.Data.ToString());
+            Assert.That(converted, Is.Not.Null);
+            Assert.That(converted.Data.ToString(), Is.EqualTo("test message"));
         }
     }
 }

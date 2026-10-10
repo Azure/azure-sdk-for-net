@@ -45,7 +45,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// removed.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasEntityHeader(IDictionary<string, BinaryData> attributes, string typeName, string lastModifiedTS, IList<string> classificationNames, IList<AtlasClassification> classifications, string displayText, string guid, bool? isIncomplete, IList<string> labels, IList<string> meaningNames, IList<AtlasTermAssignmentHeader> meanings, EntityStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasEntityHeader(IDictionary<string, BinaryData> attributes, string typeName, string lastModifiedTS, IList<string> classificationNames, IList<AtlasClassification> classifications, string displayText, string guid, bool? isIncomplete, IList<string> labels, IList<string> meaningNames, IList<AtlasTermAssignmentHeader> meanings, DataMapEntityStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Attributes = attributes;
             TypeName = typeName;
@@ -124,6 +124,6 @@ namespace Azure.Analytics.Purview.DataMap
         /// Status of the entity - can be active or deleted. Deleted entities are not
         /// removed.
         /// </summary>
-        public EntityStatus? Status { get; set; }
+        public DataMapEntityStatus? Status { get; set; }
     }
 }

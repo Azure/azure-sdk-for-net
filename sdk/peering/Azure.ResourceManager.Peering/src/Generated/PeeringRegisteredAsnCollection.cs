@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Peering
         {
             TryGetApiVersion(PeeringRegisteredAsnResource.ResourceType, out string peeringRegisteredAsnApiVersion);
             _registeredAsnsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Peering", PeeringRegisteredAsnResource.ResourceType.Namespace, Diagnostics);
-            _registeredAsnsRestClient = new RegisteredAsns(_registeredAsnsClientDiagnostics, Pipeline, Endpoint, peeringRegisteredAsnApiVersion ?? "2025-05-01");
+            _registeredAsnsRestClient = new RegisteredAsns(_registeredAsnsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, peeringRegisteredAsnApiVersion ?? "2025-05-01");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PeeringRegisteredAsnData, PeeringRegisteredAsnResource>(new RegisteredAsnsGetByPeeringAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PeeringRegisteredAsnData, PeeringRegisteredAsnResource>(new PeeringRegisteredAsnDataAsyncCollectionResultOfT(
                 _registeredAsnsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PeeringRegisteredAsnData, PeeringRegisteredAsnResource>(new RegisteredAsnsGetByPeeringCollectionResultOfT(
+            return new PageableWrapper<PeeringRegisteredAsnData, PeeringRegisteredAsnResource>(new PeeringRegisteredAsnDataCollectionResultOfT(
                 _registeredAsnsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

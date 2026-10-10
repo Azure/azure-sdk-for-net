@@ -74,6 +74,10 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         public override IClientPipelineApi ClientPipelineApi => ManagementHttpPipelineProvider.Instance;
 
+        private IClientResponseApi? _clientResponseApi;
+        /// <inheritdoc/>
+        public override IClientResponseApi ClientResponseApi => _clientResponseApi ??= new ManagementClientResponseProvider(base.ClientResponseApi);
+
         /// <inheritdoc/>
         protected override IReadOnlyList<CSharpProjectWriter.CSProjDependencyPackage> AzureDependencyPackages =>
             [];
@@ -92,7 +96,7 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         protected override ClientProvider? CreateClientCore(InputClient inputClient)
         {
-            return base.CreateClientCore(inputClient);
+            return new ManagementClientProvider(inputClient);
         }
 
         /// <inheritdoc/>

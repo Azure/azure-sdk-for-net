@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CertificateRegistration
         {
             TryGetApiVersion(AppServiceCertificateOrderResource.ResourceType, out string appServiceCertificateOrderApiVersion);
             _appServiceCertificateOrdersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CertificateRegistration", AppServiceCertificateOrderResource.ResourceType.Namespace, Diagnostics);
-            _appServiceCertificateOrdersRestClient = new AppServiceCertificateOrders(_appServiceCertificateOrdersClientDiagnostics, Pipeline, Endpoint, appServiceCertificateOrderApiVersion ?? "2024-11-01");
+            _appServiceCertificateOrdersRestClient = new AppServiceCertificateOrders(_appServiceCertificateOrdersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appServiceCertificateOrderApiVersion ?? "2024-11-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppServiceCertificateOrderData, AppServiceCertificateOrderResource>(new AppServiceCertificateOrdersGetByResourceGroupAsyncCollectionResultOfT(_appServiceCertificateOrdersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AppServiceCertificateOrderCollection.GetAll"), data => new AppServiceCertificateOrderResource(Client, data));
+            return new AsyncPageableWrapper<AppServiceCertificateOrderData, AppServiceCertificateOrderResource>(new AppServiceCertificateOrderDataAsyncCollectionResultOfT(_appServiceCertificateOrdersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AppServiceCertificateOrderCollection.GetAll"), data => new AppServiceCertificateOrderResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppServiceCertificateOrderData, AppServiceCertificateOrderResource>(new AppServiceCertificateOrdersGetByResourceGroupCollectionResultOfT(_appServiceCertificateOrdersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AppServiceCertificateOrderCollection.GetAll"), data => new AppServiceCertificateOrderResource(Client, data));
+            return new PageableWrapper<AppServiceCertificateOrderData, AppServiceCertificateOrderResource>(new AppServiceCertificateOrderDataCollectionResultOfT(_appServiceCertificateOrdersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AppServiceCertificateOrderCollection.GetAll"), data => new AppServiceCertificateOrderResource(Client, data));
         }
 
         /// <summary>

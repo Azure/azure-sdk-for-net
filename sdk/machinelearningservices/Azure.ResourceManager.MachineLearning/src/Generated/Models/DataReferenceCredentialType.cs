@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.MachineLearning.Models
     internal readonly partial struct DataReferenceCredentialType : IEquatable<DataReferenceCredentialType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DataReferenceCredentialType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataReferenceCredentialType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string SasValue = "SAS";
+        private const string SASValue = "SAS";
         private const string DockerCredentialsValue = "DockerCredentials";
         private const string ManagedIdentityValue = "ManagedIdentity";
         private const string NoCredentialsValue = "NoCredentials";
 
-        /// <summary> SAS. </summary>
-        public static DataReferenceCredentialType Sas { get; } = new DataReferenceCredentialType(SasValue);
-        /// <summary> DockerCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReferenceCredentialType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataReferenceCredentialType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the SAS. </summary>
+        public static DataReferenceCredentialType SAS { get; } = new DataReferenceCredentialType(SASValue);
+
+        /// <summary> Gets the DockerCredentials. </summary>
         public static DataReferenceCredentialType DockerCredentials { get; } = new DataReferenceCredentialType(DockerCredentialsValue);
-        /// <summary> ManagedIdentity. </summary>
+
+        /// <summary> Gets the ManagedIdentity. </summary>
         public static DataReferenceCredentialType ManagedIdentity { get; } = new DataReferenceCredentialType(ManagedIdentityValue);
-        /// <summary> NoCredentials. </summary>
+
+        /// <summary> Gets the NoCredentials. </summary>
         public static DataReferenceCredentialType NoCredentials { get; } = new DataReferenceCredentialType(NoCredentialsValue);
+
         /// <summary> Determines if two <see cref="DataReferenceCredentialType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataReferenceCredentialType left, DataReferenceCredentialType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataReferenceCredentialType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataReferenceCredentialType left, DataReferenceCredentialType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataReferenceCredentialType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataReferenceCredentialType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataReferenceCredentialType(string value) => new DataReferenceCredentialType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataReferenceCredentialType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataReferenceCredentialType?(string value) => value == null ? null : new DataReferenceCredentialType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataReferenceCredentialType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataReferenceCredentialType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

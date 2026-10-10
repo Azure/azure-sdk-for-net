@@ -11,37 +11,31 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Security.CodeTransparency.Receipt;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Security.CodeTransparency
 {
-    [CodeGenSuppress("CreateEntry", typeof(RequestContent), typeof(RequestContext))]
-    [CodeGenSuppress("CreateEntryAsync", typeof(RequestContent), typeof(RequestContext))]
-    [CodeGenSuppress("CreateEntry", typeof(BinaryData), typeof(CancellationToken))]
-    [CodeGenSuppress("CreateEntryAsync", typeof(BinaryData), typeof(CancellationToken))]
     [CodeGenSuppress("CreateGetTransparencyConfigCborRequest", typeof(RequestContext))]
-    [CodeGenSuppress("CreateGetPublicKeysRequest", typeof(RequestContext))]
-    [CodeGenSuppress("CreateGetOperationRequest", typeof(string), typeof(RequestContext))]
-    [CodeGenSuppress("CreateGetEntryRequest", typeof(string), typeof(RequestContext))]
-    [CodeGenSuppress("CreateGetEntryStatementRequest", typeof(string), typeof(RequestContext))]
-    [CodeGenSuppress("CreateCreateEntryRequest", typeof(RequestContent), typeof(RequestContext))]
+    [CodeGenSuppress("GetScittKeys", typeof(RequestContext))]
+    [CodeGenSuppress("GetScittKeysAsync", typeof(RequestContext))]
+    [CodeGenSuppress("GetScittKey", typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetScittKeyAsync", typeof(string), typeof(RequestContext))]
     public partial class CodeTransparencyClient
     {
         /// <summary>
         /// Prefix for receipts with unknown/unrecognized issuers.
         /// </summary>
-        public static readonly string UnknownIssuerPrefix = "__unknown-issuer::";
+        private static string UnknownIssuerPrefix { get; } = "__unknown-issuer::";
 
         /// <summary>
-        /// Public key storage used to verify receipts. The value can be set through the verification options.
+        /// Trusted key storage used to verify receipts. The value can be set through the verification options.
         /// </summary>
-        private IReadOnlyDictionary<string, JwksDocument> _offlineKeys = null;
+        private CodeTransparencyTrustStore _trustStore = null;
 
         /// <summary>
-        /// Indicates whether offline keys can fallback to network retrieval when a key is not found locally.
+        /// Indicates whether key resolution can fall back to network retrieval when a key is not found locally.
         /// </summary>
-        private bool _offlineKeysAllowNetworkFallback = true;
+        private bool _trustStoreAllowNetworkFallback = true;
 
         /// <summary>
         /// Initializes a new instance of CodeTransparencyClient. The client will download its own
@@ -56,6 +50,7 @@ namespace Azure.Security.CodeTransparency
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             options ??= new CodeTransparencyClientOptions();
+            ApplyRetryDefaults(options);
             string name = endpoint.Host.Split('.')[0];
             CodeTransparencyCertificateClient certificateClient = options.CreateCertificateClient();
             HttpPipelineTransportOptions transportOptions = CreateTlsCertAndTrustVerifier(name, certificateClient);
@@ -63,7 +58,7 @@ namespace Azure.Security.CodeTransparency
             ClientDiagnostics = new ClientDiagnostics(options, true);
             Pipeline = HttpPipelineBuilder.Build(
                 options,
-                new HttpPipelinePolicy[] { new CodeTransparencyRedirectPolicy() },
+                new HttpPipelinePolicy[] { new CodeTransparencyRedirectPolicy(endpoint) },
                 credential == null ?
                     Array.Empty<HttpPipelinePolicy>() :
                     new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(credential, AuthorizationHeader, AuthorizationApiKeyPrefix) },
@@ -79,10 +74,48 @@ namespace Azure.Security.CodeTransparency
         /// If the CA changes then there is a TTL which will help healing the long lived clients.
         /// </summary>
         /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public CodeTransparencyClient(Uri endpoint) : this(endpoint, null, new CodeTransparencyClientOptions())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of CodeTransparencyClient. The client will download its own
+        /// TLS CA cert to perform server cert authentication.
+        /// If the CA changes then there is a TTL which will help healing the long lived clients.
+        /// </summary>
+        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public CodeTransparencyClient(Uri endpoint, CodeTransparencyClientOptions options = default) : this(endpoint, null, options)
+        public CodeTransparencyClient(Uri endpoint, CodeTransparencyClientOptions options) : this(endpoint, null, options)
         {
+        }
+
+        // Azure.Core RetryOptions defaults, treated as "unconfigured" so an explicit caller override wins.
+        private const int FrameworkDefaultMaxRetries = 3;
+        private static readonly TimeSpan s_frameworkDefaultRetryDelay = TimeSpan.FromSeconds(0.8);
+
+        // Higher Code Transparency retry defaults. Registering an entry can stay pending for a while, and a
+        // redirected read of a not-yet-committed entry is answered with a retriable 503, so allow more,
+        // shorter-spaced (exponential) retries. Still fully overridable via CodeTransparencyClientOptions.Retry.
+        private const int DefaultMaxRetries = 10;
+        private static readonly TimeSpan s_defaultRetryDelay = TimeSpan.FromMilliseconds(200);
+
+        /// <summary>
+        /// Raises the retry defaults for pending-registration handling, without overriding values the
+        /// caller has explicitly configured on <c>CodeTransparencyClientOptions.Retry</c>.
+        /// </summary>
+        private static void ApplyRetryDefaults(CodeTransparencyClientOptions options)
+        {
+            if (options.Retry.MaxRetries == FrameworkDefaultMaxRetries)
+            {
+                options.Retry.MaxRetries = DefaultMaxRetries;
+            }
+
+            if (options.Retry.Delay == s_frameworkDefaultRetryDelay)
+            {
+                options.Retry.Delay = s_defaultRetryDelay;
+            }
         }
 
         private static List<(string IssuerHost, byte[] ReceiptBytes)> GetReceiptsFromTransparentStatementStatic(byte[] transparentStatementCoseSign1Bytes)
@@ -131,7 +164,7 @@ namespace Azure.Security.CodeTransparency
             {
                 throw new InvalidOperationException("CWT Claims map not found in receipt.");
             }
-            string issuer = CborUtils.GetStringValueFromCborMapByKey(cwtMap.EncodedValue.ToArray(), CcfReceipt.CoseReceiptCwtIssLabel);
+            string issuer = CodeTransparencyCbor.GetStringValueFromCborMapByKey(cwtMap.EncodedValue.ToArray(), CcfReceipt.CoseReceiptCwtIssLabel);
             if (string.IsNullOrEmpty(issuer))
             {
                 throw new InvalidOperationException("Issuer not found in receipt.");
@@ -149,11 +182,86 @@ namespace Azure.Security.CodeTransparency
         /// <param name="serviceName">which service to use to pull the cert from</param>
         /// <param name="certificateClient">identity service client to use for getting the CA cert</param>
         private static HttpPipelineTransportOptions CreateTlsCertAndTrustVerifier(string serviceName, CodeTransparencyCertificateClient certificateClient)
+            => CreateTlsCertAndTrustVerifier(serviceName, certificateClient, static () => DateTime.Now);
+
+        /// <summary>
+        /// Test seam for <see cref="CreateTlsCertAndTrustVerifier(string, CodeTransparencyCertificateClient)"/>
+        /// that allows the per-handshake verification time to be supplied by the caller. Production code uses
+        /// the parameterless overload, which reads <see cref="DateTime.Now"/> on every handshake.
+        /// </summary>
+        /// <param name="serviceName">which service to use to pull the cert from.</param>
+        /// <param name="certificateClient">identity service client to use for getting the CA cert.</param>
+        /// <param name="verificationTimeProvider">
+        /// Supplies the <see cref="X509ChainPolicy.VerificationTime"/> used for each validation. It is evaluated
+        /// inside the callback (per handshake), never captured once when the callback is created, so a certificate
+        /// reissued after the client was constructed is still validated against the current time.
+        /// </param>
+        internal static HttpPipelineTransportOptions CreateTlsCertAndTrustVerifier(string serviceName, CodeTransparencyCertificateClient certificateClient, Func<DateTime> verificationTimeProvider)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(certificateClient, nameof(certificateClient));
+            Argument.AssertNotNull(verificationTimeProvider, nameof(verificationTimeProvider));
 
-            X509Chain certificateChain = new();
+            // The validation callback is shared for the lifetime of the client, but a fresh X509Chain is
+            // built on every invocation (see ValidateServerCertificate). This keeps the chain's
+            // VerificationTime current on each handshake and avoids sharing a non-thread-safe X509Chain
+            // across concurrent handshakes.
+            return new HttpPipelineTransportOptions
+            {
+                ServerCertificateCustomValidationCallback = args => ValidateServerCertificate(certificateClient, serviceName, args.Certificate, verificationTimeProvider)
+            };
+        }
+
+        /// <summary>
+        /// Validates a server certificate presented during the TLS handshake against the ledger identity
+        /// TLS certificate pulled (and cached) from the identity service. The presented chain is accepted
+        /// only if it is rooted in the ledger identity TLS certificate.
+        /// </summary>
+        /// <remarks>
+        /// A fresh <see cref="X509Chain"/> is built on every call, for two reasons:
+        /// <list type="bullet">
+        /// <item><description>
+        /// <see cref="X509ChainPolicy.VerificationTime"/> must reflect the current time at each handshake.
+        /// Capturing it once at client construction freezes the timestamp, so a reissued node certificate
+        /// (whose <c>NotBefore</c> is later than the frozen time) would be rejected as <c>NotTimeValid</c>,
+        /// permanently failing every request until the process restarts.
+        /// </description></item>
+        /// <item><description>
+        /// <see cref="X509Chain"/> is not thread-safe; a single shared instance cannot be mutated and
+        /// have <see cref="X509Chain.Build(X509Certificate2)"/> called concurrently from parallel handshakes.
+        /// </description></item>
+        /// </list>
+        /// </remarks>
+        /// <param name="certificateClient">identity service client used to get (and cache) the CA cert.</param>
+        /// <param name="serviceName">which service to use to pull the cert from.</param>
+        /// <param name="cert">the server certificate presented during the TLS handshake.</param>
+        /// <returns><c>true</c> if the certificate chains to the ledger identity TLS certificate; otherwise <c>false</c>.</returns>
+        internal static bool ValidateServerCertificate(CodeTransparencyCertificateClient certificateClient, string serviceName, X509Certificate2 cert)
+            => ValidateServerCertificate(certificateClient, serviceName, cert, static () => DateTime.Now);
+
+        /// <summary>
+        /// Overload of <see cref="ValidateServerCertificate(CodeTransparencyCertificateClient, string, X509Certificate2)"/>
+        /// that takes the verification time from <paramref name="verificationTimeProvider"/> instead of reading
+        /// <see cref="DateTime.Now"/> directly, so tests can advance a clock between callback creation and invocation.
+        /// </summary>
+        /// <param name="certificateClient">identity service client used to get (and cache) the CA cert.</param>
+        /// <param name="serviceName">which service to use to pull the cert from.</param>
+        /// <param name="cert">the server certificate presented during the TLS handshake.</param>
+        /// <param name="verificationTimeProvider">supplies the per-handshake <see cref="X509ChainPolicy.VerificationTime"/>.</param>
+        /// <returns><c>true</c> if the certificate chains to the ledger identity TLS certificate; otherwise <c>false</c>.</returns>
+        internal static bool ValidateServerCertificate(CodeTransparencyCertificateClient certificateClient, string serviceName, X509Certificate2 cert, Func<DateTime> verificationTimeProvider)
+        {
+            // Pull the TLS cert or get it from the cache
+            ServiceIdentityResult identity = certificateClient.GetServiceIdentity(serviceName);
+
+            // GetCertificate() parses and returns a fresh X509Certificate2 (native resource) on every handshake;
+            // dispose it once validation is done so handles do not accumulate on long-lived clients.
+            using X509Certificate2 identityServiceCert = identity.GetCertificate();
+
+            // Build a fresh chain per validation so VerificationTime is current and the chain is not shared
+            // across concurrent handshakes.
+            using X509Chain certificateChain = new();
+
             // Revocation is not required by CCF. Hence revocation checks must be skipped to avoid validation failing unnecessarily.
             certificateChain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
 
@@ -162,161 +270,66 @@ namespace Azure.Security.CodeTransparency
             // This makes it possible for validation of certificate chains terminating in the ledger identity TLS certificate to pass.
             // Note: .NET 5 introduced `CustomTrustStore` but we cannot use that here as we must support older versions of .NET.
             certificateChain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
-            certificateChain.ChainPolicy.VerificationTime = DateTime.Now;
 
-            // Define a validation function to ensure that certificates presented to the client only pass validation if
-            // they are trusted by the ledger identity TLS certificate.
-            // will yield AuthenticationException if cert is invalid
-            bool CertValidationCheck(X509Certificate2 cert)
-            {
-                // Pull the TLS cert or get it from the cache
-                ServiceIdentityResult identity = certificateClient.GetServiceIdentity(serviceName);
-                X509Certificate2 identityServiceCert = identity.GetCertificate();
+            // Evaluate validity against the current time, per handshake. Do NOT capture this once per client.
+            certificateChain.ChainPolicy.VerificationTime = verificationTimeProvider();
 
-                // Add the ledger identity TLS certificate to the ExtraStore.
-                X509Certificate2Collection existingCerts = certificateChain.ChainPolicy.ExtraStore;
-                if (!existingCerts.Contains(identityServiceCert))
-                {
-                    certificateChain.ChainPolicy.ExtraStore.Clear();
-                    certificateChain.ChainPolicy.ExtraStore.Add(identityServiceCert);
-                }
-                // Validate the presented certificate chain, using the ChainPolicy defined above.
-                // Note: this check will allow certificates signed by standard CAs as well as those signed by the ledger identity TLS certificate.
-                bool isChainValid = certificateChain.Build(cert);
-                if (!isChainValid)
-                    return false;
+            // Add the ledger identity TLS certificate to the ExtraStore.
+            certificateChain.ChainPolicy.ExtraStore.Add(identityServiceCert);
 
-                // Ensure that the presented certificate chain passes validation only if it is rooted in the ledger identity TLS certificate.
-                X509Certificate2 rootCert = certificateChain.ChainElements[certificateChain.ChainElements.Count - 1].Certificate;
-                bool isChainRootedInTheTlsCert = rootCert.Thumbprint.Equals(identityServiceCert.Thumbprint);
-                return isChainRootedInTheTlsCert;
-            }
+            // Validate the presented certificate chain, using the ChainPolicy defined above.
+            // Note: this check will allow certificates signed by standard CAs as well as those signed by the ledger identity TLS certificate.
+            bool isChainValid = certificateChain.Build(cert);
+            if (!isChainValid)
+                return false;
 
-            return new HttpPipelineTransportOptions { ServerCertificateCustomValidationCallback = args => CertValidationCheck(args.Certificate) };
-        }
-
-        /// <summary> Post an entry to be registered on the CodeTransparency instance, mandatory in IETF SCITT draft. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>.</param>
-        /// <param name="body"> CoseSign1 signature envelope. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Operation<BinaryData> CreateEntry(WaitUntil waitUntil, BinaryData body, CancellationToken cancellationToken = default)
-        {
-            using RequestContent content = body ?? throw new ArgumentNullException(nameof(body));
-            RequestContext context = cancellationToken.ToRequestContext();
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.CreateEntry");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateEntryRequest(content, context);
-                Response response = Pipeline.ProcessMessage(message, context, cancellationToken);
-
-                string operationId = string.Empty;
-                try
-                {
-                    operationId = CborUtils.GetStringValueFromCborMapByKey(response.Content.ToArray(), "OperationId");
-                }
-                catch (Exception ex)
-                {
-                    throw new RequestFailedException("Failed to parse the Cbor response.", ex);
-                }
-
-                if (string.IsNullOrEmpty(operationId))
-                {
-                    throw new RequestFailedException(response);
-                }
-                else
-                {
-                    var entryOperation = new CreateEntryOperation(this, operationId);
-
-                    if (waitUntil == WaitUntil.Completed)
-                    {
-                        entryOperation.WaitForCompletionResponse(cancellationToken);
-                    }
-
-                    return entryOperation;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Post an entry to be registered on the CodeTransparency instance, mandatory in IETF SCITT draft. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>.</param>
-        /// <param name="body"> CoseSign1 signature envelope. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Operation<BinaryData>> CreateEntryAsync(WaitUntil waitUntil, BinaryData body, CancellationToken cancellationToken = default)
-        {
-            using RequestContent content = body ?? throw new ArgumentNullException(nameof(body));
-            RequestContext context = cancellationToken.ToRequestContext();
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.CreateEntryAsync");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateEntryRequest(content, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context, cancellationToken).ConfigureAwait(false);
-
-                string operationId = string.Empty;
-                try
-                {
-                    operationId = CborUtils.GetStringValueFromCborMapByKey(response.Content.ToArray(), "OperationId");
-                }
-                catch (Exception ex)
-                {
-                    throw new RequestFailedException("Failed to parse the Cbor response.", ex);
-                }
-
-                if (string.IsNullOrEmpty(operationId))
-                {
-                    throw new RequestFailedException(response);
-                }
-                else
-                {
-                    var entryOperation = new CreateEntryOperation(this, operationId);
-
-                    if (waitUntil == WaitUntil.Completed)
-                    {
-                        await entryOperation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                    }
-
-                    return entryOperation;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            // Ensure that the presented certificate chain passes validation only if it is rooted in the ledger identity TLS certificate.
+            X509Certificate2 rootCert = certificateChain.ChainElements[certificateChain.ChainElements.Count - 1].Certificate;
+            return rootCert.Thumbprint.Equals(identityServiceCert.Thumbprint, StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>
-        /// Verify the receipt integrity against the COSE_Sign1 envelope
-        /// and check if receipt was endorsed by the given service certificate.
-        /// In the case of multiple receipts being embedded in the signature then verify
-        /// all of them.
+        /// Extracts the entry id from the Location header of a response.
         /// </summary>
-        /// <param name="transparentStatementCoseSign1Bytes">Receipt cbor or Cose_Sign1 (with an embedded receipt) bytes.</param>
-        [Obsolete("Use the static VerifyTransparentStatement method with options instead.")]
-        public virtual void RunTransparentStatementVerification(byte[] transparentStatementCoseSign1Bytes)
+        /// <param name="response">The response to extract the entry id from.</param>
+        /// <returns>The entry id.</returns>
+        public static string GetEntryIdFromLocation(Response response)
         {
-            var verificationOptions = new CodeTransparencyVerificationOptions
+            string entryId = TryGetEntryIdFromLocation(response);
+            if (string.IsNullOrEmpty(entryId))
             {
-                AuthorizedDomains = new string[] { _endpoint.Host },
-                AuthorizedReceiptBehavior = AuthorizedReceiptBehavior.RequireAll,
-                UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.FailIfPresent
-            };
-            VerifyTransparentStatement(transparentStatementCoseSign1Bytes, verificationOptions);
+                throw new RequestFailedException(response);
+            }
+
+            return entryId;
+        }
+
+        private static string TryGetEntryIdFromLocation(Response response)
+        {
+            if (!response.Headers.TryGetValue("Location", out string location) || string.IsNullOrEmpty(location))
+            {
+                return null;
+            }
+
+            const string entriesSegment = "/entries/";
+            int index = location.LastIndexOf(entriesSegment, StringComparison.OrdinalIgnoreCase);
+            string entryId = index >= 0 ? location.Substring(index + entriesSegment.Length) : location;
+
+            int queryIndex = entryId.IndexOf('?');
+            if (queryIndex >= 0)
+            {
+                entryId = entryId.Substring(0, queryIndex);
+            }
+
+            entryId = entryId.Trim('/');
+            return string.IsNullOrEmpty(entryId) ? null : entryId;
         }
 
         /// <summary>
         /// Verify the receipt integrity against the COSE_Sign1 envelope
         /// and check if receipt was endorsed by the service public keys.
         /// This method expects the issuer in the receipt to match the CodeTransparencyClient client endpoint.
-        /// Calls <!-- see cref="CcfReceiptVerifier.VerifyTransparentStatementReceipt(JsonWebKey, byte[], byte[])"/> for each receipt found in the transparent statement.-->
+        /// Calls <see cref="CcfReceiptVerifier.Verify(byte[], byte[], CodeTransparencyVerificationKey)"/> for each receipt found in the transparent statement.
         /// </summary>
         /// <param name="signedStatementCoseSign1Bytes">Signed statement in Cose_Sign1 cbor bytes.</param>
         /// <param name="receiptCoseSign1Bytes">Receipt in COSE_Sign1 cbor bytes.</param>
@@ -325,8 +338,8 @@ namespace Azure.Security.CodeTransparency
         {
             CoseSign1Message inputSignedStatement = CoseMessage.DecodeSign1(signedStatementCoseSign1Bytes);
             inputSignedStatement.UnprotectedHeaders.Clear();
-            JsonWebKey jsonWebKey = GetServiceCertificateKey(receiptCoseSign1Bytes);
-            CcfReceiptVerifier.VerifyTransparentStatementReceipt(jsonWebKey, receiptCoseSign1Bytes, inputSignedStatement.Encode());
+            CodeTransparencyVerificationKey verificationKey = GetServiceCertificateKey(receiptCoseSign1Bytes);
+            CcfReceiptVerifier.Verify(receiptCoseSign1Bytes, inputSignedStatement.Encode(), verificationKey);
         }
 
         /// <summary>
@@ -435,10 +448,10 @@ namespace Azure.Security.CodeTransparency
                     if (!clientInstances.TryGetValue(issuer, out CodeTransparencyClient clientInstance))
                     {
                         clientInstance = new CodeTransparencyClient(new Uri($"https://{issuer}"), clientOptions);
-                        if (verificationOptions?.OfflineKeys != null)
+                        if (verificationOptions?.TrustStore != null)
                         {
-                            clientInstance._offlineKeys = verificationOptions.OfflineKeys.ByIssuer;
-                            clientInstance._offlineKeysAllowNetworkFallback = verificationOptions.OfflineKeysBehavior == OfflineKeysBehavior.FallbackToNetwork;
+                            clientInstance._trustStore = verificationOptions.TrustStore;
+                            clientInstance._trustStoreAllowNetworkFallback = verificationOptions.KeyResolutionMode == CodeTransparencyKeyResolutionMode.TrustStoreThenNetwork;
                         }
                         clientInstances[issuer] = clientInstance;
                     }
@@ -519,7 +532,7 @@ namespace Azure.Security.CodeTransparency
         /// <param name="receiptBytes">the COSE receipt bytes,
         /// see https://www.ietf.org/archive/id/draft-ietf-cose-merkle-tree-proofs-08.html#name-verifiable-data-structures-</param>
         /// <returns>The service certificate key (JWK)</returns>
-        private JsonWebKey GetServiceCertificateKey(byte[] receiptBytes)
+        private CodeTransparencyVerificationKey GetServiceCertificateKey(byte[] receiptBytes)
         {
             string issuer = GetReceiptIssuerHostStatic(receiptBytes);
 
@@ -529,31 +542,25 @@ namespace Azure.Security.CodeTransparency
                 throw new InvalidOperationException("Issuer and service instance name are not matching.");
             }
 
-            JwksDocument jwksDocument = null;
-            // Check if we have offline keys for this domain
-            if (_offlineKeys?.TryGetValue(issuer, out jwksDocument) != true && _offlineKeysAllowNetworkFallback)
+            CodeTransparencyVerificationKeySet keySet = null;
+            // Check if we have trusted keys for this domain
+            bool foundInStore = _trustStore != null && _trustStore.TryGetKeys(issuer, out keySet);
+            if (!foundInStore && _trustStoreAllowNetworkFallback)
             {
                 // Get all the public keys from the JWKS endpoint
-                jwksDocument = GetPublicKeys().Value;
+                keySet = GetPublicKeys().Value;
             }
 
-            // Ensure jwksDocument was obtained from either offline keys or network
-            if (jwksDocument == null)
+            // Ensure a key set was obtained from either the trust store or the network
+            if (keySet == null)
             {
-                throw new InvalidOperationException($"No keys available for issuer '{issuer}'. Either offline keys are not configured or network fallback is disabled.");
+                throw new InvalidOperationException($"No keys available for issuer '{issuer}'. Either a trust store is not configured or network resolution is disabled.");
             }
 
-            // Ensure there is at least one entry in the JWKS document
-            if (jwksDocument.Keys.Count == 0)
+            // Ensure there is at least one key for the issuer
+            if (keySet.Keys.Count == 0)
             {
-                throw new InvalidOperationException("No keys found in JWKS document.");
-            }
-
-            // Store all the keys in a new Dictionary to simplify lookup
-            var keysDict = new Dictionary<string, JsonWebKey>();
-            foreach (JsonWebKey jsonWebKey in jwksDocument.Keys)
-            {
-                keysDict[jsonWebKey.Kid] = jsonWebKey;
+                throw new InvalidOperationException("No keys found for the issuer.");
             }
 
             CoseSign1Message coseSign1Message = CoseMessage.DecodeSign1(receiptBytes);
@@ -564,7 +571,7 @@ namespace Azure.Security.CodeTransparency
             }
 
             string kidAsString = Encoding.UTF8.GetString(receiptKid.GetValueAsBytes());
-            if (!keysDict.TryGetValue(kidAsString, out JsonWebKey matchingKey))
+            if (!keySet.TryGetKey(kidAsString, out CodeTransparencyVerificationKey matchingKey))
             {
                 throw new InvalidOperationException($"Key with ID '{kidAsString}' not found.");
             }
@@ -586,80 +593,180 @@ namespace Azure.Security.CodeTransparency
             return message;
         }
 
-        internal HttpMessage CreateGetPublicKeysRequest(RequestContext context)
+        /// <summary> Get the public keys used by the service to verify receipts. </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns> The raw JWK Set JSON response returned from the service. </returns>
+        public virtual Response GetPublicKeys(RequestContext context)
         {
-            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jwks", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetPublicKeys");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetPublicKeysRequest(context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        internal HttpMessage CreateCreateEntryRequest(RequestContent content, RequestContext context)
+        /// <summary> Get the public keys used by the service to verify receipts. </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns> The raw JWK Set JSON response returned from the service. </returns>
+        public virtual async Task<Response> GetPublicKeysAsync(RequestContext context)
         {
-            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier201202);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/entries", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/cose; application/cbor");
-            request.Headers.Add("Content-Type", "application/cose");
-            request.Content = content;
-            return message;
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetPublicKeys");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetPublicKeysRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        internal HttpMessage CreateGetOperationRequest(string operationId, RequestContext context)
+        /// <summary> Get the public keys used by the service to verify receipts, normalized to a key set. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        public virtual Response<CodeTransparencyVerificationKeySet> GetPublicKeys(CancellationToken cancellationToken = default)
         {
-            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200202);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/operations/", false);
-            uri.AppendPath(operationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/cbor");
-            return message;
+            Response response = GetPublicKeys(cancellationToken.ToRequestContext());
+            CodeTransparencyVerificationKeySet value = CodeTransparencyKeyParser.ParseJwksJson(response.Content.ToMemory().Span);
+            return Response.FromValue(value, response);
         }
 
-        internal HttpMessage CreateGetEntryRequest(string entryId, RequestContext context)
+        /// <summary> Get the public keys used by the service to verify receipts, normalized to a key set. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        public virtual async Task<Response<CodeTransparencyVerificationKeySet>> GetPublicKeysAsync(CancellationToken cancellationToken = default)
         {
-            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/entries/", false);
-            uri.AppendPath(entryId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/cose");
-            return message;
+            Response response = await GetPublicKeysAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            CodeTransparencyVerificationKeySet value = CodeTransparencyKeyParser.ParseJwksJson(response.Content.ToMemory().Span);
+            return Response.FromValue(value, response);
         }
 
-        internal HttpMessage CreateGetEntryStatementRequest(string entryId, RequestContext context)
+        /// <summary> List all service keys in COSE_Key_Set format. </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns> The raw COSE_Key_Set CBOR response returned from the service. </returns>
+        public virtual Response GetScittKeys(RequestContext context)
         {
-            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/entries/", false);
-            uri.AppendPath(entryId, true);
-            uri.AppendPath("/statement", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/cose");
-            return message;
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetScittKeys");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetScittKeysRequest(context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> List all service keys in COSE_Key_Set format. </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns> The raw COSE_Key_Set CBOR response returned from the service. </returns>
+        public virtual async Task<Response> GetScittKeysAsync(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetScittKeys");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetScittKeysRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> List all service keys, normalized to a key set. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        public virtual Response<CodeTransparencyVerificationKeySet> GetScittKeys(CancellationToken cancellationToken = default)
+        {
+            Response response = GetScittKeys(cancellationToken.ToRequestContext());
+            CodeTransparencyVerificationKeySet value = CodeTransparencyKeyParser.ParseCoseKeySet(response.Content.ToMemory());
+            return Response.FromValue(value, response);
+        }
+
+        /// <summary> List all service keys, normalized to a key set. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        public virtual async Task<Response<CodeTransparencyVerificationKeySet>> GetScittKeysAsync(CancellationToken cancellationToken = default)
+        {
+            Response response = await GetScittKeysAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            CodeTransparencyVerificationKeySet value = CodeTransparencyKeyParser.ParseCoseKeySet(response.Content.ToMemory());
+            return Response.FromValue(value, response);
+        }
+
+        /// <summary> Get a single service key by kid. </summary>
+        /// <param name="kid"> Key ID (kid) of the SCITT key to retrieve. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns> The raw COSE_Key CBOR response returned from the service. </returns>
+        public virtual Response GetScittKey(string kid, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetScittKey");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(kid, nameof(kid));
+
+                using HttpMessage message = CreateGetScittKeyRequest(kid, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a single service key by kid. </summary>
+        /// <param name="kid"> Key ID (kid) of the SCITT key to retrieve. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns> The raw COSE_Key CBOR response returned from the service. </returns>
+        public virtual async Task<Response> GetScittKeyAsync(string kid, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetScittKey");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(kid, nameof(kid));
+
+                using HttpMessage message = CreateGetScittKeyRequest(kid, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a single service key by kid, normalized to a verification key. </summary>
+        /// <param name="kid"> Key ID (kid) of the SCITT key to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        public virtual Response<CodeTransparencyVerificationKey> GetScittKey(string kid, CancellationToken cancellationToken = default)
+        {
+            Response response = GetScittKey(kid, cancellationToken.ToRequestContext());
+            CodeTransparencyVerificationKey value = CodeTransparencyKeyParser.ParseCoseKey(response.Content.ToMemory());
+            return Response.FromValue(value, response);
+        }
+
+        /// <summary> Get a single service key by kid, normalized to a verification key. </summary>
+        /// <param name="kid"> Key ID (kid) of the SCITT key to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        public virtual async Task<Response<CodeTransparencyVerificationKey>> GetScittKeyAsync(string kid, CancellationToken cancellationToken = default)
+        {
+            Response response = await GetScittKeyAsync(kid, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            CodeTransparencyVerificationKey value = CodeTransparencyKeyParser.ParseCoseKey(response.Content.ToMemory());
+            return Response.FromValue(value, response);
         }
 
         private static ResponseClassifier _responseClassifier200;

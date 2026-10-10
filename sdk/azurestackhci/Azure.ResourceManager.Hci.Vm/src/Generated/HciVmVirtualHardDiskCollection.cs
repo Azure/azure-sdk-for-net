@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             TryGetApiVersion(HciVmVirtualHardDiskResource.ResourceType, out string hciVmVirtualHardDiskApiVersion);
             _virtualHardDisksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmVirtualHardDiskResource.ResourceType.Namespace, Diagnostics);
-            _virtualHardDisksRestClient = new VirtualHardDisks(_virtualHardDisksClientDiagnostics, Pipeline, Endpoint, hciVmVirtualHardDiskApiVersion ?? "2025-09-01-preview");
+            _virtualHardDisksRestClient = new VirtualHardDisks(_virtualHardDisksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmVirtualHardDiskApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmVirtualHardDiskData, HciVmVirtualHardDiskResource>(new VirtualHardDisksGetByResourceGroupAsyncCollectionResultOfT(_virtualHardDisksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmVirtualHardDiskCollection.GetAll"), data => new HciVmVirtualHardDiskResource(Client, data));
+            return new AsyncPageableWrapper<HciVmVirtualHardDiskData, HciVmVirtualHardDiskResource>(new HciVmVirtualHardDiskDataAsyncCollectionResultOfT(_virtualHardDisksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmVirtualHardDiskCollection.GetAll"), data => new HciVmVirtualHardDiskResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmVirtualHardDiskData, HciVmVirtualHardDiskResource>(new VirtualHardDisksGetByResourceGroupCollectionResultOfT(_virtualHardDisksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmVirtualHardDiskCollection.GetAll"), data => new HciVmVirtualHardDiskResource(Client, data));
+            return new PageableWrapper<HciVmVirtualHardDiskData, HciVmVirtualHardDiskResource>(new HciVmVirtualHardDiskDataCollectionResultOfT(_virtualHardDisksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmVirtualHardDiskCollection.GetAll"), data => new HciVmVirtualHardDiskResource(Client, data));
         }
 
         /// <summary>

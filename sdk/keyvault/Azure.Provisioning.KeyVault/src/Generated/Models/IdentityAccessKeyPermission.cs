@@ -14,66 +14,66 @@ namespace Azure.Provisioning.KeyVault
     {
         /// <summary> All. </summary>
         [DataMember(Name = "all")]
-        All,
+        All = 0,
         /// <summary> Encrypt. </summary>
         [DataMember(Name = "encrypt")]
-        Encrypt,
+        Encrypt = 1,
         /// <summary> Decrypt. </summary>
         [DataMember(Name = "decrypt")]
-        Decrypt,
+        Decrypt = 2,
         /// <summary> WrapKey. </summary>
         [DataMember(Name = "wrapKey")]
-        WrapKey,
+        WrapKey = 3,
         /// <summary> UnwrapKey. </summary>
         [DataMember(Name = "unwrapKey")]
-        UnwrapKey,
+        UnwrapKey = 4,
         /// <summary> Sign. </summary>
         [DataMember(Name = "sign")]
-        Sign,
+        Sign = 5,
         /// <summary> Verify. </summary>
         [DataMember(Name = "verify")]
-        Verify,
+        Verify = 6,
         /// <summary> Get. </summary>
         [DataMember(Name = "get")]
-        Get,
+        Get = 7,
         /// <summary> List. </summary>
         [DataMember(Name = "list")]
-        List,
+        List = 8,
         /// <summary> Create. </summary>
         [DataMember(Name = "create")]
-        Create,
+        Create = 9,
         /// <summary> Update. </summary>
         [DataMember(Name = "update")]
-        Update,
+        Update = 10,
         /// <summary> Import. </summary>
         [DataMember(Name = "import")]
-        Import,
+        Import = 11,
         /// <summary> Delete. </summary>
         [DataMember(Name = "delete")]
-        Delete,
+        Delete = 12,
         /// <summary> Backup. </summary>
         [DataMember(Name = "backup")]
-        Backup,
+        Backup = 13,
         /// <summary> Restore. </summary>
         [DataMember(Name = "restore")]
-        Restore,
+        Restore = 14,
         /// <summary> Recover. </summary>
         [DataMember(Name = "recover")]
-        Recover,
+        Recover = 15,
         /// <summary> Purge. </summary>
         [DataMember(Name = "purge")]
-        Purge,
+        Purge = 16,
         /// <summary> Release. </summary>
         [DataMember(Name = "release")]
-        Release,
+        Release = 17,
         /// <summary> Rotate. </summary>
         [DataMember(Name = "rotate")]
-        Rotate,
+        Rotate = 18,
         /// <summary> Getrotationpolicy. </summary>
         [DataMember(Name = "getrotationpolicy")]
-        Getrotationpolicy,
+        Getrotationpolicy = 19,
         /// <summary> Setrotationpolicy. </summary>
         [DataMember(Name = "setrotationpolicy")]
-        Setrotationpolicy
+        Setrotationpolicy = 20
     }
 }

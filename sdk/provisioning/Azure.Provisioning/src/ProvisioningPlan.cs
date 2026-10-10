@@ -35,7 +35,10 @@ public partial class ProvisioningPlan
         BuildOptions = options;
     }
 
-    // This is a placeholder until we get proper module splitting in place
+    /// <summary>
+    /// Compiles the infrastructure into a dictionary of Bicep file names and their source content.
+    /// </summary>
+    /// <returns>A dictionary mapping Bicep file names to their compiled source.</returns>
     public IDictionary<string, string> Compile()
     {
         Dictionary<string, string> source = [];
@@ -46,7 +49,11 @@ public partial class ProvisioningPlan
         return source;
     }
 
-    // TODO: Support overloads taking callbacks for writing to arbitrary streams
+    /// <summary>
+    /// Saves the compiled Bicep files to the specified directory.
+    /// </summary>
+    /// <param name="directoryPath">The directory to write the Bicep files to.</param>
+    /// <returns>The file paths that were written.</returns>
     public IEnumerable<string> Save(string directoryPath)
     {
         if (!Directory.Exists(directoryPath))

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             TryGetApiVersion(DataBoxEdgeTriggerResource.ResourceType, out string dataBoxEdgeTriggerApiVersion);
             _triggersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", DataBoxEdgeTriggerResource.ResourceType.Namespace, Diagnostics);
-            _triggersRestClient = new Triggers(_triggersClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeTriggerApiVersion ?? "2023-12-01");
+            _triggersRestClient = new Triggers(_triggersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeTriggerApiVersion ?? "2023-12-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataBoxEdgeTriggerData, DataBoxEdgeTriggerResource>(new TriggersGetByDataBoxEdgeDeviceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataBoxEdgeTriggerData, DataBoxEdgeTriggerResource>(new DataBoxEdgeTriggerDataAsyncCollectionResultOfT(
                 _triggersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataBoxEdgeTriggerData, DataBoxEdgeTriggerResource>(new TriggersGetByDataBoxEdgeDeviceCollectionResultOfT(
+            return new PageableWrapper<DataBoxEdgeTriggerData, DataBoxEdgeTriggerResource>(new DataBoxEdgeTriggerDataCollectionResultOfT(
                 _triggersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

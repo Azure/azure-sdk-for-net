@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct EntityParameterType : IEquatable<EntityParameterType>
     {
         private readonly string _value;
+        /// <summary> Object. </summary>
+        private const string ObjectValue = "Object";
+        /// <summary> String. </summary>
+        private const string StringValue = "String";
+        /// <summary> Int. </summary>
+        private const string IntValue = "Int";
+        /// <summary> Float. </summary>
+        private const string FloatValue = "Float";
+        /// <summary> Bool. </summary>
+        private const string BoolValue = "Bool";
+        /// <summary> Array. </summary>
+        private const string ArrayValue = "Array";
+        /// <summary> SecureString. </summary>
+        private const string SecureStringValue = "SecureString";
 
         /// <summary> Initializes a new instance of <see cref="EntityParameterType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EntityParameterType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ObjectValue = "Object";
-        private const string StringValue = "String";
-        private const string IntValue = "Int";
-        private const string FloatValue = "Float";
-        private const string BoolValue = "Bool";
-        private const string ArrayValue = "Array";
-        private const string SecureStringValue = "SecureString";
+            _value = value;
+        }
 
         /// <summary> Object. </summary>
         public static EntityParameterType Object { get; } = new EntityParameterType(ObjectValue);
+
         /// <summary> String. </summary>
         public static EntityParameterType String { get; } = new EntityParameterType(StringValue);
+
         /// <summary> Int. </summary>
         public static EntityParameterType Int { get; } = new EntityParameterType(IntValue);
+
         /// <summary> Float. </summary>
         public static EntityParameterType Float { get; } = new EntityParameterType(FloatValue);
+
         /// <summary> Bool. </summary>
         public static EntityParameterType Bool { get; } = new EntityParameterType(BoolValue);
+
         /// <summary> Array. </summary>
         public static EntityParameterType Array { get; } = new EntityParameterType(ArrayValue);
+
         /// <summary> SecureString. </summary>
         public static EntityParameterType SecureString { get; } = new EntityParameterType(SecureStringValue);
+
         /// <summary> Determines if two <see cref="EntityParameterType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EntityParameterType left, EntityParameterType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EntityParameterType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EntityParameterType left, EntityParameterType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EntityParameterType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EntityParameterType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EntityParameterType(string value) => new EntityParameterType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EntityParameterType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EntityParameterType?(string value) => value == null ? null : new EntityParameterType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EntityParameterType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EntityParameterType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -11,10 +11,10 @@ namespace Azure.Provisioning.ContainerInstance
     public enum ContainerGpuSku
     {
         /// <summary> K80. </summary>
-        K80,
+        K80 = 0,
         /// <summary> P100. </summary>
-        P100,
+        P100 = 1,
         /// <summary> V100. </summary>
-        V100
+        V100 = 2
     }
 }

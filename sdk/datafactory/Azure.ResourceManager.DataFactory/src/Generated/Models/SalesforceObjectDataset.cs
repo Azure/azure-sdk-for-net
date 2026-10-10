@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,11 +18,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="SalesforceObjectDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public SalesforceObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public SalesforceObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("SalesforceObject", linkedServiceName)
         {
             Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
 
-            DatasetType = "SalesforceObject";
         }
 
         /// <summary> Initializes a new instance of <see cref="SalesforceObjectDataset"/>. </summary>
@@ -33,20 +33,31 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="objectApiName"> The Salesforce object API name. Type: string (or Expression with resultType string). </param>
-        internal SalesforceObjectDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> objectApiName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Salesforce object dataset properties. </param>
+        internal SalesforceObjectDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, SalesforceObjectDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
-            ObjectApiName = objectApiName;
-            DatasetType = datasetType ?? "SalesforceObject";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SalesforceObjectDataset"/> for deserialization. </summary>
-        internal SalesforceObjectDataset()
-        {
-        }
+        /// <summary> Salesforce object dataset properties. </summary>
+        internal SalesforceObjectDatasetTypeProperties TypeProperties { get; set; }
 
         /// <summary> The Salesforce object API name. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ObjectApiName { get; set; }
+        public DataFactoryElement<string> ObjectApiName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ObjectApiName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SalesforceObjectDatasetTypeProperties();
+                }
+                TypeProperties.ObjectApiName = value;
+            }
+        }
     }
 }

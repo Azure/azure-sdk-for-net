@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         {
             TryGetApiVersion(CosmosDBForPostgreSqlRoleResource.ResourceType, out string cosmosDBForPostgreSqlRoleApiVersion);
             _rolesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDBForPostgreSql", CosmosDBForPostgreSqlRoleResource.ResourceType.Namespace, Diagnostics);
-            _rolesRestClient = new Roles(_rolesClientDiagnostics, Pipeline, Endpoint, cosmosDBForPostgreSqlRoleApiVersion ?? "2023-03-02-preview");
+            _rolesRestClient = new Roles(_rolesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBForPostgreSqlRoleApiVersion ?? "2023-03-02-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBForPostgreSqlRoleData, CosmosDBForPostgreSqlRoleResource>(new RolesGetByClusterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CosmosDBForPostgreSqlRoleData, CosmosDBForPostgreSqlRoleResource>(new CosmosDBForPostgreSqlRoleDataAsyncCollectionResultOfT(
                 _rolesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBForPostgreSqlRoleData, CosmosDBForPostgreSqlRoleResource>(new RolesGetByClusterCollectionResultOfT(
+            return new PageableWrapper<CosmosDBForPostgreSqlRoleData, CosmosDBForPostgreSqlRoleResource>(new CosmosDBForPostgreSqlRoleDataCollectionResultOfT(
                 _rolesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

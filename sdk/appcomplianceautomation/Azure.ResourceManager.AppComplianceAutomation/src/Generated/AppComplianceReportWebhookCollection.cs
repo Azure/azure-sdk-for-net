@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             TryGetApiVersion(AppComplianceReportWebhookResource.ResourceType, out string appComplianceReportWebhookApiVersion);
             _webhookClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation", AppComplianceReportWebhookResource.ResourceType.Namespace, Diagnostics);
-            _webhookRestClient = new Webhook(_webhookClientDiagnostics, Pipeline, Endpoint, appComplianceReportWebhookApiVersion ?? "2024-06-27");
+            _webhookRestClient = new Webhook(_webhookClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appComplianceReportWebhookApiVersion ?? "2024-06-27");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppComplianceReportWebhookData, AppComplianceReportWebhookResource>(new WebhookGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AppComplianceReportWebhookData, AppComplianceReportWebhookResource>(new AppComplianceReportWebhookDataAsyncCollectionResultOfT(
                 _webhookRestClient,
                 Id.Name,
                 skipToken,
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppComplianceReportWebhookData, AppComplianceReportWebhookResource>(new WebhookGetAllCollectionResultOfT(
+            return new PageableWrapper<AppComplianceReportWebhookData, AppComplianceReportWebhookResource>(new AppComplianceReportWebhookDataCollectionResultOfT(
                 _webhookRestClient,
                 Id.Name,
                 skipToken,

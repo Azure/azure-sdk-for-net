@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EdgeActions
         {
             TryGetApiVersion(EdgeActionExecutionFilterResource.ResourceType, out string edgeActionExecutionFilterApiVersion);
             _edgeActionExecutionFiltersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeActions", EdgeActionExecutionFilterResource.ResourceType.Namespace, Diagnostics);
-            _edgeActionExecutionFiltersRestClient = new EdgeActionExecutionFilters(_edgeActionExecutionFiltersClientDiagnostics, Pipeline, Endpoint, edgeActionExecutionFilterApiVersion ?? "2025-12-01-preview");
+            _edgeActionExecutionFiltersRestClient = new EdgeActionExecutionFilters(_edgeActionExecutionFiltersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeActionExecutionFilterApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.EdgeActions
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeActionExecutionFilterData, EdgeActionExecutionFilterResource>(new EdgeActionExecutionFiltersGetByEdgeActionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EdgeActionExecutionFilterData, EdgeActionExecutionFilterResource>(new EdgeActionExecutionFilterDataAsyncCollectionResultOfT(
                 _edgeActionExecutionFiltersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.EdgeActions
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeActionExecutionFilterData, EdgeActionExecutionFilterResource>(new EdgeActionExecutionFiltersGetByEdgeActionCollectionResultOfT(
+            return new PageableWrapper<EdgeActionExecutionFilterData, EdgeActionExecutionFilterResource>(new EdgeActionExecutionFilterDataCollectionResultOfT(
                 _edgeActionExecutionFiltersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

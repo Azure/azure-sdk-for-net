@@ -816,11 +816,11 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Flag to indicate enabling/disabling of hierarchical partition key ID last level enforcement on the account. </summary>
         [WirePath("properties.enforceHierarchicalPartitionKeyIdLastLevel")]
-        public bool? EnforceHierarchicalPartitionKeyIdLastLevel
+        public bool? IsHierarchicalPartitionKeyIdLastLevelEnforced
         {
             get
             {
-                return Properties is null ? default : Properties.EnforceHierarchicalPartitionKeyIdLastLevel;
+                return Properties is null ? default : Properties.IsHierarchicalPartitionKeyIdLastLevelEnforced;
             }
             set
             {
@@ -828,7 +828,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     Properties = new CosmosDBAccountProperties();
                 }
-                Properties.EnforceHierarchicalPartitionKeyIdLastLevel = value;
+                Properties.IsHierarchicalPartitionKeyIdLastLevelEnforced = value;
             }
         }
 

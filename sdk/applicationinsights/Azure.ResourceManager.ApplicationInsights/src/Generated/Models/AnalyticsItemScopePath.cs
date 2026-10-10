@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary> The AnalyticsItemScopePath. </summary>
+    /// <summary></summary>
     public readonly partial struct AnalyticsItemScopePath : IEquatable<AnalyticsItemScopePath>
     {
         private readonly string _value;
+        /// <summary> analyticsItems. </summary>
+        private const string AnalyticsItemsValue = "analyticsItems";
+        /// <summary> myanalyticsItems. </summary>
+        private const string MyAnalyticsItemsValue = "myanalyticsItems";
 
         /// <summary> Initializes a new instance of <see cref="AnalyticsItemScopePath"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AnalyticsItemScopePath(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AnalyticsItemsValue = "analyticsItems";
-        private const string MyAnalyticsItemsValue = "myanalyticsItems";
+            _value = value;
+        }
 
         /// <summary> analyticsItems. </summary>
         public static AnalyticsItemScopePath AnalyticsItems { get; } = new AnalyticsItemScopePath(AnalyticsItemsValue);
+
         /// <summary> myanalyticsItems. </summary>
         public static AnalyticsItemScopePath MyAnalyticsItems { get; } = new AnalyticsItemScopePath(MyAnalyticsItemsValue);
+
         /// <summary> Determines if two <see cref="AnalyticsItemScopePath"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AnalyticsItemScopePath left, AnalyticsItemScopePath right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AnalyticsItemScopePath"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AnalyticsItemScopePath left, AnalyticsItemScopePath right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AnalyticsItemScopePath"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AnalyticsItemScopePath"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AnalyticsItemScopePath(string value) => new AnalyticsItemScopePath(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AnalyticsItemScopePath"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AnalyticsItemScopePath?(string value) => value == null ? null : new AnalyticsItemScopePath(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AnalyticsItemScopePath other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AnalyticsItemScopePath other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

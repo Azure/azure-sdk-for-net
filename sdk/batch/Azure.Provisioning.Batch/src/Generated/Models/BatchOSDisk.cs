@@ -125,6 +125,10 @@ namespace Azure.Provisioning.Batch
             _managedDisk = DefineModelProperty<ManagedDisk>(nameof(ManagedDisk), new string[] { "managedDisk" });
             _diskSizeGB = DefineProperty<int>(nameof(DiskSizeGB), new string[] { "diskSizeGB" });
             _isWriteAcceleratorEnabled = DefineProperty<bool>(nameof(IsWriteAcceleratorEnabled), new string[] { "writeAcceleratorEnabled" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchOSDisk that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

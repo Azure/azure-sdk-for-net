@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct DynamicsSinkWriteBehavior : IEquatable<DynamicsSinkWriteBehavior>
     {
         private readonly string _value;
+        /// <summary> Upsert. </summary>
+        private const string UpsertValue = "Upsert";
 
         /// <summary> Initializes a new instance of <see cref="DynamicsSinkWriteBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DynamicsSinkWriteBehavior(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UpsertValue = "Upsert";
+            _value = value;
+        }
 
         /// <summary> Upsert. </summary>
         public static DynamicsSinkWriteBehavior Upsert { get; } = new DynamicsSinkWriteBehavior(UpsertValue);
+
         /// <summary> Determines if two <see cref="DynamicsSinkWriteBehavior"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DynamicsSinkWriteBehavior left, DynamicsSinkWriteBehavior right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DynamicsSinkWriteBehavior"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DynamicsSinkWriteBehavior left, DynamicsSinkWriteBehavior right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DynamicsSinkWriteBehavior"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DynamicsSinkWriteBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DynamicsSinkWriteBehavior(string value) => new DynamicsSinkWriteBehavior(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DynamicsSinkWriteBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DynamicsSinkWriteBehavior?(string value) => value == null ? null : new DynamicsSinkWriteBehavior(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DynamicsSinkWriteBehavior other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DynamicsSinkWriteBehavior other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

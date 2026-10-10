@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             TryGetApiVersion(DataReplicationPolicyResource.ResourceType, out string dataReplicationPolicyApiVersion);
             _policyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationPolicyResource.ResourceType.Namespace, Diagnostics);
-            _policyRestClient = new Policy(_policyClientDiagnostics, Pipeline, Endpoint, dataReplicationPolicyApiVersion ?? "2024-09-01");
+            _policyRestClient = new Policy(_policyClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationPolicyApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataReplicationPolicyData, DataReplicationPolicyResource>(new PolicyGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataReplicationPolicyData, DataReplicationPolicyResource>(new DataReplicationPolicyDataAsyncCollectionResultOfT(
                 _policyRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataReplicationPolicyData, DataReplicationPolicyResource>(new PolicyGetAllCollectionResultOfT(
+            return new PageableWrapper<DataReplicationPolicyData, DataReplicationPolicyResource>(new DataReplicationPolicyDataCollectionResultOfT(
                 _policyRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

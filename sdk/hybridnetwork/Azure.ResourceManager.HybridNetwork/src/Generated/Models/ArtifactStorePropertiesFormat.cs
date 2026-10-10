@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Artifact store properties. </summary>
     public partial class ArtifactStorePropertiesFormat
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ArtifactStorePropertiesFormat"/>. </summary>
         public ArtifactStorePropertiesFormat()
@@ -54,28 +25,37 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> Initializes a new instance of <see cref="ArtifactStorePropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the application groups resource. </param>
         /// <param name="storeType"> The artifact store type. </param>
+        /// <param name="backingResourcePublicNetworkAccess"> The artifact store backing resource network access type. </param>
         /// <param name="replicationStrategy"> The replication strategy. </param>
         /// <param name="managedResourceGroupConfiguration"></param>
         /// <param name="storageResourceId"> The created storage resource id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArtifactStorePropertiesFormat(ProvisioningState? provisioningState, ArtifactStoreType? storeType, ArtifactReplicationStrategy? replicationStrategy, ArtifactStorePropertiesFormatManagedResourceGroupConfiguration managedResourceGroupConfiguration, ResourceIdentifier storageResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ArtifactStorePropertiesFormat(ProvisioningState? provisioningState, ArtifactStoreType? storeType, BackingResourcePublicNetworkAccess? backingResourcePublicNetworkAccess, ArtifactReplicationStrategy? replicationStrategy, ArtifactStorePropertiesFormatManagedResourceGroupConfiguration managedResourceGroupConfiguration, ResourceIdentifier storageResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             StoreType = storeType;
+            BackingResourcePublicNetworkAccess = backingResourcePublicNetworkAccess;
             ReplicationStrategy = replicationStrategy;
             ManagedResourceGroupConfiguration = managedResourceGroupConfiguration;
             StorageResourceId = storageResourceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The provisioning state of the application groups resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
+
         /// <summary> The artifact store type. </summary>
         public ArtifactStoreType? StoreType { get; set; }
+
+        /// <summary> The artifact store backing resource network access type. </summary>
+        public BackingResourcePublicNetworkAccess? BackingResourcePublicNetworkAccess { get; set; }
+
         /// <summary> The replication strategy. </summary>
         public ArtifactReplicationStrategy? ReplicationStrategy { get; set; }
-        /// <summary> Gets or sets the managed resource group configuration. </summary>
+
+        /// <summary> Gets or sets the ManagedResourceGroupConfiguration. </summary>
         public ArtifactStorePropertiesFormatManagedResourceGroupConfiguration ManagedResourceGroupConfiguration { get; set; }
+
         /// <summary> The created storage resource id. </summary>
         public ResourceIdentifier StorageResourceId { get; }
     }

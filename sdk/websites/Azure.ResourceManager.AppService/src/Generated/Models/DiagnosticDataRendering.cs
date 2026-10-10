@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Instructions for rendering the data
-    /// Serialized Name: Rendering
-    /// </summary>
+    /// <summary> Instructions for rendering the data. </summary>
     public partial class DiagnosticDataRendering
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticDataRendering"/>. </summary>
         public DiagnosticDataRendering()
@@ -54,43 +23,27 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticDataRendering"/>. </summary>
-        /// <param name="renderingType">
-        /// Rendering Type
-        /// Serialized Name: Rendering.type
-        /// </param>
-        /// <param name="title">
-        /// Title of data
-        /// Serialized Name: Rendering.title
-        /// </param>
-        /// <param name="description">
-        /// Description of the data that will help it be interpreted
-        /// Serialized Name: Rendering.description
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticDataRendering(DiagnosticDataRenderingType? renderingType, string title, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="renderingType"> Rendering Type. </param>
+        /// <param name="title"> Title of data. </param>
+        /// <param name="description"> Description of the data that will help it be interpreted. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DiagnosticDataRendering(DiagnosticDataRenderingType? renderingType, string title, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RenderingType = renderingType;
             Title = title;
             Description = description;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Rendering Type
-        /// Serialized Name: Rendering.type
-        /// </summary>
+        /// <summary> Rendering Type. </summary>
         [WirePath("type")]
         public DiagnosticDataRenderingType? RenderingType { get; set; }
-        /// <summary>
-        /// Title of data
-        /// Serialized Name: Rendering.title
-        /// </summary>
+
+        /// <summary> Title of data. </summary>
         [WirePath("title")]
         public string Title { get; set; }
-        /// <summary>
-        /// Description of the data that will help it be interpreted
-        /// Serialized Name: Rendering.description
-        /// </summary>
+
+        /// <summary> Description of the data that will help it be interpreted. </summary>
         [WirePath("description")]
         public string Description { get; set; }
     }

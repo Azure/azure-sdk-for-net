@@ -14,6 +14,11 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> A skill that uses text analytics for key phrase extraction. </summary>
     public partial class KeyPhraseExtractionSkill : SearchIndexerSkill
     {
+        private int? _maxKeyPhraseCount;
+        internal bool _maxKeyPhraseCountIsDefined;
+        private string _modelVersion;
+        internal bool _modelVersionIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="KeyPhraseExtractionSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
@@ -39,17 +44,39 @@ namespace Azure.Search.Documents.Indexes.Models
         internal KeyPhraseExtractionSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, KeyPhraseExtractionSkillLanguage? defaultLanguageCode, int? maxKeyPhraseCount, string modelVersion) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
             DefaultLanguageCode = defaultLanguageCode;
-            MaxKeyPhraseCount = maxKeyPhraseCount;
-            ModelVersion = modelVersion;
+            _maxKeyPhraseCount = maxKeyPhraseCount;
+            _modelVersion = modelVersion;
         }
 
         /// <summary> A value indicating which language code to use. Default is `en`. </summary>
         public KeyPhraseExtractionSkillLanguage? DefaultLanguageCode { get; set; }
 
         /// <summary> A number indicating how many key phrases to return. If absent, all identified key phrases will be returned. </summary>
-        public int? MaxKeyPhraseCount { get; set; }
+        public int? MaxKeyPhraseCount
+        {
+            get
+            {
+                return _maxKeyPhraseCount;
+            }
+            set
+            {
+                _maxKeyPhraseCount = value;
+                _maxKeyPhraseCountIsDefined = true;
+            }
+        }
 
         /// <summary> The version of the model to use when calling the Text Analytics service. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </summary>
-        public string ModelVersion { get; set; }
+        public string ModelVersion
+        {
+            get
+            {
+                return _modelVersion;
+            }
+            set
+            {
+                _modelVersion = value;
+                _modelVersionIsDefined = true;
+            }
+        }
     }
 }

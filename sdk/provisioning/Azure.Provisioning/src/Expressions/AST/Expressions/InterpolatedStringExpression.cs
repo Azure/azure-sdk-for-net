@@ -3,8 +3,15 @@
 
 namespace Azure.Provisioning.Expressions;
 
+/// <summary>
+/// Represents a Bicep interpolated string expression composed of literal and embedded expression segments.
+/// </summary>
+/// <param name="values">The literal and expression segments that make up the interpolated string.</param>
 public class InterpolatedStringExpression(BicepExpression[] values) : BicepExpression
 {
+    /// <summary>
+    /// Gets the literal and expression segments that make up the interpolated string.
+    /// </summary>
     public BicepExpression[] Values { get; } = values;
     internal override BicepWriter Write(BicepWriter writer)
     {

@@ -21,15 +21,12 @@ namespace Azure.ResourceManager.Monitor.Tests.Samples
                 "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.Storage/storageAccounts/<resource_name>";
 
             ArmClient client = new(new DefaultAzureCredential());
-            ArmResourceGetMonitorMetricsOptions options = new()
-            {
-                Metricnames = "Availability",
-            };
-            AsyncPageable<MonitorMetric> metrics = client.GetMonitorMetricsAsync(
+            Azure.Response<MonitorMetricsResult> response = await client.GetMonitorMetricsAsync(
                 new ResourceIdentifier(resourceId),
-                options);
+                metricnames: "Availability",
+                autoAdjustTimegrain: true);
 
-            await foreach (MonitorMetric metric in metrics)
+            foreach (MonitorMetric metric in response.Value.Value)
             {
                 // Process each metric as needed
                 Console.WriteLine($"Metric Name: {metric.Name?.Value}, Unit: {metric.Unit}");

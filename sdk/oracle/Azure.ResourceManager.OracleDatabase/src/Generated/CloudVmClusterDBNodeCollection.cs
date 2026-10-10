@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(CloudVmClusterDBNodeResource.ResourceType, out string cloudVmClusterDBNodeApiVersion);
             _dbNodesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", CloudVmClusterDBNodeResource.ResourceType.Namespace, Diagnostics);
-            _dbNodesRestClient = new DbNodes(_dbNodesClientDiagnostics, Pipeline, Endpoint, cloudVmClusterDBNodeApiVersion ?? "2025-09-01");
+            _dbNodesRestClient = new DbNodes(_dbNodesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudVmClusterDBNodeApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CloudVmClusterDBNodeData, CloudVmClusterDBNodeResource>(new DbNodesGetByParentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CloudVmClusterDBNodeData, CloudVmClusterDBNodeResource>(new CloudVmClusterDBNodeDataAsyncCollectionResultOfT(
                 _dbNodesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CloudVmClusterDBNodeData, CloudVmClusterDBNodeResource>(new DbNodesGetByParentCollectionResultOfT(
+            return new PageableWrapper<CloudVmClusterDBNodeData, CloudVmClusterDBNodeResource>(new CloudVmClusterDBNodeDataCollectionResultOfT(
                 _dbNodesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

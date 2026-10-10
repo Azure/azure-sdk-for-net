@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         private NGroups _nGroupsRestClient;
         private ClientDiagnostics _cgProfilesClientDiagnostics;
         private CGProfiles _cgProfilesRestClient;
+        private ClientDiagnostics _sandboxGroupsClientDiagnostics;
+        private SandboxGroups _sandboxGroupsRestClient;
         private ClientDiagnostics _locationClientDiagnostics;
         private Location _locationRestClient;
 
@@ -43,19 +45,23 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
 
         private ClientDiagnostics ContainerGroupsClientDiagnostics => _containerGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ContainerGroups ContainerGroupsRestClient => _containerGroupsRestClient ??= new ContainerGroups(ContainerGroupsClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private ContainerGroups ContainerGroupsRestClient => _containerGroupsRestClient ??= new ContainerGroups(ContainerGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics NGroupsClientDiagnostics => _nGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NGroups NGroupsRestClient => _nGroupsRestClient ??= new NGroups(NGroupsClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private NGroups NGroupsRestClient => _nGroupsRestClient ??= new NGroups(NGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics CGProfilesClientDiagnostics => _cgProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CGProfiles CGProfilesRestClient => _cgProfilesRestClient ??= new CGProfiles(CGProfilesClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private CGProfiles CGProfilesRestClient => _cgProfilesRestClient ??= new CGProfiles(CGProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+
+        private ClientDiagnostics SandboxGroupsClientDiagnostics => _sandboxGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SandboxGroups SandboxGroupsRestClient => _sandboxGroupsRestClient ??= new SandboxGroups(SandboxGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics LocationClientDiagnostics => _locationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Location LocationRestClient => _locationRestClient ??= new Location(LocationClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private Location LocationRestClient => _locationRestClient ??= new Location(LocationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         /// <summary>
         /// Get a list of container groups in the specified subscription. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes.
@@ -70,7 +76,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -82,7 +88,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerGroupData, ContainerGroupResource>(new ContainerGroupsGetAllAsyncCollectionResultOfT(ContainerGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetContainerGroups"), data => new ContainerGroupResource(Client, data));
+            return new AsyncPageableWrapper<ContainerGroupData, ContainerGroupResource>(new ContainerGroupDataAsyncCollectionResultOfT(ContainerGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetContainerGroups"), data => new ContainerGroupResource(Client, data));
         }
 
         /// <summary>
@@ -98,7 +104,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -110,7 +116,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerGroupData, ContainerGroupResource>(new ContainerGroupsGetAllCollectionResultOfT(ContainerGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetContainerGroups"), data => new ContainerGroupResource(Client, data));
+            return new PageableWrapper<ContainerGroupData, ContainerGroupResource>(new ContainerGroupDataCollectionResultOfT(ContainerGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetContainerGroups"), data => new ContainerGroupResource(Client, data));
         }
 
         /// <summary>
@@ -126,7 +132,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,7 +144,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NGroupData, NGroupResource>(new NGroupsGetAllAsyncCollectionResultOfT(NGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetNGroups"), data => new NGroupResource(Client, data));
+            return new AsyncPageableWrapper<NGroupData, NGroupResource>(new NGroupDataAsync0CollectionResultOfT(NGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetNGroups"), data => new NGroupResource(Client, data));
         }
 
         /// <summary>
@@ -154,7 +160,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -166,7 +172,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NGroupData, NGroupResource>(new NGroupsGetAllCollectionResultOfT(NGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetNGroups"), data => new NGroupResource(Client, data));
+            return new PageableWrapper<NGroupData, NGroupResource>(new NGroupData0CollectionResultOfT(NGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetNGroups"), data => new NGroupResource(Client, data));
         }
 
         /// <summary>
@@ -182,7 +188,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,7 +200,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerGroupProfileData, ContainerGroupProfileResource>(new CGProfilesGetBySubscriptionAsyncCollectionResultOfT(CGProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetContainerGroupProfiles"), data => new ContainerGroupProfileResource(Client, data));
+            return new AsyncPageableWrapper<ContainerGroupProfileData, ContainerGroupProfileResource>(new ContainerGroupProfileDataAsync0CollectionResultOfT(CGProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetContainerGroupProfiles"), data => new ContainerGroupProfileResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +216,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,7 +228,63 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerGroupProfileData, ContainerGroupProfileResource>(new CGProfilesGetBySubscriptionCollectionResultOfT(CGProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetContainerGroupProfiles"), data => new ContainerGroupProfileResource(Client, data));
+            return new PageableWrapper<ContainerGroupProfileData, ContainerGroupProfileResource>(new ContainerGroupProfileData0CollectionResultOfT(CGProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetContainerGroupProfiles"), data => new ContainerGroupProfileResource(Client, data));
+        }
+
+        /// <summary>
+        /// List SandboxGroup resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/sandboxGroups. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SandboxGroups_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ContainerGroupSandboxResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerGroupSandboxResource> GetContainerGroupSandboxesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ContainerGroupSandboxData, ContainerGroupSandboxResource>(new ContainerGroupSandboxDataAsyncCollectionResultOfT(SandboxGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetContainerGroupSandboxes"), data => new ContainerGroupSandboxResource(Client, data));
+        }
+
+        /// <summary>
+        /// List SandboxGroup resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/sandboxGroups. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SandboxGroups_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ContainerGroupSandboxResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerGroupSandboxResource> GetContainerGroupSandboxes(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ContainerGroupSandboxData, ContainerGroupSandboxResource>(new ContainerGroupSandboxDataCollectionResultOfT(SandboxGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetContainerGroupSandboxes"), data => new ContainerGroupSandboxResource(Client, data));
         }
 
         /// <summary>
@@ -238,7 +300,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -251,7 +313,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationGetUsagesWithLocationAsyncCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerInstanceSubscriptionResource.GetUsagesWithLocation");
+            return new ContainerInstanceUsageAsyncCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerInstanceSubscriptionResource.GetUsagesWithLocation");
         }
 
         /// <summary>
@@ -267,7 +329,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -280,7 +342,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationGetUsagesWithLocationCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerInstanceSubscriptionResource.GetUsagesWithLocation");
+            return new ContainerInstanceUsageCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerInstanceSubscriptionResource.GetUsagesWithLocation");
         }
 
         /// <summary>
@@ -296,7 +358,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -309,7 +371,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationGetCachedImagesWithLocationAsyncCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerInstanceSubscriptionResource.GetCachedImagesWithLocation");
+            return new CachedImagesAsyncCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerInstanceSubscriptionResource.GetCachedImagesWithLocation");
         }
 
         /// <summary>
@@ -325,7 +387,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -338,7 +400,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationGetCachedImagesWithLocationCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerInstanceSubscriptionResource.GetCachedImagesWithLocation");
+            return new CachedImagesCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerInstanceSubscriptionResource.GetCachedImagesWithLocation");
         }
 
         /// <summary>
@@ -354,7 +416,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -367,7 +429,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationGetCapabilitiesWithLocationAsyncCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerInstanceSubscriptionResource.GetCapabilitiesWithLocation");
+            return new ContainerCapabilitiesAsyncCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerInstanceSubscriptionResource.GetCapabilitiesWithLocation");
         }
 
         /// <summary>
@@ -383,7 +445,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -396,7 +458,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationGetCapabilitiesWithLocationCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerInstanceSubscriptionResource.GetCapabilitiesWithLocation");
+            return new ContainerCapabilitiesCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerInstanceSubscriptionResource.GetCapabilitiesWithLocation");
         }
     }
 }

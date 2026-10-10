@@ -13,7 +13,7 @@ namespace Azure.AI.ContentUnderstanding
 {
     /// <summary>
     /// Media content base class.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DocumentContent"/> and <see cref="AudioVisualContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AudioVisualContent"/> and <see cref="DocumentContent"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAnalysisContent))]
     public abstract partial class AnalysisContent : IJsonModel<AnalysisContent>
@@ -116,6 +116,22 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsCollectionDefined(Metadata))
+            {
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteStartObject();
+                foreach (var item in Metadata)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -162,10 +178,10 @@ namespace Azure.AI.ContentUnderstanding
             {
                 switch (discriminator.GetString())
                 {
-                    case "document":
-                        return DocumentContent.DeserializeDocumentContent(element, options);
                     case "audioVisual":
                         return AudioVisualContent.DeserializeAudioVisualContent(element, options);
+                    case "document":
+                        return DocumentContent.DeserializeDocumentContent(element, options);
                 }
             }
             return UnknownAnalysisContent.DeserializeUnknownAnalysisContent(element, options);

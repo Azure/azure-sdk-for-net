@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             TryGetApiVersion(CostManagementAlertResource.ResourceType, out string costManagementAlertApiVersion);
             _alertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", CostManagementAlertResource.ResourceType.Namespace, Diagnostics);
-            _alertsRestClient = new Alerts(_alertsClientDiagnostics, Pipeline, Endpoint, costManagementAlertApiVersion ?? "2025-03-01");
+            _alertsRestClient = new Alerts(_alertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, costManagementAlertApiVersion ?? "2025-03-01");
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CostManagementAlertData, CostManagementAlertResource>(new AlertsGetAllAsyncCollectionResultOfT(_alertsRestClient, Id.ToString(), context, "CostManagementAlertCollection.GetAll"), data => new CostManagementAlertResource(Client, data));
+            return new AsyncPageableWrapper<CostManagementAlertData, CostManagementAlertResource>(new CostManagementAlertDataAsyncCollectionResultOfT(_alertsRestClient, Id.ToString(), context, "CostManagementAlertCollection.GetAll"), data => new CostManagementAlertResource(Client, data));
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CostManagementAlertData, CostManagementAlertResource>(new AlertsGetAllCollectionResultOfT(_alertsRestClient, Id.ToString(), context, "CostManagementAlertCollection.GetAll"), data => new CostManagementAlertResource(Client, data));
+            return new PageableWrapper<CostManagementAlertData, CostManagementAlertResource>(new CostManagementAlertDataCollectionResultOfT(_alertsRestClient, Id.ToString(), context, "CostManagementAlertCollection.GetAll"), data => new CostManagementAlertResource(Client, data));
         }
 
         /// <summary>

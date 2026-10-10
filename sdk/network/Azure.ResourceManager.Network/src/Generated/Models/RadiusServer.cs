@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Radius Server Settings. </summary>
     public partial class RadiusServer
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RadiusServer"/>. </summary>
         /// <param name="radiusServerAddress"> The address of this radius server. </param>
@@ -59,26 +31,23 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="radiusServerAddress"> The address of this radius server. </param>
         /// <param name="radiusServerScore"> The initial score assigned to this radius server. </param>
         /// <param name="radiusServerSecret"> The secret used for this radius server. We will no longer return radiusServerSecret in VirtualNetworkGateway Create/Update/Get/List/UpdateTags APIs response. Please use VirtualNetworkGateway ListRadiusSecrets API to fetch radius server secrets. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RadiusServer(string radiusServerAddress, long? radiusServerScore, string radiusServerSecret, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RadiusServer(string radiusServerAddress, long? radiusServerScore, string radiusServerSecret, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RadiusServerAddress = radiusServerAddress;
             RadiusServerScore = radiusServerScore;
             RadiusServerSecret = radiusServerSecret;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RadiusServer"/> for deserialization. </summary>
-        internal RadiusServer()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The address of this radius server. </summary>
         [WirePath("radiusServerAddress")]
         public string RadiusServerAddress { get; set; }
+
         /// <summary> The initial score assigned to this radius server. </summary>
         [WirePath("radiusServerScore")]
         public long? RadiusServerScore { get; set; }
+
         /// <summary> The secret used for this radius server. We will no longer return radiusServerSecret in VirtualNetworkGateway Create/Update/Get/List/UpdateTags APIs response. Please use VirtualNetworkGateway ListRadiusSecrets API to fetch radius server secrets. </summary>
         [WirePath("radiusServerSecret")]
         public string RadiusServerSecret { get; set; }

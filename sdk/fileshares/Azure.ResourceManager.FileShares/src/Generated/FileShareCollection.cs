@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.FileShares
         {
             TryGetApiVersion(FileShareResource.ResourceType, out string fileShareApiVersion);
             _fileSharesInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FileShares", FileShareResource.ResourceType.Namespace, Diagnostics);
-            _fileSharesInterfaceRestClient = new FileSharesInterface(_fileSharesInterfaceClientDiagnostics, Pipeline, Endpoint, fileShareApiVersion ?? "2026-06-01");
+            _fileSharesInterfaceRestClient = new FileSharesInterface(_fileSharesInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fileShareApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.FileShares
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FileShareData, FileShareResource>(new FileSharesInterfaceGetByParentAsyncCollectionResultOfT(_fileSharesInterfaceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FileShareCollection.GetAll"), data => new FileShareResource(Client, data));
+            return new AsyncPageableWrapper<FileShareData, FileShareResource>(new FileShareDataAsync0CollectionResultOfT(_fileSharesInterfaceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FileShareCollection.GetAll"), data => new FileShareResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.FileShares
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FileShareData, FileShareResource>(new FileSharesInterfaceGetByParentCollectionResultOfT(_fileSharesInterfaceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FileShareCollection.GetAll"), data => new FileShareResource(Client, data));
+            return new PageableWrapper<FileShareData, FileShareResource>(new FileShareData0CollectionResultOfT(_fileSharesInterfaceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FileShareCollection.GetAll"), data => new FileShareResource(Client, data));
         }
 
         /// <summary>

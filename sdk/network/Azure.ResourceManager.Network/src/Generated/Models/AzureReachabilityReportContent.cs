@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Geographic and time constraints for Azure reachability report. </summary>
     public partial class AzureReachabilityReportContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AzureReachabilityReportContent"/>. </summary>
         /// <param name="providerLocation"> Parameters that define a geographic location. </param>
@@ -68,34 +40,33 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="azureLocations"> Optional Azure regions to scope the query to. </param>
         /// <param name="startOn"> The start time for the Azure reachability report. </param>
         /// <param name="endOn"> The end time for the Azure reachability report. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureReachabilityReportContent(AzureReachabilityReportLocation providerLocation, IList<string> providers, IList<AzureLocation> azureLocations, DateTimeOffset startOn, DateTimeOffset endOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AzureReachabilityReportContent(AzureReachabilityReportLocation providerLocation, IList<string> providers, IList<AzureLocation> azureLocations, DateTimeOffset startOn, DateTimeOffset endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProviderLocation = providerLocation;
             Providers = providers;
             AzureLocations = azureLocations;
             StartOn = startOn;
             EndOn = endOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AzureReachabilityReportContent"/> for deserialization. </summary>
-        internal AzureReachabilityReportContent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Parameters that define a geographic location. </summary>
         [WirePath("providerLocation")]
         public AzureReachabilityReportLocation ProviderLocation { get; }
+
         /// <summary> List of Internet service providers. </summary>
         [WirePath("providers")]
         public IList<string> Providers { get; }
+
         /// <summary> Optional Azure regions to scope the query to. </summary>
         [WirePath("azureLocations")]
         public IList<AzureLocation> AzureLocations { get; }
+
         /// <summary> The start time for the Azure reachability report. </summary>
         [WirePath("startTime")]
         public DateTimeOffset StartOn { get; }
+
         /// <summary> The end time for the Azure reachability report. </summary>
         [WirePath("endTime")]
         public DateTimeOffset EndOn { get; }

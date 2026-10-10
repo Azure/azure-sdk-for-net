@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
 
         private ClientDiagnostics ClustersClientDiagnostics => _clustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
+        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
 
         private ClientDiagnostics ClusterVersionDetailsClientDiagnostics => _clusterVersionDetailsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ClusterVersionDetails ClusterVersionDetailsRestClient => _clusterVersionDetailsRestClient ??= new ClusterVersionDetails(ClusterVersionDetailsClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
+        private ClusterVersionDetails ClusterVersionDetailsRestClient => _clusterVersionDetailsRestClient ??= new ClusterVersionDetails(ClusterVersionDetailsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
 
         private ClientDiagnostics ClusterVersionsClientDiagnostics => _clusterVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ClusterVersions ClusterVersionsRestClient => _clusterVersionsRestClient ??= new ClusterVersions(ClusterVersionsClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
+        private ClusterVersions ClusterVersionsRestClient => _clusterVersionsRestClient ??= new ClusterVersions(ClusterVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
 
         /// <summary> Gets a collection of ServiceFabricVmSizeResources in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceFabricClusterData, ServiceFabricClusterResource>(new ClustersGetAllAsyncCollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context, "MockableServiceFabricSubscriptionResource.GetServiceFabricClusters"), data => new ServiceFabricClusterResource(Client, data));
+            return new AsyncPageableWrapper<ServiceFabricClusterData, ServiceFabricClusterResource>(new ServiceFabricClusterDataAsync0CollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context, "MockableServiceFabricSubscriptionResource.GetServiceFabricClusters"), data => new ServiceFabricClusterResource(Client, data));
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceFabricClusterData, ServiceFabricClusterResource>(new ClustersGetAllCollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context, "MockableServiceFabricSubscriptionResource.GetServiceFabricClusters"), data => new ServiceFabricClusterResource(Client, data));
+            return new PageableWrapper<ServiceFabricClusterData, ServiceFabricClusterResource>(new ServiceFabricClusterData0CollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context, "MockableServiceFabricSubscriptionResource.GetServiceFabricClusters"), data => new ServiceFabricClusterResource(Client, data));
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ClusterVersionDetailsGetClusterVersionsAsyncCollectionResultOfT(
+            return new ClusterCodeVersionsResultAsyncCollectionResultOfT(
                 ClusterVersionDetailsRestClient,
                 Id.SubscriptionId,
                 location,
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ClusterVersionDetailsGetClusterVersionsCollectionResultOfT(
+            return new ClusterCodeVersionsResultCollectionResultOfT(
                 ClusterVersionDetailsRestClient,
                 Id.SubscriptionId,
                 location,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ClusterVersionDetailsGetClusterVersionsByEnvironmentAsyncCollectionResultOfT(
+            return new ClusterCodeVersionsResultAsync0CollectionResultOfT(
                 ClusterVersionDetailsRestClient,
                 Id.SubscriptionId,
                 location,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ClusterVersionDetailsGetClusterVersionsByEnvironmentCollectionResultOfT(
+            return new ClusterCodeVersionsResult0CollectionResultOfT(
                 ClusterVersionDetailsRestClient,
                 Id.SubscriptionId,
                 location,
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ClusterVersionsGetClusterVersionsAsyncCollectionResultOfT(ClusterVersionsRestClient, Id.SubscriptionId, location, context, "MockableServiceFabricSubscriptionResource.GetClusterVersions");
+            return new ClusterCodeVersionsResultAsync1CollectionResultOfT(ClusterVersionsRestClient, Id.SubscriptionId, location, context, "MockableServiceFabricSubscriptionResource.GetClusterVersions");
         }
 
         /// <summary>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ClusterVersionsGetClusterVersionsCollectionResultOfT(ClusterVersionsRestClient, Id.SubscriptionId, location, context, "MockableServiceFabricSubscriptionResource.GetClusterVersions");
+            return new ClusterCodeVersionsResult1CollectionResultOfT(ClusterVersionsRestClient, Id.SubscriptionId, location, context, "MockableServiceFabricSubscriptionResource.GetClusterVersions");
         }
 
         /// <summary>
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ClusterVersionsGetClusterVersionsByEnvironmentAsyncCollectionResultOfT(
+            return new ClusterCodeVersionsResultAsync2CollectionResultOfT(
                 ClusterVersionsRestClient,
                 Id.SubscriptionId,
                 location,
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ClusterVersionsGetClusterVersionsByEnvironmentCollectionResultOfT(
+            return new ClusterCodeVersionsResult2CollectionResultOfT(
                 ClusterVersionsRestClient,
                 Id.SubscriptionId,
                 location,

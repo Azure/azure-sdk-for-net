@@ -145,23 +145,28 @@ namespace Azure.Security.CodeTransparency
         }
 
         /// <summary>
-        /// [Protocol Method] Get the public keys used by the service to sign receipts, mentioned in IETF SCITT draft as part of jwks_uri implementation
+        /// [Protocol Method] Post an entry to be registered on the CodeTransparency instance, mandatory in IETF SCITT draft
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="waitForCommit"> If true, waits for the entry to be committed before returning. Returns 201 with receipt or 503 on rollback. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetPublicKeys(RequestContext context)
+        public virtual Response CreateEntry(RequestContent content, bool? waitForCommit = default, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetPublicKeys");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.CreateEntry");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPublicKeysRequest(context);
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateEntryRequest(content, waitForCommit, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -172,23 +177,28 @@ namespace Azure.Security.CodeTransparency
         }
 
         /// <summary>
-        /// [Protocol Method] Get the public keys used by the service to sign receipts, mentioned in IETF SCITT draft as part of jwks_uri implementation
+        /// [Protocol Method] Post an entry to be registered on the CodeTransparency instance, mandatory in IETF SCITT draft
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="waitForCommit"> If true, waits for the entry to be committed before returning. Returns 201 with receipt or 503 on rollback. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPublicKeysAsync(RequestContext context)
+        public virtual async Task<Response> CreateEntryAsync(RequestContent content, bool? waitForCommit = default, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetPublicKeys");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.CreateEntry");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPublicKeysRequest(context);
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateEntryRequest(content, waitForCommit, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -198,113 +208,119 @@ namespace Azure.Security.CodeTransparency
             }
         }
 
-        /// <summary> Get the public keys used by the service to sign receipts, mentioned in IETF SCITT draft as part of jwks_uri implementation. </summary>
+        /// <summary> Post an entry to be registered on the CodeTransparency instance, mandatory in IETF SCITT draft. </summary>
+        /// <param name="body"> CoseSign1 signature envelope. </param>
+        /// <param name="waitForCommit"> If true, waits for the entry to be committed before returning. Returns 201 with receipt or 503 on rollback. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<JwksDocument> GetPublicKeys(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual NullableResponse<BinaryData> CreateEntry(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetPublicKeys(cancellationToken.ToRequestContext());
-            return Response.FromValue((JwksDocument)result, result);
-        }
+            Argument.AssertNotNull(body, nameof(body));
 
-        /// <summary> Get the public keys used by the service to sign receipts, mentioned in IETF SCITT draft as part of jwks_uri implementation. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<JwksDocument>> GetPublicKeysAsync(CancellationToken cancellationToken = default)
-        {
-            Response result = await GetPublicKeysAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((JwksDocument)result, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get status of the long running registration operation, mandatory in IETF SCITT draft
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> ID of the operation to retrieve. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetOperation(string operationId, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetOperation");
-            scope.Start();
-            try
+            Response result = CreateEntry(RequestContent.Create(body), waitForCommit, cancellationToken.ToRequestContext());
+            if (result.Status == 303)
             {
-                Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-                using HttpMessage message = CreateGetOperationRequest(operationId, context);
-                return Pipeline.ProcessMessage(message, context);
+                return new NoValueResponse<BinaryData>(result);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get status of the long running registration operation, mandatory in IETF SCITT draft
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> ID of the operation to retrieve. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetOperationAsync(string operationId, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetOperation");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-                using HttpMessage message = CreateGetOperationRequest(operationId, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get status of the long running registration operation, mandatory in IETF SCITT draft. </summary>
-        /// <param name="operationId"> ID of the operation to retrieve. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetOperation(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            Response result = GetOperation(operationId, cancellationToken.ToRequestContext());
             return Response.FromValue(result.Content, result);
         }
 
-        /// <summary> Get status of the long running registration operation, mandatory in IETF SCITT draft. </summary>
+        /// <summary> Post an entry to be registered on the CodeTransparency instance, mandatory in IETF SCITT draft. </summary>
+        /// <param name="body"> CoseSign1 signature envelope. </param>
+        /// <param name="waitForCommit"> If true, waits for the entry to be committed before returning. Returns 201 with receipt or 503 on rollback. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual async Task<NullableResponse<BinaryData>> CreateEntryAsync(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            Response result = await CreateEntryAsync(RequestContent.Create(body), waitForCommit, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            if (result.Status == 303)
+            {
+                return new NoValueResponse<BinaryData>(result);
+            }
+            return Response.FromValue(result.Content, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get status of the long running registration operation. Deprecated in SCRAPI v09 but retained unchanged for backward compatibility; clients should poll /entries/{entryId} directly.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> ID of the operation to retrieve. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetOperationV09(string operationId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetOperationV09");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetOperationV09Request(operationId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get status of the long running registration operation. Deprecated in SCRAPI v09 but retained unchanged for backward compatibility; clients should poll /entries/{entryId} directly.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> ID of the operation to retrieve. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetOperationV09Async(string operationId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetOperationV09");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetOperationV09Request(operationId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get status of the long running registration operation. Deprecated in SCRAPI v09 but retained unchanged for backward compatibility; clients should poll /entries/{entryId} directly. </summary>
         /// <param name="operationId"> ID of the operation to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default)
+        internal virtual NullableResponse<BinaryData> GetOperationV09(string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            Response result = GetOperationV09(operationId, cancellationToken.ToRequestContext());
+            if (result.Status == 202)
+            {
+                return new NoValueResponse<BinaryData>(result);
+            }
+            return Response.FromValue(result.Content, result);
+        }
 
-            Response result = await GetOperationAsync(operationId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        /// <summary> Get status of the long running registration operation. Deprecated in SCRAPI v09 but retained unchanged for backward compatibility; clients should poll /entries/{entryId} directly. </summary>
+        /// <param name="operationId"> ID of the operation to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        internal virtual async Task<NullableResponse<BinaryData>> GetOperationV09Async(string operationId, CancellationToken cancellationToken = default)
+        {
+            Response result = await GetOperationV09Async(operationId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            if (result.Status == 202)
+            {
+                return new NoValueResponse<BinaryData>(result);
+            }
             return Response.FromValue(result.Content, result);
         }
 
@@ -377,12 +393,15 @@ namespace Azure.Security.CodeTransparency
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetEntry(string entryId, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<BinaryData> GetEntry(string entryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
 
             Response result = GetEntry(entryId, cancellationToken.ToRequestContext());
+            if (result.Status == 302)
+            {
+                return new NoValueResponse<BinaryData>(result);
+            }
             return Response.FromValue(result.Content, result);
         }
 
@@ -391,12 +410,15 @@ namespace Azure.Security.CodeTransparency
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetEntryAsync(string entryId, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<BinaryData>> GetEntryAsync(string entryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
 
             Response result = await GetEntryAsync(entryId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            if (result.Status == 302)
+            {
+                return new NoValueResponse<BinaryData>(result);
+            }
             return Response.FromValue(result.Content, result);
         }
 

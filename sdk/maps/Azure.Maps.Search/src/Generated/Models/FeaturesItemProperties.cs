@@ -55,7 +55,7 @@ namespace Azure.Maps.Search.Models
         /// </param>
         /// <param name="address"> The address of the result. </param>
         /// <param name="geocodePoints"> A collection of geocode points that differ in how they were calculated and their suggested use. </param>
-        internal FeaturesItemProperties(string type, ConfidenceEnum? confidence, IReadOnlyList<MatchCodesEnum> matchCodes, Address address, IReadOnlyList<GeocodePointsItem> geocodePoints)
+        internal FeaturesItemProperties(string type, ConfidenceEnum? confidence, IReadOnlyList<MatchCodesEnum> matchCodes, SearchAddress address, IReadOnlyList<GeocodePointsItem> geocodePoints)
         {
             Type = type;
             Confidence = confidence;
@@ -100,7 +100,7 @@ namespace Azure.Maps.Search.Models
         /// </summary>
         public IReadOnlyList<MatchCodesEnum> MatchCodes { get; }
         /// <summary> The address of the result. </summary>
-        public Address Address { get; }
+        public SearchAddress Address { get; }
         /// <summary> A collection of geocode points that differ in how they were calculated and their suggested use. </summary>
         public IReadOnlyList<GeocodePointsItem> GeocodePoints { get; }
     }

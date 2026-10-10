@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(CosmosDBSqlRoleAssignmentResource.ResourceType, out string cosmosDBSqlRoleAssignmentApiVersion);
             _sqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBSqlRoleAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _sqlResourcesRestClient = new SqlResources(_sqlResourcesClientDiagnostics, Pipeline, Endpoint, cosmosDBSqlRoleAssignmentApiVersion ?? "2026-04-01-preview");
+            _sqlResourcesRestClient = new SqlResources(_sqlResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBSqlRoleAssignmentApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBSqlRoleAssignmentData, CosmosDBSqlRoleAssignmentResource>(new SqlResourcesGetSqlRoleAssignmentsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CosmosDBSqlRoleAssignmentData, CosmosDBSqlRoleAssignmentResource>(new CosmosDBSqlRoleAssignmentDataAsyncCollectionResultOfT(
                 _sqlResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBSqlRoleAssignmentData, CosmosDBSqlRoleAssignmentResource>(new SqlResourcesGetSqlRoleAssignmentsCollectionResultOfT(
+            return new PageableWrapper<CosmosDBSqlRoleAssignmentData, CosmosDBSqlRoleAssignmentResource>(new CosmosDBSqlRoleAssignmentDataCollectionResultOfT(
                 _sqlResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

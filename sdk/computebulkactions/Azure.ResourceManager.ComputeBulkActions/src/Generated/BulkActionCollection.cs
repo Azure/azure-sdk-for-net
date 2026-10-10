@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
             TryGetApiVersion(BulkActionResource.ResourceType, out string bulkActionApiVersion);
             _location = location;
             _bulkActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeBulkActions", BulkActionResource.ResourceType.Namespace, Diagnostics);
-            _bulkActionsRestClient = new BulkActions(_bulkActionsClientDiagnostics, Pipeline, Endpoint, bulkActionApiVersion ?? "2026-02-01-preview");
+            _bulkActionsRestClient = new BulkActions(_bulkActionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, bulkActionApiVersion ?? "2026-02-01-preview");
             ValidateResourceId(id);
         }
 
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BulkActionData, BulkActionResource>(new BulkActionsGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BulkActionData, BulkActionResource>(new BulkActionDataAsyncCollectionResultOfT(
                 _bulkActionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BulkActionData, BulkActionResource>(new BulkActionsGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<BulkActionData, BulkActionResource>(new BulkActionDataCollectionResultOfT(
                 _bulkActionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

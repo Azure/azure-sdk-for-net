@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Batch
         {
             TryGetApiVersion(BatchAccountDetectorResource.ResourceType, out string batchAccountDetectorApiVersion);
             _batchAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Batch", BatchAccountDetectorResource.ResourceType.Namespace, Diagnostics);
-            _batchAccountRestClient = new BatchAccount(_batchAccountClientDiagnostics, Pipeline, Endpoint, batchAccountDetectorApiVersion ?? "2025-06-01");
+            _batchAccountRestClient = new BatchAccount(_batchAccountClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, batchAccountDetectorApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Batch
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BatchAccountDetectorData, BatchAccountDetectorResource>(new BatchAccountGetDetectorsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BatchAccountDetectorData, BatchAccountDetectorResource>(new BatchAccountDetectorDataAsyncCollectionResultOfT(
                 _batchAccountRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Batch
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BatchAccountDetectorData, BatchAccountDetectorResource>(new BatchAccountGetDetectorsCollectionResultOfT(
+            return new PageableWrapper<BatchAccountDetectorData, BatchAccountDetectorResource>(new BatchAccountDetectorDataCollectionResultOfT(
                 _batchAccountRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

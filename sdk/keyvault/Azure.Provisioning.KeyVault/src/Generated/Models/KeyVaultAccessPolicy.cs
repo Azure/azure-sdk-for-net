@@ -92,6 +92,10 @@ namespace Azure.Provisioning.KeyVault
             _objectId = DefineProperty<string>(nameof(ObjectId), new string[] { "objectId" }, isRequired: true);
             _applicationId = DefineProperty<Guid>(nameof(ApplicationId), new string[] { "applicationId" });
             _permissions = DefineModelProperty<IdentityAccessPermissions>(nameof(Permissions), new string[] { "permissions" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for KeyVaultAccessPolicy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

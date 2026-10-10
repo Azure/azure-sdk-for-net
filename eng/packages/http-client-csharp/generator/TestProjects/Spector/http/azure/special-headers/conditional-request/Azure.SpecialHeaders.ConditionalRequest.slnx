@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.SpecialHeaders.ConditionalRequest.csproj" />
+  <Project Path="tests/Azure.SpecialHeaders.ConditionalRequest.Tests.csproj" />
+</Solution>

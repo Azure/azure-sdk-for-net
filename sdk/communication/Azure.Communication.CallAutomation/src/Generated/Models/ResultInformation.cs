@@ -19,11 +19,15 @@ namespace Azure.Communication.CallAutomation
         /// <param name="code"> Code of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </param>
         /// <param name="subCode"> Subcode of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </param>
         /// <param name="message"> Detail message that describes the current result. </param>
-        internal ResultInformation(int? code, int? subCode, string message)
+        /// <param name="sipDetails"></param>
+        /// <param name="q850Details"></param>
+        internal ResultInformation(int? code, int? subCode, string message, SipDiagnosticInfo sipDetails, SipDiagnosticInfo q850Details)
         {
             Code = code;
             SubCode = subCode;
             Message = message;
+            SipDetails = sipDetails;
+            Q850Details = q850Details;
         }
 
         /// <summary> Code of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </summary>
@@ -32,5 +36,9 @@ namespace Azure.Communication.CallAutomation
         public int? SubCode { get; }
         /// <summary> Detail message that describes the current result. </summary>
         public string Message { get; }
+        /// <summary> Gets the sip details. </summary>
+        public SipDiagnosticInfo SipDetails { get; }
+        /// <summary> Gets the q 850 details. </summary>
+        public SipDiagnosticInfo Q850Details { get; }
     }
 }

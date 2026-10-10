@@ -117,7 +117,11 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Gets or sets a description of the feature.
         /// </summary>
-        public string Description
+        /// <remarks>
+        /// This description is stored inside the feature flag's JSON value and is distinct from
+        /// <see cref="ConfigurationSetting.Description"/>, which is a separate service-managed metadata field on the configuration setting.
+        /// </remarks>
+        public new string Description
         {
             get
             {

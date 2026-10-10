@@ -4,8 +4,6 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using Microsoft.Extensions.Configuration;
 
 namespace System.ClientModel.Primitives;
@@ -72,53 +70,37 @@ internal static class CredentialResolverEngine
         // top-level section the caller passed in.
         //
         // Note: the recursive Resolve call goes through the full pipeline
-        // (cache lookup, normalization, ordering), so chain entries pick up
-        // caching for free and a single shared engine remains the source of
-        // truth for resolution semantics.
+        // (cache lookup, normalization, ordering), so the leaf entries that
+        // a chain owner composes pick up caching for free.
         Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild =
             child => Resolve(child, resolverList, configureOverrides: null)?.TokenProvider;
 
-        // Per-resolver cache lookup. The cache uses a dual-slot strategy:
+        // Per-resolver cache lookup keyed on (sectionHash, resolverInstance).
+        // The cache deliberately omits the chain identity: leaf resolvers
+        // (those that don't invoke resolveChild) are chain-independent and
+        // share a single entry across every chain composition; chain-owning
+        // resolvers (those that DO invoke resolveChild during TryResolve) are
+        // detected by the cache and skipped — they're rebuilt on every call
+        // so each caller gets a wrapper bound to its own active chain. The
+        // expensive work (token acquisition) lives on the leaves they
+        // compose, and those leaves hit this cache.
         //
-        //   * Shared slot — keyed by (sectionHash, resolverInstance). Populated
-        //     when a resolver's TryResolve does NOT invoke resolveChild — its
-        //     output is chain-independent, so one entry serves every chain
-        //     composition.
-        //   * Chain-specific slot — keyed by (sectionHash, resolverInstance,
-        //     chainKey). Populated when a resolver DOES invoke resolveChild —
-        //     its output depends on the downstream resolvers, so a different
-        //     chain composition must produce a fresh resolve.
-        //
-        // CredentialCache.GetOrTryResolve looks up the shared slot first then
-        // the chain-specific slot on miss. After invoking TryResolve it stores
-        // the result in whichever slot is correct based on whether resolveChild
-        // was used.
-        //
-        // chainKey is computed once per Resolve invocation from the materialized
-        // resolverList — stable identifier for the active chain composition
-        // (reference-identity hashes joined in order). All resolvers in this
-        // engine call share the same chainKey since they all see the same
-        // resolveChild closure capturing the same resolverList.
-        //
-        // Reference-identity (RuntimeHelpers.GetHashCode) is used so distinct
-        // instances of the same type don't leak providers into each other,
-        // and any GetHashCode override on the resolver is bypassed.
-        if (resolverList.Count > 0)
+        // Reference-identity (RuntimeHelpers.GetHashCode, used inside the
+        // cache) is used so distinct instances of the same type don't leak
+        // providers into each other, and any GetHashCode override on the
+        // resolver is bypassed.
+        foreach (CredentialResolver resolver in resolverList)
         {
-            string chainKey = ComputeChainKey(resolverList);
-            foreach (CredentialResolver resolver in resolverList)
+            if (resolver is null)
             {
-                if (resolver is null)
-                {
-                    continue;
-                }
+                continue;
+            }
 
-                CredentialSettings? matched = CredentialCache.GetOrTryResolve(workingSection, resolver, resolveChild, chainKey);
+            CredentialSettings? matched = CredentialCache.GetOrTryResolve(workingSection, resolver, resolveChild);
 
-                if (matched is not null)
-                {
-                    return matched;
-                }
+            if (matched is not null)
+            {
+                return matched;
             }
         }
 
@@ -127,31 +109,5 @@ internal static class CredentialResolverEngine
         // credential lives directly on the section as Key/CredentialSource
         // rather than through a token provider.
         return CredentialCache.GetOrCreateInline(workingSection);
-    }
-
-    // Compose a stable chain identifier from reference-identity hashes of
-    // the resolver instances in order. Two engine calls with the same
-    // resolver instances in the same order produce the same chainKey; any
-    // change (different instance, different order, added/removed resolver)
-    // produces a different one. Resolvers' own GetHashCode overrides are
-    // bypassed via RuntimeHelpers.GetHashCode.
-    private static string ComputeChainKey(IReadOnlyList<CredentialResolver> resolverList)
-    {
-        if (resolverList.Count == 0)
-        {
-            return string.Empty;
-        }
-
-        StringBuilder sb = new();
-        for (int i = 0; i < resolverList.Count; i++)
-        {
-            CredentialResolver r = resolverList[i];
-            if (i > 0)
-            {
-                sb.Append('|');
-            }
-            sb.Append(r is null ? "_" : RuntimeHelpers.GetHashCode(r).ToString(Globalization.CultureInfo.InvariantCulture));
-        }
-        return sb.ToString();
     }
 }

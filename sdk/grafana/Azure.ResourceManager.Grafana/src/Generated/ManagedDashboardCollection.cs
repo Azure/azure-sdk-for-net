@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Grafana
         {
             TryGetApiVersion(ManagedDashboardResource.ResourceType, out string managedDashboardApiVersion);
             _managedDashboardsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Grafana", ManagedDashboardResource.ResourceType.Namespace, Diagnostics);
-            _managedDashboardsRestClient = new ManagedDashboards(_managedDashboardsClientDiagnostics, Pipeline, Endpoint, managedDashboardApiVersion ?? "2025-09-01-preview");
+            _managedDashboardsRestClient = new ManagedDashboards(_managedDashboardsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedDashboardApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Grafana
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedDashboardData, ManagedDashboardResource>(new ManagedDashboardsGetAllAsyncCollectionResultOfT(_managedDashboardsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ManagedDashboardCollection.GetAll"), data => new ManagedDashboardResource(Client, data));
+            return new AsyncPageableWrapper<ManagedDashboardData, ManagedDashboardResource>(new ManagedDashboardDataAsyncCollectionResultOfT(_managedDashboardsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ManagedDashboardCollection.GetAll"), data => new ManagedDashboardResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Grafana
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedDashboardData, ManagedDashboardResource>(new ManagedDashboardsGetAllCollectionResultOfT(_managedDashboardsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ManagedDashboardCollection.GetAll"), data => new ManagedDashboardResource(Client, data));
+            return new PageableWrapper<ManagedDashboardData, ManagedDashboardResource>(new ManagedDashboardDataCollectionResultOfT(_managedDashboardsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ManagedDashboardCollection.GetAll"), data => new ManagedDashboardResource(Client, data));
         }
 
         /// <summary>

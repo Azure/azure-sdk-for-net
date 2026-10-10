@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(ProjectAttachedNetworkConnectionResource.ResourceType, out string projectAttachedNetworkConnectionApiVersion);
             _attachedNetworkConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProjectAttachedNetworkConnectionResource.ResourceType.Namespace, Diagnostics);
-            _attachedNetworkConnectionsRestClient = new AttachedNetworkConnections(_attachedNetworkConnectionsClientDiagnostics, Pipeline, Endpoint, projectAttachedNetworkConnectionApiVersion ?? "2026-01-01-preview");
+            _attachedNetworkConnectionsRestClient = new AttachedNetworkConnections(_attachedNetworkConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, projectAttachedNetworkConnectionApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AttachedNetworkConnectionData, ProjectAttachedNetworkConnectionResource>(new AttachedNetworkConnectionsGetByProjectAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AttachedNetworkConnectionData, ProjectAttachedNetworkConnectionResource>(new AttachedNetworkConnectionDataAsync0CollectionResultOfT(
                 _attachedNetworkConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AttachedNetworkConnectionData, ProjectAttachedNetworkConnectionResource>(new AttachedNetworkConnectionsGetByProjectCollectionResultOfT(
+            return new PageableWrapper<AttachedNetworkConnectionData, ProjectAttachedNetworkConnectionResource>(new AttachedNetworkConnectionData0CollectionResultOfT(
                 _attachedNetworkConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

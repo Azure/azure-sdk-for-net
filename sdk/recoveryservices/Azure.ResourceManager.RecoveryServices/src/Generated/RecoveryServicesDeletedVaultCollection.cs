@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServices
             TryGetApiVersion(RecoveryServicesDeletedVaultResource.ResourceType, out string recoveryServicesDeletedVaultApiVersion);
             _location = location;
             _deletedVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", RecoveryServicesDeletedVaultResource.ResourceType.Namespace, Diagnostics);
-            _deletedVaultsRestClient = new DeletedVaults(_deletedVaultsClientDiagnostics, Pipeline, Endpoint, recoveryServicesDeletedVaultApiVersion ?? "2025-08-01");
+            _deletedVaultsRestClient = new DeletedVaults(_deletedVaultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, recoveryServicesDeletedVaultApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RecoveryServicesDeletedVaultData, RecoveryServicesDeletedVaultResource>(new DeletedVaultsGetBySubscriptionIdAsyncCollectionResultOfT(_deletedVaultsRestClient, Id.SubscriptionId, _location, context, "RecoveryServicesDeletedVaultCollection.GetAll"), data => new RecoveryServicesDeletedVaultResource(Client, data));
+            return new AsyncPageableWrapper<RecoveryServicesDeletedVaultData, RecoveryServicesDeletedVaultResource>(new RecoveryServicesDeletedVaultDataAsyncCollectionResultOfT(_deletedVaultsRestClient, Id.SubscriptionId, _location, context, "RecoveryServicesDeletedVaultCollection.GetAll"), data => new RecoveryServicesDeletedVaultResource(Client, data));
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RecoveryServicesDeletedVaultData, RecoveryServicesDeletedVaultResource>(new DeletedVaultsGetBySubscriptionIdCollectionResultOfT(_deletedVaultsRestClient, Id.SubscriptionId, _location, context, "RecoveryServicesDeletedVaultCollection.GetAll"), data => new RecoveryServicesDeletedVaultResource(Client, data));
+            return new PageableWrapper<RecoveryServicesDeletedVaultData, RecoveryServicesDeletedVaultResource>(new RecoveryServicesDeletedVaultDataCollectionResultOfT(_deletedVaultsRestClient, Id.SubscriptionId, _location, context, "RecoveryServicesDeletedVaultCollection.GetAll"), data => new RecoveryServicesDeletedVaultResource(Client, data));
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>

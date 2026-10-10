@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
@@ -53,7 +54,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string issueTestResourceApiVersion);
             _issueTestResourcesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _issueTestResourcesRestClient = new IssueTestResources(_issueTestResourcesClientDiagnostics, Pipeline, Endpoint, issueTestResourceApiVersion ?? "2024-05-01");
+            _issueTestResourcesRestClient = new IssueTestResources(_issueTestResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, issueTestResourceApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -345,6 +346,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         patch.Tags.Add(tag);
                     }
+                    PrepareTagPatch(patch, current);
                     patch.Tags[key] = value;
                     ArmOperation<IssueTestResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -393,6 +395,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         patch.Tags.Add(tag);
                     }
+                    PrepareTagPatch(patch, current);
                     patch.Tags[key] = value;
                     ArmOperation<IssueTestResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -419,10 +422,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -436,6 +438,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     IssueTestResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     IssueTestResourcePatch patch = new IssueTestResourcePatch();
+                    PrepareTagPatch(patch, current);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<IssueTestResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -462,10 +465,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -479,6 +481,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     IssueTestResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
                     IssueTestResourcePatch patch = new IssueTestResourcePatch();
+                    PrepareTagPatch(patch, current);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<IssueTestResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -525,6 +528,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         patch.Tags.Add(tag);
                     }
+                    PrepareTagPatch(patch, current);
                     patch.Tags.Remove(key);
                     ArmOperation<IssueTestResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -571,6 +575,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         patch.Tags.Add(tag);
                     }
+                    PrepareTagPatch(patch, current);
                     patch.Tags.Remove(key);
                     ArmOperation<IssueTestResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());

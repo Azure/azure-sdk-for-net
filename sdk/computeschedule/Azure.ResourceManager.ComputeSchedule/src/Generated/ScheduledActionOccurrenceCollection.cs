@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         {
             TryGetApiVersion(ScheduledActionOccurrenceResource.ResourceType, out string scheduledActionOccurrenceApiVersion);
             _occurrencesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeSchedule", ScheduledActionOccurrenceResource.ResourceType.Namespace, Diagnostics);
-            _occurrencesRestClient = new Occurrences(_occurrencesClientDiagnostics, Pipeline, Endpoint, scheduledActionOccurrenceApiVersion ?? "2026-04-15-preview");
+            _occurrencesRestClient = new Occurrences(_occurrencesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scheduledActionOccurrenceApiVersion ?? "2026-04-15-preview");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScheduledActionOccurrenceData, ScheduledActionOccurrenceResource>(new OccurrencesGetByScheduledActionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ScheduledActionOccurrenceData, ScheduledActionOccurrenceResource>(new ScheduledActionOccurrenceDataAsyncCollectionResultOfT(
                 _occurrencesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScheduledActionOccurrenceData, ScheduledActionOccurrenceResource>(new OccurrencesGetByScheduledActionCollectionResultOfT(
+            return new PageableWrapper<ScheduledActionOccurrenceData, ScheduledActionOccurrenceResource>(new ScheduledActionOccurrenceDataCollectionResultOfT(
                 _occurrencesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

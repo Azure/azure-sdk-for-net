@@ -1,0 +1,6 @@
+# Azure.Communication.Messages approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# 'MessageContent' collides with Azure.Core's Azure.Messaging.MessageContent
+# but is the intended public model name; the two are never referenced together.
+nowarn:AZC0034 T:Azure.Communication.Messages.MessageContent

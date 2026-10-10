@@ -28,7 +28,13 @@ namespace Azure.Generator.Management.Models
         {
             if (other is null)
                 return false;
-            return _value == other._value;
+            if (IsConstant != other.IsConstant)
+                return false;
+            if (IsConstant)
+                return string.Equals(_value, other._value, StringComparison.OrdinalIgnoreCase);
+
+            // Variable segment names are placeholders only; {resourceGroupName} and {rgName} represent the same path shape.
+            return true;
         }
 
         /// <summary>
@@ -51,7 +57,7 @@ namespace Azure.Generator.Management.Models
         /// <summary>
         /// Returns true if this segment is the "providers" segment.
         /// </summary>
-        public bool IsProvidersSegment => _value.Equals("providers");
+        public bool IsProvidersSegment => _value.Equals("providers", StringComparison.OrdinalIgnoreCase);
 
         private static void ParseValue(string value, ref bool isConstant, ref string? variableName)
         {
@@ -74,7 +80,7 @@ namespace Azure.Generator.Management.Models
         public override bool Equals(object? obj) => obj is RequestPathSegment other && Equals(other);
 
         /// <inheritdoc />
-        public override int GetHashCode() => _value.GetHashCode();
+        public override int GetHashCode() => IsConstant ? StringComparer.OrdinalIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc />
         public override string ToString() => _value;

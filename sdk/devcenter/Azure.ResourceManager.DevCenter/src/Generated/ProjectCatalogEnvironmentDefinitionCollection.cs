@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(ProjectCatalogEnvironmentDefinitionResource.ResourceType, out string projectCatalogEnvironmentDefinitionApiVersion);
             _environmentDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProjectCatalogEnvironmentDefinitionResource.ResourceType.Namespace, Diagnostics);
-            _environmentDefinitionsRestClient = new EnvironmentDefinitions(_environmentDefinitionsClientDiagnostics, Pipeline, Endpoint, projectCatalogEnvironmentDefinitionApiVersion ?? "2026-01-01-preview");
+            _environmentDefinitionsRestClient = new EnvironmentDefinitions(_environmentDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, projectCatalogEnvironmentDefinitionApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EnvironmentDefinitionData, ProjectCatalogEnvironmentDefinitionResource>(new EnvironmentDefinitionsGetByProjectCatalogAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EnvironmentDefinitionData, ProjectCatalogEnvironmentDefinitionResource>(new EnvironmentDefinitionDataAsync0CollectionResultOfT(
                 _environmentDefinitionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EnvironmentDefinitionData, ProjectCatalogEnvironmentDefinitionResource>(new EnvironmentDefinitionsGetByProjectCatalogCollectionResultOfT(
+            return new PageableWrapper<EnvironmentDefinitionData, ProjectCatalogEnvironmentDefinitionResource>(new EnvironmentDefinitionData0CollectionResultOfT(
                 _environmentDefinitionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

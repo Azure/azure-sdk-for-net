@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> PostgreSQL 16. </summary>
         private const string SixteenValue = "16";
         /// <summary> PostgreSQL 15. </summary>
-        private const string _15Value = "15";
+        private const string Ver15Value = "15";
         /// <summary> PostgreSQL 14. </summary>
-        private const string _14Value = "14";
+        private const string Ver14Value = "14";
         /// <summary> PostgreSQL 13. </summary>
-        private const string _13Value = "13";
+        private const string Ver13Value = "13";
         /// <summary> PostgreSQL 12. </summary>
-        private const string _12Value = "12";
+        private const string Ver12Value = "12";
         /// <summary> PostgreSQL 11. </summary>
-        private const string _11Value = "11";
+        private const string Ver11Value = "11";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerVersion"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -50,6 +50,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> PostgreSQL 16. </summary>
         public static PostgreSqlFlexibleServerVersion Sixteen { get; } = new PostgreSqlFlexibleServerVersion(SixteenValue);
+
+        /// <summary> PostgreSQL 15. </summary>
+        public static PostgreSqlFlexibleServerVersion Ver15 { get; } = new PostgreSqlFlexibleServerVersion(Ver15Value);
+
+        /// <summary> PostgreSQL 14. </summary>
+        public static PostgreSqlFlexibleServerVersion Ver14 { get; } = new PostgreSqlFlexibleServerVersion(Ver14Value);
+
+        /// <summary> PostgreSQL 13. </summary>
+        public static PostgreSqlFlexibleServerVersion Ver13 { get; } = new PostgreSqlFlexibleServerVersion(Ver13Value);
+
+        /// <summary> PostgreSQL 12. </summary>
+        public static PostgreSqlFlexibleServerVersion Ver12 { get; } = new PostgreSqlFlexibleServerVersion(Ver12Value);
+
+        /// <summary> PostgreSQL 11. </summary>
+        public static PostgreSqlFlexibleServerVersion Ver11 { get; } = new PostgreSqlFlexibleServerVersion(Ver11Value);
 
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerVersion"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

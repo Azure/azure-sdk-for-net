@@ -126,6 +126,10 @@ namespace Azure.Provisioning.ContainerInstance
             _secret = DefineDictionaryProperty<string>(nameof(Secret), new string[] { "secret" });
             _secretReference = DefineDictionaryProperty<string>(nameof(SecretReference), new string[] { "secretReference" });
             _gitRepo = DefineModelProperty<ContainerInstanceGitRepoVolume>(nameof(GitRepo), new string[] { "gitRepo" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerVolume that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

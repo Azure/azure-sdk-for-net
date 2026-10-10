@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             TryGetApiVersion(ResourceType, out string costManagementExportApiVersion);
             _exportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", ResourceType.Namespace, Diagnostics);
-            _exportsRestClient = new Exports(_exportsClientDiagnostics, Pipeline, Endpoint, costManagementExportApiVersion ?? "2025-03-01");
+            _exportsRestClient = new Exports(_exportsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, costManagementExportApiVersion ?? "2025-03-01");
             ValidateResourceId(id);
         }
 
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new ExportsGetExecutionHistoryAsyncCollectionResultOfT(_exportsRestClient, Id.Parent.ToString(), Id.Name, context, "CostManagementExportResource.GetExecutionHistory");
+            return new ExportRunAsyncCollectionResultOfT(_exportsRestClient, Id.Parent.ToString(), Id.Name, context, "CostManagementExportResource.GetExecutionHistory");
         }
 
         /// <summary>
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new ExportsGetExecutionHistoryCollectionResultOfT(_exportsRestClient, Id.Parent.ToString(), Id.Name, context, "CostManagementExportResource.GetExecutionHistory");
+            return new ExportRunCollectionResultOfT(_exportsRestClient, Id.Parent.ToString(), Id.Name, context, "CostManagementExportResource.GetExecutionHistory");
         }
 
         /// <summary>

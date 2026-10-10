@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -8,7 +8,9 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Summary of revision metadata. </summary>
+    // Old SDK exposed both string (TermsOfServiceLink/ServiceLink) and Uri (TermsOfServiceUri/ServiceUri).
+    // The string versions are generated natively. These provide Uri wrappers for backward compat.
+    // Not spec-fixable: @@alternateType replaces the property type entirely.
     public partial class ApiPatch
     {
         /// <summary> A URL to the Terms of Service for the API. MUST be in the format of a URL. </summary>

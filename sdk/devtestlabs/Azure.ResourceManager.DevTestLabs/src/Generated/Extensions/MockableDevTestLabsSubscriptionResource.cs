@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
 
         private ClientDiagnostics LabsClientDiagnostics => _labsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevTestLabs.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Labs LabsRestClient => _labsRestClient ??= new Labs(LabsClientDiagnostics, Pipeline, Endpoint, "2018-09-15");
+        private Labs LabsRestClient => _labsRestClient ??= new Labs(LabsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2018-09-15");
 
         private ClientDiagnostics DevTestLabGlobalSchedulesClientDiagnostics => _devTestLabGlobalSchedulesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevTestLabs.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DevTestLabGlobalSchedules DevTestLabGlobalSchedulesRestClient => _devTestLabGlobalSchedulesRestClient ??= new DevTestLabGlobalSchedules(DevTestLabGlobalSchedulesClientDiagnostics, Pipeline, Endpoint, "2018-09-15");
+        private DevTestLabGlobalSchedules DevTestLabGlobalSchedulesRestClient => _devTestLabGlobalSchedulesRestClient ??= new DevTestLabGlobalSchedules(DevTestLabGlobalSchedulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2018-09-15");
 
         /// <summary>
         /// List labs in a subscription.
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevTestLabData, DevTestLabResource>(new LabsGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevTestLabData, DevTestLabResource>(new DevTestLabDataAsync0CollectionResultOfT(
                 LabsRestClient,
                 Id.SubscriptionId,
                 expand,
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevTestLabData, DevTestLabResource>(new LabsGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<DevTestLabData, DevTestLabResource>(new DevTestLabData0CollectionResultOfT(
                 LabsRestClient,
                 Id.SubscriptionId,
                 expand,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevTestLabScheduleData, DevTestLabGlobalScheduleResource>(new DevTestLabGlobalSchedulesGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevTestLabScheduleData, DevTestLabGlobalScheduleResource>(new DevTestLabScheduleDataAsync1CollectionResultOfT(
                 DevTestLabGlobalSchedulesRestClient,
                 Id.SubscriptionId,
                 expand,
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevTestLabScheduleData, DevTestLabGlobalScheduleResource>(new DevTestLabGlobalSchedulesGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<DevTestLabScheduleData, DevTestLabGlobalScheduleResource>(new DevTestLabScheduleData1CollectionResultOfT(
                 DevTestLabGlobalSchedulesRestClient,
                 Id.SubscriptionId,
                 expand,

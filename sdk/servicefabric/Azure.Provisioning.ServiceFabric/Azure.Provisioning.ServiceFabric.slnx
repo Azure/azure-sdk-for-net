@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.Provisioning.ServiceFabric.csproj" />
+  <Project Path="tests/Azure.Provisioning.ServiceFabric.Tests.csproj" />
+</Solution>

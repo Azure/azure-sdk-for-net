@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                 Location = resourceGroup.Data.Location,
             };
             vnetData.AddressPrefixes.Add("10.10.0.0/16");
-            vnetData.Subnets.Add(new SubnetData() { Name = "subnet1", AddressPrefix = "10.10.1.0/24", PrivateLinkServiceNetworkPolicy = VirtualNetworkPrivateLinkServiceNetworkPolicy.Disabled, NetworkSecurityGroup = nsg.Value.Data });
+            vnetData.Subnets.Add(new SubnetData() { Name = "subnet1", AddressPrefix = "10.10.1.0/24", PrivateLinkServiceNetworkPolicies = VirtualNetworkPrivateLinkServiceNetworkPolicy.Disabled, NetworkSecurityGroup = nsg.Value.Data });
             vnetData.Subnets.Add(new SubnetData() { Name = "subnet2", AddressPrefix = "10.10.2.0/24" });
             var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetData);
 
@@ -235,8 +235,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                 },
                 RecommendationsConfiguration =
                 {
-                    new RecommendationConfigurationProperties(IotSecurityRecommendationType.IotOpenPorts,RecommendationConfigStatus.Disabled),
-                    new RecommendationConfigurationProperties(IotSecurityRecommendationType.IotSharedCredentials,RecommendationConfigStatus.Disabled),
+                    new RecommendationConfigurationProperties(IotSecurityRecommendationType.IotOpenPorts, RecommendationConfigStatus.Disabled),
+                    new RecommendationConfigurationProperties(IotSecurityRecommendationType.IotSharedCredentials, RecommendationConfigStatus.Disabled),
                 }
             };
             var iotSecuritySolutionModel = await resourceGroup.GetIotSecuritySolutions().CreateOrUpdateAsync(WaitUntil.Completed, solutionModelName, data);

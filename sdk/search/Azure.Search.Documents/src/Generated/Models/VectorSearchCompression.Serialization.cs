@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Contains configuration options specific to the compression method used during indexing or querying.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ScalarQuantizationCompression"/> and <see cref="BinaryQuantizationCompression"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BinaryQuantizationCompression"/> and <see cref="ScalarQuantizationCompression"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownVectorSearchCompression))]
     public abstract partial class VectorSearchCompression : IJsonModel<VectorSearchCompression>
@@ -84,15 +84,29 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(CompressionName);
-            if (Optional.IsDefined(RescoringOptions))
+            if (_rescoringOptionsIsDefined || Optional.IsDefined(RescoringOptions))
             {
-                writer.WritePropertyName("rescoringOptions"u8);
-                writer.WriteObjectValue(RescoringOptions, options);
+                if (RescoringOptions != null)
+                {
+                    writer.WritePropertyName("rescoringOptions"u8);
+                    writer.WriteObjectValue(RescoringOptions, options);
+                }
+                else
+                {
+                    writer.WriteNull("rescoringOptions"u8);
+                }
             }
-            if (Optional.IsDefined(TruncationDimension))
+            if (_truncationDimensionIsDefined || Optional.IsDefined(TruncationDimension))
             {
-                writer.WritePropertyName("truncationDimension"u8);
-                writer.WriteNumberValue(TruncationDimension.Value);
+                if (TruncationDimension != null)
+                {
+                    writer.WritePropertyName("truncationDimension"u8);
+                    writer.WriteNumberValue(TruncationDimension.Value);
+                }
+                else
+                {
+                    writer.WriteNull("truncationDimension"u8);
+                }
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -142,10 +156,10 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "scalarQuantization":
-                        return ScalarQuantizationCompression.DeserializeScalarQuantizationCompression(element, options);
                     case "binaryQuantization":
                         return BinaryQuantizationCompression.DeserializeBinaryQuantizationCompression(element, options);
+                    case "scalarQuantization":
+                        return ScalarQuantizationCompression.DeserializeScalarQuantizationCompression(element, options);
                 }
             }
             return UnknownVectorSearchCompression.DeserializeUnknownVectorSearchCompression(element, options);

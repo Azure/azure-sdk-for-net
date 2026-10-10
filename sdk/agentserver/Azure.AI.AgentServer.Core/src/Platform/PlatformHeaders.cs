@@ -23,7 +23,8 @@ namespace Azure.AI.AgentServer.Core;
 /// <para><b>Request headers</b> (set by the platform or client):</para>
 /// <list type="bullet">
 ///   <item><see cref="RequestId"/> — client-provided correlation ID (echoed back on the response).</item>
-///   <item><see cref="UserIsolationKey"/> / <see cref="ChatIsolationKey"/> — platform isolation keys.</item>
+///   <item><see cref="UserId"/> — global, cross-agent per-user partition key.</item>
+///   <item><see cref="FoundryCallId"/> — opaque per-request call identifier (protocol <c>2.0.0</c>).</item>
 ///   <item><see cref="ClientHeaderPrefix"/> — prefix for pass-through client headers.</item>
 ///   <item><see cref="TraceParent"/> — W3C Trace Context propagation header.</item>
 ///   <item><see cref="ClientRequestId"/> — Azure SDK client correlation header.</item>
@@ -52,16 +53,22 @@ public static class PlatformHeaders
     public const string SessionId = "x-agent-session-id";
 
     /// <summary>
-    /// The <c>x-agent-user-isolation-key</c> header — the platform-injected
-    /// partition key for user-private state.
+    /// The <c>x-agent-user-id</c> header — the platform-injected global,
+    /// cross-agent partition key for per-user state. The same user yields the
+    /// same value regardless of which agent they interact with. Consumed
+    /// container-side for per-user state partitioning; it is <b>not</b> forwarded
+    /// on outbound 1P calls (not accepted/trusted by 1P services).
     /// </summary>
-    public const string UserIsolationKey = "x-agent-user-isolation-key";
+    public const string UserId = "x-agent-user-id";
 
     /// <summary>
-    /// The <c>x-agent-chat-isolation-key</c> header — the platform-injected
-    /// partition key for conversation-scoped state.
+    /// The <c>x-agent-foundry-call-id</c> header — the platform-minted opaque
+    /// per-request call identifier. Present only on container protocol version
+    /// <c>2.0.0</c>. The container <b>must</b> forward this value on outbound
+    /// calls to Foundry platform services (Storage, Toolboxes/MCP, A2A) so that
+    /// 1P services resolve the server-side-stored caller context. Never parsed.
     /// </summary>
-    public const string ChatIsolationKey = "x-agent-chat-isolation-key";
+    public const string FoundryCallId = "x-agent-foundry-call-id";
 
     /// <summary>
     /// The prefix <c>x-client-</c> for pass-through client headers.

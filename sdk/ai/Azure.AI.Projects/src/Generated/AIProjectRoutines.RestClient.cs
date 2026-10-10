@@ -2,6 +2,7 @@
 
 #nullable disable
 
+using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 
@@ -17,7 +18,7 @@ namespace Azure.AI.Projects
 
         private static PipelineMessageClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
 
-        internal PipelineMessage CreateCreateOrUpdateRoutineRequest(string routineName, BinaryContent content, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateCreateOrUpdateRequest(string routineName, BinaryContent content, string foundryFeatures, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -40,7 +41,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateGetRoutineRequest(string routineName, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateGetRequest(string routineName, string foundryFeatures, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -61,7 +62,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateEnableRoutineRequest(string routineName, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateEnableRequest(string routineName, string foundryFeatures, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -83,7 +84,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateDisableRoutineRequest(string routineName, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateDisableRequest(string routineName, string foundryFeatures, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -105,7 +106,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateGetRoutinesRequest(string foundryFeatures, int? limit, string after, string before, string order, RequestOptions options)
+        internal PipelineMessage CreateGetRoutinesRequest(string foundryFeatures, int? limit, string after, string order, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -117,10 +118,6 @@ namespace Azure.AI.Projects
             if (after != null)
             {
                 uri.AppendQuery("after", after, true);
-            }
-            if (before != null)
-            {
-                uri.AppendQuery("before", before, true);
             }
             if (order != null)
             {
@@ -141,7 +138,29 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateDeleteRoutineRequest(string routineName, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateNextGetRoutinesRequest(Uri nextPage, string foundryFeatures, int? limit, string after, string order, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
+            request.Headers.Set("Accept", "application/json");
+            message.Apply(options);
+            return message;
+        }
+
+        internal PipelineMessage CreateDeleteRequest(string routineName, string foundryFeatures, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -161,7 +180,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateGetRoutineRunsRequest(string routineName, string foundryFeatures, string filter, int? limit, string after, string before, string order, RequestOptions options)
+        internal PipelineMessage CreateGetRoutineRunsRequest(string routineName, string foundryFeatures, string filter, int? limit, string after, string order, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -179,10 +198,6 @@ namespace Azure.AI.Projects
             if (after != null)
             {
                 uri.AppendQuery("after", after, true);
-            }
-            if (before != null)
-            {
-                uri.AppendQuery("before", before, true);
             }
             if (order != null)
             {
@@ -203,7 +218,29 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateDispatchAsyncRoutineRequest(string routineName, BinaryContent content, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateNextGetRoutineRunsRequest(Uri nextPage, string routineName, string foundryFeatures, string filter, int? limit, string after, string order, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
+            request.Headers.Set("Accept", "application/json");
+            message.Apply(options);
+            return message;
+        }
+
+        internal PipelineMessage CreateDispatchRequest(string routineName, BinaryContent content, string foundryFeatures, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);

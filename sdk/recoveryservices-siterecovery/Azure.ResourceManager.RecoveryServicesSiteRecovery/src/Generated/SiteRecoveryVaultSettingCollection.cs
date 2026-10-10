@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             TryGetApiVersion(SiteRecoveryVaultSettingResource.ResourceType, out string siteRecoveryVaultSettingApiVersion);
             _resourceName = resourceName;
             _replicationVaultSettingClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", SiteRecoveryVaultSettingResource.ResourceType.Namespace, Diagnostics);
-            _replicationVaultSettingRestClient = new ReplicationVaultSetting(_replicationVaultSettingClientDiagnostics, Pipeline, Endpoint, siteRecoveryVaultSettingApiVersion ?? "2026-02-01");
+            _replicationVaultSettingRestClient = new ReplicationVaultSetting(_replicationVaultSettingClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteRecoveryVaultSettingApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SiteRecoveryVaultSettingData, SiteRecoveryVaultSettingResource>(new ReplicationVaultSettingGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SiteRecoveryVaultSettingData, SiteRecoveryVaultSettingResource>(new SiteRecoveryVaultSettingDataAsyncCollectionResultOfT(
                 _replicationVaultSettingRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SiteRecoveryVaultSettingData, SiteRecoveryVaultSettingResource>(new ReplicationVaultSettingGetAllCollectionResultOfT(
+            return new PageableWrapper<SiteRecoveryVaultSettingData, SiteRecoveryVaultSettingResource>(new SiteRecoveryVaultSettingDataCollectionResultOfT(
                 _replicationVaultSettingRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

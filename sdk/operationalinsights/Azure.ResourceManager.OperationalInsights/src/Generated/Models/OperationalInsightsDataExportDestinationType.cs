@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     public readonly partial struct OperationalInsightsDataExportDestinationType : IEquatable<OperationalInsightsDataExportDestinationType>
     {
         private readonly string _value;
+        /// <summary> StorageAccount. </summary>
+        private const string StorageAccountValue = "StorageAccount";
+        /// <summary> EventHub. </summary>
+        private const string EventHubValue = "EventHub";
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsDataExportDestinationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OperationalInsightsDataExportDestinationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StorageAccountValue = "StorageAccount";
-        private const string EventHubValue = "EventHub";
+            _value = value;
+        }
 
         /// <summary> StorageAccount. </summary>
         public static OperationalInsightsDataExportDestinationType StorageAccount { get; } = new OperationalInsightsDataExportDestinationType(StorageAccountValue);
+
         /// <summary> EventHub. </summary>
         public static OperationalInsightsDataExportDestinationType EventHub { get; } = new OperationalInsightsDataExportDestinationType(EventHubValue);
+
         /// <summary> Determines if two <see cref="OperationalInsightsDataExportDestinationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OperationalInsightsDataExportDestinationType left, OperationalInsightsDataExportDestinationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OperationalInsightsDataExportDestinationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OperationalInsightsDataExportDestinationType left, OperationalInsightsDataExportDestinationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationalInsightsDataExportDestinationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OperationalInsightsDataExportDestinationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OperationalInsightsDataExportDestinationType(string value) => new OperationalInsightsDataExportDestinationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OperationalInsightsDataExportDestinationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OperationalInsightsDataExportDestinationType?(string value) => value == null ? null : new OperationalInsightsDataExportDestinationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OperationalInsightsDataExportDestinationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OperationalInsightsDataExportDestinationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

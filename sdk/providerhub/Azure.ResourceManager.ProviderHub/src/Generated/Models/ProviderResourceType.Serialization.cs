@@ -231,16 +231,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ServiceTreeInfos))
-            {
-                writer.WritePropertyName("serviceTreeInfos"u8);
-                writer.WriteStartArray();
-                foreach (ServiceTreeInfo item in ServiceTreeInfos)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(RequestHeaderOptions))
             {
                 writer.WritePropertyName("requestHeaderOptions"u8);
@@ -296,6 +286,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("resourceDeletionPolicy"u8);
                 writer.WriteStringValue(ResourceDeletionPolicy.Value.ToString());
             }
+            if (Optional.IsCollectionDefined(ResourceDeletionPolicies))
+            {
+                writer.WritePropertyName("resourceDeletionPolicies"u8);
+                writer.WriteStartArray();
+                foreach (ResourceDeletionPolicyAndProperties item in ResourceDeletionPolicies)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(QuotaRule))
             {
                 writer.WritePropertyName("quotaRule"u8);
@@ -325,6 +325,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 writer.WritePropertyName("resourceProviderAuthorizationRules"u8);
                 writer.WriteObjectValue(ResourceProviderAuthorizationRules, options);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ServiceTreeInfos))
+            {
+                writer.WritePropertyName("serviceTreeInfos"u8);
+                writer.WriteStartArray();
+                foreach (ServiceTreeInfo item in ServiceTreeInfos)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -387,7 +397,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IReadOnlyList<string> requiredFeatures = default;
             ProviderFeaturesRule featuresRule = default;
             IReadOnlyList<ProviderSubscriptionStateRule> subscriptionStateRules = default;
-            IReadOnlyList<ServiceTreeInfo> serviceTreeInfos = default;
             ProviderRequestHeaderOptions requestHeaderOptions = default;
             string skuLink = default;
             IReadOnlyList<string> disallowedActionVerbs = default;
@@ -395,10 +404,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IReadOnlyList<ProviderHubExtendedLocationOptions> extendedLocations = default;
             IReadOnlyList<LinkedOperationRule> linkedOperationRules = default;
             ManifestResourceDeletionPolicy? resourceDeletionPolicy = default;
+            IList<ResourceDeletionPolicyAndProperties> resourceDeletionPolicies = default;
             ProviderQuotaRule quotaRule = default;
             IReadOnlyList<ProviderNotification> notifications = default;
             IReadOnlyList<LinkedNotificationRule> linkedNotificationRules = default;
             ResourceProviderAuthorizationRules resourceProviderAuthorizationRules = default;
+            IReadOnlyList<ServiceTreeInfo> serviceTreeInfos = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -577,7 +588,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    metadata = BinaryData.FromString(prop.Value.GetRawText());
+                    metadata = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("requiredFeatures"u8))
@@ -622,20 +633,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         array.Add(ProviderSubscriptionStateRule.DeserializeProviderSubscriptionStateRule(item, options));
                     }
                     subscriptionStateRules = array;
-                    continue;
-                }
-                if (prop.NameEquals("serviceTreeInfos"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ServiceTreeInfo> array = new List<ServiceTreeInfo>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(ServiceTreeInfo.DeserializeServiceTreeInfo(item, options));
-                    }
-                    serviceTreeInfos = array;
                     continue;
                 }
                 if (prop.NameEquals("requestHeaderOptions"u8))
@@ -719,6 +716,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     resourceDeletionPolicy = new ManifestResourceDeletionPolicy(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("resourceDeletionPolicies"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ResourceDeletionPolicyAndProperties> array = new List<ResourceDeletionPolicyAndProperties>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ResourceDeletionPolicyAndProperties.DeserializeResourceDeletionPolicyAndProperties(item, options));
+                    }
+                    resourceDeletionPolicies = array;
+                    continue;
+                }
                 if (prop.NameEquals("quotaRule"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -765,9 +776,23 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     resourceProviderAuthorizationRules = ResourceProviderAuthorizationRules.DeserializeResourceProviderAuthorizationRules(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("serviceTreeInfos"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ServiceTreeInfo> array = new List<ServiceTreeInfo>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ServiceTreeInfo.DeserializeServiceTreeInfo(item, options));
+                    }
+                    serviceTreeInfos = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ProviderResourceType(
@@ -790,7 +815,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 requiredFeatures ?? new ChangeTrackingList<string>(),
                 featuresRule,
                 subscriptionStateRules ?? new ChangeTrackingList<ProviderSubscriptionStateRule>(),
-                serviceTreeInfos ?? new ChangeTrackingList<ServiceTreeInfo>(),
                 requestHeaderOptions,
                 skuLink,
                 disallowedActionVerbs ?? new ChangeTrackingList<string>(),
@@ -798,10 +822,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 extendedLocations ?? new ChangeTrackingList<ProviderHubExtendedLocationOptions>(),
                 linkedOperationRules ?? new ChangeTrackingList<LinkedOperationRule>(),
                 resourceDeletionPolicy,
+                resourceDeletionPolicies ?? new ChangeTrackingList<ResourceDeletionPolicyAndProperties>(),
                 quotaRule,
                 notifications ?? new ChangeTrackingList<ProviderNotification>(),
                 linkedNotificationRules ?? new ChangeTrackingList<LinkedNotificationRule>(),
                 resourceProviderAuthorizationRules,
+                serviceTreeInfos ?? new ChangeTrackingList<ServiceTreeInfo>(),
                 additionalBinaryDataProperties);
         }
     }

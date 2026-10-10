@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             writer.WritePropertyName("productCode"u8);
             writer.WriteStringValue(ProductCode);
             writer.WritePropertyName("startAt"u8);
-            writer.WriteStringValue(StartOn, "O");
+            writer.WriteStringValue(StartsOn, "O");
             if (Optional.IsDefined(SystemId))
             {
                 writer.WritePropertyName("systemId"u8);

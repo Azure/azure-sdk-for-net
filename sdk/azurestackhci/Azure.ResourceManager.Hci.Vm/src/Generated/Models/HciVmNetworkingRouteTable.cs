@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="type"> Resource type. </param>
         /// <param name="properties"> Properties of the route table. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmNetworkingRouteTable(string eTag, string name, string @type, RouteTableProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmNetworkingRouteTable(ETag? eTag, string name, string @type, RouteTableProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ETag = eTag;
             Name = name;
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> Resource name. </summary>
         public string Name { get; }

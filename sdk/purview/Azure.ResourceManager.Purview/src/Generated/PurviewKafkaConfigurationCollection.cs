@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Purview
         {
             TryGetApiVersion(PurviewKafkaConfigurationResource.ResourceType, out string purviewKafkaConfigurationApiVersion);
             _kafkaConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Purview", PurviewKafkaConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _kafkaConfigurationsRestClient = new KafkaConfigurations(_kafkaConfigurationsClientDiagnostics, Pipeline, Endpoint, purviewKafkaConfigurationApiVersion ?? "2024-04-01-preview");
+            _kafkaConfigurationsRestClient = new KafkaConfigurations(_kafkaConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, purviewKafkaConfigurationApiVersion ?? "2024-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Purview
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PurviewKafkaConfigurationData, PurviewKafkaConfigurationResource>(new KafkaConfigurationsGetByAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PurviewKafkaConfigurationData, PurviewKafkaConfigurationResource>(new PurviewKafkaConfigurationDataAsyncCollectionResultOfT(
                 _kafkaConfigurationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Purview
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PurviewKafkaConfigurationData, PurviewKafkaConfigurationResource>(new KafkaConfigurationsGetByAccountCollectionResultOfT(
+            return new PageableWrapper<PurviewKafkaConfigurationData, PurviewKafkaConfigurationResource>(new PurviewKafkaConfigurationDataCollectionResultOfT(
                 _kafkaConfigurationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

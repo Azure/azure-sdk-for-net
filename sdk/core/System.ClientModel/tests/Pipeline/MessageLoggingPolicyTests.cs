@@ -532,7 +532,180 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
         Assert.AreEqual(Encoding.UTF8.GetBytes("Hello"), responseEvent.GetValueFromArguments<byte[]>("content"));
     }
 
+    [Test]
+    public async Task ResponseContentBlockIsNotPaddedWhenReadAtOffsetZeroEventSource()
+    {
+        using TestClientEventListener listener = new();
+        ClientLoggingOptions loggingOptions = new() { EnableMessageContentLogging = true };
+        MockPipelineResponse response = new(200, mockHeaders: _defaultHeaders);
+
+        await SendRequestReadingFromOffsetZero(response, loggingOptions);
+
+        EventWrittenEventArgs responseEvent = listener.GetAndValidateSingleEvent(ResponseContentBlockEvent, "ResponseContentBlock", EventLevel.Verbose, SystemClientModelEventSourceName);
+        Assert.AreEqual(Encoding.UTF8.GetBytes("Hello world"), responseEvent.GetProperty<byte[]>("content"));
+    }
+
+    [Test]
+    public async Task ErrorResponseContentBlockIsNotPaddedWhenReadAtOffsetZeroEventSource()
+    {
+        using TestClientEventListener listener = new();
+        ClientLoggingOptions loggingOptions = new() { EnableMessageContentLogging = true };
+        MockPipelineResponse response = new(500, mockHeaders: _defaultHeaders);
+
+        await SendRequestReadingFromOffsetZero(response, loggingOptions);
+
+        EventWrittenEventArgs responseEvent = listener.GetAndValidateSingleEvent(ErrorResponseContentBlockEvent, "ErrorResponseContentBlock", EventLevel.Informational, SystemClientModelEventSourceName);
+        Assert.AreEqual(Encoding.UTF8.GetBytes("Hello world"), responseEvent.GetProperty<byte[]>("content"));
+    }
+
+    [Test]
+    public async Task ResponseContentTextBlockIsNotPaddedWhenReadAtOffsetZeroEventSource()
+    {
+        using TestClientEventListener listener = new();
+        ClientLoggingOptions loggingOptions = new() { EnableMessageContentLogging = true };
+        MockPipelineResponse response = new(200, mockHeaders: _defaultTextHeaders);
+
+        await SendRequestReadingFromOffsetZero(response, loggingOptions);
+
+        EventWrittenEventArgs responseEvent = listener.GetAndValidateSingleEvent(ResponseContentTextBlockEvent, "ResponseContentTextBlock", EventLevel.Verbose, SystemClientModelEventSourceName);
+        Assert.AreEqual("Hello world", responseEvent.GetProperty<string>("content"));
+    }
+
+    [Test]
+    public async Task ErrorResponseContentTextBlockIsNotPaddedWhenReadAtOffsetZeroEventSource()
+    {
+        using TestClientEventListener listener = new();
+        ClientLoggingOptions loggingOptions = new() { EnableMessageContentLogging = true };
+        MockPipelineResponse response = new(500, mockHeaders: _defaultTextHeaders);
+
+        await SendRequestReadingFromOffsetZero(response, loggingOptions);
+
+        EventWrittenEventArgs responseEvent = listener.GetAndValidateSingleEvent(ErrorResponseContentTextBlockEvent, "ErrorResponseContentTextBlock", EventLevel.Informational, SystemClientModelEventSourceName);
+        Assert.AreEqual("Hello world", responseEvent.GetProperty<string>("content"));
+    }
+
+    [Test]
+    public async Task ResponseContentBlockIsTruncatedWhenReadAtOffsetZeroEventSource()
+    {
+        using TestClientEventListener listener = new();
+        ClientLoggingOptions loggingOptions = new() { EnableMessageContentLogging = true, MessageContentSizeLimit = 5 };
+        MockPipelineResponse response = new(200, mockHeaders: _defaultHeaders);
+
+        await SendRequestReadingFromOffsetZero(response, loggingOptions);
+
+        EventWrittenEventArgs responseEvent = listener.GetAndValidateSingleEvent(ResponseContentBlockEvent, "ResponseContentBlock", EventLevel.Verbose, SystemClientModelEventSourceName);
+        Assert.AreEqual(Encoding.UTF8.GetBytes("Hello"), responseEvent.GetProperty<byte[]>("content"));
+    }
+
+    [Test]
+    public async Task ResponseContentBlockIsNotPaddedWhenReadAtOffsetZeroILogger()
+    {
+        using TestLoggingFactory factory = new(LogLevel.Debug);
+        ClientLoggingOptions loggingOptions = new()
+        {
+            EnableMessageContentLogging = true,
+            LoggerFactory = factory
+        };
+        MockPipelineResponse response = new(200, mockHeaders: _defaultHeaders);
+
+        await SendRequestReadingFromOffsetZero(response, loggingOptions);
+
+        TestLogger logger = factory.GetLogger(LoggingPolicyCategoryName);
+        LoggerEvent responseEvent = logger.GetAndValidateSingleEvent(ResponseContentBlockEvent, "ResponseContentBlock", LogLevel.Debug);
+        Assert.AreEqual(Encoding.UTF8.GetBytes("Hello world"), responseEvent.GetValueFromArguments<byte[]>("content"));
+    }
+
+    [Test]
+    public async Task ResponseContentTextBlockIsNotPaddedWhenReadAtOffsetZeroILogger()
+    {
+        using TestLoggingFactory factory = new(LogLevel.Debug);
+        ClientLoggingOptions loggingOptions = new()
+        {
+            EnableMessageContentLogging = true,
+            LoggerFactory = factory
+        };
+        MockPipelineResponse response = new(200, mockHeaders: _defaultTextHeaders);
+
+        await SendRequestReadingFromOffsetZero(response, loggingOptions);
+
+        TestLogger logger = factory.GetLogger(LoggingPolicyCategoryName);
+        LoggerEvent responseEvent = logger.GetAndValidateSingleEvent(ResponseContentTextBlockEvent, "ResponseContentTextBlock", LogLevel.Debug);
+        Assert.AreEqual("Hello world", responseEvent.GetValueFromArguments<string>("content"));
+    }
+
+#if !NET462
+    [Test]
+    public async Task ResponseContentBlockIsNotPaddedWhenReadIntoMemoryAtOffsetZero()
+    {
+        using TestClientEventListener listener = new();
+        ClientLoggingOptions loggingOptions = new() { EnableMessageContentLogging = true };
+        MockPipelineResponse response = new(200, mockHeaders: _defaultHeaders);
+
+        await SendRequestReadingFromOffsetZero(response, loggingOptions, useMemoryOverload: true);
+
+        EventWrittenEventArgs responseEvent = listener.GetAndValidateSingleEvent(ResponseContentBlockEvent, "ResponseContentBlock", EventLevel.Verbose, SystemClientModelEventSourceName);
+        Assert.AreEqual(Encoding.UTF8.GetBytes("Hello world"), responseEvent.GetProperty<byte[]>("content"));
+    }
+#endif
+
     #region Helpers
+
+    /// <summary>
+    /// Sends a request whose non-buffered response is read a single time at offset 0 into a buffer
+    /// that is much larger than the response body and pre-filled with a recognizable poison value,
+    /// mimicking a recycled <see cref="System.Buffers.ArrayPool{T}"/> array.
+    /// See https://github.com/Azure/azure-sdk-for-net/issues/61399.
+    /// </summary>
+    private async Task SendRequestReadingFromOffsetZero(MockPipelineResponse response,
+                                                        ClientLoggingOptions loggingOptions,
+                                                        bool useMemoryOverload = false)
+    {
+        response.ContentStream = new NonSeekableMemoryStream(Encoding.UTF8.GetBytes("Hello world"));
+
+        ClientPipelineOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Transport", i => response),
+            ClientLoggingOptions = loggingOptions,
+            RetryPolicy = new ObservablePolicy("RetryPolicy")
+        };
+
+        ClientPipeline pipeline = ClientPipeline.Create(options);
+
+        PipelineMessage message = pipeline.CreateMessage();
+        message.Request.Method = "GET";
+        message.Request.Uri = new Uri("http://example.com");
+        message.BufferResponse = false;
+
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        byte[] buffer = new byte[1024];
+
+        for (int index = 0; index < buffer.Length; ++index)
+        {
+            buffer[index] = 0xAA;
+        }
+
+        int read;
+
+        if (useMemoryOverload)
+        {
+#if NET462
+            read = 0;
+#else
+            read = IsAsync
+                ? await response.ContentStream!.ReadAsync(buffer.AsMemory(0, buffer.Length))
+                : response.ContentStream!.Read(buffer.AsSpan(0, buffer.Length));
+#endif
+        }
+        else
+        {
+            read = IsAsync
+                ? await response.ContentStream!.ReadAsync(buffer, 0, buffer.Length)
+                : response.ContentStream!.Read(buffer, 0, buffer.Length);
+        }
+
+        Assert.AreEqual(11, read);
+    }
 
     private class TestEventListenerWarning : TestClientEventListener
     {

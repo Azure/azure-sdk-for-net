@@ -7,7 +7,6 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The CreateOrUpdateRoutineRequest. </summary>
     internal partial class CreateOrUpdateRoutineRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -24,13 +23,15 @@ namespace Azure.AI.Projects
         /// <param name="enabled"> Whether the routine is enabled. </param>
         /// <param name="triggers"> The triggers configured for the routine. In v1, exactly one trigger entry is supported. </param>
         /// <param name="action"> The action executed when the routine fires. </param>
+        /// <param name="authorization"> Optional authorization configuration for dispatching a newly created routine. Ignored when updating an existing routine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreateOrUpdateRoutineRequest(string description, bool? enabled, IDictionary<string, RoutineTrigger> triggers, RoutineAction action, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CreateOrUpdateRoutineRequest(string description, bool? enabled, IDictionary<string, RoutineTrigger> triggers, RoutineAction action, RoutineAuthorization authorization, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Enabled = enabled;
             Triggers = triggers;
             Action = action;
+            Authorization = authorization;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -45,5 +46,8 @@ namespace Azure.AI.Projects
 
         /// <summary> The action executed when the routine fires. </summary>
         public RoutineAction Action { get; }
+
+        /// <summary> Optional authorization configuration for dispatching a newly created routine. Ignored when updating an existing routine. </summary>
+        public RoutineAuthorization Authorization { get; }
     }
 }

@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Schedule run model. </summary>
+    [Experimental("AAIP001")]
     public partial class ScheduleRun
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

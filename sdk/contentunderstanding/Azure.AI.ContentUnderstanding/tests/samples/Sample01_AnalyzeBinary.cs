@@ -24,7 +24,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
         public async Task AnalyzeBinaryAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions(_serviceVersion));
             var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
             #region Snippet:ContentUnderstandingAnalyzeBinaryAsync
@@ -206,17 +206,97 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #region Assertion:ContentUnderstandingConvertToLlmInput
             Assert.IsNotNull(llmText, "LLM input text should not be null");
             Assert.That(llmText, Does.StartWith("---\n"));
-            Assert.That(llmText, Does.Contain("contentType: document"));
+            Assert.That(llmText, Does.Contain("mimeType: application/pdf"));
             Console.WriteLine($"LLM input text generated ({llmText.Length} characters)");
             #endregion
 
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ContentUnderstandingClientOptions.ServiceVersion.V2026_06_01_Preview)]
+        public async Task AnalyzeBinaryWithOptionsAsync()
+        {
+            string endpoint = TestEnvironment.Endpoint;
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions(_serviceVersion));
+            var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
+
+            string filePath = ContentUnderstandingClientTestEnvironment.CreatePath("mixed_financial_invoices.pdf");
+            byte[] fileBytes = File.ReadAllBytes(filePath);
+            BinaryData binaryData = BinaryData.FromBytes(fileBytes);
+
+            #region Snippet:ContentUnderstandingAnalyzeBinaryWithOptionsAsync
+            // Use AnalyzeBinaryOptions when you need ContentRange, ProcessingLocation, or other binary options.
+            Operation<AnalysisResult> optionsOperation = await client.AnalyzeBinaryAsync(
+                WaitUntil.Completed,
+                new AnalyzeBinaryOptions("prebuilt-documentSearch", binaryData)
+                {
+                    ContentRange = ContentRange.PagesFrom(3),
+                    ProcessingLocation = ProcessingLocation.Geography
+                });
+
+            AnalysisResult optionsResult = optionsOperation.Value;
+            #endregion
+
+            #region Assertion:ContentUnderstandingAnalyzeBinaryWithOptionsAsync
+            Assert.IsNotNull(optionsOperation, "Options operation should not be null");
+            Assert.IsTrue(optionsOperation.HasCompleted, "Options operation should be completed");
+            Assert.IsNotNull(optionsResult, "Options analysis result should not be null");
+            Assert.IsNotNull(optionsResult.Contents, "Options result contents should not be null");
+            DocumentContent optionsDoc = (DocumentContent)optionsResult.Contents!.First();
+            Assert.AreEqual(3, optionsDoc.StartPageNumber, "ContentRange.PagesFrom(3) should start at page 3");
+            Assert.IsTrue(optionsDoc.EndPageNumber >= optionsDoc.StartPageNumber, "End page should be at least start page");
+            #endregion
+
+            // Inline analysis succeeds when the selected content is within its 5-page limit.
+            Response<AnalysisResult> inlineResponse = await client.AnalyzeBinaryInlineAsync(
+                "prebuilt-layout",
+                binaryData,
+                contentRange: ContentRange.Pages(1, 5));
+
+            AnalysisResult inlineResult = inlineResponse.Value;
+
+            #region Assertion:ContentUnderstandingAnalyzeBinaryInlineWithinPageLimitAsync
+            Assert.IsNotNull(inlineResult.Contents);
+            DocumentContent inlineDocument = (DocumentContent)inlineResult.Contents!.First();
+            Assert.AreEqual(5, inlineDocument.Pages!.Count);
+            Assert.AreEqual(1, inlineDocument.StartPageNumber);
+            Assert.AreEqual(5, inlineDocument.EndPageNumber);
+            #endregion
+
+            // Inline analysis has a 5-page input limit. ContentRange.PagesFrom(3) selects
+            // 8 pages from this document, so the service rejects the request.
+            const string inlineLimitWarning = "Warning: Inline analysis supports at most 5 pages per request.";
+            RequestFailedException? inlineException = null;
+            try
+            {
+                await client.AnalyzeBinaryInlineAsync(
+                    new AnalyzeBinaryOptions("prebuilt-layout", binaryData)
+                    {
+                        ContentRange = ContentRange.PagesFrom(3)
+                    });
+            }
+            catch (RequestFailedException ex) when (ex.Status == 400)
+            {
+                inlineException = ex;
+                Console.WriteLine(inlineLimitWarning);
+                Console.WriteLine($"Inline analysis failed as expected: {ex.Message}");
+            }
+
+            #region Assertion:ContentUnderstandingAnalyzeBinaryInlinePageLimitAsync
+            Assert.IsNotNull(inlineException, "Inline analysis should reject an 8-page range");
+            Assert.That(inlineLimitWarning, Does.Contain("at most 5 pages"));
+            Assert.AreEqual(400, inlineException!.Status);
+            Assert.AreEqual("InvalidRequest", inlineException.ErrorCode);
+            Assert.That(inlineException.Message, Does.Contain("InputPageCountExceeded"));
+            Assert.That(inlineException.Message, Does.Contain("maximum allowed page count of 5"));
+            #endregion
+        }
+
+        [RecordedTest]
         public async Task AnalyzeBinaryWithPageContentRangesAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions(_serviceVersion));
             var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
             string filePath = ContentUnderstandingClientTestEnvironment.CreatePath("mixed_financial_invoices.pdf");

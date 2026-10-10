@@ -85,11 +85,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("powerState"u8);
                 writer.WriteObjectValue(PowerState, options);
             }
-            if (Optional.IsDefined(CreationData))
-            {
-                writer.WritePropertyName("creationData"u8);
-                writer.WriteObjectValue(CreationData, options);
-            }
             if (options.Format != "W" && Optional.IsDefined(MaxAgentPools))
             {
                 writer.WritePropertyName("maxAgentPools"u8);
@@ -196,10 +191,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("supportPlan"u8);
                 writer.WriteStringValue(SupportPlan.Value.ToString());
             }
-            if (Optional.IsDefined(IsNamespaceResourcesEnabled))
+            if (Optional.IsDefined(IsFipsEnabled))
             {
-                writer.WritePropertyName("enableNamespaceResources"u8);
-                writer.WriteBooleanValue(IsNamespaceResourcesEnabled.Value);
+                writer.WritePropertyName("enableFIPS"u8);
+                writer.WriteBooleanValue(IsFipsEnabled.Value);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
@@ -337,11 +332,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("hostedSystemProfile"u8);
                 writer.WriteObjectValue(HostedSystemProfile, options);
             }
-            if (Optional.IsDefined(HealthMonitorProfile))
-            {
-                writer.WritePropertyName("healthMonitorProfile"u8);
-                writer.WriteObjectValue(HealthMonitorProfile, options);
-            }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -391,7 +381,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             string provisioningState = default;
             ContainerServicePowerState powerState = default;
-            ContainerServiceCreationData creationData = default;
             int? maxAgentPools = default;
             string kubernetesVersion = default;
             string currentKubernetesVersion = default;
@@ -411,7 +400,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ManagedClusterNodeResourceGroupProfile nodeResourceGroupProfile = default;
             bool? isRbacEnabled = default;
             KubernetesSupportPlan? supportPlan = default;
-            bool? isNamespaceResourcesEnabled = default;
+            bool? isFipsEnabled = default;
             ContainerServiceNetworkProfile networkProfile = default;
             ManagedClusterAadProfile aadProfile = default;
             ManagedClusterAutoUpgradeProfile autoUpgradeProfile = default;
@@ -437,7 +426,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             ManagedClusterAIToolchainOperatorProfile aiToolchainOperatorProfile = default;
             SchedulerProfile schedulerProfile = default;
             ManagedClusterHostedSystemProfile hostedSystemProfile = default;
-            ManagedClusterHealthMonitorProfile healthMonitorProfile = default;
             ManagedClusterStatus status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -454,15 +442,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                         continue;
                     }
                     powerState = ContainerServicePowerState.DeserializeContainerServicePowerState(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("creationData"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    creationData = ContainerServiceCreationData.DeserializeContainerServiceCreationData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("maxAgentPools"u8))
@@ -614,13 +593,13 @@ namespace Azure.ResourceManager.ContainerService.Models
                     supportPlan = new KubernetesSupportPlan(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("enableNamespaceResources"u8))
+                if (prop.NameEquals("enableFIPS"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isNamespaceResourcesEnabled = prop.Value.GetBoolean();
+                    isFipsEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("networkProfile"u8))
@@ -858,15 +837,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                     hostedSystemProfile = ManagedClusterHostedSystemProfile.DeserializeManagedClusterHostedSystemProfile(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("healthMonitorProfile"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    healthMonitorProfile = ManagedClusterHealthMonitorProfile.DeserializeManagedClusterHealthMonitorProfile(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("status"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -878,13 +848,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ManagedClusterProperties(
                 provisioningState,
                 powerState,
-                creationData,
                 maxAgentPools,
                 kubernetesVersion,
                 currentKubernetesVersion,
@@ -904,7 +873,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 nodeResourceGroupProfile,
                 isRbacEnabled,
                 supportPlan,
-                isNamespaceResourcesEnabled,
+                isFipsEnabled,
                 networkProfile,
                 aadProfile,
                 autoUpgradeProfile,
@@ -930,7 +899,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 aiToolchainOperatorProfile,
                 schedulerProfile,
                 hostedSystemProfile,
-                healthMonitorProfile,
                 status,
                 additionalBinaryDataProperties);
         }

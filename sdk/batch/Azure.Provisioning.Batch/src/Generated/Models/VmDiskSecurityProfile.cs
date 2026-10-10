@@ -75,6 +75,10 @@ namespace Azure.Provisioning.Batch
             base.DefineProvisionableProperties();
             _securityEncryptionType = DefineProperty<BatchSecurityEncryptionType>(nameof(SecurityEncryptionType), new string[] { "securityEncryptionType" });
             _diskEncryptionSet = DefineModelProperty<DiskEncryptionSetParameters>(nameof(DiskEncryptionSet), new string[] { "diskEncryptionSet" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VmDiskSecurityProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -17,12 +16,6 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="NetAppElasticAccountPatch"/>. </summary>
-        public NetAppElasticAccountPatch()
-        {
-            Tags = new ChangeTrackingDictionary<string, string>();
-        }
 
         /// <summary> Initializes a new instance of <see cref="NetAppElasticAccountPatch"/>. </summary>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
@@ -37,30 +30,7 @@ namespace Azure.ResourceManager.NetApp.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The managed service identities assigned to this resource. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
-
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-
         /// <summary> The resource-specific properties for this resource. </summary>
         internal ElasticAccountUpdateProperties Properties { get; set; }
-
-        /// <summary> Encryption settings. </summary>
-        public ElasticEncryption ElasticAccountUpdateEncryption
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Encryption;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ElasticAccountUpdateProperties();
-                }
-                Properties.Encryption = value;
-            }
-        }
     }
 }

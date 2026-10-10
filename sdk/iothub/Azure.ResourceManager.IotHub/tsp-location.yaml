@@ -1,0 +1,6 @@
+directory: specification/iothub/resource-manager/Microsoft.Devices/IoTHub
+commit: f18cd4935e28a80399a5e18201dc4b3ddfb20520
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

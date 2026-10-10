@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.StorageCache.Models
     public readonly partial struct StorageTargetType : IEquatable<StorageTargetType>
     {
         private readonly string _value;
+        /// <summary> nfs3. </summary>
+        private const string Nfs3Value = "nfs3";
+        /// <summary> clfs. </summary>
+        private const string ClfsValue = "clfs";
+        /// <summary> unknown. </summary>
+        private const string UnknownValue = "unknown";
+        /// <summary> blobNfs. </summary>
+        private const string BlobNfsValue = "blobNfs";
 
         /// <summary> Initializes a new instance of <see cref="StorageTargetType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageTargetType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string Nfs3Value = "nfs3";
-        private const string ClfsValue = "clfs";
-        private const string UnknownValue = "unknown";
-        private const string BlobNfsValue = "blobNfs";
+            _value = value;
+        }
 
         /// <summary> nfs3. </summary>
         public static StorageTargetType Nfs3 { get; } = new StorageTargetType(Nfs3Value);
+
         /// <summary> clfs. </summary>
         public static StorageTargetType Clfs { get; } = new StorageTargetType(ClfsValue);
+
         /// <summary> unknown. </summary>
         public static StorageTargetType Unknown { get; } = new StorageTargetType(UnknownValue);
+
         /// <summary> blobNfs. </summary>
         public static StorageTargetType BlobNfs { get; } = new StorageTargetType(BlobNfsValue);
+
         /// <summary> Determines if two <see cref="StorageTargetType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageTargetType left, StorageTargetType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageTargetType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageTargetType left, StorageTargetType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageTargetType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageTargetType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageTargetType(string value) => new StorageTargetType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageTargetType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageTargetType?(string value) => value == null ? null : new StorageTargetType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageTargetType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageTargetType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

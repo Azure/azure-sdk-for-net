@@ -8,47 +8,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Static Site Reset Properties ARM resource.
-    /// Serialized Name: StaticSiteResetPropertiesARMResource
-    /// </summary>
+    /// <summary> Static Site Reset Properties ARM resource. </summary>
     public partial class StaticSiteResetContent : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteResetContent"/>. </summary>
         public StaticSiteResetContent()
@@ -56,48 +25,62 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteResetContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="repositoryToken">
-        /// The token which proves admin privileges to the repository.
-        /// Serialized Name: StaticSiteResetPropertiesARMResource.properties.repositoryToken
-        /// </param>
-        /// <param name="shouldUpdateRepository">
-        /// Determines whether the repository should be updated with the new properties.
-        /// Serialized Name: StaticSiteResetPropertiesARMResource.properties.shouldUpdateRepository
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteResetContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string repositoryToken, bool? shouldUpdateRepository, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> StaticSiteResetPropertiesARMResource resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StaticSiteResetContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StaticSiteResetPropertiesARMResourceProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            RepositoryToken = repositoryToken;
-            ShouldUpdateRepository = shouldUpdateRepository;
+            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// The token which proves admin privileges to the repository.
-        /// Serialized Name: StaticSiteResetPropertiesARMResource.properties.repositoryToken
-        /// </summary>
-        [WirePath("properties.repositoryToken")]
-        public string RepositoryToken { get; set; }
-        /// <summary>
-        /// Determines whether the repository should be updated with the new properties.
-        /// Serialized Name: StaticSiteResetPropertiesARMResource.properties.shouldUpdateRepository
-        /// </summary>
-        [WirePath("properties.shouldUpdateRepository")]
-        public bool? ShouldUpdateRepository { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> StaticSiteResetPropertiesARMResource resource specific properties. </summary>
+        [WirePath("properties")]
+        internal StaticSiteResetPropertiesARMResourceProperties Properties { get; set; }
+
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+
+        /// <summary> The token which proves admin privileges to the repository. </summary>
+        [WirePath("properties.repositoryToken")]
+        public string RepositoryToken
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RepositoryToken;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StaticSiteResetPropertiesARMResourceProperties();
+                }
+                Properties.RepositoryToken = value;
+            }
+        }
+
+        /// <summary> Determines whether the repository should be updated with the new properties. </summary>
+        [WirePath("properties.shouldUpdateRepository")]
+        public bool? ShouldUpdateRepository
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ShouldUpdateRepository;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StaticSiteResetPropertiesARMResourceProperties();
+                }
+                Properties.ShouldUpdateRepository = value;
+            }
+        }
     }
 }

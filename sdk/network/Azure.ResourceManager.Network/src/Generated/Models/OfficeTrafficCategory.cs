@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct OfficeTrafficCategory : IEquatable<OfficeTrafficCategory>
     {
         private readonly string _value;
+        /// <summary> Optimize. </summary>
+        private const string OptimizeValue = "Optimize";
+        /// <summary> OptimizeAndAllow. </summary>
+        private const string OptimizeAndAllowValue = "OptimizeAndAllow";
+        /// <summary> All. </summary>
+        private const string AllValue = "All";
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
 
         /// <summary> Initializes a new instance of <see cref="OfficeTrafficCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OfficeTrafficCategory(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OptimizeValue = "Optimize";
-        private const string OptimizeAndAllowValue = "OptimizeAndAllow";
-        private const string AllValue = "All";
-        private const string NoneValue = "None";
+            _value = value;
+        }
 
         /// <summary> Optimize. </summary>
         public static OfficeTrafficCategory Optimize { get; } = new OfficeTrafficCategory(OptimizeValue);
+
         /// <summary> OptimizeAndAllow. </summary>
         public static OfficeTrafficCategory OptimizeAndAllow { get; } = new OfficeTrafficCategory(OptimizeAndAllowValue);
+
         /// <summary> All. </summary>
         public static OfficeTrafficCategory All { get; } = new OfficeTrafficCategory(AllValue);
+
         /// <summary> None. </summary>
         public static OfficeTrafficCategory None { get; } = new OfficeTrafficCategory(NoneValue);
+
         /// <summary> Determines if two <see cref="OfficeTrafficCategory"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OfficeTrafficCategory left, OfficeTrafficCategory right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OfficeTrafficCategory"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OfficeTrafficCategory left, OfficeTrafficCategory right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OfficeTrafficCategory"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OfficeTrafficCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OfficeTrafficCategory(string value) => new OfficeTrafficCategory(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OfficeTrafficCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OfficeTrafficCategory?(string value) => value == null ? null : new OfficeTrafficCategory(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OfficeTrafficCategory other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OfficeTrafficCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerService
     public enum TransitEncryptionType
     {
         /// <summary> Enable WireGuard encryption. Refer to https://docs.cilium.io/en/latest/security/network/encryption-wireguard/ on use cases and implementation details. </summary>
-        WireGuard,
+        WireGuard = 0,
         /// <summary> Disable Transit encryption. </summary>
-        None
+        None = 1
     }
 }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.AppNetwork.Models;
 using Azure.ResourceManager.Models;
 
@@ -19,6 +18,7 @@ namespace Azure.ResourceManager.AppNetwork
     [ModelReaderWriterBuildable(typeof(AppLinkAvailableVersion))]
     [ModelReaderWriterBuildable(typeof(AppLinkAvailableVersionProperties))]
     [ModelReaderWriterBuildable(typeof(AppLinkConnectivityProfile))]
+    [ModelReaderWriterBuildable(typeof(AppLinkConnectivityProfilePatch))]
     [ModelReaderWriterBuildable(typeof(AppLinkData))]
     [ModelReaderWriterBuildable(typeof(AppLinkListResult))]
     [ModelReaderWriterBuildable(typeof(AppLinkMemberData))]
@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.AppNetwork
     [ModelReaderWriterBuildable(typeof(AppLinkMemberProperties))]
     [ModelReaderWriterBuildable(typeof(AppLinkMemberResource))]
     [ModelReaderWriterBuildable(typeof(AppLinkMemberUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(AppLinkMemberUpgradeProfilePatch))]
     [ModelReaderWriterBuildable(typeof(AppLinkPatch))]
     [ModelReaderWriterBuildable(typeof(AppLinkProperties))]
     [ModelReaderWriterBuildable(typeof(AppLinkReleaseChannelInfo))]
@@ -35,17 +36,20 @@ namespace Azure.ResourceManager.AppNetwork
     [ModelReaderWriterBuildable(typeof(AppLinkUpgradeHistoryProperties))]
     [ModelReaderWriterBuildable(typeof(AppLinkUpgradeProfile))]
     [ModelReaderWriterBuildable(typeof(AppLinkVersionInfo))]
+    [ModelReaderWriterBuildable(typeof(AppNetworkManagedServiceIdentityPatch))]
     [ModelReaderWriterBuildable(typeof(AvailableVersionListResult))]
     [ModelReaderWriterBuildable(typeof(EastWestGatewayProfile))]
+    [ModelReaderWriterBuildable(typeof(EastWestGatewayProfileUpdate))]
     [ModelReaderWriterBuildable(typeof(FullyManagedUpgradeProfile))]
+    [ModelReaderWriterBuildable(typeof(FullyManagedUpgradeProfileUpdate))]
     [ModelReaderWriterBuildable(typeof(FullyManagedVersions))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(Metadata))]
     [ModelReaderWriterBuildable(typeof(MetricsProfile))]
     [ModelReaderWriterBuildable(typeof(ObservabilityProfile))]
     [ModelReaderWriterBuildable(typeof(PrivateConnectProfile))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SelfManagedUpgradeProfile))]
+    [ModelReaderWriterBuildable(typeof(SelfManagedUpgradeProfileUpdate))]
     [ModelReaderWriterBuildable(typeof(SelfManagedVersions))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UpgradeHistoryListResult))]

@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerService
     public enum AgentPoolGpuDriver
     {
         /// <summary> Install driver. </summary>
-        Install,
+        Install = 0,
         /// <summary> Skip driver install. </summary>
-        None
+        None = 1
     }
 }

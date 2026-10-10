@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(ProjectImageVersionResource.ResourceType, out string projectImageVersionApiVersion);
             _imageVersionOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProjectImageVersionResource.ResourceType.Namespace, Diagnostics);
-            _imageVersionOperationGroupRestClient = new ImageVersionOperationGroup(_imageVersionOperationGroupClientDiagnostics, Pipeline, Endpoint, projectImageVersionApiVersion ?? "2026-01-01-preview");
+            _imageVersionOperationGroupRestClient = new ImageVersionOperationGroup(_imageVersionOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, projectImageVersionApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ImageVersionData, ProjectImageVersionResource>(new ImageVersionOperationGroupGetByProjectAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ImageVersionData, ProjectImageVersionResource>(new ImageVersionDataAsync0CollectionResultOfT(
                 _imageVersionOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ImageVersionData, ProjectImageVersionResource>(new ImageVersionOperationGroupGetByProjectCollectionResultOfT(
+            return new PageableWrapper<ImageVersionData, ProjectImageVersionResource>(new ImageVersionData0CollectionResultOfT(
                 _imageVersionOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

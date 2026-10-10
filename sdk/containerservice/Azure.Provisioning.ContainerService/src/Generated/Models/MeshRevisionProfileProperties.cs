@@ -20,18 +20,13 @@ namespace Azure.Provisioning.ContainerService
         {
         }
 
-        /// <summary> Gets or sets the MeshRevisions. </summary>
+        /// <summary> Gets the MeshRevisions. </summary>
         public BicepList<MeshRevision> MeshRevisions
         {
             get
             {
                 Initialize();
                 return _meshRevisions;
-            }
-            set
-            {
-                Initialize();
-                _meshRevisions.Assign(value);
             }
         }
 
@@ -40,6 +35,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _meshRevisions = DefineListProperty<MeshRevision>(nameof(MeshRevisions), new string[] { "meshRevisions" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for MeshRevisionProfileProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

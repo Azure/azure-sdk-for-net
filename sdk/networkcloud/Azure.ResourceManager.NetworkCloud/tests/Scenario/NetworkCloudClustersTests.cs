@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
@@ -10,9 +13,6 @@ using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
@@ -155,8 +155,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["key1"] = "myvalue1",
                     ["key2"] = "myvalue2",
                 },
-                UpdateStrategy = new ClusterUpdateStrategy(ClusterUpdateStrategyType.PauseAfterRack, ValidationThresholdType.PercentSuccess, 100)
+                UpdateStrategy = new ClusterUpdateStrategy
                 {
+                    StrategyType = ClusterUpdateStrategyType.PauseAfterRack,
+                    ThresholdType = ValidationThresholdType.PercentSuccess,
+                    ThresholdValue = 100,
                     MaxUnavailable = 2,
                     WaitTimeMinutes = 0,
                 },

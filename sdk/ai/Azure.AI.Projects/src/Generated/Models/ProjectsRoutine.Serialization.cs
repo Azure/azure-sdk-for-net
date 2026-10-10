@@ -95,7 +95,7 @@ namespace Azure.AI.Projects
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("enabled"u8);
-            writer.WriteBooleanValue(Enabled);
+            writer.WriteBooleanValue(IsEnabled);
             if (Optional.IsCollectionDefined(Triggers))
             {
                 writer.WritePropertyName("triggers"u8);
@@ -112,15 +112,15 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("action"u8);
                 writer.WriteObjectValue(Action, options);
             }
-            if (Optional.IsDefined(CreatedAt))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created_at"u8);
-                writer.WriteNumberValue(CreatedAt.Value, "U");
+                writer.WriteNumberValue(CreatedOn.Value, "U");
             }
-            if (Optional.IsDefined(UpdatedAt))
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated_at"u8);
-                writer.WriteNumberValue(UpdatedAt.Value, "U");
+                writer.WriteNumberValue(UpdatedOn.Value, "U");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -166,11 +166,11 @@ namespace Azure.AI.Projects
             }
             string name = default;
             string description = default;
-            bool enabled = default;
+            bool isEnabled = default;
             IDictionary<string, RoutineTrigger> triggers = default;
             RoutineAction action = default;
-            DateTimeOffset? createdAt = default;
-            DateTimeOffset? updatedAt = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? updatedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -186,7 +186,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("enabled"u8))
                 {
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("triggers"u8))
@@ -218,7 +218,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    createdOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("updated_at"u8))
@@ -227,22 +227,22 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    updatedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    updatedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ProjectsRoutine(
                 name,
                 description,
-                enabled,
+                isEnabled,
                 triggers ?? new ChangeTrackingDictionary<string, RoutineTrigger>(),
                 action,
-                createdAt,
-                updatedAt,
+                createdOn,
+                updatedOn,
                 additionalBinaryDataProperties);
         }
     }

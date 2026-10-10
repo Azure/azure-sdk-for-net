@@ -7,46 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The content link.
-    /// Serialized Name: ContentLink
-    /// </summary>
+    /// <summary> The content link. </summary>
     public partial class WebAppContentLink
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebAppContentLink"/>. </summary>
         public WebAppContentLink()
@@ -54,88 +24,60 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppContentLink"/>. </summary>
-        /// <param name="uri">
-        /// The content link URI.
-        /// Serialized Name: ContentLink.uri
-        /// </param>
-        /// <param name="contentVersion">
-        /// The content version.
-        /// Serialized Name: ContentLink.contentVersion
-        /// </param>
-        /// <param name="contentSize">
-        /// The content size.
-        /// Serialized Name: ContentLink.contentSize
-        /// </param>
-        /// <param name="contentHash">
-        /// The content hash.
-        /// Serialized Name: ContentLink.contentHash
-        /// </param>
-        /// <param name="metadata">
-        /// The metadata.
-        /// Serialized Name: ContentLink.metadata
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppContentLink(Uri uri, string contentVersion, long? contentSize, WebAppContentHash contentHash, BinaryData metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="uri"> The content link URI. </param>
+        /// <param name="contentVersion"> The content version. </param>
+        /// <param name="contentSize"> The content size. </param>
+        /// <param name="contentHash"> The content hash. </param>
+        /// <param name="metadata"> The metadata. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WebAppContentLink(Uri uri, string contentVersion, long? contentSize, WebAppContentHash contentHash, BinaryData metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             ContentVersion = contentVersion;
             ContentSize = contentSize;
             ContentHash = contentHash;
             Metadata = metadata;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// The content link URI.
-        /// Serialized Name: ContentLink.uri
-        /// </summary>
+        /// <summary> The content link URI. </summary>
         [WirePath("uri")]
         public Uri Uri { get; set; }
-        /// <summary>
-        /// The content version.
-        /// Serialized Name: ContentLink.contentVersion
-        /// </summary>
+
+        /// <summary> The content version. </summary>
         [WirePath("contentVersion")]
         public string ContentVersion { get; }
-        /// <summary>
-        /// The content size.
-        /// Serialized Name: ContentLink.contentSize
-        /// </summary>
+
+        /// <summary> The content size. </summary>
         [WirePath("contentSize")]
         public long? ContentSize { get; }
-        /// <summary>
-        /// The content hash.
-        /// Serialized Name: ContentLink.contentHash
-        /// </summary>
+
+        /// <summary> The content hash. </summary>
         [WirePath("contentHash")]
         public WebAppContentHash ContentHash { get; }
+
         /// <summary>
         /// The metadata.
-        /// Serialized Name: ContentLink.metadata
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>

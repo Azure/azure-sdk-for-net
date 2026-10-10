@@ -40,6 +40,10 @@ namespace Azure.Provisioning.MySql
         {
             base.DefineProvisionableProperties();
             _patchStrategy = DefineProperty<MySqlFlexibleServerPatchStrategy>(nameof(PatchStrategy), new string[] { "patchStrategy" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for MaintenancePolicy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

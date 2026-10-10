@@ -125,6 +125,10 @@ namespace Azure.Provisioning.Batch
             _frontendPortRangeStart = DefineProperty<int>(nameof(FrontendPortRangeStart), new string[] { "frontendPortRangeStart" }, isRequired: true);
             _frontendPortRangeEnd = DefineProperty<int>(nameof(FrontendPortRangeEnd), new string[] { "frontendPortRangeEnd" }, isRequired: true);
             _networkSecurityGroupRules = DefineListProperty<BatchNetworkSecurityGroupRule>(nameof(NetworkSecurityGroupRules), new string[] { "networkSecurityGroupRules" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchInboundNatPool that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

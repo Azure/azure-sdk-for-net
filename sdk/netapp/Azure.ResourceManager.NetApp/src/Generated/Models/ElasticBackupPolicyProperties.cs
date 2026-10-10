@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.NetApp.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ElasticBackupPolicyProperties"/>. </summary>
-        public ElasticBackupPolicyProperties()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ElasticBackupPolicyProperties"/>. </summary>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="dailyBackupsToKeep"> Daily backups count to keep. </param>
         /// <param name="weeklyBackupsToKeep"> Weekly backups count to keep. </param>
@@ -39,23 +34,5 @@ namespace Azure.ResourceManager.NetApp.Models
             PolicyState = policyState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Azure lifecycle management. </summary>
-        public NetAppProvisioningState? ProvisioningState { get; }
-
-        /// <summary> Daily backups count to keep. </summary>
-        public int? DailyBackupsToKeep { get; set; }
-
-        /// <summary> Weekly backups count to keep. </summary>
-        public int? WeeklyBackupsToKeep { get; set; }
-
-        /// <summary> Monthly backups count to keep. </summary>
-        public int? MonthlyBackupsToKeep { get; set; }
-
-        /// <summary> The number of volumes currently using this Backup Policy. </summary>
-        public int? AssignedVolumesCount { get; }
-
-        /// <summary> The property to identify whether Backup Policy is enabled or not. </summary>
-        public ElasticBackupPolicyState? PolicyState { get; set; }
     }
 }

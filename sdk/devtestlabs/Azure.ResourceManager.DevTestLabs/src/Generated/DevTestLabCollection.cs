@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             TryGetApiVersion(DevTestLabResource.ResourceType, out string devTestLabApiVersion);
             _labsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabResource.ResourceType.Namespace, Diagnostics);
-            _labsRestClient = new Labs(_labsClientDiagnostics, Pipeline, Endpoint, devTestLabApiVersion ?? "2018-09-15");
+            _labsRestClient = new Labs(_labsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabApiVersion ?? "2018-09-15");
             ValidateResourceId(id);
         }
 
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevTestLabData, DevTestLabResource>(new LabsGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevTestLabData, DevTestLabResource>(new DevTestLabDataAsyncCollectionResultOfT(
                 _labsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevTestLabData, DevTestLabResource>(new LabsGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<DevTestLabData, DevTestLabResource>(new DevTestLabDataCollectionResultOfT(
                 _labsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

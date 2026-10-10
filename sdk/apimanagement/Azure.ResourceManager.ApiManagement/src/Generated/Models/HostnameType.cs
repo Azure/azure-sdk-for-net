@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct HostnameType : IEquatable<HostnameType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="HostnameType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public HostnameType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ProxyValue = "Proxy";
         private const string PortalValue = "Portal";
         private const string ManagementValue = "Management";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string DeveloperPortalValue = "DeveloperPortal";
         private const string ConfigurationApiValue = "ConfigurationApi";
 
-        /// <summary> Proxy. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostnameType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public HostnameType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Proxy. </summary>
         public static HostnameType Proxy { get; } = new HostnameType(ProxyValue);
-        /// <summary> Portal. </summary>
+
+        /// <summary> Gets the Portal. </summary>
         public static HostnameType Portal { get; } = new HostnameType(PortalValue);
-        /// <summary> Management. </summary>
+
+        /// <summary> Gets the Management. </summary>
         public static HostnameType Management { get; } = new HostnameType(ManagementValue);
-        /// <summary> Scm. </summary>
+
+        /// <summary> Gets the Scm. </summary>
         public static HostnameType Scm { get; } = new HostnameType(ScmValue);
-        /// <summary> DeveloperPortal. </summary>
+
+        /// <summary> Gets the DeveloperPortal. </summary>
         public static HostnameType DeveloperPortal { get; } = new HostnameType(DeveloperPortalValue);
-        /// <summary> ConfigurationApi. </summary>
+
+        /// <summary> Gets the ConfigurationApi. </summary>
         public static HostnameType ConfigurationApi { get; } = new HostnameType(ConfigurationApiValue);
+
         /// <summary> Determines if two <see cref="HostnameType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HostnameType left, HostnameType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HostnameType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HostnameType left, HostnameType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HostnameType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HostnameType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HostnameType(string value) => new HostnameType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HostnameType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HostnameType?(string value) => value == null ? null : new HostnameType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HostnameType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HostnameType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

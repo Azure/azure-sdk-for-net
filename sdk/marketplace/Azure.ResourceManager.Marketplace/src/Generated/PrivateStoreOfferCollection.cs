@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Marketplace
         {
             TryGetApiVersion(PrivateStoreOfferResource.ResourceType, out string privateStoreOfferApiVersion);
             _privateStoreCollectionOfferClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", PrivateStoreOfferResource.ResourceType.Namespace, Diagnostics);
-            _privateStoreCollectionOfferRestClient = new PrivateStoreCollectionOffer(_privateStoreCollectionOfferClientDiagnostics, Pipeline, Endpoint, privateStoreOfferApiVersion ?? "2025-01-01");
+            _privateStoreCollectionOfferRestClient = new PrivateStoreCollectionOffer(_privateStoreCollectionOfferClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, privateStoreOfferApiVersion ?? "2025-01-01");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PrivateStoreOfferData, PrivateStoreOfferResource>(new PrivateStoreCollectionOfferGetAllAsyncCollectionResultOfT(_privateStoreCollectionOfferRestClient, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), context, "PrivateStoreOfferCollection.GetAll"), data => new PrivateStoreOfferResource(Client, data));
+            return new AsyncPageableWrapper<PrivateStoreOfferData, PrivateStoreOfferResource>(new PrivateStoreOfferDataAsyncCollectionResultOfT(_privateStoreCollectionOfferRestClient, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), context, "PrivateStoreOfferCollection.GetAll"), data => new PrivateStoreOfferResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PrivateStoreOfferData, PrivateStoreOfferResource>(new PrivateStoreCollectionOfferGetAllCollectionResultOfT(_privateStoreCollectionOfferRestClient, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), context, "PrivateStoreOfferCollection.GetAll"), data => new PrivateStoreOfferResource(Client, data));
+            return new PageableWrapper<PrivateStoreOfferData, PrivateStoreOfferResource>(new PrivateStoreOfferDataCollectionResultOfT(_privateStoreCollectionOfferRestClient, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), context, "PrivateStoreOfferCollection.GetAll"), data => new PrivateStoreOfferResource(Client, data));
         }
 
         /// <summary>

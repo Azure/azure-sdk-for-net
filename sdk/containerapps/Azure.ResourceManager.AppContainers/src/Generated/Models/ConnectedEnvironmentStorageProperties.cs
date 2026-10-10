@@ -26,14 +26,12 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="provisioningState"> Provisioning state of the storage. </param>
         /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
         /// <param name="azureFile"> Azure file properties. </param>
-        /// <param name="smb"> SMB storage properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedEnvironmentStorageProperties(ConnectedEnvironmentStorageProvisioningState? provisioningState, string deploymentErrors, ContainerAppAzureFileProperties azureFile, SmbStorage smb, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectedEnvironmentStorageProperties(ConnectedEnvironmentStorageProvisioningState? provisioningState, string deploymentErrors, ContainerAppAzureFileProperties azureFile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DeploymentErrors = deploymentErrors;
             AzureFile = azureFile;
-            Smb = smb;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -48,9 +46,5 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Azure file properties. </summary>
         [WirePath("azureFile")]
         public ContainerAppAzureFileProperties AzureFile { get; set; }
-
-        /// <summary> SMB storage properties. </summary>
-        [WirePath("smb")]
-        public SmbStorage Smb { get; set; }
     }
 }

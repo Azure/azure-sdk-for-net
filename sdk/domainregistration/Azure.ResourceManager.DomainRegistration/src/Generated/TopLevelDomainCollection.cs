@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DomainRegistration
         {
             TryGetApiVersion(TopLevelDomainResource.ResourceType, out string topLevelDomainApiVersion);
             _topLevelDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DomainRegistration", TopLevelDomainResource.ResourceType.Namespace, Diagnostics);
-            _topLevelDomainsRestClient = new TopLevelDomains(_topLevelDomainsClientDiagnostics, Pipeline, Endpoint, topLevelDomainApiVersion ?? "2024-11-01");
+            _topLevelDomainsRestClient = new TopLevelDomains(_topLevelDomainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, topLevelDomainApiVersion ?? "2024-11-01");
             ValidateResourceId(id);
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DomainRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TopLevelDomainData, TopLevelDomainResource>(new TopLevelDomainsGetAllAsyncCollectionResultOfT(_topLevelDomainsRestClient, Id.SubscriptionId, context, "TopLevelDomainCollection.GetAll"), data => new TopLevelDomainResource(Client, data));
+            return new AsyncPageableWrapper<TopLevelDomainData, TopLevelDomainResource>(new TopLevelDomainDataAsyncCollectionResultOfT(_topLevelDomainsRestClient, Id.SubscriptionId, context, "TopLevelDomainCollection.GetAll"), data => new TopLevelDomainResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DomainRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TopLevelDomainData, TopLevelDomainResource>(new TopLevelDomainsGetAllCollectionResultOfT(_topLevelDomainsRestClient, Id.SubscriptionId, context, "TopLevelDomainCollection.GetAll"), data => new TopLevelDomainResource(Client, data));
+            return new PageableWrapper<TopLevelDomainData, TopLevelDomainResource>(new TopLevelDomainDataCollectionResultOfT(_topLevelDomainsRestClient, Id.SubscriptionId, context, "TopLevelDomainCollection.GetAll"), data => new TopLevelDomainResource(Client, data));
         }
 
         /// <summary>

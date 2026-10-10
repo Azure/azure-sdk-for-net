@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(DevCenterCatalogTaskResource.ResourceType, out string devCenterCatalogTaskApiVersion);
             _customizationTasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterCatalogTaskResource.ResourceType.Namespace, Diagnostics);
-            _customizationTasksRestClient = new CustomizationTasks(_customizationTasksClientDiagnostics, Pipeline, Endpoint, devCenterCatalogTaskApiVersion ?? "2026-01-01-preview");
+            _customizationTasksRestClient = new CustomizationTasks(_customizationTasksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterCatalogTaskApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevCenterCatalogTaskData, DevCenterCatalogTaskResource>(new CustomizationTasksGetByCatalogAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevCenterCatalogTaskData, DevCenterCatalogTaskResource>(new DevCenterCatalogTaskDataAsyncCollectionResultOfT(
                 _customizationTasksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevCenterCatalogTaskData, DevCenterCatalogTaskResource>(new CustomizationTasksGetByCatalogCollectionResultOfT(
+            return new PageableWrapper<DevCenterCatalogTaskData, DevCenterCatalogTaskResource>(new DevCenterCatalogTaskDataCollectionResultOfT(
                 _customizationTasksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

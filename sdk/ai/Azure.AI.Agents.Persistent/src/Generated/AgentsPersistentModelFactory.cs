@@ -17,7 +17,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// An abstract representation of an input tool definition that an agent can use.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.CodeInterpreterToolDefinition"/>, <see cref="Persistent.FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="Persistent.BingGroundingToolDefinition"/>, <see cref="Persistent.MicrosoftFabricToolDefinition"/>, <see cref="Persistent.SharepointToolDefinition"/>, <see cref="Persistent.AzureAISearchToolDefinition"/>, <see cref="Persistent.OpenApiToolDefinition"/>, <see cref="Persistent.BingCustomSearchToolDefinition"/>, <see cref="Persistent.ConnectedAgentToolDefinition"/>, <see cref="Persistent.DeepResearchToolDefinition"/>, <see cref="Persistent.MCPToolDefinition"/>, <see cref="Persistent.ComputerUseToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, and <see cref="Persistent.BrowserAutomationToolDefinition"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="Persistent.BingCustomSearchToolDefinition"/>, <see cref="Persistent.BingGroundingToolDefinition"/>, <see cref="Persistent.BrowserAutomationToolDefinition"/>, <see cref="Persistent.CodeInterpreterToolDefinition"/>, <see cref="Persistent.ComputerUseToolDefinition"/>, <see cref="Persistent.ConnectedAgentToolDefinition"/>, <see cref="Persistent.DeepResearchToolDefinition"/>, <see cref="Persistent.FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="Persistent.MCPToolDefinition"/>, <see cref="Persistent.MicrosoftFabricToolDefinition"/>, <see cref="Persistent.OpenApiToolDefinition"/>, and <see cref="Persistent.SharepointToolDefinition"/>.
         /// </summary>
         /// <param name="type"> The object type. </param>
         /// <returns> A new <see cref="Persistent.ToolDefinition"/> instance for mocking. </returns>
@@ -660,7 +660,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// Defines a single content block when creating a message. The 'type' field determines whether it is text, an image file, or an external image URL, etc.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.MessageInputTextBlock"/>, <see cref="Persistent.MessageInputImageFileBlock"/>, and <see cref="Persistent.MessageInputImageUriBlock"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.MessageInputImageFileBlock"/>, <see cref="Persistent.MessageInputImageUriBlock"/>, and <see cref="Persistent.MessageInputTextBlock"/>.
         /// </summary>
         /// <param name="type"> Specifies which kind of content block this is (text, image_file, image_url, etc.). </param>
         /// <returns> A new <see cref="Persistent.MessageInputContentBlock"/> instance for mocking. </returns>
@@ -699,7 +699,7 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> A new <see cref="Persistent.MessageInputImageUriBlock"/> instance for mocking. </returns>
         public static MessageInputImageUriBlock MessageInputImageUriBlock(MessageImageUriParam imageUrl = default)
         {
-            return new MessageInputImageUriBlock(MessageBlockType.ImageUrl, additionalBinaryDataProperties: null, imageUrl);
+            return new MessageInputImageUriBlock(MessageBlockType.ImageUri, additionalBinaryDataProperties: null, imageUrl);
         }
 
         /// <summary> Defines how an external image URL is referenced when creating an image-URL block. </summary>
@@ -824,7 +824,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// An abstract representation of a required action for an agent thread run to continue.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SubmitToolOutputsAction"/> and <see cref="Persistent.SubmitToolApprovalAction"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.SubmitToolApprovalAction"/> and <see cref="SubmitToolOutputsAction"/>.
         /// </summary>
         /// <param name="type"> The object type. </param>
         /// <returns> A new <see cref="Persistent.RequiredAction"/> instance for mocking. </returns>
@@ -835,7 +835,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// An abstract representation of a tool invocation needed by the model to continue a run.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RequiredFunctionToolCall"/>, <see cref="Persistent.RequiredMcpToolCall"/>, and <see cref="Persistent.RequiredComputerUseToolCall"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.RequiredComputerUseToolCall"/>, <see cref="RequiredFunctionToolCall"/>, and <see cref="Persistent.RequiredMcpToolCall"/>.
         /// </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
@@ -1116,7 +1116,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// An abstract representation of a single item of thread message content.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageTextContent"/> and <see cref="MessageImageFileContent"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageImageFileContent"/> and <see cref="MessageTextContent"/>.
         /// </summary>
         /// <param name="type"> The object type. </param>
         /// <returns> A new <see cref="Persistent.MessageContent"/> instance for mocking. </returns>
@@ -1127,7 +1127,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// An abstract representation of an annotation to text thread message content.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.MessageTextUriCitationAnnotation"/>, <see cref="MessageTextFileCitationAnnotation"/>, and <see cref="MessageTextFilePathAnnotation"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageTextFileCitationAnnotation"/>, <see cref="MessageTextFilePathAnnotation"/>, and <see cref="Persistent.MessageTextUriCitationAnnotation"/>.
         /// </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="text"> The textual content associated with this text annotation item. </param>
@@ -1165,7 +1165,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// The data provided during a tool outputs submission to resolve pending tool calls and allow the model to continue.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.ToolOutput"/> and <see cref="Persistent.ComputerToolOutput"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.ComputerToolOutput"/> and <see cref="Persistent.ToolOutput"/>.
         /// </summary>
         /// <param name="type"> The object type for the tool output. Defaults to `function_call_output` if not provided. </param>
         /// <param name="toolCallId"> The ID of the tool call being resolved, as provided in the tool calls of a required action from a run. </param>
@@ -1260,7 +1260,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// An abstract representation of the details for a run step.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.RunStepMessageCreationDetails"/>, <see cref="Persistent.RunStepToolCallDetails"/>, and <see cref="Persistent.RunStepActivityDetails"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.RunStepActivityDetails"/>, <see cref="Persistent.RunStepMessageCreationDetails"/>, and <see cref="Persistent.RunStepToolCallDetails"/>.
         /// </summary>
         /// <param name="type"> The object type. </param>
         /// <returns> A new <see cref="Persistent.RunStepDetails"/> instance for mocking. </returns>
@@ -1297,7 +1297,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// An abstract representation of a detailed tool call as recorded within a run step for an existing run.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepFileSearchToolCall"/>, <see cref="Persistent.RunStepBingGroundingToolCall"/>, <see cref="Persistent.RunStepAzureAISearchToolCall"/>, <see cref="Persistent.RunStepBrowserAutomationToolCall"/>, <see cref="Persistent.RunStepMcpToolCall"/>, <see cref="Persistent.RunStepComputerUseToolCall"/>, <see cref="Persistent.RunStepSharepointToolCall"/>, <see cref="Persistent.RunStepMicrosoftFabricToolCall"/>, <see cref="Persistent.RunStepBingCustomSearchToolCall"/>, <see cref="Persistent.RunStepAzureFunctionToolCall"/>, <see cref="RunStepFunctionToolCall"/>, <see cref="Persistent.RunStepOpenAPIToolCall"/>, <see cref="Persistent.RunStepDeepResearchToolCall"/>, and <see cref="Persistent.RunStepConnectedAgentToolCall"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.RunStepAzureAISearchToolCall"/>, <see cref="Persistent.RunStepAzureFunctionToolCall"/>, <see cref="Persistent.RunStepBingCustomSearchToolCall"/>, <see cref="Persistent.RunStepBingGroundingToolCall"/>, <see cref="Persistent.RunStepBrowserAutomationToolCall"/>, <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepComputerUseToolCall"/>, <see cref="Persistent.RunStepConnectedAgentToolCall"/>, <see cref="Persistent.RunStepDeepResearchToolCall"/>, <see cref="Persistent.RunStepFileSearchToolCall"/>, <see cref="RunStepFunctionToolCall"/>, <see cref="Persistent.RunStepMcpToolCall"/>, <see cref="Persistent.RunStepMicrosoftFabricToolCall"/>, <see cref="Persistent.RunStepOpenAPIToolCall"/>, and <see cref="Persistent.RunStepSharepointToolCall"/>.
         /// </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
@@ -1309,7 +1309,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// An abstract representation of an emitted output from a code interpreter tool.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.RunStepCodeInterpreterLogOutput"/> and <see cref="Persistent.RunStepCodeInterpreterImageOutput"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.RunStepCodeInterpreterImageOutput"/> and <see cref="Persistent.RunStepCodeInterpreterLogOutput"/>.
         /// </summary>
         /// <param name="type"> The object type. </param>
         /// <returns> A new <see cref="Persistent.RunStepCodeInterpreterToolCallOutput"/> instance for mocking. </returns>
@@ -1943,7 +1943,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// The abstract base representation of a streamed text content part's text annotation.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.MessageDeltaTextUriCitationAnnotation"/>, <see cref="Persistent.MessageDeltaTextFileCitationAnnotation"/>, and <see cref="Persistent.MessageDeltaTextFilePathAnnotation"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.MessageDeltaTextFileCitationAnnotation"/>, <see cref="Persistent.MessageDeltaTextFilePathAnnotation"/>, and <see cref="Persistent.MessageDeltaTextUriCitationAnnotation"/>.
         /// </summary>
         /// <param name="index"> The index of the annotation within a text content part. </param>
         /// <param name="type"> The type of the text content annotation. </param>
@@ -2083,7 +2083,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// The abstract base representation of a streaming run step tool call's Code Interpreter tool output.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.RunStepDeltaCodeInterpreterLogOutput"/> and <see cref="Persistent.RunStepDeltaCodeInterpreterImageOutput"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.RunStepDeltaCodeInterpreterImageOutput"/> and <see cref="Persistent.RunStepDeltaCodeInterpreterLogOutput"/>.
         /// </summary>
         /// <param name="index"> The index of the output in the streaming run step tool call's Code Interpreter outputs array. </param>
         /// <param name="type"> The type of the streaming run step tool call's Code Interpreter output. </param>
@@ -2129,7 +2129,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// Represents a single run step detail item in a streaming run step's delta payload.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.RunStepDeltaMessageCreation"/>, <see cref="Persistent.RunStepDeltaToolCallObject"/>, <see cref="Persistent.RunStepDeltaMCPObject"/>, and <see cref="Persistent.RunStepDeltaOpenAPIObject"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.RunStepDeltaMCPObject"/>, <see cref="Persistent.RunStepDeltaMessageCreation"/>, <see cref="Persistent.RunStepDeltaOpenAPIObject"/>, and <see cref="Persistent.RunStepDeltaToolCallObject"/>.
         /// </summary>
         /// <param name="type"> The object type for the run step detail object. </param>
         /// <returns> A new <see cref="Persistent.RunStepDeltaDetail"/> instance for mocking. </returns>
@@ -2158,7 +2158,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// The abstract base representation of a single tool call within a streaming run step's delta tool call details.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.RunStepDeltaMcpToolCall"/>, <see cref="Persistent.RunStepDeltaOpenAPIToolCall"/>, <see cref="Persistent.RunStepDeltaConnectedAgentToolCall"/>, <see cref="Persistent.RunStepDeltaFunctionToolCall"/>, <see cref="Persistent.RunStepDeltaFileSearchToolCall"/>, <see cref="Persistent.RunStepDeltaCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepDeltaBingGroundingToolCall"/>, <see cref="Persistent.RunStepDeltaCustomBingGroundingToolCall"/>, <see cref="Persistent.RunStepDeltaAzureFunctionToolCall"/>, <see cref="Persistent.RunStepDeltaDeepResearchToolCall"/>, <see cref="Persistent.RunStepDeltaAzureAISearchToolCall"/>, <see cref="Persistent.RunStepDeltaComputerUseToolCall"/>, <see cref="Persistent.RunStepDeltaMicrosoftFabricToolCall"/>, and <see cref="Persistent.RunStepDeltaSharepointToolCall"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.RunStepDeltaAzureAISearchToolCall"/>, <see cref="Persistent.RunStepDeltaAzureFunctionToolCall"/>, <see cref="Persistent.RunStepDeltaBingGroundingToolCall"/>, <see cref="Persistent.RunStepDeltaCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepDeltaComputerUseToolCall"/>, <see cref="Persistent.RunStepDeltaConnectedAgentToolCall"/>, <see cref="Persistent.RunStepDeltaCustomBingGroundingToolCall"/>, <see cref="Persistent.RunStepDeltaDeepResearchToolCall"/>, <see cref="Persistent.RunStepDeltaFileSearchToolCall"/>, <see cref="Persistent.RunStepDeltaFunctionToolCall"/>, <see cref="Persistent.RunStepDeltaMcpToolCall"/>, <see cref="Persistent.RunStepDeltaMicrosoftFabricToolCall"/>, <see cref="Persistent.RunStepDeltaOpenAPIToolCall"/>, and <see cref="Persistent.RunStepDeltaSharepointToolCall"/>.
         /// </summary>
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>

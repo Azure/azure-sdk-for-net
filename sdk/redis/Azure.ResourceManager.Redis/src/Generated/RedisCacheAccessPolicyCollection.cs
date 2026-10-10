@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Redis
         {
             TryGetApiVersion(RedisCacheAccessPolicyResource.ResourceType, out string redisCacheAccessPolicyApiVersion);
             _redisCacheAccessPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Redis", RedisCacheAccessPolicyResource.ResourceType.Namespace, Diagnostics);
-            _redisCacheAccessPoliciesRestClient = new RedisCacheAccessPolicies(_redisCacheAccessPoliciesClientDiagnostics, Pipeline, Endpoint, redisCacheAccessPolicyApiVersion ?? "2025-08-01-preview");
+            _redisCacheAccessPoliciesRestClient = new RedisCacheAccessPolicies(_redisCacheAccessPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, redisCacheAccessPolicyApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Redis
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RedisCacheAccessPolicyData, RedisCacheAccessPolicyResource>(new RedisCacheAccessPoliciesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RedisCacheAccessPolicyData, RedisCacheAccessPolicyResource>(new RedisCacheAccessPolicyDataAsyncCollectionResultOfT(
                 _redisCacheAccessPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Redis
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RedisCacheAccessPolicyData, RedisCacheAccessPolicyResource>(new RedisCacheAccessPoliciesGetAllCollectionResultOfT(
+            return new PageableWrapper<RedisCacheAccessPolicyData, RedisCacheAccessPolicyResource>(new RedisCacheAccessPolicyDataCollectionResultOfT(
                 _redisCacheAccessPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             TryGetApiVersion(MySqlFlexibleServerBackupResource.ResourceType, out string mySqlFlexibleServerBackupApiVersion);
             _backupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", MySqlFlexibleServerBackupResource.ResourceType.Namespace, Diagnostics);
-            _backupsRestClient = new Backups(_backupsClientDiagnostics, Pipeline, Endpoint, mySqlFlexibleServerBackupApiVersion ?? "2024-12-30");
+            _backupsRestClient = new Backups(_backupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlFlexibleServerBackupApiVersion ?? "2024-12-30");
             ValidateResourceId(id);
         }
 
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MySqlFlexibleServerBackupData, MySqlFlexibleServerBackupResource>(new BackupsGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MySqlFlexibleServerBackupData, MySqlFlexibleServerBackupResource>(new MySqlFlexibleServerBackupDataAsyncCollectionResultOfT(
                 _backupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MySqlFlexibleServerBackupData, MySqlFlexibleServerBackupResource>(new BackupsGetByServerCollectionResultOfT(
+            return new PageableWrapper<MySqlFlexibleServerBackupData, MySqlFlexibleServerBackupResource>(new MySqlFlexibleServerBackupDataCollectionResultOfT(
                 _backupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

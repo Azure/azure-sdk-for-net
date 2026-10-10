@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             TryGetApiVersion(ManagedHsmPrivateEndpointConnectionResource.ResourceType, out string managedHsmPrivateEndpointConnectionApiVersion);
             _mhsmPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ManagedHsmPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _mhsmPrivateEndpointConnectionsRestClient = new MhsmPrivateEndpointConnections(_mhsmPrivateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, managedHsmPrivateEndpointConnectionApiVersion ?? "2026-02-01");
+            _mhsmPrivateEndpointConnectionsRestClient = new MhsmPrivateEndpointConnections(_mhsmPrivateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedHsmPrivateEndpointConnectionApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedHsmPrivateEndpointConnectionData, ManagedHsmPrivateEndpointConnectionResource>(new MhsmPrivateEndpointConnectionsGetByResourceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ManagedHsmPrivateEndpointConnectionData, ManagedHsmPrivateEndpointConnectionResource>(new ManagedHsmPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _mhsmPrivateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedHsmPrivateEndpointConnectionData, ManagedHsmPrivateEndpointConnectionResource>(new MhsmPrivateEndpointConnectionsGetByResourceCollectionResultOfT(
+            return new PageableWrapper<ManagedHsmPrivateEndpointConnectionData, ManagedHsmPrivateEndpointConnectionResource>(new ManagedHsmPrivateEndpointConnectionDataCollectionResultOfT(
                 _mhsmPrivateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

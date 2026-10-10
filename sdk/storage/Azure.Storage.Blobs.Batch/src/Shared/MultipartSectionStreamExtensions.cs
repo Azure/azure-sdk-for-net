@@ -16,6 +16,7 @@ namespace Azure.Core.Http.Multipart
     /// <summary>
     /// Various extension methods for dealing with the section body stream
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     internal static class MultipartSectionStreamExtensions
     {
         /// <summary>

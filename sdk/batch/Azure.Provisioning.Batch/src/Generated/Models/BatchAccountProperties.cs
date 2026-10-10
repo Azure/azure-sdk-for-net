@@ -237,6 +237,10 @@ namespace Azure.Provisioning.Batch
             _poolQuota = DefineProperty<int>(nameof(PoolQuota), new string[] { "poolQuota" }, isOutput: true);
             _activeJobAndJobScheduleQuota = DefineProperty<int>(nameof(ActiveJobAndJobScheduleQuota), new string[] { "activeJobAndJobScheduleQuota" }, isOutput: true);
             _allowedAuthenticationModes = DefineListProperty<BatchAuthenticationMode>(nameof(AllowedAuthenticationModes), new string[] { "allowedAuthenticationModes" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchAccountProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

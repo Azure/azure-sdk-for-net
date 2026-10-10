@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Maps.Mocking
 
         private ClientDiagnostics AccountsClientDiagnostics => _accountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maps.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Accounts AccountsRestClient => _accountsRestClient ??= new Accounts(AccountsClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
+        private Accounts AccountsRestClient => _accountsRestClient ??= new Accounts(AccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
 
         /// <summary>
         /// Get all Maps Accounts in a Subscription
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Maps.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MapsAccountData, MapsAccountResource>(new AccountsGetBySubscriptionAsyncCollectionResultOfT(AccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMapsSubscriptionResource.GetMapsAccounts"), data => new MapsAccountResource(Client, data));
+            return new AsyncPageableWrapper<MapsAccountData, MapsAccountResource>(new MapsAccountDataAsync0CollectionResultOfT(AccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMapsSubscriptionResource.GetMapsAccounts"), data => new MapsAccountResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Maps.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MapsAccountData, MapsAccountResource>(new AccountsGetBySubscriptionCollectionResultOfT(AccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMapsSubscriptionResource.GetMapsAccounts"), data => new MapsAccountResource(Client, data));
+            return new PageableWrapper<MapsAccountData, MapsAccountResource>(new MapsAccountData0CollectionResultOfT(AccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMapsSubscriptionResource.GetMapsAccounts"), data => new MapsAccountResource(Client, data));
         }
     }
 }

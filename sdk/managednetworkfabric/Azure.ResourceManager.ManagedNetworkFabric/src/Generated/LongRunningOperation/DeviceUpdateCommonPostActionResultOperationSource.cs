@@ -8,23 +8,36 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class DeviceUpdateCommonPostActionResultOperationSource : IOperationSource<DeviceUpdateCommonPostActionResult>
+    /// <summary></summary>
+    internal partial class DeviceUpdateCommonPostActionResultOperationSource : IOperationSource<DeviceUpdateCommonPostActionResult>
     {
-        DeviceUpdateCommonPostActionResult IOperationSource<DeviceUpdateCommonPostActionResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal DeviceUpdateCommonPostActionResultOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeviceUpdateCommonPostActionResult.DeserializeDeviceUpdateCommonPostActionResult(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        DeviceUpdateCommonPostActionResult IOperationSource<DeviceUpdateCommonPostActionResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return DeviceUpdateCommonPostActionResult.DeserializeDeviceUpdateCommonPostActionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DeviceUpdateCommonPostActionResult> IOperationSource<DeviceUpdateCommonPostActionResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return DeviceUpdateCommonPostActionResult.DeserializeDeviceUpdateCommonPostActionResult(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return DeviceUpdateCommonPostActionResult.DeserializeDeviceUpdateCommonPostActionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

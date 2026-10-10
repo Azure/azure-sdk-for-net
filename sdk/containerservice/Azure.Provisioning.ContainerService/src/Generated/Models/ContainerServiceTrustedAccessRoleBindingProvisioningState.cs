@@ -11,14 +11,14 @@ namespace Azure.Provisioning.ContainerService
     public enum ContainerServiceTrustedAccessRoleBindingProvisioningState
     {
         /// <summary> Trusted access role binding provisioning was canceled. </summary>
-        Canceled,
+        Canceled = 0,
         /// <summary> Trusted access role binding is being deleted. </summary>
-        Deleting,
+        Deleting = 1,
         /// <summary> Trusted access role binding provisioning failed. </summary>
-        Failed,
+        Failed = 2,
         /// <summary> Trusted access role binding provisioning succeeded. </summary>
-        Succeeded,
+        Succeeded = 3,
         /// <summary> Trusted access role binding is being updated. </summary>
-        Updating
+        Updating = 4
     }
 }

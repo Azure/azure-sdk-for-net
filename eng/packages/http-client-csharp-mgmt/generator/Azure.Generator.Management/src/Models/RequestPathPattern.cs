@@ -17,6 +17,7 @@ namespace Azure.Generator.Management.Models
     {
         private const string ProviderPath = "/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}";
         private const string FeaturePath = "/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features";
+        private static readonly ResourceTypePattern EmptyResourceType = new([]);
 
         /// <summary> The request path pattern for a management group resource. </summary>
         public static readonly RequestPathPattern ManagementGroup = new("/providers/Microsoft.Management/managementGroups/{managementGroupId}");
@@ -48,8 +49,9 @@ namespace Azure.Generator.Management.Models
             };
         }
 
-        private string _path;
-        private IReadOnlyList<RequestPathSegment> _segments;
+        private readonly string _path;
+        private readonly IReadOnlyList<RequestPathSegment> _segments;
+        private ResourceTypePattern? _resourceType;
 
         /// <summary> Initializes a new instance of <see cref="RequestPathPattern"/> from a raw path string. </summary>
         /// <param name="path">The raw request path string.</param>
@@ -77,6 +79,43 @@ namespace Azure.Generator.Management.Models
 
         /// <summary> Gets the serialized string representation of this request path. </summary>
         public string SerializedPath => _path;
+
+        /// <summary> Gets the ARM resource type represented by this request path. </summary>
+        public ResourceTypePattern ResourceType => _resourceType ??= BuildResourceType();
+
+        private ResourceTypePattern BuildResourceType()
+        {
+            var providerIndex = -1;
+            for (int i = Count - 1; i >= 0; i--)
+            {
+                if (_segments[i].IsProvidersSegment)
+                {
+                    providerIndex = i;
+                    break;
+                }
+            }
+
+            if (providerIndex < 0)
+            {
+                return EmptyResourceType;
+            }
+
+            if (providerIndex + 1 >= Count)
+            {
+                ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                    code: "general-warning",
+                    message: $"The request path '{_path}' does not contain a resource provider namespace segment.");
+                return EmptyResourceType;
+            }
+
+            var result = new List<RequestPathSegment>();
+            result.Add(_segments[providerIndex + 1]);
+            for (int i = providerIndex + 2; i < Count; i += 2)
+            {
+                result.Add(_segments[i]);
+            }
+            return new ResourceTypePattern(result);
+        }
 
         /// <summary> Gets the <see cref="RequestPathSegment"/> at the specified index. </summary>
         /// <param name="index">The zero-based index of the segment to get.</param>
@@ -213,7 +252,15 @@ namespace Azure.Generator.Management.Models
         public override bool Equals(object? obj) => obj is RequestPathPattern other && Equals(other);
 
         /// <inheritdoc />
-        public override int GetHashCode() => _path.GetHashCode();
+        public override int GetHashCode()
+        {
+            var hash = new HashCode();
+            foreach (var segment in _segments)
+            {
+                hash.Add(segment);
+            }
+            return hash.ToHashCode();
+        }
 
         /// <inheritdoc />
         public override string ToString() => _path;

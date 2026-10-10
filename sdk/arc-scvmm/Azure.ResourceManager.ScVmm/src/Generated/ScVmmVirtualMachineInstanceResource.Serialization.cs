@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ScVmm
 {
+    /// <summary></summary>
     public partial class ScVmmVirtualMachineInstanceResource : IJsonModel<ScVmmVirtualMachineInstanceData>
     {
-        private static ScVmmVirtualMachineInstanceData s_dataDeserializationInstance;
-        private static ScVmmVirtualMachineInstanceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ScVmmVirtualMachineInstanceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ScVmmVirtualMachineInstanceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ScVmmVirtualMachineInstanceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ScVmmVirtualMachineInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ScVmmVirtualMachineInstanceData>)Data).Write(writer, options);
 
-        ScVmmVirtualMachineInstanceData IJsonModel<ScVmmVirtualMachineInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScVmmVirtualMachineInstanceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScVmmVirtualMachineInstanceData IJsonModel<ScVmmVirtualMachineInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ScVmmVirtualMachineInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScVmmVirtualMachineInstanceData>(Data, options, AzureResourceManagerScVmmContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ScVmmVirtualMachineInstanceData IPersistableModel<ScVmmVirtualMachineInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScVmmVirtualMachineInstanceData>(data, options, AzureResourceManagerScVmmContext.Default);
 
-        string IPersistableModel<ScVmmVirtualMachineInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScVmmVirtualMachineInstanceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ScVmmVirtualMachineInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

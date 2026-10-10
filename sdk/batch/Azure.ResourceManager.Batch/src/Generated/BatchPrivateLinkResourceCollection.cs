@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Batch
         {
             TryGetApiVersion(BatchPrivateLinkResource.ResourceType, out string batchPrivateLinkResourceApiVersion);
             _privateLinkResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Batch", BatchPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkResourceRestClient = new PrivateLinkResource(_privateLinkResourceClientDiagnostics, Pipeline, Endpoint, batchPrivateLinkResourceApiVersion ?? "2025-06-01");
+            _privateLinkResourceRestClient = new PrivateLinkResource(_privateLinkResourceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, batchPrivateLinkResourceApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Batch
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BatchPrivateLinkResourceData, BatchPrivateLinkResource>(new PrivateLinkResourceGetByBatchAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BatchPrivateLinkResourceData, BatchPrivateLinkResource>(new BatchPrivateLinkResourceDataAsyncCollectionResultOfT(
                 _privateLinkResourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Batch
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BatchPrivateLinkResourceData, BatchPrivateLinkResource>(new PrivateLinkResourceGetByBatchAccountCollectionResultOfT(
+            return new PageableWrapper<BatchPrivateLinkResourceData, BatchPrivateLinkResource>(new BatchPrivateLinkResourceDataCollectionResultOfT(
                 _privateLinkResourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

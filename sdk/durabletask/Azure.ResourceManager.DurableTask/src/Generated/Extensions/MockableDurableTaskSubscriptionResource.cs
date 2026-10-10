@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DurableTask.Mocking
 
         private ClientDiagnostics SchedulersClientDiagnostics => _schedulersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DurableTask.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Schedulers SchedulersRestClient => _schedulersRestClient ??= new Schedulers(SchedulersClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
+        private Schedulers SchedulersRestClient => _schedulersRestClient ??= new Schedulers(SchedulersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-02-01");
 
         /// <summary>
         /// List Schedulers by subscription
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DurableTask.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DurableTaskSchedulerData, DurableTaskSchedulerResource>(new SchedulersGetBySubscriptionAsyncCollectionResultOfT(SchedulersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDurableTaskSubscriptionResource.GetDurableTaskSchedulers"), data => new DurableTaskSchedulerResource(Client, data));
+            return new AsyncPageableWrapper<DurableTaskSchedulerData, DurableTaskSchedulerResource>(new DurableTaskSchedulerDataAsync0CollectionResultOfT(SchedulersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDurableTaskSubscriptionResource.GetDurableTaskSchedulers"), data => new DurableTaskSchedulerResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DurableTask.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DurableTaskSchedulerData, DurableTaskSchedulerResource>(new SchedulersGetBySubscriptionCollectionResultOfT(SchedulersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDurableTaskSubscriptionResource.GetDurableTaskSchedulers"), data => new DurableTaskSchedulerResource(Client, data));
+            return new PageableWrapper<DurableTaskSchedulerData, DurableTaskSchedulerResource>(new DurableTaskSchedulerData0CollectionResultOfT(SchedulersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDurableTaskSubscriptionResource.GetDurableTaskSchedulers"), data => new DurableTaskSchedulerResource(Client, data));
         }
     }
 }

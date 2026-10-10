@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             TryGetApiVersion(MaccResource.ResourceType, out string maccApiVersion);
             _maccsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", MaccResource.ResourceType.Namespace, Diagnostics);
-            _maccsRestClient = new Maccs(_maccsClientDiagnostics, Pipeline, Endpoint, maccApiVersion ?? "2025-12-01-preview");
+            _maccsRestClient = new Maccs(_maccsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, maccApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MaccData, MaccResource>(new MaccsGetByResourceGroupAsyncCollectionResultOfT(_maccsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MaccCollection.GetAll"), data => new MaccResource(Client, data));
+            return new AsyncPageableWrapper<MaccData, MaccResource>(new MaccDataAsyncCollectionResultOfT(_maccsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MaccCollection.GetAll"), data => new MaccResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MaccData, MaccResource>(new MaccsGetByResourceGroupCollectionResultOfT(_maccsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MaccCollection.GetAll"), data => new MaccResource(Client, data));
+            return new PageableWrapper<MaccData, MaccResource>(new MaccDataCollectionResultOfT(_maccsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MaccCollection.GetAll"), data => new MaccResource(Client, data));
         }
 
         /// <summary>

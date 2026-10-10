@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
 {
     /// <summary>
     /// The generic properties of a target.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SqlDBSingleDatabaseTargetProperties"/>, <see cref="SqlDBElasticPoolTargetProperties"/>, and <see cref="SqlMITargetProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SqlDBElasticPoolTargetProperties"/>, <see cref="SqlDBSingleDatabaseTargetProperties"/>, and <see cref="SqlMITargetProperties"/>.
     /// </summary>
     public abstract partial class DatabaseWatcherTargetProperties
     {

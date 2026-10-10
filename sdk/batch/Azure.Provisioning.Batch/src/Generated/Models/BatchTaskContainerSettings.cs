@@ -108,6 +108,10 @@ namespace Azure.Provisioning.Batch
             _registry = DefineModelProperty<BatchVmContainerRegistry>(nameof(Registry), new string[] { "registry" });
             _workingDirectory = DefineProperty<BatchContainerWorkingDirectory>(nameof(WorkingDirectory), new string[] { "workingDirectory" });
             _containerHostBatchBindMounts = DefineListProperty<ContainerHostBatchBindMountEntry>(nameof(ContainerHostBatchBindMounts), new string[] { "containerHostBatchBindMounts" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchTaskContainerSettings that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
         {
             TryGetApiVersion(SapCentralServerInstanceResource.ResourceType, out string sapCentralServerInstanceApiVersion);
             _sapCentralServerInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadsSapVirtualInstance", SapCentralServerInstanceResource.ResourceType.Namespace, Diagnostics);
-            _sapCentralServerInstancesRestClient = new SapCentralServerInstances(_sapCentralServerInstancesClientDiagnostics, Pipeline, Endpoint, sapCentralServerInstanceApiVersion ?? "2024-09-01");
+            _sapCentralServerInstancesRestClient = new SapCentralServerInstances(_sapCentralServerInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sapCentralServerInstanceApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SapCentralServerInstanceData, SapCentralServerInstanceResource>(new SapCentralServerInstancesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SapCentralServerInstanceData, SapCentralServerInstanceResource>(new SapCentralServerInstanceDataAsyncCollectionResultOfT(
                 _sapCentralServerInstancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SapCentralServerInstanceData, SapCentralServerInstanceResource>(new SapCentralServerInstancesGetAllCollectionResultOfT(
+            return new PageableWrapper<SapCentralServerInstanceData, SapCentralServerInstanceResource>(new SapCentralServerInstanceDataCollectionResultOfT(
                 _sapCentralServerInstancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

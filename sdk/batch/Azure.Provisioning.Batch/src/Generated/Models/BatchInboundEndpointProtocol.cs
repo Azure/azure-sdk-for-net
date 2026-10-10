@@ -14,9 +14,9 @@ namespace Azure.Provisioning.Batch
     {
         /// <summary> Use TCP for the endpoint. </summary>
         [DataMember(Name = "TCP")]
-        Tcp,
+        Tcp = 0,
         /// <summary> Use UDP for the endpoint. </summary>
         [DataMember(Name = "UDP")]
-        Udp
+        Udp = 1
     }
 }

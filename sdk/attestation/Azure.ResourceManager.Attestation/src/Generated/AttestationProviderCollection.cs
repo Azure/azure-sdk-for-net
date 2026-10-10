@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Attestation
         {
             TryGetApiVersion(AttestationProviderResource.ResourceType, out string attestationProviderApiVersion);
             _attestationProvidersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Attestation", AttestationProviderResource.ResourceType.Namespace, Diagnostics);
-            _attestationProvidersRestClient = new AttestationProviders(_attestationProvidersClientDiagnostics, Pipeline, Endpoint, attestationProviderApiVersion ?? "2021-06-01");
+            _attestationProvidersRestClient = new AttestationProviders(_attestationProvidersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, attestationProviderApiVersion ?? "2021-06-01");
             ValidateResourceId(id);
         }
 
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Attestation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetByResourceGroupAsyncCollectionResultOfT(_attestationProvidersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AttestationProviderCollection.GetAll"), data => new AttestationProviderResource(Client, data));
+            return new AsyncPageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProviderDataAsyncCollectionResultOfT(_attestationProvidersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AttestationProviderCollection.GetAll"), data => new AttestationProviderResource(Client, data));
         }
 
         /// <summary>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Attestation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetByResourceGroupCollectionResultOfT(_attestationProvidersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AttestationProviderCollection.GetAll"), data => new AttestationProviderResource(Client, data));
+            return new PageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProviderDataCollectionResultOfT(_attestationProvidersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AttestationProviderCollection.GetAll"), data => new AttestationProviderResource(Client, data));
         }
 
         /// <summary>

@@ -81,7 +81,7 @@ Description = "Allowing all IP's within the subnet below to access containerapp"
 {
 Description = "Allowing all IP's within the subnet below to access containerapp",
 }},
-                        StickySessionsAffinity = Affinity.Sticky,
+                        StickySessionAffinity = StickySessionAffinity.Sticky,
                         ClientCertificateMode = ContainerAppIngressClientCertificateMode.Accept,
                         CorsPolicy = new ContainerAppCorsPolicy(new string[] { "https://a.test.com", "https://b.test.com" })
                         {

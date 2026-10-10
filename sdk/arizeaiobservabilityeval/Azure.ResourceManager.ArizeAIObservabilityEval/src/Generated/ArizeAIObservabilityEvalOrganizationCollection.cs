@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
         {
             TryGetApiVersion(ArizeAIObservabilityEvalOrganizationResource.ResourceType, out string arizeAIObservabilityEvalOrganizationApiVersion);
             _organizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ArizeAIObservabilityEval", ArizeAIObservabilityEvalOrganizationResource.ResourceType.Namespace, Diagnostics);
-            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Endpoint, arizeAIObservabilityEvalOrganizationApiVersion ?? "2024-10-01");
+            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, arizeAIObservabilityEvalOrganizationApiVersion ?? "2024-10-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ArizeAIObservabilityEvalOrganizationData, ArizeAIObservabilityEvalOrganizationResource>(new OrganizationsGetByResourceGroupAsyncCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ArizeAIObservabilityEvalOrganizationCollection.GetAll"), data => new ArizeAIObservabilityEvalOrganizationResource(Client, data));
+            return new AsyncPageableWrapper<ArizeAIObservabilityEvalOrganizationData, ArizeAIObservabilityEvalOrganizationResource>(new ArizeAIObservabilityEvalOrganizationDataAsyncCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ArizeAIObservabilityEvalOrganizationCollection.GetAll"), data => new ArizeAIObservabilityEvalOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ArizeAIObservabilityEvalOrganizationData, ArizeAIObservabilityEvalOrganizationResource>(new OrganizationsGetByResourceGroupCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ArizeAIObservabilityEvalOrganizationCollection.GetAll"), data => new ArizeAIObservabilityEvalOrganizationResource(Client, data));
+            return new PageableWrapper<ArizeAIObservabilityEvalOrganizationData, ArizeAIObservabilityEvalOrganizationResource>(new ArizeAIObservabilityEvalOrganizationDataCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ArizeAIObservabilityEvalOrganizationCollection.GetAll"), data => new ArizeAIObservabilityEvalOrganizationResource(Client, data));
         }
 
         /// <summary>

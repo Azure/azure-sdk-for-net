@@ -7,48 +7,89 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Specifies the priority for a standalone virtual machine or the virtual machines in the scale set. 'Low' enum will be deprecated in the future, please use 'Spot' as the enum to deploy Azure Spot VM/VMSS. </summary>
+    /// <summary> Specifies the priority for a standalone virtual machine or the virtual machines in the scale set. </summary>
     public readonly partial struct VirtualMachinePriorityType : IEquatable<VirtualMachinePriorityType>
     {
         private readonly string _value;
+        /// <summary>
+        /// Regular Priority for a standalone virtual machine or the virtual machines in the scale set.
+        /// This is the default priority and it will be used to deploy regular VM/VMSS.
+        /// </summary>
+        private const string RegularValue = "Regular";
+        /// <summary> Low priority for a standalone virtual machine or the virtual machines in the scale set. Will be Deprecated, use Spot instead. </summary>
+        private const string LowValue = "Low";
+        /// <summary> Spot priority for a standalone virtual machine or the virtual machines in the scale set. </summary>
+        private const string SpotValue = "Spot";
+        /// <summary>
+        /// SpotPlus priority for a standalone virtual machine or the virtual machines in the scale set.
+        /// This is an enum value that will be used to deploy Azure Spot Plus VM/VMSS, which is the next
+        /// generation of Azure Spot VM/VMSS with more reliability and longer running time.
+        /// </summary>
+        private const string SpotPlusValue = "SpotPlus";
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachinePriorityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualMachinePriorityType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string RegularValue = "Regular";
-        private const string LowValue = "Low";
-        private const string SpotValue = "Spot";
-
-        /// <summary> Regular. </summary>
+        /// <summary>
+        /// Regular Priority for a standalone virtual machine or the virtual machines in the scale set.
+        /// This is the default priority and it will be used to deploy regular VM/VMSS.
+        /// </summary>
         public static VirtualMachinePriorityType Regular { get; } = new VirtualMachinePriorityType(RegularValue);
-        /// <summary> Low. </summary>
+
+        /// <summary> Low priority for a standalone virtual machine or the virtual machines in the scale set. Will be Deprecated, use Spot instead. </summary>
         public static VirtualMachinePriorityType Low { get; } = new VirtualMachinePriorityType(LowValue);
-        /// <summary> Spot. </summary>
+
+        /// <summary> Spot priority for a standalone virtual machine or the virtual machines in the scale set. </summary>
         public static VirtualMachinePriorityType Spot { get; } = new VirtualMachinePriorityType(SpotValue);
+
+        /// <summary>
+        /// SpotPlus priority for a standalone virtual machine or the virtual machines in the scale set.
+        /// This is an enum value that will be used to deploy Azure Spot Plus VM/VMSS, which is the next
+        /// generation of Azure Spot VM/VMSS with more reliability and longer running time.
+        /// </summary>
+        public static VirtualMachinePriorityType SpotPlus { get; } = new VirtualMachinePriorityType(SpotPlusValue);
+
         /// <summary> Determines if two <see cref="VirtualMachinePriorityType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualMachinePriorityType left, VirtualMachinePriorityType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualMachinePriorityType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualMachinePriorityType left, VirtualMachinePriorityType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualMachinePriorityType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualMachinePriorityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualMachinePriorityType(string value) => new VirtualMachinePriorityType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualMachinePriorityType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualMachinePriorityType?(string value) => value == null ? null : new VirtualMachinePriorityType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualMachinePriorityType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualMachinePriorityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

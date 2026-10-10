@@ -11,19 +11,30 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class SiteRuntimeStateExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SiteRuntimeState value) => value switch
         {
-            SiteRuntimeState.Unknown => "UNKNOWN",
             SiteRuntimeState.Ready => "READY",
             SiteRuntimeState.Stopped => "STOPPED",
+            SiteRuntimeState.Unknown => "UNKNOWN",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SiteRuntimeState value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SiteRuntimeState ToSiteRuntimeState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UNKNOWN")) return SiteRuntimeState.Unknown;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "READY")) return SiteRuntimeState.Ready;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "STOPPED")) return SiteRuntimeState.Stopped;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "READY"))
+            {
+                return SiteRuntimeState.Ready;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "STOPPED"))
+            {
+                return SiteRuntimeState.Stopped;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UNKNOWN"))
+            {
+                return SiteRuntimeState.Unknown;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SiteRuntimeState value.");
         }
     }

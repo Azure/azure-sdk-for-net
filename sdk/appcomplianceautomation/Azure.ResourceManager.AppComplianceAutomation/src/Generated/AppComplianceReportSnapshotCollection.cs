@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             TryGetApiVersion(AppComplianceReportSnapshotResource.ResourceType, out string appComplianceReportSnapshotApiVersion);
             _snapshotClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation", AppComplianceReportSnapshotResource.ResourceType.Namespace, Diagnostics);
-            _snapshotRestClient = new Snapshot(_snapshotClientDiagnostics, Pipeline, Endpoint, appComplianceReportSnapshotApiVersion ?? "2024-06-27");
+            _snapshotRestClient = new Snapshot(_snapshotClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appComplianceReportSnapshotApiVersion ?? "2024-06-27");
             ValidateResourceId(id);
         }
 
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppComplianceReportSnapshotData, AppComplianceReportSnapshotResource>(new SnapshotGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AppComplianceReportSnapshotData, AppComplianceReportSnapshotResource>(new AppComplianceReportSnapshotDataAsyncCollectionResultOfT(
                 _snapshotRestClient,
                 Id.Name,
                 skipToken,
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppComplianceReportSnapshotData, AppComplianceReportSnapshotResource>(new SnapshotGetAllCollectionResultOfT(
+            return new PageableWrapper<AppComplianceReportSnapshotData, AppComplianceReportSnapshotResource>(new AppComplianceReportSnapshotDataCollectionResultOfT(
                 _snapshotRestClient,
                 Id.Name,
                 skipToken,

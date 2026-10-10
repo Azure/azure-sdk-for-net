@@ -25,7 +25,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
         public async Task AnalyzeConfigsAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions(_serviceVersion));
             var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
             #region Snippet:ContentUnderstandingAnalyzeWithConfigs
@@ -478,6 +478,73 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Console.WriteLine($"    {kind.Key}: {kind.Value} ({(double)kind.Value / docContentAnnotations.Annotations.Count * 100:F1}%)");
             }
             Console.WriteLine($"Verified {docContentAnnotations.Annotations.Count} annotation(s)");
+            #endregion
+
+            #region Snippet:ContentUnderstandingExtractSignatures
+            // Extract signatures from document content (requires EnableLayout + ShouldReturnDetails)
+            // Available only in 2026-06-01-preview.
+            DocumentContent documentWithSignatures = (DocumentContent)result.Contents!.First();
+            Console.WriteLine($"Found {documentWithSignatures.Signatures?.Count ?? 0} signature(s)");
+            foreach (var signature in documentWithSignatures.Signatures ?? Enumerable.Empty<DocumentSignature>())
+            {
+                Console.WriteLine($"  Signature ID: {signature.Id}");
+                Console.WriteLine($"    Role: {signature.Role?.ToString() ?? "(not available)"}");
+                Console.WriteLine($"    Source: {signature.Source ?? "(not available)"}");
+                if (signature.Span != null)
+                {
+                    Console.WriteLine($"    Span: offset={signature.Span.Offset}, length={signature.Span.Length}");
+                }
+            }
+            #endregion
+
+            #region Assertion:ContentUnderstandingExtractSignatures
+            if (_serviceVersion < ContentUnderstandingClientOptions.ServiceVersion.V2026_06_01_Preview)
+            {
+                Console.WriteLine("\n✍️ Skipping signature verification: DocumentSignature requires 2026-06-01-preview.");
+            }
+            else
+            {
+                var docContentSignatures = result.Contents?.FirstOrDefault() as DocumentContent;
+                Assert.IsNotNull(docContentSignatures, "Content should be DocumentContent");
+                Console.WriteLine("\n✍️ Signature Extraction Verification:");
+
+                Assert.IsNotNull(docContentSignatures!.Signatures,
+                    "Signatures collection should not be null when layout details are enabled");
+
+                if (docContentSignatures.Signatures.Count == 0)
+                {
+                    Console.WriteLine("No signatures were detected in sample_document_features.pdf");
+                }
+                else
+                {
+                    int signatureIndex = 1;
+                    foreach (var signature in docContentSignatures.Signatures)
+                    {
+                        Assert.IsNotNull(signature, $"Signature {signatureIndex} should not be null");
+                        Assert.IsFalse(string.IsNullOrWhiteSpace(signature.Id),
+                            $"Signature {signatureIndex} ID should not be empty");
+
+                        if (signature.Span != null)
+                        {
+                            Assert.IsTrue(signature.Span.Length > 0,
+                                $"Signature {signatureIndex} span length should be positive");
+                        }
+
+                        if (signature.Elements != null)
+                        {
+                            foreach (string element in signature.Elements)
+                            {
+                                Assert.IsFalse(string.IsNullOrWhiteSpace(element),
+                                    $"Signature {signatureIndex} element identifiers should not be empty");
+                            }
+                        }
+
+                        signatureIndex++;
+                    }
+
+                    Console.WriteLine($"Verified {docContentSignatures.Signatures.Count} signature(s)");
+                }
+            }
             #endregion
         }
     }

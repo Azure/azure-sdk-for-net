@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerService
     public enum ContainerServiceOSType
     {
         /// <summary> Use Linux. </summary>
-        Linux,
+        Linux = 0,
         /// <summary> Use Windows. </summary>
-        Windows
+        Windows = 1
     }
 }

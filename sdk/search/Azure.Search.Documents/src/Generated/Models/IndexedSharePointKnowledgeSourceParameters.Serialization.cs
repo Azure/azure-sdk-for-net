@@ -84,15 +84,34 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(ConnectionString);
             writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName.ToString());
-            if (Optional.IsDefined(Query))
+            if (_queryIsDefined || Optional.IsDefined(Query))
             {
-                writer.WritePropertyName("query"u8);
-                writer.WriteStringValue(Query);
+                if (Query != null)
+                {
+                    writer.WritePropertyName("query"u8);
+                    writer.WriteStringValue(Query);
+                }
+                else
+                {
+                    writer.WriteNull("query"u8);
+                }
             }
-            if (Optional.IsDefined(IngestionParameters))
+            if (_ingestionParametersIsDefined || Optional.IsDefined(IngestionParameters))
             {
-                writer.WritePropertyName("ingestionParameters"u8);
-                writer.WriteObjectValue(IngestionParameters, options);
+                if (IngestionParameters != null)
+                {
+                    writer.WritePropertyName("ingestionParameters"u8);
+                    writer.WriteObjectValue(IngestionParameters, options);
+                }
+                else
+                {
+                    writer.WriteNull("ingestionParameters"u8);
+                }
+            }
+            if (Optional.IsDefined(QueryHints))
+            {
+                writer.WritePropertyName("queryHints"u8);
+                writer.WriteObjectValue(QueryHints, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedResources))
             {
@@ -143,8 +162,11 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string connectionString = default;
             IndexedSharePointContainerName containerName = default;
+            bool queryIsDefined = false;
             string query = default;
+            bool ingestionParametersIsDefined = false;
             KnowledgeSourceIngestionParameters ingestionParameters = default;
+            SearchIndexKnowledgeSourceQueryHints queryHints = default;
             CreatedResources createdResources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -161,6 +183,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("query"u8))
                 {
+                    queryIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         query = null;
@@ -171,12 +194,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("ingestionParameters"u8))
                 {
+                    ingestionParametersIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         ingestionParameters = null;
                         continue;
                     }
                     ingestionParameters = KnowledgeSourceIngestionParameters.DeserializeKnowledgeSourceIngestionParameters(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("queryHints"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    queryHints = SearchIndexKnowledgeSourceQueryHints.DeserializeSearchIndexKnowledgeSourceQueryHints(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("createdResources"u8))
@@ -190,7 +223,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new IndexedSharePointKnowledgeSourceParameters(
@@ -198,8 +231,13 @@ namespace Azure.Search.Documents.Indexes.Models
                 containerName,
                 query,
                 ingestionParameters,
+                queryHints,
                 createdResources,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _queryIsDefined = queryIsDefined,
+                _ingestionParametersIsDefined = ingestionParametersIsDefined
+            };
         }
     }
 }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Chaos
         {
             TryGetApiVersion(ResourceType, out string chaosDiscoveredApiVersion);
             _discoveredResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ResourceType.Namespace, Diagnostics);
-            _discoveredResourcesRestClient = new DiscoveredResources(_discoveredResourcesClientDiagnostics, Pipeline, Endpoint, chaosDiscoveredApiVersion ?? "2026-05-01-preview");
+            _discoveredResourcesRestClient = new DiscoveredResources(_discoveredResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, chaosDiscoveredApiVersion ?? "2026-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

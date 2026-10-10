@@ -43,15 +43,15 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
 
         private ClientDiagnostics DnsResolversClientDiagnostics => _dnsResolversClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DnsResolvers DnsResolversRestClient => _dnsResolversRestClient ??= new DnsResolvers(DnsResolversClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
+        private DnsResolvers DnsResolversRestClient => _dnsResolversRestClient ??= new DnsResolvers(DnsResolversClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
 
         private ClientDiagnostics DnsForwardingRulesetsClientDiagnostics => _dnsForwardingRulesetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DnsForwardingRulesets DnsForwardingRulesetsRestClient => _dnsForwardingRulesetsRestClient ??= new DnsForwardingRulesets(DnsForwardingRulesetsClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
+        private DnsForwardingRulesets DnsForwardingRulesetsRestClient => _dnsForwardingRulesetsRestClient ??= new DnsForwardingRulesets(DnsForwardingRulesetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
 
         private ClientDiagnostics DnsResolverPoliciesClientDiagnostics => _dnsResolverPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DnsResolverPolicies DnsResolverPoliciesRestClient => _dnsResolverPoliciesRestClient ??= new DnsResolverPolicies(DnsResolverPoliciesClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
+        private DnsResolverPolicies DnsResolverPoliciesRestClient => _dnsResolverPoliciesRestClient ??= new DnsResolverPolicies(DnsResolverPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
 
         /// <summary> Gets a collection of DnsResolvers in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of DnsResolvers and their operations over a DnsResolverResource. </returns>
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DnsResolversGetDnsResolversByVirtualNetworkAsyncCollectionResultOfT(
+            return new WritableSubResourceAsyncCollectionResultOfT(
                 DnsResolversRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DnsResolversGetDnsResolversByVirtualNetworkCollectionResultOfT(
+            return new WritableSubResourceCollectionResultOfT(
                 DnsResolversRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DnsForwardingRulesetsGetDnsForwardingRulesetsByVirtualNetworkAsyncCollectionResultOfT(
+            return new VirtualNetworkDnsForwardingRulesetAsyncCollectionResultOfT(
                 DnsForwardingRulesetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DnsForwardingRulesetsGetDnsForwardingRulesetsByVirtualNetworkCollectionResultOfT(
+            return new VirtualNetworkDnsForwardingRulesetCollectionResultOfT(
                 DnsForwardingRulesetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DnsResolverPoliciesGetDnsResolverPoliciesByVirtualNetworkAsyncCollectionResultOfT(
+            return new WritableSubResourceAsync0CollectionResultOfT(
                 DnsResolverPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DnsResolverPoliciesGetDnsResolverPoliciesByVirtualNetworkCollectionResultOfT(
+            return new WritableSubResource0CollectionResultOfT(
                 DnsResolverPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

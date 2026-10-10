@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,13 +19,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="path"> The path of the SAP Cloud for Customer OData entity. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="path"/> is null. </exception>
-        public SapCloudForCustomerResourceDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> path) : base(linkedServiceName)
+        public SapCloudForCustomerResourceDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> path) : base("SapCloudForCustomerResource", linkedServiceName)
         {
             Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
             Argument.AssertNotNull(path, nameof(path));
 
-            Path = path;
-            DatasetType = "SapCloudForCustomerResource";
+            TypeProperties = new SapCloudForCustomerResourceDatasetTypeProperties(path);
         }
 
         /// <summary> Initializes a new instance of <see cref="SapCloudForCustomerResourceDataset"/>. </summary>
@@ -36,20 +36,31 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="path"> The path of the SAP Cloud for Customer OData entity. Type: string (or Expression with resultType string). </param>
-        internal SapCloudForCustomerResourceDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> path) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> SAP Cloud For Customer OData resource dataset properties. </param>
+        internal SapCloudForCustomerResourceDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, SapCloudForCustomerResourceDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
-            Path = path;
-            DatasetType = datasetType ?? "SapCloudForCustomerResource";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SapCloudForCustomerResourceDataset"/> for deserialization. </summary>
-        internal SapCloudForCustomerResourceDataset()
-        {
-        }
+        /// <summary> SAP Cloud For Customer OData resource dataset properties. </summary>
+        internal SapCloudForCustomerResourceDatasetTypeProperties TypeProperties { get; set; }
 
         /// <summary> The path of the SAP Cloud for Customer OData entity. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Path { get; set; }
+        public DataFactoryElement<string> Path
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Path;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapCloudForCustomerResourceDatasetTypeProperties();
+                }
+                TypeProperties.Path = value;
+            }
+        }
     }
 }

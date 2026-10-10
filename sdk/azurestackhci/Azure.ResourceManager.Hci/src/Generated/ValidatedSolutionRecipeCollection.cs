@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Hci
             TryGetApiVersion(ValidatedSolutionRecipeResource.ResourceType, out string validatedSolutionRecipeApiVersion);
             _location = location;
             _validatedSolutionRecipesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ValidatedSolutionRecipeResource.ResourceType.Namespace, Diagnostics);
-            _validatedSolutionRecipesRestClient = new ValidatedSolutionRecipes(_validatedSolutionRecipesClientDiagnostics, Pipeline, Endpoint, validatedSolutionRecipeApiVersion ?? "2026-04-01-preview");
+            _validatedSolutionRecipesRestClient = new ValidatedSolutionRecipes(_validatedSolutionRecipesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, validatedSolutionRecipeApiVersion ?? "2026-04-30");
             ValidateResourceId(id);
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ValidatedSolutionRecipeData, ValidatedSolutionRecipeResource>(new ValidatedSolutionRecipesGetBySubscriptionLocationResourceAsyncCollectionResultOfT(_validatedSolutionRecipesRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ValidatedSolutionRecipeCollection.GetAll"), data => new ValidatedSolutionRecipeResource(Client, data));
+            return new AsyncPageableWrapper<ValidatedSolutionRecipeData, ValidatedSolutionRecipeResource>(new ValidatedSolutionRecipeDataAsyncCollectionResultOfT(_validatedSolutionRecipesRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ValidatedSolutionRecipeCollection.GetAll"), data => new ValidatedSolutionRecipeResource(Client, data));
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ValidatedSolutionRecipeData, ValidatedSolutionRecipeResource>(new ValidatedSolutionRecipesGetBySubscriptionLocationResourceCollectionResultOfT(_validatedSolutionRecipesRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ValidatedSolutionRecipeCollection.GetAll"), data => new ValidatedSolutionRecipeResource(Client, data));
+            return new PageableWrapper<ValidatedSolutionRecipeData, ValidatedSolutionRecipeResource>(new ValidatedSolutionRecipeDataCollectionResultOfT(_validatedSolutionRecipesRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ValidatedSolutionRecipeCollection.GetAll"), data => new ValidatedSolutionRecipeResource(Client, data));
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>

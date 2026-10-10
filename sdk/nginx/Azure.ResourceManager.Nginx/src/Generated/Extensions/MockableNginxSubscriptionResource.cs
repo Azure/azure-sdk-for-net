@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Nginx.Mocking
 
         private ClientDiagnostics NginxDeploymentsClientDiagnostics => _nginxDeploymentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Nginx.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NginxDeployments NginxDeploymentsRestClient => _nginxDeploymentsRestClient ??= new NginxDeployments(NginxDeploymentsClientDiagnostics, Pipeline, Endpoint, "2025-11-01");
+        private NginxDeployments NginxDeploymentsRestClient => _nginxDeploymentsRestClient ??= new NginxDeployments(NginxDeploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-11-01");
 
         /// <summary>
         /// List the NGINX deployments resources
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Nginx.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NginxDeploymentData, NginxDeploymentResource>(new NginxDeploymentsGetAllAsyncCollectionResultOfT(NginxDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNginxSubscriptionResource.GetNginxDeployments"), data => new NginxDeploymentResource(Client, data));
+            return new AsyncPageableWrapper<NginxDeploymentData, NginxDeploymentResource>(new NginxDeploymentDataAsync0CollectionResultOfT(NginxDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNginxSubscriptionResource.GetNginxDeployments"), data => new NginxDeploymentResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Nginx.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NginxDeploymentData, NginxDeploymentResource>(new NginxDeploymentsGetAllCollectionResultOfT(NginxDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNginxSubscriptionResource.GetNginxDeployments"), data => new NginxDeploymentResource(Client, data));
+            return new PageableWrapper<NginxDeploymentData, NginxDeploymentResource>(new NginxDeploymentData0CollectionResultOfT(NginxDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNginxSubscriptionResource.GetNginxDeployments"), data => new NginxDeploymentResource(Client, data));
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Nginx
         {
             TryGetApiVersion(NginxCertificateResource.ResourceType, out string nginxCertificateApiVersion);
             _nginxCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Nginx", NginxCertificateResource.ResourceType.Namespace, Diagnostics);
-            _nginxCertificatesRestClient = new NginxCertificates(_nginxCertificatesClientDiagnostics, Pipeline, Endpoint, nginxCertificateApiVersion ?? "2025-11-01");
+            _nginxCertificatesRestClient = new NginxCertificates(_nginxCertificatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, nginxCertificateApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
         }
 
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Nginx
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NginxCertificateData, NginxCertificateResource>(new NginxCertificatesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NginxCertificateData, NginxCertificateResource>(new NginxCertificateDataAsyncCollectionResultOfT(
                 _nginxCertificatesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Nginx
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NginxCertificateData, NginxCertificateResource>(new NginxCertificatesGetAllCollectionResultOfT(
+            return new PageableWrapper<NginxCertificateData, NginxCertificateResource>(new NginxCertificateDataCollectionResultOfT(
                 _nginxCertificatesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

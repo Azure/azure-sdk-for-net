@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         private DiscoverySolution _discoverySolutionRestClient;
 
         private ClientDiagnostics DiscoverySolutionClientDiagnostics => _discoverySolutionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SelfHelp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private DiscoverySolution DiscoverySolutionRestClient => _discoverySolutionRestClient ??= new DiscoverySolution(DiscoverySolutionClientDiagnostics, Pipeline, Endpoint, "2024-03-01-preview");
+        private DiscoverySolution DiscoverySolutionRestClient => _discoverySolutionRestClient ??= new DiscoverySolution(DiscoverySolutionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-03-01-preview");
 
         /// <summary>
         /// Lists the relevant Azure diagnostics and solutions using [problemClassification API](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP)) AND  resourceUri or resourceType.&lt;br/&gt; Discovery Solutions is the initial entry point within Help API, which identifies relevant Azure diagnostics and solutions. We will do our best to return the most effective solutions based on the type of inputs, in the request URL  &lt;br/&gt;&lt;br/&gt; Mandatory input :  problemClassificationId (Use the [problemClassification API](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP)) &lt;br/&gt;Optional input: resourceUri OR resource Type &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt;  ‘requiredInputs’ from Discovery solutions response must be passed via ‘additionalParameters’ as an input to Diagnostics and Solutions API.

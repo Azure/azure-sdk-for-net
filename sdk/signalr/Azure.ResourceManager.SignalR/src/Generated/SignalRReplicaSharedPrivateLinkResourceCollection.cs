@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SignalR
         {
             TryGetApiVersion(SignalRReplicaSharedPrivateLinkResource.ResourceType, out string signalRReplicaSharedPrivateLinkResourceApiVersion);
             _signalRReplicaSharedPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SignalR", SignalRReplicaSharedPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _signalRReplicaSharedPrivateLinkResourcesRestClient = new SignalRReplicaSharedPrivateLinkResources(_signalRReplicaSharedPrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, signalRReplicaSharedPrivateLinkResourceApiVersion ?? "2025-01-01-preview");
+            _signalRReplicaSharedPrivateLinkResourcesRestClient = new SignalRReplicaSharedPrivateLinkResources(_signalRReplicaSharedPrivateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, signalRReplicaSharedPrivateLinkResourceApiVersion ?? "2025-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SignalRSharedPrivateLinkResourceData, SignalRReplicaSharedPrivateLinkResource>(new SignalRReplicaSharedPrivateLinkResourcesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SignalRSharedPrivateLinkResourceData, SignalRReplicaSharedPrivateLinkResource>(new SignalRSharedPrivateLinkResourceDataAsync0CollectionResultOfT(
                 _signalRReplicaSharedPrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SignalRSharedPrivateLinkResourceData, SignalRReplicaSharedPrivateLinkResource>(new SignalRReplicaSharedPrivateLinkResourcesGetAllCollectionResultOfT(
+            return new PageableWrapper<SignalRSharedPrivateLinkResourceData, SignalRReplicaSharedPrivateLinkResource>(new SignalRSharedPrivateLinkResourceData0CollectionResultOfT(
                 _signalRReplicaSharedPrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -10,6 +10,7 @@ using System.IO;
 
 namespace Azure.Core.Http.Multipart
 {
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     internal class MultipartSection
     {
         public string ContentType

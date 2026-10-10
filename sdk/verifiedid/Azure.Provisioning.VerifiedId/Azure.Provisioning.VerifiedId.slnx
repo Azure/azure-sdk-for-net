@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.Provisioning.VerifiedId.csproj" />
+  <Project Path="tests/Azure.Provisioning.VerifiedId.Tests.csproj" />
+</Solution>

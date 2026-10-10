@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             Argument.AssertNotNull(priorityProfile, nameof(priorityProfile));
 
             VmSizeProfiles = vmSizeProfiles.ToList();
-            OsType = osType;
+            OSType = osType;
             PriorityProfile = priorityProfile;
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         internal ComputeScheduleFlexProperties(IList<ComputeScheduleVmSizeProfile> vmSizeProfiles, ComputeScheduleOSType osType, ComputeSchedulePriorityProfile priorityProfile, ComputeScheduleZoneAllocationPolicy zoneAllocationPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmSizeProfiles = vmSizeProfiles;
-            OsType = osType;
+            OSType = osType;
             PriorityProfile = priorityProfile;
             ZoneAllocationPolicy = zoneAllocationPolicy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public IList<ComputeScheduleVmSizeProfile> VmSizeProfiles { get; }
 
         /// <summary> The operating system type for the VMs. </summary>
-        public ComputeScheduleOSType OsType { get; }
+        public ComputeScheduleOSType OSType { get; }
 
         /// <summary> The priority profile for VM allocation. </summary>
         public ComputeSchedulePriorityProfile PriorityProfile { get; }

@@ -41,7 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(WorkloadNetworksResource.ResourceType, out string workloadNetworksApiVersion);
             _workloadNetworksOpsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", WorkloadNetworksResource.ResourceType.Namespace, Diagnostics);
-            _workloadNetworksOpsRestClient = new WorkloadNetworksOps(_workloadNetworksOpsClientDiagnostics, Pipeline, Endpoint, workloadNetworksApiVersion ?? "2024-05-01");
+            _workloadNetworksOpsRestClient = new WorkloadNetworksOps(_workloadNetworksOpsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workloadNetworksApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -296,7 +296,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkloadNetworksData, WorkloadNetworksResource>(new WorkloadNetworksOpsGetAllAsyncCollectionResultOfT(_workloadNetworksOpsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WorkloadNetworksCollection.GetAll"), data => new WorkloadNetworksResource(Client, data));
+            return new AsyncPageableWrapper<WorkloadNetworksData, WorkloadNetworksResource>(new WorkloadNetworksDataAsyncCollectionResultOfT(_workloadNetworksOpsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WorkloadNetworksCollection.GetAll"), data => new WorkloadNetworksResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkloadNetworksData, WorkloadNetworksResource>(new WorkloadNetworksOpsGetAllCollectionResultOfT(_workloadNetworksOpsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WorkloadNetworksCollection.GetAll"), data => new WorkloadNetworksResource(Client, data));
+            return new PageableWrapper<WorkloadNetworksData, WorkloadNetworksResource>(new WorkloadNetworksDataCollectionResultOfT(_workloadNetworksOpsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WorkloadNetworksCollection.GetAll"), data => new WorkloadNetworksResource(Client, data));
         }
 
         /// <summary>

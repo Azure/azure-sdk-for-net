@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class StaticSiteCustomDomainOverviewResource : IJsonModel<StaticSiteCustomDomainOverviewData>
     {
-        private static StaticSiteCustomDomainOverviewData s_dataDeserializationInstance;
-        private static StaticSiteCustomDomainOverviewData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<StaticSiteCustomDomainOverviewData> s_dataDeserializationInstance;
 
+        private static IJsonModel<StaticSiteCustomDomainOverviewData> DataDeserializationInstance => s_dataDeserializationInstance ??= new StaticSiteCustomDomainOverviewData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StaticSiteCustomDomainOverviewData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StaticSiteCustomDomainOverviewData>)Data).Write(writer, options);
 
-        StaticSiteCustomDomainOverviewData IJsonModel<StaticSiteCustomDomainOverviewData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StaticSiteCustomDomainOverviewData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StaticSiteCustomDomainOverviewData IJsonModel<StaticSiteCustomDomainOverviewData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<StaticSiteCustomDomainOverviewData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StaticSiteCustomDomainOverviewData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         StaticSiteCustomDomainOverviewData IPersistableModel<StaticSiteCustomDomainOverviewData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticSiteCustomDomainOverviewData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<StaticSiteCustomDomainOverviewData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StaticSiteCustomDomainOverviewData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StaticSiteCustomDomainOverviewData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

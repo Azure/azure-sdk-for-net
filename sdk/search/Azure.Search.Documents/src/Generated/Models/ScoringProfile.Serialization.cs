@@ -81,10 +81,17 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(TextWeights))
+            if (_textWeightsIsDefined || Optional.IsDefined(TextWeights))
             {
-                writer.WritePropertyName("text"u8);
-                writer.WriteObjectValue(TextWeights, options);
+                if (TextWeights != null)
+                {
+                    writer.WritePropertyName("text"u8);
+                    writer.WriteObjectValue(TextWeights, options);
+                }
+                else
+                {
+                    writer.WriteNull("text"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Functions))
             {
@@ -144,6 +151,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string name = default;
+            bool textWeightsIsDefined = false;
             TextWeights textWeights = default;
             IList<ScoringFunction> functions = default;
             ScoringFunctionAggregation? functionAggregation = default;
@@ -157,6 +165,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("text"u8))
                 {
+                    textWeightsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         textWeights = null;
@@ -190,10 +199,13 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ScoringProfile(name, textWeights, functions ?? new ChangeTrackingList<ScoringFunction>(), functionAggregation, additionalBinaryDataProperties);
+            return new ScoringProfile(name, textWeights, functions ?? new ChangeTrackingList<ScoringFunction>(), functionAggregation, additionalBinaryDataProperties)
+            {
+                _textWeightsIsDefined = textWeightsIsDefined
+            };
         }
     }
 }

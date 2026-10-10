@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
 
         private ClientDiagnostics SqlVirtualMachinesClientDiagnostics => _sqlVirtualMachinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SqlVirtualMachines SqlVirtualMachinesRestClient => _sqlVirtualMachinesRestClient ??= new SqlVirtualMachines(SqlVirtualMachinesClientDiagnostics, Pipeline, Endpoint, "2023-10-01");
+        private SqlVirtualMachines SqlVirtualMachinesRestClient => _sqlVirtualMachinesRestClient ??= new SqlVirtualMachines(SqlVirtualMachinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-10-01");
 
         private ClientDiagnostics SqlVirtualMachineGroupsClientDiagnostics => _sqlVirtualMachineGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SqlVirtualMachineGroups SqlVirtualMachineGroupsRestClient => _sqlVirtualMachineGroupsRestClient ??= new SqlVirtualMachineGroups(SqlVirtualMachineGroupsClientDiagnostics, Pipeline, Endpoint, "2023-10-01");
+        private SqlVirtualMachineGroups SqlVirtualMachineGroupsRestClient => _sqlVirtualMachineGroupsRestClient ??= new SqlVirtualMachineGroups(SqlVirtualMachineGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-10-01");
 
         /// <summary>
         /// Gets all SQL virtual machines in a subscription.
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlVmData, SqlVmResource>(new SqlVirtualMachinesGetAllAsyncCollectionResultOfT(SqlVirtualMachinesRestClient, Id.SubscriptionId, context, "MockableSqlVirtualMachineSubscriptionResource.GetSqlVms"), data => new SqlVmResource(Client, data));
+            return new AsyncPageableWrapper<SqlVmData, SqlVmResource>(new SqlVmDataAsync0CollectionResultOfT(SqlVirtualMachinesRestClient, Id.SubscriptionId, context, "MockableSqlVirtualMachineSubscriptionResource.GetSqlVms"), data => new SqlVmResource(Client, data));
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlVmData, SqlVmResource>(new SqlVirtualMachinesGetAllCollectionResultOfT(SqlVirtualMachinesRestClient, Id.SubscriptionId, context, "MockableSqlVirtualMachineSubscriptionResource.GetSqlVms"), data => new SqlVmResource(Client, data));
+            return new PageableWrapper<SqlVmData, SqlVmResource>(new SqlVmData0CollectionResultOfT(SqlVirtualMachinesRestClient, Id.SubscriptionId, context, "MockableSqlVirtualMachineSubscriptionResource.GetSqlVms"), data => new SqlVmResource(Client, data));
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlVmGroupData, SqlVmGroupResource>(new SqlVirtualMachineGroupsGetAllAsyncCollectionResultOfT(SqlVirtualMachineGroupsRestClient, Id.SubscriptionId, context, "MockableSqlVirtualMachineSubscriptionResource.GetSqlVmGroups"), data => new SqlVmGroupResource(Client, data));
+            return new AsyncPageableWrapper<SqlVmGroupData, SqlVmGroupResource>(new SqlVmGroupDataAsync0CollectionResultOfT(SqlVirtualMachineGroupsRestClient, Id.SubscriptionId, context, "MockableSqlVirtualMachineSubscriptionResource.GetSqlVmGroups"), data => new SqlVmGroupResource(Client, data));
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlVmGroupData, SqlVmGroupResource>(new SqlVirtualMachineGroupsGetAllCollectionResultOfT(SqlVirtualMachineGroupsRestClient, Id.SubscriptionId, context, "MockableSqlVirtualMachineSubscriptionResource.GetSqlVmGroups"), data => new SqlVmGroupResource(Client, data));
+            return new PageableWrapper<SqlVmGroupData, SqlVmGroupResource>(new SqlVmGroupData0CollectionResultOfT(SqlVirtualMachineGroupsRestClient, Id.SubscriptionId, context, "MockableSqlVirtualMachineSubscriptionResource.GetSqlVmGroups"), data => new SqlVmGroupResource(Client, data));
         }
     }
 }

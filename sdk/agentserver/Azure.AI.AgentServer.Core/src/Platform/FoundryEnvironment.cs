@@ -17,6 +17,14 @@ public static class FoundryEnvironment
     public static string? AgentName { get; private set; }
 
     /// <summary>
+    /// The agent's stable identifier (GUID). Sourced from the <c>FOUNDRY_AGENT_ID</c>
+    /// environment variable. Available for container-side logic such as per-agent
+    /// routing, telemetry tagging, or custom storage partitioning. Stable across
+    /// all requests to the same agent.
+    /// </summary>
+    public static string? AgentId { get; private set; }
+
+    /// <summary>
     /// The agent version. Sourced from the <c>FOUNDRY_AGENT_VERSION</c> environment variable.
     /// </summary>
     public static string? AgentVersion { get; private set; }
@@ -38,6 +46,19 @@ public static class FoundryEnvironment
     public static string? SessionId { get; private set; }
 
     /// <summary>
+    /// The system-generated session incarnation identifier. Sourced from the
+    /// <c>FOUNDRY_AGENT_SESSION_GUID</c> environment variable.
+    /// </summary>
+    /// <remarks>
+    /// Unlike <see cref="SessionId"/>, which is the logical public session identity, this value
+    /// is an internal identifier unique to one hosted session incarnation, independent of the
+    /// session name. It changes when a session is recreated. Responses uses it to avoid reusing a
+    /// durable task ID whose prior session was deleted and tombstoned by the service. In hosted
+    /// environments, a non-empty value must be exactly 32 lowercase hexadecimal characters.
+    /// </remarks>
+    public static Guid? SessionInstanceId { get; private set; }
+
+    /// <summary>
     /// The HTTP listen port. Sourced from the <c>PORT</c> environment variable. Default: 8088.
     /// </summary>
     public static int Port { get; private set; }
@@ -51,6 +72,17 @@ public static class FoundryEnvironment
     /// The Application Insights connection string. Sourced from the <c>APPLICATIONINSIGHTS_CONNECTION_STRING</c> environment variable.
     /// </summary>
     public static string? AppInsightsConnectionString { get; private set; }
+
+    /// <summary>
+    /// Indicates whether Microsoft Entra (AAD) authentication is requested for
+    /// Azure Monitor export. Returns <c>true</c> when the
+    /// <c>APPLICATIONINSIGHTS_AUTH_MODE</c> environment variable is set to
+    /// <c>"Entra"</c> (case-insensitive). When enabled, the Azure Monitor
+    /// exporter is configured with a system-assigned
+    /// <see cref="Azure.Identity.ManagedIdentityCredential"/> instead of relying
+    /// on the connection string's instrumentation key alone.
+    /// </summary>
+    public static bool IsAppInsightsEntraAuth { get; private set; }
 
     /// <summary>
     /// The SSE keep-alive comment frame interval. Sourced from the <c>SSE_KEEPALIVE_INTERVAL</c>
@@ -123,13 +155,39 @@ public static class FoundryEnvironment
     /// </summary>
     internal static void Reload()
     {
+        bool isHosted =
+            !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT"));
+        string? sessionInstanceIdValue =
+            Environment.GetEnvironmentVariable("FOUNDRY_AGENT_SESSION_GUID");
+        Guid? sessionInstanceId = null;
+        if (!string.IsNullOrEmpty(sessionInstanceIdValue))
+        {
+            if (!IsLowercaseHexGuid(sessionInstanceIdValue)
+                || !Guid.TryParseExact(sessionInstanceIdValue, "N", out Guid parsedSessionInstanceId))
+            {
+                throw new InvalidOperationException(
+                    "FOUNDRY_AGENT_SESSION_GUID must be a 32-character lowercase hexadecimal GUID.");
+            }
+
+            sessionInstanceId = parsedSessionInstanceId;
+        }
+
+        IsHosted = isHosted;
+        SessionInstanceId = sessionInstanceId;
         AgentName = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_NAME");
+        AgentId = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_ID");
         AgentVersion = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_VERSION");
         ProjectEndpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         ProjectArmId = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ARM_ID");
         SessionId = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_SESSION_ID");
         OtlpEndpoint = Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT");
         AppInsightsConnectionString = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
+
+        // Entra (AAD) auth for Azure Monitor export when APPLICATIONINSIGHTS_AUTH_MODE=Entra.
+        IsAppInsightsEntraAuth = string.Equals(
+            Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_AUTH_MODE"),
+            "Entra",
+            StringComparison.OrdinalIgnoreCase);
 
         // Port: default 8088, validate range 1-65535.
         var portEnv = Environment.GetEnvironmentVariable("PORT");
@@ -164,10 +222,6 @@ public static class FoundryEnvironment
                 ? TimeSpan.FromSeconds(wsSeconds)
                 : Timeout.InfiniteTimeSpan;
 
-        // IsHosted: true when the FOUNDRY_HOSTING_ENVIRONMENT environment variable exists
-        // and is non-empty. This variable is injected by the Azure AI Foundry hosting infrastructure.
-        IsHosted = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT"));
-
         // Agent identity env vars for A365 tracing.
         AgentInstanceClientId = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_INSTANCE_CLIENT_ID");
         AgentBlueprintClientId = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_BLUEPRINT_CLIENT_ID");
@@ -176,5 +230,23 @@ public static class FoundryEnvironment
         // A365 tracing enabled when both hosted and explicitly opted in.
         IsAgent365TracingEnabled = IsHosted
             && string.Equals(Environment.GetEnvironmentVariable("FOUNDRY_AGENT365_TRACING_ENABLED"), "true", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool IsLowercaseHexGuid(string value)
+    {
+        if (value.Length != 32)
+        {
+            return false;
+        }
+
+        foreach (char character in value)
+        {
+            if (!((character >= '0' && character <= '9') || (character >= 'a' && character <= 'f')))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

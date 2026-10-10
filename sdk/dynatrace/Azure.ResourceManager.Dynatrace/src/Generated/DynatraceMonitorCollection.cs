@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Dynatrace
         {
             TryGetApiVersion(DynatraceMonitorResource.ResourceType, out string dynatraceMonitorApiVersion);
             _monitorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dynatrace", DynatraceMonitorResource.ResourceType.Namespace, Diagnostics);
-            _monitorsRestClient = new Monitors(_monitorsClientDiagnostics, Pipeline, Endpoint, dynatraceMonitorApiVersion ?? "2024-04-24");
+            _monitorsRestClient = new Monitors(_monitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dynatraceMonitorApiVersion ?? "2024-04-24");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DynatraceMonitorData, DynatraceMonitorResource>(new MonitorsGetByResourceGroupAsyncCollectionResultOfT(_monitorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DynatraceMonitorCollection.GetAll"), data => new DynatraceMonitorResource(Client, data));
+            return new AsyncPageableWrapper<DynatraceMonitorData, DynatraceMonitorResource>(new DynatraceMonitorDataAsyncCollectionResultOfT(_monitorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DynatraceMonitorCollection.GetAll"), data => new DynatraceMonitorResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DynatraceMonitorData, DynatraceMonitorResource>(new MonitorsGetByResourceGroupCollectionResultOfT(_monitorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DynatraceMonitorCollection.GetAll"), data => new DynatraceMonitorResource(Client, data));
+            return new PageableWrapper<DynatraceMonitorData, DynatraceMonitorResource>(new DynatraceMonitorDataCollectionResultOfT(_monitorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DynatraceMonitorCollection.GetAll"), data => new DynatraceMonitorResource(Client, data));
         }
 
         /// <summary>

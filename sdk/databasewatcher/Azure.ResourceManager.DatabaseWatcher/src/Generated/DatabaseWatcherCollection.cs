@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         {
             TryGetApiVersion(DatabaseWatcherResource.ResourceType, out string databaseWatcherApiVersion);
             _watchersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DatabaseWatcher", DatabaseWatcherResource.ResourceType.Namespace, Diagnostics);
-            _watchersRestClient = new Watchers(_watchersClientDiagnostics, Pipeline, Endpoint, databaseWatcherApiVersion ?? "2025-01-02");
+            _watchersRestClient = new Watchers(_watchersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databaseWatcherApiVersion ?? "2025-01-02");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatabaseWatcherData, DatabaseWatcherResource>(new WatchersGetByResourceGroupAsyncCollectionResultOfT(_watchersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DatabaseWatcherCollection.GetAll"), data => new DatabaseWatcherResource(Client, data));
+            return new AsyncPageableWrapper<DatabaseWatcherData, DatabaseWatcherResource>(new DatabaseWatcherDataAsyncCollectionResultOfT(_watchersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DatabaseWatcherCollection.GetAll"), data => new DatabaseWatcherResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatabaseWatcherData, DatabaseWatcherResource>(new WatchersGetByResourceGroupCollectionResultOfT(_watchersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DatabaseWatcherCollection.GetAll"), data => new DatabaseWatcherResource(Client, data));
+            return new PageableWrapper<DatabaseWatcherData, DatabaseWatcherResource>(new DatabaseWatcherDataCollectionResultOfT(_watchersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DatabaseWatcherCollection.GetAll"), data => new DatabaseWatcherResource(Client, data));
         }
 
         /// <summary>

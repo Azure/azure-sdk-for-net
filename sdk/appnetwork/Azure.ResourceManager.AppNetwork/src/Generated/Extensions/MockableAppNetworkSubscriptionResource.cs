@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.AppNetwork.Mocking
 
         private ClientDiagnostics AppLinksClientDiagnostics => _appLinksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppNetwork.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AppLinks AppLinksRestClient => _appLinksRestClient ??= new AppLinks(AppLinksClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
+        private AppLinks AppLinksRestClient => _appLinksRestClient ??= new AppLinks(AppLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01-preview");
 
         private ClientDiagnostics AvailableVersionsClientDiagnostics => _availableVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppNetwork.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AvailableVersions AvailableVersionsRestClient => _availableVersionsRestClient ??= new AvailableVersions(AvailableVersionsClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
+        private AvailableVersions AvailableVersionsRestClient => _availableVersionsRestClient ??= new AvailableVersions(AvailableVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01-preview");
 
         /// <summary>
-        /// List AppLink resources by subscription.
+        /// List Azure Kubernetes Application Network resources by subscription.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppNetwork.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.AppNetwork.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppLinkData, AppLinkResource>(new AppLinksGetBySubscriptionAsyncCollectionResultOfT(AppLinksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppNetworkSubscriptionResource.GetAppLinks"), data => new AppLinkResource(Client, data));
+            return new AsyncPageableWrapper<AppLinkData, AppLinkResource>(new AppLinkDataAsync0CollectionResultOfT(AppLinksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppNetworkSubscriptionResource.GetAppLinks"), data => new AppLinkResource(Client, data));
         }
 
         /// <summary>
-        /// List AppLink resources by subscription.
+        /// List Azure Kubernetes Application Network resources by subscription.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppNetwork.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.AppNetwork.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppLinkData, AppLinkResource>(new AppLinksGetBySubscriptionCollectionResultOfT(AppLinksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppNetworkSubscriptionResource.GetAppLinks"), data => new AppLinkResource(Client, data));
+            return new PageableWrapper<AppLinkData, AppLinkResource>(new AppLinkData0CollectionResultOfT(AppLinksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppNetworkSubscriptionResource.GetAppLinks"), data => new AppLinkResource(Client, data));
         }
 
         /// <summary>
-        /// List AvailableVersion resources by location.
+        /// List the Azure Kubernetes Application Network versions available in a location.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppNetwork.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppNetwork.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailableVersionsGetAppLinkAvailableVersionsByLocationAsyncCollectionResultOfT(
+            return new AppLinkAvailableVersionAsyncCollectionResultOfT(
                 AvailableVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 location,
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AppNetwork.Mocking
         }
 
         /// <summary>
-        /// List AvailableVersion resources by location.
+        /// List the Azure Kubernetes Application Network versions available in a location.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppNetwork.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppNetwork.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailableVersionsGetAppLinkAvailableVersionsByLocationCollectionResultOfT(
+            return new AppLinkAvailableVersionCollectionResultOfT(
                 AvailableVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 location,

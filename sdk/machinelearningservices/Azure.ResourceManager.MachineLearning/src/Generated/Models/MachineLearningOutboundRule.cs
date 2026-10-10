@@ -7,73 +7,62 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Outbound Rule for the managed network of a machine learning workspace.
-    /// Please note <see cref="MachineLearningOutboundRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="FqdnOutboundRule"/>, <see cref="PrivateEndpointOutboundRule"/> and <see cref="ServiceTagOutboundRule"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FqdnOutboundRule"/>, <see cref="PrivateEndpointOutboundRule"/>, and <see cref="ServiceTagOutboundRule"/>.
     /// </summary>
     public abstract partial class MachineLearningOutboundRule
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningOutboundRule"/>. </summary>
-        protected MachineLearningOutboundRule()
+        /// <param name="type"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
+        private protected MachineLearningOutboundRule(RuleType @type)
         {
+            Type = @type;
+            ParentRuleNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningOutboundRule"/>. </summary>
         /// <param name="category"> Category of a managed network Outbound Rule of a machine learning workspace. </param>
         /// <param name="status"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
-        /// <param name="outboundRuleType"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningOutboundRule(OutboundRuleCategory? category, OutboundRuleStatus? status, OutboundRuleType outboundRuleType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="type"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
+        /// <param name="errorInformation"> Error information about an outbound rule of a machine learning workspace if RuleStatus is failed. </param>
+        /// <param name="parentRuleNames"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningOutboundRule(OutboundRuleCategory? category, OutboundRuleStatus? status, RuleType @type, string errorInformation, IReadOnlyList<string> parentRuleNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             Status = status;
-            OutboundRuleType = outboundRuleType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Type = @type;
+            ErrorInformation = errorInformation;
+            ParentRuleNames = parentRuleNames;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Category of a managed network Outbound Rule of a machine learning workspace. </summary>
         [WirePath("category")]
         public OutboundRuleCategory? Category { get; set; }
+
         /// <summary> Type of a managed network Outbound Rule of a machine learning workspace. </summary>
         [WirePath("status")]
         public OutboundRuleStatus? Status { get; set; }
+
         /// <summary> Type of a managed network Outbound Rule of a machine learning workspace. </summary>
-        internal OutboundRuleType OutboundRuleType { get; set; }
+        [WirePath("type")]
+        internal RuleType Type { get; set; }
+
+        /// <summary> Error information about an outbound rule of a machine learning workspace if RuleStatus is failed. </summary>
+        [WirePath("errorInformation")]
+        public string ErrorInformation { get; }
+
+        /// <summary> Gets the ParentRuleNames. </summary>
+        [WirePath("parentRuleNames")]
+        public IReadOnlyList<string> ParentRuleNames { get; }
     }
 }

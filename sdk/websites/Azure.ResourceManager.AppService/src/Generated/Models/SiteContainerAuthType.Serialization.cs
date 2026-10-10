@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class SiteContainerAuthTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SiteContainerAuthType value) => value switch
         {
             SiteContainerAuthType.Anonymous => "Anonymous",
@@ -20,12 +21,25 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SiteContainerAuthType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SiteContainerAuthType ToSiteContainerAuthType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Anonymous")) return SiteContainerAuthType.Anonymous;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UserCredentials")) return SiteContainerAuthType.UserCredentials;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SystemIdentity")) return SiteContainerAuthType.SystemIdentity;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UserAssigned")) return SiteContainerAuthType.UserAssigned;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Anonymous"))
+            {
+                return SiteContainerAuthType.Anonymous;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UserCredentials"))
+            {
+                return SiteContainerAuthType.UserCredentials;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SystemIdentity"))
+            {
+                return SiteContainerAuthType.SystemIdentity;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UserAssigned"))
+            {
+                return SiteContainerAuthType.UserAssigned;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SiteContainerAuthType value.");
         }
     }

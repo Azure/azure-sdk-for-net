@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
 
         private ClientDiagnostics UserAssignedIdentitiesClientDiagnostics => _userAssignedIdentitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedServiceIdentities.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private UserAssignedIdentities UserAssignedIdentitiesRestClient => _userAssignedIdentitiesRestClient ??= new UserAssignedIdentities(UserAssignedIdentitiesClientDiagnostics, Pipeline, Endpoint, "2025-05-31-preview");
+        private UserAssignedIdentities UserAssignedIdentitiesRestClient => _userAssignedIdentitiesRestClient ??= new UserAssignedIdentities(UserAssignedIdentitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-31-preview");
 
         /// <summary>
         /// Lists all the userAssignedIdentities available under the specified subscription.
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<UserAssignedIdentityData, UserAssignedIdentityResource>(new UserAssignedIdentitiesGetBySubscriptionAsyncCollectionResultOfT(UserAssignedIdentitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedServiceIdentitiesSubscriptionResource.GetUserAssignedIdentities"), data => new UserAssignedIdentityResource(Client, data));
+            return new AsyncPageableWrapper<UserAssignedIdentityData, UserAssignedIdentityResource>(new UserAssignedIdentityDataAsync0CollectionResultOfT(UserAssignedIdentitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedServiceIdentitiesSubscriptionResource.GetUserAssignedIdentities"), data => new UserAssignedIdentityResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<UserAssignedIdentityData, UserAssignedIdentityResource>(new UserAssignedIdentitiesGetBySubscriptionCollectionResultOfT(UserAssignedIdentitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedServiceIdentitiesSubscriptionResource.GetUserAssignedIdentities"), data => new UserAssignedIdentityResource(Client, data));
+            return new PageableWrapper<UserAssignedIdentityData, UserAssignedIdentityResource>(new UserAssignedIdentityData0CollectionResultOfT(UserAssignedIdentitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedServiceIdentitiesSubscriptionResource.GetUserAssignedIdentities"), data => new UserAssignedIdentityResource(Client, data));
         }
     }
 }

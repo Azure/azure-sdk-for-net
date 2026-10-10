@@ -15,6 +15,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ServiceGroups
 {
@@ -54,9 +55,9 @@ namespace Azure.ResourceManager.ServiceGroups
         {
             TryGetApiVersion(ResourceType, out string serviceGroupApiVersion);
             _managementClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceGroups", ResourceType.Namespace, Diagnostics);
-            _managementClientRestClient = new ManagementClient(_managementClientClientDiagnostics, Pipeline, Endpoint, serviceGroupApiVersion ?? "2024-02-01-preview");
+            _managementClientRestClient = new ManagementClient(_managementClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceGroupApiVersion ?? "2026-08-01");
             _serviceGroupsOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceGroups", ResourceType.Namespace, Diagnostics);
-            _serviceGroupsOperationGroupRestClient = new ServiceGroupsOperationGroup(_serviceGroupsOperationGroupClientDiagnostics, Pipeline, Endpoint, serviceGroupApiVersion ?? "2024-02-01-preview");
+            _serviceGroupsOperationGroupRestClient = new ServiceGroupsOperationGroup(_serviceGroupsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceGroupApiVersion ?? "2026-08-01");
             ValidateResourceId(id);
         }
 
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.ServiceGroups
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-02-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.ServiceGroups
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-02-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -203,7 +204,7 @@ namespace Azure.ResourceManager.ServiceGroups
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-02-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -262,7 +263,7 @@ namespace Azure.ResourceManager.ServiceGroups
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-02-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -321,7 +322,7 @@ namespace Azure.ResourceManager.ServiceGroups
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-02-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -370,7 +371,7 @@ namespace Azure.ResourceManager.ServiceGroups
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-02-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -404,70 +405,6 @@ namespace Azure.ResourceManager.ServiceGroups
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Get the details of the serviceGroup's ancestors
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/serviceGroups/{serviceGroupName}/listAncestors. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ServiceGroups_ListAncestors. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-02-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ServiceGroupResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceGroupResource> GetAncestorsAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ServiceGroupData, ServiceGroupResource>(new ServiceGroupsOperationGroupGetAncestorsAsyncCollectionResultOfT(_serviceGroupsOperationGroupRestClient, Id.Name, context, "ServiceGroupResource.GetAncestors"), data => new ServiceGroupResource(Client, data));
-        }
-
-        /// <summary>
-        /// Get the details of the serviceGroup's ancestors
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/serviceGroups/{serviceGroupName}/listAncestors. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ServiceGroups_ListAncestors. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-02-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ServiceGroupResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceGroupResource> GetAncestors(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ServiceGroupData, ServiceGroupResource>(new ServiceGroupsOperationGroupGetAncestorsCollectionResultOfT(_serviceGroupsOperationGroupRestClient, Id.Name, context, "ServiceGroupResource.GetAncestors"), data => new ServiceGroupResource(Client, data));
         }
 
         /// <summary> Add a tag to the current resource. </summary>
@@ -580,10 +517,9 @@ namespace Azure.ResourceManager.ServiceGroups
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -623,10 +559,9 @@ namespace Azure.ResourceManager.ServiceGroups
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

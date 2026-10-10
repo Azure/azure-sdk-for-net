@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             TryGetApiVersion(DataBoxEdgeRoleAddonResource.ResourceType, out string dataBoxEdgeRoleAddonApiVersion);
             _addonsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", DataBoxEdgeRoleAddonResource.ResourceType.Namespace, Diagnostics);
-            _addonsRestClient = new Addons(_addonsClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeRoleAddonApiVersion ?? "2023-12-01");
+            _addonsRestClient = new Addons(_addonsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeRoleAddonApiVersion ?? "2023-12-01");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataBoxEdgeRoleAddonData, DataBoxEdgeRoleAddonResource>(new AddonsGetByRoleAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataBoxEdgeRoleAddonData, DataBoxEdgeRoleAddonResource>(new DataBoxEdgeRoleAddonDataAsyncCollectionResultOfT(
                 _addonsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataBoxEdgeRoleAddonData, DataBoxEdgeRoleAddonResource>(new AddonsGetByRoleCollectionResultOfT(
+            return new PageableWrapper<DataBoxEdgeRoleAddonData, DataBoxEdgeRoleAddonResource>(new DataBoxEdgeRoleAddonDataCollectionResultOfT(
                 _addonsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

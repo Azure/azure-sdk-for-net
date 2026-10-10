@@ -67,6 +67,20 @@ namespace Azure.Messaging.WebPubSub.Tests
             }
         }
 
+        [Test]
+        public void GetClientAccessUri_MicrosoftEntraId_ForwardsGroups()
+        {
+            var serviceClient = new WebPubSubServiceSubClass(new Uri("https://localhost"), "hub", new DefaultAzureCredential());
+            var groups = new[] { "group1", "group2" };
+
+            serviceClient.GetClientAccessUri(TimeSpan.FromMinutes(1), groups: groups);
+            serviceClient.GetClientAccessUri(DateTimeOffset.UtcNow.AddMinutes(1), groups: groups);
+
+            Assert.That(serviceClient.InvocationParameters, Has.Count.EqualTo(2));
+            CollectionAssert.AreEqual(groups, serviceClient.InvocationParameters[0][3] as IEnumerable<string>);
+            CollectionAssert.AreEqual(groups, serviceClient.InvocationParameters[1][3] as IEnumerable<string>);
+        }
+
         /// <summary>
         /// A subclass of WebPubSubServiceClient to mock method GenerateClientTokenImpl(Async)
         /// </summary>

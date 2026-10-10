@@ -40,6 +40,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _isAIToolchainOperatorEnabled = DefineProperty<bool>(nameof(IsAIToolchainOperatorEnabled), new string[] { "enabled" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterAIToolchainOperatorProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

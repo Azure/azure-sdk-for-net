@@ -111,10 +111,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("authResourceId"u8);
                 writer.WriteStringValue(AuthResourceId);
             }
-            if (Optional.IsDefined(AuthIdentity))
+            if (_authIdentityIsDefined || Optional.IsDefined(AuthIdentity))
             {
-                writer.WritePropertyName("authIdentity"u8);
-                writer.WriteObjectValue(AuthIdentity, options);
+                if (AuthIdentity != null)
+                {
+                    writer.WritePropertyName("authIdentity"u8);
+                    writer.WriteObjectValue(AuthIdentity, options);
+                }
+                else
+                {
+                    writer.WriteNull("authIdentity"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -163,6 +170,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string httpMethod = default;
             TimeSpan? timeout = default;
             ResourceIdentifier authResourceId = default;
+            bool authIdentityIsDefined = false;
             SearchIndexerDataIdentity authIdentity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -222,6 +230,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("authIdentity"u8))
                 {
+                    authIdentityIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         authIdentity = null;
@@ -232,7 +241,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new WebApiVectorizerParameters(
@@ -242,7 +251,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 timeout,
                 authResourceId,
                 authIdentity,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _authIdentityIsDefined = authIdentityIsDefined
+            };
         }
     }
 }

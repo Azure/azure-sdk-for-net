@@ -14,15 +14,15 @@ namespace Azure.Provisioning.ContainerService
     {
         /// <summary> Selects the node group that will have the least idle CPU (if tied, unused memory) after scale-up. This is useful when you have different classes of nodes, for example, high CPU or high memory nodes, and only want to expand those when there are pending pods that need a lot of those resources. </summary>
         [DataMember(Name = "least-waste")]
-        LeastWaste,
+        LeastWaste = 0,
         /// <summary> Selects the node group that would be able to schedule the most pods when scaling up. This is useful when you are using nodeSelector to make sure certain pods land on certain nodes. Note that this won't cause the autoscaler to select bigger nodes vs. smaller, as it can add multiple smaller nodes at once. </summary>
         [DataMember(Name = "most-pods")]
-        MostPods,
+        MostPods = 1,
         /// <summary> Selects the node group that has the highest priority assigned by the user. It's configuration is described in more details [here](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/expander/priority/readme.md). </summary>
         [DataMember(Name = "priority")]
-        Priority,
+        Priority = 2,
         /// <summary> Used when you don't have a particular need for the node groups to scale differently. </summary>
         [DataMember(Name = "random")]
-        Random
+        Random = 3
     }
 }

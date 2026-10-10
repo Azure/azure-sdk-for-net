@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(ResourceType, out string oracleSubscriptionApiVersion);
             _oracleSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ResourceType.Namespace, Diagnostics);
-            _oracleSubscriptionsRestClient = new OracleSubscriptions(_oracleSubscriptionsClientDiagnostics, Pipeline, Endpoint, oracleSubscriptionApiVersion ?? "2025-09-01");
+            _oracleSubscriptionsRestClient = new OracleSubscriptions(_oracleSubscriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleSubscriptionApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

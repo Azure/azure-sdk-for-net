@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.CertificateRegistration
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
 
         /// <summary> Initializes a new instance of CertificateOrdersDiagnostics for mocking. </summary>
         protected CertificateOrdersDiagnostics()
@@ -25,14 +26,16 @@ namespace Azure.ResourceManager.CertificateRegistration
         /// <summary> Initializes a new instance of CertificateOrdersDiagnostics. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal CertificateOrdersDiagnostics(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal CertificateOrdersDiagnostics(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _userAgent = new TelemetryDetails(typeof(CertificateOrdersDiagnostics).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -41,7 +44,7 @@ namespace Azure.ResourceManager.CertificateRegistration
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAppServiceCertificateOrderDetectorResponseRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, string detectorName, DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, RequestContext context)
+        internal HttpMessage CreateGetAppServiceCertificateOrderDetectorResponseRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, string detectorName, DateTimeOffset? startsOn, DateTimeOffset? endsOn, string timeGrain, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -57,13 +60,13 @@ namespace Azure.ResourceManager.CertificateRegistration
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (startOn != null)
+            if (startsOn != null)
             {
-                uri.AppendQuery("startTime", TypeFormatters.ConvertToString(startOn, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("startTime", TypeFormatters.ConvertToString(startsOn, SerializationFormat.DateTime_RFC3339), true);
             }
-            if (endOn != null)
+            if (endsOn != null)
             {
-                uri.AppendQuery("endTime", TypeFormatters.ConvertToString(endOn, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("endTime", TypeFormatters.ConvertToString(endsOn, SerializationFormat.DateTime_RFC3339), true);
             }
             if (timeGrain != null)
             {
@@ -73,6 +76,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -96,6 +100,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -119,6 +124,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

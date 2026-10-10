@@ -61,7 +61,7 @@ public class BasicResourceGraphTests
             param location string = resourceGroup().location
 
             resource query 'Microsoft.ResourceGraph/queries@2024-04-01' = {
-              name: take('query${uniqueString(resourceGroup().id)}', 24)
+              name: take('query-${uniqueString(resourceGroup().id)}', 24)
               location: location
               properties: {
                 description: queryDescription

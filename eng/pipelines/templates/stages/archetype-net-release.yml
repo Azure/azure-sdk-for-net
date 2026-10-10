@@ -38,7 +38,23 @@ stages:
               PackagesPath: $(Pipeline.Workspace)/${{parameters.ArtifactName}}
               BuildToolsPath: $(Pipeline.Workspace)/azure-sdk-build-tools
 
-  - ${{if and(in(variables['Build.Reason'], 'Manual', ''), eq(variables['System.TeamProject'], 'internal'))}}:
+  # Auto-release preparation: on an internal post-merge CI run on 'main' (IndividualCI), determine
+  # whether the merged pull request carries the 'auto-release' label and which of this pipeline's
+  # packages it changed. Runs after Signing so a signing failure fails fast (release cannot proceed).
+  # Emits per-artifact 'ReleaseArtifact_<safeName>' output variables consumed by the Release stages.
+  # Implemented by the cross-language shared template synced under eng/common.
+  - ${{ if and(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['System.TeamProject'], 'internal')) }}:
+    - template: /eng/common/pipelines/templates/stages/archetype-auto-release-prepare.yml
+      parameters:
+        DependsOn:
+          - Signing
+        Artifacts: ${{ parameters.Artifacts }}
+        Condition: and(succeeded(), ne(variables['SetDevVersion'], 'true'), ne(variables['Skip.Release'], 'true'), ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net-pr'))
+
+  # Release stages are compiled for manual releases (existing behavior, any branch) and for internal
+  # post-merge CI on 'main' (IndividualCI) to enable auto-release. On the auto-release path each stage
+  # additionally gates on the merged PR's 'auto-release' label and whether that package changed.
+  - ${{ if and(eq(variables['System.TeamProject'], 'internal'), or(in(variables['Build.Reason'], 'Manual', ''), and(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/heads/main')))) }}:
     - ${{ each artifact in parameters.Artifacts }}:
       - ${{if ne(artifact.skipReleaseStage, 'true')}}:
         - stage: Release_${{artifact.safeName}}
@@ -46,8 +62,21 @@ stages:
             - template: /eng/pipelines/templates/variables/globals.yml
             - template: /eng/pipelines/templates/variables/image.yml
           displayName: 'Release: ${{artifact.name}}'
-          dependsOn: Signing
-          condition: and(succeeded(), ne(variables['SetDevVersion'], 'true'), ne(variables['Skip.Release'], 'true'), ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net-pr'))
+          ${{ if eq(variables['Build.Reason'], 'IndividualCI') }}:
+            # Auto-release path: only release when the merged PR is labeled and changed this package.
+            dependsOn:
+              - Signing
+              - AutoReleasePrepare
+            condition: >-
+              and(succeeded(),
+                  ne(variables['SetDevVersion'], 'true'),
+                  ne(variables['Skip.Release'], 'true'),
+                  ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net-pr'),
+                  eq(dependencies.AutoReleasePrepare.outputs['ResolveAutoReleasePackages.resolve.ReleaseArtifact_${{artifact.safeName}}'], 'true'))
+          ${{ else }}:
+            # Manual release path: unchanged existing behavior.
+            dependsOn: Signing
+            condition: and(succeeded(), ne(variables['SetDevVersion'], 'true'), ne(variables['Skip.Release'], 'true'), ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net-pr'))
           pool:
             name: $(WINDOWSPOOL)
             image: $(WINDOWSVMIMAGE)
@@ -101,7 +130,11 @@ stages:
               - deployment: PublishPackage
                 displayName: Publish package to ${{ parameters.PublicFeed }} and Dev Feed
                 condition: and(succeeded(), ne(variables['Skip.PublishPackage'], 'true'))
-                environment: ${{ parameters.PublicPublishEnvironment }}
+                # Auto-release is fully automated, so use an environment with no approval checks.
+                ${{ if and(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['System.TeamProject'], 'internal')) }}:
+                  environment: none
+                ${{ else }}:
+                  environment: ${{ parameters.PublicPublishEnvironment }}
                 dependsOn: TagRepository
 
                 pool:
@@ -121,15 +154,45 @@ stages:
                   runOnce:
                     deploy:
                       steps:
-                        - task: 1ES.PublishNuget@1
-                          displayName: Publish ${{ artifact.name }} package to ${{ parameters.PublicFeed }}
-                          inputs:
-                            packageParentPath: '$(Pipeline.Workspace)'
-                            packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)//${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
-                            ${{ if eq(parameters.PublicFeed, 'Nuget.org') }}:
-                              nuGetFeedType: external
-                              publishFeedCredentials: Nuget.org
-                            ${{ if ne(parameters.PublicFeed, 'Nuget.org') }}:
+                        - ${{ if eq(parameters.PublicFeed, 'Nuget.org') }}:
+                          - pwsh: |
+                              $source = '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}'
+                              $destination = '$(Pipeline.Workspace)/esrp/${{artifact.safeName}}'
+                              Remove-Item -Recurse -Force $destination -ErrorAction SilentlyContinue
+                              New-Item -ItemType Directory -Path $destination | Out-Null
+                              $packages = @(Get-ChildItem -Path $source -Filter '*.nupkg' -File | Where-Object Name -NotLike '*.symbols.nupkg')
+                              if ($packages.Count -eq 0) {
+                                throw "No product NuGet packages found in $source"
+                              }
+                              $packages | Copy-Item -Destination $destination
+                            displayName: Stage NuGet packages for ESRP
+
+                          - task: EsrpRelease@14
+                            displayName: Publish ${{ artifact.name }} package to ${{ parameters.PublicFeed }} via ESRP
+                            inputs:
+                              ConnectedServiceName: 'Azure SDK PME Managed Identity'
+                              ClientId: '5f81938c-2544-4f1f-9251-dd9de5b8a81b'
+                              DomainTenantId: '975f013f-7f24-47e8-a7d3-abc4752bf346'
+                              UseManagedIdentity: true
+                              KeyVaultName: 'kv-azuresdk-codesign'
+                              SignCertName: 'azure-sdk-esrp-release-certificate'
+                              Intent: 'PackageDistribution'
+                              ContentType: 'NuGet'
+                              OrganizationName: 'azure-sdk'
+                              ContentSource: 'Folder'
+                              FolderLocation: '$(Pipeline.Workspace)/esrp/${{artifact.safeName}}'
+                              WaitForReleaseCompletion: true
+                              Owners: ${{ coalesce(variables['Build.RequestedForEmail'], 'azuresdk@microsoft.com') }}
+                              Approvers: ${{ coalesce(variables['Build.RequestedForEmail'], 'azuresdk@microsoft.com') }}
+                              ServiceEndpointUrl: 'https://api.esrp.microsoft.com'
+                              MainPublisher: 'ESRPRELPACMAN'
+
+                        - ${{ if ne(parameters.PublicFeed, 'Nuget.org') }}:
+                          - task: 1ES.PublishNuget@1
+                            displayName: Publish ${{ artifact.name }} package to ${{ parameters.PublicFeed }}
+                            inputs:
+                              packageParentPath: '$(Pipeline.Workspace)'
+                              packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
                               publishVstsFeed: ${{ parameters.PublicFeed }}
 
                         - task: 1ES.PublishNuget@1

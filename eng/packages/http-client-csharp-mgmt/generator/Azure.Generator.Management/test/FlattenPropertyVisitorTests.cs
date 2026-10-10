@@ -166,6 +166,383 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(rendered, Does.Not.Match(@"\breturn\s+(?:this\.)?Data\.Errors;"));
         }
 
+        [Test]
+        public void TestFlattenedGetterReturnsNullableDefaultWhenOptionalParentIsMissing()
+        {
+            var countProperty = InputFactory.Property("count", InputPrimitiveType.Int32, isRequired: true, serializedName: "count");
+            var propertiesModel = InputFactory.Model(
+                "TestProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [countProperty]);
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, serializedName: "properties");
+            ApplyFlattenDecorator(propertiesProperty);
+            var parentModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [parentModel, propertiesModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance)!;
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore.Invoke(visitor, [model]);
+            }
+
+            var rendered = plugin.Object.GetWriter(model).Write().Content;
+            Assert.That(rendered, Does.Contain("? ((int?)default) : Properties.Count;"));
+        }
+
+        [Test]
+        public void TestFlattenedDateTimePropertyPreservesOuterLastContractName()
+        {
+            var dateTimeType = new InputDateTimeType(
+                DateTimeKnownEncoding.Rfc3339,
+                "utcDateTime",
+                "TypeSpec.utcDateTime",
+                InputPrimitiveType.String);
+            var accessTierChangeTime = InputFactory.Property(
+                "accessTierChangeTime",
+                dateTimeType,
+                serializedName: "accessTierChangeTime");
+            var propertiesModel = InputFactory.Model(
+                "TestResourceProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [accessTierChangeTime]);
+
+            var propertiesProperty = InputFactory.Property(
+                "properties",
+                propertiesModel,
+                serializedName: "properties");
+            ApplyFlattenDecorator(propertiesProperty);
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel]);
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            var propertiesProvider = plugin.Object.TypeFactory.CreateModel(propertiesModel)!;
+
+            Assert.That(
+                propertiesProvider.Properties.Single().Name,
+                Is.EqualTo("AccessTierChangedOn"),
+                "Precondition: MTG should use its canonical name on the internal model, which has no GA contract.");
+
+            var lastContractView = new TestTypeView(parentProvider.Name);
+            lastContractView.PropertiesToBuild =
+            [
+                new PropertyProvider(
+                    null,
+                    MethodSignatureModifiers.Public,
+                    typeof(DateTimeOffset?),
+                    "AccessTierChangeOn",
+                    new AutoPropertyBody(true),
+                    lastContractView)
+            ];
+            ModelTestHelper.SetLastContractView(parentProvider, lastContractView);
+
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitTypeCore, Is.Not.Null);
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [parentProvider]);
+            }
+
+            Assert.That(
+                parentProvider.Properties.Select(p => p.Name),
+                Does.Contain("AccessTierChangeOn"));
+            Assert.That(
+                parentProvider.Properties.Select(p => p.Name),
+                Does.Not.Contain("AccessTierChangedOn"));
+        }
+
+        [Test]
+        public void TestChainedFlattenedDateTimePropertyPreservesOuterLastContractName()
+        {
+            var dateTimeType = new InputDateTimeType(
+                DateTimeKnownEncoding.Rfc3339,
+                "utcDateTime",
+                "TypeSpec.utcDateTime",
+                InputPrimitiveType.String);
+            var detailsModel = InputFactory.Model(
+                "TestScheduleDetails",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("startTime", dateTimeType, serializedName: "startTime")]);
+
+            var detailsProperty = InputFactory.Property("details", detailsModel, serializedName: "details");
+            ApplyFlattenDecorator(detailsProperty);
+            var propertiesModel = InputFactory.Model(
+                "TestResourceProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [detailsProperty]);
+
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, serializedName: "properties");
+            ApplyFlattenDecorator(propertiesProperty);
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel, detailsModel]);
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            var propertiesProvider = plugin.Object.TypeFactory.CreateModel(propertiesModel)!;
+
+            var lastContractView = new TestTypeView(parentProvider.Name);
+            lastContractView.PropertiesToBuild =
+            [
+                new PropertyProvider(
+                    null,
+                    MethodSignatureModifiers.Public,
+                    typeof(DateTimeOffset?),
+                    "StartOn",
+                    new AutoPropertyBody(true),
+                    lastContractView)
+            ];
+            ModelTestHelper.SetLastContractView(parentProvider, lastContractView);
+
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitTypeCore, Is.Not.Null);
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [parentProvider]);
+            }
+
+            Assert.That(propertiesProvider.Properties.Select(p => p.Name), Does.Contain("StartsOn"));
+            Assert.That(parentProvider.Properties.Select(p => p.Name), Does.Contain("StartOn"));
+            Assert.That(parentProvider.Properties.Select(p => p.Name), Does.Not.Contain("StartsOn"));
+        }
+
+        [Test]
+        public void TestSafeFlattenPreservesPublicLastContractWrapperProperty()
+        {
+            var conditionProperty = InputFactory.Property(
+                "condition",
+                InputPrimitiveType.String,
+                serializedName: "condition");
+            var actionModel = InputFactory.Model(
+                "TestAction",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [conditionProperty]);
+            var actionProperty = InputFactory.Property(
+                "action",
+                actionModel,
+                serializedName: "action");
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [actionProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, actionModel]);
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            var actionProvider = plugin.Object.TypeFactory.CreateModel(actionModel)!;
+
+            var lastContractView = new TestTypeView(parentProvider.Name);
+            lastContractView.PropertiesToBuild =
+            [
+                new PropertyProvider(
+                    null,
+                    MethodSignatureModifiers.Public,
+                    actionProvider.Type,
+                    "Action",
+                    new AutoPropertyBody(true),
+                    lastContractView)
+            ];
+            ModelTestHelper.SetLastContractView(parentProvider, lastContractView);
+
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitTypeCore, Is.Not.Null);
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [parentProvider]);
+            }
+
+            var action = parentProvider.Properties.Single(p => p.Name == "Action");
+            Assert.That(action.Modifiers.HasFlag(MethodSignatureModifiers.Public), Is.True);
+            Assert.That(parentProvider.Properties.Select(p => p.Name), Does.Not.Contain("Condition"));
+        }
+
+        [Test]
+        public void TestSafeFlattenIgnoresInternalLastContractWrapperProperty()
+        {
+            var skuModel = InputFactory.Model(
+                "TestSku",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("name", InputPrimitiveType.String, serializedName: "name")]);
+            var skuProperty = InputFactory.Property("sku", skuModel, serializedName: "sku");
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [skuProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, skuModel]);
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            var skuProvider = plugin.Object.TypeFactory.CreateModel(skuModel)!;
+
+            var lastContractView = new TestTypeView(parentProvider.Name);
+            lastContractView.PropertiesToBuild =
+            [
+                new PropertyProvider(
+                    null,
+                    MethodSignatureModifiers.Internal,
+                    skuProvider.Type,
+                    "Sku",
+                    new AutoPropertyBody(true),
+                    lastContractView),
+                new PropertyProvider(
+                    null,
+                    MethodSignatureModifiers.Public,
+                    typeof(string),
+                    "SkuName",
+                    new AutoPropertyBody(true),
+                    lastContractView)
+            ];
+            ModelTestHelper.SetLastContractView(parentProvider, lastContractView);
+
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitTypeCore, Is.Not.Null);
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [parentProvider]);
+            }
+
+            var sku = parentProvider.Properties.Single(p => p.Name == "Sku");
+            Assert.That(sku.Modifiers.HasFlag(MethodSignatureModifiers.Public), Is.False);
+            Assert.That(parentProvider.Properties.Select(p => p.Name), Does.Contain("SkuName"));
+        }
+
+        [Test]
+        public void TestFlattenedCollectionPreservesLastContractSetter()
+        {
+            var stagesProperty = InputFactory.Property("stages", InputFactory.Array(InputPrimitiveType.String), isRequired: true, serializedName: "stages");
+            var strategyModel = InputFactory.Model(
+                "TestUpdateRunStrategy",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [stagesProperty]);
+
+            var strategyProperty = InputFactory.Property("strategy", strategyModel, isRequired: false, serializedName: "strategy");
+            var propertiesModel = InputFactory.Model(
+                "TestUpdateRunProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [strategyProperty]);
+
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, isRequired: false, serializedName: "properties");
+            ApplyFlattenDecorator(propertiesProperty);
+            var parentModel = InputFactory.Model(
+                "TestUpdateRunData",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel, strategyModel]);
+
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel);
+            var propertiesProvider = plugin.Object.TypeFactory.CreateModel(propertiesModel);
+            Assert.That(parentProvider, Is.Not.Null);
+            Assert.That(propertiesProvider, Is.Not.Null);
+
+            var lastContractView = new TestTypeView(parentProvider!.Name);
+            lastContractView.PropertiesToBuild =
+            [
+                new PropertyProvider(
+                    null,
+                    MethodSignatureModifiers.Public,
+                    typeof(IList<string>),
+                    "StrategyStages",
+                    new AutoPropertyBody(true),
+                    lastContractView)
+            ];
+            ModelTestHelper.SetLastContractView(parentProvider, lastContractView);
+
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitTypeCore, Is.Not.Null, "Could not find LibraryVisitor.VisitTypeCore method");
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [parentProvider]);
+            }
+
+            var renderedParent = new TypeProviderWriter(parentProvider).Write().Content;
+            Assert.That(renderedParent, Does.Match(@"set\s*\{"));
+            Assert.That(renderedParent, Does.Contain("Properties = new global::Samples.Models.TestUpdateRunProperties()"));
+            Assert.That(renderedParent, Does.Contain("Properties.StrategyStages = value"));
+
+            var renderedProperties = new TypeProviderWriter(propertiesProvider!).Write().Content;
+            Assert.That(renderedProperties, Does.Match(@"set\s*\{"));
+            Assert.That(renderedProperties, Does.Contain("Strategy = new global::Samples.Models.TestUpdateRunStrategy(value)"));
+        }
+
+        [Test]
+        public void TestFlattenedCollectionSkipsDelegationSetterWhenParentCustomCodePreservesSetter()
+        {
+            var stagesProperty = InputFactory.Property("stages", InputFactory.Array(InputPrimitiveType.String), isRequired: true, serializedName: "stages");
+            var strategyModel = InputFactory.Model(
+                "TestUpdateRunStrategy",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [stagesProperty]);
+
+            var strategyProperty = InputFactory.Property("strategy", strategyModel, isRequired: false, serializedName: "strategy");
+            var propertiesModel = InputFactory.Model(
+                "TestUpdateRunProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [strategyProperty]);
+
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, isRequired: false, serializedName: "properties");
+            ApplyFlattenDecorator(propertiesProperty);
+            var parentModel = InputFactory.Model(
+                "TestUpdateRunData",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel, strategyModel]);
+
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel);
+            var propertiesProvider = plugin.Object.TypeFactory.CreateModel(propertiesModel);
+            Assert.That(parentProvider, Is.Not.Null);
+            Assert.That(propertiesProvider, Is.Not.Null);
+
+            var lastContractView = CreateStrategyStagesView(parentProvider!.Name);
+            ModelTestHelper.SetLastContractView(parentProvider, lastContractView);
+
+            var customCodeView = CreateStrategyStagesView(parentProvider.Name);
+            ManagementMockHelpers.SetCustomCodeView(parentProvider, customCodeView);
+
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitTypeCore, Is.Not.Null, "Could not find LibraryVisitor.VisitTypeCore method");
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [parentProvider]);
+            }
+
+            var renderedProperties = new TypeProviderWriter(propertiesProvider!).Write().Content;
+            Assert.That(renderedProperties, Does.Not.Match(@"set\s*\{"));
+            Assert.That(renderedProperties, Does.Not.Contain("Strategy = new global::Samples.Models.TestUpdateRunStrategy(value)"));
+        }
+
         /// <summary>
         /// Verifies that FixModelFactoryBackwardCompatOverloads correctly reorders arguments in
         /// backward-compat overloads when the primary method's parameter order has changed
@@ -419,6 +796,117 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void TestBackwardCompatNewInstanceGuardsOptionalRecursiveNestedModel()
+        {
+            var deploymentModeProperty = InputFactory.Property("deploymentMode", InputPrimitiveType.Int32, isRequired: true, serializedName: "deploymentMode");
+            var deploymentPolicyModel = InputFactory.Model(
+                "TestDeploymentPolicy",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [deploymentModeProperty]);
+            var lockLevelProperty = InputFactory.Property("lockLevel", InputPrimitiveType.Int32, isRequired: true, serializedName: "lockLevel");
+            var deploymentPolicyProperty = InputFactory.Property("deploymentPolicy", deploymentPolicyModel, serializedName: "deploymentPolicy");
+            var propertiesModel = InputFactory.Model(
+                "TestProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [lockLevelProperty, deploymentPolicyProperty]);
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, serializedName: "properties");
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel, deploymentPolicyModel]);
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(propertiesModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(deploymentPolicyModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+
+            var oldLockLevelParam = new ParameterProvider("lockLevel", $"", typeof(int));
+            var oldDeploymentModeParam = new ParameterProvider("deploymentMode", $"", new CSharpType(typeof(int)).WithNullable(true));
+            var oldSignature = new MethodSignature(
+                "TestResource",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                parentProvider.Type,
+                null,
+                [oldLockLevelParam, oldDeploymentModeParam],
+                Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), Snippet.FrameworkEnumValue(EditorBrowsableState.Never))]);
+            var constructorArguments = parentProvider.FullConstructor.Signature.Parameters
+                .Select(parameter => parameter.Name == "properties" ? Default : parameter.DefaultValue ?? Default)
+                .ToArray();
+            modelFactory.Update(methods:
+                [new MethodProvider(oldSignature, Return(New.Instance(parentProvider.Type, constructorArguments)), modelFactory)]);
+
+            ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+
+            var rendered = plugin.Object.GetWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain("new global::Samples.Models.TestProperties(lockLevel,"));
+            Assert.That(rendered, Does.Contain("(deploymentMode is null) ? default : new global::Samples.Models.TestDeploymentPolicy(deploymentMode.GetValueOrDefault(),"));
+        }
+
+        [Test]
+        public void TestBackwardCompatNewInstanceGuardsRecursiveNestedModelFromUnrelatedParentParameters()
+        {
+            var objectIdProperty = InputFactory.Property("objectId", InputPrimitiveType.String, serializedName: "objectId");
+            var principalTypeProperty = InputFactory.Property("principalType", InputPrimitiveType.Int32, isRequired: true, serializedName: "principalType");
+            var tenantIdProperty = InputFactory.Property("tenantId", InputPrimitiveType.String, serializedName: "tenantId");
+            var externalIdentityModel = InputFactory.Model(
+                "TestExternalIdentity",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [objectIdProperty, principalTypeProperty, tenantIdProperty]);
+            var roleTypeProperty = InputFactory.Property("roleType", InputPrimitiveType.String, serializedName: "roleType");
+            var externalIdentityProperty = InputFactory.Property("externalIdentity", externalIdentityModel, serializedName: "externalIdentity");
+            var provisioningStateProperty = InputFactory.Property("provisioningState", InputPrimitiveType.String, serializedName: "provisioningState");
+            var propertiesModel = InputFactory.Model(
+                "TestProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [roleTypeProperty, externalIdentityProperty, provisioningStateProperty]);
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, serializedName: "properties");
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel, externalIdentityModel]);
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(propertiesModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(externalIdentityModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+
+            var oldRoleTypeParam = new ParameterProvider("roleType", $"", typeof(string), Default);
+            var oldObjectIdParam = new ParameterProvider("objectId", $"", typeof(string), Default);
+            var oldPrincipalTypeParam = new ParameterProvider("principalType", $"", new CSharpType(typeof(int)).WithNullable(true), Default);
+            var oldTenantIdParam = new ParameterProvider("tenantId", $"", typeof(string), Default);
+            var oldProvisioningStateParam = new ParameterProvider("provisioningState", $"", typeof(string), Default);
+            var oldSignature = new MethodSignature(
+                "TestResource",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                parentProvider.Type,
+                null,
+                [oldRoleTypeParam, oldObjectIdParam, oldPrincipalTypeParam, oldTenantIdParam, oldProvisioningStateParam],
+                Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), Snippet.FrameworkEnumValue(EditorBrowsableState.Never))]);
+            var constructorArguments = parentProvider.FullConstructor.Signature.Parameters
+                .Select(parameter => parameter.Name == "properties" ? Default : parameter.DefaultValue ?? Default)
+                .ToArray();
+            modelFactory.Update(methods:
+                [new MethodProvider(oldSignature, Return(New.Instance(parentProvider.Type, constructorArguments)), modelFactory)]);
+
+            ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+
+            var rendered = plugin.Object.GetWriter(modelFactory).Write().Content;
+            var parentGuard = rendered[..rendered.IndexOf("? default : new global::Samples.Models.TestProperties", StringComparison.Ordinal)];
+            Assert.That(parentGuard, Does.Contain("roleType is null"));
+            Assert.That(parentGuard, Does.Contain("objectId is null"));
+            Assert.That(parentGuard, Does.Contain("principalType is null"));
+            Assert.That(parentGuard, Does.Contain("tenantId is null"));
+            Assert.That(parentGuard, Does.Contain("provisioningState is null"));
+            Assert.That(rendered, Does.Contain("(((objectId is null) && (principalType is null)) && (tenantId is null)) ? default : new global::Samples.Models.TestExternalIdentity(objectId, principalType.GetValueOrDefault(), tenantId,"));
+        }
+
+        [Test]
         public void TestBackwardCompatNewInstanceSkipsNamedConstructorMismatch()
         {
             var provisioningStateProperty = InputFactory.Property("provisioningState", InputPrimitiveType.String, serializedName: "provisioningState");
@@ -582,9 +1070,9 @@ namespace Azure.Generator.Mgmt.Tests
                 null,
                 [new ParameterProvider("testProvisioningState", $"", typeof(string))]);
 
-            var lastContractView = new TestModelFactoryView(modelFactory.Name);
+            var lastContractView = new TestTypeView(modelFactory.Name);
             lastContractView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView)];
-            SetLastContractView(modelFactory, lastContractView);
+            ModelTestHelper.SetLastContractView(modelFactory, lastContractView);
 
             ProcessTypeForBackCompatibility(modelFactory);
 
@@ -775,14 +1263,6 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(actualName, Is.EqualTo(expectedName), $"Expected parameter '{expectedName}' at {context}, but got '{actualName ?? arg.GetType().Name}'");
         }
 
-        private static void SetLastContractView(TypeProvider typeProvider, TypeProvider lastContractView)
-        {
-            typeof(TypeProvider).GetField(
-                    "_lastContractView",
-                    BindingFlags.NonPublic | BindingFlags.Instance)!
-                .SetValue(typeProvider, new Lazy<TypeProvider?>(() => lastContractView));
-        }
-
         private static void ProcessTypeForBackCompatibility(TypeProvider typeProvider)
         {
             typeof(TypeProvider).GetMethod(
@@ -791,22 +1271,41 @@ namespace Azure.Generator.Mgmt.Tests
                 .Invoke(typeProvider, null);
         }
 
-        private class TestModelFactoryView : TypeProvider
+        private static TestTypeView CreateStrategyStagesView(string name)
+        {
+            var view = new TestTypeView(name);
+            view.PropertiesToBuild =
+            [
+                new PropertyProvider(
+                    null,
+                    MethodSignatureModifiers.Public,
+                    typeof(IList<string>),
+                    "StrategyStages",
+                    new AutoPropertyBody(true),
+                    view)
+            ];
+            return view;
+        }
+
+        private class TestTypeView : TypeProvider
         {
             private readonly string _name;
 
-            public TestModelFactoryView(string name)
+            public TestTypeView(string name)
             {
                 _name = name;
             }
 
             public MethodProvider[] MethodsToBuild { get; set; } = [];
+            public PropertyProvider[] PropertiesToBuild { get; set; } = [];
 
             protected override string BuildName() => _name;
 
             protected override string BuildRelativeFilePath() => $"{Name}.cs";
 
             protected override MethodProvider[] BuildMethods() => MethodsToBuild;
+
+            protected override PropertyProvider[] BuildProperties() => PropertiesToBuild;
         }
 
         private static void ApplyFlattenDecorator(InputModelProperty property)
@@ -819,6 +1318,152 @@ namespace Azure.Generator.Mgmt.Tests
                 BindingFlags.Public | BindingFlags.Instance);
             Assert.That(decoratorsProperty, Is.Not.Null, "Could not find InputModelProperty.Decorators property");
             decoratorsProperty!.SetValue(property, new[] { decorator });
+        }
+
+        [Test]
+        public void TestPropertyFlattenSkipsDynamicPatchProperty()
+        {
+            var valueProperty = InputFactory.Property("value", InputPrimitiveType.String, isRequired: true, serializedName: "value");
+            var propertiesModel = InputFactory.Model(
+                "TestProperties",
+                properties: [valueProperty],
+                isDynamicModel: true);
+
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, isRequired: true, serializedName: "properties");
+            ApplyFlattenDecorator(propertiesProperty);
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                properties: [propertiesProperty],
+                isDynamicModel: true);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel]);
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+
+            RunVisitors(parentProvider);
+
+            Assert.That(parentProvider.Properties.Count(p => p.Name == "Patch"), Is.EqualTo(1));
+            Assert.That(parentProvider.Properties.Any(p => p.Name == "Value"), Is.True);
+        }
+
+        [Test]
+        public void TestSafeFlattenIgnoresDynamicPatchProperty()
+        {
+            var valueProperty = InputFactory.Property("value", InputPrimitiveType.String, isRequired: true, serializedName: "value");
+            var wrapperModel = InputFactory.Model(
+                "WrapperModel",
+                properties: [valueProperty],
+                isDynamicModel: true);
+            var wrapperProperty = InputFactory.Property("wrapper", wrapperModel, isRequired: true, serializedName: "wrapper");
+            var parentModel = InputFactory.Model(
+                "ParentModel",
+                properties: [wrapperProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, wrapperModel]);
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+
+            RunVisitors(parentProvider);
+
+            AssertSafeFlattenApplied(parentProvider, "dynamic Patch property");
+        }
+
+        [Test]
+        public void TestSafeFlattenCountsCustomizedReplacementProperty()
+        {
+            var nameProperty = InputFactory.Property("name", InputPrimitiveType.String, isRequired: true, serializedName: "name");
+            var tierProperty = InputFactory.Property("tier", InputPrimitiveType.String, isRequired: false, serializedName: "tier");
+            var skuModel = InputFactory.Model(
+                "TestSku",
+                properties: [nameProperty, tierProperty]);
+            var skuProperty = InputFactory.Property("sku", skuModel, isRequired: false, serializedName: "sku");
+            var parentModel = InputFactory.Model(
+                "ParentModel",
+                properties: [skuProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, skuModel]);
+            var skuProvider = plugin.Object.TypeFactory.CreateModel(skuModel)!;
+            var customCodeView = new TestTypeView(skuProvider.Name)
+            {
+                PropertiesToBuild =
+                [
+                    new PropertyProvider(
+                        null,
+                        MethodSignatureModifiers.Public,
+                        typeof(string),
+                        "Name",
+                        new AutoPropertyBody(true),
+                        skuProvider)
+                ]
+            };
+            ManagementMockHelpers.SetCustomCodeView(skuProvider, customCodeView);
+
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+
+            RunVisitors(parentProvider);
+
+            var resultingSkuProperty = parentProvider.Properties.Single(p => p.Name == "Sku");
+            Assert.That(
+                resultingSkuProperty.Modifiers.HasFlag(MethodSignatureModifiers.Public),
+                Is.True,
+                "A model with generated Tier and customized Name properties must not be treated as a single-property wrapper.");
+            Assert.That(parentProvider.Properties.Any(p => p.Name == "SkuTier"), Is.False);
+        }
+
+        [Test]
+        public void TestSafeFlattenCountsIndependentCustomPropertyWithoutWireInfo()
+        {
+            var valueProperty = InputFactory.Property("value", InputPrimitiveType.String, isRequired: true, serializedName: "value");
+            var wrapperModel = InputFactory.Model(
+                "WrapperModel",
+                properties: [valueProperty]);
+            var wrapperProperty = InputFactory.Property("wrapper", wrapperModel, isRequired: true, serializedName: "wrapper");
+            var parentModel = InputFactory.Model(
+                "ParentModel",
+                properties: [wrapperProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, wrapperModel]);
+            var wrapperProvider = plugin.Object.TypeFactory.CreateModel(wrapperModel)!;
+            var customCodeView = new TestTypeView(wrapperProvider.Name)
+            {
+                PropertiesToBuild =
+                [
+                    new PropertyProvider(
+                        null,
+                        MethodSignatureModifiers.Public,
+                        typeof(string),
+                        "DisplayName",
+                        new AutoPropertyBody(true),
+                        wrapperProvider)
+                ]
+            };
+            ManagementMockHelpers.SetCustomCodeView(wrapperProvider, customCodeView);
+
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+
+            RunVisitors(parentProvider);
+
+            var resultingWrapperProperty = parentProvider.Properties.Single(p => p.Name == "Wrapper");
+            Assert.That(
+                resultingWrapperProperty.Modifiers.HasFlag(MethodSignatureModifiers.Public),
+                Is.True,
+                "A custom public property without wire metadata must contribute to the model's public property count.");
+            Assert.That(parentProvider.Properties.Any(p => p.Name == "WrapperValue"), Is.False);
+        }
+
+        private static void RunVisitors(ModelProvider model)
+        {
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitTypeCore, Is.Not.Null);
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [model]);
+            }
         }
 
         /// <summary>

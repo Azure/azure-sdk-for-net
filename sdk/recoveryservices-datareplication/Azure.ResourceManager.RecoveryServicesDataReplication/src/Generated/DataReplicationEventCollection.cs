@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             TryGetApiVersion(DataReplicationEventResource.ResourceType, out string dataReplicationEventApiVersion);
             _eventClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationEventResource.ResourceType.Namespace, Diagnostics);
-            _eventRestClient = new Event(_eventClientDiagnostics, Pipeline, Endpoint, dataReplicationEventApiVersion ?? "2024-09-01");
+            _eventRestClient = new Event(_eventClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationEventApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataReplicationEventData, DataReplicationEventResource>(new EventGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataReplicationEventData, DataReplicationEventResource>(new DataReplicationEventDataAsyncCollectionResultOfT(
                 _eventRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataReplicationEventData, DataReplicationEventResource>(new EventGetAllCollectionResultOfT(
+            return new PageableWrapper<DataReplicationEventData, DataReplicationEventResource>(new DataReplicationEventDataCollectionResultOfT(
                 _eventRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

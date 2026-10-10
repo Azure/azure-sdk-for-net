@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         {
             TryGetApiVersion(ConnectedClusterStorageClassResource.ResourceType, out string connectedClusterStorageClassApiVersion);
             _storageClassClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerOrchestratorRuntime", ConnectedClusterStorageClassResource.ResourceType.Namespace, Diagnostics);
-            _storageClassRestClient = new StorageClass(_storageClassClientDiagnostics, Pipeline, Endpoint, connectedClusterStorageClassApiVersion ?? "2024-03-01");
+            _storageClassRestClient = new StorageClass(_storageClassClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, connectedClusterStorageClassApiVersion ?? "2024-03-01");
         }
 
         /// <summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConnectedClusterStorageClassData, ConnectedClusterStorageClassResource>(new StorageClassGetAllAsyncCollectionResultOfT(_storageClassRestClient, Id.ToString(), context, "ConnectedClusterStorageClassCollection.GetAll"), data => new ConnectedClusterStorageClassResource(Client, data));
+            return new AsyncPageableWrapper<ConnectedClusterStorageClassData, ConnectedClusterStorageClassResource>(new ConnectedClusterStorageClassDataAsyncCollectionResultOfT(_storageClassRestClient, Id.ToString(), context, "ConnectedClusterStorageClassCollection.GetAll"), data => new ConnectedClusterStorageClassResource(Client, data));
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConnectedClusterStorageClassData, ConnectedClusterStorageClassResource>(new StorageClassGetAllCollectionResultOfT(_storageClassRestClient, Id.ToString(), context, "ConnectedClusterStorageClassCollection.GetAll"), data => new ConnectedClusterStorageClassResource(Client, data));
+            return new PageableWrapper<ConnectedClusterStorageClassData, ConnectedClusterStorageClassResource>(new ConnectedClusterStorageClassDataCollectionResultOfT(_storageClassRestClient, Id.ToString(), context, "ConnectedClusterStorageClassCollection.GetAll"), data => new ConnectedClusterStorageClassResource(Client, data));
         }
 
         /// <summary>

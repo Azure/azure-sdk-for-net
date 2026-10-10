@@ -41,7 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(BestPracticeResource.ResourceType, out string bestPracticeApiVersion);
             _bestPracticesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", BestPracticeResource.ResourceType.Namespace, Diagnostics);
-            _bestPracticesRestClient = new BestPractices(_bestPracticesClientDiagnostics, Pipeline, Endpoint, bestPracticeApiVersion ?? "2024-05-01");
+            _bestPracticesRestClient = new BestPractices(_bestPracticesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, bestPracticeApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -288,7 +288,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BestPracticeData, BestPracticeResource>(new BestPracticesGetAllAsyncCollectionResultOfT(_bestPracticesRestClient, context, "BestPracticeCollection.GetAll"), data => new BestPracticeResource(Client, data));
+            return new AsyncPageableWrapper<BestPracticeData, BestPracticeResource>(new BestPracticeDataAsyncCollectionResultOfT(_bestPracticesRestClient, context, "BestPracticeCollection.GetAll"), data => new BestPracticeResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BestPracticeData, BestPracticeResource>(new BestPracticesGetAllCollectionResultOfT(_bestPracticesRestClient, context, "BestPracticeCollection.GetAll"), data => new BestPracticeResource(Client, data));
+            return new PageableWrapper<BestPracticeData, BestPracticeResource>(new BestPracticeDataCollectionResultOfT(_bestPracticesRestClient, context, "BestPracticeCollection.GetAll"), data => new BestPracticeResource(Client, data));
         }
 
         /// <summary>

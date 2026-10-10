@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ManagedOps.Models
         internal ManagedOpUpdateProperties Properties { get; set; }
 
         /// <summary> Desired configuration input by the user. </summary>
-        public ManagedOpsDesiredConfigurationUpdate ManagedOpUpdateDesiredConfiguration
+        public ManagedOpsDesiredConfigurationPatch ManagedOpUpdateDesiredConfiguration
         {
             get
             {

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             TryGetApiVersion(DataReplicationJobResource.ResourceType, out string dataReplicationJobApiVersion);
             _jobClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationJobResource.ResourceType.Namespace, Diagnostics);
-            _jobRestClient = new Job(_jobClientDiagnostics, Pipeline, Endpoint, dataReplicationJobApiVersion ?? "2024-09-01");
+            _jobRestClient = new Job(_jobClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationJobApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataReplicationJobData, DataReplicationJobResource>(new JobGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataReplicationJobData, DataReplicationJobResource>(new DataReplicationJobDataAsyncCollectionResultOfT(
                 _jobRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataReplicationJobData, DataReplicationJobResource>(new JobGetAllCollectionResultOfT(
+            return new PageableWrapper<DataReplicationJobData, DataReplicationJobResource>(new DataReplicationJobDataCollectionResultOfT(
                 _jobRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

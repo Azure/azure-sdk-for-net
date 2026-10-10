@@ -88,25 +88,53 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 writer.WriteNull("uri"u8);
             }
-            if (Optional.IsDefined(AuthenticationKey))
+            if (_authenticationKeyIsDefined || Optional.IsDefined(AuthenticationKey))
             {
-                writer.WritePropertyName("key"u8);
-                writer.WriteStringValue(AuthenticationKey);
+                if (AuthenticationKey != null)
+                {
+                    writer.WritePropertyName("key"u8);
+                    writer.WriteStringValue(AuthenticationKey);
+                }
+                else
+                {
+                    writer.WriteNull("key"u8);
+                }
             }
-            if (Optional.IsDefined(ResourceId))
+            if (_resourceIdIsDefined || Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("resourceId"u8);
-                writer.WriteStringValue(ResourceId);
+                if (ResourceId != null)
+                {
+                    writer.WritePropertyName("resourceId"u8);
+                    writer.WriteStringValue(ResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("resourceId"u8);
+                }
             }
-            if (Optional.IsDefined(Timeout))
+            if (_timeoutIsDefined || Optional.IsDefined(Timeout))
             {
-                writer.WritePropertyName("timeout"u8);
-                writer.WriteStringValue(Timeout.Value, "P");
+                if (Timeout != null)
+                {
+                    writer.WritePropertyName("timeout"u8);
+                    writer.WriteStringValue(Timeout.Value, "P");
+                }
+                else
+                {
+                    writer.WriteNull("timeout"u8);
+                }
             }
-            if (Optional.IsDefined(Region))
+            if (_regionIsDefined || Optional.IsDefined(Region))
             {
-                writer.WritePropertyName("region"u8);
-                writer.WriteStringValue(Region);
+                if (Region != null)
+                {
+                    writer.WritePropertyName("region"u8);
+                    writer.WriteStringValue(Region);
+                }
+                else
+                {
+                    writer.WriteNull("region"u8);
+                }
             }
             if (Optional.IsDefined(ModelName))
             {
@@ -156,9 +184,13 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             Uri scoringUri = default;
+            bool authenticationKeyIsDefined = false;
             string authenticationKey = default;
+            bool resourceIdIsDefined = false;
             string resourceId = default;
+            bool timeoutIsDefined = false;
             TimeSpan? timeout = default;
+            bool regionIsDefined = false;
             string region = default;
             AIFoundryModelCatalogName? modelName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -176,6 +208,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("key"u8))
                 {
+                    authenticationKeyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         authenticationKey = null;
@@ -186,6 +219,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("resourceId"u8))
                 {
+                    resourceIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         resourceId = null;
@@ -196,6 +230,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("timeout"u8))
                 {
+                    timeoutIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         timeout = null;
@@ -206,6 +241,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("region"u8))
                 {
+                    regionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         region = null;
@@ -225,7 +261,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AzureMachineLearningParameters(
@@ -235,7 +271,13 @@ namespace Azure.Search.Documents.Indexes.Models
                 timeout,
                 region,
                 modelName,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _authenticationKeyIsDefined = authenticationKeyIsDefined,
+                _resourceIdIsDefined = resourceIdIsDefined,
+                _timeoutIsDefined = timeoutIsDefined,
+                _regionIsDefined = regionIsDefined
+            };
         }
     }
 }

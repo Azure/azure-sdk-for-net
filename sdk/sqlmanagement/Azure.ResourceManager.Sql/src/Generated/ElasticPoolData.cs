@@ -13,155 +13,269 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary>
-    /// A class representing the ElasticPool data model.
-    /// An elastic pool.
-    /// </summary>
+    /// <summary> An elastic pool. </summary>
     public partial class ElasticPoolData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ElasticPoolData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public ElasticPoolData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ElasticPoolData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Resource properties. </param>
         /// <param name="sku">
         /// The elastic pool SKU.
-        ///
         /// The list of SKUs may vary by region and support offer. To determine the SKUs (including the SKU name, tier/edition, family, and capacity) that are available to your subscription in an Azure region, use the `Capabilities_ListByLocation` REST API or the following command:
-        ///
         /// ```azurecli
         /// az sql elastic-pool list-editions -l &lt;location&gt; -o table
-        /// ````
-        ///
+        /// ```
         /// </param>
         /// <param name="kind"> Kind of elastic pool. This is metadata used for the Azure portal experience. </param>
-        /// <param name="state"> The state of the elastic pool. </param>
-        /// <param name="createdOn"> The creation date of the elastic pool (ISO8601 format). </param>
-        /// <param name="maxSizeBytes"> The storage limit for the database elastic pool in bytes. </param>
-        /// <param name="minCapacity"> Minimal capacity that serverless pool will not shrink below, if not paused. </param>
-        /// <param name="perDatabaseSettings"> The per database settings for the elastic pool. </param>
-        /// <param name="isZoneRedundant"> Whether or not this elastic pool is zone redundant, which means the replicas of this elastic pool will be spread across multiple availability zones. </param>
-        /// <param name="licenseType"> The license type to apply for this elastic pool. </param>
-        /// <param name="maintenanceConfigurationId"> Maintenance configuration id assigned to the elastic pool. This configuration defines the period when the maintenance updates will will occur. </param>
-        /// <param name="highAvailabilityReplicaCount"> The number of secondary replicas associated with the Business Critical, Premium, or Hyperscale edition elastic pool that are used to provide high availability. Applicable only to Hyperscale elastic pools. </param>
-        /// <param name="autoPauseDelay"> Time in minutes after which elastic pool is automatically paused. A value of -1 means that automatic pause is disabled. </param>
-        /// <param name="preferredEnclaveType"> Type of enclave requested on the elastic pool. </param>
-        /// <param name="availabilityZone"> Specifies the availability zone the pool's primary replica is pinned to. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string kind, ElasticPoolState? state, DateTimeOffset? createdOn, long? maxSizeBytes, double? minCapacity, ElasticPoolPerDatabaseSettings perDatabaseSettings, bool? isZoneRedundant, ElasticPoolLicenseType? licenseType, ResourceIdentifier maintenanceConfigurationId, int? highAvailabilityReplicaCount, int? autoPauseDelay, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, SqlAvailabilityZoneType? availabilityZone, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ElasticPoolProperties properties, SqlSku sku, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
+            Properties = properties;
             Sku = sku;
             Kind = kind;
-            State = state;
-            CreatedOn = createdOn;
-            MaxSizeBytes = maxSizeBytes;
-            MinCapacity = minCapacity;
-            PerDatabaseSettings = perDatabaseSettings;
-            IsZoneRedundant = isZoneRedundant;
-            LicenseType = licenseType;
-            MaintenanceConfigurationId = maintenanceConfigurationId;
-            HighAvailabilityReplicaCount = highAvailabilityReplicaCount;
-            AutoPauseDelay = autoPauseDelay;
-            PreferredEnclaveType = preferredEnclaveType;
-            AvailabilityZone = availabilityZone;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ElasticPoolData"/> for deserialization. </summary>
-        internal ElasticPoolData()
-        {
-        }
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal ElasticPoolProperties Properties { get; set; }
 
         /// <summary>
         /// The elastic pool SKU.
-        ///
         /// The list of SKUs may vary by region and support offer. To determine the SKUs (including the SKU name, tier/edition, family, and capacity) that are available to your subscription in an Azure region, use the `Capabilities_ListByLocation` REST API or the following command:
-        ///
         /// ```azurecli
         /// az sql elastic-pool list-editions -l &lt;location&gt; -o table
-        /// ````
-        ///
+        /// ```
         /// </summary>
         [WirePath("sku")]
         public SqlSku Sku { get; set; }
+
         /// <summary> Kind of elastic pool. This is metadata used for the Azure portal experience. </summary>
         [WirePath("kind")]
         public string Kind { get; }
+
         /// <summary> The state of the elastic pool. </summary>
         [WirePath("properties.state")]
-        public ElasticPoolState? State { get; }
+        public ElasticPoolState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+        }
+
         /// <summary> The creation date of the elastic pool (ISO8601 format). </summary>
         [WirePath("properties.creationDate")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> The storage limit for the database elastic pool in bytes. </summary>
         [WirePath("properties.maxSizeBytes")]
-        public long? MaxSizeBytes { get; set; }
+        public long? MaxSizeBytes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaxSizeBytes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ElasticPoolProperties();
+                }
+                Properties.MaxSizeBytes = value;
+            }
+        }
+
         /// <summary> Minimal capacity that serverless pool will not shrink below, if not paused. </summary>
         [WirePath("properties.minCapacity")]
-        public double? MinCapacity { get; set; }
+        public double? MinCapacity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MinCapacity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ElasticPoolProperties();
+                }
+                Properties.MinCapacity = value;
+            }
+        }
+
         /// <summary> The per database settings for the elastic pool. </summary>
         [WirePath("properties.perDatabaseSettings")]
-        public ElasticPoolPerDatabaseSettings PerDatabaseSettings { get; set; }
+        public ElasticPoolPerDatabaseSettings PerDatabaseSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PerDatabaseSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ElasticPoolProperties();
+                }
+                Properties.PerDatabaseSettings = value;
+            }
+        }
+
         /// <summary> Whether or not this elastic pool is zone redundant, which means the replicas of this elastic pool will be spread across multiple availability zones. </summary>
         [WirePath("properties.zoneRedundant")]
-        public bool? IsZoneRedundant { get; set; }
+        public bool? IsZoneRedundant
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsZoneRedundant;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ElasticPoolProperties();
+                }
+                Properties.IsZoneRedundant = value;
+            }
+        }
+
         /// <summary> The license type to apply for this elastic pool. </summary>
         [WirePath("properties.licenseType")]
-        public ElasticPoolLicenseType? LicenseType { get; set; }
+        public ElasticPoolLicenseType? LicenseType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LicenseType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ElasticPoolProperties();
+                }
+                Properties.LicenseType = value;
+            }
+        }
+
         /// <summary> Maintenance configuration id assigned to the elastic pool. This configuration defines the period when the maintenance updates will will occur. </summary>
         [WirePath("properties.maintenanceConfigurationId")]
-        public ResourceIdentifier MaintenanceConfigurationId { get; set; }
+        public ResourceIdentifier MaintenanceConfigurationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaintenanceConfigurationId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ElasticPoolProperties();
+                }
+                Properties.MaintenanceConfigurationId = value;
+            }
+        }
+
         /// <summary> The number of secondary replicas associated with the Business Critical, Premium, or Hyperscale edition elastic pool that are used to provide high availability. Applicable only to Hyperscale elastic pools. </summary>
         [WirePath("properties.highAvailabilityReplicaCount")]
-        public int? HighAvailabilityReplicaCount { get; set; }
+        public int? HighAvailabilityReplicaCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HighAvailabilityReplicaCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ElasticPoolProperties();
+                }
+                Properties.HighAvailabilityReplicaCount = value;
+            }
+        }
+
         /// <summary> Time in minutes after which elastic pool is automatically paused. A value of -1 means that automatic pause is disabled. </summary>
         [WirePath("properties.autoPauseDelay")]
-        public int? AutoPauseDelay { get; set; }
+        public int? AutoPauseDelay
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AutoPauseDelay;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ElasticPoolProperties();
+                }
+                Properties.AutoPauseDelay = value;
+            }
+        }
+
         /// <summary> Type of enclave requested on the elastic pool. </summary>
         [WirePath("properties.preferredEnclaveType")]
-        public SqlAlwaysEncryptedEnclaveType? PreferredEnclaveType { get; set; }
+        public SqlAlwaysEncryptedEnclaveType? PreferredEnclaveType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PreferredEnclaveType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ElasticPoolProperties();
+                }
+                Properties.PreferredEnclaveType = value;
+            }
+        }
+
         /// <summary> Specifies the availability zone the pool's primary replica is pinned to. </summary>
         [WirePath("properties.availabilityZone")]
-        public SqlAvailabilityZoneType? AvailabilityZone { get; set; }
+        public SqlAvailabilityZoneType? AvailabilityZone
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AvailabilityZone;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ElasticPoolProperties();
+                }
+                Properties.AvailabilityZone = value;
+            }
+        }
+
+        /// <summary> The name and tier of the current SKU. </summary>
+        [WirePath("properties.currentSku")]
+        public SqlSku CurrentSku
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CurrentSku;
+            }
+        }
     }
 }

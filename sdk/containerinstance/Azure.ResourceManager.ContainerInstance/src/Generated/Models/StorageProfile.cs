@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         }
 
         /// <summary> Gets the FileShares. </summary>
-        public IList<ContainerGroupFileShare> FileShares { get; }
+        public IList<ContainerGroupFileShare> FileShares { get; } = new ChangeTrackingList<ContainerGroupFileShare>();
     }
 }

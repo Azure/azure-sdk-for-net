@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct LoadBalancerSkuTier : IEquatable<LoadBalancerSkuTier>
     {
         private readonly string _value;
+        /// <summary> Regional. </summary>
+        private const string RegionalValue = "Regional";
+        /// <summary> Global. </summary>
+        private const string GlobalValue = "Global";
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancerSkuTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LoadBalancerSkuTier(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RegionalValue = "Regional";
-        private const string GlobalValue = "Global";
+            _value = value;
+        }
 
         /// <summary> Regional. </summary>
         public static LoadBalancerSkuTier Regional { get; } = new LoadBalancerSkuTier(RegionalValue);
+
         /// <summary> Global. </summary>
         public static LoadBalancerSkuTier Global { get; } = new LoadBalancerSkuTier(GlobalValue);
+
         /// <summary> Determines if two <see cref="LoadBalancerSkuTier"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LoadBalancerSkuTier left, LoadBalancerSkuTier right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LoadBalancerSkuTier"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LoadBalancerSkuTier left, LoadBalancerSkuTier right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LoadBalancerSkuTier"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LoadBalancerSkuTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LoadBalancerSkuTier(string value) => new LoadBalancerSkuTier(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LoadBalancerSkuTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LoadBalancerSkuTier?(string value) => value == null ? null : new LoadBalancerSkuTier(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LoadBalancerSkuTier other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LoadBalancerSkuTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

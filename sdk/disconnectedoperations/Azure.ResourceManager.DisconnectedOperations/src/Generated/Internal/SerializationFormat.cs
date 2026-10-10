@@ -44,6 +44,10 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// <summary> The Base64Url bytes format. </summary>
         Bytes_Base64Url = 16,
         /// <summary> The Base64 bytes format. </summary>
-        Bytes_Base64 = 17
+        Bytes_Base64 = 17,
+        /// <summary> The seconds duration format with int64 precision. </summary>
+        Duration_Seconds_Int64 = 18,
+        /// <summary> The milliseconds duration format with int64 precision. </summary>
+        Duration_Milliseconds_Int64 = 19
     }
 }

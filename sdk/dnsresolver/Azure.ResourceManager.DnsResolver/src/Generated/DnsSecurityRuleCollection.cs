@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             TryGetApiVersion(DnsSecurityRuleResource.ResourceType, out string dnsSecurityRuleApiVersion);
             _dnsSecurityRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsSecurityRuleResource.ResourceType.Namespace, Diagnostics);
-            _dnsSecurityRulesRestClient = new DnsSecurityRules(_dnsSecurityRulesClientDiagnostics, Pipeline, Endpoint, dnsSecurityRuleApiVersion ?? "2025-10-01-preview");
+            _dnsSecurityRulesRestClient = new DnsSecurityRules(_dnsSecurityRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dnsSecurityRuleApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DnsSecurityRuleData, DnsSecurityRuleResource>(new DnsSecurityRulesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DnsSecurityRuleData, DnsSecurityRuleResource>(new DnsSecurityRuleDataAsyncCollectionResultOfT(
                 _dnsSecurityRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DnsSecurityRuleData, DnsSecurityRuleResource>(new DnsSecurityRulesGetAllCollectionResultOfT(
+            return new PageableWrapper<DnsSecurityRuleData, DnsSecurityRuleResource>(new DnsSecurityRuleDataCollectionResultOfT(
                 _dnsSecurityRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

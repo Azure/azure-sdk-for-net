@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(ResourceType, out string chaosFaultApiVersion);
             _chaosFaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _chaosFaultRestClient = new ChaosFault(_chaosFaultClientDiagnostics, Pipeline, Endpoint, chaosFaultApiVersion ?? "2026-04-01-preview");
+            _chaosFaultRestClient = new ChaosFault(_chaosFaultClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, chaosFaultApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 

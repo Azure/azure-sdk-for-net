@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
 
         private ClientDiagnostics SubscriptionOperationGroupClientDiagnostics => _subscriptionOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Subscription.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SubscriptionOperationGroup SubscriptionOperationGroupRestClient => _subscriptionOperationGroupRestClient ??= new SubscriptionOperationGroup(SubscriptionOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
+        private SubscriptionOperationGroup SubscriptionOperationGroupRestClient => _subscriptionOperationGroupRestClient ??= new SubscriptionOperationGroup(SubscriptionOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-11-01-preview");
 
         /// <summary>
         /// The operation to view Initiator Subscription Changed Request

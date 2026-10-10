@@ -142,7 +142,7 @@ namespace Azure.AI.Translation.Document
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateStartTranslationRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DocumentTranslationClient.StartTranslationAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DocumentTranslationClient.StartTranslation", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -206,7 +206,7 @@ namespace Azure.AI.Translation.Document
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            return ProtocolOperationHelpers.Convert(await StartTranslationAsync(waitUntil, body, cancellationToken.ToRequestContext()).ConfigureAwait(false), response => (TranslationStatusResult)response, ClientDiagnostics, "DocumentTranslationClient.StartTranslationAsync");
+            return ProtocolOperationHelpers.Convert(await StartTranslationAsync(waitUntil, body, cancellationToken.ToRequestContext()).ConfigureAwait(false), response => (TranslationStatusResult)response, ClientDiagnostics, "DocumentTranslationClient.StartTranslation");
         }
 
         /// <summary>
@@ -920,7 +920,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetSupportedFormats(string @type, RequestContext context)
+        public virtual Response GetSupportedFormats(string @type, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentTranslationClient.GetSupportedFormats");
             scope.Start();
@@ -951,7 +951,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetSupportedFormatsAsync(string @type, RequestContext context)
+        public virtual async Task<Response> GetSupportedFormatsAsync(string @type, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentTranslationClient.GetSupportedFormats");
             scope.Start();
@@ -965,36 +965,6 @@ namespace Azure.AI.Translation.Document
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// The list of supported formats supported by the Document Translation
-        /// service.
-        /// The list includes the common file extension, as well as the
-        /// content-type if using the upload API.
-        /// </summary>
-        /// <param name="type"> the type of format like document or glossary . </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SupportedFileFormats> GetSupportedFormats(FileFormatType? @type = default, CancellationToken cancellationToken = default)
-        {
-            Response result = GetSupportedFormats(@type?.ToString(), cancellationToken.ToRequestContext());
-            return Response.FromValue((SupportedFileFormats)result, result);
-        }
-
-        /// <summary>
-        /// The list of supported formats supported by the Document Translation
-        /// service.
-        /// The list includes the common file extension, as well as the
-        /// content-type if using the upload API.
-        /// </summary>
-        /// <param name="type"> the type of format like document or glossary . </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SupportedFileFormats>> GetSupportedFormatsAsync(FileFormatType? @type = default, CancellationToken cancellationToken = default)
-        {
-            Response result = await GetSupportedFormatsAsync(@type?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SupportedFileFormats)result, result);
         }
     }
 }

@@ -74,20 +74,41 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 throw new FormatException($"The model {nameof(RescoringOptions)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(EnableRescoring))
+            if (_enableRescoringIsDefined || Optional.IsDefined(EnableRescoring))
             {
-                writer.WritePropertyName("enableRescoring"u8);
-                writer.WriteBooleanValue(EnableRescoring.Value);
+                if (EnableRescoring != null)
+                {
+                    writer.WritePropertyName("enableRescoring"u8);
+                    writer.WriteBooleanValue(EnableRescoring.Value);
+                }
+                else
+                {
+                    writer.WriteNull("enableRescoring"u8);
+                }
             }
-            if (Optional.IsDefined(DefaultOversampling))
+            if (_defaultOversamplingIsDefined || Optional.IsDefined(DefaultOversampling))
             {
-                writer.WritePropertyName("defaultOversampling"u8);
-                writer.WriteNumberValue(DefaultOversampling.Value);
+                if (DefaultOversampling != null)
+                {
+                    writer.WritePropertyName("defaultOversampling"u8);
+                    writer.WriteNumberValue(DefaultOversampling.Value);
+                }
+                else
+                {
+                    writer.WriteNull("defaultOversampling"u8);
+                }
             }
-            if (Optional.IsDefined(RescoreStorageMethod))
+            if (_rescoreStorageMethodIsDefined || Optional.IsDefined(RescoreStorageMethod))
             {
-                writer.WritePropertyName("rescoreStorageMethod"u8);
-                writer.WriteStringValue(RescoreStorageMethod.Value.ToString());
+                if (RescoreStorageMethod != null)
+                {
+                    writer.WritePropertyName("rescoreStorageMethod"u8);
+                    writer.WriteStringValue(RescoreStorageMethod.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("rescoreStorageMethod"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -131,14 +152,18 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
+            bool enableRescoringIsDefined = false;
             bool? enableRescoring = default;
+            bool defaultOversamplingIsDefined = false;
             double? defaultOversampling = default;
+            bool rescoreStorageMethodIsDefined = false;
             VectorSearchCompressionRescoreStorageMethod? rescoreStorageMethod = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("enableRescoring"u8))
                 {
+                    enableRescoringIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         enableRescoring = null;
@@ -149,6 +174,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("defaultOversampling"u8))
                 {
+                    defaultOversamplingIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         defaultOversampling = null;
@@ -159,6 +185,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("rescoreStorageMethod"u8))
                 {
+                    rescoreStorageMethodIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         rescoreStorageMethod = null;
@@ -169,10 +196,15 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RescoringOptions(enableRescoring, defaultOversampling, rescoreStorageMethod, additionalBinaryDataProperties);
+            return new RescoringOptions(enableRescoring, defaultOversampling, rescoreStorageMethod, additionalBinaryDataProperties)
+            {
+                _enableRescoringIsDefined = enableRescoringIsDefined,
+                _defaultOversamplingIsDefined = defaultOversamplingIsDefined,
+                _rescoreStorageMethodIsDefined = rescoreStorageMethodIsDefined
+            };
         }
     }
 }

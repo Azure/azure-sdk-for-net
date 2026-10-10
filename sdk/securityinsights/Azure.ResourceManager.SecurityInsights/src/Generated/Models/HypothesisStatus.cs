@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct HypothesisStatus : IEquatable<HypothesisStatus>
     {
         private readonly string _value;
+        /// <summary> Unknown. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> Invalidated. </summary>
+        private const string InvalidatedValue = "Invalidated";
+        /// <summary> Validated. </summary>
+        private const string ValidatedValue = "Validated";
 
         /// <summary> Initializes a new instance of <see cref="HypothesisStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HypothesisStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string InvalidatedValue = "Invalidated";
-        private const string ValidatedValue = "Validated";
+            _value = value;
+        }
 
         /// <summary> Unknown. </summary>
         public static HypothesisStatus Unknown { get; } = new HypothesisStatus(UnknownValue);
+
         /// <summary> Invalidated. </summary>
         public static HypothesisStatus Invalidated { get; } = new HypothesisStatus(InvalidatedValue);
+
         /// <summary> Validated. </summary>
         public static HypothesisStatus Validated { get; } = new HypothesisStatus(ValidatedValue);
+
         /// <summary> Determines if two <see cref="HypothesisStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HypothesisStatus left, HypothesisStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HypothesisStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HypothesisStatus left, HypothesisStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HypothesisStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HypothesisStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HypothesisStatus(string value) => new HypothesisStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HypothesisStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HypothesisStatus?(string value) => value == null ? null : new HypothesisStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HypothesisStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HypothesisStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

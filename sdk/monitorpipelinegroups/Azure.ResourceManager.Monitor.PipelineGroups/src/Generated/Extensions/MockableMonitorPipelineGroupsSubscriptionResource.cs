@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Mocking
 
         private ClientDiagnostics PipelineGroupOperationsClientDiagnostics => _pipelineGroupOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.PipelineGroups.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PipelineGroupOperations PipelineGroupOperationsRestClient => _pipelineGroupOperationsRestClient ??= new PipelineGroupOperations(PipelineGroupOperationsClientDiagnostics, Pipeline, Endpoint, "2026-04-01");
+        private PipelineGroupOperations PipelineGroupOperationsRestClient => _pipelineGroupOperationsRestClient ??= new PipelineGroupOperations(PipelineGroupOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         /// <summary>
         /// Lists all workspaces in the specified subscription
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PipelineGroupData, PipelineGroupResource>(new PipelineGroupOperationsGetBySubscriptionAsyncCollectionResultOfT(PipelineGroupOperationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorPipelineGroupsSubscriptionResource.GetPipelineGroups"), data => new PipelineGroupResource(Client, data));
+            return new AsyncPageableWrapper<PipelineGroupData, PipelineGroupResource>(new PipelineGroupDataAsync0CollectionResultOfT(PipelineGroupOperationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorPipelineGroupsSubscriptionResource.GetPipelineGroups"), data => new PipelineGroupResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PipelineGroupData, PipelineGroupResource>(new PipelineGroupOperationsGetBySubscriptionCollectionResultOfT(PipelineGroupOperationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorPipelineGroupsSubscriptionResource.GetPipelineGroups"), data => new PipelineGroupResource(Client, data));
+            return new PageableWrapper<PipelineGroupData, PipelineGroupResource>(new PipelineGroupData0CollectionResultOfT(PipelineGroupOperationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorPipelineGroupsSubscriptionResource.GetPipelineGroups"), data => new PipelineGroupResource(Client, data));
         }
     }
 }

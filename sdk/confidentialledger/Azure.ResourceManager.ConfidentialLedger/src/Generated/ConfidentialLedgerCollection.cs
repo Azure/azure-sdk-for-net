@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         {
             TryGetApiVersion(ConfidentialLedgerResource.ResourceType, out string confidentialLedgerApiVersion);
             _ledgerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConfidentialLedger", ConfidentialLedgerResource.ResourceType.Namespace, Diagnostics);
-            _ledgerRestClient = new Ledger(_ledgerClientDiagnostics, Pipeline, Endpoint, confidentialLedgerApiVersion ?? "2026-02-23");
+            _ledgerRestClient = new Ledger(_ledgerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, confidentialLedgerApiVersion ?? "2026-02-23");
             ValidateResourceId(id);
         }
 
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConfidentialLedgerData, ConfidentialLedgerResource>(new LedgerGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ConfidentialLedgerData, ConfidentialLedgerResource>(new ConfidentialLedgerDataAsyncCollectionResultOfT(
                 _ledgerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConfidentialLedgerData, ConfidentialLedgerResource>(new LedgerGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<ConfidentialLedgerData, ConfidentialLedgerResource>(new ConfidentialLedgerDataCollectionResultOfT(
                 _ledgerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         {
             TryGetApiVersion(DatabaseWatcherAlertRuleResource.ResourceType, out string databaseWatcherAlertRuleApiVersion);
             _alertRuleResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DatabaseWatcher", DatabaseWatcherAlertRuleResource.ResourceType.Namespace, Diagnostics);
-            _alertRuleResourcesRestClient = new AlertRuleResources(_alertRuleResourcesClientDiagnostics, Pipeline, Endpoint, databaseWatcherAlertRuleApiVersion ?? "2025-01-02");
+            _alertRuleResourcesRestClient = new AlertRuleResources(_alertRuleResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databaseWatcherAlertRuleApiVersion ?? "2025-01-02");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatabaseWatcherAlertRuleData, DatabaseWatcherAlertRuleResource>(new AlertRuleResourcesGetByParentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DatabaseWatcherAlertRuleData, DatabaseWatcherAlertRuleResource>(new DatabaseWatcherAlertRuleDataAsyncCollectionResultOfT(
                 _alertRuleResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatabaseWatcherAlertRuleData, DatabaseWatcherAlertRuleResource>(new AlertRuleResourcesGetByParentCollectionResultOfT(
+            return new PageableWrapper<DatabaseWatcherAlertRuleData, DatabaseWatcherAlertRuleResource>(new DatabaseWatcherAlertRuleDataCollectionResultOfT(
                 _alertRuleResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

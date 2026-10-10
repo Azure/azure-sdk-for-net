@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.AlertRuleRecommendations.csproj" />
+  <Project Path="tests/Azure.ResourceManager.AlertRuleRecommendations.Tests.csproj" />
+</Solution>

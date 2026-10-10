@@ -7,13 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The workflow output parameter.
-    /// Serialized Name: WorkflowOutputParameter
-    /// </summary>
+    /// <summary> The workflow output parameter. </summary>
     public partial class WorkflowOutputContent : WorkflowContent
     {
         /// <summary> Initializes a new instance of <see cref="WorkflowOutputContent"/>. </summary>
@@ -22,59 +21,39 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowOutputContent"/>. </summary>
-        /// <param name="webAppParameterType">
-        /// The type.
-        /// Serialized Name: WorkflowParameter.type
-        /// </param>
-        /// <param name="value">
-        /// The value.
-        /// Serialized Name: WorkflowParameter.value
-        /// </param>
-        /// <param name="metadata">
-        /// The metadata.
-        /// Serialized Name: WorkflowParameter.metadata
-        /// </param>
-        /// <param name="description">
-        /// The description.
-        /// Serialized Name: WorkflowParameter.description
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="error">
-        /// Gets the error.
-        /// Serialized Name: WorkflowOutputParameter.error
-        /// </param>
-        internal WorkflowOutputContent(WebAppParameterType? webAppParameterType, BinaryData value, BinaryData metadata, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, BinaryData error) : base(webAppParameterType, value, metadata, description, serializedAdditionalRawData)
+        /// <param name="webAppParameterType"> The type. </param>
+        /// <param name="value"> The value. </param>
+        /// <param name="metadata"> The metadata. </param>
+        /// <param name="description"> The description. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="error"> Gets the error. </param>
+        internal WorkflowOutputContent(WebAppParameterType? webAppParameterType, BinaryData value, BinaryData metadata, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData error) : base(webAppParameterType, value, metadata, description, additionalBinaryDataProperties)
         {
             Error = error;
         }
 
         /// <summary>
         /// Gets the error.
-        /// Serialized Name: WorkflowOutputParameter.error
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>

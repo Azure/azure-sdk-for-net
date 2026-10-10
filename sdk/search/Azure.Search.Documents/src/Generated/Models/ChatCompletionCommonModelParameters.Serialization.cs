@@ -74,50 +74,99 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 throw new FormatException($"The model {nameof(ChatCompletionCommonModelParameters)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ModelName))
+            if (_modelNameIsDefined || Optional.IsDefined(ModelName))
             {
-                writer.WritePropertyName("model"u8);
-                writer.WriteStringValue(ModelName);
+                if (ModelName != null)
+                {
+                    writer.WritePropertyName("model"u8);
+                    writer.WriteStringValue(ModelName);
+                }
+                else
+                {
+                    writer.WriteNull("model"u8);
+                }
             }
-            if (Optional.IsDefined(FrequencyPenalty))
+            if (_frequencyPenaltyIsDefined || Optional.IsDefined(FrequencyPenalty))
             {
-                writer.WritePropertyName("frequencyPenalty"u8);
-                writer.WriteNumberValue(FrequencyPenalty.Value);
+                if (FrequencyPenalty != null)
+                {
+                    writer.WritePropertyName("frequencyPenalty"u8);
+                    writer.WriteNumberValue(FrequencyPenalty.Value);
+                }
+                else
+                {
+                    writer.WriteNull("frequencyPenalty"u8);
+                }
             }
-            if (Optional.IsDefined(PresencePenalty))
+            if (_presencePenaltyIsDefined || Optional.IsDefined(PresencePenalty))
             {
-                writer.WritePropertyName("presencePenalty"u8);
-                writer.WriteNumberValue(PresencePenalty.Value);
+                if (PresencePenalty != null)
+                {
+                    writer.WritePropertyName("presencePenalty"u8);
+                    writer.WriteNumberValue(PresencePenalty.Value);
+                }
+                else
+                {
+                    writer.WriteNull("presencePenalty"u8);
+                }
             }
-            if (Optional.IsDefined(MaxTokens))
+            if (_maxTokensIsDefined || Optional.IsDefined(MaxTokens))
             {
-                writer.WritePropertyName("maxTokens"u8);
-                writer.WriteNumberValue(MaxTokens.Value);
+                if (MaxTokens != null)
+                {
+                    writer.WritePropertyName("maxTokens"u8);
+                    writer.WriteNumberValue(MaxTokens.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maxTokens"u8);
+                }
             }
-            if (Optional.IsDefined(Temperature))
+            if (_temperatureIsDefined || Optional.IsDefined(Temperature))
             {
-                writer.WritePropertyName("temperature"u8);
-                writer.WriteNumberValue(Temperature.Value);
+                if (Temperature != null)
+                {
+                    writer.WritePropertyName("temperature"u8);
+                    writer.WriteNumberValue(Temperature.Value);
+                }
+                else
+                {
+                    writer.WriteNull("temperature"u8);
+                }
             }
-            if (Optional.IsDefined(Seed))
+            if (_seedIsDefined || Optional.IsDefined(Seed))
             {
-                writer.WritePropertyName("seed"u8);
-                writer.WriteNumberValue(Seed.Value);
+                if (Seed != null)
+                {
+                    writer.WritePropertyName("seed"u8);
+                    writer.WriteNumberValue(Seed.Value);
+                }
+                else
+                {
+                    writer.WriteNull("seed"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Stop))
             {
-                writer.WritePropertyName("stop"u8);
-                writer.WriteStartArray();
-                foreach (string item in Stop)
+                if (Stop != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("stop"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in Stop)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("stop"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -161,18 +210,25 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
+            bool modelNameIsDefined = false;
             string modelName = default;
+            bool frequencyPenaltyIsDefined = false;
             double? frequencyPenalty = default;
+            bool presencePenaltyIsDefined = false;
             double? presencePenalty = default;
+            bool maxTokensIsDefined = false;
             int? maxTokens = default;
+            bool temperatureIsDefined = false;
             double? temperature = default;
+            bool seedIsDefined = false;
             int? seed = default;
-            IList<string> stop = default;
+            IList<string> stop = new ChangeTrackingList<string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("model"u8))
                 {
+                    modelNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         modelName = null;
@@ -183,6 +239,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("frequencyPenalty"u8))
                 {
+                    frequencyPenaltyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         frequencyPenalty = null;
@@ -193,6 +250,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("presencePenalty"u8))
                 {
+                    presencePenaltyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         presencePenalty = null;
@@ -203,6 +261,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("maxTokens"u8))
                 {
+                    maxTokensIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         maxTokens = null;
@@ -213,6 +272,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("temperature"u8))
                 {
+                    temperatureIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         temperature = null;
@@ -223,6 +283,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("seed"u8))
                 {
+                    seedIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         seed = null;
@@ -235,6 +296,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        stop = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -254,7 +316,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ChatCompletionCommonModelParameters(
@@ -264,8 +326,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 maxTokens,
                 temperature,
                 seed,
-                stop ?? new ChangeTrackingList<string>(),
-                additionalBinaryDataProperties);
+                stop,
+                additionalBinaryDataProperties)
+            {
+                _modelNameIsDefined = modelNameIsDefined,
+                _frequencyPenaltyIsDefined = frequencyPenaltyIsDefined,
+                _presencePenaltyIsDefined = presencePenaltyIsDefined,
+                _maxTokensIsDefined = maxTokensIsDefined,
+                _temperatureIsDefined = temperatureIsDefined,
+                _seedIsDefined = seedIsDefined
+            };
         }
     }
 }

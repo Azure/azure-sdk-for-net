@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         }
 
         /// <summary> Replica configurations. </summary>
-        public IList<AvailabilityGroupReplica> Replicas { get; }
+        public IList<AvailabilityGroupReplica> Replicas { get; } = new ChangeTrackingList<AvailabilityGroupReplica>();
     }
 }

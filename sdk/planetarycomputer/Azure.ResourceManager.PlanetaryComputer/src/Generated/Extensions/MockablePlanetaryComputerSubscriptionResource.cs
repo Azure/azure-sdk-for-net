@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Mocking
 
         private ClientDiagnostics GeoCatalogsClientDiagnostics => _geoCatalogsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PlanetaryComputer.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GeoCatalogs GeoCatalogsRestClient => _geoCatalogsRestClient ??= new GeoCatalogs(GeoCatalogsClientDiagnostics, Pipeline, Endpoint, "2026-04-15");
+        private GeoCatalogs GeoCatalogsRestClient => _geoCatalogsRestClient ??= new GeoCatalogs(GeoCatalogsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-15");
 
         /// <summary>
         /// List GeoCatalog resources by subscription ID
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PlanetaryComputerGeoCatalogData, PlanetaryComputerGeoCatalogResource>(new GeoCatalogsGetBySubscriptionAsyncCollectionResultOfT(GeoCatalogsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockablePlanetaryComputerSubscriptionResource.GetPlanetaryComputerGeoCatalogs"), data => new PlanetaryComputerGeoCatalogResource(Client, data));
+            return new AsyncPageableWrapper<PlanetaryComputerGeoCatalogData, PlanetaryComputerGeoCatalogResource>(new PlanetaryComputerGeoCatalogDataAsync0CollectionResultOfT(GeoCatalogsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockablePlanetaryComputerSubscriptionResource.GetPlanetaryComputerGeoCatalogs"), data => new PlanetaryComputerGeoCatalogResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PlanetaryComputerGeoCatalogData, PlanetaryComputerGeoCatalogResource>(new GeoCatalogsGetBySubscriptionCollectionResultOfT(GeoCatalogsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockablePlanetaryComputerSubscriptionResource.GetPlanetaryComputerGeoCatalogs"), data => new PlanetaryComputerGeoCatalogResource(Client, data));
+            return new PageableWrapper<PlanetaryComputerGeoCatalogData, PlanetaryComputerGeoCatalogResource>(new PlanetaryComputerGeoCatalogData0CollectionResultOfT(GeoCatalogsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockablePlanetaryComputerSubscriptionResource.GetPlanetaryComputerGeoCatalogs"), data => new PlanetaryComputerGeoCatalogResource(Client, data));
         }
     }
 }

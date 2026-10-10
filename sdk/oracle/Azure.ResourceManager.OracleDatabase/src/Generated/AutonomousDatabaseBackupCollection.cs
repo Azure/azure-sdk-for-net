@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(AutonomousDatabaseBackupResource.ResourceType, out string autonomousDatabaseBackupApiVersion);
             _autonomousDatabaseBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", AutonomousDatabaseBackupResource.ResourceType.Namespace, Diagnostics);
-            _autonomousDatabaseBackupsRestClient = new AutonomousDatabaseBackups(_autonomousDatabaseBackupsClientDiagnostics, Pipeline, Endpoint, autonomousDatabaseBackupApiVersion ?? "2025-09-01");
+            _autonomousDatabaseBackupsRestClient = new AutonomousDatabaseBackups(_autonomousDatabaseBackupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, autonomousDatabaseBackupApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutonomousDatabaseBackupData, AutonomousDatabaseBackupResource>(new AutonomousDatabaseBackupsGetByParentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AutonomousDatabaseBackupData, AutonomousDatabaseBackupResource>(new AutonomousDatabaseBackupDataAsyncCollectionResultOfT(
                 _autonomousDatabaseBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutonomousDatabaseBackupData, AutonomousDatabaseBackupResource>(new AutonomousDatabaseBackupsGetByParentCollectionResultOfT(
+            return new PageableWrapper<AutonomousDatabaseBackupData, AutonomousDatabaseBackupResource>(new AutonomousDatabaseBackupDataCollectionResultOfT(
                 _autonomousDatabaseBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

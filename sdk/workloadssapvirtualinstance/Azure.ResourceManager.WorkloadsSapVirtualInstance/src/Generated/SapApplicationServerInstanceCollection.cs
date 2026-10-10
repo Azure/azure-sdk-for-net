@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
         {
             TryGetApiVersion(SapApplicationServerInstanceResource.ResourceType, out string sapApplicationServerInstanceApiVersion);
             _sapApplicationServerInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadsSapVirtualInstance", SapApplicationServerInstanceResource.ResourceType.Namespace, Diagnostics);
-            _sapApplicationServerInstancesRestClient = new SapApplicationServerInstances(_sapApplicationServerInstancesClientDiagnostics, Pipeline, Endpoint, sapApplicationServerInstanceApiVersion ?? "2024-09-01");
+            _sapApplicationServerInstancesRestClient = new SapApplicationServerInstances(_sapApplicationServerInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sapApplicationServerInstanceApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SapApplicationServerInstanceData, SapApplicationServerInstanceResource>(new SapApplicationServerInstancesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SapApplicationServerInstanceData, SapApplicationServerInstanceResource>(new SapApplicationServerInstanceDataAsyncCollectionResultOfT(
                 _sapApplicationServerInstancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SapApplicationServerInstanceData, SapApplicationServerInstanceResource>(new SapApplicationServerInstancesGetAllCollectionResultOfT(
+            return new PageableWrapper<SapApplicationServerInstanceData, SapApplicationServerInstanceResource>(new SapApplicationServerInstanceDataCollectionResultOfT(
                 _sapApplicationServerInstancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

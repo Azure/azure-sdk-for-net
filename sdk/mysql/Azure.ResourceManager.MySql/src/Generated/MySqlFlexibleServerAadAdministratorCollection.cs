@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             TryGetApiVersion(MySqlFlexibleServerAadAdministratorResource.ResourceType, out string mySqlFlexibleServerAadAdministratorApiVersion);
             _azureADAdministratorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", MySqlFlexibleServerAadAdministratorResource.ResourceType.Namespace, Diagnostics);
-            _azureADAdministratorsRestClient = new AzureADAdministrators(_azureADAdministratorsClientDiagnostics, Pipeline, Endpoint, mySqlFlexibleServerAadAdministratorApiVersion ?? "2024-12-30");
+            _azureADAdministratorsRestClient = new AzureADAdministrators(_azureADAdministratorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlFlexibleServerAadAdministratorApiVersion ?? "2024-12-30");
             ValidateResourceId(id);
         }
 
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MySqlFlexibleServerAadAdministratorData, MySqlFlexibleServerAadAdministratorResource>(new AzureADAdministratorsGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MySqlFlexibleServerAadAdministratorData, MySqlFlexibleServerAadAdministratorResource>(new MySqlFlexibleServerAadAdministratorDataAsyncCollectionResultOfT(
                 _azureADAdministratorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MySqlFlexibleServerAadAdministratorData, MySqlFlexibleServerAadAdministratorResource>(new AzureADAdministratorsGetByServerCollectionResultOfT(
+            return new PageableWrapper<MySqlFlexibleServerAadAdministratorData, MySqlFlexibleServerAadAdministratorResource>(new MySqlFlexibleServerAadAdministratorDataCollectionResultOfT(
                 _azureADAdministratorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The supported source types for data generation jobs. </summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct DataGenerationJobSourceType : IEquatable<DataGenerationJobSourceType>
     {
         private readonly string _value;

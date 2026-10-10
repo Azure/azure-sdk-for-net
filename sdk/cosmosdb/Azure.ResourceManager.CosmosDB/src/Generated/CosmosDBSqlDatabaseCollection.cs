@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(CosmosDBSqlDatabaseResource.ResourceType, out string cosmosDBSqlDatabaseApiVersion);
             _sqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBSqlDatabaseResource.ResourceType.Namespace, Diagnostics);
-            _sqlResourcesRestClient = new SqlResources(_sqlResourcesClientDiagnostics, Pipeline, Endpoint, cosmosDBSqlDatabaseApiVersion ?? "2026-04-01-preview");
+            _sqlResourcesRestClient = new SqlResources(_sqlResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBSqlDatabaseApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBSqlDatabaseData, CosmosDBSqlDatabaseResource>(new SqlResourcesGetSqlDatabasesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CosmosDBSqlDatabaseData, CosmosDBSqlDatabaseResource>(new CosmosDBSqlDatabaseDataAsyncCollectionResultOfT(
                 _sqlResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBSqlDatabaseData, CosmosDBSqlDatabaseResource>(new SqlResourcesGetSqlDatabasesCollectionResultOfT(
+            return new PageableWrapper<CosmosDBSqlDatabaseData, CosmosDBSqlDatabaseResource>(new CosmosDBSqlDatabaseDataCollectionResultOfT(
                 _sqlResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

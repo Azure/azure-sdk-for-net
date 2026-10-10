@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
 
         private ClientDiagnostics NamespacesClientDiagnostics => _namespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NotificationHubs.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Namespaces NamespacesRestClient => _namespacesRestClient ??= new Namespaces(NamespacesClientDiagnostics, Pipeline, Endpoint, "2023-10-01-preview");
+        private Namespaces NamespacesRestClient => _namespacesRestClient ??= new Namespaces(NamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-10-01-preview");
 
         /// <summary>
         /// Lists all the available namespaces within the subscription.
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NotificationHubNamespaceData, NotificationHubNamespaceResource>(new NamespacesGetNotificationHubNamespacesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NotificationHubNamespaceData, NotificationHubNamespaceResource>(new NotificationHubNamespaceDataAsync0CollectionResultOfT(
                 NamespacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 skipToken,
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NotificationHubNamespaceData, NotificationHubNamespaceResource>(new NamespacesGetNotificationHubNamespacesCollectionResultOfT(
+            return new PageableWrapper<NotificationHubNamespaceData, NotificationHubNamespaceResource>(new NotificationHubNamespaceData0CollectionResultOfT(
                 NamespacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 skipToken,

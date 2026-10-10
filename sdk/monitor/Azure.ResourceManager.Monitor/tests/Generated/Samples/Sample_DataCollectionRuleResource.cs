@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.Monitor.Samples
             DataCollectionRuleResource dataCollectionRule = client.GetDataCollectionRuleResource(dataCollectionRuleResourceId);
 
             // invoke the operation
-            await dataCollectionRule.DeleteAsync(WaitUntil.Completed);
+            await dataCollectionRule.DeleteAsync(WaitUntil.Completed, (CancellationToken)default);
 
             Console.WriteLine("Succeeded");
         }
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.Monitor.Samples
             DataCollectionRuleResource dataCollectionRule = client.GetDataCollectionRuleResource(dataCollectionRuleResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (DataCollectionRuleAssociationResource item in dataCollectionRule.GetDataCollectionRuleAssociationsByRuleAsync())
+            await foreach (DataCollectionRuleAssociationResource item in dataCollectionRule.GetDataCollectionRuleAssociationsByRuleAsync((CancellationToken)default))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance

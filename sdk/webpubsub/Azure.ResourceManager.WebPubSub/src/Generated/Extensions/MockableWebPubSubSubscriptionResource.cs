@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
 
         private ClientDiagnostics WebPubSubResourcesClientDiagnostics => _webPubSubResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WebPubSub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private WebPubSubResources WebPubSubResourcesRestClient => _webPubSubResourcesRestClient ??= new WebPubSubResources(WebPubSubResourcesClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
+        private WebPubSubResources WebPubSubResourcesRestClient => _webPubSubResourcesRestClient ??= new WebPubSubResources(WebPubSubResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01-preview");
 
         private ClientDiagnostics WebPubSubOperationGroupClientDiagnostics => _webPubSubOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WebPubSub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private WebPubSubOperationGroup WebPubSubOperationGroupRestClient => _webPubSubOperationGroupRestClient ??= new WebPubSubOperationGroup(WebPubSubOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
+        private WebPubSubOperationGroup WebPubSubOperationGroupRestClient => _webPubSubOperationGroupRestClient ??= new WebPubSubOperationGroup(WebPubSubOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01-preview");
 
         private ClientDiagnostics UsagesOperationGroupClientDiagnostics => _usagesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WebPubSub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private UsagesOperationGroup UsagesOperationGroupRestClient => _usagesOperationGroupRestClient ??= new UsagesOperationGroup(UsagesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
+        private UsagesOperationGroup UsagesOperationGroupRestClient => _usagesOperationGroupRestClient ??= new UsagesOperationGroup(UsagesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01-preview");
 
         /// <summary>
         /// Handles requests to list all resources in a subscription.
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WebPubSubData, WebPubSubResource>(new WebPubSubResourcesGetBySubscriptionAsyncCollectionResultOfT(WebPubSubResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWebPubSubSubscriptionResource.GetWebPubSubs"), data => new WebPubSubResource(Client, data));
+            return new AsyncPageableWrapper<WebPubSubData, WebPubSubResource>(new WebPubSubDataAsync0CollectionResultOfT(WebPubSubResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWebPubSubSubscriptionResource.GetWebPubSubs"), data => new WebPubSubResource(Client, data));
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WebPubSubData, WebPubSubResource>(new WebPubSubResourcesGetBySubscriptionCollectionResultOfT(WebPubSubResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWebPubSubSubscriptionResource.GetWebPubSubs"), data => new WebPubSubResource(Client, data));
+            return new PageableWrapper<WebPubSubData, WebPubSubResource>(new WebPubSubData0CollectionResultOfT(WebPubSubResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWebPubSubSubscriptionResource.GetWebPubSubs"), data => new WebPubSubResource(Client, data));
         }
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesOperationGroupGetUsagesAsyncCollectionResultOfT(UsagesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableWebPubSubSubscriptionResource.GetUsages");
+            return new SignalRServiceUsageAsyncCollectionResultOfT(UsagesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableWebPubSubSubscriptionResource.GetUsages");
         }
 
         /// <summary>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesOperationGroupGetUsagesCollectionResultOfT(UsagesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableWebPubSubSubscriptionResource.GetUsages");
+            return new SignalRServiceUsageCollectionResultOfT(UsagesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableWebPubSubSubscriptionResource.GetUsages");
         }
     }
 }

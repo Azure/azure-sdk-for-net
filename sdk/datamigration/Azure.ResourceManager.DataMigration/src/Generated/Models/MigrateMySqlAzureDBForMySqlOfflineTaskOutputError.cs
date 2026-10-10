@@ -14,20 +14,18 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateMySqlAzureDBForMySqlOfflineTaskOutputError : MigrateMySqlAzureDBForMySqlOfflineTaskOutput
     {
         /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputError"/>. </summary>
-        internal MigrateMySqlAzureDBForMySqlOfflineTaskOutputError()
+        internal MigrateMySqlAzureDBForMySqlOfflineTaskOutputError() : base("ErrorOutput")
         {
-            ResultType = "ErrorOutput";
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputError"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="error"> Migration error. </param>
-        internal MigrateMySqlAzureDBForMySqlOfflineTaskOutputError(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataMigrationReportableException error) : base(id, resultType, serializedAdditionalRawData)
+        internal MigrateMySqlAzureDBForMySqlOfflineTaskOutputError(string id, string resultType, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataMigrationReportableException error) : base(id, resultType, additionalBinaryDataProperties)
         {
             Error = error;
-            ResultType = resultType ?? "ErrorOutput";
         }
 
         /// <summary> Migration error. </summary>

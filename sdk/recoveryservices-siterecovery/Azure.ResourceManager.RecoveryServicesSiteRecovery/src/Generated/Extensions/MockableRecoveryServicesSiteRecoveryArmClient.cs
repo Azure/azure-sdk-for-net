@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
 
         private ClientDiagnostics ReplicationEligibilityResultsClientDiagnostics => _replicationEligibilityResultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReplicationEligibilityResults ReplicationEligibilityResultsRestClient => _replicationEligibilityResultsRestClient ??= new ReplicationEligibilityResults(ReplicationEligibilityResultsClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
+        private ReplicationEligibilityResults ReplicationEligibilityResultsRestClient => _replicationEligibilityResultsRestClient ??= new ReplicationEligibilityResults(ReplicationEligibilityResultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-02-01");
 
         /// <summary> Gets an object representing a <see cref="MigrationRecoveryPointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>

@@ -117,12 +117,12 @@ namespace Azure.AI.Projects
             if (options.Format != "W")
             {
                 writer.WritePropertyName("created_at"u8);
-                writer.WriteNumberValue(CreatedAt, "U");
+                writer.WriteNumberValue(CreatedOn, "U");
             }
-            if (options.Format != "W" && Optional.IsDefined(FinishedAt))
+            if (options.Format != "W" && Optional.IsDefined(FinishedOn))
             {
                 writer.WritePropertyName("finished_at"u8);
-                writer.WriteNumberValue(FinishedAt.Value, "U");
+                writer.WriteNumberValue(FinishedOn.Value, "U");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -169,10 +169,10 @@ namespace Azure.AI.Projects
             string id = default;
             DataGenerationJobInputs inputs = default;
             DataGenerationJobResult result = default;
-            JobStatus status = default;
+            ProjectsJobStatus status = default;
             FoundryOpenAIError error = default;
-            DateTimeOffset createdAt = default;
-            DateTimeOffset? finishedAt = default;
+            DateTimeOffset createdOn = default;
+            DateTimeOffset? finishedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -201,7 +201,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = new JobStatus(prop.Value.GetString());
+                    status = new ProjectsJobStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("error"u8))
@@ -215,7 +215,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("created_at"u8))
                 {
-                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    createdOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("finished_at"u8))
@@ -224,12 +224,12 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    finishedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    finishedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DataGenerationJob(
@@ -238,8 +238,8 @@ namespace Azure.AI.Projects
                 result,
                 status,
                 error,
-                createdAt,
-                finishedAt,
+                createdOn,
+                finishedOn,
                 additionalBinaryDataProperties);
         }
     }

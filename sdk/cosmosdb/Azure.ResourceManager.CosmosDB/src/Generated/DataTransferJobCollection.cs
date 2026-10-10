@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(DataTransferJobResource.ResourceType, out string dataTransferJobApiVersion);
             _dataTransferJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", DataTransferJobResource.ResourceType.Namespace, Diagnostics);
-            _dataTransferJobsRestClient = new DataTransferJobs(_dataTransferJobsClientDiagnostics, Pipeline, Endpoint, dataTransferJobApiVersion ?? "2026-04-01-preview");
+            _dataTransferJobsRestClient = new DataTransferJobs(_dataTransferJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataTransferJobApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataTransferJobData, DataTransferJobResource>(new DataTransferJobsGetByDatabaseAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataTransferJobData, DataTransferJobResource>(new DataTransferJobDataAsyncCollectionResultOfT(
                 _dataTransferJobsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataTransferJobData, DataTransferJobResource>(new DataTransferJobsGetByDatabaseAccountCollectionResultOfT(
+            return new PageableWrapper<DataTransferJobData, DataTransferJobResource>(new DataTransferJobDataCollectionResultOfT(
                 _dataTransferJobsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

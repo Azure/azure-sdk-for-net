@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             TryGetApiVersion(DataReplicationFabricAgentResource.ResourceType, out string dataReplicationFabricAgentApiVersion);
             _fabricAgentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationFabricAgentResource.ResourceType.Namespace, Diagnostics);
-            _fabricAgentRestClient = new FabricAgent(_fabricAgentClientDiagnostics, Pipeline, Endpoint, dataReplicationFabricAgentApiVersion ?? "2024-09-01");
+            _fabricAgentRestClient = new FabricAgent(_fabricAgentClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationFabricAgentApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataReplicationFabricAgentData, DataReplicationFabricAgentResource>(new FabricAgentGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataReplicationFabricAgentData, DataReplicationFabricAgentResource>(new DataReplicationFabricAgentDataAsyncCollectionResultOfT(
                 _fabricAgentRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataReplicationFabricAgentData, DataReplicationFabricAgentResource>(new FabricAgentGetAllCollectionResultOfT(
+            return new PageableWrapper<DataReplicationFabricAgentData, DataReplicationFabricAgentResource>(new DataReplicationFabricAgentDataCollectionResultOfT(
                 _fabricAgentRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

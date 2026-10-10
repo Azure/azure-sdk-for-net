@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> SshPublicKey represents the public key used to authenticate with a resource through SSH. </summary>
-        public IList<NetworkCloudSshPublicKey> SshPublicKeys { get; }
+        public IList<NetworkCloudSshPublicKey> SshPublicKeys { get; } = new ChangeTrackingList<NetworkCloudSshPublicKey>();
     }
 }

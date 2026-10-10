@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public readonly partial struct HybridComputeStatusLevelType : IEquatable<HybridComputeStatusLevelType>
     {
         private readonly string _value;
+        /// <summary> Info. </summary>
+        private const string InfoValue = "Info";
+        /// <summary> Warning. </summary>
+        private const string WarningValue = "Warning";
+        /// <summary> Error. </summary>
+        private const string ErrorValue = "Error";
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeStatusLevelType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HybridComputeStatusLevelType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InfoValue = "Info";
-        private const string WarningValue = "Warning";
-        private const string ErrorValue = "Error";
+            _value = value;
+        }
 
         /// <summary> Info. </summary>
         public static HybridComputeStatusLevelType Info { get; } = new HybridComputeStatusLevelType(InfoValue);
+
         /// <summary> Warning. </summary>
         public static HybridComputeStatusLevelType Warning { get; } = new HybridComputeStatusLevelType(WarningValue);
+
         /// <summary> Error. </summary>
         public static HybridComputeStatusLevelType Error { get; } = new HybridComputeStatusLevelType(ErrorValue);
+
         /// <summary> Determines if two <see cref="HybridComputeStatusLevelType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HybridComputeStatusLevelType left, HybridComputeStatusLevelType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HybridComputeStatusLevelType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HybridComputeStatusLevelType left, HybridComputeStatusLevelType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridComputeStatusLevelType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HybridComputeStatusLevelType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HybridComputeStatusLevelType(string value) => new HybridComputeStatusLevelType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HybridComputeStatusLevelType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HybridComputeStatusLevelType?(string value) => value == null ? null : new HybridComputeStatusLevelType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HybridComputeStatusLevelType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HybridComputeStatusLevelType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

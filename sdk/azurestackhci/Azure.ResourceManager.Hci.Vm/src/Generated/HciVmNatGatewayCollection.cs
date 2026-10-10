@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             TryGetApiVersion(HciVmNatGatewayResource.ResourceType, out string hciVmNatGatewayApiVersion);
             _natGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmNatGatewayResource.ResourceType.Namespace, Diagnostics);
-            _natGatewaysRestClient = new NatGateways(_natGatewaysClientDiagnostics, Pipeline, Endpoint, hciVmNatGatewayApiVersion ?? "2025-09-01-preview");
+            _natGatewaysRestClient = new NatGateways(_natGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmNatGatewayApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmNatGatewayData, HciVmNatGatewayResource>(new NatGatewaysGetByResourceGroupAsyncCollectionResultOfT(_natGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmNatGatewayCollection.GetAll"), data => new HciVmNatGatewayResource(Client, data));
+            return new AsyncPageableWrapper<HciVmNatGatewayData, HciVmNatGatewayResource>(new HciVmNatGatewayDataAsyncCollectionResultOfT(_natGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmNatGatewayCollection.GetAll"), data => new HciVmNatGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmNatGatewayData, HciVmNatGatewayResource>(new NatGatewaysGetByResourceGroupCollectionResultOfT(_natGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmNatGatewayCollection.GetAll"), data => new HciVmNatGatewayResource(Client, data));
+            return new PageableWrapper<HciVmNatGatewayData, HciVmNatGatewayResource>(new HciVmNatGatewayDataCollectionResultOfT(_natGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmNatGatewayCollection.GetAll"), data => new HciVmNatGatewayResource(Client, data));
         }
 
         /// <summary>

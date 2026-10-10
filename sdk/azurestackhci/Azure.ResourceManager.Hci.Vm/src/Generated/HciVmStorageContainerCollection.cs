@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             TryGetApiVersion(HciVmStorageContainerResource.ResourceType, out string hciVmStorageContainerApiVersion);
             _storageContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmStorageContainerResource.ResourceType.Namespace, Diagnostics);
-            _storageContainersRestClient = new StorageContainers(_storageContainersClientDiagnostics, Pipeline, Endpoint, hciVmStorageContainerApiVersion ?? "2025-09-01-preview");
+            _storageContainersRestClient = new StorageContainers(_storageContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmStorageContainerApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmStorageContainerData, HciVmStorageContainerResource>(new StorageContainersGetByResourceGroupAsyncCollectionResultOfT(_storageContainersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmStorageContainerCollection.GetAll"), data => new HciVmStorageContainerResource(Client, data));
+            return new AsyncPageableWrapper<HciVmStorageContainerData, HciVmStorageContainerResource>(new HciVmStorageContainerDataAsyncCollectionResultOfT(_storageContainersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmStorageContainerCollection.GetAll"), data => new HciVmStorageContainerResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmStorageContainerData, HciVmStorageContainerResource>(new StorageContainersGetByResourceGroupCollectionResultOfT(_storageContainersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmStorageContainerCollection.GetAll"), data => new HciVmStorageContainerResource(Client, data));
+            return new PageableWrapper<HciVmStorageContainerData, HciVmStorageContainerResource>(new HciVmStorageContainerDataCollectionResultOfT(_storageContainersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmStorageContainerCollection.GetAll"), data => new HciVmStorageContainerResource(Client, data));
         }
 
         /// <summary>

@@ -16,6 +16,10 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private MarkdownParsingSubmode? _markdownParsingSubmode;
+        internal bool _markdownParsingSubmodeIsDefined;
+        private MarkdownHeaderDepth? _markdownHeaderDepth;
+        internal bool _markdownHeaderDepthIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="IndexingParametersConfiguration"/>. </summary>
         public IndexingParametersConfiguration()
@@ -54,8 +58,8 @@ namespace Azure.Search.Documents.Indexes.Models
             DelimitedTextHeaders = delimitedTextHeaders;
             DelimitedTextDelimiter = delimitedTextDelimiter;
             FirstLineContainsHeaders = firstLineContainsHeaders;
-            MarkdownParsingSubmode = markdownParsingSubmode;
-            MarkdownHeaderDepth = markdownHeaderDepth;
+            _markdownParsingSubmode = markdownParsingSubmode;
+            _markdownHeaderDepth = markdownHeaderDepth;
             DocumentRoot = documentRoot;
             DataToExtract = dataToExtract;
             ImageAction = imageAction;
@@ -94,10 +98,32 @@ namespace Azure.Search.Documents.Indexes.Models
         public bool? FirstLineContainsHeaders { get; set; }
 
         /// <summary> Specifies the submode that will determine whether a markdown file will be parsed into exactly one search document or multiple search documents. Default is `oneToMany`. </summary>
-        public MarkdownParsingSubmode? MarkdownParsingSubmode { get; set; }
+        public MarkdownParsingSubmode? MarkdownParsingSubmode
+        {
+            get
+            {
+                return _markdownParsingSubmode;
+            }
+            set
+            {
+                _markdownParsingSubmode = value;
+                _markdownParsingSubmodeIsDefined = true;
+            }
+        }
 
         /// <summary> Specifies the max header depth that will be considered while grouping markdown content. Default is `h6`. </summary>
-        public MarkdownHeaderDepth? MarkdownHeaderDepth { get; set; }
+        public MarkdownHeaderDepth? MarkdownHeaderDepth
+        {
+            get
+            {
+                return _markdownHeaderDepth;
+            }
+            set
+            {
+                _markdownHeaderDepth = value;
+                _markdownHeaderDepthIsDefined = true;
+            }
+        }
 
         /// <summary> For JSON arrays, given a structured or semi-structured document, you can specify a path to the array using this property. </summary>
         public string DocumentRoot { get; set; }

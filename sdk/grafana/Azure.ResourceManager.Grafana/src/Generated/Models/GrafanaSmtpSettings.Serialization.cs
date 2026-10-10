@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WritePropertyName("fromName"u8);
                 writer.WriteStringValue(FromName);
             }
-            if (Optional.IsDefined(StartTLSPolicy))
+            if (Optional.IsDefined(StartTlsPolicy))
             {
                 writer.WritePropertyName("startTLSPolicy"u8);
-                writer.WriteStringValue(StartTLSPolicy.Value.ToString());
+                writer.WriteStringValue(StartTlsPolicy.Value.ToString());
             }
             if (Optional.IsDefined(SkipVerify))
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Grafana.Models
             string password = default;
             string fromAddress = default;
             string fromName = default;
-            GrafanaStartTlsPolicy? startTLSPolicy = default;
+            GrafanaStartTlsPolicy? startTlsPolicy = default;
             bool? skipVerify = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    startTLSPolicy = new GrafanaStartTlsPolicy(prop.Value.GetString());
+                    startTlsPolicy = new GrafanaStartTlsPolicy(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("skipVerify"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new GrafanaSmtpSettings(
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 password,
                 fromAddress,
                 fromName,
-                startTLSPolicy,
+                startTlsPolicy,
                 skipVerify,
                 additionalBinaryDataProperties);
         }

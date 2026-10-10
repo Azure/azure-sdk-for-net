@@ -19,7 +19,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// The <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
-        public ServiceBusAdministrationClientOptions(ServiceVersion version = ServiceVersion.V2021_05)
+        public ServiceBusAdministrationClientOptions(ServiceVersion version = ServiceVersion.V2024_05)
         {
             Version = version;
         }
@@ -39,7 +39,12 @@ namespace Azure.Messaging.ServiceBus.Administration
             /// <summary>
             /// The 2021-05 service version.
             /// </summary>
-            V2021_05 = 2
+            V2021_05 = 2,
+
+            /// <summary>
+            /// The 2024-05 service version.
+            /// </summary>
+            V2024_05 = 3
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 

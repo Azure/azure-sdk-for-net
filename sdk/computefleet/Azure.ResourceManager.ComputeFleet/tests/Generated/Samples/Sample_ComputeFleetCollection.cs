@@ -714,18 +714,8 @@ IsOverridable = true,
 },
 },
 }},
-                    Mode = ComputeFleetMode.Instance,
+                    Mode = ComputeFleetMode.Launch,
                     CapacityType = ComputeFleetCapacityType.VCpu,
-                    ZoneAllocationPolicy = new ComputeFleetZoneAllocationPolicy(ComputeFleetZoneDistributionStrategy.Prioritized)
-                    {
-                        ZonePreferences = {new ZonePreference("1")
-{
-Rank = 0,
-}, new ZonePreference("2")
-{
-Rank = 1,
-}},
-                    },
                 },
                 Zones = { "1", "2" },
                 Identity = new ManagedServiceIdentity("UserAssigned")

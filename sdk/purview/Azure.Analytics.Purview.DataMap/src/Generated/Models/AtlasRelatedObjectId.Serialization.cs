@@ -185,7 +185,7 @@ namespace Azure.Analytics.Purview.DataMap
             string typeName = default;
             IDictionary<string, BinaryData> uniqueAttributes = default;
             string displayText = default;
-            EntityStatus? entityStatus = default;
+            DataMapEntityStatus? entityStatus = default;
             string relationshipType = default;
             AtlasStruct relationshipAttributes = default;
             Guid? relationshipGuid = default;
@@ -218,7 +218,7 @@ namespace Azure.Analytics.Purview.DataMap
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     uniqueAttributes = dictionary;
@@ -235,7 +235,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    entityStatus = new EntityStatus(prop.Value.GetString());
+                    entityStatus = new DataMapEntityStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("relationshipType"u8))
@@ -272,7 +272,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AtlasRelatedObjectId(

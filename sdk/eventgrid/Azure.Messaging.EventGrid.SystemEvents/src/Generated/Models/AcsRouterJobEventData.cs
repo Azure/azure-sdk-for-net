@@ -37,5 +37,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Router Job events Queue Id. </summary>
         public string QueueId { get; }
+
+        /// <summary> Router Job events Labels. </summary>
+        public IReadOnlyDictionary<string, string> Labels { get; }
+
+        /// <summary> Router Jobs events Tags. </summary>
+        public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

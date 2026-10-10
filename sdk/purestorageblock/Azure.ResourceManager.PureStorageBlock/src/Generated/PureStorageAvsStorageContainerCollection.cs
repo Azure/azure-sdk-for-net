@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             TryGetApiVersion(PureStorageAvsStorageContainerResource.ResourceType, out string pureStorageAvsStorageContainerApiVersion);
             _avsStorageContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock", PureStorageAvsStorageContainerResource.ResourceType.Namespace, Diagnostics);
-            _avsStorageContainersRestClient = new AvsStorageContainers(_avsStorageContainersClientDiagnostics, Pipeline, Endpoint, pureStorageAvsStorageContainerApiVersion ?? "2024-11-01");
+            _avsStorageContainersRestClient = new AvsStorageContainers(_avsStorageContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, pureStorageAvsStorageContainerApiVersion ?? "2024-11-01");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PureStorageAvsStorageContainerData, PureStorageAvsStorageContainerResource>(new AvsStorageContainersGetByStoragePoolAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PureStorageAvsStorageContainerData, PureStorageAvsStorageContainerResource>(new PureStorageAvsStorageContainerDataAsyncCollectionResultOfT(
                 _avsStorageContainersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PureStorageAvsStorageContainerData, PureStorageAvsStorageContainerResource>(new AvsStorageContainersGetByStoragePoolCollectionResultOfT(
+            return new PageableWrapper<PureStorageAvsStorageContainerData, PureStorageAvsStorageContainerResource>(new PureStorageAvsStorageContainerDataCollectionResultOfT(
                 _avsStorageContainersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

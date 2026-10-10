@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             TryGetApiVersion(DataBoxEdgeStorageAccountCredentialResource.ResourceType, out string dataBoxEdgeStorageAccountCredentialApiVersion);
             _storageAccountCredentialsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", DataBoxEdgeStorageAccountCredentialResource.ResourceType.Namespace, Diagnostics);
-            _storageAccountCredentialsRestClient = new StorageAccountCredentials(_storageAccountCredentialsClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeStorageAccountCredentialApiVersion ?? "2023-12-01");
+            _storageAccountCredentialsRestClient = new StorageAccountCredentials(_storageAccountCredentialsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeStorageAccountCredentialApiVersion ?? "2023-12-01");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataBoxEdgeStorageAccountCredentialData, DataBoxEdgeStorageAccountCredentialResource>(new StorageAccountCredentialsGetByDataBoxEdgeDeviceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataBoxEdgeStorageAccountCredentialData, DataBoxEdgeStorageAccountCredentialResource>(new DataBoxEdgeStorageAccountCredentialDataAsyncCollectionResultOfT(
                 _storageAccountCredentialsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataBoxEdgeStorageAccountCredentialData, DataBoxEdgeStorageAccountCredentialResource>(new StorageAccountCredentialsGetByDataBoxEdgeDeviceCollectionResultOfT(
+            return new PageableWrapper<DataBoxEdgeStorageAccountCredentialData, DataBoxEdgeStorageAccountCredentialResource>(new DataBoxEdgeStorageAccountCredentialDataCollectionResultOfT(
                 _storageAccountCredentialsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

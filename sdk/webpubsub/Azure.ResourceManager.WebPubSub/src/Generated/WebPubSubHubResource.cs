@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             TryGetApiVersion(ResourceType, out string webPubSubHubApiVersion);
             _webPubSubHubsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", ResourceType.Namespace, Diagnostics);
-            _webPubSubHubsRestClient = new WebPubSubHubs(_webPubSubHubsClientDiagnostics, Pipeline, Endpoint, webPubSubHubApiVersion ?? "2025-08-01-preview");
+            _webPubSubHubsRestClient = new WebPubSubHubs(_webPubSubHubsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webPubSubHubApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 

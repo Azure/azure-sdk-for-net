@@ -104,20 +104,20 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="purpose"> The purpose of the file. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<InternalFileListResponse> InternalListFiles(PersistentAgentFilePurpose? purpose = default, CancellationToken cancellationToken = default)
+        internal virtual Response<InternalFileListResult> InternalListFiles(PersistentAgentFilePurpose? purpose = default, CancellationToken cancellationToken = default)
         {
             Response result = InternalListFiles(purpose?.ToString(), cancellationToken.ToRequestContext());
-            return Response.FromValue((InternalFileListResponse)result, result);
+            return Response.FromValue((InternalFileListResult)result, result);
         }
 
         /// <summary> Gets a list of previously uploaded files. </summary>
         /// <param name="purpose"> The purpose of the file. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<InternalFileListResponse>> InternalListFilesAsync(PersistentAgentFilePurpose? purpose = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<InternalFileListResult>> InternalListFilesAsync(PersistentAgentFilePurpose? purpose = default, CancellationToken cancellationToken = default)
         {
             Response result = await InternalListFilesAsync(purpose?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((InternalFileListResponse)result, result);
+            return Response.FromValue((InternalFileListResult)result, result);
         }
 
         /// <summary>
@@ -131,7 +131,8 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response UploadFile(RequestContent content, string contentType, RequestContext context = null)
@@ -141,6 +142,7 @@ namespace Azure.AI.Agents.Persistent
             try
             {
                 Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
 
                 using HttpMessage message = CreateUploadFileRequest(content, contentType, context);
                 return Pipeline.ProcessMessage(message, context);
@@ -163,7 +165,8 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> UploadFileAsync(RequestContent content, string contentType, RequestContext context = null)
@@ -173,6 +176,7 @@ namespace Azure.AI.Agents.Persistent
             try
             {
                 Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
 
                 using HttpMessage message = CreateUploadFileRequest(content, contentType, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);

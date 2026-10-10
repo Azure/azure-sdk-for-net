@@ -1,13 +1,15 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
-#nullable disable
 
 using System;
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
+    // Backward-compat extensible enum used by SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions.
+    // The previous SDK exposed this typed wrapper around the "expand" query parameter.
+    // The new generator emits a plain `string expand` argument; we keep this struct
+    // to preserve the public surface and convert via ToString() when forwarding.
     /// <summary> The GetVirtualMachineImagesWithPropertiesExpand. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public readonly partial struct GetVirtualMachineImagesWithPropertiesExpand : IEquatable<GetVirtualMachineImagesWithPropertiesExpand>
@@ -25,6 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Properties. </summary>
         public static GetVirtualMachineImagesWithPropertiesExpand Properties { get; } = new GetVirtualMachineImagesWithPropertiesExpand(PropertiesValue);
+
         /// <summary> Determines if two <see cref="GetVirtualMachineImagesWithPropertiesExpand"/> values are the same. </summary>
         public static bool operator ==(GetVirtualMachineImagesWithPropertiesExpand left, GetVirtualMachineImagesWithPropertiesExpand right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GetVirtualMachineImagesWithPropertiesExpand"/> values are not the same. </summary>

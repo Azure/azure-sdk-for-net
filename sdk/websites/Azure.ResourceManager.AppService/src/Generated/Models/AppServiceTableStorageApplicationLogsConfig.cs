@@ -7,52 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Application logs to Azure table storage configuration.
-    /// Serialized Name: AzureTableStorageApplicationLogsConfig
-    /// </summary>
+    /// <summary> Application logs to Azure table storage configuration. </summary>
     public partial class AppServiceTableStorageApplicationLogsConfig
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceTableStorageApplicationLogsConfig"/>. </summary>
-        /// <param name="sasUriString">
-        /// SAS URL to an Azure table with add/query/delete permissions.
-        /// Serialized Name: AzureTableStorageApplicationLogsConfig.sasUrl
-        /// </param>
+        /// <param name="sasUriString"> SAS URL to an Azure table with add/query/delete permissions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sasUriString"/> is null. </exception>
         public AppServiceTableStorageApplicationLogsConfig(string sasUriString)
         {
@@ -62,37 +28,21 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceTableStorageApplicationLogsConfig"/>. </summary>
-        /// <param name="level">
-        /// Log level.
-        /// Serialized Name: AzureTableStorageApplicationLogsConfig.level
-        /// </param>
-        /// <param name="sasUriString">
-        /// SAS URL to an Azure table with add/query/delete permissions.
-        /// Serialized Name: AzureTableStorageApplicationLogsConfig.sasUrl
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceTableStorageApplicationLogsConfig(WebAppLogLevel? level, string sasUriString, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="level"> Log level. </param>
+        /// <param name="sasUriString"> SAS URL to an Azure table with add/query/delete permissions. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceTableStorageApplicationLogsConfig(WebAppLogLevel? level, string sasUriString, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Level = level;
             SasUriString = sasUriString;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppServiceTableStorageApplicationLogsConfig"/> for deserialization. </summary>
-        internal AppServiceTableStorageApplicationLogsConfig()
-        {
-        }
-
-        /// <summary>
-        /// Log level.
-        /// Serialized Name: AzureTableStorageApplicationLogsConfig.level
-        /// </summary>
+        /// <summary> Log level. </summary>
         [WirePath("level")]
         public WebAppLogLevel? Level { get; set; }
-        /// <summary>
-        /// SAS URL to an Azure table with add/query/delete permissions.
-        /// Serialized Name: AzureTableStorageApplicationLogsConfig.sasUrl
-        /// </summary>
+
+        /// <summary> SAS URL to an Azure table with add/query/delete permissions. </summary>
         [WirePath("sasUrl")]
         public string SasUriString { get; set; }
     }

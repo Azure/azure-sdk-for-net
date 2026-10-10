@@ -7,26 +7,14 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The SiteRuntimeState.
-    /// Serialized Name: SiteRuntimeState
-    /// </summary>
+    /// <summary></summary>
     public enum SiteRuntimeState
     {
-        /// <summary>
-        /// UNKNOWN
-        /// Serialized Name: SiteRuntimeState.UNKNOWN
-        /// </summary>
+        /// <summary> Unknown. </summary>
         Unknown,
-        /// <summary>
-        /// READY
-        /// Serialized Name: SiteRuntimeState.READY
-        /// </summary>
+        /// <summary> Ready. </summary>
         Ready,
-        /// <summary>
-        /// STOPPED
-        /// Serialized Name: SiteRuntimeState.STOPPED
-        /// </summary>
+        /// <summary> Stopped. </summary>
         Stopped
     }
 }

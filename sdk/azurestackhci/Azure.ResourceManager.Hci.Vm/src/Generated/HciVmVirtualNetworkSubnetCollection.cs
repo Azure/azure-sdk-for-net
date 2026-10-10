@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             TryGetApiVersion(HciVmVirtualNetworkSubnetResource.ResourceType, out string hciVmVirtualNetworkSubnetApiVersion);
             _virtualNetworkSubnetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmVirtualNetworkSubnetResource.ResourceType.Namespace, Diagnostics);
-            _virtualNetworkSubnetsRestClient = new VirtualNetworkSubnets(_virtualNetworkSubnetsClientDiagnostics, Pipeline, Endpoint, hciVmVirtualNetworkSubnetApiVersion ?? "2025-09-01-preview");
+            _virtualNetworkSubnetsRestClient = new VirtualNetworkSubnets(_virtualNetworkSubnetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmVirtualNetworkSubnetApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmVirtualNetworkSubnetData, HciVmVirtualNetworkSubnetResource>(new VirtualNetworkSubnetsGetByVirtualNetworkAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HciVmVirtualNetworkSubnetData, HciVmVirtualNetworkSubnetResource>(new HciVmVirtualNetworkSubnetDataAsyncCollectionResultOfT(
                 _virtualNetworkSubnetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmVirtualNetworkSubnetData, HciVmVirtualNetworkSubnetResource>(new VirtualNetworkSubnetsGetByVirtualNetworkCollectionResultOfT(
+            return new PageableWrapper<HciVmVirtualNetworkSubnetData, HciVmVirtualNetworkSubnetResource>(new HciVmVirtualNetworkSubnetDataCollectionResultOfT(
                 _virtualNetworkSubnetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

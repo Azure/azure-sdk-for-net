@@ -3,8 +3,11 @@
 
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Tests.TestHelpers;
+using Microsoft.TypeSpec.Generator.Primitives;
 using NUnit.Framework;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -47,6 +50,16 @@ namespace Azure.Generator.Management.Tests.Providers
             string content = scaffolding.TestGetTestProjectContent("Azure.ResourceManager.Test");
             Assert.That(content.Contains(@"<ProjectReference Include=""..\src\Azure.ResourceManager.Test.csproj"" />"), Is.True);
             Assert.That(content.Contains("<Project Sdk=\"Microsoft.NET.Sdk\">"), Is.True);
+        }
+
+        [Test]
+        public void BuildCompileIncludesAddsExperimentalAttributePolyfill()
+        {
+            var scaffolding = new TestableNewManagementProjectScaffolding();
+
+            var compileInclude = scaffolding.TestBuildCompileIncludes().Single();
+            Assert.That(compileInclude.Include, Is.EqualTo("$(AzureCoreSharedSources)ExperimentalAttribute.cs"));
+            Assert.That(compileInclude.LinkBase, Is.EqualTo("Shared/Core"));
         }
 
         [Test]
@@ -116,6 +129,7 @@ namespace Azure.Generator.Management.Tests.Providers
             public string TestGetTestProjectContent(string packageName) => GetTestProjectContent(packageName);
             public string TestGetSolutionFileContent() => GetSolutionFileContent();
             public Task TestWriteAdditionalFiles() => WriteAdditionalFiles();
+            public IReadOnlyList<CSharpProjectCompileInclude> TestBuildCompileIncludes() => BuildCompileIncludes();
         }
 
         private static void SetOutputDirectory(string outputDirectory)

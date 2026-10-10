@@ -20,19 +20,24 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="ListAliasesResult"/>. </summary>
         internal ListAliasesResult()
         {
-            Aliases = new ChangeTrackingList<SearchAlias>();
+            Value = new ChangeTrackingList<SearchAlias>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ListAliasesResult"/>. </summary>
-        /// <param name="aliases"> The aliases in the Search service. </param>
+        /// <param name="value"> The aliases in the Search service. </param>
+        /// <param name="odataNextLink"> The URL that can be used to fetch the next set of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListAliasesResult(IReadOnlyList<SearchAlias> aliases, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListAliasesResult(IReadOnlyList<SearchAlias> value, string odataNextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Aliases = aliases;
+            Value = value;
+            OdataNextLink = odataNextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The aliases in the Search service. </summary>
-        public IReadOnlyList<SearchAlias> Aliases { get; }
+        public IReadOnlyList<SearchAlias> Value { get; }
+
+        /// <summary> The URL that can be used to fetch the next set of results. </summary>
+        public string OdataNextLink { get; }
     }
 }

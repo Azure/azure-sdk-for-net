@@ -16,23 +16,48 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionPatch"/>. </summary>
         public IotSecuritySolutionPatch()
         {
-            RecommendationsConfiguration = new ChangeTrackingList<RecommendationConfigurationProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="userDefinedResources"> Properties of the IoT Security solution's user defined resources. </param>
-        /// <param name="recommendationsConfiguration"> List of the configuration status for each recommendation type. </param>
-        internal IotSecuritySolutionPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, UserDefinedResourcesProperties userDefinedResources, IList<RecommendationConfigurationProperties> recommendationsConfiguration) : base(tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Security Solution data. </param>
+        internal IotSecuritySolutionPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, UpdateIoTSecuritySolutionProperties properties) : base(tags, additionalBinaryDataProperties)
         {
-            UserDefinedResources = userDefinedResources;
-            RecommendationsConfiguration = recommendationsConfiguration;
+            Properties = properties;
         }
 
+        /// <summary> Security Solution data. </summary>
+        internal UpdateIoTSecuritySolutionProperties Properties { get; set; }
+
         /// <summary> Properties of the IoT Security solution's user defined resources. </summary>
-        public UserDefinedResourcesProperties UserDefinedResources { get; set; }
+        public UserDefinedResourcesProperties UserDefinedResources
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UserDefinedResources;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateIoTSecuritySolutionProperties();
+                }
+                Properties.UserDefinedResources = value;
+            }
+        }
+
         /// <summary> List of the configuration status for each recommendation type. </summary>
-        public IList<RecommendationConfigurationProperties> RecommendationsConfiguration { get; }
+        public IList<RecommendationConfigurationProperties> RecommendationsConfiguration
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateIoTSecuritySolutionProperties();
+                }
+                return Properties.RecommendationsConfiguration;
+            }
+        }
     }
 }

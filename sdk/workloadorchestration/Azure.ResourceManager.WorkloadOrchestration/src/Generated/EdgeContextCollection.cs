@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             TryGetApiVersion(EdgeContextResource.ResourceType, out string edgeContextApiVersion);
             _contextsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeContextResource.ResourceType.Namespace, Diagnostics);
-            _contextsRestClient = new Contexts(_contextsClientDiagnostics, Pipeline, Endpoint, edgeContextApiVersion ?? "2025-06-01");
+            _contextsRestClient = new Contexts(_contextsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeContextApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeContextData, EdgeContextResource>(new ContextsGetByResourceGroupAsyncCollectionResultOfT(_contextsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeContextCollection.GetAll"), data => new EdgeContextResource(Client, data));
+            return new AsyncPageableWrapper<EdgeContextData, EdgeContextResource>(new EdgeContextDataAsyncCollectionResultOfT(_contextsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeContextCollection.GetAll"), data => new EdgeContextResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeContextData, EdgeContextResource>(new ContextsGetByResourceGroupCollectionResultOfT(_contextsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeContextCollection.GetAll"), data => new EdgeContextResource(Client, data));
+            return new PageableWrapper<EdgeContextData, EdgeContextResource>(new EdgeContextDataCollectionResultOfT(_contextsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeContextCollection.GetAll"), data => new EdgeContextResource(Client, data));
         }
 
         /// <summary>

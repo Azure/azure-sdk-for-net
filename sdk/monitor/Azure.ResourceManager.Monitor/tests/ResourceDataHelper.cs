@@ -1,16 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Monitor.Models;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor;
+using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources.Models;
-using NUnit.Framework;
-using Azure.Core;
-using System;
 using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Storage.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Monitor.Tests
 {
@@ -93,56 +93,6 @@ namespace Azure.ResourceManager.Monitor.Tests
         }
         #endregion
 
-        #region AlertRule
-        public static void AssertAlertRule(AlertRuleData data1, AlertRuleData data2)
-        {
-            AssertTrackedResource(data1, data2);
-            Assert.AreEqual(data1.Description, data2.Description);
-        }
-
-        public static AlertRuleData GetBasicAlertRuleData(AzureLocation location)
-        {
-            var ruleWebhookAction = new RuleWebhookAction()
-            {
-                ServiceUri = new Uri("https://www.contoso.com/alerts?type=HighCPU"),
-                Properties = { new KeyValuePair<string, string>("key1", "value1") }
-            };
-            //RuleMetricDataSource ruleDataSource = new RuleMetricDataSource(
-            //    "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource",
-            //    "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-EventHub-1375/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-8280",
-            //    "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-EventHub-1375/providers/microsoft.insights/metricalerts/testAlertRule",
-            //    "global",
-            //    "Microsoft.EventHub/namespaces",
-            //    "ActiveConnections");
-            RuleMetricDataSource ruleDataSource = new RuleMetricDataSource()
-            {
-                //LegacyResourceId = "",
-                MetricName = "testrulemetric",
-                MetricNamespace = "Microsoft.Compute/virtualMachines",
-                ResourceLocation = location,
-                ResourceId = new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/deleteme0122/providers/Microsoft.Compute/virtualMachines/MetricAlertActionTestVM01")
-            };
-            //var ruleCondition = new ThresholdRuleCondition(
-            //    "Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria",
-            //    ruleDataSource,
-            //    ConditionOperator.GreaterThan,
-            //    3.0,
-            //    TimeSpan.FromMinutes(15),
-            //    TimeAggregationOperator.Average);
-            var ruleCondition = new ThresholdRuleCondition(MonitorConditionOperator.GreaterThan, 3.0)
-            {
-                WindowSize = TimeSpan.FromMinutes(15),
-                TimeAggregation = ThresholdRuleConditionTimeAggregationType.Average,
-                DataSource = ruleDataSource
-            };
-            var data = new AlertRuleData(location, "testAlertRule", true, ruleCondition)
-            {
-                Actions = { ruleWebhookAction }
-            };
-            return data;
-        }
-        #endregion
-
         #region AutoscaleSetting
         public static void AssertAutoscaleSetting(AutoscaleSettingData setting1, AutoscaleSettingData setting2)
         {
@@ -159,7 +109,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             var Schedule = new RecurrentSchedule("UTC-11", new MonitorDayOfWeek[] { "Monday" }, new[] { 0 }, new[] { 10 });
             var recurrence = new MonitorRecurrence(RecurrenceFrequency.Week, Schedule);
             var scaleCapacity = new MonitorScaleCapacity(1, 1, 1);
-            var metricTrigger = new MetricTrigger("AbandonMessage", new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892"), TimeSpan.FromMinutes(1), MetricStatisticType.Average, TimeSpan.FromMinutes(10), MetricTriggerTimeAggregationType.Average, MetricTriggerComparisonOperation.GreaterThan, 70)
+            var metricTrigger = new MetricTrigger("AbandonMessage", new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892"), TimeSpan.FromMinutes(1), MetricStatisticType.Average, TimeSpan.FromMinutes(10), MetricTriggerTimeAggregationType.Average, MetricTriggerComparisonOperator.GreaterThan, 70)
             {
                 MetricNamespace = "microsoft.servicebus/namespaces",
                 MetricResourceLocation = AzureLocation.EastUS2,
@@ -210,46 +160,6 @@ namespace Azure.ResourceManager.Monitor.Tests
                 },*/
                 Tags = { },
             };
-            return data;
-        }
-        #endregion
-
-        #region DiagnosticSettings
-        public static void AssertDiagnosticSetting(DiagnosticSettingData data1, DiagnosticSettingData data2)
-        {
-            //AssertTrackedResource(data1, data2);
-            Assert.AreEqual(data1.Id, data2.Id);
-            Assert.AreEqual(data1.Name, data2.Name);
-        }
-
-        public static DiagnosticSettingData GetBasicDiagnosticSettingsData()
-        {
-            var data = new DiagnosticSettingData()
-            {
-                StorageAccountId = new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/lockformonitor/providers/Microsoft.Storage/storageAccounts/testaccountforlog2"),
-                //ServiceBusRuleId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892/AuthorizationRules/testfordiagnostic",
-                //EventHubAuthorizationRuleId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-EventHub-1375/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-8280/eventhubs/testfordiagnosticsetting/authorizationRules/testfordiagonst",
-                //EventHubName = "myeventhub",
-                //WorkspaceId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/default-eventhub-1375/providers/microsoft.operationalinsights/workspaces/myworkspace",
-                LogAnalyticsDestinationType = "Dedicated",
-                Metrics =
-                {
-                    new MetricSettings(true)
-                {
-                    Category = "WorkflowMetrics",
-                    RetentionPolicy = new RetentionPolicy(false, 0),
-                }
-                },
-                Logs =
-                {
-                    new LogSettings(true)
-                {
-                    Category = "Alert",
-                    RetentionPolicy= new RetentionPolicy(false, 0)
-                }
-                }
-            };
-            //var data = new DiagnosticSettingsData(ResourceIdentifier.Root, "mysetting", "Microsoft.Insights/diagnosticSettings", "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-5335/providers/Microsoft.Storage/storageAccounts/teststoragemgmt8010", "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892", "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/default-eventhub-1375/providers/microsoft.eventhub/namespaces/testnamespacemgmt1412", "myeventhub", metricSettings, logSettings, "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c", "Dedicated");
             return data;
         }
         #endregion
@@ -311,7 +221,7 @@ namespace Azure.ResourceManager.Monitor.Tests
                 new TimeSpan(0, 1, 0),
                 new MetricAlertSingleResourceMultipleMetricCriteria() { AllOf = { metricCriteria } })
             {
-                MonitorWindowSize = TimeSpan.FromMinutes(5),
+                WindowSize = TimeSpan.FromMinutes(5),
                 Actions = { metricAlertAction }
             };
         }

@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Utilities;
+using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -51,6 +53,7 @@ namespace Azure.Generator.Management.Visitors
                 }
                 AddMissingLastContractModelMethods(modelFactory, updatedMethods);
                 modelFactory.Update(methods: updatedMethods);
+                ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
                 return modelFactory;
             }
             return base.VisitType(type);
@@ -70,6 +73,7 @@ namespace Azure.Generator.Management.Visitors
                 var returnType = previousMethod.Signature.ReturnType;
                 if (returnType is null
                     || KnownManagementTypes.IsKnownManagementType(returnType)
+                    || IsRemovalAcceptedInBaseline(modelFactory, previousMethod.Signature)
                     || updatedMethods.Any(method => HasSameCSharpSignature(method.Signature, previousMethod.Signature))
                     || customMethods.Any(method => HasSameCSharpSignature(method.Signature, previousMethod.Signature))
                     || !ModelFactoryBackwardCompatHelper.TryCreateBackwardCompatMethod(previousMethod, modelFactory, out var restoredMethod))
@@ -77,8 +81,60 @@ namespace Azure.Generator.Management.Visitors
                     continue;
                 }
 
-                updatedMethods.Add(restoredMethod);
+                // If the only change to the factory signature is a lifted value-type leaf,
+                // retain the historical signature as the primary method. Adding both
+                // optional overloads would make calls that omit the leaf ambiguous.
+                var replacementIndex = updatedMethods.FindIndex(current =>
+                    HasOnlyLiftedValueTypeDifferences(current.Signature, previousMethod.Signature));
+                if (replacementIndex >= 0 && !previousMethods.Any(previous =>
+                    HasSameCSharpSignature(previous.Signature, updatedMethods[replacementIndex].Signature)))
+                {
+                    // This is the primary factory, not a hidden compatibility overload.
+                    // Preserve the historical method's visibility attributes.
+                    restoredMethod.Signature.Update(attributes: previousMethod.Signature.Attributes);
+                    updatedMethods[replacementIndex] = restoredMethod;
+                }
+                else
+                {
+                    updatedMethods.Add(restoredMethod);
+                }
             }
+        }
+
+        private static bool HasOnlyLiftedValueTypeDifferences(MethodSignature current, MethodSignature previous)
+        {
+            return current.Name == previous.Name
+                && current.Parameters.Count == previous.Parameters.Count
+                && current.Parameters.Zip(previous.Parameters).All(pair =>
+                    pair.First.Type.HasSamePublicType(pair.Second.Type, ignoreNullable: true))
+                && current.Parameters.Zip(previous.Parameters).Any(pair =>
+                    pair.First.Type.IsValueType && pair.First.Type.IsNullable && !pair.Second.Type.IsNullable);
+        }
+
+        /// <summary>
+        /// Determines whether a previously shipped model factory overload must stay removed. An overload is left out
+        /// when the ApiCompat baseline records its removal, or when its return type or any parameter type refers to a
+        /// type whose removal the baseline already accepted. Without the second check the generator would resurrect an
+        /// overload whose signature names a type that is no longer generated, producing code that does not compile.
+        /// </summary>
+        private static bool IsRemovalAcceptedInBaseline(ModelFactoryProvider modelFactory, MethodSignature previousSignature)
+        {
+            var baseline = CodeModelGenerator.Instance.SourceInputModel?.ApiCompatBaseline;
+            if (baseline is null || baseline.IsEmpty)
+            {
+                return false;
+            }
+
+            if (baseline.IsMethodRemovalSuppressed(
+                    modelFactory.Type.FullyQualifiedName,
+                    previousSignature.Name,
+                    [.. previousSignature.Parameters.Select(parameter => parameter.Type)]))
+            {
+                return true;
+            }
+
+            return baseline.ReferencesSuppressedType(previousSignature.ReturnType)
+                || previousSignature.Parameters.Any(parameter => baseline.ReferencesSuppressedType(parameter.Type));
         }
 
         private bool IsModelType(CSharpType type) => ContainsModelType(ModelTypes, type.WithNullable(false));
@@ -183,7 +239,21 @@ namespace Azure.Generator.Management.Visitors
         {
             return first.Name == second.Name
                 && first.Parameters.Count == second.Parameters.Count
-                && first.Parameters.Zip(second.Parameters).All(pair => pair.First.Type.AreNamesEqual(pair.Second.Type));
+                && first.Parameters.Zip(second.Parameters).All(pair => HasSameEmittedParameterType(
+                    pair.First.Type, pair.Second.Type));
+        }
+
+        private static bool HasSameEmittedParameterType(CSharpType first, CSharpType second)
+        {
+            // Last-contract types can differ from generated types in metadata such as
+            // IsFrameworkType or IsStruct while emitting the same C# type name. Neither
+            // distinction permits a second method with the same parameter signature.
+            // Nullable<T> does create a distinct overload; reference annotations do not.
+            return first.FullyQualifiedName == second.FullyQualifiedName
+                && (first.IsNullable == second.IsNullable || (!first.IsValueType && !second.IsValueType))
+                && first.Arguments.Count == second.Arguments.Count
+                && first.Arguments.Zip(second.Arguments).All(pair => HasSameEmittedParameterType(
+                    pair.First, pair.Second));
         }
 
         private void FixArgumentNullExceptionXmlDoc(MethodProvider method)

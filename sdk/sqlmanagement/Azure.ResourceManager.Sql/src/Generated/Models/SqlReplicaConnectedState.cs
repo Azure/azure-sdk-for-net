@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct SqlReplicaConnectedState : IEquatable<SqlReplicaConnectedState>
     {
         private readonly string _value;
+        /// <summary> DISCONNECTED. </summary>
+        private const string DisconnectedValue = "DISCONNECTED";
+        /// <summary> CONNECTED. </summary>
+        private const string ConnectedValue = "CONNECTED";
 
         /// <summary> Initializes a new instance of <see cref="SqlReplicaConnectedState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SqlReplicaConnectedState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DisconnectedValue = "DISCONNECTED";
-        private const string ConnectedValue = "CONNECTED";
+            _value = value;
+        }
 
         /// <summary> DISCONNECTED. </summary>
         public static SqlReplicaConnectedState Disconnected { get; } = new SqlReplicaConnectedState(DisconnectedValue);
+
         /// <summary> CONNECTED. </summary>
         public static SqlReplicaConnectedState Connected { get; } = new SqlReplicaConnectedState(ConnectedValue);
+
         /// <summary> Determines if two <see cref="SqlReplicaConnectedState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SqlReplicaConnectedState left, SqlReplicaConnectedState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SqlReplicaConnectedState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SqlReplicaConnectedState left, SqlReplicaConnectedState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlReplicaConnectedState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SqlReplicaConnectedState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SqlReplicaConnectedState(string value) => new SqlReplicaConnectedState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SqlReplicaConnectedState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SqlReplicaConnectedState?(string value) => value == null ? null : new SqlReplicaConnectedState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SqlReplicaConnectedState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SqlReplicaConnectedState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

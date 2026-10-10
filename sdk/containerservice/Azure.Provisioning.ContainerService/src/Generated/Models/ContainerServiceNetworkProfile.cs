@@ -329,6 +329,10 @@ namespace Azure.Provisioning.ContainerService
             _podCidrs = DefineListProperty<string>(nameof(PodCidrs), new string[] { "podCidrs" });
             _serviceCidrs = DefineListProperty<string>(nameof(ServiceCidrs), new string[] { "serviceCidrs" });
             _networkIPFamilies = DefineListProperty<ContainerServiceIPFamily>(nameof(NetworkIPFamilies), new string[] { "ipFamilies" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerServiceNetworkProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

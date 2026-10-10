@@ -103,30 +103,30 @@ public class BasicContainerInstanceTests
                       image: image
                       ports: [
                         {
-                          protocol: 'TCP'
                           port: port
+                          protocol: 'TCP'
                         }
                       ]
                       resources: {
                         requests: {
-                          memoryInGB: json('1.5')
                           cpu: 1
+                          memoryInGB: json('1.5')
                         }
                       }
                     }
                   }
                 ]
-                restartPolicy: 'Always'
                 ipAddress: {
                   ports: [
                     {
-                      protocol: 'TCP'
                       port: port
+                      protocol: 'TCP'
                     }
                   ]
                   type: 'Public'
                 }
                 osType: 'Linux'
+                restartPolicy: 'Always'
               }
             }
 

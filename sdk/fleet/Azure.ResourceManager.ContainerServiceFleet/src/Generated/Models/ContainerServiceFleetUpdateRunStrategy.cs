@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         }
 
         /// <summary> The list of stages that compose this update run. Min size: 1. </summary>
-        public IList<ContainerServiceFleetUpdateStage> Stages { get; }
+        public IList<ContainerServiceFleetUpdateStage> Stages { get; } = new ChangeTrackingList<ContainerServiceFleetUpdateStage>();
     }
 }

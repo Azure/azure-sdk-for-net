@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(MongoMIRoleAssignmentResource.ResourceType, out string mongoMIRoleAssignmentApiVersion);
             _mongoMIResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", MongoMIRoleAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _mongoMIResourcesRestClient = new MongoMIResources(_mongoMIResourcesClientDiagnostics, Pipeline, Endpoint, mongoMIRoleAssignmentApiVersion ?? "2026-04-01-preview");
+            _mongoMIResourcesRestClient = new MongoMIResources(_mongoMIResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mongoMIRoleAssignmentApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MongoMIRoleAssignmentData, MongoMIRoleAssignmentResource>(new MongoMIResourcesGetMongoMIRoleAssignmentsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MongoMIRoleAssignmentData, MongoMIRoleAssignmentResource>(new MongoMIRoleAssignmentDataAsyncCollectionResultOfT(
                 _mongoMIResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MongoMIRoleAssignmentData, MongoMIRoleAssignmentResource>(new MongoMIResourcesGetMongoMIRoleAssignmentsCollectionResultOfT(
+            return new PageableWrapper<MongoMIRoleAssignmentData, MongoMIRoleAssignmentResource>(new MongoMIRoleAssignmentDataCollectionResultOfT(
                 _mongoMIResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -60,51 +60,51 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
 
         private ClientDiagnostics BackupProtectionIntentClientDiagnostics => _backupProtectionIntentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BackupProtectionIntent BackupProtectionIntentRestClient => _backupProtectionIntentRestClient ??= new BackupProtectionIntent(BackupProtectionIntentClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
+        private BackupProtectionIntent BackupProtectionIntentRestClient => _backupProtectionIntentRestClient ??= new BackupProtectionIntent(BackupProtectionIntentClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01");
 
         private ClientDiagnostics BackupUsageSummariesClientDiagnostics => _backupUsageSummariesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BackupUsageSummaries BackupUsageSummariesRestClient => _backupUsageSummariesRestClient ??= new BackupUsageSummaries(BackupUsageSummariesClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
+        private BackupUsageSummaries BackupUsageSummariesRestClient => _backupUsageSummariesRestClient ??= new BackupUsageSummaries(BackupUsageSummariesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01");
 
         private ClientDiagnostics JobsClientDiagnostics => _jobsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Jobs JobsRestClient => _jobsRestClient ??= new Jobs(JobsClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
+        private Jobs JobsRestClient => _jobsRestClient ??= new Jobs(JobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01");
 
         private ClientDiagnostics BackupProtectedItemsClientDiagnostics => _backupProtectedItemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BackupProtectedItems BackupProtectedItemsRestClient => _backupProtectedItemsRestClient ??= new BackupProtectedItems(BackupProtectedItemsClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
+        private BackupProtectedItems BackupProtectedItemsRestClient => _backupProtectedItemsRestClient ??= new BackupProtectedItems(BackupProtectedItemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01");
 
         private ClientDiagnostics ProtectableContainersClientDiagnostics => _protectableContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ProtectableContainers ProtectableContainersRestClient => _protectableContainersRestClient ??= new ProtectableContainers(ProtectableContainersClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
+        private ProtectableContainers ProtectableContainersRestClient => _protectableContainersRestClient ??= new ProtectableContainers(ProtectableContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01");
 
         private ClientDiagnostics ProtectionContainersOperationGroupClientDiagnostics => _protectionContainersOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ProtectionContainersOperationGroup ProtectionContainersOperationGroupRestClient => _protectionContainersOperationGroupRestClient ??= new ProtectionContainersOperationGroup(ProtectionContainersOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
+        private ProtectionContainersOperationGroup ProtectionContainersOperationGroupRestClient => _protectionContainersOperationGroupRestClient ??= new ProtectionContainersOperationGroup(ProtectionContainersOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01");
 
         private ClientDiagnostics BackupProtectableItemsClientDiagnostics => _backupProtectableItemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BackupProtectableItems BackupProtectableItemsRestClient => _backupProtectableItemsRestClient ??= new BackupProtectableItems(BackupProtectableItemsClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
+        private BackupProtectableItems BackupProtectableItemsRestClient => _backupProtectableItemsRestClient ??= new BackupProtectableItems(BackupProtectableItemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01");
 
         private ClientDiagnostics BackupProtectionContainersClientDiagnostics => _backupProtectionContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BackupProtectionContainers BackupProtectionContainersRestClient => _backupProtectionContainersRestClient ??= new BackupProtectionContainers(BackupProtectionContainersClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
+        private BackupProtectionContainers BackupProtectionContainersRestClient => _backupProtectionContainersRestClient ??= new BackupProtectionContainers(BackupProtectionContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01");
 
         private ClientDiagnostics DeletedProtectionContainersClientDiagnostics => _deletedProtectionContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DeletedProtectionContainers DeletedProtectionContainersRestClient => _deletedProtectionContainersRestClient ??= new DeletedProtectionContainers(DeletedProtectionContainersClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
+        private DeletedProtectionContainers DeletedProtectionContainersRestClient => _deletedProtectionContainersRestClient ??= new DeletedProtectionContainers(DeletedProtectionContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01");
 
         private ClientDiagnostics SecurityPINsClientDiagnostics => _securityPINsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SecurityPINs SecurityPINsRestClient => _securityPINsRestClient ??= new SecurityPINs(SecurityPINsClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
+        private SecurityPINs SecurityPINsRestClient => _securityPINsRestClient ??= new SecurityPINs(SecurityPINsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01");
 
         private ClientDiagnostics FetchTieringCostClientDiagnostics => _fetchTieringCostClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FetchTieringCost FetchTieringCostRestClient => _fetchTieringCostRestClient ??= new FetchTieringCost(FetchTieringCostClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
+        private FetchTieringCost FetchTieringCostRestClient => _fetchTieringCostRestClient ??= new FetchTieringCost(FetchTieringCostClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01");
 
         private ClientDiagnostics GetTieringCostOperationResultClientDiagnostics => _getTieringCostOperationResultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GetTieringCostOperationResult GetTieringCostOperationResultRestClient => _getTieringCostOperationResultRestClient ??= new GetTieringCostOperationResult(GetTieringCostOperationResultClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
+        private GetTieringCostOperationResult GetTieringCostOperationResultRestClient => _getTieringCostOperationResultRestClient ??= new GetTieringCostOperationResult(GetTieringCostOperationResultClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01");
 
         /// <summary>
         /// Fetches resource storage config.
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -695,7 +695,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BackupProtectionIntentData, BackupProtectionIntentResource>(new BackupProtectionIntentGetBackupProtectionIntentsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BackupProtectionIntentData, BackupProtectionIntentResource>(new BackupProtectionIntentDataAsyncCollectionResultOfT(
                 BackupProtectionIntentRestClient,
                 vaultName,
                 Id.ResourceGroupName,
@@ -738,7 +738,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -757,7 +757,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BackupProtectionIntentData, BackupProtectionIntentResource>(new BackupProtectionIntentGetBackupProtectionIntentsCollectionResultOfT(
+            return new PageableWrapper<BackupProtectionIntentData, BackupProtectionIntentResource>(new BackupProtectionIntentDataCollectionResultOfT(
                 BackupProtectionIntentRestClient,
                 vaultName,
                 Id.ResourceGroupName,
@@ -781,7 +781,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BackupUsageSummariesGetBackupUsageSummariesAsyncCollectionResultOfT(
+            return new BackupManagementUsageAsyncCollectionResultOfT(
                 BackupUsageSummariesRestClient,
                 vaultName,
                 Id.ResourceGroupName,
@@ -824,7 +824,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -843,7 +843,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BackupUsageSummariesGetBackupUsageSummariesCollectionResultOfT(
+            return new BackupManagementUsageCollectionResultOfT(
                 BackupUsageSummariesRestClient,
                 vaultName,
                 Id.ResourceGroupName,
@@ -867,7 +867,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -912,7 +912,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -957,7 +957,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -976,7 +976,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BackupProtectedItemData, BackupProtectedItemResource>(new BackupProtectedItemsGetBackupProtectedItemsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BackupProtectedItemData, BackupProtectedItemResource>(new BackupProtectedItemDataAsyncCollectionResultOfT(
                 BackupProtectedItemsRestClient,
                 vaultName,
                 Id.ResourceGroupName,
@@ -1000,7 +1000,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1019,7 +1019,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BackupProtectedItemData, BackupProtectedItemResource>(new BackupProtectedItemsGetBackupProtectedItemsCollectionResultOfT(
+            return new PageableWrapper<BackupProtectedItemData, BackupProtectedItemResource>(new BackupProtectedItemDataCollectionResultOfT(
                 BackupProtectedItemsRestClient,
                 vaultName,
                 Id.ResourceGroupName,
@@ -1043,7 +1043,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1063,7 +1063,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ProtectableContainersGetProtectableContainersAsyncCollectionResultOfT(
+            return new ProtectableContainerResourceAsyncCollectionResultOfT(
                 ProtectableContainersRestClient,
                 vaultName,
                 Id.ResourceGroupName,
@@ -1087,7 +1087,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1107,7 +1107,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ProtectableContainersGetProtectableContainersCollectionResultOfT(
+            return new ProtectableContainerResourceCollectionResultOfT(
                 ProtectableContainersRestClient,
                 vaultName,
                 Id.ResourceGroupName,
@@ -1132,7 +1132,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1180,7 +1180,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1228,7 +1228,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1247,7 +1247,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BackupProtectableItemsGetBackupProtectableItemsAsyncCollectionResultOfT(
+            return new WorkloadProtectableItemResourceAsyncCollectionResultOfT(
                 BackupProtectableItemsRestClient,
                 vaultName,
                 Id.ResourceGroupName,
@@ -1272,7 +1272,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1291,7 +1291,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BackupProtectableItemsGetBackupProtectableItemsCollectionResultOfT(
+            return new WorkloadProtectableItemResourceCollectionResultOfT(
                 BackupProtectableItemsRestClient,
                 vaultName,
                 Id.ResourceGroupName,
@@ -1315,7 +1315,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1333,7 +1333,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BackupProtectionContainerData, BackupProtectionContainerResource>(new BackupProtectionContainersGetBackupProtectionContainersAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BackupProtectionContainerData, BackupProtectionContainerResource>(new BackupProtectionContainerDataAsyncCollectionResultOfT(
                 BackupProtectionContainersRestClient,
                 vaultName,
                 Id.ResourceGroupName,
@@ -1356,7 +1356,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1374,7 +1374,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BackupProtectionContainerData, BackupProtectionContainerResource>(new BackupProtectionContainersGetBackupProtectionContainersCollectionResultOfT(
+            return new PageableWrapper<BackupProtectionContainerData, BackupProtectionContainerResource>(new BackupProtectionContainerDataCollectionResultOfT(
                 BackupProtectionContainersRestClient,
                 vaultName,
                 Id.ResourceGroupName,
@@ -1397,7 +1397,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1415,7 +1415,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BackupProtectionContainerData, BackupProtectionContainerResource>(new DeletedProtectionContainersGetSoftDeletedProtectionContainersAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BackupProtectionContainerData, BackupProtectionContainerResource>(new BackupProtectionContainerDataAsync0CollectionResultOfT(
                 DeletedProtectionContainersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1438,7 +1438,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1456,7 +1456,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BackupProtectionContainerData, BackupProtectionContainerResource>(new DeletedProtectionContainersGetSoftDeletedProtectionContainersCollectionResultOfT(
+            return new PageableWrapper<BackupProtectionContainerData, BackupProtectionContainerResource>(new BackupProtectionContainerData0CollectionResultOfT(
                 DeletedProtectionContainersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1479,7 +1479,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1530,7 +1530,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1582,7 +1582,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1641,7 +1641,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1699,7 +1699,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1750,7 +1750,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             TryGetApiVersion(PublicCloudConnectorSolutionConfigurationResource.ResourceType, out string publicCloudConnectorSolutionConfigurationApiVersion);
             _solutionConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", PublicCloudConnectorSolutionConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _solutionConfigurationsRestClient = new SolutionConfigurations(_solutionConfigurationsClientDiagnostics, Pipeline, Endpoint, publicCloudConnectorSolutionConfigurationApiVersion ?? "2024-12-01");
+            _solutionConfigurationsRestClient = new SolutionConfigurations(_solutionConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, publicCloudConnectorSolutionConfigurationApiVersion ?? "2024-12-01");
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PublicCloudConnectorSolutionConfigurationData, PublicCloudConnectorSolutionConfigurationResource>(new SolutionConfigurationsGetAllAsyncCollectionResultOfT(_solutionConfigurationsRestClient, Id.ToString(), context, "PublicCloudConnectorSolutionConfigurationCollection.GetAll"), data => new PublicCloudConnectorSolutionConfigurationResource(Client, data));
+            return new AsyncPageableWrapper<PublicCloudConnectorSolutionConfigurationData, PublicCloudConnectorSolutionConfigurationResource>(new PublicCloudConnectorSolutionConfigurationDataAsyncCollectionResultOfT(_solutionConfigurationsRestClient, Id.ToString(), context, "PublicCloudConnectorSolutionConfigurationCollection.GetAll"), data => new PublicCloudConnectorSolutionConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PublicCloudConnectorSolutionConfigurationData, PublicCloudConnectorSolutionConfigurationResource>(new SolutionConfigurationsGetAllCollectionResultOfT(_solutionConfigurationsRestClient, Id.ToString(), context, "PublicCloudConnectorSolutionConfigurationCollection.GetAll"), data => new PublicCloudConnectorSolutionConfigurationResource(Client, data));
+            return new PageableWrapper<PublicCloudConnectorSolutionConfigurationData, PublicCloudConnectorSolutionConfigurationResource>(new PublicCloudConnectorSolutionConfigurationDataCollectionResultOfT(_solutionConfigurationsRestClient, Id.ToString(), context, "PublicCloudConnectorSolutionConfigurationCollection.GetAll"), data => new PublicCloudConnectorSolutionConfigurationResource(Client, data));
         }
 
         /// <summary>

@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             long? totalCount = default;
             long? processedCount = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            CosmosDBMongoCollection source = default;
-            CosmosDBMongoCollection destination = default;
+            CosmosDBMongoCollectionInfo source = default;
+            CosmosDBMongoCollectionInfo destination = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("totalCount"u8))
@@ -138,17 +138,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (prop.NameEquals("source"u8))
                 {
-                    source = CosmosDBMongoCollection.DeserializeCosmosDBMongoCollection(prop.Value, options);
+                    source = CosmosDBMongoCollectionInfo.DeserializeCosmosDBMongoCollectionInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("destination"u8))
                 {
-                    destination = CosmosDBMongoCollection.DeserializeCosmosDBMongoCollection(prop.Value, options);
+                    destination = CosmosDBMongoCollectionInfo.DeserializeCosmosDBMongoCollectionInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MongoRUToMongoRUCopyJobTask(totalCount, processedCount, additionalBinaryDataProperties, source, destination);

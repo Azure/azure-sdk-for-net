@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Purview
         {
             TryGetApiVersion(PurviewPrivateLinkResource.ResourceType, out string purviewPrivateLinkResourceApiVersion);
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Purview", PurviewPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, purviewPrivateLinkResourceApiVersion ?? "2024-04-01-preview");
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, purviewPrivateLinkResourceApiVersion ?? "2024-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Purview
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PurviewPrivateLinkResourceData, PurviewPrivateLinkResource>(new PrivateLinkResourcesGetByAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PurviewPrivateLinkResourceData, PurviewPrivateLinkResource>(new PurviewPrivateLinkResourceDataAsyncCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Purview
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PurviewPrivateLinkResourceData, PurviewPrivateLinkResource>(new PrivateLinkResourcesGetByAccountCollectionResultOfT(
+            return new PageableWrapper<PurviewPrivateLinkResourceData, PurviewPrivateLinkResource>(new PurviewPrivateLinkResourceDataCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

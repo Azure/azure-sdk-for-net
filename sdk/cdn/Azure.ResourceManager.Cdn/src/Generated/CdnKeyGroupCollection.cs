@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(CdnKeyGroupResource.ResourceType, out string cdnKeyGroupApiVersion);
             _keyGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnKeyGroupResource.ResourceType.Namespace, Diagnostics);
-            _keyGroupsRestClient = new KeyGroups(_keyGroupsClientDiagnostics, Pipeline, Endpoint, cdnKeyGroupApiVersion ?? "2025-09-01-preview");
+            _keyGroupsRestClient = new KeyGroups(_keyGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cdnKeyGroupApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CdnKeyGroupData, CdnKeyGroupResource>(new KeyGroupsGetByProfileAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CdnKeyGroupData, CdnKeyGroupResource>(new CdnKeyGroupDataAsyncCollectionResultOfT(
                 _keyGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CdnKeyGroupData, CdnKeyGroupResource>(new KeyGroupsGetByProfileCollectionResultOfT(
+            return new PageableWrapper<CdnKeyGroupData, CdnKeyGroupResource>(new CdnKeyGroupDataCollectionResultOfT(
                 _keyGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

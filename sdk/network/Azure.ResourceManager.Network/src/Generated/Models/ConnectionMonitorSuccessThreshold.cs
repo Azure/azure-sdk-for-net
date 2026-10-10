@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Describes the threshold for declaring a test successful. </summary>
     public partial class ConnectionMonitorSuccessThreshold
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorSuccessThreshold"/>. </summary>
         public ConnectionMonitorSuccessThreshold()
@@ -53,17 +25,18 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorSuccessThreshold"/>. </summary>
         /// <param name="checksFailedPercent"> The maximum percentage of failed checks permitted for a test to evaluate as successful. </param>
         /// <param name="roundTripTimeMs"> The maximum round-trip time in milliseconds permitted for a test to evaluate as successful. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionMonitorSuccessThreshold(int? checksFailedPercent, float? roundTripTimeMs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectionMonitorSuccessThreshold(int? checksFailedPercent, float? roundTripTimeMs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ChecksFailedPercent = checksFailedPercent;
             RoundTripTimeMs = roundTripTimeMs;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The maximum percentage of failed checks permitted for a test to evaluate as successful. </summary>
         [WirePath("checksFailedPercent")]
         public int? ChecksFailedPercent { get; set; }
+
         /// <summary> The maximum round-trip time in milliseconds permitted for a test to evaluate as successful. </summary>
         [WirePath("roundTripTimeMs")]
         public float? RoundTripTimeMs { get; set; }

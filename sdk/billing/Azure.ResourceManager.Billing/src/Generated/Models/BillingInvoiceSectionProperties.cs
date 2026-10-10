@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> An invoice section. </summary>
     public partial class BillingInvoiceSectionProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingInvoiceSectionProperties"/>. </summary>
         public BillingInvoiceSectionProperties()
@@ -59,8 +31,8 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="systemId"> The system generated unique identifier for an invoice section. </param>
         /// <param name="targetCloud"> Identifies the cloud environments that are associated with an invoice section. This is a system managed optional field and gets updated as the invoice section gets associated with accounts in various clouds. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingInvoiceSectionProperties(BillingProvisioningState? provisioningState, string displayName, InvoiceSectionState? state, InvoiceSectionStateReasonCode? reasonCode, string systemId, string targetCloud, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BillingInvoiceSectionProperties(BillingProvisioningState? provisioningState, string displayName, InvoiceSectionState? state, InvoiceSectionStateReasonCode? reasonCode, string systemId, string targetCloud, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DisplayName = displayName;
@@ -69,27 +41,33 @@ namespace Azure.ResourceManager.Billing.Models
             SystemId = systemId;
             TargetCloud = targetCloud;
             Tags = tags;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The provisioning state of the resource during a long-running operation. </summary>
         [WirePath("provisioningState")]
         public BillingProvisioningState? ProvisioningState { get; }
+
         /// <summary> The name of the invoice section. </summary>
         [WirePath("displayName")]
         public string DisplayName { get; set; }
+
         /// <summary> Identifies the status of an invoice section. </summary>
         [WirePath("state")]
         public InvoiceSectionState? State { get; set; }
+
         /// <summary> Reason for the specified invoice section status. </summary>
         [WirePath("reasonCode")]
         public InvoiceSectionStateReasonCode? ReasonCode { get; set; }
+
         /// <summary> The system generated unique identifier for an invoice section. </summary>
         [WirePath("systemId")]
         public string SystemId { get; }
+
         /// <summary> Identifies the cloud environments that are associated with an invoice section. This is a system managed optional field and gets updated as the invoice section gets associated with accounts in various clouds. </summary>
         [WirePath("targetCloud")]
         public string TargetCloud { get; set; }
+
         /// <summary> Dictionary of metadata associated with the resource. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }

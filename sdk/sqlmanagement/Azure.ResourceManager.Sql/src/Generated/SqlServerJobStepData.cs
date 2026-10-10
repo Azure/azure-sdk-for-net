@@ -13,43 +13,11 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary>
-    /// A class representing the SqlServerJobStep data model.
-    /// A job step.
-    /// </summary>
+    /// <summary> A job step. </summary>
     public partial class SqlServerJobStepData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlServerJobStepData"/>. </summary>
         public SqlServerJobStepData()
@@ -57,45 +25,128 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlServerJobStepData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="stepId"> The job step's index within the job. If not specified when creating the job step, it will be created as the last step. If not specified when updating the job step, the step id is not modified. </param>
-        /// <param name="targetGroup"> The resource ID of the target group that the job step will be executed on. </param>
-        /// <param name="credential"> The resource ID of the job credential that will be used to connect to the targets. </param>
-        /// <param name="action"> The action payload of the job step. </param>
-        /// <param name="output"> Output destination properties of the job step. </param>
-        /// <param name="executionOptions"> Execution options for the job step. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerJobStepData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? stepId, string targetGroup, string credential, JobStepAction action, JobStepOutput output, JobStepExecutionOptions executionOptions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Resource properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SqlServerJobStepData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobStepProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            StepId = stepId;
-            TargetGroup = targetGroup;
-            Credential = credential;
-            Action = action;
-            Output = output;
-            ExecutionOptions = executionOptions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal JobStepProperties Properties { get; set; }
 
         /// <summary> The job step's index within the job. If not specified when creating the job step, it will be created as the last step. If not specified when updating the job step, the step id is not modified. </summary>
         [WirePath("properties.stepId")]
-        public int? StepId { get; set; }
+        public int? StepId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StepId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobStepProperties();
+                }
+                Properties.StepId = value;
+            }
+        }
+
         /// <summary> The resource ID of the target group that the job step will be executed on. </summary>
         [WirePath("properties.targetGroup")]
-        public string TargetGroup { get; set; }
+        public string TargetGroup
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetGroup;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobStepProperties();
+                }
+                Properties.TargetGroup = value;
+            }
+        }
+
         /// <summary> The resource ID of the job credential that will be used to connect to the targets. </summary>
         [WirePath("properties.credential")]
-        public string Credential { get; set; }
+        public string Credential
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Credential;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobStepProperties();
+                }
+                Properties.Credential = value;
+            }
+        }
+
         /// <summary> The action payload of the job step. </summary>
         [WirePath("properties.action")]
-        public JobStepAction Action { get; set; }
+        public JobStepAction Action
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Action;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobStepProperties();
+                }
+                Properties.Action = value;
+            }
+        }
+
         /// <summary> Output destination properties of the job step. </summary>
         [WirePath("properties.output")]
-        public JobStepOutput Output { get; set; }
+        public JobStepOutput Output
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Output;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobStepProperties();
+                }
+                Properties.Output = value;
+            }
+        }
+
         /// <summary> Execution options for the job step. </summary>
         [WirePath("properties.executionOptions")]
-        public JobStepExecutionOptions ExecutionOptions { get; set; }
+        public JobStepExecutionOptions ExecutionOptions
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExecutionOptions;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobStepProperties();
+                }
+                Properties.ExecutionOptions = value;
+            }
+        }
     }
 }

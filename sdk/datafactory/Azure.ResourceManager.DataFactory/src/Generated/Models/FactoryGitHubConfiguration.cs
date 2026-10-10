@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,14 +20,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="collaborationBranch"> Collaboration branch. </param>
         /// <param name="rootFolder"> Root folder. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="repositoryName"/>, <paramref name="collaborationBranch"/> or <paramref name="rootFolder"/> is null. </exception>
-        public FactoryGitHubConfiguration(string accountName, string repositoryName, string collaborationBranch, string rootFolder) : base(accountName, repositoryName, collaborationBranch, rootFolder)
+        public FactoryGitHubConfiguration(string accountName, string repositoryName, string collaborationBranch, string rootFolder) : base("FactoryGitHubConfiguration", accountName, repositoryName, collaborationBranch, rootFolder)
         {
             Argument.AssertNotNull(accountName, nameof(accountName));
             Argument.AssertNotNull(repositoryName, nameof(repositoryName));
             Argument.AssertNotNull(collaborationBranch, nameof(collaborationBranch));
             Argument.AssertNotNull(rootFolder, nameof(rootFolder));
 
-            FactoryRepoConfigurationType = "FactoryGitHubConfiguration";
         }
 
         /// <summary> Initializes a new instance of <see cref="FactoryGitHubConfiguration"/>. </summary>
@@ -37,27 +37,23 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="rootFolder"> Root folder. </param>
         /// <param name="lastCommitId"> Last commit id. </param>
         /// <param name="disablePublish"> Disable manual publish operation in ADF studio to favor automated publish. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="hostName"> GitHub Enterprise host name. For example: `https://github.mydomain.com`. </param>
         /// <param name="clientId"> GitHub bring your own app client id. </param>
         /// <param name="clientSecret"> GitHub bring your own app client secret information. </param>
-        internal FactoryGitHubConfiguration(string factoryRepoConfigurationType, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, bool? disablePublish, IDictionary<string, BinaryData> serializedAdditionalRawData, string hostName, string clientId, FactoryGitHubClientSecret clientSecret) : base(factoryRepoConfigurationType, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId, disablePublish, serializedAdditionalRawData)
+        internal FactoryGitHubConfiguration(string factoryRepoConfigurationType, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, bool? disablePublish, IDictionary<string, BinaryData> additionalBinaryDataProperties, string hostName, string clientId, FactoryGitHubClientSecret clientSecret) : base(factoryRepoConfigurationType, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId, disablePublish, additionalBinaryDataProperties)
         {
             HostName = hostName;
             ClientId = clientId;
             ClientSecret = clientSecret;
-            FactoryRepoConfigurationType = factoryRepoConfigurationType ?? "FactoryGitHubConfiguration";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FactoryGitHubConfiguration"/> for deserialization. </summary>
-        internal FactoryGitHubConfiguration()
-        {
         }
 
         /// <summary> GitHub Enterprise host name. For example: `https://github.mydomain.com`. </summary>
         public string HostName { get; set; }
+
         /// <summary> GitHub bring your own app client id. </summary>
         public string ClientId { get; set; }
+
         /// <summary> GitHub bring your own app client secret information. </summary>
         public FactoryGitHubClientSecret ClientSecret { get; set; }
     }

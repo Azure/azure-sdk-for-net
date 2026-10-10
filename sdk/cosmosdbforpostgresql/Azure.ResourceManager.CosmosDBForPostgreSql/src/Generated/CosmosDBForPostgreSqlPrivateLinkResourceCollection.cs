@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         {
             TryGetApiVersion(CosmosDBForPostgreSqlPrivateLinkResource.ResourceType, out string cosmosDBForPostgreSqlPrivateLinkResourceApiVersion);
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDBForPostgreSql", CosmosDBForPostgreSqlPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, cosmosDBForPostgreSqlPrivateLinkResourceApiVersion ?? "2023-03-02-preview");
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBForPostgreSqlPrivateLinkResourceApiVersion ?? "2023-03-02-preview");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBForPostgreSqlPrivateLinkResourceData, CosmosDBForPostgreSqlPrivateLinkResource>(new PrivateLinkResourcesGetByClusterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CosmosDBForPostgreSqlPrivateLinkResourceData, CosmosDBForPostgreSqlPrivateLinkResource>(new CosmosDBForPostgreSqlPrivateLinkResourceDataAsyncCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBForPostgreSqlPrivateLinkResourceData, CosmosDBForPostgreSqlPrivateLinkResource>(new PrivateLinkResourcesGetByClusterCollectionResultOfT(
+            return new PageableWrapper<CosmosDBForPostgreSqlPrivateLinkResourceData, CosmosDBForPostgreSqlPrivateLinkResource>(new CosmosDBForPostgreSqlPrivateLinkResourceDataCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

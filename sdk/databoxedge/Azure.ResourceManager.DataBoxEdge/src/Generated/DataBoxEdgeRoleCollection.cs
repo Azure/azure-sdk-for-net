@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             TryGetApiVersion(DataBoxEdgeRoleResource.ResourceType, out string dataBoxEdgeRoleApiVersion);
             _rolesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", DataBoxEdgeRoleResource.ResourceType.Namespace, Diagnostics);
-            _rolesRestClient = new Roles(_rolesClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeRoleApiVersion ?? "2023-12-01");
+            _rolesRestClient = new Roles(_rolesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeRoleApiVersion ?? "2023-12-01");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataBoxEdgeRoleData, DataBoxEdgeRoleResource>(new RolesGetByDataBoxEdgeDeviceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataBoxEdgeRoleData, DataBoxEdgeRoleResource>(new DataBoxEdgeRoleDataAsyncCollectionResultOfT(
                 _rolesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataBoxEdgeRoleData, DataBoxEdgeRoleResource>(new RolesGetByDataBoxEdgeDeviceCollectionResultOfT(
+            return new PageableWrapper<DataBoxEdgeRoleData, DataBoxEdgeRoleResource>(new DataBoxEdgeRoleDataCollectionResultOfT(
                 _rolesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

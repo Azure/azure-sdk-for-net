@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.OracleDatabase
             TryGetApiVersion(OracleDBVersionResource.ResourceType, out string oracleDBVersionApiVersion);
             _location = location;
             _dbVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleDBVersionResource.ResourceType.Namespace, Diagnostics);
-            _dbVersionsRestClient = new DbVersions(_dbVersionsClientDiagnostics, Pipeline, Endpoint, oracleDBVersionApiVersion ?? "2025-09-01");
+            _dbVersionsRestClient = new DbVersions(_dbVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDBVersionApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OracleDBVersionData, OracleDBVersionResource>(new DbVersionsGetByLocationAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<OracleDBVersionData, OracleDBVersionResource>(new OracleDBVersionDataAsyncCollectionResultOfT(
                 _dbVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _location,
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OracleDBVersionData, OracleDBVersionResource>(new DbVersionsGetByLocationCollectionResultOfT(
+            return new PageableWrapper<OracleDBVersionData, OracleDBVersionResource>(new OracleDBVersionDataCollectionResultOfT(
                 _dbVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _location,

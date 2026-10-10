@@ -93,6 +93,10 @@ namespace Azure.Provisioning.ContainerService
             _tenantId = DefineProperty<Guid>(nameof(TenantId), new string[] { "tenantId" });
             _referralResource = DefineProperty<string>(nameof(ReferralResource), new string[] { "referralResource" }, isRequired: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterDelegatedIdentity that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

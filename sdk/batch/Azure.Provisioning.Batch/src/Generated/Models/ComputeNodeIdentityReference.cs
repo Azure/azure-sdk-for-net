@@ -41,6 +41,10 @@ namespace Azure.Provisioning.Batch
         {
             base.DefineProvisionableProperties();
             _resourceId = DefineProperty<ResourceIdentifier>(nameof(ResourceId), new string[] { "resourceId" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ComputeNodeIdentityReference that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

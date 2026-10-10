@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         {
             TryGetApiVersion(CustomLocationResource.ResourceType, out string customLocationApiVersion);
             _customLocationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ExtendedLocations", CustomLocationResource.ResourceType.Namespace, Diagnostics);
-            _customLocationsRestClient = new CustomLocations(_customLocationsClientDiagnostics, Pipeline, Endpoint, customLocationApiVersion ?? "2021-08-31-preview");
+            _customLocationsRestClient = new CustomLocations(_customLocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, customLocationApiVersion ?? "2021-08-31-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ExtendedLocations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CustomLocationData, CustomLocationResource>(new CustomLocationsGetByResourceGroupAsyncCollectionResultOfT(_customLocationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "CustomLocationCollection.GetAll"), data => new CustomLocationResource(Client, data));
+            return new AsyncPageableWrapper<CustomLocationData, CustomLocationResource>(new CustomLocationDataAsyncCollectionResultOfT(_customLocationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "CustomLocationCollection.GetAll"), data => new CustomLocationResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ExtendedLocations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CustomLocationData, CustomLocationResource>(new CustomLocationsGetByResourceGroupCollectionResultOfT(_customLocationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "CustomLocationCollection.GetAll"), data => new CustomLocationResource(Client, data));
+            return new PageableWrapper<CustomLocationData, CustomLocationResource>(new CustomLocationDataCollectionResultOfT(_customLocationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "CustomLocationCollection.GetAll"), data => new CustomLocationResource(Client, data));
         }
 
         /// <summary>

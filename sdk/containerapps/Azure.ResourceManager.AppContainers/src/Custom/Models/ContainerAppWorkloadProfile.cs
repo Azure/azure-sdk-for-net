@@ -10,14 +10,15 @@ namespace Azure.ResourceManager.AppContainers.Models
         // The generated names must remain MaximumNodeCount/MinimumNodeCount for GA compatibility.
         // Preserve the newer MaximumCount/MinimumCount aliases and the shipped three-parameter constructor.
         /// <summary> Initializes a new instance of <see cref="ContainerAppWorkloadProfile"/>. </summary>
-        /// <param name="name"> Workload profile type for the workloads to run on. </param>
-        /// <param name="maximumCount"> The maximum capacity. </param>
+        /// <param name="workloadProfileType"> Workload profile type for the workloads to run on. </param>
         /// <param name="minimumCount"> The minimum capacity. </param>
-        public ContainerAppWorkloadProfile(string name, int maximumCount, int minimumCount)
-            : this(name, name)
+        /// <param name="maximumCount"> The maximum capacity. </param>
+        // TODO: Remove this compatibility constructor after https://github.com/microsoft/typespec/issues/11588 is fixed.
+        public ContainerAppWorkloadProfile(string workloadProfileType, int minimumCount, int maximumCount)
+            : this(workloadProfileType, workloadProfileType)
         {
-            MaximumCount = maximumCount;
             MinimumCount = minimumCount;
+            MaximumCount = maximumCount;
         }
 
         /// <summary> The maximum capacity. </summary>

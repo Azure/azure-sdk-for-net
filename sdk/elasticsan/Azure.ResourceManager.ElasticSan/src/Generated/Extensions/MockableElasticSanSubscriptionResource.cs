@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
 
         private ClientDiagnostics ElasticSansClientDiagnostics => _elasticSansClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ElasticSan.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ElasticSans ElasticSansRestClient => _elasticSansRestClient ??= new ElasticSans(ElasticSansClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private ElasticSans ElasticSansRestClient => _elasticSansRestClient ??= new ElasticSans(ElasticSansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
 
         private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ElasticSan.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Skus SkusRestClient => _skusRestClient ??= new Skus(SkusClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private Skus SkusRestClient => _skusRestClient ??= new Skus(SkusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
 
         /// <summary>
         /// Gets a list of ElasticSans in a subscription
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ElasticSanData, ElasticSanResource>(new ElasticSansGetBySubscriptionAsyncCollectionResultOfT(ElasticSansRestClient, Id.SubscriptionId, context, "MockableElasticSanSubscriptionResource.GetElasticSans"), data => new ElasticSanResource(Client, data));
+            return new AsyncPageableWrapper<ElasticSanData, ElasticSanResource>(new ElasticSanDataAsync0CollectionResultOfT(ElasticSansRestClient, Id.SubscriptionId, context, "MockableElasticSanSubscriptionResource.GetElasticSans"), data => new ElasticSanResource(Client, data));
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ElasticSanData, ElasticSanResource>(new ElasticSansGetBySubscriptionCollectionResultOfT(ElasticSansRestClient, Id.SubscriptionId, context, "MockableElasticSanSubscriptionResource.GetElasticSans"), data => new ElasticSanResource(Client, data));
+            return new PageableWrapper<ElasticSanData, ElasticSanResource>(new ElasticSanData0CollectionResultOfT(ElasticSansRestClient, Id.SubscriptionId, context, "MockableElasticSanSubscriptionResource.GetElasticSans"), data => new ElasticSanResource(Client, data));
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SkusGetSkusAsyncCollectionResultOfT(SkusRestClient, Id.SubscriptionId, filter, context, "MockableElasticSanSubscriptionResource.GetSkus");
+            return new ElasticSanSkuInformationAsyncCollectionResultOfT(SkusRestClient, Id.SubscriptionId, filter, context, "MockableElasticSanSubscriptionResource.GetSkus");
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SkusGetSkusCollectionResultOfT(SkusRestClient, Id.SubscriptionId, filter, context, "MockableElasticSanSubscriptionResource.GetSkus");
+            return new ElasticSanSkuInformationCollectionResultOfT(SkusRestClient, Id.SubscriptionId, filter, context, "MockableElasticSanSubscriptionResource.GetSkus");
         }
     }
 }

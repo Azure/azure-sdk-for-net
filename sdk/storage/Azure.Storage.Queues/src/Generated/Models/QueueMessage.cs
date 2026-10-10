@@ -5,12 +5,9 @@
 
 #nullable disable
 
-using System;
-using Azure.Storage.Common;
-
 namespace Azure.Storage.Queues.Models
 {
-    /// <summary> A Message object which can be stored in a Queue. </summary>
+    /// <summary> The queue message. </summary>
     public partial class QueueMessage
     {
     }

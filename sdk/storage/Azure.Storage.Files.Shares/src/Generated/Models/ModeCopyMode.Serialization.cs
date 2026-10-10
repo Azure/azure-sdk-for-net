@@ -11,6 +11,7 @@ namespace Azure.Storage.Files.Shares.Models
 {
     internal static partial class ModeCopyModeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ModeCopyMode value) => value switch
         {
             ModeCopyMode.Source => "source",
@@ -18,10 +19,17 @@ namespace Azure.Storage.Files.Shares.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ModeCopyMode value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ModeCopyMode ToModeCopyMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "source")) return ModeCopyMode.Source;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "override")) return ModeCopyMode.Override;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "source"))
+            {
+                return ModeCopyMode.Source;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "override"))
+            {
+                return ModeCopyMode.Override;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ModeCopyMode value.");
         }
     }

@@ -11,18 +11,18 @@ namespace Azure.Provisioning.ServiceNetworking
     public enum ServiceNetworkingProvisioningState
     {
         /// <summary> Resource in Provisioning State. </summary>
-        Provisioning,
+        Provisioning = 0,
         /// <summary> Resource in Updating State. </summary>
-        Updating,
+        Updating = 1,
         /// <summary> Resource in Deleting State. </summary>
-        Deleting,
+        Deleting = 2,
         /// <summary> Resource in Accepted State. </summary>
-        Accepted,
+        Accepted = 3,
         /// <summary> Resource in Succeeded State. </summary>
-        Succeeded,
+        Succeeded = 4,
         /// <summary> Resource in Failed State. </summary>
-        Failed,
+        Failed = 5,
         /// <summary> Resource in Canceled State. </summary>
-        Canceled
+        Canceled = 6
     }
 }

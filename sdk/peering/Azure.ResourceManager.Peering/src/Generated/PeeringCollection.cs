@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Peering
         {
             TryGetApiVersion(PeeringResource.ResourceType, out string peeringApiVersion);
             _peeringsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Peering", PeeringResource.ResourceType.Namespace, Diagnostics);
-            _peeringsRestClient = new Peerings(_peeringsClientDiagnostics, Pipeline, Endpoint, peeringApiVersion ?? "2025-05-01");
+            _peeringsRestClient = new Peerings(_peeringsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, peeringApiVersion ?? "2025-05-01");
             ValidateResourceId(id);
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PeeringData, PeeringResource>(new PeeringsGetByResourceGroupAsyncCollectionResultOfT(_peeringsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PeeringCollection.GetAll"), data => new PeeringResource(Client, data));
+            return new AsyncPageableWrapper<PeeringData, PeeringResource>(new PeeringDataAsyncCollectionResultOfT(_peeringsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PeeringCollection.GetAll"), data => new PeeringResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PeeringData, PeeringResource>(new PeeringsGetByResourceGroupCollectionResultOfT(_peeringsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PeeringCollection.GetAll"), data => new PeeringResource(Client, data));
+            return new PageableWrapper<PeeringData, PeeringResource>(new PeeringDataCollectionResultOfT(_peeringsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PeeringCollection.GetAll"), data => new PeeringResource(Client, data));
         }
 
         /// <summary>

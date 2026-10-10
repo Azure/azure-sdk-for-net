@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 throw new FormatException($"The model {nameof(GrafanaUserSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ViewersCanEdit))
+            if (Optional.IsDefined(CanViewersEdit))
             {
                 writer.WritePropertyName("viewersCanEdit"u8);
-                writer.WriteBooleanValue(ViewersCanEdit.Value);
+                writer.WriteBooleanValue(CanViewersEdit.Value);
             }
-            if (Optional.IsDefined(EditorsCanAdmin))
+            if (Optional.IsDefined(CanEditorsAdmin))
             {
                 writer.WritePropertyName("editorsCanAdmin"u8);
-                writer.WriteBooleanValue(EditorsCanAdmin.Value);
+                writer.WriteBooleanValue(CanEditorsAdmin.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            bool? viewersCanEdit = default;
-            bool? editorsCanAdmin = default;
+            bool? canViewersEdit = default;
+            bool? canEditorsAdmin = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    viewersCanEdit = prop.Value.GetBoolean();
+                    canViewersEdit = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("editorsCanAdmin"u8))
@@ -146,15 +146,15 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    editorsCanAdmin = prop.Value.GetBoolean();
+                    canEditorsAdmin = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GrafanaUserSettings(viewersCanEdit, editorsCanAdmin, additionalBinaryDataProperties);
+            return new GrafanaUserSettings(canViewersEdit, canEditorsAdmin, additionalBinaryDataProperties);
         }
     }
 }

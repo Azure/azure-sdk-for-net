@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
 
         private ClientDiagnostics AssetsClientDiagnostics => _assetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Assets AssetsRestClient => _assetsRestClient ??= new Assets(AssetsClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
+        private Assets AssetsRestClient => _assetsRestClient ??= new Assets(AssetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
 
         private ClientDiagnostics AssetEndpointProfilesClientDiagnostics => _assetEndpointProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AssetEndpointProfiles AssetEndpointProfilesRestClient => _assetEndpointProfilesRestClient ??= new AssetEndpointProfiles(AssetEndpointProfilesClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
+        private AssetEndpointProfiles AssetEndpointProfilesRestClient => _assetEndpointProfilesRestClient ??= new AssetEndpointProfiles(AssetEndpointProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
 
         private ClientDiagnostics NamespacesClientDiagnostics => _namespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Namespaces NamespacesRestClient => _namespacesRestClient ??= new Namespaces(NamespacesClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
+        private Namespaces NamespacesRestClient => _namespacesRestClient ??= new Namespaces(NamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
 
         private ClientDiagnostics SchemaRegistriesClientDiagnostics => _schemaRegistriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SchemaRegistries SchemaRegistriesRestClient => _schemaRegistriesRestClient ??= new SchemaRegistries(SchemaRegistriesClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
+        private SchemaRegistries SchemaRegistriesRestClient => _schemaRegistriesRestClient ??= new SchemaRegistries(SchemaRegistriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
 
         /// <summary> Gets a collection of DeviceRegistryBillingContainers in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of DeviceRegistryBillingContainers and their operations over a DeviceRegistryBillingContainerResource. </returns>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceRegistryAssetData, DeviceRegistryAssetResource>(new AssetsGetBySubscriptionAsyncCollectionResultOfT(AssetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryAssets"), data => new DeviceRegistryAssetResource(Client, data));
+            return new AsyncPageableWrapper<DeviceRegistryAssetData, DeviceRegistryAssetResource>(new DeviceRegistryAssetDataAsync0CollectionResultOfT(AssetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryAssets"), data => new DeviceRegistryAssetResource(Client, data));
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceRegistryAssetData, DeviceRegistryAssetResource>(new AssetsGetBySubscriptionCollectionResultOfT(AssetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryAssets"), data => new DeviceRegistryAssetResource(Client, data));
+            return new PageableWrapper<DeviceRegistryAssetData, DeviceRegistryAssetResource>(new DeviceRegistryAssetData0CollectionResultOfT(AssetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryAssets"), data => new DeviceRegistryAssetResource(Client, data));
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceRegistryAssetEndpointProfileData, DeviceRegistryAssetEndpointProfileResource>(new AssetEndpointProfilesGetBySubscriptionAsyncCollectionResultOfT(AssetEndpointProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryAssetEndpointProfiles"), data => new DeviceRegistryAssetEndpointProfileResource(Client, data));
+            return new AsyncPageableWrapper<DeviceRegistryAssetEndpointProfileData, DeviceRegistryAssetEndpointProfileResource>(new DeviceRegistryAssetEndpointProfileDataAsync0CollectionResultOfT(AssetEndpointProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryAssetEndpointProfiles"), data => new DeviceRegistryAssetEndpointProfileResource(Client, data));
         }
 
         /// <summary>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceRegistryAssetEndpointProfileData, DeviceRegistryAssetEndpointProfileResource>(new AssetEndpointProfilesGetBySubscriptionCollectionResultOfT(AssetEndpointProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryAssetEndpointProfiles"), data => new DeviceRegistryAssetEndpointProfileResource(Client, data));
+            return new PageableWrapper<DeviceRegistryAssetEndpointProfileData, DeviceRegistryAssetEndpointProfileResource>(new DeviceRegistryAssetEndpointProfileData0CollectionResultOfT(AssetEndpointProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryAssetEndpointProfiles"), data => new DeviceRegistryAssetEndpointProfileResource(Client, data));
         }
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceRegistryNamespaceData, DeviceRegistryNamespaceResource>(new NamespacesGetBySubscriptionAsyncCollectionResultOfT(NamespacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryNamespaces"), data => new DeviceRegistryNamespaceResource(Client, data));
+            return new AsyncPageableWrapper<DeviceRegistryNamespaceData, DeviceRegistryNamespaceResource>(new DeviceRegistryNamespaceDataAsync0CollectionResultOfT(NamespacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryNamespaces"), data => new DeviceRegistryNamespaceResource(Client, data));
         }
 
         /// <summary>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceRegistryNamespaceData, DeviceRegistryNamespaceResource>(new NamespacesGetBySubscriptionCollectionResultOfT(NamespacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryNamespaces"), data => new DeviceRegistryNamespaceResource(Client, data));
+            return new PageableWrapper<DeviceRegistryNamespaceData, DeviceRegistryNamespaceResource>(new DeviceRegistryNamespaceData0CollectionResultOfT(NamespacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryNamespaces"), data => new DeviceRegistryNamespaceResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceRegistrySchemaRegistryData, DeviceRegistrySchemaRegistryResource>(new SchemaRegistriesGetBySubscriptionAsyncCollectionResultOfT(SchemaRegistriesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistrySchemaRegistries"), data => new DeviceRegistrySchemaRegistryResource(Client, data));
+            return new AsyncPageableWrapper<DeviceRegistrySchemaRegistryData, DeviceRegistrySchemaRegistryResource>(new DeviceRegistrySchemaRegistryDataAsync0CollectionResultOfT(SchemaRegistriesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistrySchemaRegistries"), data => new DeviceRegistrySchemaRegistryResource(Client, data));
         }
 
         /// <summary>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceRegistrySchemaRegistryData, DeviceRegistrySchemaRegistryResource>(new SchemaRegistriesGetBySubscriptionCollectionResultOfT(SchemaRegistriesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistrySchemaRegistries"), data => new DeviceRegistrySchemaRegistryResource(Client, data));
+            return new PageableWrapper<DeviceRegistrySchemaRegistryData, DeviceRegistrySchemaRegistryResource>(new DeviceRegistrySchemaRegistryData0CollectionResultOfT(SchemaRegistriesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistrySchemaRegistries"), data => new DeviceRegistrySchemaRegistryResource(Client, data));
         }
     }
 }

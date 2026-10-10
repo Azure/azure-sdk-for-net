@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Certificates
     /// Experimental, Azure Key Vault internal usage only. Any calls using this type will fail and it is not
     /// recommended to be used at this point.
     /// </remarks>
-    public class PlatformManaged
+    public partial class PlatformManaged
     {
         private const string CertificateUsagePropertyName = "certificateUsage";
         private const string MetadataPropertyName = "metadata";
@@ -51,7 +51,23 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Gets JSON-formatted platform managed metadata. The schema is intentionally undefined as this feature is currently intended for internal use only.
         /// </summary>
-        public IDictionary<string, BinaryData> Metadata => LazyInitializer.EnsureInitialized(ref _metadata);
+        public IDictionary<string, BinaryData> Metadata
+        {
+            get => LazyInitializer.EnsureInitialized(ref _metadata);
+            internal set
+            {
+                if (value is null)
+                {
+                    return;
+                }
+                Dictionary<string, BinaryData> store = LazyInitializer.EnsureInitialized(ref _metadata);
+                store.Clear();
+                foreach (KeyValuePair<string, BinaryData> entry in value)
+                {
+                    store[entry.Key] = entry.Value;
+                }
+            }
+        }
 
         internal static PlatformManaged FromJsonObject(JsonElement json)
         {

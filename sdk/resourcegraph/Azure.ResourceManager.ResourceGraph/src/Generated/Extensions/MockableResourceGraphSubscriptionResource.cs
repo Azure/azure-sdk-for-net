@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
 
         private ClientDiagnostics GraphQueryClientDiagnostics => _graphQueryClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceGraph.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GraphQuery GraphQueryRestClient => _graphQueryRestClient ??= new GraphQuery(GraphQueryClientDiagnostics, Pipeline, Endpoint, "2024-04-01");
+        private GraphQuery GraphQueryRestClient => _graphQueryRestClient ??= new GraphQuery(GraphQueryClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-04-01");
 
         /// <summary>
         /// Get all graph queries defined within a specified subscription.
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceGraphQueryData, ResourceGraphQueryResource>(new GraphQueryGetBySubscriptionAsyncCollectionResultOfT(GraphQueryRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableResourceGraphSubscriptionResource.GetResourceGraphQueries"), data => new ResourceGraphQueryResource(Client, data));
+            return new AsyncPageableWrapper<ResourceGraphQueryData, ResourceGraphQueryResource>(new ResourceGraphQueryDataAsync0CollectionResultOfT(GraphQueryRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableResourceGraphSubscriptionResource.GetResourceGraphQueries"), data => new ResourceGraphQueryResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceGraphQueryData, ResourceGraphQueryResource>(new GraphQueryGetBySubscriptionCollectionResultOfT(GraphQueryRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableResourceGraphSubscriptionResource.GetResourceGraphQueries"), data => new ResourceGraphQueryResource(Client, data));
+            return new PageableWrapper<ResourceGraphQueryData, ResourceGraphQueryResource>(new ResourceGraphQueryData0CollectionResultOfT(GraphQueryRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableResourceGraphSubscriptionResource.GetResourceGraphQueries"), data => new ResourceGraphQueryResource(Client, data));
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -16,109 +17,84 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="MachineLearningForecasting"/>. </summary>
         /// <param name="trainingData"> [Required] Training data input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> is null. </exception>
-        public MachineLearningForecasting(MachineLearningTableJobInput trainingData) : base(trainingData)
+        public MachineLearningForecasting(MachineLearningTableJobInput trainingData) : base(TaskType.Forecasting, trainingData)
         {
             Argument.AssertNotNull(trainingData, nameof(trainingData));
 
             CvSplitColumnNames = new ChangeTrackingList<string>();
-            TaskType = TaskType.Forecasting;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningForecasting"/>. </summary>
-        /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
-        /// <param name="logVerbosity"> Log verbosity for the job. </param>
-        /// <param name="trainingData"> [Required] Training data input. </param>
+        /// <param name="logVerbosity"> Enum for setting log verbosity. </param>
         /// <param name="targetColumnName">
         /// Target column name: This is prediction values column.
         /// Also known as label column name in context of classification tasks.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="primaryMetric"> Primary metric for forecasting task. </param>
-        /// <param name="forecastingSettings"> Forecasting task specific inputs. </param>
-        /// <param name="trainingSettings"> Inputs for training phase for an AutoML Job. </param>
+        /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
+        /// <param name="trainingData"> [Required] Training data input. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="cvSplitColumnNames"> Columns to use for CVSplit data. </param>
+        /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
         /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
         /// <param name="nCrossValidations">
         /// Number of cross validation folds to be applied on training dataset
         /// when validation dataset is not provided.
-        /// Please note <see cref="Models.NCrossValidations"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutoNCrossValidations"/> and <see cref="CustomNCrossValidations"/>.
         /// </param>
-        /// <param name="cvSplitColumnNames"> Columns to use for CVSplit data. </param>
-        /// <param name="weightColumnName"> The name of the sample weight column. Automated ML supports a weighted column as an input, causing rows in the data to be weighted up or down. </param>
-        /// <param name="validationData"> Validation data inputs. </param>
         /// <param name="testData"> Test data input. </param>
-        /// <param name="validationDataSize">
-        /// The fraction of training dataset that needs to be set aside for validation purpose.
-        /// Values between (0.0 , 1.0)
-        /// Applied when validation dataset is not provided.
-        /// </param>
         /// <param name="testDataSize">
         /// The fraction of test dataset that needs to be set aside for validation purpose.
         /// Values between (0.0 , 1.0)
         /// Applied when validation dataset is not provided.
         /// </param>
-        /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
-        internal MachineLearningForecasting(TaskType taskType, MachineLearningLogVerbosity? logVerbosity, MachineLearningTableJobInput trainingData, string targetColumnName, IDictionary<string, BinaryData> serializedAdditionalRawData, ForecastingPrimaryMetric? primaryMetric, ForecastingSettings forecastingSettings, ForecastingTrainingSettings trainingSettings, TableVerticalLimitSettings limitSettings, NCrossValidations nCrossValidations, IList<string> cvSplitColumnNames, string weightColumnName, MachineLearningTableJobInput validationData, MachineLearningTableJobInput testData, double? validationDataSize, double? testDataSize, TableVerticalFeaturizationSettings featurizationSettings) : base(taskType, logVerbosity, trainingData, targetColumnName, serializedAdditionalRawData)
-        {
-            PrimaryMetric = primaryMetric;
-            ForecastingSettings = forecastingSettings;
-            TrainingSettings = trainingSettings;
-            LimitSettings = limitSettings;
-            NCrossValidations = nCrossValidations;
-            CvSplitColumnNames = cvSplitColumnNames;
-            WeightColumnName = weightColumnName;
-            ValidationData = validationData;
-            TestData = testData;
-            ValidationDataSize = validationDataSize;
-            TestDataSize = testDataSize;
-            FeaturizationSettings = featurizationSettings;
-            TaskType = taskType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningForecasting"/> for deserialization. </summary>
-        internal MachineLearningForecasting()
-        {
-        }
-
-        /// <summary> Primary metric for forecasting task. </summary>
-        [WirePath("primaryMetric")]
-        public ForecastingPrimaryMetric? PrimaryMetric { get; set; }
-        /// <summary> Forecasting task specific inputs. </summary>
-        [WirePath("forecastingSettings")]
-        public ForecastingSettings ForecastingSettings { get; set; }
-        /// <summary> Inputs for training phase for an AutoML Job. </summary>
-        [WirePath("trainingSettings")]
-        public ForecastingTrainingSettings TrainingSettings { get; set; }
-        /// <summary> Execution constraints for AutoMLJob. </summary>
-        [WirePath("limitSettings")]
-        public TableVerticalLimitSettings LimitSettings { get; set; }
-        /// <summary>
-        /// Number of cross validation folds to be applied on training dataset
-        /// when validation dataset is not provided.
-        /// Please note <see cref="Models.NCrossValidations"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutoNCrossValidations"/> and <see cref="CustomNCrossValidations"/>.
-        /// </summary>
-        [WirePath("nCrossValidations")]
-        public NCrossValidations NCrossValidations { get; set; }
-        /// <summary> Columns to use for CVSplit data. </summary>
-        [WirePath("cvSplitColumnNames")]
-        public IList<string> CvSplitColumnNames { get; set; }
-        /// <summary> The name of the sample weight column. Automated ML supports a weighted column as an input, causing rows in the data to be weighted up or down. </summary>
-        [WirePath("weightColumnName")]
-        public string WeightColumnName { get; set; }
-        /// <summary> Validation data inputs. </summary>
-        [WirePath("validationData")]
-        public MachineLearningTableJobInput ValidationData { get; set; }
-        /// <summary> Test data input. </summary>
-        [WirePath("testData")]
-        public MachineLearningTableJobInput TestData { get; set; }
-        /// <summary>
+        /// <param name="validationData"> Validation data inputs. </param>
+        /// <param name="validationDataSize">
         /// The fraction of training dataset that needs to be set aside for validation purpose.
         /// Values between (0.0 , 1.0)
         /// Applied when validation dataset is not provided.
+        /// </param>
+        /// <param name="weightColumnName"> The name of the sample weight column. Automated ML supports a weighted column as an input, causing rows in the data to be weighted up or down. </param>
+        /// <param name="forecastingSettings"> Forecasting task specific inputs. </param>
+        /// <param name="primaryMetric"> Primary metrics for Forecasting task. </param>
+        /// <param name="trainingSettings"> Inputs for training phase for an AutoML Job. </param>
+        internal MachineLearningForecasting(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> cvSplitColumnNames, TableVerticalFeaturizationSettings featurizationSettings, TableVerticalLimitSettings limitSettings, NCrossValidations nCrossValidations, MachineLearningTableJobInput testData, double? testDataSize, MachineLearningTableJobInput validationData, double? validationDataSize, string weightColumnName, ForecastingSettings forecastingSettings, ForecastingPrimaryMetric? primaryMetric, ForecastingTrainingSettings trainingSettings) : base(logVerbosity, targetColumnName, taskType, trainingData, additionalBinaryDataProperties)
+        {
+            CvSplitColumnNames = cvSplitColumnNames;
+            FeaturizationSettings = featurizationSettings;
+            LimitSettings = limitSettings;
+            NCrossValidations = nCrossValidations;
+            TestData = testData;
+            TestDataSize = testDataSize;
+            ValidationData = validationData;
+            ValidationDataSize = validationDataSize;
+            WeightColumnName = weightColumnName;
+            ForecastingSettings = forecastingSettings;
+            PrimaryMetric = primaryMetric;
+            TrainingSettings = trainingSettings;
+        }
+
+        /// <summary> Columns to use for CVSplit data. </summary>
+        [WirePath("cvSplitColumnNames")]
+        public IList<string> CvSplitColumnNames { get; set; }
+
+        /// <summary> Featurization inputs needed for AutoML job. </summary>
+        [WirePath("featurizationSettings")]
+        public TableVerticalFeaturizationSettings FeaturizationSettings { get; set; }
+
+        /// <summary> Execution constraints for AutoMLJob. </summary>
+        [WirePath("limitSettings")]
+        public TableVerticalLimitSettings LimitSettings { get; set; }
+
+        /// <summary>
+        /// Number of cross validation folds to be applied on training dataset
+        /// when validation dataset is not provided.
         /// </summary>
-        [WirePath("validationDataSize")]
-        public double? ValidationDataSize { get; set; }
+        [WirePath("nCrossValidations")]
+        public NCrossValidations NCrossValidations { get; set; }
+
+        /// <summary> Test data input. </summary>
+        [WirePath("testData")]
+        public MachineLearningTableJobInput TestData { get; set; }
+
         /// <summary>
         /// The fraction of test dataset that needs to be set aside for validation purpose.
         /// Values between (0.0 , 1.0)
@@ -126,8 +102,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         [WirePath("testDataSize")]
         public double? TestDataSize { get; set; }
-        /// <summary> Featurization inputs needed for AutoML job. </summary>
-        [WirePath("featurizationSettings")]
-        public TableVerticalFeaturizationSettings FeaturizationSettings { get; set; }
+
+        /// <summary> Validation data inputs. </summary>
+        [WirePath("validationData")]
+        public MachineLearningTableJobInput ValidationData { get; set; }
+
+        /// <summary>
+        /// The fraction of training dataset that needs to be set aside for validation purpose.
+        /// Values between (0.0 , 1.0)
+        /// Applied when validation dataset is not provided.
+        /// </summary>
+        [WirePath("validationDataSize")]
+        public double? ValidationDataSize { get; set; }
+
+        /// <summary> The name of the sample weight column. Automated ML supports a weighted column as an input, causing rows in the data to be weighted up or down. </summary>
+        [WirePath("weightColumnName")]
+        public string WeightColumnName { get; set; }
+
+        /// <summary> Forecasting task specific inputs. </summary>
+        [WirePath("forecastingSettings")]
+        public ForecastingSettings ForecastingSettings { get; set; }
+
+        /// <summary> Primary metrics for Forecasting task. </summary>
+        [WirePath("primaryMetric")]
+        public ForecastingPrimaryMetric? PrimaryMetric { get; set; }
+
+        /// <summary> Inputs for training phase for an AutoML Job. </summary>
+        [WirePath("trainingSettings")]
+        public ForecastingTrainingSettings TrainingSettings { get; set; }
     }
 }

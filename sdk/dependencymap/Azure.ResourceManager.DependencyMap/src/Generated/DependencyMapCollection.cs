@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DependencyMap
         {
             TryGetApiVersion(DependencyMapResource.ResourceType, out string dependencyMapApiVersion);
             _mapsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DependencyMap", DependencyMapResource.ResourceType.Namespace, Diagnostics);
-            _mapsRestClient = new Maps(_mapsClientDiagnostics, Pipeline, Endpoint, dependencyMapApiVersion ?? "2025-07-01-preview");
+            _mapsRestClient = new Maps(_mapsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dependencyMapApiVersion ?? "2025-07-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DependencyMap
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DependencyMapData, DependencyMapResource>(new MapsGetByResourceGroupAsyncCollectionResultOfT(_mapsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DependencyMapCollection.GetAll"), data => new DependencyMapResource(Client, data));
+            return new AsyncPageableWrapper<DependencyMapData, DependencyMapResource>(new DependencyMapDataAsyncCollectionResultOfT(_mapsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DependencyMapCollection.GetAll"), data => new DependencyMapResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DependencyMap
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DependencyMapData, DependencyMapResource>(new MapsGetByResourceGroupCollectionResultOfT(_mapsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DependencyMapCollection.GetAll"), data => new DependencyMapResource(Client, data));
+            return new PageableWrapper<DependencyMapData, DependencyMapResource>(new DependencyMapDataCollectionResultOfT(_mapsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DependencyMapCollection.GetAll"), data => new DependencyMapResource(Client, data));
         }
 
         /// <summary>

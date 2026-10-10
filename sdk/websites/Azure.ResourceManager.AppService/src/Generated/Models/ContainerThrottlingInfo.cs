@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The ContainerThrottlingInfo.
-    /// Serialized Name: ContainerThrottlingData
-    /// </summary>
+    /// <summary> The ContainerThrottlingInfo. </summary>
     public partial class ContainerThrottlingInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerThrottlingInfo"/>. </summary>
         public ContainerThrottlingInfo()
@@ -54,25 +23,27 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerThrottlingInfo"/>. </summary>
-        /// <param name="periods"> Serialized Name: ContainerThrottlingData.periods. </param>
-        /// <param name="throttledPeriods"> Serialized Name: ContainerThrottlingData.throttledPeriods. </param>
-        /// <param name="throttledTime"> Serialized Name: ContainerThrottlingData.throttledTime. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerThrottlingInfo(int? periods, int? throttledPeriods, int? throttledTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="periods"></param>
+        /// <param name="throttledPeriods"></param>
+        /// <param name="throttledTime"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerThrottlingInfo(int? periods, int? throttledPeriods, int? throttledTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Periods = periods;
             ThrottledPeriods = throttledPeriods;
             ThrottledTime = throttledTime;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Serialized Name: ContainerThrottlingData.periods. </summary>
+        /// <summary> Gets or sets the Periods. </summary>
         [WirePath("periods")]
         public int? Periods { get; set; }
-        /// <summary> Serialized Name: ContainerThrottlingData.throttledPeriods. </summary>
+
+        /// <summary> Gets or sets the ThrottledPeriods. </summary>
         [WirePath("throttledPeriods")]
         public int? ThrottledPeriods { get; set; }
-        /// <summary> Serialized Name: ContainerThrottlingData.throttledTime. </summary>
+
+        /// <summary> Gets or sets the ThrottledTime. </summary>
         [WirePath("throttledTime")]
         public int? ThrottledTime { get; set; }
     }

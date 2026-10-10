@@ -46,23 +46,23 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
 
         private ClientDiagnostics MonitorsClientDiagnostics => _monitorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NewRelicObservability.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Monitors MonitorsRestClient => _monitorsRestClient ??= new Monitors(MonitorsClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+        private Monitors MonitorsRestClient => _monitorsRestClient ??= new Monitors(MonitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics AccountsClientDiagnostics => _accountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NewRelicObservability.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Accounts AccountsRestClient => _accountsRestClient ??= new Accounts(AccountsClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+        private Accounts AccountsRestClient => _accountsRestClient ??= new Accounts(AccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics OrganizationsClientDiagnostics => _organizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NewRelicObservability.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Organizations OrganizationsRestClient => _organizationsRestClient ??= new Organizations(OrganizationsClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+        private Organizations OrganizationsRestClient => _organizationsRestClient ??= new Organizations(OrganizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics PlansClientDiagnostics => _plansClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NewRelicObservability.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Plans PlansRestClient => _plansRestClient ??= new Plans(PlansClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+        private Plans PlansRestClient => _plansRestClient ??= new Plans(PlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics SaaSClientDiagnostics => _saaSClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NewRelicObservability.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SaaS SaaSRestClient => _saaSRestClient ??= new SaaS(SaaSClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+        private SaaS SaaSRestClient => _saaSRestClient ??= new SaaS(SaaSClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         /// <summary>
         /// Lists all New Relic monitor resources either within a specific subscription
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NewRelicMonitorResourceData, NewRelicMonitorResource>(new MonitorsGetBySubscriptionAsyncCollectionResultOfT(MonitorsRestClient, Id.SubscriptionId, context, "MockableNewRelicObservabilitySubscriptionResource.GetNewRelicMonitorResources"), data => new NewRelicMonitorResource(Client, data));
+            return new AsyncPageableWrapper<NewRelicMonitorResourceData, NewRelicMonitorResource>(new NewRelicMonitorResourceDataAsync0CollectionResultOfT(MonitorsRestClient, Id.SubscriptionId, context, "MockableNewRelicObservabilitySubscriptionResource.GetNewRelicMonitorResources"), data => new NewRelicMonitorResource(Client, data));
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NewRelicMonitorResourceData, NewRelicMonitorResource>(new MonitorsGetBySubscriptionCollectionResultOfT(MonitorsRestClient, Id.SubscriptionId, context, "MockableNewRelicObservabilitySubscriptionResource.GetNewRelicMonitorResources"), data => new NewRelicMonitorResource(Client, data));
+            return new PageableWrapper<NewRelicMonitorResourceData, NewRelicMonitorResource>(new NewRelicMonitorResourceData0CollectionResultOfT(MonitorsRestClient, Id.SubscriptionId, context, "MockableNewRelicObservabilitySubscriptionResource.GetNewRelicMonitorResources"), data => new NewRelicMonitorResource(Client, data));
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetNewRelicAccountsAsyncCollectionResultOfT(
+            return new NewRelicAccountResourceDataAsyncCollectionResultOfT(
                 AccountsRestClient,
                 Id.SubscriptionId,
                 userEmail,
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetNewRelicAccountsCollectionResultOfT(
+            return new NewRelicAccountResourceDataCollectionResultOfT(
                 AccountsRestClient,
                 Id.SubscriptionId,
                 userEmail,
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new OrganizationsGetNewRelicOrganizationsAsyncCollectionResultOfT(
+            return new NewRelicOrganizationResourceDataAsyncCollectionResultOfT(
                 OrganizationsRestClient,
                 Id.SubscriptionId,
                 userEmail,
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new OrganizationsGetNewRelicOrganizationsCollectionResultOfT(
+            return new NewRelicOrganizationResourceDataCollectionResultOfT(
                 OrganizationsRestClient,
                 Id.SubscriptionId,
                 userEmail,
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PlansGetNewRelicPlansAsyncCollectionResultOfT(
+            return new NewRelicPlanDataAsyncCollectionResultOfT(
                 PlansRestClient,
                 Id.SubscriptionId,
                 accountId,
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PlansGetNewRelicPlansCollectionResultOfT(
+            return new NewRelicPlanDataCollectionResultOfT(
                 PlansRestClient,
                 Id.SubscriptionId,
                 accountId,
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct SelfHostedIntegrationRuntimeNodeStatus : IEquatable<SelfHostedIntegrationRuntimeNodeStatus>
     {
         private readonly string _value;
+        /// <summary> NeedRegistration. </summary>
+        private const string NeedRegistrationValue = "NeedRegistration";
+        /// <summary> Online. </summary>
+        private const string OnlineValue = "Online";
+        /// <summary> Limited. </summary>
+        private const string LimitedValue = "Limited";
+        /// <summary> Offline. </summary>
+        private const string OfflineValue = "Offline";
+        /// <summary> Upgrading. </summary>
+        private const string UpgradingValue = "Upgrading";
+        /// <summary> Initializing. </summary>
+        private const string InitializingValue = "Initializing";
+        /// <summary> InitializeFailed. </summary>
+        private const string InitializeFailedValue = "InitializeFailed";
 
         /// <summary> Initializes a new instance of <see cref="SelfHostedIntegrationRuntimeNodeStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SelfHostedIntegrationRuntimeNodeStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NeedRegistrationValue = "NeedRegistration";
-        private const string OnlineValue = "Online";
-        private const string LimitedValue = "Limited";
-        private const string OfflineValue = "Offline";
-        private const string UpgradingValue = "Upgrading";
-        private const string InitializingValue = "Initializing";
-        private const string InitializeFailedValue = "InitializeFailed";
+            _value = value;
+        }
 
         /// <summary> NeedRegistration. </summary>
         public static SelfHostedIntegrationRuntimeNodeStatus NeedRegistration { get; } = new SelfHostedIntegrationRuntimeNodeStatus(NeedRegistrationValue);
+
         /// <summary> Online. </summary>
         public static SelfHostedIntegrationRuntimeNodeStatus Online { get; } = new SelfHostedIntegrationRuntimeNodeStatus(OnlineValue);
+
         /// <summary> Limited. </summary>
         public static SelfHostedIntegrationRuntimeNodeStatus Limited { get; } = new SelfHostedIntegrationRuntimeNodeStatus(LimitedValue);
+
         /// <summary> Offline. </summary>
         public static SelfHostedIntegrationRuntimeNodeStatus Offline { get; } = new SelfHostedIntegrationRuntimeNodeStatus(OfflineValue);
+
         /// <summary> Upgrading. </summary>
         public static SelfHostedIntegrationRuntimeNodeStatus Upgrading { get; } = new SelfHostedIntegrationRuntimeNodeStatus(UpgradingValue);
+
         /// <summary> Initializing. </summary>
         public static SelfHostedIntegrationRuntimeNodeStatus Initializing { get; } = new SelfHostedIntegrationRuntimeNodeStatus(InitializingValue);
+
         /// <summary> InitializeFailed. </summary>
         public static SelfHostedIntegrationRuntimeNodeStatus InitializeFailed { get; } = new SelfHostedIntegrationRuntimeNodeStatus(InitializeFailedValue);
+
         /// <summary> Determines if two <see cref="SelfHostedIntegrationRuntimeNodeStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SelfHostedIntegrationRuntimeNodeStatus left, SelfHostedIntegrationRuntimeNodeStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SelfHostedIntegrationRuntimeNodeStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SelfHostedIntegrationRuntimeNodeStatus left, SelfHostedIntegrationRuntimeNodeStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SelfHostedIntegrationRuntimeNodeStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SelfHostedIntegrationRuntimeNodeStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SelfHostedIntegrationRuntimeNodeStatus(string value) => new SelfHostedIntegrationRuntimeNodeStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SelfHostedIntegrationRuntimeNodeStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SelfHostedIntegrationRuntimeNodeStatus?(string value) => value == null ? null : new SelfHostedIntegrationRuntimeNodeStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SelfHostedIntegrationRuntimeNodeStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SelfHostedIntegrationRuntimeNodeStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

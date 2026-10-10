@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.ResourceManager.Peering.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {

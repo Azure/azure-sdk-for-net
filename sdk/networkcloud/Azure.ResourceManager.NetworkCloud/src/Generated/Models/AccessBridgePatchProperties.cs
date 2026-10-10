@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> The list of security rules enforced by the access bridge. </summary>
-        public IList<NetworkCloudAccessBridgeSecurityRule> SecurityRules { get; }
+        public IList<NetworkCloudAccessBridgeSecurityRule> SecurityRules { get; } = new ChangeTrackingList<NetworkCloudAccessBridgeSecurityRule>();
     }
 }

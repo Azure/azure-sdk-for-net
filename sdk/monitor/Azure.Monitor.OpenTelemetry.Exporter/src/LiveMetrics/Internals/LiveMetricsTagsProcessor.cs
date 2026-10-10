@@ -31,7 +31,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
         public LiveMetricsTagsProcessor()
         {
-            Tags = AzMonList.Initialize();
+            Tags = AzMonList.InitializeForMappedTags();
         }
 
         public OperationType ActivityType { get; set; }

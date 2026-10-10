@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(NotebookWorkspaceResource.ResourceType, out string notebookWorkspaceApiVersion);
             _notebookWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", NotebookWorkspaceResource.ResourceType.Namespace, Diagnostics);
-            _notebookWorkspacesRestClient = new NotebookWorkspaces(_notebookWorkspacesClientDiagnostics, Pipeline, Endpoint, notebookWorkspaceApiVersion ?? "2026-04-01-preview");
+            _notebookWorkspacesRestClient = new NotebookWorkspaces(_notebookWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, notebookWorkspaceApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NotebookWorkspaceData, NotebookWorkspaceResource>(new NotebookWorkspacesGetByDatabaseAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NotebookWorkspaceData, NotebookWorkspaceResource>(new NotebookWorkspaceDataAsyncCollectionResultOfT(
                 _notebookWorkspacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NotebookWorkspaceData, NotebookWorkspaceResource>(new NotebookWorkspacesGetByDatabaseAccountCollectionResultOfT(
+            return new PageableWrapper<NotebookWorkspaceData, NotebookWorkspaceResource>(new NotebookWorkspaceDataCollectionResultOfT(
                 _notebookWorkspacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

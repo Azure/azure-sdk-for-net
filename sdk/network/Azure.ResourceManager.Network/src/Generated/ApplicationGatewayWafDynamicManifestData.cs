@@ -13,75 +13,62 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the ApplicationGatewayWafDynamicManifest data model.
-    /// Response for ApplicationGatewayWafDynamicManifest API service call.
-    /// </summary>
+    /// <summary> Response for ApplicationGatewayWafDynamicManifest API service call. </summary>
     public partial class ApplicationGatewayWafDynamicManifestData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayWafDynamicManifestData"/>. </summary>
         internal ApplicationGatewayWafDynamicManifestData()
         {
-            AvailableRuleSets = new ChangeTrackingList<ApplicationGatewayFirewallManifestRuleSet>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayWafDynamicManifestData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="availableRuleSets"> The available rulesets. </param>
-        /// <param name="ruleSetType"> The type of the web application firewall rule set. </param>
-        /// <param name="ruleSetVersion"> The version of the web application firewall rule set type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayWafDynamicManifestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<ApplicationGatewayFirewallManifestRuleSet> availableRuleSets, string ruleSetType, string ruleSetVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of the ApplicationGatewayWafDynamicManifest . </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayWafDynamicManifestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApplicationGatewayWafDynamicManifestPropertiesResult properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            AvailableRuleSets = availableRuleSets;
-            RuleSetType = ruleSetType;
-            RuleSetVersion = ruleSetVersion;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The available rulesets. </summary>
-        [WirePath("properties.availableRuleSets")]
-        public IReadOnlyList<ApplicationGatewayFirewallManifestRuleSet> AvailableRuleSets { get; }
+        /// <summary> Properties of the ApplicationGatewayWafDynamicManifest . </summary>
+        [WirePath("properties")]
+        internal ApplicationGatewayWafDynamicManifestPropertiesResult Properties { get; }
+
         /// <summary> The type of the web application firewall rule set. </summary>
-        [WirePath("properties.ruleSetType")]
-        public string RuleSetType { get; }
+        [WirePath("properties.defaultRuleSet.ruleSetType")]
+        public string RuleSetType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RuleSetType;
+            }
+        }
+
         /// <summary> The version of the web application firewall rule set type. </summary>
-        [WirePath("properties.ruleSetVersion")]
-        public string RuleSetVersion { get; }
+        [WirePath("properties.defaultRuleSet.ruleSetVersion")]
+        public string RuleSetVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RuleSetVersion;
+            }
+        }
+
+        /// <summary> Human-readable display name for the managed rule set version (e.g., 'Default Ruleset 2.2 (Latest, Recommended)'). </summary>
+        [WirePath("properties.defaultRuleSet.displayName")]
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+        }
     }
 }

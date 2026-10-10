@@ -1,0 +1,16 @@
+# Azure.AI.OpenAI approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# This library is the Azure surface of the OpenAI .NET SDK: it subclasses and extends types that
+# OpenAI and System.ClientModel ship as [Experimental], and marks its own additions
+# [Experimental("AOAI001")]. Consuming those APIs from inside the library is the design, not an
+# oversight — the diagnostics exist so external callers acknowledge the experimental contract.
+#
+# The opt-in is uniform across the assembly rather than localized: AOAI001 alone fires at 64 sites
+# spanning hand-written and generated code, and regenerating the latter would erase any #pragma
+# placed there. Enumerating per-symbol entries would mean listing most of the public surface and
+# re-listing it on every regen, so project scope is the honest description of the approval.
+nowarn:AOAI001
+nowarn:OPENAI001
+nowarn:OPENAI002
+nowarn:SCME0001

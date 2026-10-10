@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         /// <summary> The list of location profiles. </summary>
-        public IList<LocationProfile> LocationProfiles { get; }
+        public IList<LocationProfile> LocationProfiles { get; } = new ChangeTrackingList<LocationProfile>();
     }
 }

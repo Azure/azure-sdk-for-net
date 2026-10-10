@@ -8,7 +8,6 @@
 		<Version>1.1.0-beta.1</Version>
 		<!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
 		<ApiCompatVersion>1.0.0</ApiCompatVersion>
-		<NoWarn>$(NoWarn);AZC0001;CS8632;CA1056;CA2227</NoWarn>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<IsExtensionClientLibrary>true</IsExtensionClientLibrary>
 		<AotCompatOptOut>true</AotCompatOptOut>
@@ -18,8 +17,8 @@
 		<Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\ConnectionStatesConverter.cs" LinkBase="Bindings\Shared" />
 		<Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\WebPubSubStatusCode.cs" LinkBase="Bindings\Shared" />
 		<Compile Include="..\..\..\core\Azure.Core\src\Shared\ArrayBufferWriter.cs" LinkBase="Bindings\Shared" />
-		<Compile Include="..\..\Azure.Messaging.WebPubSub\src\JwtBuilder.cs" LinkBase="Bindings\Shared" />
-		<Compile Include="..\..\Azure.Messaging.WebPubSub\src\NS2Bridge.cs" LinkBase="Bindings\Shared" />
+		<Compile Include="..\..\Azure.Messaging.WebPubSub\src\Shared\JwtBuilder.cs" LinkBase="Bindings\Shared" />
+		<Compile Include="..\..\Azure.Messaging.WebPubSub\src\Shared\NS2Bridge.cs" LinkBase="Bindings\Shared" />
 		<Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\src\Shared\WebJobsConfigurationExtensions.cs" LinkBase="Bindings\Shared" />
 	</ItemGroup>
 

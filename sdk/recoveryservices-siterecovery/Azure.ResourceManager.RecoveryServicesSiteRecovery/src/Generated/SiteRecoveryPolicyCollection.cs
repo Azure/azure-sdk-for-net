@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             TryGetApiVersion(SiteRecoveryPolicyResource.ResourceType, out string siteRecoveryPolicyApiVersion);
             _resourceName = resourceName;
             _replicationPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", SiteRecoveryPolicyResource.ResourceType.Namespace, Diagnostics);
-            _replicationPoliciesRestClient = new ReplicationPolicies(_replicationPoliciesClientDiagnostics, Pipeline, Endpoint, siteRecoveryPolicyApiVersion ?? "2026-02-01");
+            _replicationPoliciesRestClient = new ReplicationPolicies(_replicationPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteRecoveryPolicyApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SiteRecoveryPolicyData, SiteRecoveryPolicyResource>(new ReplicationPoliciesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SiteRecoveryPolicyData, SiteRecoveryPolicyResource>(new SiteRecoveryPolicyDataAsyncCollectionResultOfT(
                 _replicationPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SiteRecoveryPolicyData, SiteRecoveryPolicyResource>(new ReplicationPoliciesGetAllCollectionResultOfT(
+            return new PageableWrapper<SiteRecoveryPolicyData, SiteRecoveryPolicyResource>(new SiteRecoveryPolicyDataCollectionResultOfT(
                 _replicationPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -52,5 +52,23 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
             DedicatedHsmResource.ValidateResourceId(id);
             return new DedicatedHsmResource(Client, id);
         }
+
+        /// <summary> Gets an object representing a <see cref="PaymentHsmClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PaymentHsmClusterResource"/> object. </returns>
+        public virtual PaymentHsmClusterResource GetPaymentHsmClusterResource(ResourceIdentifier id)
+        {
+            PaymentHsmClusterResource.ValidateResourceId(id);
+            return new PaymentHsmClusterResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="PaymentHsmClusterPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PaymentHsmClusterPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual PaymentHsmClusterPrivateEndpointConnectionResource GetPaymentHsmClusterPrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            PaymentHsmClusterPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new PaymentHsmClusterPrivateEndpointConnectionResource(Client, id);
+        }
     }
 }

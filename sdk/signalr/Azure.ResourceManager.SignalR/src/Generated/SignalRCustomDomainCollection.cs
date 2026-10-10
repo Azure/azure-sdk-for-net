@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SignalR
         {
             TryGetApiVersion(SignalRCustomDomainResource.ResourceType, out string signalRCustomDomainApiVersion);
             _customDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SignalR", SignalRCustomDomainResource.ResourceType.Namespace, Diagnostics);
-            _customDomainsRestClient = new CustomDomains(_customDomainsClientDiagnostics, Pipeline, Endpoint, signalRCustomDomainApiVersion ?? "2025-01-01-preview");
+            _customDomainsRestClient = new CustomDomains(_customDomainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, signalRCustomDomainApiVersion ?? "2025-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SignalRCustomDomainData, SignalRCustomDomainResource>(new CustomDomainsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SignalRCustomDomainData, SignalRCustomDomainResource>(new SignalRCustomDomainDataAsyncCollectionResultOfT(
                 _customDomainsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SignalRCustomDomainData, SignalRCustomDomainResource>(new CustomDomainsGetAllCollectionResultOfT(
+            return new PageableWrapper<SignalRCustomDomainData, SignalRCustomDomainResource>(new SignalRCustomDomainDataCollectionResultOfT(
                 _customDomainsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

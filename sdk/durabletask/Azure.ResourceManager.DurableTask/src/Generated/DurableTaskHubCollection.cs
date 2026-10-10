@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DurableTask
         {
             TryGetApiVersion(DurableTaskHubResource.ResourceType, out string durableTaskHubApiVersion);
             _taskHubsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DurableTask", DurableTaskHubResource.ResourceType.Namespace, Diagnostics);
-            _taskHubsRestClient = new TaskHubs(_taskHubsClientDiagnostics, Pipeline, Endpoint, durableTaskHubApiVersion ?? "2026-02-01");
+            _taskHubsRestClient = new TaskHubs(_taskHubsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, durableTaskHubApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DurableTask
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DurableTaskHubData, DurableTaskHubResource>(new TaskHubsGetBySchedulerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DurableTaskHubData, DurableTaskHubResource>(new DurableTaskHubDataAsyncCollectionResultOfT(
                 _taskHubsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.DurableTask
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DurableTaskHubData, DurableTaskHubResource>(new TaskHubsGetBySchedulerCollectionResultOfT(
+            return new PageableWrapper<DurableTaskHubData, DurableTaskHubResource>(new DurableTaskHubDataCollectionResultOfT(
                 _taskHubsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

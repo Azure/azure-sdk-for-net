@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,13 +19,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="collectionName"> Document Database collection name. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="collectionName"/> is null. </exception>
-        public DocumentDBCollectionDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> collectionName) : base(linkedServiceName)
+        public DocumentDBCollectionDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> collectionName) : base("DocumentDbCollection", linkedServiceName)
         {
             Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
             Argument.AssertNotNull(collectionName, nameof(collectionName));
 
-            CollectionName = collectionName;
-            DatasetType = "DocumentDbCollection";
+            TypeProperties = new DocumentDBCollectionDatasetTypeProperties(collectionName);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentDBCollectionDataset"/>. </summary>
@@ -36,20 +36,31 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="collectionName"> Document Database collection name. Type: string (or Expression with resultType string). </param>
-        internal DocumentDBCollectionDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> collectionName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> DocumentDB Collection dataset properties. </param>
+        internal DocumentDBCollectionDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DocumentDBCollectionDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
-            CollectionName = collectionName;
-            DatasetType = datasetType ?? "DocumentDbCollection";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentDBCollectionDataset"/> for deserialization. </summary>
-        internal DocumentDBCollectionDataset()
-        {
-        }
+        /// <summary> DocumentDB Collection dataset properties. </summary>
+        internal DocumentDBCollectionDatasetTypeProperties TypeProperties { get; set; }
 
         /// <summary> Document Database collection name. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> CollectionName { get; set; }
+        public DataFactoryElement<string> CollectionName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.CollectionName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new DocumentDBCollectionDatasetTypeProperties();
+                }
+                TypeProperties.CollectionName = value;
+            }
+        }
     }
 }

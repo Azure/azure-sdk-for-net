@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             ScheduledEventsPolicy = scheduledEventsPolicy;
             StorageProfile = storageProfile;
             AdditionalCapabilities = additionalCapabilities;
-            OsProfile = osProfile;
+            OSProfile = osProfile;
             NetworkProfile = networkProfile;
             SecurityProfile = securityProfile;
             DiagnosticsProfile = diagnosticsProfile;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public ComputeBulkActionsAdditionalCapabilities AdditionalCapabilities { get; set; }
 
         /// <summary> Specifies the operating system settings used while creating the virtual machine. Some of the settings cannot be changed once VM is provisioned. </summary>
-        public ComputeBulkActionsOSProfile OsProfile { get; set; }
+        public ComputeBulkActionsOSProfile OSProfile { get; set; }
 
         /// <summary> Specifies the network interfaces of the virtual machine. </summary>
         public ComputeBulkActionsNetworkProfile NetworkProfile { get; set; }

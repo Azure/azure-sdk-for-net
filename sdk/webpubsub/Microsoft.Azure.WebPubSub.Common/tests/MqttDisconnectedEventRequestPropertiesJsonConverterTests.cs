@@ -19,19 +19,19 @@ namespace Microsoft.Azure.WebPubSub.Common.Tests
 
             MqttDisconnectedEventRequestProperties properties = JsonSerializer.Deserialize<MqttDisconnectedEventRequestProperties>(payload, JsonSerializationOptions);
 
-            Assert.NotNull(properties);
-            Assert.False(properties.InitiatedByClient);
-            Assert.NotNull(properties.DisconnectPacket);
-            Assert.AreEqual((MqttDisconnectReasonCode)128, properties.DisconnectPacket.Code);
-            Assert.AreEqual("u1", properties.DisconnectPacket.UserProperties.Single().Name);
+            Assert.That(properties, Is.Not.Null);
+            Assert.That(properties.InitiatedByClient, Is.False);
+            Assert.That(properties.DisconnectPacket, Is.Not.Null);
+            Assert.That(properties.DisconnectPacket.Code, Is.EqualTo((MqttDisconnectReasonCode)128));
+            Assert.That(properties.DisconnectPacket.UserProperties.Single().Name, Is.EqualTo("u1"));
 
             string serialized = JsonSerializer.Serialize(properties, JsonSerializationOptions);
             MqttDisconnectedEventRequestProperties converted = JsonSerializer.Deserialize<MqttDisconnectedEventRequestProperties>(serialized, JsonSerializationOptions);
 
-            Assert.NotNull(converted);
-            Assert.False(converted.InitiatedByClient);
-            Assert.AreEqual(properties.DisconnectPacket.Code, converted.DisconnectPacket.Code);
-            Assert.AreEqual(properties.DisconnectPacket.UserProperties.Single().Value, converted.DisconnectPacket.UserProperties.Single().Value);
+            Assert.That(converted, Is.Not.Null);
+            Assert.That(converted.InitiatedByClient, Is.False);
+            Assert.That(converted.DisconnectPacket.Code, Is.EqualTo(properties.DisconnectPacket.Code));
+            Assert.That(converted.DisconnectPacket.UserProperties.Single().Value, Is.EqualTo(properties.DisconnectPacket.UserProperties.Single().Value));
         }
 
         [Test]
@@ -41,16 +41,16 @@ namespace Microsoft.Azure.WebPubSub.Common.Tests
 
             MqttDisconnectedEventRequestProperties properties = JsonSerializer.Deserialize<MqttDisconnectedEventRequestProperties>(payload, JsonSerializationOptions);
 
-            Assert.NotNull(properties);
-            Assert.True(properties.InitiatedByClient);
-            Assert.IsNull(properties.DisconnectPacket);
+            Assert.That(properties, Is.Not.Null);
+            Assert.That(properties.InitiatedByClient, Is.True);
+            Assert.That(properties.DisconnectPacket, Is.Null);
 
             string serialized = JsonSerializer.Serialize(properties, JsonSerializationOptions);
             MqttDisconnectedEventRequestProperties converted = JsonSerializer.Deserialize<MqttDisconnectedEventRequestProperties>(serialized, JsonSerializationOptions);
 
-            Assert.NotNull(converted);
-            Assert.True(converted.InitiatedByClient);
-            Assert.IsNull(converted.DisconnectPacket);
+            Assert.That(converted, Is.Not.Null);
+            Assert.That(converted.InitiatedByClient, Is.True);
+            Assert.That(converted.DisconnectPacket, Is.Null);
         }
 
         [Test]

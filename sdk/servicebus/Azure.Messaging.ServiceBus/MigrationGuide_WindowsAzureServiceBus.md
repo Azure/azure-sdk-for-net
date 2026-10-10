@@ -160,6 +160,17 @@ await sender.SendAsync(message);
 
 In `Azure.Messaging.ServiceBus`, all of the send-related features are combined in a common class, `ServiceBusSender`, that is created  by calling `CreateSender` on your `ServiceBusClient`. This method takes the queue or topic you want to send to and creates a sender for that specific entity.
 
+When migrating message creation, explicitly set `ServiceBusMessage.MessageId` if your application relies on message identifiers for duplicate detection. `BrokeredMessage` constructors automatically assign a generated GUID to `MessageId`, while `ServiceBusMessage` constructors that create a new message leave it unset. Use an application-defined value that remains stable across retries; generating a new identifier for each retry prevents duplicate detection from recognizing resubmissions.
+
+When sending to a partitioned entity with duplicate detection enabled, ensure that `SessionId`, `PartitionKey`, or `MessageId` is set. Leaving all three properties unset causes the send to fail.
+
+```C#
+string orderId = "order-12345";
+ServiceBusMessage message = new("Hello world!")
+{
+    MessageId = orderId
+};
+```
 
 The feature to send a list of messages in a single call was implemented by batching all the messages into a single AMQP message and sending that to the service.
 

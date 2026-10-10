@@ -8,23 +8,36 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class CommitConfigurationResultOperationSource : IOperationSource<CommitConfigurationResult>
+    /// <summary></summary>
+    internal partial class CommitConfigurationResultOperationSource : IOperationSource<CommitConfigurationResult>
     {
-        CommitConfigurationResult IOperationSource<CommitConfigurationResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal CommitConfigurationResultOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return CommitConfigurationResult.DeserializeCommitConfigurationResult(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        CommitConfigurationResult IOperationSource<CommitConfigurationResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return CommitConfigurationResult.DeserializeCommitConfigurationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<CommitConfigurationResult> IOperationSource<CommitConfigurationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return CommitConfigurationResult.DeserializeCommitConfigurationResult(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return CommitConfigurationResult.DeserializeCommitConfigurationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> The result of a non-compliant policy evaluation against the given resource content. </summary>
     public partial class PolicyEvaluationResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PolicyEvaluationResult"/>. </summary>
         internal PolicyEvaluationResult()
@@ -55,28 +26,35 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="evaluationResult"> The result of the policy evaluation against the resource. This will typically be 'NonCompliant' but may contain other values if errors were encountered. </param>
         /// <param name="checkRestrictionEvaluationDetails"> The detailed results of the policy expressions and values that were evaluated. </param>
         /// <param name="effectDetails"> The details of the effect that was applied to the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyEvaluationResult(PolicyReference policyInfo, string evaluationResult, CheckRestrictionEvaluationDetails checkRestrictionEvaluationDetails, PolicyEffectDetails effectDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyEvaluationResult(PolicyReference policyInfo, string evaluationResult, CheckRestrictionEvaluationDetails checkRestrictionEvaluationDetails, PolicyEffectDetails effectDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicyInfo = policyInfo;
             EvaluationResult = evaluationResult;
             CheckRestrictionEvaluationDetails = checkRestrictionEvaluationDetails;
             EffectDetails = effectDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The details of the policy that was evaluated. </summary>
         public PolicyReference PolicyInfo { get; }
+
         /// <summary> The result of the policy evaluation against the resource. This will typically be 'NonCompliant' but may contain other values if errors were encountered. </summary>
         public string EvaluationResult { get; }
+
         /// <summary> The detailed results of the policy expressions and values that were evaluated. </summary>
         public CheckRestrictionEvaluationDetails CheckRestrictionEvaluationDetails { get; }
+
         /// <summary> The details of the effect that was applied to the resource. </summary>
         internal PolicyEffectDetails EffectDetails { get; }
+
         /// <summary> The effect that was applied to the resource. http://aka.ms/policyeffects. </summary>
         public string PolicyEffect
         {
-            get => EffectDetails?.PolicyEffect;
+            get
+            {
+                return EffectDetails is null ? default : EffectDetails.PolicyEffect;
+            }
         }
     }
 }

@@ -40,6 +40,10 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         {
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ProfileSku that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

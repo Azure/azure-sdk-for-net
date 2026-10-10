@@ -83,10 +83,17 @@ namespace Azure.Security.KeyVault.Administration.Models
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Optional.IsDefined(InnerError))
+            if (options.Format != "W" && (_innerErrorIsDefined || Optional.IsDefined(InnerError)))
             {
-                writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue(InnerError, options);
+                if (InnerError != null)
+                {
+                    writer.WritePropertyName("innererror"u8);
+                    writer.WriteObjectValue(InnerError, options);
+                }
+                else
+                {
+                    writer.WriteNull("innererror"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -132,6 +139,7 @@ namespace Azure.Security.KeyVault.Administration.Models
             }
             string code = default;
             string message = default;
+            bool innerErrorIsDefined = false;
             KeyVaultServiceError innerError = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -148,6 +156,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                 }
                 if (prop.NameEquals("innererror"u8))
                 {
+                    innerErrorIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         innerError = null;
@@ -158,10 +167,13 @@ namespace Azure.Security.KeyVault.Administration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new KeyVaultServiceError(code, message, innerError, additionalBinaryDataProperties);
+            return new KeyVaultServiceError(code, message, innerError, additionalBinaryDataProperties)
+            {
+                _innerErrorIsDefined = innerErrorIsDefined
+            };
         }
     }
 }

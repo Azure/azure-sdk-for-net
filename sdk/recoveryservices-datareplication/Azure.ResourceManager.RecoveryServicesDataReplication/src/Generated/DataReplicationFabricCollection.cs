@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             TryGetApiVersion(DataReplicationFabricResource.ResourceType, out string dataReplicationFabricApiVersion);
             _fabricClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationFabricResource.ResourceType.Namespace, Diagnostics);
-            _fabricRestClient = new Fabric(_fabricClientDiagnostics, Pipeline, Endpoint, dataReplicationFabricApiVersion ?? "2024-09-01");
+            _fabricRestClient = new Fabric(_fabricClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationFabricApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataReplicationFabricData, DataReplicationFabricResource>(new FabricGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataReplicationFabricData, DataReplicationFabricResource>(new DataReplicationFabricDataAsyncCollectionResultOfT(
                 _fabricRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataReplicationFabricData, DataReplicationFabricResource>(new FabricGetAllCollectionResultOfT(
+            return new PageableWrapper<DataReplicationFabricData, DataReplicationFabricResource>(new DataReplicationFabricDataCollectionResultOfT(
                 _fabricRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

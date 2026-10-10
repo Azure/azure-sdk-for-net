@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             TryGetApiVersion(CostManagementViewsResource.ResourceType, out string costManagementViewsApiVersion);
             _viewOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", CostManagementViewsResource.ResourceType.Namespace, Diagnostics);
-            _viewOperationGroupRestClient = new ViewOperationGroup(_viewOperationGroupClientDiagnostics, Pipeline, Endpoint, costManagementViewsApiVersion ?? "2025-03-01");
+            _viewOperationGroupRestClient = new ViewOperationGroup(_viewOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, costManagementViewsApiVersion ?? "2025-03-01");
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CostManagementViewData, CostManagementViewsResource>(new ViewOperationGroupGetByScopeAsyncCollectionResultOfT(_viewOperationGroupRestClient, Id.ToString(), context, "CostManagementViewsCollection.GetAll"), data => new CostManagementViewsResource(Client, data));
+            return new AsyncPageableWrapper<CostManagementViewData, CostManagementViewsResource>(new CostManagementViewDataAsync0CollectionResultOfT(_viewOperationGroupRestClient, Id.ToString(), context, "CostManagementViewsCollection.GetAll"), data => new CostManagementViewsResource(Client, data));
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CostManagementViewData, CostManagementViewsResource>(new ViewOperationGroupGetByScopeCollectionResultOfT(_viewOperationGroupRestClient, Id.ToString(), context, "CostManagementViewsCollection.GetAll"), data => new CostManagementViewsResource(Client, data));
+            return new PageableWrapper<CostManagementViewData, CostManagementViewsResource>(new CostManagementViewData0CollectionResultOfT(_viewOperationGroupRestClient, Id.ToString(), context, "CostManagementViewsCollection.GetAll"), data => new CostManagementViewsResource(Client, data));
         }
 
         /// <summary>

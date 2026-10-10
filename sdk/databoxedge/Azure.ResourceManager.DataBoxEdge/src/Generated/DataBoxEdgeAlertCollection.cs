@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             TryGetApiVersion(DataBoxEdgeAlertResource.ResourceType, out string dataBoxEdgeAlertApiVersion);
             _alertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", DataBoxEdgeAlertResource.ResourceType.Namespace, Diagnostics);
-            _alertsRestClient = new Alerts(_alertsClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeAlertApiVersion ?? "2023-12-01");
+            _alertsRestClient = new Alerts(_alertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeAlertApiVersion ?? "2023-12-01");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataBoxEdgeAlertData, DataBoxEdgeAlertResource>(new AlertsGetByDataBoxEdgeDeviceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataBoxEdgeAlertData, DataBoxEdgeAlertResource>(new DataBoxEdgeAlertDataAsyncCollectionResultOfT(
                 _alertsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataBoxEdgeAlertData, DataBoxEdgeAlertResource>(new AlertsGetByDataBoxEdgeDeviceCollectionResultOfT(
+            return new PageableWrapper<DataBoxEdgeAlertData, DataBoxEdgeAlertResource>(new DataBoxEdgeAlertDataCollectionResultOfT(
                 _alertsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -8,48 +8,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the SwiftVirtualNetwork data model.
-    /// Swift Virtual Network Contract. This is used to enable the new Swift way of doing virtual network integration.
-    /// Serialized Name: SwiftVirtualNetwork
-    /// </summary>
+    /// <summary> Swift Virtual Network Contract. This is used to enable the new Swift way of doing virtual network integration. </summary>
     public partial class SwiftVirtualNetworkData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SwiftVirtualNetworkData"/>. </summary>
         public SwiftVirtualNetworkData()
@@ -57,48 +25,62 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of <see cref="SwiftVirtualNetworkData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: SwiftVirtualNetwork.kind
-        /// </param>
-        /// <param name="subnetResourceId">
-        /// The Virtual Network subnet's resource ID. This is the subnet that this Web App will join. This subnet must have a delegation to Microsoft.Web/serverFarms defined first.
-        /// Serialized Name: SwiftVirtualNetwork.properties.subnetResourceId
-        /// </param>
-        /// <param name="isSwiftSupported">
-        /// A flag that specifies if the scale unit this Web App is on supports Swift integration.
-        /// Serialized Name: SwiftVirtualNetwork.properties.swiftSupported
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SwiftVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, ResourceIdentifier subnetResourceId, bool? isSwiftSupported, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> SwiftVirtualNetwork resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SwiftVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SwiftVirtualNetworkProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             Kind = kind;
-            SubnetResourceId = subnetResourceId;
-            IsSwiftSupported = isSwiftSupported;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: SwiftVirtualNetwork.kind
-        /// </summary>
+        /// <summary> SwiftVirtualNetwork resource specific properties. </summary>
+        [WirePath("properties")]
+        internal SwiftVirtualNetworkProperties Properties { get; set; }
+
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
-        /// <summary>
-        /// The Virtual Network subnet's resource ID. This is the subnet that this Web App will join. This subnet must have a delegation to Microsoft.Web/serverFarms defined first.
-        /// Serialized Name: SwiftVirtualNetwork.properties.subnetResourceId
-        /// </summary>
+
+        /// <summary> The Virtual Network subnet's resource ID. This is the subnet that this Web App will join. This subnet must have a delegation to Microsoft.Web/serverFarms defined first. </summary>
         [WirePath("properties.subnetResourceId")]
-        public ResourceIdentifier SubnetResourceId { get; set; }
-        /// <summary>
-        /// A flag that specifies if the scale unit this Web App is on supports Swift integration.
-        /// Serialized Name: SwiftVirtualNetwork.properties.swiftSupported
-        /// </summary>
+        public ResourceIdentifier SubnetResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubnetResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SwiftVirtualNetworkProperties();
+                }
+                Properties.SubnetResourceId = value;
+            }
+        }
+
+        /// <summary> A flag that specifies if the scale unit this Web App is on supports Swift integration. </summary>
         [WirePath("properties.swiftSupported")]
-        public bool? IsSwiftSupported { get; set; }
+        public bool? IsSwiftSupported
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsSwiftSupported;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SwiftVirtualNetworkProperties();
+                }
+                Properties.IsSwiftSupported = value;
+            }
+        }
     }
 }

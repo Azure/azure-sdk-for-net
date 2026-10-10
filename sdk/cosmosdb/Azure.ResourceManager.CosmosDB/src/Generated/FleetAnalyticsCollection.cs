@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(FleetAnalyticsResource.ResourceType, out string fleetAnalyticsApiVersion);
             _fleetAnalyticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", FleetAnalyticsResource.ResourceType.Namespace, Diagnostics);
-            _fleetAnalyticsRestClient = new FleetAnalytics(_fleetAnalyticsClientDiagnostics, Pipeline, Endpoint, fleetAnalyticsApiVersion ?? "2026-04-01-preview");
+            _fleetAnalyticsRestClient = new FleetAnalytics(_fleetAnalyticsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fleetAnalyticsApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FleetAnalyticsData, FleetAnalyticsResource>(new FleetAnalyticsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FleetAnalyticsData, FleetAnalyticsResource>(new FleetAnalyticsDataAsyncCollectionResultOfT(
                 _fleetAnalyticsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FleetAnalyticsData, FleetAnalyticsResource>(new FleetAnalyticsGetAllCollectionResultOfT(
+            return new PageableWrapper<FleetAnalyticsData, FleetAnalyticsResource>(new FleetAnalyticsDataCollectionResultOfT(
                 _fleetAnalyticsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

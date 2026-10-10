@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CertificateRegistration
         {
             TryGetApiVersion(AppServiceCertificateResource.ResourceType, out string appServiceCertificateApiVersion);
             _appServiceCertificateResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CertificateRegistration", AppServiceCertificateResource.ResourceType.Namespace, Diagnostics);
-            _appServiceCertificateResourcesRestClient = new AppServiceCertificateResources(_appServiceCertificateResourcesClientDiagnostics, Pipeline, Endpoint, appServiceCertificateApiVersion ?? "2024-11-01");
+            _appServiceCertificateResourcesRestClient = new AppServiceCertificateResources(_appServiceCertificateResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appServiceCertificateApiVersion ?? "2024-11-01");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppServiceCertificateData, AppServiceCertificateResource>(new AppServiceCertificateResourcesGetCertificatesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AppServiceCertificateData, AppServiceCertificateResource>(new AppServiceCertificateDataAsyncCollectionResultOfT(
                 _appServiceCertificateResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppServiceCertificateData, AppServiceCertificateResource>(new AppServiceCertificateResourcesGetCertificatesCollectionResultOfT(
+            return new PageableWrapper<AppServiceCertificateData, AppServiceCertificateResource>(new AppServiceCertificateDataCollectionResultOfT(
                 _appServiceCertificateResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

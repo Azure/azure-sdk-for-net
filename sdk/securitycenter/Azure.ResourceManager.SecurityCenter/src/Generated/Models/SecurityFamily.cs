@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public readonly partial struct SecurityFamily : IEquatable<SecurityFamily>
     {
         private readonly string _value;
+        /// <summary> Waf. </summary>
+        private const string WafValue = "Waf";
+        /// <summary> Ngfw. </summary>
+        private const string NgfwValue = "Ngfw";
+        /// <summary> SaasWaf. </summary>
+        private const string SaasWafValue = "SaasWaf";
+        /// <summary> Va. </summary>
+        private const string VaValue = "Va";
 
         /// <summary> Initializes a new instance of <see cref="SecurityFamily"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityFamily(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string WafValue = "Waf";
-        private const string NgfwValue = "Ngfw";
-        private const string SaasWafValue = "SaasWaf";
-        private const string VulnerabilityAssessmentValue = "Va";
+            _value = value;
+        }
 
         /// <summary> Waf. </summary>
         public static SecurityFamily Waf { get; } = new SecurityFamily(WafValue);
+
         /// <summary> Ngfw. </summary>
         public static SecurityFamily Ngfw { get; } = new SecurityFamily(NgfwValue);
+
         /// <summary> SaasWaf. </summary>
         public static SecurityFamily SaasWaf { get; } = new SecurityFamily(SaasWafValue);
+
         /// <summary> Va. </summary>
-        public static SecurityFamily VulnerabilityAssessment { get; } = new SecurityFamily(VulnerabilityAssessmentValue);
+        public static SecurityFamily Va { get; } = new SecurityFamily(VaValue);
+
         /// <summary> Determines if two <see cref="SecurityFamily"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityFamily left, SecurityFamily right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityFamily"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityFamily left, SecurityFamily right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityFamily"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityFamily"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityFamily(string value) => new SecurityFamily(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityFamily"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityFamily?(string value) => value == null ? null : new SecurityFamily(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityFamily other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityFamily other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

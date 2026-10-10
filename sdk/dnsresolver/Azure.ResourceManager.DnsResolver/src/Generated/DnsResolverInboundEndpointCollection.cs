@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             TryGetApiVersion(DnsResolverInboundEndpointResource.ResourceType, out string dnsResolverInboundEndpointApiVersion);
             _inboundEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsResolverInboundEndpointResource.ResourceType.Namespace, Diagnostics);
-            _inboundEndpointsRestClient = new InboundEndpoints(_inboundEndpointsClientDiagnostics, Pipeline, Endpoint, dnsResolverInboundEndpointApiVersion ?? "2025-10-01-preview");
+            _inboundEndpointsRestClient = new InboundEndpoints(_inboundEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dnsResolverInboundEndpointApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DnsResolverInboundEndpointData, DnsResolverInboundEndpointResource>(new InboundEndpointsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DnsResolverInboundEndpointData, DnsResolverInboundEndpointResource>(new DnsResolverInboundEndpointDataAsyncCollectionResultOfT(
                 _inboundEndpointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DnsResolverInboundEndpointData, DnsResolverInboundEndpointResource>(new InboundEndpointsGetAllCollectionResultOfT(
+            return new PageableWrapper<DnsResolverInboundEndpointData, DnsResolverInboundEndpointResource>(new DnsResolverInboundEndpointDataCollectionResultOfT(
                 _inboundEndpointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

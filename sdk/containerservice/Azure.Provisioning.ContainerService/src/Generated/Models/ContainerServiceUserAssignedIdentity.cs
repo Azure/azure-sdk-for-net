@@ -76,6 +76,10 @@ namespace Azure.Provisioning.ContainerService
             _resourceId = DefineProperty<ResourceIdentifier>(nameof(ResourceId), new string[] { "resourceId" });
             _clientId = DefineProperty<Guid>(nameof(ClientId), new string[] { "clientId" });
             _objectId = DefineProperty<Guid>(nameof(ObjectId), new string[] { "objectId" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerServiceUserAssignedIdentity that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

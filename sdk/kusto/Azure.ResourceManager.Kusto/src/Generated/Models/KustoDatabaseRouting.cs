@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Kusto.Models
     public readonly partial struct KustoDatabaseRouting : IEquatable<KustoDatabaseRouting>
     {
         private readonly string _value;
+        /// <summary> Single. </summary>
+        private const string SingleValue = "Single";
+        /// <summary> Multi. </summary>
+        private const string MultiValue = "Multi";
 
         /// <summary> Initializes a new instance of <see cref="KustoDatabaseRouting"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KustoDatabaseRouting(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SingleValue = "Single";
-        private const string MultiValue = "Multi";
+            _value = value;
+        }
 
         /// <summary> Single. </summary>
         public static KustoDatabaseRouting Single { get; } = new KustoDatabaseRouting(SingleValue);
+
         /// <summary> Multi. </summary>
         public static KustoDatabaseRouting Multi { get; } = new KustoDatabaseRouting(MultiValue);
+
         /// <summary> Determines if two <see cref="KustoDatabaseRouting"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KustoDatabaseRouting left, KustoDatabaseRouting right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KustoDatabaseRouting"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KustoDatabaseRouting left, KustoDatabaseRouting right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoDatabaseRouting"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KustoDatabaseRouting"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KustoDatabaseRouting(string value) => new KustoDatabaseRouting(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KustoDatabaseRouting"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KustoDatabaseRouting?(string value) => value == null ? null : new KustoDatabaseRouting(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KustoDatabaseRouting other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KustoDatabaseRouting other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

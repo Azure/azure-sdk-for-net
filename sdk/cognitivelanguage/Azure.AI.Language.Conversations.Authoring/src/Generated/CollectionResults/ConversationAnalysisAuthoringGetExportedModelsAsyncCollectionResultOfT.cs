@@ -49,7 +49,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <returns> The pages of ConversationAnalysisAuthoringGetExportedModelsAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<ConversationAuthoringExportedTrainedModel>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
@@ -58,8 +58,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                     yield break;
                 }
                 PagedAnalyzeConversationAuthoringExportedTrainedModel result = (PagedAnalyzeConversationAuthoringExportedTrainedModel)response;
-                yield return Page<ConversationAuthoringExportedTrainedModel>.FromValues((IReadOnlyList<ConversationAuthoringExportedTrainedModel>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ConversationAuthoringExportedTrainedModel>.FromValues((IReadOnlyList<ConversationAuthoringExportedTrainedModel>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

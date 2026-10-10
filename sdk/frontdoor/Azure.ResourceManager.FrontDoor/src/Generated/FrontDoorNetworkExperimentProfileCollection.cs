@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             TryGetApiVersion(FrontDoorNetworkExperimentProfileResource.ResourceType, out string frontDoorNetworkExperimentProfileApiVersion);
             _networkExperimentProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", FrontDoorNetworkExperimentProfileResource.ResourceType.Namespace, Diagnostics);
-            _networkExperimentProfilesRestClient = new NetworkExperimentProfiles(_networkExperimentProfilesClientDiagnostics, Pipeline, Endpoint, frontDoorNetworkExperimentProfileApiVersion ?? "2025-11-01");
+            _networkExperimentProfilesRestClient = new NetworkExperimentProfiles(_networkExperimentProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorNetworkExperimentProfileApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FrontDoorNetworkExperimentProfileData, FrontDoorNetworkExperimentProfileResource>(new NetworkExperimentProfilesGetByResourceGroupAsyncCollectionResultOfT(_networkExperimentProfilesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "FrontDoorNetworkExperimentProfileCollection.GetAll"), data => new FrontDoorNetworkExperimentProfileResource(Client, data));
+            return new AsyncPageableWrapper<FrontDoorNetworkExperimentProfileData, FrontDoorNetworkExperimentProfileResource>(new FrontDoorNetworkExperimentProfileDataAsyncCollectionResultOfT(_networkExperimentProfilesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "FrontDoorNetworkExperimentProfileCollection.GetAll"), data => new FrontDoorNetworkExperimentProfileResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FrontDoorNetworkExperimentProfileData, FrontDoorNetworkExperimentProfileResource>(new NetworkExperimentProfilesGetByResourceGroupCollectionResultOfT(_networkExperimentProfilesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "FrontDoorNetworkExperimentProfileCollection.GetAll"), data => new FrontDoorNetworkExperimentProfileResource(Client, data));
+            return new PageableWrapper<FrontDoorNetworkExperimentProfileData, FrontDoorNetworkExperimentProfileResource>(new FrontDoorNetworkExperimentProfileDataCollectionResultOfT(_networkExperimentProfilesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "FrontDoorNetworkExperimentProfileCollection.GetAll"), data => new FrontDoorNetworkExperimentProfileResource(Client, data));
         }
 
         /// <summary>

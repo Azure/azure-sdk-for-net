@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Redis
         {
             TryGetApiVersion(ResourceType, out string redisCacheAccessPolicyApiVersion);
             _redisCacheAccessPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Redis", ResourceType.Namespace, Diagnostics);
-            _redisCacheAccessPoliciesRestClient = new RedisCacheAccessPolicies(_redisCacheAccessPoliciesClientDiagnostics, Pipeline, Endpoint, redisCacheAccessPolicyApiVersion ?? "2025-08-01-preview");
+            _redisCacheAccessPoliciesRestClient = new RedisCacheAccessPolicies(_redisCacheAccessPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, redisCacheAccessPolicyApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 

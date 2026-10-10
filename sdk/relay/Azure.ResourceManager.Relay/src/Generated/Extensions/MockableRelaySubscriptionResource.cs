@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.Relay.Mocking
     /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableRelaySubscriptionResource : ArmResource
     {
+        private ClientDiagnostics _clustersClientDiagnostics;
+        private Clusters _clustersRestClient;
         private ClientDiagnostics _namespacesClientDiagnostics;
         private Namespaces _namespacesRestClient;
 
@@ -36,36 +38,68 @@ namespace Azure.ResourceManager.Relay.Mocking
         {
         }
 
+        private ClientDiagnostics ClustersClientDiagnostics => _clustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Relay.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01-preview");
+
         private ClientDiagnostics NamespacesClientDiagnostics => _namespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Relay.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Namespaces NamespacesRestClient => _namespacesRestClient ??= new Namespaces(NamespacesClientDiagnostics, Pipeline, Endpoint, "2024-01-01");
+        private Namespaces NamespacesRestClient => _namespacesRestClient ??= new Namespaces(NamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01-preview");
 
         /// <summary>
-        /// Lists all the available namespaces within the subscription regardless of the resourceGroups.
+        /// Lists Relay clusters in a subscription.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Relay/namespaces. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Relay/clusters. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RelayNamespaces_List. </description>
+        /// <description> Clusters_ListBySubscription. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RelayNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RelayNamespaceResource> GetRelayNamespacesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RelayClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RelayClusterResource> GetRelayClustersAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RelayNamespaceData, RelayNamespaceResource>(new NamespacesGetAllAsyncCollectionResultOfT(NamespacesRestClient, Id.SubscriptionId, context, "MockableRelaySubscriptionResource.GetRelayNamespaces"), data => new RelayNamespaceResource(Client, data));
+            return new AsyncPageableWrapper<RelayClusterData, RelayClusterResource>(new RelayClusterDataAsync0CollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context, "MockableRelaySubscriptionResource.GetRelayClusters"), data => new RelayClusterResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists Relay clusters in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Relay/clusters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="RelayClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RelayClusterResource> GetRelayClusters(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<RelayClusterData, RelayClusterResource>(new RelayClusterData0CollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context, "MockableRelaySubscriptionResource.GetRelayClusters"), data => new RelayClusterResource(Client, data));
         }
 
         /// <summary>
@@ -81,7 +115,35 @@ namespace Azure.ResourceManager.Relay.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="RelayNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RelayNamespaceResource> GetRelayNamespacesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<RelayNamespaceData, RelayNamespaceResource>(new RelayNamespaceDataAsync0CollectionResultOfT(NamespacesRestClient, Id.SubscriptionId, context, "MockableRelaySubscriptionResource.GetRelayNamespaces"), data => new RelayNamespaceResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all the available namespaces within the subscription regardless of the resourceGroups.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Relay/namespaces. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RelayNamespaces_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -93,7 +155,95 @@ namespace Azure.ResourceManager.Relay.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RelayNamespaceData, RelayNamespaceResource>(new NamespacesGetAllCollectionResultOfT(NamespacesRestClient, Id.SubscriptionId, context, "MockableRelaySubscriptionResource.GetRelayNamespaces"), data => new RelayNamespaceResource(Client, data));
+            return new PageableWrapper<RelayNamespaceData, RelayNamespaceResource>(new RelayNamespaceData0CollectionResultOfT(NamespacesRestClient, Id.SubscriptionId, context, "MockableRelaySubscriptionResource.GetRelayNamespaces"), data => new RelayNamespaceResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists regions containing available pre-provisioned Relay clusters.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Relay/availableClusterRegions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ClustersOperationGroup_ListAvailableClusterRegion. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<AvailableRelayClustersList>> GetAvailableClusterRegionAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClustersClientDiagnostics.CreateScope("MockableRelaySubscriptionResource.GetAvailableClusterRegion");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ClustersRestClient.CreateGetAvailableClusterRegionRequest(Id.SubscriptionId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AvailableRelayClustersList> response = Response.FromValue(AvailableRelayClustersList.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists regions containing available pre-provisioned Relay clusters.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Relay/availableClusterRegions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ClustersOperationGroup_ListAvailableClusterRegion. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<AvailableRelayClustersList> GetAvailableClusterRegion(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClustersClientDiagnostics.CreateScope("MockableRelaySubscriptionResource.GetAvailableClusterRegion");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ClustersRestClient.CreateGetAvailableClusterRegionRequest(Id.SubscriptionId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AvailableRelayClustersList> response = Response.FromValue(AvailableRelayClustersList.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -109,7 +259,7 @@ namespace Azure.ResourceManager.Relay.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -157,7 +307,7 @@ namespace Azure.ResourceManager.Relay.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

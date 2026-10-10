@@ -120,6 +120,10 @@ namespace Azure.Provisioning.ContainerInstance
             _instanceView = DefineModelProperty<InitContainerPropertiesDefinitionInstanceView>(nameof(InstanceView), new string[] { "instanceView" }, isOutput: true);
             _volumeMounts = DefineListProperty<ContainerVolumeMount>(nameof(VolumeMounts), new string[] { "volumeMounts" });
             _securityContext = DefineModelProperty<ContainerSecurityContextDefinition>(nameof(SecurityContext), new string[] { "securityContext" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for InitContainerPropertiesDefinition that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

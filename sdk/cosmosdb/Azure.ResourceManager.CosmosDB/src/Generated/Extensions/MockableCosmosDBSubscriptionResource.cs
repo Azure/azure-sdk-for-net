@@ -47,27 +47,27 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
 
         private ClientDiagnostics DatabaseAccountsClientDiagnostics => _databaseAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DatabaseAccounts DatabaseAccountsRestClient => _databaseAccountsRestClient ??= new DatabaseAccounts(DatabaseAccountsClientDiagnostics, Pipeline, Endpoint, "2026-04-01-preview");
+        private DatabaseAccounts DatabaseAccountsRestClient => _databaseAccountsRestClient ??= new DatabaseAccounts(DatabaseAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01-preview");
 
         private ClientDiagnostics GarnetClustersClientDiagnostics => _garnetClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GarnetClusters GarnetClustersRestClient => _garnetClustersRestClient ??= new GarnetClusters(GarnetClustersClientDiagnostics, Pipeline, Endpoint, "2026-04-01-preview");
+        private GarnetClusters GarnetClustersRestClient => _garnetClustersRestClient ??= new GarnetClusters(GarnetClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01-preview");
 
         private ClientDiagnostics CassandraClustersClientDiagnostics => _cassandraClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CassandraClusters CassandraClustersRestClient => _cassandraClustersRestClient ??= new CassandraClusters(CassandraClustersClientDiagnostics, Pipeline, Endpoint, "2026-04-01-preview");
+        private CassandraClusters CassandraClustersRestClient => _cassandraClustersRestClient ??= new CassandraClusters(CassandraClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01-preview");
 
         private ClientDiagnostics ThroughputPoolsClientDiagnostics => _throughputPoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ThroughputPools ThroughputPoolsRestClient => _throughputPoolsRestClient ??= new ThroughputPools(ThroughputPoolsClientDiagnostics, Pipeline, Endpoint, "2026-04-01-preview");
+        private ThroughputPools ThroughputPoolsRestClient => _throughputPoolsRestClient ??= new ThroughputPools(ThroughputPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01-preview");
 
         private ClientDiagnostics FleetClientDiagnostics => _fleetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Fleet FleetRestClient => _fleetRestClient ??= new Fleet(FleetClientDiagnostics, Pipeline, Endpoint, "2026-04-01-preview");
+        private Fleet FleetRestClient => _fleetRestClient ??= new Fleet(FleetClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01-preview");
 
         private ClientDiagnostics RestorableDatabaseAccountsClientDiagnostics => _restorableDatabaseAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RestorableDatabaseAccounts RestorableDatabaseAccountsRestClient => _restorableDatabaseAccountsRestClient ??= new RestorableDatabaseAccounts(RestorableDatabaseAccountsClientDiagnostics, Pipeline, Endpoint, "2026-04-01-preview");
+        private RestorableDatabaseAccounts RestorableDatabaseAccountsRestClient => _restorableDatabaseAccountsRestClient ??= new RestorableDatabaseAccounts(RestorableDatabaseAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01-preview");
 
         /// <summary> Gets a collection of CosmosDBLocations in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of CosmosDBLocations and their operations over a CosmosDBLocationResource. </returns>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBAccountData, CosmosDBAccountResource>(new DatabaseAccountsGetAllAsyncCollectionResultOfT(DatabaseAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetCosmosDBAccounts"), data => new CosmosDBAccountResource(Client, data));
+            return new AsyncPageableWrapper<CosmosDBAccountData, CosmosDBAccountResource>(new CosmosDBAccountDataAsync0CollectionResultOfT(DatabaseAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetCosmosDBAccounts"), data => new CosmosDBAccountResource(Client, data));
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBAccountData, CosmosDBAccountResource>(new DatabaseAccountsGetAllCollectionResultOfT(DatabaseAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetCosmosDBAccounts"), data => new CosmosDBAccountResource(Client, data));
+            return new PageableWrapper<CosmosDBAccountData, CosmosDBAccountResource>(new CosmosDBAccountData0CollectionResultOfT(DatabaseAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetCosmosDBAccounts"), data => new CosmosDBAccountResource(Client, data));
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GarnetClusterData, GarnetClusterResource>(new GarnetClustersGetBySubscriptionAsyncCollectionResultOfT(GarnetClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetGarnetClusters"), data => new GarnetClusterResource(Client, data));
+            return new AsyncPageableWrapper<GarnetClusterData, GarnetClusterResource>(new GarnetClusterDataAsync0CollectionResultOfT(GarnetClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetGarnetClusters"), data => new GarnetClusterResource(Client, data));
         }
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GarnetClusterData, GarnetClusterResource>(new GarnetClustersGetBySubscriptionCollectionResultOfT(GarnetClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetGarnetClusters"), data => new GarnetClusterResource(Client, data));
+            return new PageableWrapper<GarnetClusterData, GarnetClusterResource>(new GarnetClusterData0CollectionResultOfT(GarnetClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetGarnetClusters"), data => new GarnetClusterResource(Client, data));
         }
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CassandraClusterData, CassandraClusterResource>(new CassandraClustersGetBySubscriptionAsyncCollectionResultOfT(CassandraClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetCassandraClusters"), data => new CassandraClusterResource(Client, data));
+            return new AsyncPageableWrapper<CassandraClusterData, CassandraClusterResource>(new CassandraClusterDataAsync0CollectionResultOfT(CassandraClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetCassandraClusters"), data => new CassandraClusterResource(Client, data));
         }
 
         /// <summary>
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CassandraClusterData, CassandraClusterResource>(new CassandraClustersGetBySubscriptionCollectionResultOfT(CassandraClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetCassandraClusters"), data => new CassandraClusterResource(Client, data));
+            return new PageableWrapper<CassandraClusterData, CassandraClusterResource>(new CassandraClusterData0CollectionResultOfT(CassandraClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetCassandraClusters"), data => new CassandraClusterResource(Client, data));
         }
 
         /// <summary>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBThroughputPoolData, CosmosDBThroughputPoolResource>(new ThroughputPoolsGetAllAsyncCollectionResultOfT(ThroughputPoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetCosmosDBThroughputPools"), data => new CosmosDBThroughputPoolResource(Client, data));
+            return new AsyncPageableWrapper<CosmosDBThroughputPoolData, CosmosDBThroughputPoolResource>(new CosmosDBThroughputPoolDataAsync0CollectionResultOfT(ThroughputPoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetCosmosDBThroughputPools"), data => new CosmosDBThroughputPoolResource(Client, data));
         }
 
         /// <summary>
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBThroughputPoolData, CosmosDBThroughputPoolResource>(new ThroughputPoolsGetAllCollectionResultOfT(ThroughputPoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetCosmosDBThroughputPools"), data => new CosmosDBThroughputPoolResource(Client, data));
+            return new PageableWrapper<CosmosDBThroughputPoolData, CosmosDBThroughputPoolResource>(new CosmosDBThroughputPoolData0CollectionResultOfT(ThroughputPoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetCosmosDBThroughputPools"), data => new CosmosDBThroughputPoolResource(Client, data));
         }
 
         /// <summary>
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBFleetData, CosmosDBFleetResource>(new FleetGetAllAsyncCollectionResultOfT(FleetRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetCosmosDBFleets"), data => new CosmosDBFleetResource(Client, data));
+            return new AsyncPageableWrapper<CosmosDBFleetData, CosmosDBFleetResource>(new CosmosDBFleetDataAsync0CollectionResultOfT(FleetRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetCosmosDBFleets"), data => new CosmosDBFleetResource(Client, data));
         }
 
         /// <summary>
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBFleetData, CosmosDBFleetResource>(new FleetGetAllCollectionResultOfT(FleetRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetCosmosDBFleets"), data => new CosmosDBFleetResource(Client, data));
+            return new PageableWrapper<CosmosDBFleetData, CosmosDBFleetResource>(new CosmosDBFleetData0CollectionResultOfT(FleetRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetCosmosDBFleets"), data => new CosmosDBFleetResource(Client, data));
         }
 
         /// <summary>
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RestorableCosmosDBAccountData, RestorableCosmosDBAccountResource>(new RestorableDatabaseAccountsGetRestorableCosmosDBAccountsAsyncCollectionResultOfT(RestorableDatabaseAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetRestorableCosmosDBAccounts"), data => new RestorableCosmosDBAccountResource(Client, data));
+            return new AsyncPageableWrapper<RestorableCosmosDBAccountData, RestorableCosmosDBAccountResource>(new RestorableCosmosDBAccountDataAsync0CollectionResultOfT(RestorableDatabaseAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetRestorableCosmosDBAccounts"), data => new RestorableCosmosDBAccountResource(Client, data));
         }
 
         /// <summary>
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RestorableCosmosDBAccountData, RestorableCosmosDBAccountResource>(new RestorableDatabaseAccountsGetRestorableCosmosDBAccountsCollectionResultOfT(RestorableDatabaseAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetRestorableCosmosDBAccounts"), data => new RestorableCosmosDBAccountResource(Client, data));
+            return new PageableWrapper<RestorableCosmosDBAccountData, RestorableCosmosDBAccountResource>(new RestorableCosmosDBAccountData0CollectionResultOfT(RestorableDatabaseAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetRestorableCosmosDBAccounts"), data => new RestorableCosmosDBAccountResource(Client, data));
         }
     }
 }

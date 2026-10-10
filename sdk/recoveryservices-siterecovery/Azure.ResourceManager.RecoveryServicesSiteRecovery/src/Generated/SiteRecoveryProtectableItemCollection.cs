@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             TryGetApiVersion(SiteRecoveryProtectableItemResource.ResourceType, out string siteRecoveryProtectableItemApiVersion);
             _replicationProtectableItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", SiteRecoveryProtectableItemResource.ResourceType.Namespace, Diagnostics);
-            _replicationProtectableItemsRestClient = new ReplicationProtectableItems(_replicationProtectableItemsClientDiagnostics, Pipeline, Endpoint, siteRecoveryProtectableItemApiVersion ?? "2026-02-01");
+            _replicationProtectableItemsRestClient = new ReplicationProtectableItems(_replicationProtectableItemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteRecoveryProtectableItemApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SiteRecoveryProtectableItemData, SiteRecoveryProtectableItemResource>(new ReplicationProtectableItemsGetByReplicationProtectionContainersAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SiteRecoveryProtectableItemData, SiteRecoveryProtectableItemResource>(new SiteRecoveryProtectableItemDataAsyncCollectionResultOfT(
                 _replicationProtectableItemsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SiteRecoveryProtectableItemData, SiteRecoveryProtectableItemResource>(new ReplicationProtectableItemsGetByReplicationProtectionContainersCollectionResultOfT(
+            return new PageableWrapper<SiteRecoveryProtectableItemData, SiteRecoveryProtectableItemResource>(new SiteRecoveryProtectableItemDataCollectionResultOfT(
                 _replicationProtectableItemsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -151,10 +151,10 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RequiredComputerUseToolCallDetails(action, pendingSafetyChecks, additionalBinaryDataProperties);
+            return new RequiredComputerUseToolCallDetails(action, pendingSafetyChecks ?? new ChangeTrackingList<SafetyCheck>(), additionalBinaryDataProperties);
         }
     }
 }

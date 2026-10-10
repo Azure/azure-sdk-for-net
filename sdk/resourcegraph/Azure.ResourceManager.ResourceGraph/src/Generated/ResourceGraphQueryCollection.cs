@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ResourceGraph
         {
             TryGetApiVersion(ResourceGraphQueryResource.ResourceType, out string resourceGraphQueryApiVersion);
             _graphQueryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceGraph", ResourceGraphQueryResource.ResourceType.Namespace, Diagnostics);
-            _graphQueryRestClient = new GraphQuery(_graphQueryClientDiagnostics, Pipeline, Endpoint, resourceGraphQueryApiVersion ?? "2024-04-01");
+            _graphQueryRestClient = new GraphQuery(_graphQueryClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceGraphQueryApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ResourceGraph
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceGraphQueryData, ResourceGraphQueryResource>(new GraphQueryGetAllAsyncCollectionResultOfT(_graphQueryRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ResourceGraphQueryCollection.GetAll"), data => new ResourceGraphQueryResource(Client, data));
+            return new AsyncPageableWrapper<ResourceGraphQueryData, ResourceGraphQueryResource>(new ResourceGraphQueryDataAsyncCollectionResultOfT(_graphQueryRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ResourceGraphQueryCollection.GetAll"), data => new ResourceGraphQueryResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.ResourceGraph
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceGraphQueryData, ResourceGraphQueryResource>(new GraphQueryGetAllCollectionResultOfT(_graphQueryRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ResourceGraphQueryCollection.GetAll"), data => new ResourceGraphQueryResource(Client, data));
+            return new PageableWrapper<ResourceGraphQueryData, ResourceGraphQueryResource>(new ResourceGraphQueryDataCollectionResultOfT(_graphQueryRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ResourceGraphQueryCollection.GetAll"), data => new ResourceGraphQueryResource(Client, data));
         }
 
         /// <summary>

@@ -140,10 +140,10 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VersionSelector(versionSelectionRules, additionalBinaryDataProperties);
+            return new VersionSelector(versionSelectionRules ?? new ChangeTrackingList<VersionSelectionRule>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Batch.Mocking
 
         private ClientDiagnostics BatchAccountClientDiagnostics => _batchAccountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Batch.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BatchAccount BatchAccountRestClient => _batchAccountRestClient ??= new BatchAccount(BatchAccountClientDiagnostics, Pipeline, Endpoint, "2025-06-01");
+        private BatchAccount BatchAccountRestClient => _batchAccountRestClient ??= new BatchAccount(BatchAccountClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-06-01");
 
         private ClientDiagnostics LocationClientDiagnostics => _locationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Batch.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Location LocationRestClient => _locationRestClient ??= new Location(LocationClientDiagnostics, Pipeline, Endpoint, "2025-06-01");
+        private Location LocationRestClient => _locationRestClient ??= new Location(LocationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-06-01");
 
         /// <summary>
         /// Gets information about the Batch accounts associated with the subscription.
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Batch.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BatchAccountData, BatchAccountResource>(new BatchAccountGetAllAsyncCollectionResultOfT(BatchAccountRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBatchSubscriptionResource.GetBatchAccounts"), data => new BatchAccountResource(Client, data));
+            return new AsyncPageableWrapper<BatchAccountData, BatchAccountResource>(new BatchAccountDataAsync0CollectionResultOfT(BatchAccountRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBatchSubscriptionResource.GetBatchAccounts"), data => new BatchAccountResource(Client, data));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Batch.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BatchAccountData, BatchAccountResource>(new BatchAccountGetAllCollectionResultOfT(BatchAccountRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBatchSubscriptionResource.GetBatchAccounts"), data => new BatchAccountResource(Client, data));
+            return new PageableWrapper<BatchAccountData, BatchAccountResource>(new BatchAccountData0CollectionResultOfT(BatchAccountRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBatchSubscriptionResource.GetBatchAccounts"), data => new BatchAccountResource(Client, data));
         }
 
         /// <summary>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Batch.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationGetBatchSupportedVirtualMachineSkusAsyncCollectionResultOfT(
+            return new BatchSupportedSkuAsyncCollectionResultOfT(
                 LocationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 locationName,
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Batch.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationGetBatchSupportedVirtualMachineSkusCollectionResultOfT(
+            return new BatchSupportedSkuCollectionResultOfT(
                 LocationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 locationName,

@@ -17,6 +17,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using static Azure.AI.Agents.Persistent.Telemetry.OpenTelemetryConstants;
+
+// This file groups the OpenTelemetryScope class with its small helper enum and related types;
+// they are tightly coupled and splitting them would fragment the telemetry implementation.
+#pragma warning disable SA1402 // File may only contain a single type
+#pragma warning disable SA1649 // File name should match first type name
+
 namespace Azure.AI.Agents.Persistent.Telemetry
 {
     internal class StreamingMessage

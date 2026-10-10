@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Communication
         {
             TryGetApiVersion(EmailSuppressionListResource.ResourceType, out string emailSuppressionListApiVersion);
             _suppressionListsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Communication", EmailSuppressionListResource.ResourceType.Namespace, Diagnostics);
-            _suppressionListsRestClient = new SuppressionLists(_suppressionListsClientDiagnostics, Pipeline, Endpoint, emailSuppressionListApiVersion ?? "2026-03-18");
+            _suppressionListsRestClient = new SuppressionLists(_suppressionListsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, emailSuppressionListApiVersion ?? "2026-03-18");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Communication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EmailSuppressionListData, EmailSuppressionListResource>(new SuppressionListsGetByDomainAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EmailSuppressionListData, EmailSuppressionListResource>(new EmailSuppressionListDataAsyncCollectionResultOfT(
                 _suppressionListsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Communication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EmailSuppressionListData, EmailSuppressionListResource>(new SuppressionListsGetByDomainCollectionResultOfT(
+            return new PageableWrapper<EmailSuppressionListData, EmailSuppressionListResource>(new EmailSuppressionListDataCollectionResultOfT(
                 _suppressionListsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

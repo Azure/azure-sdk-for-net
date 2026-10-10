@@ -17,6 +17,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         /// <summary> Creates a new PeriodicBackupPolicy. </summary>
         public PeriodicBackupPolicy()
         {
+            Kind.Assign(BackupPolicyKind.Periodic);
         }
 
         /// <summary> Gets or sets the IntervalInHours. </summary>
@@ -38,8 +39,11 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("kind", new string[] { "kind" }, defaultValue: "Periodic");
             _intervalInHours = DefineProperty<int>(nameof(IntervalInHours), new string[] { "intervalInHours" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for PeriodicBackupPolicy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

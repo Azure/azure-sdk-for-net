@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.OracleDatabase
             TryGetApiVersion(AutonomousDatabaseCharacterSetResource.ResourceType, out string autonomousDatabaseCharacterSetApiVersion);
             _location = location;
             _autonomousDatabaseCharacterSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", AutonomousDatabaseCharacterSetResource.ResourceType.Namespace, Diagnostics);
-            _autonomousDatabaseCharacterSetsRestClient = new AutonomousDatabaseCharacterSets(_autonomousDatabaseCharacterSetsClientDiagnostics, Pipeline, Endpoint, autonomousDatabaseCharacterSetApiVersion ?? "2025-09-01");
+            _autonomousDatabaseCharacterSetsRestClient = new AutonomousDatabaseCharacterSets(_autonomousDatabaseCharacterSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, autonomousDatabaseCharacterSetApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutonomousDatabaseCharacterSetData, AutonomousDatabaseCharacterSetResource>(new AutonomousDatabaseCharacterSetsGetByLocationAsyncCollectionResultOfT(_autonomousDatabaseCharacterSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "AutonomousDatabaseCharacterSetCollection.GetAll"), data => new AutonomousDatabaseCharacterSetResource(Client, data));
+            return new AsyncPageableWrapper<AutonomousDatabaseCharacterSetData, AutonomousDatabaseCharacterSetResource>(new AutonomousDatabaseCharacterSetDataAsyncCollectionResultOfT(_autonomousDatabaseCharacterSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "AutonomousDatabaseCharacterSetCollection.GetAll"), data => new AutonomousDatabaseCharacterSetResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutonomousDatabaseCharacterSetData, AutonomousDatabaseCharacterSetResource>(new AutonomousDatabaseCharacterSetsGetByLocationCollectionResultOfT(_autonomousDatabaseCharacterSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "AutonomousDatabaseCharacterSetCollection.GetAll"), data => new AutonomousDatabaseCharacterSetResource(Client, data));
+            return new PageableWrapper<AutonomousDatabaseCharacterSetData, AutonomousDatabaseCharacterSetResource>(new AutonomousDatabaseCharacterSetDataCollectionResultOfT(_autonomousDatabaseCharacterSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "AutonomousDatabaseCharacterSetCollection.GetAll"), data => new AutonomousDatabaseCharacterSetResource(Client, data));
         }
 
         /// <summary>

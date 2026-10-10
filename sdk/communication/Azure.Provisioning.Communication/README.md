@@ -39,7 +39,7 @@ ProvisioningParameter location =
 infra.Add(location);
 
 CommunicationService comm =
-    new(nameof(comm), "2023-03-31")
+    new(nameof(comm), "2026-03-18")
     {
         Location = location,
         DataLocation = "unitedstates"

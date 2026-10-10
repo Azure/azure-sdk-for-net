@@ -14,12 +14,12 @@ namespace Azure.Provisioning.ContainerService
     {
         /// <summary> Use the Azure CNI network plugin. See [Azure CNI (advanced) networking](https://docs.microsoft.com/azure/aks/concepts-network#azure-cni-advanced-networking) for more information. </summary>
         [DataMember(Name = "azure")]
-        Azure,
+        Azure = 0,
         /// <summary> Use the Kubenet network plugin. See [Kubenet (basic) networking](https://docs.microsoft.com/azure/aks/concepts-network#kubenet-basic-networking) for more information. </summary>
         [DataMember(Name = "kubenet")]
-        Kubenet,
+        Kubenet = 1,
         /// <summary> No CNI plugin is pre-installed. See [BYO CNI](https://docs.microsoft.com/en-us/azure/aks/use-byo-cni) for more information. </summary>
         [DataMember(Name = "none")]
-        None
+        None = 2
     }
 }

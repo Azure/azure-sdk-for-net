@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             TryGetApiVersion(EdgeSolutionTemplateVersionResource.ResourceType, out string edgeSolutionTemplateVersionApiVersion);
             _solutionTemplateVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeSolutionTemplateVersionResource.ResourceType.Namespace, Diagnostics);
-            _solutionTemplateVersionsRestClient = new SolutionTemplateVersions(_solutionTemplateVersionsClientDiagnostics, Pipeline, Endpoint, edgeSolutionTemplateVersionApiVersion ?? "2025-06-01");
+            _solutionTemplateVersionsRestClient = new SolutionTemplateVersions(_solutionTemplateVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeSolutionTemplateVersionApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeSolutionTemplateVersionData, EdgeSolutionTemplateVersionResource>(new SolutionTemplateVersionsGetBySolutionTemplateAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EdgeSolutionTemplateVersionData, EdgeSolutionTemplateVersionResource>(new EdgeSolutionTemplateVersionDataAsyncCollectionResultOfT(
                 _solutionTemplateVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeSolutionTemplateVersionData, EdgeSolutionTemplateVersionResource>(new SolutionTemplateVersionsGetBySolutionTemplateCollectionResultOfT(
+            return new PageableWrapper<EdgeSolutionTemplateVersionData, EdgeSolutionTemplateVersionResource>(new EdgeSolutionTemplateVersionDataCollectionResultOfT(
                 _solutionTemplateVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

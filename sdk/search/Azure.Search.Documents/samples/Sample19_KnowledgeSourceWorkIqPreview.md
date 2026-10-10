@@ -2,6 +2,8 @@
 
 This sample demonstrates how to create and use a Work IQ knowledge source. Work IQ connects a knowledge base to Microsoft 365 work data, enabling retrieval from emails, documents, and other M365 content. Work IQ queries may take 40–60 seconds, so a generous `MaxRuntimeInSeconds` is recommended.
 
+The customer-owned Microsoft Entra application must grant the required delegated Work IQ permission and configure a federated credential that Azure AI Search can use without storing a client secret. The Search service identity and federated credential configuration must satisfy the service requirements before retrieval can succeed. Creating or reading the knowledge source confirms only that the configuration was persisted; it does not prove federation or token exchange.
+
 For more information, see the [agentic retrieval documentation](https://learn.microsoft.com/azure/search/agentic-retrieval-overview).
 
 ## Required Namespaces
@@ -11,11 +13,12 @@ using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.KnowledgeBases;
 using Azure.Search.Documents.KnowledgeBases.Models;
+using Azure.Search.Documents.Models;
 ```
 
 ## Create a Work IQ Knowledge Source
 
-Create a Work IQ knowledge source. No additional parameters are required — the source automatically connects to M365 data.
+Create a Work IQ knowledge source with customer-owned Entra application authentication. Omit `TenantId` only when the app registration and Search service are in the same tenant; set it for cross-tenant registrations.
 
 ```C# Snippet:Azure_Search_Tests_Samples_Sample19_WorkIqKS_Create
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
@@ -28,13 +31,29 @@ SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 // Work IQ connects the knowledge base to Microsoft 365 work data,
 // enabling retrieval from emails, documents, and other M365 content.
 string knowledgeSourceName = "my-workiq-source";
-WorkIQKnowledgeSource workIqSource = new WorkIQKnowledgeSource(knowledgeSourceName)
+
+EntraAppAuthentication entraAuthentication = new EntraAppAuthentication(
+    applicationId: Guid.Parse("00000000-0000-0000-0000-000000000000"),
+    federatedCredentialId: Guid.Parse("00000000-0000-0000-0000-000000000000"));
+
+// TenantId is optional when the app and Search service use the same
+// tenant. Set it explicitly for a cross-tenant app registration.
+string tenantId = Environment.GetEnvironmentVariable("WORK_IQ_TENANT_ID");
+if (!string.IsNullOrEmpty(tenantId))
+{
+    entraAuthentication.TenantId = Guid.Parse(tenantId);
+}
+
+WorkIQKnowledgeSourceParameters workIqParameters = new WorkIQKnowledgeSourceParameters(entraAuthentication);
+
+WorkIQKnowledgeSource workIqSource = new WorkIQKnowledgeSource(knowledgeSourceName, workIqParameters)
 {
     Description = "Work IQ knowledge source for M365 content"
 };
 
 KnowledgeSource createdSource = await indexClient.CreateKnowledgeSourceAsync(workIqSource);
 Console.WriteLine($"Created Work IQ knowledge source '{createdSource.Name}'");
+Console.WriteLine($"  Tenant: {workIqParameters.EntraAppAuthentication.TenantId?.ToString() ?? "Search service tenant"}");
 ```
 
 ## Get and List Work IQ Knowledge Sources
@@ -85,8 +104,8 @@ string openAIKey = Environment.GetEnvironmentVariable("OPENAI_KEY");
             {
                 ResourceUri = new Uri(openAIEndpoint),
                 ApiKey = openAIKey,
-                DeploymentName = "gpt-5-mini",
-                ModelName = AzureOpenAIModelName.Gpt5Mini
+                DeploymentName = "gpt-5.4-mini",
+                ModelName = AzureOpenAIModelName.Gpt54Mini
             }));
 
 KnowledgeBase createdBase = await indexClient.CreateKnowledgeBaseAsync(knowledgeBase);
@@ -95,7 +114,7 @@ Console.WriteLine($"Created knowledge base '{createdBase.Name}' with Work IQ sou
 
 ## Retrieve from the Knowledge Base
 
-Retrieve content from the knowledge base. Work IQ queries M365 data and may take 40–60 seconds. Use `MaxRuntimeInSeconds = 120` and `WorkIQKnowledgeSourceParams` with references enabled.
+Retrieve content from the knowledge base. Work IQ queries M365 data and may take 40–60 seconds. Use `MaxRuntimeInSeconds = 120` and `WorkIQKnowledgeSourceParams` with references enabled. Search query-source authorization and the Work IQ user assertion protect different resources and must be acquired and passed separately.
 
 ```C# Snippet:Azure_Search_Tests_Samples_Sample19_WorkIqKS_Retrieve
 // Retrieve from the knowledge base — Work IQ queries M365 data.
@@ -118,13 +137,18 @@ request.KnowledgeSourceParams.Add(
         IncludeReferenceSourceData = true
     });
 
-// Work IQ sources require a query source authorization token.
-// Obtain an access token scoped to the search service:
-// az account get-access-token --resource https://search.azure.com/.default
+// Search query-source authorization enforces Search document access.
+// It is separate from the Work IQ user assertion.
 string querySourceAuthorization = Environment.GetEnvironmentVariable("SEARCH_QUERY_SOURCE_AUTH");
 
+// The Work IQ user assertion represents the user for on-behalf-of
+// authentication to Work IQ. Do not reuse a Search access token here.
+string queryWorkIQSourceAuthorization = Environment.GetEnvironmentVariable("WORK_IQ_USER_ASSERTION");
+
 Response<KnowledgeBaseRetrievalResponse> response = await retrievalClient.RetrieveAsync(
-    request, querySourceAuthorization);
+    request,
+    querySourceAuthorization: querySourceAuthorization,
+    queryWorkIQSourceAuthorization: queryWorkIQSourceAuthorization);
 KnowledgeBaseRetrievalResponse retrievalResponse = response.Value;
 
 foreach (KnowledgeBaseMessage message in retrievalResponse.Response)

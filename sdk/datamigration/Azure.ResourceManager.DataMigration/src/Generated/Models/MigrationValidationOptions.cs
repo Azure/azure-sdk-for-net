@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Types of validations to run after the migration. </summary>
     public partial class MigrationValidationOptions
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MigrationValidationOptions"/>. </summary>
         public MigrationValidationOptions()
@@ -54,19 +25,21 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="isSchemaValidationEnabled"> Allows to compare the schema information between source and target. </param>
         /// <param name="isDataIntegrityValidationEnabled"> Allows to perform a checksum based data integrity validation between source and target for the selected database / tables . </param>
         /// <param name="isQueryAnalysisValidationEnabled"> Allows to perform a quick and intelligent query analysis by retrieving queries from the source database and executes them in the target. The result will have execution statistics for executions in source and target databases for the extracted queries. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationValidationOptions(bool? isSchemaValidationEnabled, bool? isDataIntegrityValidationEnabled, bool? isQueryAnalysisValidationEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MigrationValidationOptions(bool? isSchemaValidationEnabled, bool? isDataIntegrityValidationEnabled, bool? isQueryAnalysisValidationEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsSchemaValidationEnabled = isSchemaValidationEnabled;
             IsDataIntegrityValidationEnabled = isDataIntegrityValidationEnabled;
             IsQueryAnalysisValidationEnabled = isQueryAnalysisValidationEnabled;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Allows to compare the schema information between source and target. </summary>
         public bool? IsSchemaValidationEnabled { get; set; }
+
         /// <summary> Allows to perform a checksum based data integrity validation between source and target for the selected database / tables . </summary>
         public bool? IsDataIntegrityValidationEnabled { get; set; }
+
         /// <summary> Allows to perform a quick and intelligent query analysis by retrieving queries from the source database and executes them in the target. The result will have execution statistics for executions in source and target databases for the extracted queries. </summary>
         public bool? IsQueryAnalysisValidationEnabled { get; set; }
     }

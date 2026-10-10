@@ -35,6 +35,10 @@ namespace Azure.Provisioning.MySql
         {
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ServerVersionCapabilityV2 that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

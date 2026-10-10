@@ -81,65 +81,142 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Description))
+            if (_descriptionIsDefined || Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
+                if (Description != null)
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+                else
+                {
+                    writer.WriteNull("description"u8);
+                }
             }
-            if (Optional.IsDefined(Type))
+            if (_typeIsDefined || Optional.IsDefined(Type))
             {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                if (Type != null)
+                {
+                    writer.WritePropertyName("type"u8);
+                    writer.WriteStringValue(Type);
+                }
+                else
+                {
+                    writer.WriteNull("type"u8);
+                }
             }
-            if (Optional.IsDefined(Subtype))
+            if (_subtypeIsDefined || Optional.IsDefined(Subtype))
             {
-                writer.WritePropertyName("subtype"u8);
-                writer.WriteStringValue(Subtype);
+                if (Subtype != null)
+                {
+                    writer.WritePropertyName("subtype"u8);
+                    writer.WriteStringValue(Subtype);
+                }
+                else
+                {
+                    writer.WriteNull("subtype"u8);
+                }
             }
-            if (Optional.IsDefined(Id))
+            if (_idIsDefined || Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNull("id"u8);
+                }
             }
-            if (Optional.IsDefined(CaseSensitive))
+            if (_caseSensitiveIsDefined || Optional.IsDefined(CaseSensitive))
             {
-                writer.WritePropertyName("caseSensitive"u8);
-                writer.WriteBooleanValue(CaseSensitive.Value);
+                if (CaseSensitive != null)
+                {
+                    writer.WritePropertyName("caseSensitive"u8);
+                    writer.WriteBooleanValue(CaseSensitive.Value);
+                }
+                else
+                {
+                    writer.WriteNull("caseSensitive"u8);
+                }
             }
-            if (Optional.IsDefined(AccentSensitive))
+            if (_accentSensitiveIsDefined || Optional.IsDefined(AccentSensitive))
             {
-                writer.WritePropertyName("accentSensitive"u8);
-                writer.WriteBooleanValue(AccentSensitive.Value);
+                if (AccentSensitive != null)
+                {
+                    writer.WritePropertyName("accentSensitive"u8);
+                    writer.WriteBooleanValue(AccentSensitive.Value);
+                }
+                else
+                {
+                    writer.WriteNull("accentSensitive"u8);
+                }
             }
-            if (Optional.IsDefined(FuzzyEditDistance))
+            if (_fuzzyEditDistanceIsDefined || Optional.IsDefined(FuzzyEditDistance))
             {
-                writer.WritePropertyName("fuzzyEditDistance"u8);
-                writer.WriteNumberValue(FuzzyEditDistance.Value);
+                if (FuzzyEditDistance != null)
+                {
+                    writer.WritePropertyName("fuzzyEditDistance"u8);
+                    writer.WriteNumberValue(FuzzyEditDistance.Value);
+                }
+                else
+                {
+                    writer.WriteNull("fuzzyEditDistance"u8);
+                }
             }
-            if (Optional.IsDefined(DefaultCaseSensitive))
+            if (_defaultCaseSensitiveIsDefined || Optional.IsDefined(DefaultCaseSensitive))
             {
-                writer.WritePropertyName("defaultCaseSensitive"u8);
-                writer.WriteBooleanValue(DefaultCaseSensitive.Value);
+                if (DefaultCaseSensitive != null)
+                {
+                    writer.WritePropertyName("defaultCaseSensitive"u8);
+                    writer.WriteBooleanValue(DefaultCaseSensitive.Value);
+                }
+                else
+                {
+                    writer.WriteNull("defaultCaseSensitive"u8);
+                }
             }
-            if (Optional.IsDefined(DefaultAccentSensitive))
+            if (_defaultAccentSensitiveIsDefined || Optional.IsDefined(DefaultAccentSensitive))
             {
-                writer.WritePropertyName("defaultAccentSensitive"u8);
-                writer.WriteBooleanValue(DefaultAccentSensitive.Value);
+                if (DefaultAccentSensitive != null)
+                {
+                    writer.WritePropertyName("defaultAccentSensitive"u8);
+                    writer.WriteBooleanValue(DefaultAccentSensitive.Value);
+                }
+                else
+                {
+                    writer.WriteNull("defaultAccentSensitive"u8);
+                }
             }
-            if (Optional.IsDefined(DefaultFuzzyEditDistance))
+            if (_defaultFuzzyEditDistanceIsDefined || Optional.IsDefined(DefaultFuzzyEditDistance))
             {
-                writer.WritePropertyName("defaultFuzzyEditDistance"u8);
-                writer.WriteNumberValue(DefaultFuzzyEditDistance.Value);
+                if (DefaultFuzzyEditDistance != null)
+                {
+                    writer.WritePropertyName("defaultFuzzyEditDistance"u8);
+                    writer.WriteNumberValue(DefaultFuzzyEditDistance.Value);
+                }
+                else
+                {
+                    writer.WriteNull("defaultFuzzyEditDistance"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Aliases))
             {
-                writer.WritePropertyName("aliases"u8);
-                writer.WriteStartArray();
-                foreach (CustomEntityAlias item in Aliases)
+                if (Aliases != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("aliases"u8);
+                    writer.WriteStartArray();
+                    foreach (CustomEntityAlias item in Aliases)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("aliases"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -184,17 +261,27 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string name = default;
+            bool descriptionIsDefined = false;
             string description = default;
+            bool typeIsDefined = false;
             string @type = default;
+            bool subtypeIsDefined = false;
             string subtype = default;
+            bool idIsDefined = false;
             string id = default;
+            bool caseSensitiveIsDefined = false;
             bool? caseSensitive = default;
+            bool accentSensitiveIsDefined = false;
             bool? accentSensitive = default;
+            bool fuzzyEditDistanceIsDefined = false;
             int? fuzzyEditDistance = default;
+            bool defaultCaseSensitiveIsDefined = false;
             bool? defaultCaseSensitive = default;
+            bool defaultAccentSensitiveIsDefined = false;
             bool? defaultAccentSensitive = default;
+            bool defaultFuzzyEditDistanceIsDefined = false;
             int? defaultFuzzyEditDistance = default;
-            IList<CustomEntityAlias> aliases = default;
+            IList<CustomEntityAlias> aliases = new ChangeTrackingList<CustomEntityAlias>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -205,6 +292,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -215,6 +303,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
+                    typeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         @type = null;
@@ -225,6 +314,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("subtype"u8))
                 {
+                    subtypeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         subtype = null;
@@ -235,6 +325,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("id"u8))
                 {
+                    idIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         id = null;
@@ -245,6 +336,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("caseSensitive"u8))
                 {
+                    caseSensitiveIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         caseSensitive = null;
@@ -255,6 +347,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("accentSensitive"u8))
                 {
+                    accentSensitiveIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         accentSensitive = null;
@@ -265,6 +358,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("fuzzyEditDistance"u8))
                 {
+                    fuzzyEditDistanceIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         fuzzyEditDistance = null;
@@ -275,6 +369,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("defaultCaseSensitive"u8))
                 {
+                    defaultCaseSensitiveIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         defaultCaseSensitive = null;
@@ -285,6 +380,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("defaultAccentSensitive"u8))
                 {
+                    defaultAccentSensitiveIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         defaultAccentSensitive = null;
@@ -295,6 +391,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("defaultFuzzyEditDistance"u8))
                 {
+                    defaultFuzzyEditDistanceIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         defaultFuzzyEditDistance = null;
@@ -307,6 +404,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        aliases = null;
                         continue;
                     }
                     List<CustomEntityAlias> array = new List<CustomEntityAlias>();
@@ -319,7 +417,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CustomEntity(
@@ -334,8 +432,20 @@ namespace Azure.Search.Documents.Indexes.Models
                 defaultCaseSensitive,
                 defaultAccentSensitive,
                 defaultFuzzyEditDistance,
-                aliases ?? new ChangeTrackingList<CustomEntityAlias>(),
-                additionalBinaryDataProperties);
+                aliases,
+                additionalBinaryDataProperties)
+            {
+                _descriptionIsDefined = descriptionIsDefined,
+                _typeIsDefined = typeIsDefined,
+                _subtypeIsDefined = subtypeIsDefined,
+                _idIsDefined = idIsDefined,
+                _caseSensitiveIsDefined = caseSensitiveIsDefined,
+                _accentSensitiveIsDefined = accentSensitiveIsDefined,
+                _fuzzyEditDistanceIsDefined = fuzzyEditDistanceIsDefined,
+                _defaultCaseSensitiveIsDefined = defaultCaseSensitiveIsDefined,
+                _defaultAccentSensitiveIsDefined = defaultAccentSensitiveIsDefined,
+                _defaultFuzzyEditDistanceIsDefined = defaultFuzzyEditDistanceIsDefined
+            };
         }
     }
 }

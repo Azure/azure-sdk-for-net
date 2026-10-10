@@ -17,7 +17,10 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary> Subvolume Information properties. </summary>
+    /// <summary>
+    /// Subvolume Information properties
+    /// Deprecated. This resource type will be removed in a future API version.
+    /// </summary>
     public partial class NetAppSubvolumeInfoData : ResourceData, IJsonModel<NetAppSubvolumeInfoData>
     {
         /// <param name="data"> The data to parse. </param>
@@ -194,7 +197,7 @@ namespace Azure.ResourceManager.NetApp
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new NetAppSubvolumeInfoData(

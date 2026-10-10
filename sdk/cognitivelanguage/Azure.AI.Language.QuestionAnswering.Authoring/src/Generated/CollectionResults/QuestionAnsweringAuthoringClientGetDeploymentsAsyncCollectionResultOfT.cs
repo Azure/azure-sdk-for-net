@@ -49,7 +49,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <returns> The pages of QuestionAnsweringAuthoringClientGetDeploymentsAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<ProjectDeployment>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
@@ -58,8 +58,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     yield break;
                 }
                 PagedProjectDeployment result = (PagedProjectDeployment)response;
-                yield return Page<ProjectDeployment>.FromValues((IReadOnlyList<ProjectDeployment>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ProjectDeployment>.FromValues((IReadOnlyList<ProjectDeployment>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

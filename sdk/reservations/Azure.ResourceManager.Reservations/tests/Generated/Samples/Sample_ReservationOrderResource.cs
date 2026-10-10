@@ -104,7 +104,6 @@ namespace Azure.ResourceManager.Reservations.Samples
                 Quantity = 1,
                 DisplayName = "TestReservationOrder",
                 AppliedScopeType = AppliedScopeType.Shared,
-                AppliedScopes = { },
                 IsRenewEnabled = false,
                 ReservedResourceInstanceFlexibility = InstanceFlexibility.On,
             };

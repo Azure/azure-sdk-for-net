@@ -4,15 +4,43 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
-
+using Azure.Core.Tests.Identity.Mock;
 using Azure.Identity;
+using NUnit.Framework;
 namespace Azure.Core.Tests.Identity
 {
     internal class DefaultAzureCredentialFactoryTests
     {
+        [Test]
+        public void ValidateManagedIdentityMtlsProofOfPossessionOptionHonored(
+            [Values(null, true, false)] bool? enableMtlsProofOfPossession,
+            [Values] bool isChained)
+        {
+            using var environment = new TestEnvVar(new()
+            {
+                { "AZURE_CLIENT_ID", null },
+                { "AZURE_USERNAME", null },
+                { "AZURE_TENANT_ID", null }
+            });
+            var options = new DefaultAzureCredentialOptions();
+            if (enableMtlsProofOfPossession.HasValue)
+            {
+                options.EnableMtlsProofOfPossession = enableMtlsProofOfPossession.Value;
+            }
+
+            var factory = new DefaultAzureCredentialFactory(options);
+            var credential = (ManagedIdentityCredential)factory.CreateManagedIdentityCredential(isChained);
+            var client = (MsalManagedIdentityClient)typeof(ManagedIdentityClient)
+                .GetField("_msalManagedIdentityClient", BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetValue(credential.Client);
+            var context = new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true);
+
+            Assert.AreEqual(enableMtlsProofOfPossession ?? true, client.ShouldAttemptMtlsPop(context, isTokenBindingAvailable: true));
+        }
+
         [Test]
         public void ValidateManagedIdentityCtorOptionsHonored([Values] bool setClientId, [Values] bool setResourceId)
         {

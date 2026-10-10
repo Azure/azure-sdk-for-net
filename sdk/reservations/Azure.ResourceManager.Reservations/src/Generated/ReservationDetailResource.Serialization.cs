@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Reservations
 {
+    /// <summary></summary>
     public partial class ReservationDetailResource : IJsonModel<ReservationDetailData>
     {
-        private static ReservationDetailData s_dataDeserializationInstance;
-        private static ReservationDetailData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ReservationDetailData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ReservationDetailData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ReservationDetailData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ReservationDetailData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ReservationDetailData>)Data).Write(writer, options);
 
-        ReservationDetailData IJsonModel<ReservationDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ReservationDetailData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ReservationDetailData IJsonModel<ReservationDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ReservationDetailData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ReservationDetailData>(Data, options, AzureResourceManagerReservationsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ReservationDetailData IPersistableModel<ReservationDetailData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ReservationDetailData>(data, options, AzureResourceManagerReservationsContext.Default);
 
-        string IPersistableModel<ReservationDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ReservationDetailData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ReservationDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

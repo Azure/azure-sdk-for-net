@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(ChaosFaultResource.ResourceType, out string chaosFaultApiVersion);
             _chaosFaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ChaosFaultResource.ResourceType.Namespace, Diagnostics);
-            _chaosFaultRestClient = new ChaosFault(_chaosFaultClientDiagnostics, Pipeline, Endpoint, chaosFaultApiVersion ?? "2026-04-01-preview");
+            _chaosFaultRestClient = new ChaosFault(_chaosFaultClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, chaosFaultApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ChaosFaultData, ChaosFaultResource>(new ChaosFaultGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ChaosFaultData, ChaosFaultResource>(new ChaosFaultDataAsyncCollectionResultOfT(
                 _chaosFaultRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ChaosFaultData, ChaosFaultResource>(new ChaosFaultGetAllCollectionResultOfT(
+            return new PageableWrapper<ChaosFaultData, ChaosFaultResource>(new ChaosFaultDataCollectionResultOfT(
                 _chaosFaultRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

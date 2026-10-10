@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> The role type. </summary>
+    /// <summary></summary>
     public readonly partial struct AuthorizationRoleType : IEquatable<AuthorizationRoleType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AuthorizationRoleType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AuthorizationRoleType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string BuiltInRoleValue = "BuiltInRole";
         private const string CustomRoleValue = "CustomRole";
 
-        /// <summary> BuiltInRole. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationRoleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AuthorizationRoleType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the BuiltInRole. </summary>
         public static AuthorizationRoleType BuiltInRole { get; } = new AuthorizationRoleType(BuiltInRoleValue);
-        /// <summary> CustomRole. </summary>
+
+        /// <summary> Gets the CustomRole. </summary>
         public static AuthorizationRoleType CustomRole { get; } = new AuthorizationRoleType(CustomRoleValue);
+
         /// <summary> Determines if two <see cref="AuthorizationRoleType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AuthorizationRoleType left, AuthorizationRoleType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AuthorizationRoleType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AuthorizationRoleType left, AuthorizationRoleType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AuthorizationRoleType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AuthorizationRoleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AuthorizationRoleType(string value) => new AuthorizationRoleType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AuthorizationRoleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AuthorizationRoleType?(string value) => value == null ? null : new AuthorizationRoleType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AuthorizationRoleType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AuthorizationRoleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             TryGetApiVersion(DevTestLabDiskResource.ResourceType, out string devTestLabDiskApiVersion);
             _disksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabDiskResource.ResourceType.Namespace, Diagnostics);
-            _disksRestClient = new Disks(_disksClientDiagnostics, Pipeline, Endpoint, devTestLabDiskApiVersion ?? "2018-09-15");
+            _disksRestClient = new Disks(_disksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabDiskApiVersion ?? "2018-09-15");
             ValidateResourceId(id);
         }
 
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevTestLabDiskData, DevTestLabDiskResource>(new DisksGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevTestLabDiskData, DevTestLabDiskResource>(new DevTestLabDiskDataAsyncCollectionResultOfT(
                 _disksRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevTestLabDiskData, DevTestLabDiskResource>(new DisksGetAllCollectionResultOfT(
+            return new PageableWrapper<DevTestLabDiskData, DevTestLabDiskResource>(new DevTestLabDiskDataCollectionResultOfT(
                 _disksRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

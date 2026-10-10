@@ -1,0 +1,4 @@
+directory: specification/workloads/Workloads.SAPDiscoverySite.Management
+commit: d93e146fcd4ef7f2157fef8f2bee0c4cd69b4e17
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

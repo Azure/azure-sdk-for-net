@@ -14,41 +14,41 @@ namespace Azure.Provisioning.ContainerService
     /// <summary> A time range. For example, between 2021-05-25T13:00:00Z and 2021-05-25T14:00:00Z. </summary>
     public partial class ContainerServiceTimeSpan : ProvisionableConstruct
     {
-        private BicepValue<DateTimeOffset> _startOn;
-        private BicepValue<DateTimeOffset> _endOn;
+        private BicepValue<DateTimeOffset> _startsOn;
+        private BicepValue<DateTimeOffset> _endsOn;
 
         /// <summary> Creates a new ContainerServiceTimeSpan. </summary>
         public ContainerServiceTimeSpan()
         {
         }
 
-        /// <summary> Gets or sets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets or sets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
                 Initialize();
-                return _startOn;
+                return _startsOn;
             }
             set
             {
                 Initialize();
-                _startOn.Assign(value);
+                _startsOn.Assign(value);
             }
         }
 
-        /// <summary> Gets or sets the EndOn. </summary>
-        public BicepValue<DateTimeOffset> EndOn
+        /// <summary> Gets or sets the EndsOn. </summary>
+        public BicepValue<DateTimeOffset> EndsOn
         {
             get
             {
                 Initialize();
-                return _endOn;
+                return _endsOn;
             }
             set
             {
                 Initialize();
-                _endOn.Assign(value);
+                _endsOn.Assign(value);
             }
         }
 
@@ -56,8 +56,12 @@ namespace Azure.Provisioning.ContainerService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "start" });
-            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "end" });
+            _startsOn = DefineProperty<DateTimeOffset>(nameof(StartsOn), new string[] { "start" }, format: "O");
+            _endsOn = DefineProperty<DateTimeOffset>(nameof(EndsOn), new string[] { "end" }, format: "O");
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerServiceTimeSpan that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

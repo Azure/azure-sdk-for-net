@@ -8,10 +8,6 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-// The Id of content item does not meet the criteria of ResourceIdentifier.
-// Therefore we suppress the generation of ApiManagementContentItem to stop it from inheriting ResourceData.
-// This customization can be removed once we support no type replacement of inheritance in generator.
-[assembly: CodeGenSuppressType("ApiManagementContentItem")]
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Content type contract details. </summary>

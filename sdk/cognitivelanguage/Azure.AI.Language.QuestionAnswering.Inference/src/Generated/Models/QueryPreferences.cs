@@ -25,7 +25,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <param name="scorer"> To specify what scoring algorithm is preferred. </param>
         /// <param name="matchingPolicy"> Policy for controling exact query match behavior. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QueryPreferences(Scorer? scorer, MatchingPolicy matchingPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QueryPreferences(QuestionAnsweringScorer? scorer, MatchingPolicy matchingPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scorer = scorer;
             MatchingPolicy = matchingPolicy;
@@ -33,7 +33,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         }
 
         /// <summary> To specify what scoring algorithm is preferred. </summary>
-        public Scorer? Scorer { get; set; }
+        public QuestionAnsweringScorer? Scorer { get; set; }
 
         /// <summary> Policy for controling exact query match behavior. </summary>
         public MatchingPolicy MatchingPolicy { get; set; }

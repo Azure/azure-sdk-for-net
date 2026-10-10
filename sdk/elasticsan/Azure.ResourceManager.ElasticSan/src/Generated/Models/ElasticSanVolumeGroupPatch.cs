@@ -107,6 +107,40 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
         }
 
+        /// <summary> Reserved IOPS allocated for this volume group, applicable for QualityOfService PerformanceCritical only. </summary>
+        public int? ReservedIops
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReservedIops;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeGroupUpdateProperties();
+                }
+                Properties.ReservedIops = value;
+            }
+        }
+
+        /// <summary> Reserved MBps allocated for this volume group, applicable for QualityOfService PerformanceCritical only. </summary>
+        public int? ReservedMBps
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReservedMBps;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeGroupUpdateProperties();
+                }
+                Properties.ReservedMBps = value;
+            }
+        }
+
         /// <summary> The list of virtual network rules. </summary>
         public IList<ElasticSanVirtualNetworkRule> VirtualNetworkRules
         {

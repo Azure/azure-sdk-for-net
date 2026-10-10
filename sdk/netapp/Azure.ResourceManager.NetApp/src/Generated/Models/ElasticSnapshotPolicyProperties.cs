@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.NetApp.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ElasticSnapshotPolicyProperties"/>. </summary>
-        public ElasticSnapshotPolicyProperties()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ElasticSnapshotPolicyProperties"/>. </summary>
         /// <param name="hourlySchedule"> Schedule for hourly snapshots. </param>
         /// <param name="dailySchedule"> Schedule for daily snapshots. </param>
         /// <param name="weeklySchedule"> Schedule for weekly snapshots. </param>
@@ -39,23 +34,5 @@ namespace Azure.ResourceManager.NetApp.Models
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Schedule for hourly snapshots. </summary>
-        public ElasticSnapshotPolicyHourlySchedule HourlySchedule { get; set; }
-
-        /// <summary> Schedule for daily snapshots. </summary>
-        public ElasticSnapshotPolicyDailySchedule DailySchedule { get; set; }
-
-        /// <summary> Schedule for weekly snapshots. </summary>
-        public ElasticSnapshotPolicyWeeklySchedule WeeklySchedule { get; set; }
-
-        /// <summary> Schedule for monthly snapshots. </summary>
-        public ElasticSnapshotPolicyMonthlySchedule MonthlySchedule { get; set; }
-
-        /// <summary> Configures if the snapshot policy is enabled on the volumes connected to the policy. </summary>
-        public ElasticSnapshotPolicyStatus? PolicyStatus { get; set; }
-
-        /// <summary> Azure lifecycle management. </summary>
-        public NetAppProvisioningState? ProvisioningState { get; }
     }
 }

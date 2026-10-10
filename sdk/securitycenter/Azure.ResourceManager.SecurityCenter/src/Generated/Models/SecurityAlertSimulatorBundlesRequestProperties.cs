@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,20 +15,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public partial class SecurityAlertSimulatorBundlesRequestProperties : SecurityAlertSimulatorRequestProperties
     {
         /// <summary> Initializes a new instance of <see cref="SecurityAlertSimulatorBundlesRequestProperties"/>. </summary>
-        public SecurityAlertSimulatorBundlesRequestProperties()
+        public SecurityAlertSimulatorBundlesRequestProperties() : base(SecurityCenterKind.Bundles)
         {
             Bundles = new ChangeTrackingList<SecurityAlertSimulatorBundleType>();
-            Kind = SecurityCenterKind.Bundles;
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityAlertSimulatorBundlesRequestProperties"/>. </summary>
         /// <param name="kind"> The kind of alert simulation. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="bundles"> Bundles list. </param>
         internal SecurityAlertSimulatorBundlesRequestProperties(SecurityCenterKind kind, IDictionary<string, BinaryData> additionalProperties, IList<SecurityAlertSimulatorBundleType> bundles) : base(kind, additionalProperties)
         {
             Bundles = bundles;
-            Kind = kind;
         }
 
         /// <summary> Bundles list. </summary>

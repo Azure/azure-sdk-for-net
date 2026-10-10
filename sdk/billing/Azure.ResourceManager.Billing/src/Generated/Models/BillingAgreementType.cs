@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct BillingAgreementType : IEquatable<BillingAgreementType>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> MicrosoftCustomerAgreement. </summary>
+        private const string MicrosoftCustomerAgreementValue = "MicrosoftCustomerAgreement";
+        /// <summary> EnterpriseAgreement. </summary>
+        private const string EnterpriseAgreementValue = "EnterpriseAgreement";
+        /// <summary> MicrosoftOnlineServicesProgram. </summary>
+        private const string MicrosoftOnlineServicesProgramValue = "MicrosoftOnlineServicesProgram";
+        /// <summary> MicrosoftPartnerAgreement. </summary>
+        private const string MicrosoftPartnerAgreementValue = "MicrosoftPartnerAgreement";
 
         /// <summary> Initializes a new instance of <see cref="BillingAgreementType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingAgreementType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string MicrosoftCustomerAgreementValue = "MicrosoftCustomerAgreement";
-        private const string EnterpriseAgreementValue = "EnterpriseAgreement";
-        private const string MicrosoftOnlineServicesProgramValue = "MicrosoftOnlineServicesProgram";
-        private const string MicrosoftPartnerAgreementValue = "MicrosoftPartnerAgreement";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static BillingAgreementType Other { get; } = new BillingAgreementType(OtherValue);
+
         /// <summary> MicrosoftCustomerAgreement. </summary>
         public static BillingAgreementType MicrosoftCustomerAgreement { get; } = new BillingAgreementType(MicrosoftCustomerAgreementValue);
+
         /// <summary> EnterpriseAgreement. </summary>
         public static BillingAgreementType EnterpriseAgreement { get; } = new BillingAgreementType(EnterpriseAgreementValue);
+
         /// <summary> MicrosoftOnlineServicesProgram. </summary>
         public static BillingAgreementType MicrosoftOnlineServicesProgram { get; } = new BillingAgreementType(MicrosoftOnlineServicesProgramValue);
+
         /// <summary> MicrosoftPartnerAgreement. </summary>
         public static BillingAgreementType MicrosoftPartnerAgreement { get; } = new BillingAgreementType(MicrosoftPartnerAgreementValue);
+
         /// <summary> Determines if two <see cref="BillingAgreementType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingAgreementType left, BillingAgreementType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingAgreementType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingAgreementType left, BillingAgreementType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingAgreementType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingAgreementType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingAgreementType(string value) => new BillingAgreementType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingAgreementType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingAgreementType?(string value) => value == null ? null : new BillingAgreementType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingAgreementType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingAgreementType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

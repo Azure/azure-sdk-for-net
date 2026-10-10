@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(CloudVmClusterResource.ResourceType, out string cloudVmClusterApiVersion);
             _cloudVmClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", CloudVmClusterResource.ResourceType.Namespace, Diagnostics);
-            _cloudVmClustersRestClient = new CloudVmClusters(_cloudVmClustersClientDiagnostics, Pipeline, Endpoint, cloudVmClusterApiVersion ?? "2025-09-01");
+            _cloudVmClustersRestClient = new CloudVmClusters(_cloudVmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudVmClusterApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CloudVmClusterData, CloudVmClusterResource>(new CloudVmClustersGetByResourceGroupAsyncCollectionResultOfT(_cloudVmClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CloudVmClusterCollection.GetAll"), data => new CloudVmClusterResource(Client, data));
+            return new AsyncPageableWrapper<CloudVmClusterData, CloudVmClusterResource>(new CloudVmClusterDataAsync0CollectionResultOfT(_cloudVmClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CloudVmClusterCollection.GetAll"), data => new CloudVmClusterResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CloudVmClusterData, CloudVmClusterResource>(new CloudVmClustersGetByResourceGroupCollectionResultOfT(_cloudVmClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CloudVmClusterCollection.GetAll"), data => new CloudVmClusterResource(Client, data));
+            return new PageableWrapper<CloudVmClusterData, CloudVmClusterResource>(new CloudVmClusterData0CollectionResultOfT(_cloudVmClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CloudVmClusterCollection.GetAll"), data => new CloudVmClusterResource(Client, data));
         }
 
         /// <summary>

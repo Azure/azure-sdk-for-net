@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         {
             TryGetApiVersion(ConnectedClusterLoadBalancerResource.ResourceType, out string connectedClusterLoadBalancerApiVersion);
             _loadBalancersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerOrchestratorRuntime", ConnectedClusterLoadBalancerResource.ResourceType.Namespace, Diagnostics);
-            _loadBalancersRestClient = new LoadBalancers(_loadBalancersClientDiagnostics, Pipeline, Endpoint, connectedClusterLoadBalancerApiVersion ?? "2024-03-01");
+            _loadBalancersRestClient = new LoadBalancers(_loadBalancersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, connectedClusterLoadBalancerApiVersion ?? "2024-03-01");
         }
 
         /// <summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConnectedClusterLoadBalancerData, ConnectedClusterLoadBalancerResource>(new LoadBalancersGetAllAsyncCollectionResultOfT(_loadBalancersRestClient, Id.ToString(), context, "ConnectedClusterLoadBalancerCollection.GetAll"), data => new ConnectedClusterLoadBalancerResource(Client, data));
+            return new AsyncPageableWrapper<ConnectedClusterLoadBalancerData, ConnectedClusterLoadBalancerResource>(new ConnectedClusterLoadBalancerDataAsyncCollectionResultOfT(_loadBalancersRestClient, Id.ToString(), context, "ConnectedClusterLoadBalancerCollection.GetAll"), data => new ConnectedClusterLoadBalancerResource(Client, data));
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConnectedClusterLoadBalancerData, ConnectedClusterLoadBalancerResource>(new LoadBalancersGetAllCollectionResultOfT(_loadBalancersRestClient, Id.ToString(), context, "ConnectedClusterLoadBalancerCollection.GetAll"), data => new ConnectedClusterLoadBalancerResource(Client, data));
+            return new PageableWrapper<ConnectedClusterLoadBalancerData, ConnectedClusterLoadBalancerResource>(new ConnectedClusterLoadBalancerDataCollectionResultOfT(_loadBalancersRestClient, Id.ToString(), context, "ConnectedClusterLoadBalancerCollection.GetAll"), data => new ConnectedClusterLoadBalancerResource(Client, data));
         }
 
         /// <summary>

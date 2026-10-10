@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ConnectedGroupPrivateEndpointsScale : IEquatable<ConnectedGroupPrivateEndpointsScale>
     {
         private readonly string _value;
+        /// <summary> Default. Allows for up to 2K private endpoints in the connected group. </summary>
+        private const string StandardValue = "Standard";
+        /// <summary> Allows for up to 20K private endpoints in the connected group. </summary>
+        private const string HighScaleValue = "HighScale";
 
         /// <summary> Initializes a new instance of <see cref="ConnectedGroupPrivateEndpointsScale"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConnectedGroupPrivateEndpointsScale(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StandardValue = "Standard";
-        private const string HighScaleValue = "HighScale";
+            _value = value;
+        }
 
         /// <summary> Default. Allows for up to 2K private endpoints in the connected group. </summary>
         public static ConnectedGroupPrivateEndpointsScale Standard { get; } = new ConnectedGroupPrivateEndpointsScale(StandardValue);
+
         /// <summary> Allows for up to 20K private endpoints in the connected group. </summary>
         public static ConnectedGroupPrivateEndpointsScale HighScale { get; } = new ConnectedGroupPrivateEndpointsScale(HighScaleValue);
+
         /// <summary> Determines if two <see cref="ConnectedGroupPrivateEndpointsScale"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConnectedGroupPrivateEndpointsScale left, ConnectedGroupPrivateEndpointsScale right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConnectedGroupPrivateEndpointsScale"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConnectedGroupPrivateEndpointsScale left, ConnectedGroupPrivateEndpointsScale right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectedGroupPrivateEndpointsScale"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConnectedGroupPrivateEndpointsScale"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConnectedGroupPrivateEndpointsScale(string value) => new ConnectedGroupPrivateEndpointsScale(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConnectedGroupPrivateEndpointsScale"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConnectedGroupPrivateEndpointsScale?(string value) => value == null ? null : new ConnectedGroupPrivateEndpointsScale(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConnectedGroupPrivateEndpointsScale other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConnectedGroupPrivateEndpointsScale other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

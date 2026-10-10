@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Grafana
         {
             TryGetApiVersion(ManagedPrivateEndpointModelResource.ResourceType, out string managedPrivateEndpointModelApiVersion);
             _managedPrivateEndpointModelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Grafana", ManagedPrivateEndpointModelResource.ResourceType.Namespace, Diagnostics);
-            _managedPrivateEndpointModelsRestClient = new ManagedPrivateEndpointModels(_managedPrivateEndpointModelsClientDiagnostics, Pipeline, Endpoint, managedPrivateEndpointModelApiVersion ?? "2025-09-01-preview");
+            _managedPrivateEndpointModelsRestClient = new ManagedPrivateEndpointModels(_managedPrivateEndpointModelsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedPrivateEndpointModelApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Grafana
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedPrivateEndpointModelData, ManagedPrivateEndpointModelResource>(new ManagedPrivateEndpointModelsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ManagedPrivateEndpointModelData, ManagedPrivateEndpointModelResource>(new ManagedPrivateEndpointModelDataAsyncCollectionResultOfT(
                 _managedPrivateEndpointModelsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Grafana
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedPrivateEndpointModelData, ManagedPrivateEndpointModelResource>(new ManagedPrivateEndpointModelsGetAllCollectionResultOfT(
+            return new PageableWrapper<ManagedPrivateEndpointModelData, ManagedPrivateEndpointModelResource>(new ManagedPrivateEndpointModelDataCollectionResultOfT(
                 _managedPrivateEndpointModelsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

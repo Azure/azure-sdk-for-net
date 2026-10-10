@@ -11,14 +11,14 @@ namespace Azure.Provisioning.Kubernetes
     public enum ConnectedClusterConnectivityStatus
     {
         /// <summary> Connecting. </summary>
-        Connecting,
+        Connecting = 0,
         /// <summary> Connected. </summary>
-        Connected,
+        Connected = 1,
         /// <summary> Offline. </summary>
-        Offline,
+        Offline = 2,
         /// <summary> Expired. </summary>
-        Expired,
+        Expired = 3,
         /// <summary> AgentNotInstalled. </summary>
-        AgentNotInstalled
+        AgentNotInstalled = 4
     }
 }

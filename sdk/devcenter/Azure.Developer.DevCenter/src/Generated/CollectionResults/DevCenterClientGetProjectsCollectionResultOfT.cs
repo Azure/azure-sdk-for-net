@@ -37,7 +37,7 @@ namespace Azure.Developer.DevCenter
         /// <returns> The pages of DevCenterClientGetProjectsCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<DevCenterProject>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -46,8 +46,8 @@ namespace Azure.Developer.DevCenter
                     yield break;
                 }
                 PagedProject result = (PagedProject)response;
-                yield return Page<DevCenterProject>.FromValues((IReadOnlyList<DevCenterProject>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DevCenterProject>.FromValues((IReadOnlyList<DevCenterProject>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

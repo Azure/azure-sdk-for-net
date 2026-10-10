@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.RedHatOpenShift
             TryGetApiVersion(OpenShiftPlatformWorkloadIdentityRoleSetResource.ResourceType, out string openShiftPlatformWorkloadIdentityRoleSetApiVersion);
             _location = location;
             _platformWorkloadIdentityRoleSetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShift", OpenShiftPlatformWorkloadIdentityRoleSetResource.ResourceType.Namespace, Diagnostics);
-            _platformWorkloadIdentityRoleSetRestClient = new PlatformWorkloadIdentityRoleSet(_platformWorkloadIdentityRoleSetClientDiagnostics, Pipeline, Endpoint, openShiftPlatformWorkloadIdentityRoleSetApiVersion ?? "2025-07-25");
+            _platformWorkloadIdentityRoleSetRestClient = new PlatformWorkloadIdentityRoleSet(_platformWorkloadIdentityRoleSetClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, openShiftPlatformWorkloadIdentityRoleSetApiVersion ?? "2025-07-25");
             _platformWorkloadIdentityRoleSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShift", OpenShiftPlatformWorkloadIdentityRoleSetResource.ResourceType.Namespace, Diagnostics);
-            _platformWorkloadIdentityRoleSetsRestClient = new PlatformWorkloadIdentityRoleSets(_platformWorkloadIdentityRoleSetsClientDiagnostics, Pipeline, Endpoint, openShiftPlatformWorkloadIdentityRoleSetApiVersion ?? "2025-07-25");
+            _platformWorkloadIdentityRoleSetsRestClient = new PlatformWorkloadIdentityRoleSets(_platformWorkloadIdentityRoleSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, openShiftPlatformWorkloadIdentityRoleSetApiVersion ?? "2025-07-25");
             ValidateResourceId(id);
         }
 
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OpenShiftPlatformWorkloadIdentityRoleSetData, OpenShiftPlatformWorkloadIdentityRoleSetResource>(new PlatformWorkloadIdentityRoleSetsGetAllAsyncCollectionResultOfT(_platformWorkloadIdentityRoleSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OpenShiftPlatformWorkloadIdentityRoleSetCollection.GetAll"), data => new OpenShiftPlatformWorkloadIdentityRoleSetResource(Client, data));
+            return new AsyncPageableWrapper<OpenShiftPlatformWorkloadIdentityRoleSetData, OpenShiftPlatformWorkloadIdentityRoleSetResource>(new OpenShiftPlatformWorkloadIdentityRoleSetDataAsyncCollectionResultOfT(_platformWorkloadIdentityRoleSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OpenShiftPlatformWorkloadIdentityRoleSetCollection.GetAll"), data => new OpenShiftPlatformWorkloadIdentityRoleSetResource(Client, data));
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OpenShiftPlatformWorkloadIdentityRoleSetData, OpenShiftPlatformWorkloadIdentityRoleSetResource>(new PlatformWorkloadIdentityRoleSetsGetAllCollectionResultOfT(_platformWorkloadIdentityRoleSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OpenShiftPlatformWorkloadIdentityRoleSetCollection.GetAll"), data => new OpenShiftPlatformWorkloadIdentityRoleSetResource(Client, data));
+            return new PageableWrapper<OpenShiftPlatformWorkloadIdentityRoleSetData, OpenShiftPlatformWorkloadIdentityRoleSetResource>(new OpenShiftPlatformWorkloadIdentityRoleSetDataCollectionResultOfT(_platformWorkloadIdentityRoleSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OpenShiftPlatformWorkloadIdentityRoleSetCollection.GetAll"), data => new OpenShiftPlatformWorkloadIdentityRoleSetResource(Client, data));
         }
 
         /// <summary>

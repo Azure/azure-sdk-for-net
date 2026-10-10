@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
                 writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
             }
-            if (Optional.IsDefined(LcmUpdate))
+            if (Optional.IsDefined(IsLcmUpdate))
             {
                 writer.WritePropertyName("lcmUpdate"u8);
-                writer.WriteBooleanValue(LcmUpdate.Value);
+                writer.WriteBooleanValue(IsLcmUpdate.Value);
             }
             if (Optional.IsDefined(Catalog))
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Hci.Models
             string extensionType = default;
             string publisher = default;
             bool? enableAutomaticUpgrade = default;
-            bool? lcmUpdate = default;
+            bool? isLcmUpdate = default;
             string catalog = default;
             string ring = default;
             string releaseTrain = default;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    lcmUpdate = prop.Value.GetBoolean();
+                    isLcmUpdate = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("catalog"u8))
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ValidatedSolutionRecipeComponentMetadata(
                 extensionType,
                 publisher,
                 enableAutomaticUpgrade,
-                lcmUpdate,
+                isLcmUpdate,
                 catalog,
                 ring,
                 releaseTrain,

@@ -343,7 +343,7 @@ namespace Azure.Analytics.Purview.DataMap
             int? provenanceType = default;
             bool? proxy = default;
             IDictionary<string, BinaryData> relationshipAttributes = default;
-            EntityStatus? status = default;
+            DataMapEntityStatus? status = default;
             long? updateTime = default;
             string updatedBy = default;
             long? version = default;
@@ -366,7 +366,7 @@ namespace Azure.Analytics.Purview.DataMap
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     attributes = dictionary;
@@ -397,7 +397,7 @@ namespace Azure.Analytics.Purview.DataMap
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     businessAttributes = dictionary;
@@ -544,7 +544,7 @@ namespace Azure.Analytics.Purview.DataMap
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     relationshipAttributes = dictionary;
@@ -556,7 +556,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    status = new EntityStatus(prop.Value.GetString());
+                    status = new DataMapEntityStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("updateTime"u8))
@@ -610,7 +610,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AtlasEntity(

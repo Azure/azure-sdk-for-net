@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HealthBot
         {
             TryGetApiVersion(HealthBotResource.ResourceType, out string healthBotApiVersion);
             _botsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthBot", HealthBotResource.ResourceType.Namespace, Diagnostics);
-            _botsRestClient = new Bots(_botsClientDiagnostics, Pipeline, Endpoint, healthBotApiVersion ?? "2025-11-01");
+            _botsRestClient = new Bots(_botsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, healthBotApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.HealthBot
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HealthBotData, HealthBotResource>(new BotsGetByResourceGroupAsyncCollectionResultOfT(_botsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "HealthBotCollection.GetAll"), data => new HealthBotResource(Client, data));
+            return new AsyncPageableWrapper<HealthBotData, HealthBotResource>(new HealthBotDataAsyncCollectionResultOfT(_botsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "HealthBotCollection.GetAll"), data => new HealthBotResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.HealthBot
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HealthBotData, HealthBotResource>(new BotsGetByResourceGroupCollectionResultOfT(_botsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "HealthBotCollection.GetAll"), data => new HealthBotResource(Client, data));
+            return new PageableWrapper<HealthBotData, HealthBotResource>(new HealthBotDataCollectionResultOfT(_botsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "HealthBotCollection.GetAll"), data => new HealthBotResource(Client, data));
         }
 
         /// <summary>

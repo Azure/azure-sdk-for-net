@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Marketplace
         {
             TryGetApiVersion(PrivateStoreResource.ResourceType, out string privateStoreApiVersion);
             _privateStoreClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", PrivateStoreResource.ResourceType.Namespace, Diagnostics);
-            _privateStoreRestClient = new PrivateStore(_privateStoreClientDiagnostics, Pipeline, Endpoint, privateStoreApiVersion ?? "2025-01-01");
+            _privateStoreRestClient = new PrivateStore(_privateStoreClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, privateStoreApiVersion ?? "2025-01-01");
             ValidateResourceId(id);
         }
 
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PrivateStoreData, PrivateStoreResource>(new PrivateStoreGetAllAsyncCollectionResultOfT(_privateStoreRestClient, useCache, context, "PrivateStoreCollection.GetAll"), data => new PrivateStoreResource(Client, data));
+            return new AsyncPageableWrapper<PrivateStoreData, PrivateStoreResource>(new PrivateStoreDataAsyncCollectionResultOfT(_privateStoreRestClient, useCache, context, "PrivateStoreCollection.GetAll"), data => new PrivateStoreResource(Client, data));
         }
 
         /// <summary>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PrivateStoreData, PrivateStoreResource>(new PrivateStoreGetAllCollectionResultOfT(_privateStoreRestClient, useCache, context, "PrivateStoreCollection.GetAll"), data => new PrivateStoreResource(Client, data));
+            return new PageableWrapper<PrivateStoreData, PrivateStoreResource>(new PrivateStoreDataCollectionResultOfT(_privateStoreRestClient, useCache, context, "PrivateStoreCollection.GetAll"), data => new PrivateStoreResource(Client, data));
         }
 
         /// <summary>

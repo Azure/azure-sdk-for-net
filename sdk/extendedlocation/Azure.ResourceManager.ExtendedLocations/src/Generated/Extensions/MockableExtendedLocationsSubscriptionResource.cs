@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Mocking
 
         private ClientDiagnostics CustomLocationsClientDiagnostics => _customLocationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ExtendedLocations.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CustomLocations CustomLocationsRestClient => _customLocationsRestClient ??= new CustomLocations(CustomLocationsClientDiagnostics, Pipeline, Endpoint, "2021-08-31-preview");
+        private CustomLocations CustomLocationsRestClient => _customLocationsRestClient ??= new CustomLocations(CustomLocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2021-08-31-preview");
 
         /// <summary>
         /// Gets a list of Custom Locations in the specified subscription. The operation returns properties of each Custom Location
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CustomLocationData, CustomLocationResource>(new CustomLocationsGetBySubscriptionAsyncCollectionResultOfT(CustomLocationsRestClient, Id.SubscriptionId, context, "MockableExtendedLocationsSubscriptionResource.GetCustomLocations"), data => new CustomLocationResource(Client, data));
+            return new AsyncPageableWrapper<CustomLocationData, CustomLocationResource>(new CustomLocationDataAsync0CollectionResultOfT(CustomLocationsRestClient, Id.SubscriptionId, context, "MockableExtendedLocationsSubscriptionResource.GetCustomLocations"), data => new CustomLocationResource(Client, data));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CustomLocationData, CustomLocationResource>(new CustomLocationsGetBySubscriptionCollectionResultOfT(CustomLocationsRestClient, Id.SubscriptionId, context, "MockableExtendedLocationsSubscriptionResource.GetCustomLocations"), data => new CustomLocationResource(Client, data));
+            return new PageableWrapper<CustomLocationData, CustomLocationResource>(new CustomLocationData0CollectionResultOfT(CustomLocationsRestClient, Id.SubscriptionId, context, "MockableExtendedLocationsSubscriptionResource.GetCustomLocations"), data => new CustomLocationResource(Client, data));
         }
     }
 }

@@ -87,6 +87,10 @@ namespace Azure.Provisioning.ServiceNetworking
             _associationType = DefineProperty<TrafficControllerAssociationType>(nameof(AssociationType), new string[] { "associationType" }, isRequired: true);
             _subnet = DefineModelProperty<AssociationSubnet>(nameof(Subnet), new string[] { "subnet" });
             _provisioningState = DefineProperty<ServiceNetworkingProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for AssociationProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

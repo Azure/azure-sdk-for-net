@@ -13,9 +13,9 @@ namespace Azure.Provisioning.ContainerService
     public enum WindowsVmLicenseType
     {
         /// <summary> No additional licensing is applied. </summary>
-        None,
+        None = 0,
         /// <summary> Enables Azure Hybrid User Benefits for Windows VMs. </summary>
         [DataMember(Name = "Windows_Server")]
-        WindowsServer
+        WindowsServer = 1
     }
 }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models;
 using Azure.ResourceManager.Models;
 
@@ -31,7 +30,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
     [ModelReaderWriterBuildable(typeof(KubernetesConfigurationPrivateLinkScopesPrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerKubernetesConfigurationPrivateLinkScopesContext : ModelReaderWriterContext
     {

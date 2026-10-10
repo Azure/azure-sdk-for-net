@@ -14,7 +14,7 @@ using Azure.ResourceManager.Maintenance;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    /// <summary> Response of scheduled event acknowledge. </summary>
+    /// <summary> Response of ScheduledEvents acknowledge. </summary>
     public partial class MaintenanceScheduledEventApproveResult : IJsonModel<MaintenanceScheduledEventApproveResult>
     {
         /// <param name="data"> The data to parse. </param>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MaintenanceScheduledEventApproveResult(value, additionalBinaryDataProperties);

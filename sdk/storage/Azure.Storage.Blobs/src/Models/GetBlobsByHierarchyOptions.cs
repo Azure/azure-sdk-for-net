@@ -19,7 +19,7 @@ namespace Azure.Storage.Blobs.Models
         public BlobStates States { get; set; }
 
         /// <summary>
-        /// A delimiter that can be used to traverse a
+        /// Required. A delimiter that can be used to traverse a
         /// virtual hierarchy of blobs as though it were a file system.  The
         /// delimiter may be a single character or a string.
         /// <see cref="BlobHierarchyItem.Prefix"/> will be returned
@@ -50,5 +50,18 @@ namespace Azure.Storage.Blobs.Models
         /// For recursive list, multiple entity levels are supported. (Inclusive).
         /// </summary>
         public string StartFrom { get; set; }
+
+        /// <summary>
+        /// Optional.  Specifies a fully qualified path within the container,
+        /// ending the listing when all results before have been returned.
+        /// This is only supported if <see cref="ResponseFormat"/> is set to <see cref="StorageResponseFormat.Arrow"/>.
+        /// </summary>
+        public string EndBefore { get; set; }
+
+        /// <summary>
+        /// Optional.  Specifies the format the service should use to return list results.
+        /// Defaults to <see cref="StorageResponseFormat.Auto"/>.
+        /// </summary>
+        public StorageResponseFormat ResponseFormat { get; set; } = StorageResponseFormat.Auto;
     }
 }

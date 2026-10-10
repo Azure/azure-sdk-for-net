@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Dynatrace
         {
             TryGetApiVersion(DynatraceTagRuleResource.ResourceType, out string dynatraceTagRuleApiVersion);
             _tagRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dynatrace", DynatraceTagRuleResource.ResourceType.Namespace, Diagnostics);
-            _tagRulesRestClient = new TagRules(_tagRulesClientDiagnostics, Pipeline, Endpoint, dynatraceTagRuleApiVersion ?? "2024-04-24");
+            _tagRulesRestClient = new TagRules(_tagRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dynatraceTagRuleApiVersion ?? "2024-04-24");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DynatraceTagRuleData, DynatraceTagRuleResource>(new TagRulesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DynatraceTagRuleData, DynatraceTagRuleResource>(new DynatraceTagRuleDataAsyncCollectionResultOfT(
                 _tagRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DynatraceTagRuleData, DynatraceTagRuleResource>(new TagRulesGetAllCollectionResultOfT(
+            return new PageableWrapper<DynatraceTagRuleData, DynatraceTagRuleResource>(new DynatraceTagRuleDataCollectionResultOfT(
                 _tagRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

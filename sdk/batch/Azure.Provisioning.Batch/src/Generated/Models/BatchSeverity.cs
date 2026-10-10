@@ -10,9 +10,9 @@ namespace Azure.Provisioning.Batch
     /// <summary> Severity of the issue. </summary>
     public enum BatchSeverity
     {
-        /// <summary> Warning. </summary>
-        Warning,
-        /// <summary> Error. </summary>
-        Error
+        /// <summary> The issue is a warning and does not prevent the configuration from being applied. </summary>
+        Warning = 0,
+        /// <summary> The issue is an error and prevents the configuration from being applied. </summary>
+        Error = 1
     }
 }

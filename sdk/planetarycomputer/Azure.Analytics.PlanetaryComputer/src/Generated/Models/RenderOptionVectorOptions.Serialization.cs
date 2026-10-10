@@ -79,7 +79,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 throw new FormatException($"The model {nameof(RenderOptionVectorOptions)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("tilejsonKey"u8);
-            writer.WriteStringValue(TilejsonKey);
+            writer.WriteStringValue(TileJsonKey);
             writer.WritePropertyName("sourceLayer"u8);
             writer.WriteStringValue(SourceLayer);
             if (Optional.IsDefined(FillColor))
@@ -154,7 +154,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 return null;
             }
-            string tilejsonKey = default;
+            string tileJsonKey = default;
             string sourceLayer = default;
             string fillColor = default;
             string strokeColor = default;
@@ -165,7 +165,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 if (prop.NameEquals("tilejsonKey"u8))
                 {
-                    tilejsonKey = prop.Value.GetString();
+                    tileJsonKey = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("sourceLayer"u8))
@@ -215,11 +215,11 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new RenderOptionVectorOptions(
-                tilejsonKey,
+                tileJsonKey,
                 sourceLayer,
                 fillColor,
                 strokeColor,

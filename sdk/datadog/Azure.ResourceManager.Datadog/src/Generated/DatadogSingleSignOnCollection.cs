@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Datadog
         {
             TryGetApiVersion(DatadogSingleSignOnResource.ResourceType, out string datadogSingleSignOnApiVersion);
             _singleSignOnConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Datadog", DatadogSingleSignOnResource.ResourceType.Namespace, Diagnostics);
-            _singleSignOnConfigurationsRestClient = new SingleSignOnConfigurations(_singleSignOnConfigurationsClientDiagnostics, Pipeline, Endpoint, datadogSingleSignOnApiVersion ?? "2025-12-26-preview");
+            _singleSignOnConfigurationsRestClient = new SingleSignOnConfigurations(_singleSignOnConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, datadogSingleSignOnApiVersion ?? "2025-12-26-preview");
             ValidateResourceId(id);
         }
 
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatadogSingleSignOnData, DatadogSingleSignOnResource>(new SingleSignOnConfigurationsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DatadogSingleSignOnData, DatadogSingleSignOnResource>(new DatadogSingleSignOnDataAsyncCollectionResultOfT(
                 _singleSignOnConfigurationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatadogSingleSignOnData, DatadogSingleSignOnResource>(new SingleSignOnConfigurationsGetAllCollectionResultOfT(
+            return new PageableWrapper<DatadogSingleSignOnData, DatadogSingleSignOnResource>(new DatadogSingleSignOnDataCollectionResultOfT(
                 _singleSignOnConfigurationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

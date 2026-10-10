@@ -11,6 +11,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
+    // Backward compatibility: flatten VMSS properties (UpgradePolicy, VirtualMachineProfile, etc.)
+    // onto the Data model. The TypeSpec migration disabled @@flattenProperty for C# (to keep
+    // VirtualMachineScaleSetProperties public), so these convenience accessors preserve the old API.
     public partial class VirtualMachineScaleSetData : TrackedResourceData
     {
         /// <summary> The upgrade policy. </summary>

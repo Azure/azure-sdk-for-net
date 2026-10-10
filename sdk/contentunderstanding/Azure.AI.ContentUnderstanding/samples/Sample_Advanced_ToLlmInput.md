@@ -9,16 +9,17 @@ The `.ToLlmInput` method converts a CU `AnalysisResult` into a formatted text st
 When using Content Understanding with large language models, you typically need to convert the structured `AnalysisResult` into a text format that an LLM can consume. The `ToLlmInput` helper handles this conversion automatically:
 
 - **YAML front matter** with content type, extracted fields, page numbers, and optional metadata
-- **Markdown body** with the document content and page markers (e.g., `<!-- page 1 -->`)
+- **Markdown body** with the document content and page markers (e.g., `<!-- InputPageNumber: 1 -->`)
 
 The helper supports all content types (documents, images, audio, video) and handles multi-segment results (e.g., video with multiple scenes) by rendering each segment with its time range. For classification results, it automatically skips the parent document and renders each categorized child with its category label.
 
 ### Scenarios demonstrated
 
-1. **Output options** — Fields-only, markdown-only, and custom metadata
-2. **Multi-page PDF with ContentRange** — Analyze specific pages and verify page markers
-3. **Multi-segment video** — Analyze a video with multiple segments and time ranges
-4. **Audio with ContentRange** — Analyze a specific time range of an audio file
+1. **Output options** — Fields-only, markdown-only, and caller `customMetadata`
+2. **Preview metadata from analysis result** — Analyze a sample PDF with embedded metadata and include it in `ToLlmInput` output
+3. **Multi-page PDF with ContentRange** — Analyze specific pages and verify page markers
+4. **Multi-segment video** — Analyze a video with multiple segments and time ranges
+5. **Audio with ContentRange** — Analyze a specific time range of an audio file
 
 For classification results, see [Sample 05: Create classifier][sample05-create-classifier].
 
@@ -75,16 +76,68 @@ string markdownOnly = result.ToLlmInput(options: new LlmInputOptions { IncludeFi
 Console.WriteLine("\n--- Markdown only (includeFields: false) ---");
 Console.WriteLine(markdownOnly);
 
-// Custom metadata — add your own key-value pairs to the YAML front matter.
-// Useful for RAG pipelines to track document source, department, batch, etc.
-string withMetadata = result.ToLlmInput(
+// Custom metadata — nested under customMetadata: so it never collides with
+// helper-owned keys (mimeType, fields, metadata, …). Useful for RAG pipelines
+// to track document source, department, batch, etc.
+string withCustomMetadata = result.ToLlmInput(
     new Dictionary<string, object>
     {
         ["source"] = "invoice.pdf",
         ["department"] = "finance"
     });
-Console.WriteLine("\n--- With metadata ---");
-Console.WriteLine(withMetadata);
+Console.WriteLine("\n--- With customMetadata ---");
+Console.WriteLine(withCustomMetadata);
+```
+
+Example front matter showing the nested `customMetadata` block (fields/markdown omitted for brevity):
+
+```text
+---
+mimeType: application/pdf
+customMetadata:
+  source: invoice.pdf
+  department: finance
+pages: 1
+---
+```
+
+## Preview API: metadata from analysis result
+
+> **Preview-only:** This scenario requires service API version `2026-06-01-preview`.
+> Metadata shape and availability can change in future preview versions.
+
+Analyze a PDF with embedded metadata and convert the result to LLM input.
+The snippet assumes `previewClient` was created with service version `V2026_06_01_Preview`:
+
+```C# Snippet:ContentUnderstandingToLlmInputMetadataFromAnalysisResultPreview
+// This scenario requires preview API version 2026-06-01-preview.
+string metadataPdfPath = "<path-to-pdf-with-embedded-metadata>";
+BinaryData metadataPdfData = BinaryData.FromBytes(File.ReadAllBytes(metadataPdfPath));
+
+Operation<AnalysisResult> metadataOperation = await previewClient.AnalyzeBinaryAsync(
+    WaitUntil.Completed,
+    "prebuilt-layout",
+    metadataPdfData);
+
+// ToLlmInput includes AnalysisContent.Metadata under the "metadata" block.
+string metadataText = metadataOperation.Value.ToLlmInput();
+Console.WriteLine("\n--- Preview metadata from analysis result ---");
+Console.WriteLine(metadataText);
+```
+
+Example output from the sample metadata PDF:
+
+```text
+---
+mimeType: application/pdf
+metadata:
+  author: Contoso Metadata Team
+  contentType: application/pdf
+  language: en-US
+  pageCount: '1'
+  title: Contoso Metadata Extraction Sample
+pages: 1
+---
 ```
 
 ## Multi-page PDF with content range
@@ -96,8 +149,8 @@ Uri multiPageUrl = new Uri("https://raw.githubusercontent.com/Azure-Samples/azur
 
 // Analyze specific pages using ContentRange.
 // Page markers in the output will use the original document page numbers,
-// so even though we only requested pages 2-3 and 5, the markers will say
-// <!-- page 2 -->, <!-- page 3 -->, <!-- page 5 --> (not 1, 2, 3).
+// so markers will say <!-- InputPageNumber: 2 -->, <!-- InputPageNumber: 3 -->,
+// <!-- InputPageNumber: 5 --> (not renumbered 1, 2, 3).
 Operation<AnalysisResult> multiPageOperation = await client.AnalyzeAsync(
     WaitUntil.Completed,
     "prebuilt-documentSearch",
@@ -106,7 +159,7 @@ Operation<AnalysisResult> multiPageOperation = await client.AnalyzeAsync(
         new AnalysisInput
         {
             Uri = multiPageUrl,
-            ContentRange = new ContentRange("2-3,5")
+            ContentRange = ContentRange.Combine(ContentRange.Pages(2, 3), ContentRange.Page(5))
         }
     });
 
@@ -161,10 +214,10 @@ Operation<AnalysisResult> audioOperation = await client.AnalyzeAsync(
 
 AnalysisResult audioResult = audioOperation.Value;
 
-// Include metadata to track the source file in RAG pipelines
+// Include customMetadata to track the source file in RAG pipelines
 string audioText = audioResult.ToLlmInput(
     new Dictionary<string, object> { ["source"] = "callCenterRecording.mp3" });
-Console.WriteLine("\n--- Audio with content range and metadata ---");
+Console.WriteLine("\n--- Audio with content range and customMetadata ---");
 Console.WriteLine(audioText);
 ```
 

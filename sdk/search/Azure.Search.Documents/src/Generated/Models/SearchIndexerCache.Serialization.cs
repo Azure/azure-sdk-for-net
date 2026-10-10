@@ -84,15 +84,29 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("storageConnectionString"u8);
                 writer.WriteStringValue(StorageConnectionString);
             }
-            if (Optional.IsDefined(EnableReprocessing))
+            if (_enableReprocessingIsDefined || Optional.IsDefined(EnableReprocessing))
             {
-                writer.WritePropertyName("enableReprocessing"u8);
-                writer.WriteBooleanValue(EnableReprocessing.Value);
+                if (EnableReprocessing != null)
+                {
+                    writer.WritePropertyName("enableReprocessing"u8);
+                    writer.WriteBooleanValue(EnableReprocessing.Value);
+                }
+                else
+                {
+                    writer.WriteNull("enableReprocessing"u8);
+                }
             }
-            if (Optional.IsDefined(Identity))
+            if (_identityIsDefined || Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                if (Identity != null)
+                {
+                    writer.WritePropertyName("identity"u8);
+                    writer.WriteObjectValue(Identity, options);
+                }
+                else
+                {
+                    writer.WriteNull("identity"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -138,7 +152,9 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string id = default;
             string storageConnectionString = default;
+            bool enableReprocessingIsDefined = false;
             bool? enableReprocessing = default;
+            bool identityIsDefined = false;
             SearchIndexerDataIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -155,6 +171,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("enableReprocessing"u8))
                 {
+                    enableReprocessingIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         enableReprocessing = null;
@@ -165,6 +182,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("identity"u8))
                 {
+                    identityIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         identity = null;
@@ -175,10 +193,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SearchIndexerCache(id, storageConnectionString, enableReprocessing, identity, additionalBinaryDataProperties);
+            return new SearchIndexerCache(id, storageConnectionString, enableReprocessing, identity, additionalBinaryDataProperties)
+            {
+                _enableReprocessingIsDefined = enableReprocessingIsDefined,
+                _identityIsDefined = identityIsDefined
+            };
         }
     }
 }

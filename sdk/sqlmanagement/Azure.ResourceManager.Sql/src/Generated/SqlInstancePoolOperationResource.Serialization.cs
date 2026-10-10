@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class SqlInstancePoolOperationResource : IJsonModel<SqlInstancePoolOperationData>
     {
-        private static SqlInstancePoolOperationData s_dataDeserializationInstance;
-        private static SqlInstancePoolOperationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SqlInstancePoolOperationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SqlInstancePoolOperationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SqlInstancePoolOperationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlInstancePoolOperationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlInstancePoolOperationData>)Data).Write(writer, options);
 
-        SqlInstancePoolOperationData IJsonModel<SqlInstancePoolOperationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlInstancePoolOperationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlInstancePoolOperationData IJsonModel<SqlInstancePoolOperationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SqlInstancePoolOperationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlInstancePoolOperationData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SqlInstancePoolOperationData IPersistableModel<SqlInstancePoolOperationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlInstancePoolOperationData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlInstancePoolOperationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlInstancePoolOperationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SqlInstancePoolOperationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

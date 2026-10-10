@@ -83,10 +83,17 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("prioritizedFields"u8);
             writer.WriteObjectValue(PrioritizedFields, options);
-            if (Optional.IsDefined(RankingOrder))
+            if (_rankingOrderIsDefined || Optional.IsDefined(RankingOrder))
             {
-                writer.WritePropertyName("rankingOrder"u8);
-                writer.WriteStringValue(RankingOrder.Value.ToString());
+                if (RankingOrder != null)
+                {
+                    writer.WritePropertyName("rankingOrder"u8);
+                    writer.WriteStringValue(RankingOrder.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("rankingOrder"u8);
+                }
             }
             if (Optional.IsDefined(FlightingOptIn))
             {
@@ -137,6 +144,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string name = default;
             SemanticPrioritizedFields prioritizedFields = default;
+            bool rankingOrderIsDefined = false;
             RankingOrder? rankingOrder = default;
             bool? flightingOptIn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -154,6 +162,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("rankingOrder"u8))
                 {
+                    rankingOrderIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         rankingOrder = null;
@@ -173,10 +182,13 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SemanticConfiguration(name, prioritizedFields, rankingOrder, flightingOptIn, additionalBinaryDataProperties);
+            return new SemanticConfiguration(name, prioritizedFields, rankingOrder, flightingOptIn, additionalBinaryDataProperties)
+            {
+                _rankingOrderIsDefined = rankingOrderIsDefined
+            };
         }
     }
 }

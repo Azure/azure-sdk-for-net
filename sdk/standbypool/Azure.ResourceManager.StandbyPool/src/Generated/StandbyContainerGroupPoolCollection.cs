@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.StandbyPool
         {
             TryGetApiVersion(StandbyContainerGroupPoolResource.ResourceType, out string standbyContainerGroupPoolApiVersion);
             _standbyContainerGroupPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StandbyPool", StandbyContainerGroupPoolResource.ResourceType.Namespace, Diagnostics);
-            _standbyContainerGroupPoolsRestClient = new StandbyContainerGroupPools(_standbyContainerGroupPoolsClientDiagnostics, Pipeline, Endpoint, standbyContainerGroupPoolApiVersion ?? "2025-10-01");
+            _standbyContainerGroupPoolsRestClient = new StandbyContainerGroupPools(_standbyContainerGroupPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, standbyContainerGroupPoolApiVersion ?? "2025-10-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.StandbyPool
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StandbyContainerGroupPoolData, StandbyContainerGroupPoolResource>(new StandbyContainerGroupPoolsGetByResourceGroupAsyncCollectionResultOfT(_standbyContainerGroupPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StandbyContainerGroupPoolCollection.GetAll"), data => new StandbyContainerGroupPoolResource(Client, data));
+            return new AsyncPageableWrapper<StandbyContainerGroupPoolData, StandbyContainerGroupPoolResource>(new StandbyContainerGroupPoolDataAsyncCollectionResultOfT(_standbyContainerGroupPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StandbyContainerGroupPoolCollection.GetAll"), data => new StandbyContainerGroupPoolResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.StandbyPool
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StandbyContainerGroupPoolData, StandbyContainerGroupPoolResource>(new StandbyContainerGroupPoolsGetByResourceGroupCollectionResultOfT(_standbyContainerGroupPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StandbyContainerGroupPoolCollection.GetAll"), data => new StandbyContainerGroupPoolResource(Client, data));
+            return new PageableWrapper<StandbyContainerGroupPoolData, StandbyContainerGroupPoolResource>(new StandbyContainerGroupPoolDataCollectionResultOfT(_standbyContainerGroupPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StandbyContainerGroupPoolCollection.GetAll"), data => new StandbyContainerGroupPoolResource(Client, data));
         }
 
         /// <summary>

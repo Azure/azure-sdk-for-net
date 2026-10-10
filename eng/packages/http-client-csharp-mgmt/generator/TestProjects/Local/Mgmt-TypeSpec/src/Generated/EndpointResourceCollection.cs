@@ -39,7 +39,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(EndpointResource.ResourceType, out string endpointResourceApiVersion);
             _endpointResourcesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", EndpointResource.ResourceType.Namespace, Diagnostics);
-            _endpointResourcesRestClient = new EndpointResources(_endpointResourcesClientDiagnostics, Pipeline, Endpoint, endpointResourceApiVersion ?? "2024-05-01");
+            _endpointResourcesRestClient = new EndpointResources(_endpointResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, endpointResourceApiVersion ?? "2024-05-01");
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EndpointResourceData, EndpointResource>(new EndpointResourcesGetAllAsyncCollectionResultOfT(_endpointResourcesRestClient, Id.ToString(), context, "EndpointResourceCollection.GetAll"), data => new EndpointResource(Client, data));
+            return new AsyncPageableWrapper<EndpointResourceData, EndpointResource>(new EndpointResourceDataAsyncCollectionResultOfT(_endpointResourcesRestClient, Id.ToString(), context, "EndpointResourceCollection.GetAll"), data => new EndpointResource(Client, data));
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EndpointResourceData, EndpointResource>(new EndpointResourcesGetAllCollectionResultOfT(_endpointResourcesRestClient, Id.ToString(), context, "EndpointResourceCollection.GetAll"), data => new EndpointResource(Client, data));
+            return new PageableWrapper<EndpointResourceData, EndpointResource>(new EndpointResourceDataCollectionResultOfT(_endpointResourcesRestClient, Id.ToString(), context, "EndpointResourceCollection.GetAll"), data => new EndpointResource(Client, data));
         }
 
         /// <summary>

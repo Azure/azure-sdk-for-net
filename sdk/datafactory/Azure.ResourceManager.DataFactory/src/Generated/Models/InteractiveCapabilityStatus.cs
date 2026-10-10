@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct InteractiveCapabilityStatus : IEquatable<InteractiveCapabilityStatus>
     {
         private readonly string _value;
+        /// <summary> Enabling. </summary>
+        private const string EnablingValue = "Enabling";
+        /// <summary> Enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Disabling. </summary>
+        private const string DisablingValue = "Disabling";
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="InteractiveCapabilityStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InteractiveCapabilityStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnablingValue = "Enabling";
-        private const string EnabledValue = "Enabled";
-        private const string DisablingValue = "Disabling";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> Enabling. </summary>
         public static InteractiveCapabilityStatus Enabling { get; } = new InteractiveCapabilityStatus(EnablingValue);
+
         /// <summary> Enabled. </summary>
         public static InteractiveCapabilityStatus Enabled { get; } = new InteractiveCapabilityStatus(EnabledValue);
+
         /// <summary> Disabling. </summary>
         public static InteractiveCapabilityStatus Disabling { get; } = new InteractiveCapabilityStatus(DisablingValue);
+
         /// <summary> Disabled. </summary>
         public static InteractiveCapabilityStatus Disabled { get; } = new InteractiveCapabilityStatus(DisabledValue);
+
         /// <summary> Determines if two <see cref="InteractiveCapabilityStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InteractiveCapabilityStatus left, InteractiveCapabilityStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="InteractiveCapabilityStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InteractiveCapabilityStatus left, InteractiveCapabilityStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="InteractiveCapabilityStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="InteractiveCapabilityStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator InteractiveCapabilityStatus(string value) => new InteractiveCapabilityStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="InteractiveCapabilityStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator InteractiveCapabilityStatus?(string value) => value == null ? null : new InteractiveCapabilityStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is InteractiveCapabilityStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(InteractiveCapabilityStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

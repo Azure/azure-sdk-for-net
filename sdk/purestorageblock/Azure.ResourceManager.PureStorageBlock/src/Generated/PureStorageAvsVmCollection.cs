@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             TryGetApiVersion(PureStorageAvsVmResource.ResourceType, out string pureStorageAvsVmApiVersion);
             _avsVmsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock", PureStorageAvsVmResource.ResourceType.Namespace, Diagnostics);
-            _avsVmsRestClient = new AvsVms(_avsVmsClientDiagnostics, Pipeline, Endpoint, pureStorageAvsVmApiVersion ?? "2024-11-01");
+            _avsVmsRestClient = new AvsVms(_avsVmsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, pureStorageAvsVmApiVersion ?? "2024-11-01");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PureStorageAvsVmData, PureStorageAvsVmResource>(new AvsVmsGetByStoragePoolAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PureStorageAvsVmData, PureStorageAvsVmResource>(new PureStorageAvsVmDataAsyncCollectionResultOfT(
                 _avsVmsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PureStorageAvsVmData, PureStorageAvsVmResource>(new AvsVmsGetByStoragePoolCollectionResultOfT(
+            return new PageableWrapper<PureStorageAvsVmData, PureStorageAvsVmResource>(new PureStorageAvsVmDataCollectionResultOfT(
                 _avsVmsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

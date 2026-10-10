@@ -41,7 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(EventGridDomainResource.ResourceType, out string eventGridDomainApiVersion);
             _eventGridDomainsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", EventGridDomainResource.ResourceType.Namespace, Diagnostics);
-            _eventGridDomainsRestClient = new EventGridDomains(_eventGridDomainsClientDiagnostics, Pipeline, Endpoint, eventGridDomainApiVersion ?? "2024-05-01");
+            _eventGridDomainsRestClient = new EventGridDomains(_eventGridDomainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventGridDomainApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -296,7 +296,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventGridDomainData, EventGridDomainResource>(new EventGridDomainsGetByResourceGroupAsyncCollectionResultOfT(_eventGridDomainsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EventGridDomainCollection.GetAll"), data => new EventGridDomainResource(Client, data));
+            return new AsyncPageableWrapper<EventGridDomainData, EventGridDomainResource>(new EventGridDomainDataAsyncCollectionResultOfT(_eventGridDomainsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EventGridDomainCollection.GetAll"), data => new EventGridDomainResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventGridDomainData, EventGridDomainResource>(new EventGridDomainsGetByResourceGroupCollectionResultOfT(_eventGridDomainsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EventGridDomainCollection.GetAll"), data => new EventGridDomainResource(Client, data));
+            return new PageableWrapper<EventGridDomainData, EventGridDomainResource>(new EventGridDomainDataCollectionResultOfT(_eventGridDomainsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EventGridDomainCollection.GetAll"), data => new EventGridDomainResource(Client, data));
         }
 
         /// <summary>

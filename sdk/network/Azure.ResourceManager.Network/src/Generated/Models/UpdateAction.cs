@@ -7,50 +7,68 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary>
     /// Specifies the type of update operation to perform on address locations within the service gateway.
-    ///
-    /// - FullUpdate: Replaces all existing address location data with the new list provided in the request. Any previously defined locations not included will be removed.
-    /// - PartialUpdate: Updates only the specified address locations.
+    /// <list type="bullet"><item><description>FullUpdate: Replaces all existing address location data with the new list provided in the request. Any previously defined locations not included will be removed.</description></item><item><description>PartialUpdate: Updates only the specified address locations.</description></item></list>
     /// </summary>
     public readonly partial struct UpdateAction : IEquatable<UpdateAction>
     {
         private readonly string _value;
+        /// <summary> FullUpdate. </summary>
+        private const string FullUpdateValue = "FullUpdate";
+        /// <summary> PartialUpdate. </summary>
+        private const string PartialUpdateValue = "PartialUpdate";
 
         /// <summary> Initializes a new instance of <see cref="UpdateAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public UpdateAction(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FullUpdateValue = "FullUpdate";
-        private const string PartialUpdateValue = "PartialUpdate";
+            _value = value;
+        }
 
         /// <summary> FullUpdate. </summary>
         public static UpdateAction FullUpdate { get; } = new UpdateAction(FullUpdateValue);
+
         /// <summary> PartialUpdate. </summary>
         public static UpdateAction PartialUpdate { get; } = new UpdateAction(PartialUpdateValue);
+
         /// <summary> Determines if two <see cref="UpdateAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(UpdateAction left, UpdateAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="UpdateAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(UpdateAction left, UpdateAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="UpdateAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="UpdateAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator UpdateAction(string value) => new UpdateAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="UpdateAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator UpdateAction?(string value) => value == null ? null : new UpdateAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is UpdateAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(UpdateAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             TryGetApiVersion(ResourceType, out string storageClassificationMappingApiVersion);
             _replicationStorageClassificationMappingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
-            _replicationStorageClassificationMappingsRestClient = new ReplicationStorageClassificationMappings(_replicationStorageClassificationMappingsClientDiagnostics, Pipeline, Endpoint, storageClassificationMappingApiVersion ?? "2026-02-01");
+            _replicationStorageClassificationMappingsRestClient = new ReplicationStorageClassificationMappings(_replicationStorageClassificationMappingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageClassificationMappingApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 

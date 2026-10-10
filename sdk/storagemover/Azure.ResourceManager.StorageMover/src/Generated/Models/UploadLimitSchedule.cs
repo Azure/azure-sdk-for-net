@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.StorageMover.Models
         }
 
         /// <summary> The set of weekly repeating recurrences of the WAN-link upload limit schedule. </summary>
-        public IList<UploadLimitWeeklyRecurrence> WeeklyRecurrences { get; }
+        public IList<UploadLimitWeeklyRecurrence> WeeklyRecurrences { get; } = new ChangeTrackingList<UploadLimitWeeklyRecurrence>();
     }
 }

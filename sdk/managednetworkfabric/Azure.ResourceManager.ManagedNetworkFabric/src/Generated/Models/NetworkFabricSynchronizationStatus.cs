@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,45 +15,68 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct NetworkFabricSynchronizationStatus : IEquatable<NetworkFabricSynchronizationStatus>
     {
         private readonly string _value;
+        /// <summary> The device has been configured with the latest version of the secret. </summary>
+        private const string InSyncValue = "InSync";
+        /// <summary>
+        /// The device is being reconfigured with the latest version of the secret.
+        /// While in this state, the secret archive reference may not match the secret configured on the device.
+        /// </summary>
+        private const string SynchronizingValue = "Synchronizing";
+        /// <summary> The device has not been configured with the latest version of the secret. </summary>
+        private const string OutOfSyncValue = "OutOfSync";
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricSynchronizationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkFabricSynchronizationStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InSyncValue = "InSync";
-        private const string SynchronizingValue = "Synchronizing";
-        private const string OutOfSyncValue = "OutOfSync";
+            _value = value;
+        }
 
         /// <summary> The device has been configured with the latest version of the secret. </summary>
         public static NetworkFabricSynchronizationStatus InSync { get; } = new NetworkFabricSynchronizationStatus(InSyncValue);
+
         /// <summary>
         /// The device is being reconfigured with the latest version of the secret.
-        ///
         /// While in this state, the secret archive reference may not match the secret configured on the device.
         /// </summary>
         public static NetworkFabricSynchronizationStatus Synchronizing { get; } = new NetworkFabricSynchronizationStatus(SynchronizingValue);
+
         /// <summary> The device has not been configured with the latest version of the secret. </summary>
         public static NetworkFabricSynchronizationStatus OutOfSync { get; } = new NetworkFabricSynchronizationStatus(OutOfSyncValue);
+
         /// <summary> Determines if two <see cref="NetworkFabricSynchronizationStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkFabricSynchronizationStatus left, NetworkFabricSynchronizationStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkFabricSynchronizationStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkFabricSynchronizationStatus left, NetworkFabricSynchronizationStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkFabricSynchronizationStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkFabricSynchronizationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkFabricSynchronizationStatus(string value) => new NetworkFabricSynchronizationStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkFabricSynchronizationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkFabricSynchronizationStatus?(string value) => value == null ? null : new NetworkFabricSynchronizationStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkFabricSynchronizationStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkFabricSynchronizationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

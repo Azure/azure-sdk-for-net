@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             TryGetApiVersion(FrontDoorResource.ResourceType, out string frontDoorApiVersion);
             _frontDoorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", FrontDoorResource.ResourceType.Namespace, Diagnostics);
-            _frontDoorsRestClient = new FrontDoors(_frontDoorsClientDiagnostics, Pipeline, Endpoint, frontDoorApiVersion ?? "2025-11-01");
+            _frontDoorsRestClient = new FrontDoors(_frontDoorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FrontDoorData, FrontDoorResource>(new FrontDoorsGetByResourceGroupAsyncCollectionResultOfT(_frontDoorsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "FrontDoorCollection.GetAll"), data => new FrontDoorResource(Client, data));
+            return new AsyncPageableWrapper<FrontDoorData, FrontDoorResource>(new FrontDoorDataAsyncCollectionResultOfT(_frontDoorsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "FrontDoorCollection.GetAll"), data => new FrontDoorResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FrontDoorData, FrontDoorResource>(new FrontDoorsGetByResourceGroupCollectionResultOfT(_frontDoorsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "FrontDoorCollection.GetAll"), data => new FrontDoorResource(Client, data));
+            return new PageableWrapper<FrontDoorData, FrontDoorResource>(new FrontDoorDataCollectionResultOfT(_frontDoorsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "FrontDoorCollection.GetAll"), data => new FrontDoorResource(Client, data));
         }
 
         /// <summary>

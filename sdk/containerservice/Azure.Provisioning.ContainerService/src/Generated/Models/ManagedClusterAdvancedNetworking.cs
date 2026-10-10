@@ -125,6 +125,10 @@ namespace Azure.Provisioning.ContainerService
             _observability = DefineModelProperty<AdvancedNetworkingObservability>(nameof(Observability), new string[] { "observability" });
             _security = DefineModelProperty<ManagedClusterAdvancedNetworkingSecurity>(nameof(Security), new string[] { "security" });
             _performance = DefineModelProperty<ManagedClusterAdvancedNetworkingPerformance>(nameof(Performance), new string[] { "performance" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterAdvancedNetworking that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

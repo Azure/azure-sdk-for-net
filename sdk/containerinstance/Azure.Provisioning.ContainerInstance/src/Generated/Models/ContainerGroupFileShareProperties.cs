@@ -57,6 +57,10 @@ namespace Azure.Provisioning.ContainerInstance
             base.DefineProvisionableProperties();
             _shareAccessType = DefineProperty<AzureFileShareAccessType>(nameof(ShareAccessType), new string[] { "shareAccessType" });
             _shareAccessTier = DefineProperty<AzureFileShareAccessTier>(nameof(ShareAccessTier), new string[] { "shareAccessTier" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerGroupFileShareProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

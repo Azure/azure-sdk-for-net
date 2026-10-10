@@ -12,7 +12,7 @@ namespace Azure.Communication.Messages
 {
     /// <summary>
     /// Advanced Messaging conversation participant.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="InternalConversationParticipant"/> and <see cref="ExternalConversationParticipant"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ExternalConversationParticipant"/> and <see cref="InternalConversationParticipant"/>.
     /// </summary>
     public abstract partial class ConversationParticipant
     {

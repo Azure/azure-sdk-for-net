@@ -23,6 +23,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         private CloudHsmClusters _cloudHsmClustersRestClient;
         private ClientDiagnostics _dedicatedHsmsClientDiagnostics;
         private DedicatedHsms _dedicatedHsmsRestClient;
+        private ClientDiagnostics _paymentHsmClustersClientDiagnostics;
+        private PaymentHsmClusters _paymentHsmClustersRestClient;
 
         /// <summary> Initializes a new instance of MockableHardwareSecurityModulesSubscriptionResource for mocking. </summary>
         protected MockableHardwareSecurityModulesSubscriptionResource()
@@ -38,11 +40,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
 
         private ClientDiagnostics CloudHsmClustersClientDiagnostics => _cloudHsmClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CloudHsmClusters CloudHsmClustersRestClient => _cloudHsmClustersRestClient ??= new CloudHsmClusters(CloudHsmClustersClientDiagnostics, Pipeline, Endpoint, "2025-03-31");
+        private CloudHsmClusters CloudHsmClustersRestClient => _cloudHsmClustersRestClient ??= new CloudHsmClusters(CloudHsmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
 
         private ClientDiagnostics DedicatedHsmsClientDiagnostics => _dedicatedHsmsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DedicatedHsms DedicatedHsmsRestClient => _dedicatedHsmsRestClient ??= new DedicatedHsms(DedicatedHsmsClientDiagnostics, Pipeline, Endpoint, "2025-03-31");
+        private DedicatedHsms DedicatedHsmsRestClient => _dedicatedHsmsRestClient ??= new DedicatedHsms(DedicatedHsmsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
+
+        private ClientDiagnostics PaymentHsmClustersClientDiagnostics => _paymentHsmClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private PaymentHsmClusters PaymentHsmClustersRestClient => _paymentHsmClustersRestClient ??= new PaymentHsmClusters(PaymentHsmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
 
         /// <summary>
         /// The List operation gets information about the Cloud HSM Clusters associated with the subscription.
@@ -57,7 +63,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -70,7 +76,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CloudHsmClusterData, CloudHsmClusterResource>(new CloudHsmClustersGetBySubscriptionAsyncCollectionResultOfT(CloudHsmClustersRestClient, Guid.Parse(Id.SubscriptionId), skiptoken, context, "MockableHardwareSecurityModulesSubscriptionResource.GetCloudHsmClusters"), data => new CloudHsmClusterResource(Client, data));
+            return new AsyncPageableWrapper<CloudHsmClusterData, CloudHsmClusterResource>(new CloudHsmClusterDataAsync0CollectionResultOfT(CloudHsmClustersRestClient, Guid.Parse(Id.SubscriptionId), skiptoken, context, "MockableHardwareSecurityModulesSubscriptionResource.GetCloudHsmClusters"), data => new CloudHsmClusterResource(Client, data));
         }
 
         /// <summary>
@@ -86,7 +92,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,7 +105,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CloudHsmClusterData, CloudHsmClusterResource>(new CloudHsmClustersGetBySubscriptionCollectionResultOfT(CloudHsmClustersRestClient, Guid.Parse(Id.SubscriptionId), skiptoken, context, "MockableHardwareSecurityModulesSubscriptionResource.GetCloudHsmClusters"), data => new CloudHsmClusterResource(Client, data));
+            return new PageableWrapper<CloudHsmClusterData, CloudHsmClusterResource>(new CloudHsmClusterData0CollectionResultOfT(CloudHsmClustersRestClient, Guid.Parse(Id.SubscriptionId), skiptoken, context, "MockableHardwareSecurityModulesSubscriptionResource.GetCloudHsmClusters"), data => new CloudHsmClusterResource(Client, data));
         }
 
         /// <summary>
@@ -115,7 +121,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,7 +134,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DedicatedHsmData, DedicatedHsmResource>(new DedicatedHsmsGetBySubscriptionAsyncCollectionResultOfT(DedicatedHsmsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableHardwareSecurityModulesSubscriptionResource.GetDedicatedHsms"), data => new DedicatedHsmResource(Client, data));
+            return new AsyncPageableWrapper<DedicatedHsmData, DedicatedHsmResource>(new DedicatedHsmDataAsync0CollectionResultOfT(DedicatedHsmsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableHardwareSecurityModulesSubscriptionResource.GetDedicatedHsms"), data => new DedicatedHsmResource(Client, data));
         }
 
         /// <summary>
@@ -144,7 +150,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -157,7 +163,65 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DedicatedHsmData, DedicatedHsmResource>(new DedicatedHsmsGetBySubscriptionCollectionResultOfT(DedicatedHsmsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableHardwareSecurityModulesSubscriptionResource.GetDedicatedHsms"), data => new DedicatedHsmResource(Client, data));
+            return new PageableWrapper<DedicatedHsmData, DedicatedHsmResource>(new DedicatedHsmData0CollectionResultOfT(DedicatedHsmsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableHardwareSecurityModulesSubscriptionResource.GetDedicatedHsms"), data => new DedicatedHsmResource(Client, data));
+        }
+
+        /// <summary>
+        /// The List operation gets information about the Payment HSM Clusters associated with the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.HardwareSecurityModules/paymentHsmClusters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PaymentHsmClusters_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="skiptoken"> The page-continuation token to use with a paged version of this API. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PaymentHsmClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PaymentHsmClusterResource> GetPaymentHsmClustersAsync(string skiptoken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PaymentHsmClusterData, PaymentHsmClusterResource>(new PaymentHsmClusterDataAsync0CollectionResultOfT(PaymentHsmClustersRestClient, Guid.Parse(Id.SubscriptionId), skiptoken, context, "MockableHardwareSecurityModulesSubscriptionResource.GetPaymentHsmClusters"), data => new PaymentHsmClusterResource(Client, data));
+        }
+
+        /// <summary>
+        /// The List operation gets information about the Payment HSM Clusters associated with the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.HardwareSecurityModules/paymentHsmClusters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PaymentHsmClusters_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="skiptoken"> The page-continuation token to use with a paged version of this API. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PaymentHsmClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PaymentHsmClusterResource> GetPaymentHsmClusters(string skiptoken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PaymentHsmClusterData, PaymentHsmClusterResource>(new PaymentHsmClusterData0CollectionResultOfT(PaymentHsmClustersRestClient, Guid.Parse(Id.SubscriptionId), skiptoken, context, "MockableHardwareSecurityModulesSubscriptionResource.GetPaymentHsmClusters"), data => new PaymentHsmClusterResource(Client, data));
         }
     }
 }

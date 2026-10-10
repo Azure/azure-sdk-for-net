@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor.Slis
         {
             TryGetApiVersion(MonitorSliResource.ResourceType, out string monitorSliApiVersion);
             _sliOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor.Slis", MonitorSliResource.ResourceType.Namespace, Diagnostics);
-            _sliOperationsRestClient = new SliOperations(_sliOperationsClientDiagnostics, Pipeline, Endpoint, monitorSliApiVersion ?? "2025-03-01-preview");
+            _sliOperationsRestClient = new SliOperations(_sliOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, monitorSliApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Monitor.Slis
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MonitorSliData, MonitorSliResource>(new SliOperationsGetByParentAsyncCollectionResultOfT(_sliOperationsRestClient, Id.Name, context, "MonitorSliCollection.GetAll"), data => new MonitorSliResource(Client, data));
+            return new AsyncPageableWrapper<MonitorSliData, MonitorSliResource>(new MonitorSliDataAsyncCollectionResultOfT(_sliOperationsRestClient, Id.Name, context, "MonitorSliCollection.GetAll"), data => new MonitorSliResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Monitor.Slis
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MonitorSliData, MonitorSliResource>(new SliOperationsGetByParentCollectionResultOfT(_sliOperationsRestClient, Id.Name, context, "MonitorSliCollection.GetAll"), data => new MonitorSliResource(Client, data));
+            return new PageableWrapper<MonitorSliData, MonitorSliResource>(new MonitorSliDataCollectionResultOfT(_sliOperationsRestClient, Id.Name, context, "MonitorSliCollection.GetAll"), data => new MonitorSliResource(Client, data));
         }
 
         /// <summary>

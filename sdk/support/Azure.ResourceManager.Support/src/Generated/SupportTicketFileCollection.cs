@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Support
         {
             TryGetApiVersion(SupportTicketFileResource.ResourceType, out string supportTicketFileApiVersion);
             _supportTicketFileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", SupportTicketFileResource.ResourceType.Namespace, Diagnostics);
-            _supportTicketFileRestClient = new SupportTicketFile(_supportTicketFileClientDiagnostics, Pipeline, Endpoint, supportTicketFileApiVersion ?? "2025-06-01-preview");
+            _supportTicketFileRestClient = new SupportTicketFile(_supportTicketFileClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, supportTicketFileApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Support
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SupportFileDetailData, SupportTicketFileResource>(new SupportTicketFileGetAllAsyncCollectionResultOfT(_supportTicketFileRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "SupportTicketFileCollection.GetAll"), data => new SupportTicketFileResource(Client, data));
+            return new AsyncPageableWrapper<SupportFileDetailData, SupportTicketFileResource>(new SupportFileDetailDataAsyncCollectionResultOfT(_supportTicketFileRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "SupportTicketFileCollection.GetAll"), data => new SupportTicketFileResource(Client, data));
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Support
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SupportFileDetailData, SupportTicketFileResource>(new SupportTicketFileGetAllCollectionResultOfT(_supportTicketFileRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "SupportTicketFileCollection.GetAll"), data => new SupportTicketFileResource(Client, data));
+            return new PageableWrapper<SupportFileDetailData, SupportTicketFileResource>(new SupportFileDetailDataCollectionResultOfT(_supportTicketFileRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "SupportTicketFileCollection.GetAll"), data => new SupportTicketFileResource(Client, data));
         }
 
         /// <summary>
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>

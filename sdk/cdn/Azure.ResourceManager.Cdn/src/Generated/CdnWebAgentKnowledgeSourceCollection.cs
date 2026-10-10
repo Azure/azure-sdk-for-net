@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(CdnWebAgentKnowledgeSourceResource.ResourceType, out string cdnWebAgentKnowledgeSourceApiVersion);
             _knowledgeSourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnWebAgentKnowledgeSourceResource.ResourceType.Namespace, Diagnostics);
-            _knowledgeSourcesRestClient = new KnowledgeSources(_knowledgeSourcesClientDiagnostics, Pipeline, Endpoint, cdnWebAgentKnowledgeSourceApiVersion ?? "2025-09-01-preview");
+            _knowledgeSourcesRestClient = new KnowledgeSources(_knowledgeSourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cdnWebAgentKnowledgeSourceApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CdnWebAgentKnowledgeSourceData, CdnWebAgentKnowledgeSourceResource>(new KnowledgeSourcesGetByWebAgentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CdnWebAgentKnowledgeSourceData, CdnWebAgentKnowledgeSourceResource>(new CdnWebAgentKnowledgeSourceDataAsyncCollectionResultOfT(
                 _knowledgeSourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CdnWebAgentKnowledgeSourceData, CdnWebAgentKnowledgeSourceResource>(new KnowledgeSourcesGetByWebAgentCollectionResultOfT(
+            return new PageableWrapper<CdnWebAgentKnowledgeSourceData, CdnWebAgentKnowledgeSourceResource>(new CdnWebAgentKnowledgeSourceDataCollectionResultOfT(
                 _knowledgeSourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

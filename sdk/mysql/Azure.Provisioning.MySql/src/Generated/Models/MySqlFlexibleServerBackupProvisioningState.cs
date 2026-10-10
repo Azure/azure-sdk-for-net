@@ -11,14 +11,14 @@ namespace Azure.Provisioning.MySql
     public enum MySqlFlexibleServerBackupProvisioningState
     {
         /// <summary> Succeeded. </summary>
-        Succeeded,
+        Succeeded = 0,
         /// <summary> Creating. </summary>
-        Creating,
+        Creating = 1,
         /// <summary> Deleting. </summary>
-        Deleting,
+        Deleting = 2,
         /// <summary> Failed. </summary>
-        Failed,
+        Failed = 3,
         /// <summary> Canceled. </summary>
-        Canceled
+        Canceled = 4
     }
 }

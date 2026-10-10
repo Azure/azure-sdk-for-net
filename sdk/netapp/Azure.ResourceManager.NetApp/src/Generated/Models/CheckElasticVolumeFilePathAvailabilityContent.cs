@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -19,24 +18,11 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Initializes a new instance of <see cref="CheckElasticVolumeFilePathAvailabilityContent"/>. </summary>
         /// <param name="filePath"> A unique file path for the volume. Used when creating mount targets. This needs to be unique within the elastic capacity pool. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filePath"/> is null. </exception>
-        public CheckElasticVolumeFilePathAvailabilityContent(string filePath)
-        {
-            Argument.AssertNotNull(filePath, nameof(filePath));
-
-            FilePath = filePath;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CheckElasticVolumeFilePathAvailabilityContent"/>. </summary>
-        /// <param name="filePath"> A unique file path for the volume. Used when creating mount targets. This needs to be unique within the elastic capacity pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal CheckElasticVolumeFilePathAvailabilityContent(string filePath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FilePath = filePath;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> A unique file path for the volume. Used when creating mount targets. This needs to be unique within the elastic capacity pool. </summary>
-        public string FilePath { get; }
     }
 }

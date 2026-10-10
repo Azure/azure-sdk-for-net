@@ -90,6 +90,11 @@ namespace Azure.ResourceManager.Qumulo.Models
                 writer.WritePropertyName("delegatedSubnetId"u8);
                 writer.WriteStringValue(DelegatedSubnetId);
             }
+            if (Optional.IsDefined(PerformanceTier))
+            {
+                writer.WritePropertyName("performanceTier"u8);
+                writer.WriteStringValue(PerformanceTier);
+            }
             if (Optional.IsDefined(ClusterLoginUri))
             {
                 writer.WritePropertyName("clusterLoginUri"u8);
@@ -155,6 +160,7 @@ namespace Azure.ResourceManager.Qumulo.Models
             MarketplaceDetails marketplaceDetails = default;
             QumuloUserDetails userDetails = default;
             ResourceIdentifier delegatedSubnetId = default;
+            string performanceTier = default;
             Uri clusterLoginUri = default;
             IList<string> privateIPs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -185,6 +191,11 @@ namespace Azure.ResourceManager.Qumulo.Models
                         continue;
                     }
                     delegatedSubnetId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("performanceTier"u8))
+                {
+                    performanceTier = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("clusterLoginUri"u8))
@@ -219,13 +230,14 @@ namespace Azure.ResourceManager.Qumulo.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new FileSystemResourceUpdateProperties(
                 marketplaceDetails,
                 userDetails,
                 delegatedSubnetId,
+                performanceTier,
                 clusterLoginUri,
                 privateIPs ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);

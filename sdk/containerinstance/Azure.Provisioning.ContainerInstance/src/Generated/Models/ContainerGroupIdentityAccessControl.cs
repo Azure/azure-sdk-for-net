@@ -58,6 +58,10 @@ namespace Azure.Provisioning.ContainerInstance
             base.DefineProvisionableProperties();
             _access = DefineProperty<ContainerGroupIdentityAccessLevel>(nameof(Access), new string[] { "access" });
             _identity = DefineProperty<ResourceIdentifier>(nameof(Identity), new string[] { "identity" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerGroupIdentityAccessControl that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

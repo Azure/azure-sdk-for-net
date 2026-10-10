@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The DscNodeUpdateParametersProperties. </summary>
     internal partial class DscNodeUpdateParametersProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DscNodeUpdateParametersProperties"/>. </summary>
         public DscNodeUpdateParametersProperties()
@@ -51,15 +22,32 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DscNodeUpdateParametersProperties"/>. </summary>
-        /// <param name="name"> Gets or sets the name of the dsc node configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DscNodeUpdateParametersProperties(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="nodeConfiguration"> Gets or sets the configuration of the node. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DscNodeUpdateParametersProperties(DscNodeConfigurationAssociationProperty nodeConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Name = name;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            NodeConfiguration = nodeConfiguration;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Gets or sets the configuration of the node. </summary>
+        internal DscNodeConfigurationAssociationProperty NodeConfiguration { get; set; }
+
         /// <summary> Gets or sets the name of the dsc node configuration. </summary>
-        public string Name { get; set; }
+        public string NamePropertiesNodeConfigurationName
+        {
+            get
+            {
+                return NodeConfiguration is null ? default : NodeConfiguration.NamePropertiesNodeConfigurationName;
+            }
+            set
+            {
+                if (NodeConfiguration is null)
+                {
+                    NodeConfiguration = new DscNodeConfigurationAssociationProperty();
+                }
+                NodeConfiguration.NamePropertiesNodeConfigurationName = value;
+            }
+        }
     }
 }

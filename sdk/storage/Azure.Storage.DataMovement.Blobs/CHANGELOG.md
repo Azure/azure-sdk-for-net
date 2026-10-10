@@ -7,6 +7,7 @@
 - Added support for versioning transfers as the source. This includes the ability to copy a version to a new blob, download a version, and pause/resume version transfers.
 
 ### Breaking Changes
+- Block IDs generated during partitioned uploads are now randomly generated instead of based on sequential integers. This ensures uniqueness across concurrent uploads to the same blob but means block IDs are no longer predictable or ordered.
 
 ### Bugs Fixed
 - Fixed an issue where corrupted or truncated checkpoint files could cause unexpected errors during transfer resume.

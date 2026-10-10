@@ -7,71 +7,32 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Size of the machines.
-    /// Serialized Name: WorkerSizeOptions
-    /// </summary>
+    /// <summary> Size of the machines. </summary>
     public enum WorkerSizeOption
     {
-        /// <summary>
-        /// Small
-        /// Serialized Name: WorkerSizeOptions.Small
-        /// </summary>
+        /// <summary> Small. </summary>
         Small,
-        /// <summary>
-        /// Medium
-        /// Serialized Name: WorkerSizeOptions.Medium
-        /// </summary>
+        /// <summary> Medium. </summary>
         Medium,
-        /// <summary>
-        /// Large
-        /// Serialized Name: WorkerSizeOptions.Large
-        /// </summary>
+        /// <summary> Large. </summary>
         Large,
-        /// <summary>
-        /// D1
-        /// Serialized Name: WorkerSizeOptions.D1
-        /// </summary>
+        /// <summary> D1. </summary>
         D1,
-        /// <summary>
-        /// D2
-        /// Serialized Name: WorkerSizeOptions.D2
-        /// </summary>
+        /// <summary> D2. </summary>
         D2,
-        /// <summary>
-        /// D3
-        /// Serialized Name: WorkerSizeOptions.D3
-        /// </summary>
+        /// <summary> D3. </summary>
         D3,
-        /// <summary>
-        /// SmallV3
-        /// Serialized Name: WorkerSizeOptions.SmallV3
-        /// </summary>
+        /// <summary> SmallV3. </summary>
         SmallV3,
-        /// <summary>
-        /// MediumV3
-        /// Serialized Name: WorkerSizeOptions.MediumV3
-        /// </summary>
+        /// <summary> MediumV3. </summary>
         MediumV3,
-        /// <summary>
-        /// LargeV3
-        /// Serialized Name: WorkerSizeOptions.LargeV3
-        /// </summary>
+        /// <summary> LargeV3. </summary>
         LargeV3,
-        /// <summary>
-        /// NestedSmall
-        /// Serialized Name: WorkerSizeOptions.NestedSmall
-        /// </summary>
+        /// <summary> NestedSmall. </summary>
         NestedSmall,
-        /// <summary>
-        /// NestedSmallLinux
-        /// Serialized Name: WorkerSizeOptions.NestedSmallLinux
-        /// </summary>
+        /// <summary> NestedSmallLinux. </summary>
         NestedSmallLinux,
-        /// <summary>
-        /// Default
-        /// Serialized Name: WorkerSizeOptions.Default
-        /// </summary>
+        /// <summary> Default. </summary>
         Default
     }
 }

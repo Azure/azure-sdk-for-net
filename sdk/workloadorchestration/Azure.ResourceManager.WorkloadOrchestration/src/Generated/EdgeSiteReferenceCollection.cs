@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             TryGetApiVersion(EdgeSiteReferenceResource.ResourceType, out string edgeSiteReferenceApiVersion);
             _siteReferencesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeSiteReferenceResource.ResourceType.Namespace, Diagnostics);
-            _siteReferencesRestClient = new SiteReferences(_siteReferencesClientDiagnostics, Pipeline, Endpoint, edgeSiteReferenceApiVersion ?? "2025-06-01");
+            _siteReferencesRestClient = new SiteReferences(_siteReferencesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeSiteReferenceApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeSiteReferenceData, EdgeSiteReferenceResource>(new SiteReferencesGetByContextAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EdgeSiteReferenceData, EdgeSiteReferenceResource>(new EdgeSiteReferenceDataAsyncCollectionResultOfT(
                 _siteReferencesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeSiteReferenceData, EdgeSiteReferenceResource>(new SiteReferencesGetByContextCollectionResultOfT(
+            return new PageableWrapper<EdgeSiteReferenceData, EdgeSiteReferenceResource>(new EdgeSiteReferenceDataCollectionResultOfT(
                 _siteReferencesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

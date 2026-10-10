@@ -12,7 +12,10 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Base type for describing any Azure AI service resource attached to a skillset. </summary>
+    /// <summary>
+    /// Base type for describing any Azure AI service resource attached to a skillset.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AIServicesAccountIdentity"/>, <see cref="AIServicesAccountKey"/>, <see cref="CognitiveServicesAccountKey"/>, and <see cref="DefaultCognitiveServicesAccount"/>.
+    /// </summary>
     public partial class CognitiveServicesAccount : IJsonModel<CognitiveServicesAccount>
     {
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccount"/> for deserialization. </summary>
@@ -131,14 +134,14 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Azure.Search.DefaultCognitiveServices":
-                        return DefaultCognitiveServicesAccount.DeserializeDefaultCognitiveServicesAccount(element, options);
-                    case "#Microsoft.Azure.Search.CognitiveServicesByKey":
-                        return CognitiveServicesAccountKey.DeserializeCognitiveServicesAccountKey(element, options);
-                    case "#Microsoft.Azure.Search.AIServicesByKey":
-                        return AIServicesAccountKey.DeserializeAIServicesAccountKey(element, options);
                     case "#Microsoft.Azure.Search.AIServicesByIdentity":
                         return AIServicesAccountIdentity.DeserializeAIServicesAccountIdentity(element, options);
+                    case "#Microsoft.Azure.Search.AIServicesByKey":
+                        return AIServicesAccountKey.DeserializeAIServicesAccountKey(element, options);
+                    case "#Microsoft.Azure.Search.CognitiveServicesByKey":
+                        return CognitiveServicesAccountKey.DeserializeCognitiveServicesAccountKey(element, options);
+                    case "#Microsoft.Azure.Search.DefaultCognitiveServices":
+                        return DefaultCognitiveServicesAccount.DeserializeDefaultCognitiveServicesAccount(element, options);
                 }
             }
             return UnknownCognitiveServicesAccount.DeserializeUnknownCognitiveServicesAccount(element, options);

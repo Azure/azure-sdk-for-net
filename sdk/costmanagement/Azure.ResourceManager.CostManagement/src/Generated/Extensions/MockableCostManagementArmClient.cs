@@ -59,51 +59,51 @@ namespace Azure.ResourceManager.CostManagement.Mocking
 
         private ClientDiagnostics ScheduledActionsClientDiagnostics => _scheduledActionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ScheduledActions ScheduledActionsRestClient => _scheduledActionsRestClient ??= new ScheduledActions(ScheduledActionsClientDiagnostics, Pipeline, Endpoint, "2025-03-01");
+        private ScheduledActions ScheduledActionsRestClient => _scheduledActionsRestClient ??= new ScheduledActions(ScheduledActionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
 
         private ClientDiagnostics GenerateCostDetailsReportClientDiagnostics => _generateCostDetailsReportClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GenerateCostDetailsReport GenerateCostDetailsReportRestClient => _generateCostDetailsReportRestClient ??= new GenerateCostDetailsReport(GenerateCostDetailsReportClientDiagnostics, Pipeline, Endpoint, "2025-03-01");
+        private GenerateCostDetailsReport GenerateCostDetailsReportRestClient => _generateCostDetailsReportRestClient ??= new GenerateCostDetailsReport(GenerateCostDetailsReportClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
 
         private ClientDiagnostics CostAllocationRulesClientDiagnostics => _costAllocationRulesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CostAllocationRules CostAllocationRulesRestClient => _costAllocationRulesRestClient ??= new CostAllocationRules(CostAllocationRulesClientDiagnostics, Pipeline, Endpoint, "2025-03-01");
+        private CostAllocationRules CostAllocationRulesRestClient => _costAllocationRulesRestClient ??= new CostAllocationRules(CostAllocationRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
 
         private ClientDiagnostics BenefitRecommendationsClientDiagnostics => _benefitRecommendationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BenefitRecommendations BenefitRecommendationsRestClient => _benefitRecommendationsRestClient ??= new BenefitRecommendations(BenefitRecommendationsClientDiagnostics, Pipeline, Endpoint, "2025-03-01");
+        private BenefitRecommendations BenefitRecommendationsRestClient => _benefitRecommendationsRestClient ??= new BenefitRecommendations(BenefitRecommendationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
 
         private ClientDiagnostics BenefitUtilizationSummariesClientDiagnostics => _benefitUtilizationSummariesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BenefitUtilizationSummaries BenefitUtilizationSummariesRestClient => _benefitUtilizationSummariesRestClient ??= new BenefitUtilizationSummaries(BenefitUtilizationSummariesClientDiagnostics, Pipeline, Endpoint, "2025-03-01");
+        private BenefitUtilizationSummaries BenefitUtilizationSummariesRestClient => _benefitUtilizationSummariesRestClient ??= new BenefitUtilizationSummaries(BenefitUtilizationSummariesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
 
         private ClientDiagnostics GenerateBenefitUtilizationSummariesReportClientDiagnostics => _generateBenefitUtilizationSummariesReportClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GenerateBenefitUtilizationSummariesReport GenerateBenefitUtilizationSummariesReportRestClient => _generateBenefitUtilizationSummariesReportRestClient ??= new GenerateBenefitUtilizationSummariesReport(GenerateBenefitUtilizationSummariesReportClientDiagnostics, Pipeline, Endpoint, "2025-03-01");
+        private GenerateBenefitUtilizationSummariesReport GenerateBenefitUtilizationSummariesReportRestClient => _generateBenefitUtilizationSummariesReportRestClient ??= new GenerateBenefitUtilizationSummariesReport(GenerateBenefitUtilizationSummariesReportClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
 
         private ClientDiagnostics GenerateDetailedCostReportClientDiagnostics => _generateDetailedCostReportClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GenerateDetailedCostReport GenerateDetailedCostReportRestClient => _generateDetailedCostReportRestClient ??= new GenerateDetailedCostReport(GenerateDetailedCostReportClientDiagnostics, Pipeline, Endpoint, "2025-03-01");
+        private GenerateDetailedCostReport GenerateDetailedCostReportRestClient => _generateDetailedCostReportRestClient ??= new GenerateDetailedCostReport(GenerateDetailedCostReportClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
 
         private ClientDiagnostics ForecastClientDiagnostics => _forecastClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Forecast ForecastRestClient => _forecastRestClient ??= new Forecast(ForecastClientDiagnostics, Pipeline, Endpoint, "2025-03-01");
+        private Forecast ForecastRestClient => _forecastRestClient ??= new Forecast(ForecastClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
 
         private ClientDiagnostics DimensionsClientDiagnostics => _dimensionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Dimensions DimensionsRestClient => _dimensionsRestClient ??= new Dimensions(DimensionsClientDiagnostics, Pipeline, Endpoint, "2025-03-01");
+        private Dimensions DimensionsRestClient => _dimensionsRestClient ??= new Dimensions(DimensionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
 
         private ClientDiagnostics QueryClientDiagnostics => _queryClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Query QueryRestClient => _queryRestClient ??= new Query(QueryClientDiagnostics, Pipeline, Endpoint, "2025-03-01");
+        private Query QueryRestClient => _queryRestClient ??= new Query(QueryClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
 
         private ClientDiagnostics GenerateReservationDetailsReportClientDiagnostics => _generateReservationDetailsReportClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GenerateReservationDetailsReport GenerateReservationDetailsReportRestClient => _generateReservationDetailsReportRestClient ??= new GenerateReservationDetailsReport(GenerateReservationDetailsReportClientDiagnostics, Pipeline, Endpoint, "2025-03-01");
+        private GenerateReservationDetailsReport GenerateReservationDetailsReportRestClient => _generateReservationDetailsReportRestClient ??= new GenerateReservationDetailsReport(GenerateReservationDetailsReportClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
 
         private ClientDiagnostics PriceSheetClientDiagnostics => _priceSheetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PriceSheet PriceSheetRestClient => _priceSheetRestClient ??= new PriceSheet(PriceSheetClientDiagnostics, Pipeline, Endpoint, "2025-03-01");
+        private PriceSheet PriceSheetRestClient => _priceSheetRestClient ??= new PriceSheet(PriceSheetClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
 
         /// <summary> Gets an object representing a <see cref="GenerateDetailedCostReportOperationStatusesResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -986,7 +986,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BenefitRecommendationsGetBenefitRecommendationsAsyncCollectionResultOfT(
+            return new BenefitRecommendationModelAsyncCollectionResultOfT(
                 BenefitRecommendationsRestClient,
                 scope.ToString(),
                 filter,
@@ -1028,7 +1028,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BenefitRecommendationsGetBenefitRecommendationsCollectionResultOfT(
+            return new BenefitRecommendationModelCollectionResultOfT(
                 BenefitRecommendationsRestClient,
                 scope.ToString(),
                 filter,
@@ -1069,7 +1069,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesByBillingAccountIdAsyncCollectionResultOfT(
+            return new BenefitUtilizationSummaryAsyncCollectionResultOfT(
                 BenefitUtilizationSummariesRestClient,
                 scope.Name,
                 grainParameter?.ToString(),
@@ -1109,7 +1109,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesByBillingAccountIdCollectionResultOfT(
+            return new BenefitUtilizationSummaryCollectionResultOfT(
                 BenefitUtilizationSummariesRestClient,
                 scope.Name,
                 grainParameter?.ToString(),
@@ -1149,7 +1149,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesByBillingProfileIdAsyncCollectionResultOfT(
+            return new BenefitUtilizationSummaryAsync0CollectionResultOfT(
                 BenefitUtilizationSummariesRestClient,
                 scope.Parent.Name,
                 scope.Name,
@@ -1190,7 +1190,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesByBillingProfileIdCollectionResultOfT(
+            return new BenefitUtilizationSummary0CollectionResultOfT(
                 BenefitUtilizationSummariesRestClient,
                 scope.Parent.Name,
                 scope.Name,
@@ -1231,7 +1231,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesBySavingsPlanOrderAsyncCollectionResultOfT(
+            return new BenefitUtilizationSummaryAsync1CollectionResultOfT(
                 BenefitUtilizationSummariesRestClient,
                 scope.Name,
                 filter,
@@ -1271,7 +1271,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesBySavingsPlanOrderCollectionResultOfT(
+            return new BenefitUtilizationSummary1CollectionResultOfT(
                 BenefitUtilizationSummariesRestClient,
                 scope.Name,
                 filter,
@@ -1311,7 +1311,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesBySavingsPlanIdAsyncCollectionResultOfT(
+            return new BenefitUtilizationSummaryAsync2CollectionResultOfT(
                 BenefitUtilizationSummariesRestClient,
                 scope.Parent.Name,
                 scope.Name,
@@ -1352,7 +1352,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesBySavingsPlanIdCollectionResultOfT(
+            return new BenefitUtilizationSummary2CollectionResultOfT(
                 BenefitUtilizationSummariesRestClient,
                 scope.Parent.Name,
                 scope.Name,
@@ -2295,7 +2295,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DimensionsGetDimensionsAsyncCollectionResultOfT(
+            return new CostManagementDimensionAsyncCollectionResultOfT(
                 DimensionsRestClient,
                 scope.ToString(),
                 filter,
@@ -2339,7 +2339,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DimensionsGetDimensionsCollectionResultOfT(
+            return new CostManagementDimensionCollectionResultOfT(
                 DimensionsRestClient,
                 scope.ToString(),
                 filter,

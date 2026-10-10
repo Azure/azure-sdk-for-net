@@ -7,7 +7,7 @@
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary> The ModeCopyMode. </summary>
+    /// <summary> The mode copy mode. </summary>
     public enum ModeCopyMode
     {
         /// <summary> source. </summary>

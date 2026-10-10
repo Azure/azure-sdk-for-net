@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="clusterType"> Type of the cluster. If set to Production, some operations might not be permitted on cluster. </param>
         /// <param name="extensions"> Extensions to be added or updated on cluster. </param>
         /// <param name="authenticationMethod"> The authentication method used for the Garnet cluster. </param>
-        /// <param name="persistence"> Flag to indicate if persistence is enabled for the Garnet cluster. </param>
+        /// <param name="isPersistenceEnabled"> Flag to indicate if persistence is enabled for the Garnet cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GarnetClusterResourcePatchProperties(CassandraClusterType? clusterType, IList<string> extensions, GarnetAuthenticationType? authenticationMethod, bool? persistence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GarnetClusterResourcePatchProperties(CassandraClusterType? clusterType, IList<string> extensions, GarnetAuthenticationType? authenticationMethod, bool? isPersistenceEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClusterType = clusterType;
             Extensions = extensions;
             AuthenticationMethod = authenticationMethod;
-            Persistence = persistence;
+            IsPersistenceEnabled = isPersistenceEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Flag to indicate if persistence is enabled for the Garnet cluster. </summary>
         [WirePath("persistence")]
-        public bool? Persistence { get; set; }
+        public bool? IsPersistenceEnabled { get; set; }
     }
 }

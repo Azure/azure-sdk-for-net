@@ -17,6 +17,18 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private CorsOptions _corsOptions;
+        internal bool _corsOptionsIsDefined;
+        private SearchResourceEncryptionKey _encryptionKey;
+        internal bool _encryptionKeyIsDefined;
+        private SemanticSearch _semanticSearch;
+        internal bool _semanticSearchIsDefined;
+        private VectorSearch _vectorSearch;
+        internal bool _vectorSearchIsDefined;
+        private SearchIndexPermissionFilterOption? _permissionFilterOption;
+        internal bool _permissionFilterOptionIsDefined;
+        private bool? _purviewEnabled;
+        internal bool _purviewEnabledIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexResponse"/>. </summary>
         /// <param name="name"> The name of the index. </param>
@@ -61,19 +73,19 @@ namespace Azure.Search.Documents.Indexes.Models
             Fields = fields;
             ScoringProfiles = scoringProfiles;
             DefaultScoringProfile = defaultScoringProfile;
-            CorsOptions = corsOptions;
+            _corsOptions = corsOptions;
             Suggesters = suggesters;
             Analyzers = analyzers;
             Tokenizers = tokenizers;
             TokenFilters = tokenFilters;
             CharFilters = charFilters;
             Normalizers = normalizers;
-            EncryptionKey = encryptionKey;
+            _encryptionKey = encryptionKey;
             Similarity = similarity;
-            SemanticSearch = semanticSearch;
-            VectorSearch = vectorSearch;
-            PermissionFilterOption = permissionFilterOption;
-            PurviewEnabled = purviewEnabled;
+            _semanticSearch = semanticSearch;
+            _vectorSearch = vectorSearch;
+            _permissionFilterOption = permissionFilterOption;
+            _purviewEnabled = purviewEnabled;
             ETag = eTag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -94,7 +106,13 @@ namespace Azure.Search.Documents.Indexes.Models
         public string DefaultScoringProfile { get; }
 
         /// <summary> Options to control Cross-Origin Resource Sharing (CORS) for the index. </summary>
-        public CorsOptions CorsOptions { get; }
+        public CorsOptions CorsOptions
+        {
+            get
+            {
+                return _corsOptions;
+            }
+        }
 
         /// <summary> The suggesters for the index. </summary>
         public IList<SearchSuggester> Suggesters { get; }
@@ -115,22 +133,52 @@ namespace Azure.Search.Documents.Indexes.Models
         public IList<LexicalNormalizer> Normalizers { get; }
 
         /// <summary> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your data when you want full assurance that no one, not even Microsoft, can decrypt your data. Once you have encrypted your data, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your data will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </summary>
-        public SearchResourceEncryptionKey EncryptionKey { get; }
+        public SearchResourceEncryptionKey EncryptionKey
+        {
+            get
+            {
+                return _encryptionKey;
+            }
+        }
 
         /// <summary> The type of similarity algorithm to be used when scoring and ranking the documents matching a search query. The similarity algorithm can only be defined at index creation time and cannot be modified on existing indexes. If null, the ClassicSimilarity algorithm is used. </summary>
         public SimilarityAlgorithm Similarity { get; }
 
         /// <summary> Defines parameters for a search index that influence semantic capabilities. </summary>
-        public SemanticSearch SemanticSearch { get; }
+        public SemanticSearch SemanticSearch
+        {
+            get
+            {
+                return _semanticSearch;
+            }
+        }
 
         /// <summary> Contains configuration options related to vector search. </summary>
-        public VectorSearch VectorSearch { get; }
+        public VectorSearch VectorSearch
+        {
+            get
+            {
+                return _vectorSearch;
+            }
+        }
 
         /// <summary> A value indicating whether permission filtering is enabled for the index. </summary>
-        public SearchIndexPermissionFilterOption? PermissionFilterOption { get; }
+        public SearchIndexPermissionFilterOption? PermissionFilterOption
+        {
+            get
+            {
+                return _permissionFilterOption;
+            }
+        }
 
         /// <summary> A value indicating whether Purview is enabled for the index. </summary>
-        public bool? PurviewEnabled { get; }
+        public bool? PurviewEnabled
+        {
+            get
+            {
+                return _purviewEnabled;
+            }
+        }
 
         /// <summary> The ETag of the index. </summary>
         public ETag? ETag { get; }

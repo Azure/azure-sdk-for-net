@@ -12,7 +12,7 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Parameters to create Data Transfer Job. </summary>
-    public partial class CosmosDBJobCreateContent : ArmProxyResource
+    public partial class CosmosDBJobCreateContent : CosmosDBProxyResource
     {
         /// <summary> Initializes a new instance of <see cref="CosmosDBJobCreateContent"/>. </summary>
         /// <param name="properties"> Data Transfer Create Job Properties. </param>

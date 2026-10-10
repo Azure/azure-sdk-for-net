@@ -24,7 +24,7 @@ namespace Azure.Provisioning.Batch
         {
         }
 
-        /// <summary> Gets or sets the Id. </summary>
+        /// <summary> Gets the Id. </summary>
         public BicepValue<ResourceIdentifier> Id
         {
             get
@@ -32,14 +32,9 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _id;
             }
-            set
-            {
-                Initialize();
-                _id.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the PerimeterGuid. </summary>
+        /// <summary> Gets the PerimeterGuid. </summary>
         public BicepValue<Guid> PerimeterGuid
         {
             get
@@ -47,25 +42,15 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _perimeterGuid;
             }
-            set
-            {
-                Initialize();
-                _perimeterGuid.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Location. </summary>
+        /// <summary> Gets the Location. </summary>
         public BicepValue<AzureLocation> Location
         {
             get
             {
                 Initialize();
                 return _location;
-            }
-            set
-            {
-                Initialize();
-                _location.Assign(value);
             }
         }
 
@@ -76,6 +61,10 @@ namespace Azure.Provisioning.Batch
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" });
             _perimeterGuid = DefineProperty<Guid>(nameof(PerimeterGuid), new string[] { "perimeterGuid" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for NetworkSecurityPerimeter that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

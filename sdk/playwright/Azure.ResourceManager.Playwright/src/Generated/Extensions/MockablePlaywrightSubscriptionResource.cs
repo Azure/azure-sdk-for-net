@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Playwright.Mocking
 
         private ClientDiagnostics PlaywrightWorkspacesClientDiagnostics => _playwrightWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Playwright.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PlaywrightWorkspaces PlaywrightWorkspacesRestClient => _playwrightWorkspacesRestClient ??= new PlaywrightWorkspaces(PlaywrightWorkspacesClientDiagnostics, Pipeline, Endpoint, "2026-02-01-preview");
+        private PlaywrightWorkspaces PlaywrightWorkspacesRestClient => _playwrightWorkspacesRestClient ??= new PlaywrightWorkspaces(PlaywrightWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-02-01-preview");
 
         /// <summary> Gets a collection of PlaywrightQuota in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Playwright.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PlaywrightWorkspaceData, PlaywrightWorkspaceResource>(new PlaywrightWorkspacesGetBySubscriptionAsyncCollectionResultOfT(PlaywrightWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockablePlaywrightSubscriptionResource.GetPlaywrightWorkspaces"), data => new PlaywrightWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<PlaywrightWorkspaceData, PlaywrightWorkspaceResource>(new PlaywrightWorkspaceDataAsync0CollectionResultOfT(PlaywrightWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockablePlaywrightSubscriptionResource.GetPlaywrightWorkspaces"), data => new PlaywrightWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Playwright.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PlaywrightWorkspaceData, PlaywrightWorkspaceResource>(new PlaywrightWorkspacesGetBySubscriptionCollectionResultOfT(PlaywrightWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockablePlaywrightSubscriptionResource.GetPlaywrightWorkspaces"), data => new PlaywrightWorkspaceResource(Client, data));
+            return new PageableWrapper<PlaywrightWorkspaceData, PlaywrightWorkspaceResource>(new PlaywrightWorkspaceData0CollectionResultOfT(PlaywrightWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockablePlaywrightSubscriptionResource.GetPlaywrightWorkspaces"), data => new PlaywrightWorkspaceResource(Client, data));
         }
 
         /// <summary>

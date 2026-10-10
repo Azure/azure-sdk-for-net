@@ -41,7 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(TrafficProfileResource.ResourceType, out string trafficProfileApiVersion);
             _trafficProfilesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", TrafficProfileResource.ResourceType.Namespace, Diagnostics);
-            _trafficProfilesRestClient = new TrafficProfiles(_trafficProfilesClientDiagnostics, Pipeline, Endpoint, trafficProfileApiVersion ?? "2024-05-01");
+            _trafficProfilesRestClient = new TrafficProfiles(_trafficProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, trafficProfileApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -288,7 +288,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TrafficProfileData, TrafficProfileResource>(new TrafficProfilesGetAllAsyncCollectionResultOfT(_trafficProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "TrafficProfileCollection.GetAll"), data => new TrafficProfileResource(Client, data));
+            return new AsyncPageableWrapper<TrafficProfileData, TrafficProfileResource>(new TrafficProfileDataAsyncCollectionResultOfT(_trafficProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "TrafficProfileCollection.GetAll"), data => new TrafficProfileResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TrafficProfileData, TrafficProfileResource>(new TrafficProfilesGetAllCollectionResultOfT(_trafficProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "TrafficProfileCollection.GetAll"), data => new TrafficProfileResource(Client, data));
+            return new PageableWrapper<TrafficProfileData, TrafficProfileResource>(new TrafficProfileDataCollectionResultOfT(_trafficProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "TrafficProfileCollection.GetAll"), data => new TrafficProfileResource(Client, data));
         }
 
         /// <summary>

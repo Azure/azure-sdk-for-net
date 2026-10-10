@@ -15,6 +15,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
@@ -27,7 +28,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     {
         private readonly ClientDiagnostics _customBaseTypeResourcesClientDiagnostics;
         private readonly CustomBaseTypeResources _customBaseTypeResourcesRestClient;
-        private readonly CustomBaseTypeResourceData _data;
+        private readonly CustomBaseTypeResourceCustomData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/customBaseTypeResources";
 
@@ -39,7 +40,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <summary> Initializes a new instance of <see cref="CustomBaseTypeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal CustomBaseTypeResource(ArmClient client, CustomBaseTypeResourceData data) : this(client, data.Id)
+        internal CustomBaseTypeResource(ArmClient client, CustomBaseTypeResourceCustomData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -52,7 +53,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string customBaseTypeResourceApiVersion);
             _customBaseTypeResourcesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _customBaseTypeResourcesRestClient = new CustomBaseTypeResources(_customBaseTypeResourcesClientDiagnostics, Pipeline, Endpoint, customBaseTypeResourceApiVersion ?? "2024-05-01");
+            _customBaseTypeResourcesRestClient = new CustomBaseTypeResources(_customBaseTypeResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, customBaseTypeResourceApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -60,7 +61,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual CustomBaseTypeResourceData Data
+        public virtual CustomBaseTypeResourceCustomData Data
         {
             get
             {
@@ -126,7 +127,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 };
                 HttpMessage message = _customBaseTypeResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CustomBaseTypeResourceData> response = Response.FromValue(CustomBaseTypeResourceData.FromResponse(result), result);
+                Response<CustomBaseTypeResourceCustomData> response = Response.FromValue(CustomBaseTypeResourceCustomData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -174,7 +175,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 };
                 HttpMessage message = _customBaseTypeResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CustomBaseTypeResourceData> response = Response.FromValue(CustomBaseTypeResourceData.FromResponse(result), result);
+                Response<CustomBaseTypeResourceCustomData> response = Response.FromValue(CustomBaseTypeResourceCustomData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -210,12 +211,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Resource create parameters. </param>
+        /// <param name="resource"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<CustomBaseTypeResource>> UpdateAsync(WaitUntil waitUntil, CustomBaseTypeResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
+        public virtual async Task<ArmOperation<CustomBaseTypeResource>> UpdateAsync(WaitUntil waitUntil, CustomBaseTypeResourceCustomData resource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(resource, nameof(resource));
 
             using DiagnosticScope scope = _customBaseTypeResourcesClientDiagnostics.CreateScope("CustomBaseTypeResource.Update");
             scope.Start();
@@ -225,7 +226,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customBaseTypeResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CustomBaseTypeResourceData.ToRequestContent(data), context);
+                HttpMessage message = _customBaseTypeResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CustomBaseTypeResourceCustomData.ToRequestContent(resource), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<CustomBaseTypeResource> operation = new TestsArmOperation<CustomBaseTypeResource>(
                     new CustomBaseTypeResourceOperationSource(Client),
@@ -270,12 +271,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Resource create parameters. </param>
+        /// <param name="resource"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<CustomBaseTypeResource> Update(WaitUntil waitUntil, CustomBaseTypeResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
+        public virtual ArmOperation<CustomBaseTypeResource> Update(WaitUntil waitUntil, CustomBaseTypeResourceCustomData resource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(resource, nameof(resource));
 
             using DiagnosticScope scope = _customBaseTypeResourcesClientDiagnostics.CreateScope("CustomBaseTypeResource.Update");
             scope.Start();
@@ -285,7 +286,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customBaseTypeResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CustomBaseTypeResourceData.ToRequestContent(data), context);
+                HttpMessage message = _customBaseTypeResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CustomBaseTypeResourceCustomData.ToRequestContent(resource), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<CustomBaseTypeResource> operation = new TestsArmOperation<CustomBaseTypeResource>(
                     new CustomBaseTypeResourceOperationSource(Client),
@@ -333,12 +334,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     };
                     HttpMessage message = _customBaseTypeResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<CustomBaseTypeResourceData> response = Response.FromValue(CustomBaseTypeResourceData.FromResponse(result), result);
+                    Response<CustomBaseTypeResourceCustomData> response = Response.FromValue(CustomBaseTypeResourceCustomData.FromResponse(result), result);
                     return Response.FromValue(new CustomBaseTypeResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    CustomBaseTypeResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    CustomBaseTypeResourceCustomData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags[key] = value;
                     ArmOperation<CustomBaseTypeResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -376,12 +377,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     };
                     HttpMessage message = _customBaseTypeResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<CustomBaseTypeResourceData> response = Response.FromValue(CustomBaseTypeResourceData.FromResponse(result), result);
+                    Response<CustomBaseTypeResourceCustomData> response = Response.FromValue(CustomBaseTypeResourceCustomData.FromResponse(result), result);
                     return Response.FromValue(new CustomBaseTypeResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    CustomBaseTypeResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    CustomBaseTypeResourceCustomData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags[key] = value;
                     ArmOperation<CustomBaseTypeResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -408,22 +409,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
                     };
                     HttpMessage message = _customBaseTypeResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<CustomBaseTypeResourceData> response = Response.FromValue(CustomBaseTypeResourceData.FromResponse(result), result);
+                    Response<CustomBaseTypeResourceCustomData> response = Response.FromValue(CustomBaseTypeResourceCustomData.FromResponse(result), result);
                     return Response.FromValue(new CustomBaseTypeResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    CustomBaseTypeResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    CustomBaseTypeResourceCustomData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.ReplaceWith(tags);
                     ArmOperation<CustomBaseTypeResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -450,22 +450,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
                     };
                     HttpMessage message = _customBaseTypeResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<CustomBaseTypeResourceData> response = Response.FromValue(CustomBaseTypeResourceData.FromResponse(result), result);
+                    Response<CustomBaseTypeResourceCustomData> response = Response.FromValue(CustomBaseTypeResourceCustomData.FromResponse(result), result);
                     return Response.FromValue(new CustomBaseTypeResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    CustomBaseTypeResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    CustomBaseTypeResourceCustomData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.ReplaceWith(tags);
                     ArmOperation<CustomBaseTypeResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -501,12 +500,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     };
                     HttpMessage message = _customBaseTypeResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<CustomBaseTypeResourceData> response = Response.FromValue(CustomBaseTypeResourceData.FromResponse(result), result);
+                    Response<CustomBaseTypeResourceCustomData> response = Response.FromValue(CustomBaseTypeResourceCustomData.FromResponse(result), result);
                     return Response.FromValue(new CustomBaseTypeResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    CustomBaseTypeResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    CustomBaseTypeResourceCustomData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.Remove(key);
                     ArmOperation<CustomBaseTypeResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -542,12 +541,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     };
                     HttpMessage message = _customBaseTypeResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<CustomBaseTypeResourceData> response = Response.FromValue(CustomBaseTypeResourceData.FromResponse(result), result);
+                    Response<CustomBaseTypeResourceCustomData> response = Response.FromValue(CustomBaseTypeResourceCustomData.FromResponse(result), result);
                     return Response.FromValue(new CustomBaseTypeResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    CustomBaseTypeResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    CustomBaseTypeResourceCustomData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.Remove(key);
                     ArmOperation<CustomBaseTypeResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());

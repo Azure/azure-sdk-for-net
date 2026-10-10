@@ -34,6 +34,7 @@ namespace Azure.ResourceManager.ArtifactSigning
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(Revocation))]
     [ModelReaderWriterBuildable(typeof(RevokeCertificateContent))]
+    [ModelReaderWriterBuildable(typeof(RevokeCertificateList))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerArtifactSigningContext : ModelReaderWriterContext
     {

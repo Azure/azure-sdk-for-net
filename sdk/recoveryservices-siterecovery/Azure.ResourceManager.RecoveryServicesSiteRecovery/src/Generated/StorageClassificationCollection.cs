@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             TryGetApiVersion(StorageClassificationResource.ResourceType, out string storageClassificationApiVersion);
             _replicationStorageClassificationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", StorageClassificationResource.ResourceType.Namespace, Diagnostics);
-            _replicationStorageClassificationsRestClient = new ReplicationStorageClassifications(_replicationStorageClassificationsClientDiagnostics, Pipeline, Endpoint, storageClassificationApiVersion ?? "2026-02-01");
+            _replicationStorageClassificationsRestClient = new ReplicationStorageClassifications(_replicationStorageClassificationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageClassificationApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageClassificationData, StorageClassificationResource>(new ReplicationStorageClassificationsGetByReplicationFabricsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<StorageClassificationData, StorageClassificationResource>(new StorageClassificationDataAsyncCollectionResultOfT(
                 _replicationStorageClassificationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageClassificationData, StorageClassificationResource>(new ReplicationStorageClassificationsGetByReplicationFabricsCollectionResultOfT(
+            return new PageableWrapper<StorageClassificationData, StorageClassificationResource>(new StorageClassificationDataCollectionResultOfT(
                 _replicationStorageClassificationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -32,7 +32,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="SessionLogEvent"/>. </summary>
         /// <param name="event"> The SSE event type. Currently `log`, but additional event types may be added in the future. Clients should ignore unrecognized event types. </param>
         /// <param name="data"> The event payload as plain text. Currently JSON-formatted but the schema is not contractual and may change. </param>
-        internal SessionLogEvent(SessionLogEventType @event, string data)
+        internal SessionLogEvent(SessionLogEventKind @event, string data)
         {
             Event = @event;
             Data = data;
@@ -42,7 +42,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="event"> The SSE event type. Currently `log`, but additional event types may be added in the future. Clients should ignore unrecognized event types. </param>
         /// <param name="data"> The event payload as plain text. Currently JSON-formatted but the schema is not contractual and may change. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SessionLogEvent(SessionLogEventType @event, string data, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SessionLogEvent(SessionLogEventKind @event, string data, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Event = @event;
             Data = data;
@@ -50,7 +50,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The SSE event type. Currently `log`, but additional event types may be added in the future. Clients should ignore unrecognized event types. </summary>
-        public SessionLogEventType Event { get; }
+        public SessionLogEventKind Event { get; }
 
         /// <summary> The event payload as plain text. Currently JSON-formatted but the schema is not contractual and may change. </summary>
         public string Data { get; }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DataMigration
 {
+    /// <summary></summary>
     public partial class ServiceServiceTaskResource : IJsonModel<DataMigrationProjectTaskData>
     {
-        private static DataMigrationProjectTaskData s_dataDeserializationInstance;
-        private static DataMigrationProjectTaskData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DataMigrationProjectTaskData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DataMigrationProjectTaskData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DataMigrationProjectTaskData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataMigrationProjectTaskData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataMigrationProjectTaskData>)Data).Write(writer, options);
 
-        DataMigrationProjectTaskData IJsonModel<DataMigrationProjectTaskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataMigrationProjectTaskData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataMigrationProjectTaskData IJsonModel<DataMigrationProjectTaskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DataMigrationProjectTaskData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataMigrationProjectTaskData>(Data, options, AzureResourceManagerDataMigrationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DataMigrationProjectTaskData IPersistableModel<DataMigrationProjectTaskData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataMigrationProjectTaskData>(data, options, AzureResourceManagerDataMigrationContext.Default);
 
-        string IPersistableModel<DataMigrationProjectTaskData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataMigrationProjectTaskData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataMigrationProjectTaskData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

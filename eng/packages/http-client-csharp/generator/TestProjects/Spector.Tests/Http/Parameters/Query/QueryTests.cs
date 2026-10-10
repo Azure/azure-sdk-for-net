@@ -15,5 +15,12 @@ namespace TestProjects.Spector.Tests.Http.Parameters.Query
             var response = await new QueryClient(host, null).GetConstantClient().PostAsync();
             Assert.AreEqual(204, response.Status);
         });
+
+        [SpectorTest]
+        public Task Parameters_Query_SpecialChar_DollarSign() => Test(async (host) =>
+        {
+            var response = await new QueryClient(host, null).GetSpecialCharClient().DollarSignAsync("status eq 'active'");
+            Assert.AreEqual(204, response.Status);
+        });
     }
 }

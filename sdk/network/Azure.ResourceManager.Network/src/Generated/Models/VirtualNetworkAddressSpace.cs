@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> AddressSpace contains an array of IP address ranges that can be used by subnets of the virtual network. </summary>
     public partial class VirtualNetworkAddressSpace
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkAddressSpace"/>. </summary>
         public VirtualNetworkAddressSpace()
@@ -55,17 +27,18 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkAddressSpace"/>. </summary>
         /// <param name="addressPrefixes"> A list of address blocks reserved for this virtual network in CIDR notation. </param>
         /// <param name="ipamPoolPrefixAllocations"> A list of IPAM Pools allocating IP address prefixes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkAddressSpace(IList<string> addressPrefixes, IList<IpamPoolPrefixAllocation> ipamPoolPrefixAllocations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworkAddressSpace(IList<string> addressPrefixes, IList<IpamPoolPrefixAllocation> ipamPoolPrefixAllocations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AddressPrefixes = addressPrefixes;
             IpamPoolPrefixAllocations = ipamPoolPrefixAllocations;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
         [WirePath("addressPrefixes")]
         public IList<string> AddressPrefixes { get; }
+
         /// <summary> A list of IPAM Pools allocating IP address prefixes. </summary>
         [WirePath("ipamPoolPrefixAllocations")]
         public IList<IpamPoolPrefixAllocation> IpamPoolPrefixAllocations { get; }

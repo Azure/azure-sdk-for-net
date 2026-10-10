@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.MachineLearning.Models
     internal readonly partial struct ForecastHorizonMode : IEquatable<ForecastHorizonMode>
     {
         private readonly string _value;
+        /// <summary> Forecast horizon to be determined automatically. </summary>
+        private const string AutoValue = "Auto";
+        /// <summary> Use the custom forecast horizon. </summary>
+        private const string CustomValue = "Custom";
 
         /// <summary> Initializes a new instance of <see cref="ForecastHorizonMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ForecastHorizonMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AutoValue = "Auto";
-        private const string CustomValue = "Custom";
+            _value = value;
+        }
 
         /// <summary> Forecast horizon to be determined automatically. </summary>
         public static ForecastHorizonMode Auto { get; } = new ForecastHorizonMode(AutoValue);
+
         /// <summary> Use the custom forecast horizon. </summary>
         public static ForecastHorizonMode Custom { get; } = new ForecastHorizonMode(CustomValue);
+
         /// <summary> Determines if two <see cref="ForecastHorizonMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ForecastHorizonMode left, ForecastHorizonMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ForecastHorizonMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ForecastHorizonMode left, ForecastHorizonMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ForecastHorizonMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ForecastHorizonMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ForecastHorizonMode(string value) => new ForecastHorizonMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ForecastHorizonMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ForecastHorizonMode?(string value) => value == null ? null : new ForecastHorizonMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ForecastHorizonMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ForecastHorizonMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

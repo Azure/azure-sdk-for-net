@@ -89,10 +89,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("efSearch"u8);
                 writer.WriteNumberValue(EfSearch.Value);
             }
-            if (Optional.IsDefined(Metric))
+            if (_metricIsDefined || Optional.IsDefined(Metric))
             {
-                writer.WritePropertyName("metric"u8);
-                writer.WriteStringValue(Metric.Value.ToString());
+                if (Metric != null)
+                {
+                    writer.WritePropertyName("metric"u8);
+                    writer.WriteStringValue(Metric.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("metric"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,6 +146,7 @@ namespace Azure.Search.Documents.Indexes.Models
             int? m = default;
             int? efConstruction = default;
             int? efSearch = default;
+            bool metricIsDefined = false;
             VectorSearchAlgorithmMetric? metric = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -172,6 +180,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("metric"u8))
                 {
+                    metricIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         metric = null;
@@ -182,10 +191,13 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HnswParameters(m, efConstruction, efSearch, metric, additionalBinaryDataProperties);
+            return new HnswParameters(m, efConstruction, efSearch, metric, additionalBinaryDataProperties)
+            {
+                _metricIsDefined = metricIsDefined
+            };
         }
     }
 }

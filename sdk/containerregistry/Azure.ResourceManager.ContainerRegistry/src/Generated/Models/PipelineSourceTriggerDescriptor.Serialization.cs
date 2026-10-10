@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 throw new FormatException($"The model {nameof(PipelineSourceTriggerDescriptor)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SourceTriggerTimestamp))
+            if (Optional.IsDefined(SourceTriggerOn))
             {
                 writer.WritePropertyName("timestamp"u8);
-                writer.WriteStringValue(SourceTriggerTimestamp.Value, "O");
+                writer.WriteStringValue(SourceTriggerOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            DateTimeOffset? sourceTriggerTimestamp = default;
+            DateTimeOffset? sourceTriggerOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,15 +131,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    sourceTriggerTimestamp = prop.Value.GetDateTimeOffset("O");
+                    sourceTriggerOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PipelineSourceTriggerDescriptor(sourceTriggerTimestamp, additionalBinaryDataProperties);
+            return new PipelineSourceTriggerDescriptor(sourceTriggerOn, additionalBinaryDataProperties);
         }
     }
 }

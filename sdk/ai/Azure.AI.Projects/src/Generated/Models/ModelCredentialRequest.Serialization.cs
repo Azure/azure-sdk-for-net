@@ -11,7 +11,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Request to fetch credentials for a model asset. </summary>
-    internal partial class ModelCredentialRequest : IJsonModel<ModelCredentialRequest>
+    public partial class ModelCredentialRequest : IJsonModel<ModelCredentialRequest>
     {
         /// <summary> Initializes a new instance of <see cref="ModelCredentialRequest"/> for deserialization. </summary>
         internal ModelCredentialRequest()
@@ -141,7 +141,7 @@ namespace Azure.AI.Projects
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ModelCredentialRequest(blobUri, additionalBinaryDataProperties);

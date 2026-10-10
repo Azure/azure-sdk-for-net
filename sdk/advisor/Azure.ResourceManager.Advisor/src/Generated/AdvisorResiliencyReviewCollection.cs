@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Advisor
         {
             TryGetApiVersion(AdvisorResiliencyReviewResource.ResourceType, out string advisorResiliencyReviewApiVersion);
             _resiliencyReviewsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", AdvisorResiliencyReviewResource.ResourceType.Namespace, Diagnostics);
-            _resiliencyReviewsRestClient = new ResiliencyReviews(_resiliencyReviewsClientDiagnostics, Pipeline, Endpoint, advisorResiliencyReviewApiVersion ?? "2025-05-01-preview");
+            _resiliencyReviewsRestClient = new ResiliencyReviews(_resiliencyReviewsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, advisorResiliencyReviewApiVersion ?? "2025-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Advisor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AdvisorResiliencyReviewData, AdvisorResiliencyReviewResource>(new ResiliencyReviewsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AdvisorResiliencyReviewData, AdvisorResiliencyReviewResource>(new AdvisorResiliencyReviewDataAsyncCollectionResultOfT(
                 _resiliencyReviewsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Advisor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AdvisorResiliencyReviewData, AdvisorResiliencyReviewResource>(new ResiliencyReviewsGetAllCollectionResultOfT(
+            return new PageableWrapper<AdvisorResiliencyReviewData, AdvisorResiliencyReviewResource>(new AdvisorResiliencyReviewDataCollectionResultOfT(
                 _resiliencyReviewsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,

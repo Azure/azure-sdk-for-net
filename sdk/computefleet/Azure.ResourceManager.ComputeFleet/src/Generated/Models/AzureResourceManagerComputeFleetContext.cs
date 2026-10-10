@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.ComputeFleet.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -86,13 +85,11 @@ namespace Azure.ResourceManager.ComputeFleet
     [ModelReaderWriterBuildable(typeof(ComputeFleetWindowsConfiguration))]
     [ModelReaderWriterBuildable(typeof(ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings))]
     [ModelReaderWriterBuildable(typeof(ComputeFleetWinRMListener))]
-    [ModelReaderWriterBuildable(typeof(ComputeFleetZoneAllocationPolicy))]
     [ModelReaderWriterBuildable(typeof(DiskEncryptionSetParameters))]
     [ModelReaderWriterBuildable(typeof(FleetListResult))]
     [ModelReaderWriterBuildable(typeof(LocationProfile))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(RegularPriorityProfile))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceArtifactReference))]
     [ModelReaderWriterBuildable(typeof(SpotPriorityProfile))]
     [ModelReaderWriterBuildable(typeof(Models.SubResource))]
@@ -103,7 +100,6 @@ namespace Azure.ResourceManager.ComputeFleet
     [ModelReaderWriterBuildable(typeof(WindowsSetupAdditionalInformation))]
     [ModelReaderWriterBuildable(typeof(WinRMConfiguration))]
     [ModelReaderWriterBuildable(typeof(WritableSubResource))]
-    [ModelReaderWriterBuildable(typeof(ZonePreference))]
     public partial class AzureResourceManagerComputeFleetContext : ModelReaderWriterContext
     {
     }

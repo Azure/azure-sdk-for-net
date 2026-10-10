@@ -48,7 +48,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <returns> The pages of TextAnalysisAuthoringClientGetDeploymentsCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<TextAuthoringProjectDeployment>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -57,8 +57,8 @@ namespace Azure.AI.Language.Text.Authoring
                     yield break;
                 }
                 PagedTextAnalysisAuthoringProjectDeployment result = (PagedTextAnalysisAuthoringProjectDeployment)response;
-                yield return Page<TextAuthoringProjectDeployment>.FromValues((IReadOnlyList<TextAuthoringProjectDeployment>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<TextAuthoringProjectDeployment>.FromValues((IReadOnlyList<TextAuthoringProjectDeployment>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

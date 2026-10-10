@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(FrontDoorOriginResource.ResourceType, out string frontDoorOriginApiVersion);
             _frontDoorOriginsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", FrontDoorOriginResource.ResourceType.Namespace, Diagnostics);
-            _frontDoorOriginsRestClient = new FrontDoorOrigins(_frontDoorOriginsClientDiagnostics, Pipeline, Endpoint, frontDoorOriginApiVersion ?? "2025-09-01-preview");
+            _frontDoorOriginsRestClient = new FrontDoorOrigins(_frontDoorOriginsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorOriginApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FrontDoorOriginData, FrontDoorOriginResource>(new FrontDoorOriginsGetByOriginGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FrontDoorOriginData, FrontDoorOriginResource>(new FrontDoorOriginDataAsyncCollectionResultOfT(
                 _frontDoorOriginsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FrontDoorOriginData, FrontDoorOriginResource>(new FrontDoorOriginsGetByOriginGroupCollectionResultOfT(
+            return new PageableWrapper<FrontDoorOriginData, FrontDoorOriginResource>(new FrontDoorOriginDataCollectionResultOfT(
                 _frontDoorOriginsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

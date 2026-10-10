@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         }
 
         /// <summary> The image versions to upgrade the nodes to. </summary>
-        public IReadOnlyList<NodeImageVersion> SelectedNodeImageVersions { get; }
+        public IReadOnlyList<NodeImageVersion> SelectedNodeImageVersions { get; } = new ChangeTrackingList<NodeImageVersion>();
     }
 }

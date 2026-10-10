@@ -40,8 +40,8 @@ steps:
         $prAuthor = $prData.user.login
         Write-Host "PR author: $prAuthor"
 
-        if ($prAuthor -ieq "azure-sdk") {
-          Write-Host "PR opened by azure-sdk. Skipping CODEOWNERS section check."
+        if ($prAuthor -ieq 'azure-sdk-automation[bot]') {
+          Write-Host "PR opened by azure-sdk-automation[bot]. Skipping CODEOWNERS section check."
           Write-Host "##vso[task.setvariable variable=ShouldCheckCodeownersEdits]false"
           exit 0
         }

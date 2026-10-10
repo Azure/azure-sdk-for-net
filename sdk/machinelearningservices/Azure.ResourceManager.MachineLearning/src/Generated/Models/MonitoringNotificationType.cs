@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The MonitoringNotificationType. </summary>
+    /// <summary></summary>
     public readonly partial struct MonitoringNotificationType : IEquatable<MonitoringNotificationType>
     {
         private readonly string _value;
+        /// <summary> Enables email notifications through AML notifications. </summary>
+        private const string AmlNotificationValue = "AmlNotification";
 
         /// <summary> Initializes a new instance of <see cref="MonitoringNotificationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MonitoringNotificationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AmlNotificationValue = "AmlNotification";
+            _value = value;
+        }
 
         /// <summary> Enables email notifications through AML notifications. </summary>
         public static MonitoringNotificationType AmlNotification { get; } = new MonitoringNotificationType(AmlNotificationValue);
+
         /// <summary> Determines if two <see cref="MonitoringNotificationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MonitoringNotificationType left, MonitoringNotificationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MonitoringNotificationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MonitoringNotificationType left, MonitoringNotificationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitoringNotificationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MonitoringNotificationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MonitoringNotificationType(string value) => new MonitoringNotificationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MonitoringNotificationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MonitoringNotificationType?(string value) => value == null ? null : new MonitoringNotificationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MonitoringNotificationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MonitoringNotificationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

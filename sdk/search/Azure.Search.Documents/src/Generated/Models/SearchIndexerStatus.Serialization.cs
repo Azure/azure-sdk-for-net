@@ -224,7 +224,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SearchIndexerStatus(
@@ -232,7 +232,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 status,
                 runtime,
                 lastResult,
-                executionHistory,
+                executionHistory ?? new ChangeTrackingList<IndexerExecutionResult>(),
                 limits,
                 currentState,
                 additionalBinaryDataProperties);

@@ -11,6 +11,7 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests.Samples.Evaluation;
+#pragma warning disable AAIP001
 
 public class Sample_EvaluatorsCatalog : EvaluationSampleBase
 {
@@ -138,7 +139,7 @@ public class Sample_EvaluatorsCatalog : EvaluationSampleBase
         Console.WriteLine("     Categories:");
         foreach (EvaluatorCategory category in evaluator.Categories)
         {
-            Console.WriteLine("         - ${category}");
+            Console.WriteLine($"         - {category}");
         }
     }
     #endregion

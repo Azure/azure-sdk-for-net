@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Virtual Wan Vpn profile parameters Vpn profile generation. </summary>
     public partial class VirtualWanVpnProfileContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualWanVpnProfileContent"/>. </summary>
         public VirtualWanVpnProfileContent()
@@ -54,17 +26,18 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="VirtualWanVpnProfileContent"/>. </summary>
         /// <param name="vpnServerConfigurationResourceId"> VpnServerConfiguration partial resource uri with which VirtualWan is associated to. </param>
         /// <param name="authenticationMethod"> VPN client authentication method. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualWanVpnProfileContent(ResourceIdentifier vpnServerConfigurationResourceId, NetworkAuthenticationMethod? authenticationMethod, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualWanVpnProfileContent(ResourceIdentifier vpnServerConfigurationResourceId, NetworkAuthenticationMethod? authenticationMethod, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VpnServerConfigurationResourceId = vpnServerConfigurationResourceId;
             AuthenticationMethod = authenticationMethod;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> VpnServerConfiguration partial resource uri with which VirtualWan is associated to. </summary>
         [WirePath("vpnServerConfigurationResourceId")]
         public ResourceIdentifier VpnServerConfigurationResourceId { get; set; }
+
         /// <summary> VPN client authentication method. </summary>
         [WirePath("authenticationMethod")]
         public NetworkAuthenticationMethod? AuthenticationMethod { get; set; }

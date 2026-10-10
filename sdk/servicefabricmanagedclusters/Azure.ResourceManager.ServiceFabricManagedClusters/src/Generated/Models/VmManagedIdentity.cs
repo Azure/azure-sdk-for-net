@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         }
 
         /// <summary> The list of user identities associated with the virtual machine scale set under the node type. Each entry will be an ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </summary>
-        public IList<ResourceIdentifier> UserAssignedIdentities { get; }
+        public IList<ResourceIdentifier> UserAssignedIdentities { get; } = new ChangeTrackingList<ResourceIdentifier>();
     }
 }

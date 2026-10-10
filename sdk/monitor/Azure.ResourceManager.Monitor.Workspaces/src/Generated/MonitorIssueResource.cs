@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         {
             TryGetApiVersion(ResourceType, out string monitorIssueApiVersion);
             _issueClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor.Workspaces", ResourceType.Namespace, Diagnostics);
-            _issueRestClient = new Issue(_issueClientDiagnostics, Pipeline, Endpoint, monitorIssueApiVersion ?? "2025-10-03");
+            _issueRestClient = new Issue(_issueClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, monitorIssueApiVersion ?? "2025-10-03");
             ValidateResourceId(id);
         }
 
@@ -939,7 +939,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
             {
                 CancellationToken = cancellationToken
             };
-            return new IssueGetAlertsAsyncCollectionResultOfT(
+            return new IssueRelatedAlertInfoAsyncCollectionResultOfT(
                 _issueRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -983,7 +983,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
             {
                 CancellationToken = cancellationToken
             };
-            return new IssueGetAlertsCollectionResultOfT(
+            return new IssueRelatedAlertInfoCollectionResultOfT(
                 _issueRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1027,7 +1027,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
             {
                 CancellationToken = cancellationToken
             };
-            return new IssueGetResourcesAsyncCollectionResultOfT(
+            return new IssueRelatedResourceInfoAsyncCollectionResultOfT(
                 _issueRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1071,7 +1071,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
             {
                 CancellationToken = cancellationToken
             };
-            return new IssueGetResourcesCollectionResultOfT(
+            return new IssueRelatedResourceInfoCollectionResultOfT(
                 _issueRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

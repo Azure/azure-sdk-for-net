@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             TryGetApiVersion(BudgetResource.ResourceType, out string budgetApiVersion);
             _budgetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", BudgetResource.ResourceType.Namespace, Diagnostics);
-            _budgetsRestClient = new Budgets(_budgetsClientDiagnostics, Pipeline, Endpoint, budgetApiVersion ?? "2025-03-01");
+            _budgetsRestClient = new Budgets(_budgetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, budgetApiVersion ?? "2025-03-01");
         }
 
         /// <summary>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BudgetData, BudgetResource>(new BudgetsGetAllAsyncCollectionResultOfT(_budgetsRestClient, Id.ToString(), filter, context, "BudgetCollection.GetAll"), data => new BudgetResource(Client, data));
+            return new AsyncPageableWrapper<BudgetData, BudgetResource>(new BudgetDataAsyncCollectionResultOfT(_budgetsRestClient, Id.ToString(), filter, context, "BudgetCollection.GetAll"), data => new BudgetResource(Client, data));
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BudgetData, BudgetResource>(new BudgetsGetAllCollectionResultOfT(_budgetsRestClient, Id.ToString(), filter, context, "BudgetCollection.GetAll"), data => new BudgetResource(Client, data));
+            return new PageableWrapper<BudgetData, BudgetResource>(new BudgetDataCollectionResultOfT(_budgetsRestClient, Id.ToString(), filter, context, "BudgetCollection.GetAll"), data => new BudgetResource(Client, data));
         }
 
         /// <summary>

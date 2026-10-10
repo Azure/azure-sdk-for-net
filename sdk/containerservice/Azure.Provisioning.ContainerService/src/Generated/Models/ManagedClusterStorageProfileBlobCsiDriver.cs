@@ -40,6 +40,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _isBlobCsiDriverEnabled = DefineProperty<bool>(nameof(IsBlobCsiDriverEnabled), new string[] { "enabled" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterStorageProfileBlobCsiDriver that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

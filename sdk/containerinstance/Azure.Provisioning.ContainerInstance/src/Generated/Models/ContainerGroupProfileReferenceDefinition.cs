@@ -58,6 +58,10 @@ namespace Azure.Provisioning.ContainerInstance
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" });
             _revision = DefineProperty<int>(nameof(Revision), new string[] { "revision" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerGroupProfileReferenceDefinition that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

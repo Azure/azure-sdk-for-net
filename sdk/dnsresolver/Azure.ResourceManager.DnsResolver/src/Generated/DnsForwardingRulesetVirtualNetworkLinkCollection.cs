@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             TryGetApiVersion(DnsForwardingRulesetVirtualNetworkLinkResource.ResourceType, out string dnsForwardingRulesetVirtualNetworkLinkApiVersion);
             _virtualNetworkLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsForwardingRulesetVirtualNetworkLinkResource.ResourceType.Namespace, Diagnostics);
-            _virtualNetworkLinksRestClient = new VirtualNetworkLinks(_virtualNetworkLinksClientDiagnostics, Pipeline, Endpoint, dnsForwardingRulesetVirtualNetworkLinkApiVersion ?? "2025-10-01-preview");
+            _virtualNetworkLinksRestClient = new VirtualNetworkLinks(_virtualNetworkLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dnsForwardingRulesetVirtualNetworkLinkApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DnsForwardingRulesetVirtualNetworkLinkData, DnsForwardingRulesetVirtualNetworkLinkResource>(new VirtualNetworkLinksGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DnsForwardingRulesetVirtualNetworkLinkData, DnsForwardingRulesetVirtualNetworkLinkResource>(new DnsForwardingRulesetVirtualNetworkLinkDataAsyncCollectionResultOfT(
                 _virtualNetworkLinksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DnsForwardingRulesetVirtualNetworkLinkData, DnsForwardingRulesetVirtualNetworkLinkResource>(new VirtualNetworkLinksGetAllCollectionResultOfT(
+            return new PageableWrapper<DnsForwardingRulesetVirtualNetworkLinkData, DnsForwardingRulesetVirtualNetworkLinkResource>(new DnsForwardingRulesetVirtualNetworkLinkDataCollectionResultOfT(
                 _virtualNetworkLinksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

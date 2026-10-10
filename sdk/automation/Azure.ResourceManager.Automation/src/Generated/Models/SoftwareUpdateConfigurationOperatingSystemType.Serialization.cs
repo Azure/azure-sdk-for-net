@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Automation.Models
 {
     internal static partial class SoftwareUpdateConfigurationOperatingSystemTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SoftwareUpdateConfigurationOperatingSystemType value) => value switch
         {
             SoftwareUpdateConfigurationOperatingSystemType.Windows => "Windows",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Automation.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SoftwareUpdateConfigurationOperatingSystemType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SoftwareUpdateConfigurationOperatingSystemType ToSoftwareUpdateConfigurationOperatingSystemType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Windows")) return SoftwareUpdateConfigurationOperatingSystemType.Windows;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Linux")) return SoftwareUpdateConfigurationOperatingSystemType.Linux;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Windows"))
+            {
+                return SoftwareUpdateConfigurationOperatingSystemType.Windows;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Linux"))
+            {
+                return SoftwareUpdateConfigurationOperatingSystemType.Linux;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SoftwareUpdateConfigurationOperatingSystemType value.");
         }
     }
