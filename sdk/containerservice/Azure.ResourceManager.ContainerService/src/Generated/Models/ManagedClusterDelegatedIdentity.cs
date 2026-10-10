@@ -19,16 +19,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterDelegatedIdentity"/>. </summary>
-        /// <param name="resourceId"> The ARM resource id of the delegated resource - internal use only. </param>
-        /// <param name="referralResource"> The delegation id of the referral delegation (optional) - internal use only. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="referralResource"/> is null. </exception>
-        public ManagedClusterDelegatedIdentity(ResourceIdentifier resourceId, string referralResource)
+        public ManagedClusterDelegatedIdentity()
         {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
-            Argument.AssertNotNull(referralResource, nameof(referralResource));
-
-            ResourceId = resourceId;
-            ReferralResource = referralResource;
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterDelegatedIdentity"/>. </summary>
@@ -44,6 +36,15 @@ namespace Azure.ResourceManager.ContainerService.Models
             ReferralResource = referralResource;
             Location = location;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterDelegatedIdentity"/>. </summary>
+        /// <param name="resourceId"> The ARM resource id of the delegated resource - internal use only. </param>
+        /// <param name="referralResource"> The delegation id of the referral delegation (optional) - internal use only. </param>
+        public ManagedClusterDelegatedIdentity(ResourceIdentifier resourceId, string referralResource) : this()
+        {
+            ResourceId = resourceId;
+            ReferralResource = referralResource;
         }
 
         /// <summary> The ARM resource id of the delegated resource - internal use only. </summary>
