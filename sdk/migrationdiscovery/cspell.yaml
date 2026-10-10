@@ -1,0 +1,16 @@
+import:
+  - ../../.vscode/cspell.json
+overrides:
+  - filename: '**/sdk/migrationdiscovery/**/*.cs'
+    words:
+      - Atleast
+      - Cifs
+      - Hyperv
+      - Pmem
+      - runasaccount
+      - runasaccounts
+      - Succeded
+      - Vcenters
+      - Vffs
+      - Vmfs
+      - Vvol
