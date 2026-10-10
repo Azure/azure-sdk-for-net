@@ -1,14 +1,19 @@
 # Release History
 
-## 1.2.0-beta.5 (Unreleased)
+## 1.2.0-beta.5 (2026-10-12)
 
 ### Features Added
 
+- Upgraded API version from `2026-05-01-preview` to `2026-10-01-preview`.
+- Added MQTT v5 support: `IotHubProperties.ConnectionProfile` (`IotHubConnectionProfile`) and `IotHubProperties.MqttV5TopicGroups` (`MqttV5TopicGroup`).
+- Added `MessagePayloadFormat` property (`IotHubMessagePayloadFormat`) to all routing endpoint property models (`RoutingCosmosDBSqlApiProperties`, `RoutingEventHubProperties`, `RoutingEventStreamProperties`, `RoutingServiceBusQueueEndpointProperties`, `RoutingServiceBusTopicEndpointProperties`, `RoutingStorageContainerProperties`).
+- Added `RoutingRuleProperties.DataSchema` property.
+- Added `NamespaceUuid`, `DataPlaneHostName`, `Identity` (`DeviceRegistryIdentity`) and `LinkingProperties` (`DeviceRegistryLinkingProperties`) properties to `IotHubDeviceRegistry`.
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Renamed `PolicyResourceId` to `CertificateAuthorityResourceId` on `IotHubCertificateProperties` and `IotHubCertificatePropertiesWithNonce`.
+- `IotHubDeviceRegistry` is now output-only: its public constructor was removed, `IotHubProperties.DeviceRegistry` no longer has a setter, and `IotHubDeviceRegistry.IdentityResourceId` was replaced by `IotHubDeviceRegistry.Identity`.
 
 ## 1.2.0-beta.4 (2026-08-12)
 

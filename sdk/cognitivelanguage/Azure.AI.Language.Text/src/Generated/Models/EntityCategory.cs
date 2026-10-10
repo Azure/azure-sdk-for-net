@@ -109,7 +109,7 @@ namespace Azure.AI.Language.Text
         /// <summary> URLs to websites. </summary>
         private const string UriValue = "URL";
         /// <summary> network IP addresses. </summary>
-        private const string IpAddressValue = "IP";
+        private const string IPAddressValue = "IP";
         /// <summary> Phone numbers (US and EU phone numbers only). </summary>
         private const string PhoneNumberValue = "PhoneNumber";
         /// <summary> Single or group of commercial, consumable objects, electronics, vehicles, food groups. </summary>
@@ -271,7 +271,7 @@ namespace Azure.AI.Language.Text
         public static EntityCategory Uri { get; } = new EntityCategory(UriValue);
 
         /// <summary> network IP addresses. </summary>
-        public static EntityCategory IpAddress { get; } = new EntityCategory(IpAddressValue);
+        public static EntityCategory IPAddress { get; } = new EntityCategory(IPAddressValue);
 
         /// <summary> Phone numbers (US and EU phone numbers only). </summary>
         public static EntityCategory PhoneNumber { get; } = new EntityCategory(PhoneNumberValue);

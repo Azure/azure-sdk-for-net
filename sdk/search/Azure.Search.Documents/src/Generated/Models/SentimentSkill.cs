@@ -14,6 +14,11 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Using the Text Analytics API, evaluates unstructured text and for each record, provides sentiment labels (such as "negative", "neutral" and "positive") based on the highest confidence score found by the service at a sentence and document-level. </summary>
     public partial class SentimentSkill : SearchIndexerSkill
     {
+        private SentimentSkillLanguage? _defaultLanguageCode;
+        internal bool _defaultLanguageCodeIsDefined;
+        private string _modelVersion;
+        internal bool _modelVersionIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="SentimentSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
@@ -38,18 +43,40 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="modelVersion"> The version of the model to use when calling the Text Analytics service. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </param>
         internal SentimentSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, SentimentSkillLanguage? defaultLanguageCode, bool? includeOpinionMining, string modelVersion) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
-            DefaultLanguageCode = defaultLanguageCode;
+            _defaultLanguageCode = defaultLanguageCode;
             IncludeOpinionMining = includeOpinionMining;
-            ModelVersion = modelVersion;
+            _modelVersion = modelVersion;
         }
 
         /// <summary> A value indicating which language code to use. Default is `en`. </summary>
-        public SentimentSkillLanguage? DefaultLanguageCode { get; set; }
+        public SentimentSkillLanguage? DefaultLanguageCode
+        {
+            get
+            {
+                return _defaultLanguageCode;
+            }
+            set
+            {
+                _defaultLanguageCode = value;
+                _defaultLanguageCodeIsDefined = true;
+            }
+        }
 
         /// <summary> If set to true, the skill output will include information from Text Analytics for opinion mining, namely targets (nouns or verbs) and their associated assessment (adjective) in the text. Default is false. </summary>
         public bool? IncludeOpinionMining { get; set; }
 
         /// <summary> The version of the model to use when calling the Text Analytics service. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </summary>
-        public string ModelVersion { get; set; }
+        public string ModelVersion
+        {
+            get
+            {
+                return _modelVersion;
+            }
+            set
+            {
+                _modelVersion = value;
+                _modelVersionIsDefined = true;
+            }
+        }
     }
 }

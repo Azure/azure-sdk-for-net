@@ -80,10 +80,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new FormatException($"The model {nameof(CustomEntityLookupSkill)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(DefaultLanguageCode))
+            if (_defaultLanguageCodeIsDefined || Optional.IsDefined(DefaultLanguageCode))
             {
-                writer.WritePropertyName("defaultLanguageCode"u8);
-                writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
+                if (DefaultLanguageCode != null)
+                {
+                    writer.WritePropertyName("defaultLanguageCode"u8);
+                    writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("defaultLanguageCode"u8);
+                }
             }
             if (Optional.IsDefined(EntitiesDefinitionUri))
             {
@@ -92,28 +99,56 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsCollectionDefined(InlineEntitiesDefinition))
             {
-                writer.WritePropertyName("inlineEntitiesDefinition"u8);
-                writer.WriteStartArray();
-                foreach (CustomEntity item in InlineEntitiesDefinition)
+                if (InlineEntitiesDefinition != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("inlineEntitiesDefinition"u8);
+                    writer.WriteStartArray();
+                    foreach (CustomEntity item in InlineEntitiesDefinition)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("inlineEntitiesDefinition"u8);
+                }
             }
-            if (Optional.IsDefined(GlobalDefaultCaseSensitive))
+            if (_globalDefaultCaseSensitiveIsDefined || Optional.IsDefined(GlobalDefaultCaseSensitive))
             {
-                writer.WritePropertyName("globalDefaultCaseSensitive"u8);
-                writer.WriteBooleanValue(GlobalDefaultCaseSensitive.Value);
+                if (GlobalDefaultCaseSensitive != null)
+                {
+                    writer.WritePropertyName("globalDefaultCaseSensitive"u8);
+                    writer.WriteBooleanValue(GlobalDefaultCaseSensitive.Value);
+                }
+                else
+                {
+                    writer.WriteNull("globalDefaultCaseSensitive"u8);
+                }
             }
-            if (Optional.IsDefined(GlobalDefaultAccentSensitive))
+            if (_globalDefaultAccentSensitiveIsDefined || Optional.IsDefined(GlobalDefaultAccentSensitive))
             {
-                writer.WritePropertyName("globalDefaultAccentSensitive"u8);
-                writer.WriteBooleanValue(GlobalDefaultAccentSensitive.Value);
+                if (GlobalDefaultAccentSensitive != null)
+                {
+                    writer.WritePropertyName("globalDefaultAccentSensitive"u8);
+                    writer.WriteBooleanValue(GlobalDefaultAccentSensitive.Value);
+                }
+                else
+                {
+                    writer.WriteNull("globalDefaultAccentSensitive"u8);
+                }
             }
-            if (Optional.IsDefined(GlobalDefaultFuzzyEditDistance))
+            if (_globalDefaultFuzzyEditDistanceIsDefined || Optional.IsDefined(GlobalDefaultFuzzyEditDistance))
             {
-                writer.WritePropertyName("globalDefaultFuzzyEditDistance"u8);
-                writer.WriteNumberValue(GlobalDefaultFuzzyEditDistance.Value);
+                if (GlobalDefaultFuzzyEditDistance != null)
+                {
+                    writer.WritePropertyName("globalDefaultFuzzyEditDistance"u8);
+                    writer.WriteNumberValue(GlobalDefaultFuzzyEditDistance.Value);
+                }
+                else
+                {
+                    writer.WriteNull("globalDefaultFuzzyEditDistance"u8);
+                }
             }
         }
 
@@ -149,11 +184,15 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool defaultLanguageCodeIsDefined = false;
             CustomEntityLookupSkillLanguage? defaultLanguageCode = default;
             Uri entitiesDefinitionUri = default;
-            IList<CustomEntity> inlineEntitiesDefinition = default;
+            IList<CustomEntity> inlineEntitiesDefinition = new ChangeTrackingList<CustomEntity>();
+            bool globalDefaultCaseSensitiveIsDefined = false;
             bool? globalDefaultCaseSensitive = default;
+            bool globalDefaultAccentSensitiveIsDefined = false;
             bool? globalDefaultAccentSensitive = default;
+            bool globalDefaultFuzzyEditDistanceIsDefined = false;
             int? globalDefaultFuzzyEditDistance = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -199,6 +238,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("defaultLanguageCode"u8))
                 {
+                    defaultLanguageCodeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         defaultLanguageCode = null;
@@ -220,6 +260,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        inlineEntitiesDefinition = null;
                         continue;
                     }
                     List<CustomEntity> array = new List<CustomEntity>();
@@ -232,6 +273,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("globalDefaultCaseSensitive"u8))
                 {
+                    globalDefaultCaseSensitiveIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         globalDefaultCaseSensitive = null;
@@ -242,6 +284,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("globalDefaultAccentSensitive"u8))
                 {
+                    globalDefaultAccentSensitiveIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         globalDefaultAccentSensitive = null;
@@ -252,6 +295,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("globalDefaultFuzzyEditDistance"u8))
                 {
+                    globalDefaultFuzzyEditDistanceIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         globalDefaultFuzzyEditDistance = null;
@@ -275,10 +319,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 additionalBinaryDataProperties,
                 defaultLanguageCode,
                 entitiesDefinitionUri,
-                inlineEntitiesDefinition ?? new ChangeTrackingList<CustomEntity>(),
+                inlineEntitiesDefinition,
                 globalDefaultCaseSensitive,
                 globalDefaultAccentSensitive,
-                globalDefaultFuzzyEditDistance);
+                globalDefaultFuzzyEditDistance)
+            {
+                _defaultLanguageCodeIsDefined = defaultLanguageCodeIsDefined,
+                _globalDefaultCaseSensitiveIsDefined = globalDefaultCaseSensitiveIsDefined,
+                _globalDefaultAccentSensitiveIsDefined = globalDefaultAccentSensitiveIsDefined,
+                _globalDefaultFuzzyEditDistanceIsDefined = globalDefaultFuzzyEditDistanceIsDefined
+            };
         }
     }
 }

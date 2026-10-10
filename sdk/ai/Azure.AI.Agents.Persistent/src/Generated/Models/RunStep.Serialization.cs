@@ -149,10 +149,17 @@ namespace Azure.AI.Agents.Persistent
             {
                 writer.WriteNull("failed_at"u8);
             }
-            if (Optional.IsDefined(Usage))
+            if (_usageIsDefined || Optional.IsDefined(Usage))
             {
-                writer.WritePropertyName("usage"u8);
-                writer.WriteObjectValue(Usage, options);
+                if (Usage != null)
+                {
+                    writer.WritePropertyName("usage"u8);
+                    writer.WriteObjectValue(Usage, options);
+                }
+                else
+                {
+                    writer.WriteNull("usage"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Metadata))
             {
@@ -230,6 +237,7 @@ namespace Azure.AI.Agents.Persistent
             DateTimeOffset? completedAt = default;
             DateTimeOffset? cancelledAt = default;
             DateTimeOffset? failedAt = default;
+            bool usageIsDefined = false;
             RunStepCompletionUsage usage = default;
             IReadOnlyDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -312,6 +320,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("usage"u8))
                 {
+                    usageIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         usage = null;
@@ -364,7 +373,10 @@ namespace Azure.AI.Agents.Persistent
                 failedAt,
                 usage,
                 metadata,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _usageIsDefined = usageIsDefined
+            };
         }
     }
 }

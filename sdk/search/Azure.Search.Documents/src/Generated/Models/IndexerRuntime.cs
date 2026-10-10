@@ -15,6 +15,8 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private long? _remainingSeconds;
+        internal bool _remainingSecondsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="IndexerRuntime"/>. </summary>
         /// <param name="usedSeconds"> Cumulative runtime of the indexer from the beginningTime to endingTime, in seconds. </param>
@@ -36,7 +38,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal IndexerRuntime(long usedSeconds, long? remainingSeconds, DateTimeOffset beginningOn, DateTimeOffset endingOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UsedSeconds = usedSeconds;
-            RemainingSeconds = remainingSeconds;
+            _remainingSeconds = remainingSeconds;
             BeginningOn = beginningOn;
             EndingOn = endingOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -46,7 +48,13 @@ namespace Azure.Search.Documents.Indexes.Models
         public long UsedSeconds { get; }
 
         /// <summary> Cumulative runtime remaining for all indexers in the service from the beginningTime to endingTime, in seconds. </summary>
-        public long? RemainingSeconds { get; }
+        public long? RemainingSeconds
+        {
+            get
+            {
+                return _remainingSeconds;
+            }
+        }
 
         /// <summary> Beginning UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </summary>
         public DateTimeOffset BeginningOn { get; }

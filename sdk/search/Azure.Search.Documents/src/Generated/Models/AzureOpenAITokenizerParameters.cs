@@ -16,6 +16,8 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private SplitSkillEncoderModelName? _encoderModelName;
+        internal bool _encoderModelNameIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AzureOpenAITokenizerParameters"/>. </summary>
         public AzureOpenAITokenizerParameters()
@@ -29,13 +31,24 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal AzureOpenAITokenizerParameters(SplitSkillEncoderModelName? encoderModelName, IList<string> allowedSpecialTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            EncoderModelName = encoderModelName;
+            _encoderModelName = encoderModelName;
             AllowedSpecialTokens = allowedSpecialTokens;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Only applies if the unit is set to azureOpenAITokens. Options include 'R50k_base', 'P50k_base', 'P50k_edit' and 'CL100k_base'. The default value is 'CL100k_base'. </summary>
-        public SplitSkillEncoderModelName? EncoderModelName { get; set; }
+        public SplitSkillEncoderModelName? EncoderModelName
+        {
+            get
+            {
+                return _encoderModelName;
+            }
+            set
+            {
+                _encoderModelName = value;
+                _encoderModelNameIsDefined = true;
+            }
+        }
 
         /// <summary> (Optional) Only applies if the unit is set to azureOpenAITokens. This parameter defines a collection of special tokens that are permitted within the tokenization process. </summary>
         public IList<string> AllowedSpecialTokens { get; }

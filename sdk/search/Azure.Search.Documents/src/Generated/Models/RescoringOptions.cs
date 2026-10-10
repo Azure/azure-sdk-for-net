@@ -15,6 +15,12 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private bool? _enableRescoring;
+        internal bool _enableRescoringIsDefined;
+        private double? _defaultOversampling;
+        internal bool _defaultOversamplingIsDefined;
+        private VectorSearchCompressionRescoreStorageMethod? _rescoreStorageMethod;
+        internal bool _rescoreStorageMethodIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="RescoringOptions"/>. </summary>
         public RescoringOptions()
@@ -28,19 +34,52 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal RescoringOptions(bool? enableRescoring, double? defaultOversampling, VectorSearchCompressionRescoreStorageMethod? rescoreStorageMethod, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            EnableRescoring = enableRescoring;
-            DefaultOversampling = defaultOversampling;
-            RescoreStorageMethod = rescoreStorageMethod;
+            _enableRescoring = enableRescoring;
+            _defaultOversampling = defaultOversampling;
+            _rescoreStorageMethod = rescoreStorageMethod;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> If set to true, after the initial search on the compressed vectors, the similarity scores are recalculated using the full-precision vectors. This will improve recall at the expense of latency. </summary>
-        public bool? EnableRescoring { get; set; }
+        public bool? EnableRescoring
+        {
+            get
+            {
+                return _enableRescoring;
+            }
+            set
+            {
+                _enableRescoring = value;
+                _enableRescoringIsDefined = true;
+            }
+        }
 
         /// <summary> Default oversampling factor. Oversampling retrieves a greater set of potential documents to offset the resolution loss due to quantization. This increases the set of results that will be rescored on full-precision vectors. Minimum value is 1, meaning no oversampling (1x). This parameter can only be set when 'enableRescoring' is true. Higher values improve recall at the expense of latency. </summary>
-        public double? DefaultOversampling { get; set; }
+        public double? DefaultOversampling
+        {
+            get
+            {
+                return _defaultOversampling;
+            }
+            set
+            {
+                _defaultOversampling = value;
+                _defaultOversamplingIsDefined = true;
+            }
+        }
 
         /// <summary> Controls the storage method for original vectors. This setting is immutable. </summary>
-        public VectorSearchCompressionRescoreStorageMethod? RescoreStorageMethod { get; set; }
+        public VectorSearchCompressionRescoreStorageMethod? RescoreStorageMethod
+        {
+            get
+            {
+                return _rescoreStorageMethod;
+            }
+            set
+            {
+                _rescoreStorageMethod = value;
+                _rescoreStorageMethodIsDefined = true;
+            }
+        }
     }
 }
