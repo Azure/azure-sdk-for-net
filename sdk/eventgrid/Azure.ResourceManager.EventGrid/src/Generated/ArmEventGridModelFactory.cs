@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 azureSubscriptionId,
                 resourceGroupName,
                 name,
-                default,
+                endpointType is null ? default : new PartnerEndpointType(endpointType),
                 endpointServiceContext,
                 (resourceMoveChangeHistory ?? new ChangeTrackingList<ResourceMoveChangeHistory>()).ToList(),
                 default);
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 azureSubscriptionId,
                 resourceGroupName,
                 name,
-                default,
+                PartnerEndpointType.WebHook,
                 endpointServiceContext,
                 (resourceMoveChangeHistory ?? new ChangeTrackingList<ResourceMoveChangeHistory>()).ToList(),
                 default,
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <returns> A new <see cref="Models.PartnerClientAuthentication"/> instance for mocking. </returns>
         public static PartnerClientAuthentication PartnerClientAuthentication(string clientAuthenticationType = default)
         {
-            return new UnknownPartnerClientAuthentication(default, default);
+            return new UnknownPartnerClientAuthentication(clientAuthenticationType is null ? default : new PartnerClientAuthenticationType(clientAuthenticationType), default);
         }
 
         /// <param name="azureActiveDirectoryTenantId"> The Microsoft Entra ID Tenant ID to get the access token that will be included as the bearer token in delivery requests. </param>
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <returns> A new <see cref="Models.AzureADPartnerClientAuthentication"/> instance for mocking. </returns>
         public static AzureADPartnerClientAuthentication AzureADPartnerClientAuthentication(string azureActiveDirectoryTenantId = default, Uri azureActiveDirectoryApplicationIdOrUri = default)
         {
-            return new AzureADPartnerClientAuthentication(default, default, azureActiveDirectoryTenantId is null && azureActiveDirectoryApplicationIdOrUri is null ? default : new AzureADPartnerClientAuthenticationProperties(azureActiveDirectoryTenantId, azureActiveDirectoryApplicationIdOrUri, default));
+            return new AzureADPartnerClientAuthentication(PartnerClientAuthenticationType.AzureAD, default, azureActiveDirectoryTenantId is null && azureActiveDirectoryApplicationIdOrUri is null ? default : new AzureADPartnerClientAuthenticationProperties(azureActiveDirectoryTenantId, azureActiveDirectoryApplicationIdOrUri, default));
         }
 
         /// <param name="expireOnIfNotActivated">
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <returns> A new <see cref="Models.PartnerUpdateDestinationInfo"/> instance for mocking. </returns>
         public static PartnerUpdateDestinationInfo PartnerUpdateDestinationInfo(string endpointType = default)
         {
-            return new UnknownPartnerUpdateDestinationInfo(default, default);
+            return new UnknownPartnerUpdateDestinationInfo(endpointType is null ? default : new PartnerEndpointType(endpointType), default);
         }
 
         /// <param name="endpointUri"> The URL that represents the endpoint of the partner destination. </param>
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <returns> A new <see cref="Models.WebhookUpdatePartnerDestinationInfo"/> instance for mocking. </returns>
         public static WebhookUpdatePartnerDestinationInfo WebhookUpdatePartnerDestinationInfo(Uri endpointUri = default, Uri endpointBaseUri = default, PartnerClientAuthentication clientAuthentication = default)
         {
-            return new WebhookUpdatePartnerDestinationInfo(default, default, endpointUri is null && endpointBaseUri is null && clientAuthentication is null ? default : new WebhookPartnerDestinationProperties(endpointUri, endpointBaseUri, clientAuthentication, default));
+            return new WebhookUpdatePartnerDestinationInfo(PartnerEndpointType.WebHook, default, endpointUri is null && endpointBaseUri is null && clientAuthentication is null ? default : new WebhookPartnerDestinationProperties(endpointUri, endpointBaseUri, clientAuthentication, default));
         }
 
         /// <summary> Full endpoint URL of an event subscription. </summary>

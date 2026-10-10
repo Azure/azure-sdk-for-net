@@ -856,7 +856,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <returns> A new <see cref="Models.EventHubsApplicationGroupPolicy"/> instance for mocking. </returns>
         public static EventHubsApplicationGroupPolicy EventHubsApplicationGroupPolicy(string name = default, string applicationGroupPolicyType = default)
         {
-            return new UnknownApplicationGroupPolicy(name, default, default);
+            return new UnknownApplicationGroupPolicy(name, applicationGroupPolicyType is null ? default : new ApplicationGroupPolicyType(applicationGroupPolicyType), default);
         }
 
         /// <summary> Properties of the throttling policy. </summary>
@@ -866,7 +866,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <returns> A new <see cref="Models.EventHubsThrottlingPolicy"/> instance for mocking. </returns>
         public static EventHubsThrottlingPolicy EventHubsThrottlingPolicy(string name = default, long rateLimitThreshold = default, EventHubsMetricId metricId = default)
         {
-            return new EventHubsThrottlingPolicy(name, default, default, rateLimitThreshold, metricId);
+            return new EventHubsThrottlingPolicy(name, ApplicationGroupPolicyType.ThrottlingPolicy, default, rateLimitThreshold, metricId);
         }
 
         /// <summary> Single Event Hubs Cluster resource in List or Get operations. </summary>
