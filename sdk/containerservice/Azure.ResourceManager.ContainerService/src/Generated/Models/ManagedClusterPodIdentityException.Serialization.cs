@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ManagedClusterPodIdentityException(name, @namespace, podLabels, additionalBinaryDataProperties);
+            return new ManagedClusterPodIdentityException(name, @namespace, podLabels ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

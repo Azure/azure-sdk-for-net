@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> The cost allocation rule check name availability response. </summary>
-    public partial class CostAllocationRuleCheckNameAvailabilityResponse
+    public partial class CostAllocationRuleCheckNameAvailabilityResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CostAllocationRuleCheckNameAvailabilityResponse"/>. </summary>
-        internal CostAllocationRuleCheckNameAvailabilityResponse()
+        /// <summary> Initializes a new instance of <see cref="CostAllocationRuleCheckNameAvailabilityResult"/>. </summary>
+        internal CostAllocationRuleCheckNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CostAllocationRuleCheckNameAvailabilityResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostAllocationRuleCheckNameAvailabilityResult"/>. </summary>
         /// <param name="nameAvailable"> Whether this rule name is available. </param>
         /// <param name="reason"> The reason this name is not available. </param>
         /// <param name="message"> Error message if the name is not available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CostAllocationRuleCheckNameAvailabilityResponse(bool? nameAvailable, CostAllocationRuleCheckNameAvailabilityReason? reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CostAllocationRuleCheckNameAvailabilityResult(bool? nameAvailable, CostAllocationRuleCheckNameAvailabilityReason? reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NameAvailable = nameAvailable;
             Reason = reason;

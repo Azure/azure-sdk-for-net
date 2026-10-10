@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UnencryptedCredentialsList(value, nextLink, additionalBinaryDataProperties);
+            return new UnencryptedCredentialsList(value ?? new ChangeTrackingList<UnencryptedCredentials>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

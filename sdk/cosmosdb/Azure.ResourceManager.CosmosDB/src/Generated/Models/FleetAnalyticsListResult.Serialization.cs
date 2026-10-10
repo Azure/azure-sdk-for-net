@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FleetAnalyticsListResult(value, nextLink, additionalBinaryDataProperties);
+            return new FleetAnalyticsListResult(value ?? new ChangeTrackingList<FleetAnalyticsData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

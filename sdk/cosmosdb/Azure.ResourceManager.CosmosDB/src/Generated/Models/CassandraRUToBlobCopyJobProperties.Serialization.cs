@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CassandraRUToBlobCopyJobProperties(jobType, additionalBinaryDataProperties, sourceDetails, destinationDetails, tasks);
+            return new CassandraRUToBlobCopyJobProperties(jobType, additionalBinaryDataProperties, sourceDetails, destinationDetails, tasks ?? new ChangeTrackingList<CassandraRUToBlobCopyJobTask>());
         }
     }
 }

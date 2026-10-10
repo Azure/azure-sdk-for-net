@@ -12,21 +12,21 @@ using Azure.ResourceManager.DataBox;
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Schedule availability for given sku in a region. </summary>
-    internal partial class ScheduleAvailabilityResponse
+    internal partial class ScheduleAvailabilityResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ScheduleAvailabilityResponse"/>. </summary>
-        internal ScheduleAvailabilityResponse()
+        /// <summary> Initializes a new instance of <see cref="ScheduleAvailabilityResult"/>. </summary>
+        internal ScheduleAvailabilityResult()
         {
             AvailableDates = new ChangeTrackingList<DateTimeOffset>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduleAvailabilityResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleAvailabilityResult"/>. </summary>
         /// <param name="availableDates"> List of dates available to schedule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduleAvailabilityResponse(IReadOnlyList<DateTimeOffset> availableDates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduleAvailabilityResult(IReadOnlyList<DateTimeOffset> availableDates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AvailableDates = availableDates;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

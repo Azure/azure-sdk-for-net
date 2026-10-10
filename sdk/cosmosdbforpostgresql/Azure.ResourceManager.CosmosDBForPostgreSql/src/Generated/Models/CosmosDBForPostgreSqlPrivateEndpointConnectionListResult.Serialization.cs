@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CosmosDBForPostgreSqlPrivateEndpointConnectionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new CosmosDBForPostgreSqlPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<CosmosDBForPostgreSqlPrivateEndpointConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             return new NotificationProperties(
-                to,
+                to ?? new ChangeTrackingList<string>(),
                 language,
                 message,
                 regionalFormat,

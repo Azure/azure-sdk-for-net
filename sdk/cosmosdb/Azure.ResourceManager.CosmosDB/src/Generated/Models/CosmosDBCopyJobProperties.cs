@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="duration"> Total Duration of Job. </param>
         /// <param name="mode"> Mode of job execution. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBCopyJobProperties(CosmosDBCopyJobBaseProperties jobProperties, CopyJobStatus? status, long? processedCount, long? totalCount, DateTimeOffset? lastUpdatedUtcOn, int? workerCount, ErrorResponse errorResponse, string duration, CopyJobMode? mode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CosmosDBCopyJobProperties(CosmosDBCopyJobBaseProperties jobProperties, CopyJobStatus? status, long? processedCount, long? totalCount, DateTimeOffset? lastUpdatedUtcOn, int? workerCount, ErrorResult errorResponse, string duration, CopyJobMode? mode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             JobProperties = jobProperties;
             Status = status;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Error response for Faulted job. </summary>
         [WirePath("error")]
-        internal ErrorResponse ErrorResponse { get; }
+        internal ErrorResult ErrorResponse { get; }
 
         /// <summary> Total Duration of Job. </summary>
         [WirePath("duration")]

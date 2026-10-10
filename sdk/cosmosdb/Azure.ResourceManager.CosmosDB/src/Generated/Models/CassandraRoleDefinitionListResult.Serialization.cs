@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CassandraRoleDefinitionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new CassandraRoleDefinitionListResult(value ?? new ChangeTrackingList<CassandraRoleDefinitionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 dataType,
                 allowedValues,
                 isRestartRequired,
-                serverRoleGroupConfigurations,
+                serverRoleGroupConfigurations ?? new ChangeTrackingList<CosmosDBForPostgreSqlServerRoleGroupConfiguration>(),
                 provisioningState,
                 additionalBinaryDataProperties);
         }

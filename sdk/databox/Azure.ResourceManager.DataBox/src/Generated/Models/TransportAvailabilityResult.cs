@@ -12,21 +12,21 @@ using Azure.ResourceManager.DataBox;
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Transport options available for given sku in a region. </summary>
-    internal partial class TransportAvailabilityResponse
+    internal partial class TransportAvailabilityResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TransportAvailabilityResponse"/>. </summary>
-        internal TransportAvailabilityResponse()
+        /// <summary> Initializes a new instance of <see cref="TransportAvailabilityResult"/>. </summary>
+        internal TransportAvailabilityResult()
         {
             TransportAvailabilityDetails = new ChangeTrackingList<TransportAvailabilityDetails>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TransportAvailabilityResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransportAvailabilityResult"/>. </summary>
         /// <param name="transportAvailabilityDetails"> List of transport availability details for given region. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TransportAvailabilityResponse(IReadOnlyList<TransportAvailabilityDetails> transportAvailabilityDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TransportAvailabilityResult(IReadOnlyList<TransportAvailabilityDetails> transportAvailabilityDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TransportAvailabilityDetails = transportAvailabilityDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

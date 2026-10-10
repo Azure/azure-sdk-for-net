@@ -12,21 +12,21 @@ using Azure.ResourceManager.DataBox;
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Device capabilities for given sku in a region. </summary>
-    internal partial class DeviceCapabilityResponse
+    internal partial class DeviceCapabilityResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeviceCapabilityResponse"/>. </summary>
-        internal DeviceCapabilityResponse()
+        /// <summary> Initializes a new instance of <see cref="DeviceCapabilityResult"/>. </summary>
+        internal DeviceCapabilityResult()
         {
             DeviceCapabilityDetails = new ChangeTrackingList<DeviceCapabilityDetails>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeviceCapabilityResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceCapabilityResult"/>. </summary>
         /// <param name="deviceCapabilityDetails"> List of device capabilities available for a given region and a given sku. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceCapabilityResponse(IReadOnlyList<DeviceCapabilityDetails> deviceCapabilityDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeviceCapabilityResult(IReadOnlyList<DeviceCapabilityDetails> deviceCapabilityDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DeviceCapabilityDetails = deviceCapabilityDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

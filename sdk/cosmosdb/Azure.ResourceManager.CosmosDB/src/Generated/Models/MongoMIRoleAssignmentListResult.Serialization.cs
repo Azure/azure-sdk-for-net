@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MongoMIRoleAssignmentListResult(value, nextLink, additionalBinaryDataProperties);
+            return new MongoMIRoleAssignmentListResult(value ?? new ChangeTrackingList<MongoMIRoleAssignmentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
