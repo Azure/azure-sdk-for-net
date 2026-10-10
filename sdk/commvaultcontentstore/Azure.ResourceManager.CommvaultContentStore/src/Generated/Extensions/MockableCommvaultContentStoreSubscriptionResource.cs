@@ -40,7 +40,13 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
 
         private ClientDiagnostics CloudAccountsClientDiagnostics => _cloudAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CommvaultContentStore.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CloudAccounts CloudAccountsRestClient => _cloudAccountsRestClient ??= new CloudAccounts(CloudAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-03-preview");
+        private CloudAccounts CloudAccountsRestClient => _cloudAccountsRestClient ??= new CloudAccounts(
+            CloudAccountsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-07-03-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics SaaSOperationGroupClientDiagnostics => _saaSOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CommvaultContentStore.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

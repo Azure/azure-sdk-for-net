@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.ConfidentialLedger
         {
             TryGetApiVersion(ConfidentialLedgerResource.ResourceType, out string confidentialLedgerApiVersion);
             _ledgerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConfidentialLedger", ConfidentialLedgerResource.ResourceType.Namespace, Diagnostics);
-            _ledgerRestClient = new Ledger(_ledgerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, confidentialLedgerApiVersion ?? "2026-02-23");
+            _ledgerRestClient = new Ledger(
+                _ledgerClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                confidentialLedgerApiVersion ?? "2026-02-23",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

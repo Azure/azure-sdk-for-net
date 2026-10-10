@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.Compute
         {
             TryGetApiVersion(ResourceType, out string proximityPlacementGroupApiVersion);
             _proximityPlacementGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            _proximityPlacementGroupsRestClient = new ProximityPlacementGroups(_proximityPlacementGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, proximityPlacementGroupApiVersion ?? "2026-04-01");
+            _proximityPlacementGroupsRestClient = new ProximityPlacementGroups(
+                _proximityPlacementGroupsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                proximityPlacementGroupApiVersion ?? "2026-04-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.ComputeFleet
         {
             TryGetApiVersion(ComputeFleetResource.ResourceType, out string computeFleetApiVersion);
             _fleetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeFleet", ComputeFleetResource.ResourceType.Namespace, Diagnostics);
-            _fleetsRestClient = new Fleets(_fleetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, computeFleetApiVersion ?? "2026-08-01");
+            _fleetsRestClient = new Fleets(
+                _fleetsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                computeFleetApiVersion ?? "2026-08-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

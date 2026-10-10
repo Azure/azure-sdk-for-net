@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             TryGetApiVersion(NGroupResource.ResourceType, out string nGroupApiVersion);
             _nGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", NGroupResource.ResourceType.Namespace, Diagnostics);
-            _nGroupsRestClient = new NGroups(_nGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, nGroupApiVersion ?? "2026-07-01");
+            _nGroupsRestClient = new NGroups(
+                _nGroupsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                nGroupApiVersion ?? "2026-07-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

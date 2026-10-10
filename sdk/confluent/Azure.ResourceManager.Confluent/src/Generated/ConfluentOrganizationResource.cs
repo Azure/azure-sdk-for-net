@@ -58,7 +58,13 @@ namespace Azure.ResourceManager.Confluent
         {
             TryGetApiVersion(ResourceType, out string confluentOrganizationApiVersion);
             _confluentOrganizationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ResourceType.Namespace, Diagnostics);
-            _confluentOrganizationRestClient = new ConfluentOrganization(_confluentOrganizationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, confluentOrganizationApiVersion ?? "2026-06-02-preview");
+            _confluentOrganizationRestClient = new ConfluentOrganization(
+                _confluentOrganizationClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                confluentOrganizationApiVersion ?? "2026-06-02-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _organizationResourceAPIKeyActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ResourceType.Namespace, Diagnostics);
             _organizationResourceAPIKeyActionsRestClient = new OrganizationResourceAPIKeyActions(_organizationResourceAPIKeyActionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, confluentOrganizationApiVersion ?? "2026-06-02-preview");
             _organizationResourceRoleBindingIdActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ResourceType.Namespace, Diagnostics);

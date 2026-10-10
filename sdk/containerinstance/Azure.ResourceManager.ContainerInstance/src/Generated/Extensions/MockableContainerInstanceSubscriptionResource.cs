@@ -45,19 +45,43 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
 
         private ClientDiagnostics ContainerGroupsClientDiagnostics => _containerGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ContainerGroups ContainerGroupsRestClient => _containerGroupsRestClient ??= new ContainerGroups(ContainerGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private ContainerGroups ContainerGroupsRestClient => _containerGroupsRestClient ??= new ContainerGroups(
+            ContainerGroupsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-07-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics NGroupsClientDiagnostics => _nGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NGroups NGroupsRestClient => _nGroupsRestClient ??= new NGroups(NGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private NGroups NGroupsRestClient => _nGroupsRestClient ??= new NGroups(
+            NGroupsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-07-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics CGProfilesClientDiagnostics => _cgProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CGProfiles CGProfilesRestClient => _cgProfilesRestClient ??= new CGProfiles(CGProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private CGProfiles CGProfilesRestClient => _cgProfilesRestClient ??= new CGProfiles(
+            CGProfilesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-07-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics SandboxGroupsClientDiagnostics => _sandboxGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SandboxGroups SandboxGroupsRestClient => _sandboxGroupsRestClient ??= new SandboxGroups(SandboxGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private SandboxGroups SandboxGroupsRestClient => _sandboxGroupsRestClient ??= new SandboxGroups(
+            SandboxGroupsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-07-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics LocationClientDiagnostics => _locationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

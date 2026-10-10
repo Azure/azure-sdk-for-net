@@ -42,7 +42,13 @@ namespace Azure.ResourceManager.Compute
         {
             TryGetApiVersion(DedicatedHostGroupResource.ResourceType, out string dedicatedHostGroupApiVersion);
             _dedicatedHostGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", DedicatedHostGroupResource.ResourceType.Namespace, Diagnostics);
-            _dedicatedHostGroupsRestClient = new DedicatedHostGroups(_dedicatedHostGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dedicatedHostGroupApiVersion ?? "2026-04-01");
+            _dedicatedHostGroupsRestClient = new DedicatedHostGroups(
+                _dedicatedHostGroupsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                dedicatedHostGroupApiVersion ?? "2026-04-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
