@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EdgeActions
         {
             TryGetApiVersion(ResourceType, out string edgeActionVersionApiVersion);
             _edgeActionVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeActions", ResourceType.Namespace, Diagnostics);
-            _edgeActionVersionsRestClient = new EdgeActionVersions(_edgeActionVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeActionVersionApiVersion ?? "2025-12-01-preview");
+            _edgeActionVersionsRestClient = new EdgeActionVersions(_edgeActionVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeActionVersionApiVersion ?? "2026-10-01");
             ValidateResourceId(id);
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.EdgeActions
         }
 
         /// <summary>
-        /// Update a EdgeActionVersion
+        /// Updates the tags of an Edge Action version. Omitted tags are preserved, an empty tags object clears all tags, and supplied tags replace the entire tag collection. Null tags are rejected. Version properties are not changed. If deploymentType or isDefaultVersion is supplied, it must match the existing value; use swapDefault to change the default version.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.EdgeActions
         }
 
         /// <summary>
-        /// Update a EdgeActionVersion
+        /// Updates the tags of an Edge Action version. Omitted tags are preserved, an empty tags object clears all tags, and supplied tags replace the entire tag collection. Null tags are rejected. Version properties are not changed. If deploymentType or isDefaultVersion is supplied, it must match the existing value; use swapDefault to change the default version.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.EdgeActions
         }
 
         /// <summary>
-        /// DeployVersionCode
+        /// A long-running resource action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.EdgeActions
         }
 
         /// <summary>
-        /// DeployVersionCode
+        /// A long-running resource action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

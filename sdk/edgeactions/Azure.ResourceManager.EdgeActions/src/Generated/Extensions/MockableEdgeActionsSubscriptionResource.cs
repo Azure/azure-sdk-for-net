@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EdgeActions.Mocking
 
         private ClientDiagnostics EdgeActionsMgmtClientClientDiagnostics => _edgeActionsMgmtClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeActions.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private EdgeActionsMgmtClient EdgeActionsMgmtClientRestClient => _edgeActionsMgmtClientRestClient ??= new EdgeActionsMgmtClient(EdgeActionsMgmtClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
+        private EdgeActionsMgmtClient EdgeActionsMgmtClientRestClient => _edgeActionsMgmtClientRestClient ??= new EdgeActionsMgmtClient(EdgeActionsMgmtClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-10-01");
 
         /// <summary>
         /// List EdgeAction resources by subscription ID
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EdgeActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.EdgeActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
