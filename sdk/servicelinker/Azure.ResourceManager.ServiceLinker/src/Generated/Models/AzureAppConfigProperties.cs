@@ -13,6 +13,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The resource properties when type is Azure App Configuration. </summary>
     public partial class AzureAppConfigProperties : AzureResourceBaseProperties
     {
+        private bool? _isConnectedWithKubernetesExtension;
+        internal bool _isConnectedWithKubernetesExtensionIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="AzureAppConfigProperties"/>. </summary>
         public AzureAppConfigProperties() : base(AzureResourceType.AppConfig)
         {
@@ -24,10 +27,21 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="isConnectedWithKubernetesExtension"> True if connection enables app configuration kubernetes extension. </param>
         internal AzureAppConfigProperties(AzureResourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? isConnectedWithKubernetesExtension) : base(@type, additionalBinaryDataProperties)
         {
-            IsConnectedWithKubernetesExtension = isConnectedWithKubernetesExtension;
+            _isConnectedWithKubernetesExtension = isConnectedWithKubernetesExtension;
         }
 
         /// <summary> True if connection enables app configuration kubernetes extension. </summary>
-        public bool? IsConnectedWithKubernetesExtension { get; set; }
+        public bool? IsConnectedWithKubernetesExtension
+        {
+            get
+            {
+                return _isConnectedWithKubernetesExtension;
+            }
+            set
+            {
+                _isConnectedWithKubernetesExtension = value;
+                _isConnectedWithKubernetesExtensionIsDefined = true;
+            }
+        }
     }
 }

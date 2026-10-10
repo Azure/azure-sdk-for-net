@@ -15,6 +15,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Model for API authentication with session cookie. </summary>
     public partial class SessionAuthModel : CcpAuthConfig
     {
+        private bool? _isPostPayloadJson;
+        internal bool _isPostPayloadJsonIsDefined;
+        private int? _sessionTimeoutInMinutes;
+        internal bool _sessionTimeoutInMinutesIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="SessionAuthModel"/>. </summary>
         /// <param name="userName"> The user name attribute key value. </param>
         /// <param name="password"> The password attribute name. </param>
@@ -46,9 +51,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             UserName = userName;
             Password = password;
             QueryParameters = queryParameters;
-            IsPostPayloadJson = isPostPayloadJson;
+            _isPostPayloadJson = isPostPayloadJson;
             Headers = headers;
-            SessionTimeoutInMinutes = sessionTimeoutInMinutes;
+            _sessionTimeoutInMinutes = sessionTimeoutInMinutes;
             SessionIdName = sessionIdName;
             SessionLoginRequestUri = sessionLoginRequestUri;
         }
@@ -92,7 +97,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Indicating whether API key is set in HTTP POST payload. </summary>
         [WirePath("isPostPayloadJson")]
-        public bool? IsPostPayloadJson { get; set; }
+        public bool? IsPostPayloadJson
+        {
+            get
+            {
+                return _isPostPayloadJson;
+            }
+            set
+            {
+                _isPostPayloadJson = value;
+                _isPostPayloadJsonIsDefined = true;
+            }
+        }
 
         /// <summary> HTTP request headers to session service endpoint. </summary>
         [WirePath("headers")]
@@ -100,7 +116,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Session timeout in minutes. </summary>
         [WirePath("sessionTimeoutInMinutes")]
-        public int? SessionTimeoutInMinutes { get; set; }
+        public int? SessionTimeoutInMinutes
+        {
+            get
+            {
+                return _sessionTimeoutInMinutes;
+            }
+            set
+            {
+                _sessionTimeoutInMinutes = value;
+                _sessionTimeoutInMinutesIsDefined = true;
+            }
+        }
 
         /// <summary> Session id attribute name from HTTP response header. </summary>
         [WirePath("sessionIdName")]

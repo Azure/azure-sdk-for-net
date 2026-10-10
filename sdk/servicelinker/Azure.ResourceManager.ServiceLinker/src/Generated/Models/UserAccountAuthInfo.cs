@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The authentication info when authType is user account. </summary>
     public partial class UserAccountAuthInfo : AuthBaseInfo
     {
+        private string _userName;
+        internal bool _userNameIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="UserAccountAuthInfo"/>. </summary>
         public UserAccountAuthInfo() : base(LinkerAuthType.UserAccount)
         {
@@ -30,14 +33,25 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="roles"> Optional, this value specifies the Azure roles to be assigned. Automatically. </param>
         internal UserAccountAuthInfo(LinkerAuthType authType, LinkerAuthMode? authMode, IDictionary<string, BinaryData> additionalBinaryDataProperties, string userName, string principalId, LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior, IList<string> roles) : base(authType, authMode, additionalBinaryDataProperties)
         {
-            UserName = userName;
+            _userName = userName;
             PrincipalId = principalId;
             DeleteOrUpdateBehavior = deleteOrUpdateBehavior;
             Roles = roles;
         }
 
         /// <summary> Username created in the database which is mapped to a user in AAD. </summary>
-        public string UserName { get; set; }
+        public string UserName
+        {
+            get
+            {
+                return _userName;
+            }
+            set
+            {
+                _userName = value;
+                _userNameIsDefined = true;
+            }
+        }
 
         /// <summary> Principal Id for user account. </summary>
         public string PrincipalId { get; set; }

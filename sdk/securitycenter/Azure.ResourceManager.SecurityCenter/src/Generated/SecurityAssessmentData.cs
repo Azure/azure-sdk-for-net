@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Describes properties of an assessment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityAssessmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityAssessmentPropertiesResponse properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal SecurityAssessmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityAssessmentPropertiesResult properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Describes properties of an assessment. </summary>
-        internal SecurityAssessmentPropertiesResponse Properties { get; }
+        internal SecurityAssessmentPropertiesResult Properties { get; }
 
         /// <summary> External model of risk result. </summary>
         public SecurityAssessmentPropertiesBaseRisk Risk

@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                 serviceAccountName,
                 kubernetesSecretType,
                 forceSynchronization,
-                objectSecretMapping,
+                objectSecretMapping ?? new ChangeTrackingList<KubernetesSecretObjectMapping>(),
                 status,
                 provisioningState,
                 additionalBinaryDataProperties);

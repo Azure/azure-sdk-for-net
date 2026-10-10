@@ -15,58 +15,58 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> List of RP resources which supports pagination. </summary>
-    internal partial class AzureDevOpsProjectListResponse : IJsonModel<AzureDevOpsProjectListResponse>
+    internal partial class GitHubRepositoryListResult : IJsonModel<GitHubRepositoryListResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AzureDevOpsProjectListResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual GitHubRepositoryListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsProjectListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GitHubRepositoryListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAzureDevOpsProjectListResponse(document.RootElement, options);
+                        return DeserializeGitHubRepositoryListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureDevOpsProjectListResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GitHubRepositoryListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsProjectListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GitHubRepositoryListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AzureDevOpsProjectListResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GitHubRepositoryListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureDevOpsProjectListResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<GitHubRepositoryListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureDevOpsProjectListResponse IPersistableModel<AzureDevOpsProjectListResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        GitHubRepositoryListResult IPersistableModel<GitHubRepositoryListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureDevOpsProjectListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GitHubRepositoryListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AzureDevOpsProjectListResponse"/> from. </param>
-        internal static AzureDevOpsProjectListResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GitHubRepositoryListResult"/> from. </param>
+        internal static GitHubRepositoryListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAzureDevOpsProjectListResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeGitHubRepositoryListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AzureDevOpsProjectListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GitHubRepositoryListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,16 +77,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsProjectListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GitHubRepositoryListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureDevOpsProjectListResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GitHubRepositoryListResult)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (AzureDevOpsProjectData item in Value)
+                foreach (GitHubRepositoryData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -116,30 +116,30 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureDevOpsProjectListResponse IJsonModel<AzureDevOpsProjectListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        GitHubRepositoryListResult IJsonModel<GitHubRepositoryListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AzureDevOpsProjectListResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual GitHubRepositoryListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsProjectListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GitHubRepositoryListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureDevOpsProjectListResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GitHubRepositoryListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureDevOpsProjectListResponse(document.RootElement, options);
+            return DeserializeGitHubRepositoryListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AzureDevOpsProjectListResponse DeserializeAzureDevOpsProjectListResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static GitHubRepositoryListResult DeserializeGitHubRepositoryListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<AzureDevOpsProjectData> value = default;
+            IList<GitHubRepositoryData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<AzureDevOpsProjectData> array = new List<AzureDevOpsProjectData>();
+                    List<GitHubRepositoryData> array = new List<GitHubRepositoryData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AzureDevOpsProjectData.DeserializeAzureDevOpsProjectData(item, options));
+                        array.Add(GitHubRepositoryData.DeserializeGitHubRepositoryData(item, options));
                     }
                     value = array;
                     continue;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AzureDevOpsProjectListResponse(value ?? new ChangeTrackingList<AzureDevOpsProjectData>(), nextLink, additionalBinaryDataProperties);
+            return new GitHubRepositoryListResult(value ?? new ChangeTrackingList<GitHubRepositoryData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

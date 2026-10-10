@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _keyVaultSecretName;
+        internal bool _keyVaultSecretNameIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="LinkerSecretStore"/>. </summary>
         public LinkerSecretStore()
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         internal LinkerSecretStore(ResourceIdentifier secretStoreKeyVaultId, string keyVaultSecretName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecretStoreKeyVaultId = secretStoreKeyVaultId;
-            KeyVaultSecretName = keyVaultSecretName;
+            _keyVaultSecretName = keyVaultSecretName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -37,6 +39,17 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public ResourceIdentifier SecretStoreKeyVaultId { get; set; }
 
         /// <summary> The key vault secret name to store secret, only valid when storing one secret. </summary>
-        public string KeyVaultSecretName { get; set; }
+        public string KeyVaultSecretName
+        {
+            get
+            {
+                return _keyVaultSecretName;
+            }
+            set
+            {
+                _keyVaultSecretName = value;
+                _keyVaultSecretNameIsDefined = true;
+            }
+        }
     }
 }

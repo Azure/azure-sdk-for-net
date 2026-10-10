@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Describes properties of an assessment. </summary>
-    internal partial class SecurityAssessmentPropertiesResponse : SecurityAssessmentPropertiesBase
+    internal partial class SecurityAssessmentPropertiesResult : SecurityAssessmentPropertiesBase
     {
-        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentPropertiesResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentPropertiesResult"/>. </summary>
         /// <param name="resourceDetails"> Details of the resource that was assessed. </param>
         /// <param name="status"> The result of the assessment. </param>
-        internal SecurityAssessmentPropertiesResponse(SecurityCenterResourceDetails resourceDetails, SecurityAssessmentStatusResult status) : base(resourceDetails)
+        internal SecurityAssessmentPropertiesResult(SecurityCenterResourceDetails resourceDetails, SecurityAssessmentStatusResult status) : base(resourceDetails)
         {
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentPropertiesResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentPropertiesResult"/>. </summary>
         /// <param name="risk"> External model of risk result. </param>
         /// <param name="resourceDetails"> Details of the resource that was assessed. </param>
         /// <param name="displayName"> User friendly display name of the assessment. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="partnersData"> Data regarding 3rd party partner integration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status"> The result of the assessment. </param>
-        internal SecurityAssessmentPropertiesResponse(SecurityAssessmentPropertiesBaseRisk risk, SecurityCenterResourceDetails resourceDetails, string displayName, IDictionary<string, string> additionalData, AssessmentLinks links, SecurityAssessmentMetadataProperties metadata, SecurityAssessmentPartner partnersData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityAssessmentStatusResult status) : base(risk, resourceDetails, displayName, additionalData, links, metadata, partnersData, additionalBinaryDataProperties)
+        internal SecurityAssessmentPropertiesResult(SecurityAssessmentPropertiesBaseRisk risk, SecurityCenterResourceDetails resourceDetails, string displayName, IDictionary<string, string> additionalData, AssessmentLinks links, SecurityAssessmentMetadataProperties metadata, SecurityAssessmentPartner partnersData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityAssessmentStatusResult status) : base(risk, resourceDetails, displayName, additionalData, links, metadata, partnersData, additionalBinaryDataProperties)
         {
             Status = status;
         }

@@ -75,10 +75,17 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 throw new FormatException($"The model {nameof(RawValueSecretInfo)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Value))
+            if (_valueIsDefined || Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStringValue(Value);
+                if (Value != null)
+                {
+                    writer.WritePropertyName("value"u8);
+                    writer.WriteStringValue(Value);
+                }
+                else
+                {
+                    writer.WriteNull("value"u8);
+                }
             }
         }
 
@@ -109,6 +116,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
             LinkerSecretType secretType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool valueIsDefined = false;
             string value = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -119,6 +127,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (prop.NameEquals("value"u8))
                 {
+                    valueIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         value = null;
@@ -132,7 +141,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RawValueSecretInfo(secretType, additionalBinaryDataProperties, value);
+            return new RawValueSecretInfo(secretType, additionalBinaryDataProperties, value)
+            {
+                _valueIsDefined = valueIsDefined
+            };
         }
     }
 }

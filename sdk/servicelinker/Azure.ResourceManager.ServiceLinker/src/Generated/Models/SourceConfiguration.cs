@@ -15,6 +15,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _value;
+        internal bool _valueIsDefined;
+        private string _keyVaultReferenceIdentity;
+        internal bool _keyVaultReferenceIdentityIsDefined;
+        private string _description;
+        internal bool _descriptionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SourceConfiguration"/>. </summary>
         internal SourceConfiguration()
@@ -31,10 +37,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         internal SourceConfiguration(string name, string value, LinkerConfigurationType? configType, string keyVaultReferenceIdentity, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Value = value;
+            _value = value;
             ConfigType = configType;
-            KeyVaultReferenceIdentity = keyVaultReferenceIdentity;
-            Description = description;
+            _keyVaultReferenceIdentity = keyVaultReferenceIdentity;
+            _description = description;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,15 +48,33 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public string Name { get; }
 
         /// <summary> The value of setting. </summary>
-        public string Value { get; }
+        public string Value
+        {
+            get
+            {
+                return _value;
+            }
+        }
 
         /// <summary> The type of setting. </summary>
         public LinkerConfigurationType? ConfigType { get; }
 
         /// <summary> The identity for key vault reference, system or user-assigned managed identity ID. </summary>
-        public string KeyVaultReferenceIdentity { get; }
+        public string KeyVaultReferenceIdentity
+        {
+            get
+            {
+                return _keyVaultReferenceIdentity;
+            }
+        }
 
         /// <summary> Descriptive information for the configuration. </summary>
-        public string Description { get; }
+        public string Description
+        {
+            get
+            {
+                return _description;
+            }
+        }
     }
 }

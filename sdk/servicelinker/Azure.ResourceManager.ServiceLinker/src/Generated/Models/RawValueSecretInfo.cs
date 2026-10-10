@@ -13,6 +13,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The secret info when type is rawValue. It's for scenarios that user input the secret. </summary>
     public partial class RawValueSecretInfo : SecretBaseInfo
     {
+        private string _value;
+        internal bool _valueIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="RawValueSecretInfo"/>. </summary>
         public RawValueSecretInfo() : base(LinkerSecretType.RawValue)
         {
@@ -24,10 +27,21 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="value"> The actual value of the secret. </param>
         internal RawValueSecretInfo(LinkerSecretType secretType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string value) : base(secretType, additionalBinaryDataProperties)
         {
-            Value = value;
+            _value = value;
         }
 
         /// <summary> The actual value of the secret. </summary>
-        public string Value { get; set; }
+        public string Value
+        {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                _value = value;
+                _valueIsDefined = true;
+            }
+        }
     }
 }

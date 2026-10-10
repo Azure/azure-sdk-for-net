@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AlertsSuppressionRulesList(value, nextLink, additionalBinaryDataProperties);
+            return new AlertsSuppressionRulesList(value ?? new ChangeTrackingList<SecurityAlertsSuppressionRuleData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

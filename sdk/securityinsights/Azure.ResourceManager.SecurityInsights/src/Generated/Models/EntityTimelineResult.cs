@@ -12,22 +12,22 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> The entity timeline result operation response. </summary>
-    internal partial class EntityTimelineResponse
+    internal partial class EntityTimelineResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EntityTimelineResponse"/>. </summary>
-        internal EntityTimelineResponse()
+        /// <summary> Initializes a new instance of <see cref="EntityTimelineResult"/>. </summary>
+        internal EntityTimelineResult()
         {
             Value = new ChangeTrackingList<EntityTimelineItem>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EntityTimelineResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntityTimelineResult"/>. </summary>
         /// <param name="metaData"> The metadata from the timeline operation results. </param>
         /// <param name="value"> The timeline result values. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntityTimelineResponse(TimelineResultsMetadata metaData, IList<EntityTimelineItem> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EntityTimelineResult(TimelineResultsMetadata metaData, IList<EntityTimelineItem> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MetaData = metaData;
             Value = value;

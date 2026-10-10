@@ -10,63 +10,63 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.ResourceManager.SecurityInsights;
+using Azure.ResourceManager.SecurityCenter;
 
-namespace Azure.ResourceManager.SecurityInsights.Models
+namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Retrieve queries for entity result operation response. </summary>
-    internal partial class GetQueriesResponse : IJsonModel<GetQueriesResponse>
+    /// <summary> List of RP resources which supports pagination. </summary>
+    internal partial class AzureDevOpsProjectListResult : IJsonModel<AzureDevOpsProjectListResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GetQueriesResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AzureDevOpsProjectListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GetQueriesResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsProjectListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGetQueriesResponse(document.RootElement, options);
+                        return DeserializeAzureDevOpsProjectListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GetQueriesResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureDevOpsProjectListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GetQueriesResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsProjectListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GetQueriesResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureDevOpsProjectListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GetQueriesResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AzureDevOpsProjectListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GetQueriesResponse IPersistableModel<GetQueriesResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AzureDevOpsProjectListResult IPersistableModel<AzureDevOpsProjectListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GetQueriesResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AzureDevOpsProjectListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GetQueriesResponse"/> from. </param>
-        internal static GetQueriesResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AzureDevOpsProjectListResult"/> from. </param>
+        internal static AzureDevOpsProjectListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeGetQueriesResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeAzureDevOpsProjectListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GetQueriesResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AzureDevOpsProjectListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,16 +77,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GetQueriesResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsProjectListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetQueriesResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureDevOpsProjectListResult)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (EntityQueryItem item in Value)
+                foreach (AzureDevOpsProjectData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -116,31 +116,31 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GetQueriesResponse IJsonModel<GetQueriesResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AzureDevOpsProjectListResult IJsonModel<AzureDevOpsProjectListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GetQueriesResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AzureDevOpsProjectListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GetQueriesResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsProjectListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetQueriesResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureDevOpsProjectListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGetQueriesResponse(document.RootElement, options);
+            return DeserializeAzureDevOpsProjectListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GetQueriesResponse DeserializeGetQueriesResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static AzureDevOpsProjectListResult DeserializeAzureDevOpsProjectListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<EntityQueryItem> value = default;
-            string nextLink = default;
+            IList<AzureDevOpsProjectData> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -150,17 +150,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    List<EntityQueryItem> array = new List<EntityQueryItem>();
+                    List<AzureDevOpsProjectData> array = new List<AzureDevOpsProjectData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(EntityQueryItem.DeserializeEntityQueryItem(item, options));
+                        array.Add(AzureDevOpsProjectData.DeserializeAzureDevOpsProjectData(item, options));
                     }
                     value = array;
                     continue;
                 }
                 if (prop.NameEquals("nextLink"u8))
                 {
-                    nextLink = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -168,7 +172,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GetQueriesResponse(value ?? new ChangeTrackingList<EntityQueryItem>(), nextLink, additionalBinaryDataProperties);
+            return new AzureDevOpsProjectListResult(value ?? new ChangeTrackingList<AzureDevOpsProjectData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

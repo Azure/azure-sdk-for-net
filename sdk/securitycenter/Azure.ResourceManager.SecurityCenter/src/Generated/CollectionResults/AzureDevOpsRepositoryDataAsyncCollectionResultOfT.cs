@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> The pages of AzureDevOpsRepositoryDataAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<AzureDevOpsRepositoryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     yield break;
                 }
-                AzureDevOpsRepositoryListResponse result = AzureDevOpsRepositoryListResponse.FromResponse(response);
+                AzureDevOpsRepositoryListResult result = AzureDevOpsRepositoryListResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<AzureDevOpsRepositoryData>.FromValues((IReadOnlyList<AzureDevOpsRepositoryData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

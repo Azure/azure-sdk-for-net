@@ -12,22 +12,22 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Retrieve queries for entity result operation response. </summary>
-    internal partial class GetQueriesResponse
+    internal partial class GetQueriesResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GetQueriesResponse"/>. </summary>
-        internal GetQueriesResponse()
+        /// <summary> Initializes a new instance of <see cref="GetQueriesResult"/>. </summary>
+        internal GetQueriesResult()
         {
             Value = new ChangeTrackingList<EntityQueryItem>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="GetQueriesResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetQueriesResult"/>. </summary>
         /// <param name="value"> The query result values. </param>
         /// <param name="nextLink"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GetQueriesResponse(IList<EntityQueryItem> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GetQueriesResult(IList<EntityQueryItem> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;

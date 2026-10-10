@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
             return new ManagedServiceRestartReplicaContent(
                 partitionId,
-                replicaIds,
+                replicaIds ?? new ChangeTrackingList<long>(),
                 restartKind,
                 forceRestart,
                 timeoutInSeconds,

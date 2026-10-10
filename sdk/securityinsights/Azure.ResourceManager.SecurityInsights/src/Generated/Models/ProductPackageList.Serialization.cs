@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ProductPackageList(value, nextLink, additionalBinaryDataProperties);
+            return new ProductPackageList(value ?? new ChangeTrackingList<SecurityInsightsProductPackageData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

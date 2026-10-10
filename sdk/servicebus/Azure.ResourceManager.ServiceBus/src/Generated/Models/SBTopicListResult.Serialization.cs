@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SBTopicListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SBTopicListResult(value ?? new ChangeTrackingList<ServiceBusTopicData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

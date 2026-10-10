@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private ConfigurationNames _properties;
+        internal bool _propertiesIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="LinkerConfigurationNameItem"/>. </summary>
         internal LinkerConfigurationNameItem()
@@ -26,12 +28,18 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal LinkerConfigurationNameItem(ConfigurationNames properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Properties = properties;
+            _properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The result detail. </summary>
-        internal ConfigurationNames Properties { get; }
+        internal ConfigurationNames Properties
+        {
+            get
+            {
+                return _properties;
+            }
+        }
 
         /// <summary> The target service provider name and resource name. </summary>
         public string TargetService

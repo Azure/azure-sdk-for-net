@@ -148,10 +148,17 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(ConfigurationStore))
+            if (_configurationStoreIsDefined || Optional.IsDefined(ConfigurationStore))
             {
-                writer.WritePropertyName("configurationStore"u8);
-                writer.WriteObjectValue(ConfigurationStore, options);
+                if (ConfigurationStore != null)
+                {
+                    writer.WritePropertyName("configurationStore"u8);
+                    writer.WriteObjectValue(ConfigurationStore, options);
+                }
+                else
+                {
+                    writer.WriteNull("configurationStore"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -201,6 +208,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             DaprProperties daprProperties = default;
             IDictionary<string, string> additionalConfigurations = default;
             IDictionary<string, string> additionalConnectionStringProperties = default;
+            bool configurationStoreIsDefined = false;
             ConfigurationStore configurationStore = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -297,6 +305,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (prop.NameEquals("configurationStore"u8))
                 {
+                    configurationStoreIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         configurationStore = null;
@@ -318,7 +327,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 additionalConfigurations ?? new ChangeTrackingDictionary<string, string>(),
                 additionalConnectionStringProperties ?? new ChangeTrackingDictionary<string, string>(),
                 configurationStore,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _configurationStoreIsDefined = configurationStoreIsDefined
+            };
         }
     }
 }

@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _appConfigurationId;
+        internal bool _appConfigurationIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ConfigurationStore"/>. </summary>
         public ConfigurationStore()
@@ -26,11 +28,22 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ConfigurationStore(string appConfigurationId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AppConfigurationId = appConfigurationId;
+            _appConfigurationId = appConfigurationId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The app configuration id to store configuration. </summary>
-        public string AppConfigurationId { get; set; }
+        public string AppConfigurationId
+        {
+            get
+            {
+                return _appConfigurationId;
+            }
+            set
+            {
+                _appConfigurationId = value;
+                _appConfigurationIdIsDefined = true;
+            }
+        }
     }
 }

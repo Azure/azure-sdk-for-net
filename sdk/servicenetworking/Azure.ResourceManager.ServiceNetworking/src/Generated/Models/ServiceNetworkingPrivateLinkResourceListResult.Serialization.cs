@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ServiceNetworkingPrivateLinkResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ServiceNetworkingPrivateLinkResourceListResult(value ?? new ChangeTrackingList<ServiceNetworkingPrivateLinkResourceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
