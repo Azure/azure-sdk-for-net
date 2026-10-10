@@ -14,58 +14,58 @@ using Azure;
 namespace Azure.Security.Attestation
 {
     /// <summary> The response to the OpenID metadata description document API. </summary>
-    internal partial class OpenIDConfigurationResult : IJsonModel<OpenIDConfigurationResult>
+    public partial class AttestationOpenIdMetadata : IJsonModel<AttestationOpenIdMetadata>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OpenIDConfigurationResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AttestationOpenIdMetadata PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OpenIDConfigurationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AttestationOpenIdMetadata>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOpenIDConfigurationResult(document.RootElement, options);
+                        return DeserializeAttestationOpenIdMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OpenIDConfigurationResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AttestationOpenIdMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OpenIDConfigurationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AttestationOpenIdMetadata>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSecurityAttestationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OpenIDConfigurationResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AttestationOpenIdMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OpenIDConfigurationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AttestationOpenIdMetadata>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OpenIDConfigurationResult IPersistableModel<OpenIDConfigurationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AttestationOpenIdMetadata IPersistableModel<AttestationOpenIdMetadata>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OpenIDConfigurationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AttestationOpenIdMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="OpenIDConfigurationResult"/> from. </param>
-        public static explicit operator OpenIDConfigurationResult(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AttestationOpenIdMetadata"/> from. </param>
+        public static explicit operator AttestationOpenIdMetadata(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeOpenIDConfigurationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeAttestationOpenIdMetadata(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OpenIDConfigurationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AttestationOpenIdMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -76,10 +76,10 @@ namespace Azure.Security.Attestation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OpenIDConfigurationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AttestationOpenIdMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OpenIDConfigurationResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AttestationOpenIdMetadata)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(ResponseTypesSupported))
             {
@@ -96,11 +96,11 @@ namespace Azure.Security.Attestation
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IdTokenSigningAlgValuesSupported))
+            if (Optional.IsCollectionDefined(TokenSigningAlgorithmsSupported))
             {
                 writer.WritePropertyName("id_token_signing_alg_values_supported"u8);
                 writer.WriteStartArray();
-                foreach (string item in IdTokenSigningAlgValuesSupported)
+                foreach (string item in TokenSigningAlgorithmsSupported)
                 {
                     if (item == null)
                     {
@@ -119,18 +119,18 @@ namespace Azure.Security.Attestation
             if (Optional.IsDefined(Issuer))
             {
                 writer.WritePropertyName("issuer"u8);
-                writer.WriteStringValue(Issuer);
+                writer.WriteStringValue(Issuer.AbsoluteUri);
             }
-            if (Optional.IsDefined(JwksUri))
+            if (Optional.IsDefined(JsonWebKeySetUri))
             {
                 writer.WritePropertyName("jwks_uri"u8);
-                writer.WriteStringValue(JwksUri);
+                writer.WriteStringValue(JsonWebKeySetUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(ClaimsSupported))
+            if (Optional.IsCollectionDefined(SupportedClaims))
             {
                 writer.WritePropertyName("claims_supported"u8);
                 writer.WriteStartArray();
-                foreach (string item in ClaimsSupported)
+                foreach (string item in SupportedClaims)
                 {
                     if (item == null)
                     {
@@ -160,35 +160,35 @@ namespace Azure.Security.Attestation
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OpenIDConfigurationResult IJsonModel<OpenIDConfigurationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AttestationOpenIdMetadata IJsonModel<AttestationOpenIdMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OpenIDConfigurationResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AttestationOpenIdMetadata JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OpenIDConfigurationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AttestationOpenIdMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OpenIDConfigurationResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AttestationOpenIdMetadata)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOpenIDConfigurationResult(document.RootElement, options);
+            return DeserializeAttestationOpenIdMetadata(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static OpenIDConfigurationResult DeserializeOpenIDConfigurationResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static AttestationOpenIdMetadata DeserializeAttestationOpenIdMetadata(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<string> responseTypesSupported = default;
-            IList<string> idTokenSigningAlgValuesSupported = default;
+            IReadOnlyList<string> responseTypesSupported = default;
+            IReadOnlyList<string> tokenSigningAlgorithmsSupported = default;
             string revocationEndpoint = default;
-            string issuer = default;
-            string jwksUri = default;
-            IList<string> claimsSupported = default;
+            Uri issuer = default;
+            Uri jsonWebKeySetUri = default;
+            IReadOnlyList<string> supportedClaims = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -231,7 +231,7 @@ namespace Azure.Security.Attestation
                             array.Add(item.GetString());
                         }
                     }
-                    idTokenSigningAlgValuesSupported = array;
+                    tokenSigningAlgorithmsSupported = array;
                     continue;
                 }
                 if (prop.NameEquals("revocation_endpoint"u8))
@@ -241,12 +241,20 @@ namespace Azure.Security.Attestation
                 }
                 if (prop.NameEquals("issuer"u8))
                 {
-                    issuer = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    issuer = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("jwks_uri"u8))
                 {
-                    jwksUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    jsonWebKeySetUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("claims_supported"u8))
@@ -267,7 +275,7 @@ namespace Azure.Security.Attestation
                             array.Add(item.GetString());
                         }
                     }
-                    claimsSupported = array;
+                    supportedClaims = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -275,13 +283,13 @@ namespace Azure.Security.Attestation
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new OpenIDConfigurationResult(
+            return new AttestationOpenIdMetadata(
                 responseTypesSupported ?? new ChangeTrackingList<string>(),
-                idTokenSigningAlgValuesSupported ?? new ChangeTrackingList<string>(),
+                tokenSigningAlgorithmsSupported ?? new ChangeTrackingList<string>(),
                 revocationEndpoint,
                 issuer,
-                jwksUri,
-                claimsSupported ?? new ChangeTrackingList<string>(),
+                jsonWebKeySetUri,
+                supportedClaims ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
     }

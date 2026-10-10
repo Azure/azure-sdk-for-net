@@ -6,14 +6,19 @@
 
 - Updated the client library to target the `2025-06-01` Azure Attestation service API version.
 - Added `AttestationClientOptions.ServiceVersion.V2025_06_01`, which is now the default service version. `V2020_10_01` remains available for callers that need to continue targeting the previous service API version.
-- Added the `AttestationType.AzureGuest`, `AttestationType.SevSnpVm`, and `AttestationType.TdxVm` values, for use with the policy management APIs. `TdxVm` requires service version `V2025_06_01`.
+- Added the `AttestationType.AzureGuest`, `AttestationType.SevSnpVm`, and `AttestationType.TdxVm` values. `TdxVm` requires service version `V2025_06_01`.
+- Added `AttestationClient.AttestTdxVm` and `AttestationClient.AttestSevSnpVm` (and their async counterparts) to attest Intel TDX and AMD SEV-SNP confidential virtual machines. `AttestTdxVm` requires service version `V2025_06_01`.
+- Added `AttestationRequest.Nonce`, which the service returns in the `nonce` claim of the attestation token.
+- Added `AttestationResult.AdditionalClaims`, which exposes the token's claims that have no dedicated property, such as the TDX and SEV-SNP claims and claims issued by attestation policy.
+- Added `AttestationClient.GetOpenIdMetadata` (and its async counterpart), which retrieves the attestation provider's OpenID Connect discovery document as an `AttestationOpenIdMetadata`.
+- Added `AttestationClient.AttestAzureGuest` (and its async counterpart) to attest Azure confidential and Trusted Launch virtual machines. It returns a `SealedAttestationResult` whose token is encrypted to the virtual machine's TPM, so the client does not validate it.
 - Model types now implement `IJsonModel<T>` and `IPersistableModel<T>`, and `AzureSecurityAttestationContext` was added, for use with `System.ClientModel.Primitives.ModelReaderWriter`.
 
 ### Bugs Fixed
 
 - Fixed `GetPolicy` throwing instead of returning a null policy when the requested attestation type has no policy configured.
 - `AttestationToken.ExpirationTime`, `NotBeforeTime`, and `IssuedAtTime` no longer truncate fractional seconds in the token's `exp`, `nbf`, and `iat` claims.
-- `AttestationToken.ValidateToken` and `AttestationToken.ValidateTokenAsync` now return `false` for unsecured tokens, that is, tokens whose `alg` header is `none`. Such tokens carry no signature, so no signature verification was performed and validation previously succeeded by default. The `AttestationTokenValidationOptions.TokenValidated` handler is no longer invoked for these tokens and cannot be used to accept them. Tokens returned by the Attestation service are always signed and are unaffected; unsecured tokens sent to the service by `SetPolicy` and `ResetPolicy` are also unaffected, as they are never validated by the client.
+- `AttestationToken.ValidateToken` and `AttestationToken.ValidateTokenAsync` now return `false` for unsecured tokens, that is, tokens whose `alg` header is `none`. Such tokens carry no signature, so no signature verification was performed and validation previously succeeded by default. The `AttestationTokenValidationOptions.TokenValidated` handler is no longer invoked for these tokens and cannot be used to accept them. Tokens returned by the Attestation service are signed and are unaffected, except for the response to an attestation request that sets `DraftPolicyForAttestation`: the service never signs it, so the client still returns it, as before, after checking its time claims and invoking the `TokenValidated` handler. Unsecured tokens sent to the service by `SetPolicy` and `ResetPolicy` are also unaffected, as they are never validated by the client.
 
 ### Other Changes
 

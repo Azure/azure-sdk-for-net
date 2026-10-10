@@ -77,6 +77,254 @@ namespace Azure.Security.Attestation.Tests
             Assert.AreEqual("mrs", result.MrSigner);
         }
 
+        [TestCase(false)]
+        [TestCase(true)]
+        public async System.Threading.Tasks.Task AttestTdxVm(bool async)
+        {
+            var captured = new List<CapturedRequest>();
+            var client = new AttestationClient(new Uri(Endpoint), new MockCredential(), Options(captured, TokenResponse("{\"nonce\":\"n1\",\"x-ms-attestation-type\":\"tdxvm\",\"tdx_mrtd\":\"abc\"}")));
+            var attestationRequest = new AttestationRequest
+            {
+                Evidence = BinaryData.FromBytes(s_evidence),
+                RuntimeData = new AttestationData(BinaryData.FromBytes(s_runtimeData), false),
+                InittimeData = new AttestationData(BinaryData.FromString("{\"a\":1}"), true),
+                Nonce = "n1",
+            };
+
+            AttestationResult result = async
+                ? (await client.AttestTdxVmAsync(attestationRequest)).Value
+                : client.AttestTdxVm(attestationRequest).Value;
+
+            CapturedRequest request = captured.Single();
+            Assert.AreEqual(RequestMethod.Post, request.Method);
+            Assert.AreEqual($"{Endpoint}/attest/TdxVm?{ApiVersion}", request.Uri);
+            Assert.AreEqual("application/json", request.ContentType);
+            AssertJsonEqual(
+                $@"{{""quote"":""{Base64Url.Encode(s_evidence)}"",
+                    ""runtimeData"":{{""data"":""{Base64Url.Encode(s_runtimeData)}"",""dataType"":""Binary""}},
+                    ""initTimeData"":{{""data"":""{Base64Url.EncodeString("{\"a\":1}")}"",""dataType"":""JSON""}},
+                    ""nonce"":""n1""}}",
+                request.Body);
+            Assert.AreEqual("n1", result.Nonce);
+            Assert.AreEqual("tdxvm", result.VerifierType);
+            Assert.AreEqual("abc", result.AdditionalClaims["tdx_mrtd"].ToObjectFromJson<string>());
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async System.Threading.Tasks.Task AttestSevSnpVm(bool async)
+        {
+            var captured = new List<CapturedRequest>();
+            var client = new AttestationClient(new Uri(Endpoint), new MockCredential(), Options(captured, TokenResponse("{\"nonce\":\"n2\",\"x-ms-attestation-type\":\"sevsnpvm\",\"x-ms-sevsnpvm-guestsvn\":7}")));
+            const string Evidence = "{\"SnpReport\":\"AQID\",\"VcekCertChain\":\"BAUG\"}";
+            var attestationRequest = new AttestationRequest
+            {
+                Evidence = BinaryData.FromString(Evidence),
+                RuntimeData = new AttestationData(BinaryData.FromString("{\"b\":2}"), true),
+                DraftPolicyForAttestation = Policy,
+                Nonce = "n2",
+            };
+
+            AttestationResult result = async
+                ? (await client.AttestSevSnpVmAsync(attestationRequest)).Value
+                : client.AttestSevSnpVm(attestationRequest).Value;
+
+            CapturedRequest request = captured.Single();
+            Assert.AreEqual(RequestMethod.Post, request.Method);
+            Assert.AreEqual($"{Endpoint}/attest/SevSnpVm?{ApiVersion}", request.Uri);
+            Assert.AreEqual("application/json", request.ContentType);
+            AssertJsonEqual(
+                $@"{{""report"":""{Base64Url.EncodeString(Evidence)}"",
+                    ""runtimeData"":{{""data"":""{Base64Url.EncodeString("{\"b\":2}")}"",""dataType"":""JSON""}},
+                    ""draftPolicyForAttestation"":""{Policy}"",
+                    ""nonce"":""n2""}}",
+                request.Body);
+            Assert.AreEqual("n2", result.Nonce);
+            Assert.AreEqual("sevsnpvm", result.VerifierType);
+            Assert.AreEqual(7, result.AdditionalClaims["x-ms-sevsnpvm-guestsvn"].ToObjectFromJson<int>());
+        }
+
+        [Test]
+        public void AttestTdxVmRejectsDraftPolicy()
+        {
+            var captured = new List<CapturedRequest>();
+            var client = new AttestationClient(new Uri(Endpoint), new MockCredential(), Options(captured, TokenResponse("{}")));
+            var request = new AttestationRequest { Evidence = BinaryData.FromBytes(s_evidence), DraftPolicyForAttestation = Policy };
+
+            Assert.Throws<ArgumentException>(() => client.AttestTdxVm(request));
+            Assert.ThrowsAsync<ArgumentException>(() => client.AttestTdxVmAsync(request));
+            Assert.IsEmpty(captured);
+        }
+
+        [Test]
+        public void AttestTdxVmRequiresServiceVersion20250601()
+        {
+            var captured = new List<CapturedRequest>();
+            var client = new AttestationClient(new Uri(Endpoint), new MockCredential(), Options(captured, TokenResponse("{}"), AttestationClientOptions.ServiceVersion.V2020_10_01));
+            var request = new AttestationRequest { Evidence = BinaryData.FromBytes(s_evidence) };
+
+            Assert.Throws<NotSupportedException>(() => client.AttestTdxVm(request));
+            Assert.ThrowsAsync<NotSupportedException>(() => client.AttestTdxVmAsync(request));
+            Assert.IsEmpty(captured);
+        }
+
+        [Test]
+        public void AttestSevSnpVmIsAvailableOnServiceVersion20201001()
+        {
+            var captured = new List<CapturedRequest>();
+            var client = new AttestationClient(new Uri(Endpoint), new MockCredential(), Options(captured, TokenResponse("{}"), AttestationClientOptions.ServiceVersion.V2020_10_01));
+
+            client.AttestSevSnpVm(new AttestationRequest { Evidence = BinaryData.FromString("{}") });
+
+            Assert.AreEqual($"{Endpoint}/attest/SevSnpVm?api-version=2020-10-01", captured.Single().Uri);
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void AttestConfidentialVmRejectsNullArguments(bool tdx)
+        {
+            var captured = new List<CapturedRequest>();
+            var client = new AttestationClient(new Uri(Endpoint), new MockCredential(), Options(captured, TokenResponse("{}")));
+            Action<AttestationRequest> attest = tdx ? r => client.AttestTdxVm(r) : r => client.AttestSevSnpVm(r);
+
+            Assert.AreEqual("request", Assert.Throws<ArgumentNullException>(() => attest(null)).ParamName);
+            Assert.AreEqual("Evidence", Assert.Throws<ArgumentNullException>(() => attest(new AttestationRequest())).ParamName);
+            Assert.IsEmpty(captured);
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void AttestEnclaveSendsNonce(bool sgx)
+        {
+            var captured = new List<CapturedRequest>();
+            var client = new AttestationClient(new Uri(Endpoint), new MockCredential(), Options(captured, TokenResponse("{}")));
+            var request = new AttestationRequest { Evidence = BinaryData.FromBytes(s_evidence), Nonce = "n3" };
+
+            _ = sgx ? client.AttestSgxEnclave(request) : client.AttestOpenEnclave(request);
+
+            using JsonDocument body = JsonDocument.Parse(captured.Single().Body);
+            Assert.AreEqual("n3", body.RootElement.GetProperty("nonce").GetString());
+        }
+
+        // The service never signs the token for a draft-policy attestation; 1.0.0 returned it, and so must 1.1.0.
+        [Test]
+        public async System.Threading.Tasks.Task DraftPolicyAttestationReturnsUnsignedToken([Values("SgxEnclave", "OpenEnclave", "SevSnpVm")] string type, [Values] bool async)
+        {
+            AttestationClient client = ValidatingClient("{\"nonce\":\"d1\"}");
+            var request = new AttestationRequest { Evidence = BinaryData.FromString("{}"), DraftPolicyForAttestation = Policy };
+
+            AttestationResponse<AttestationResult> response = await Attest(client, type, request, async);
+
+            Assert.AreEqual("none", response.Token.Algorithm);
+            Assert.AreEqual("d1", response.Value.Nonce);
+        }
+
+        [Test]
+        public void AttestationWithoutDraftPolicyRejectsUnsignedToken([Values("SgxEnclave", "OpenEnclave", "SevSnpVm", "TdxVm")] string type, [Values] bool async)
+        {
+            AttestationClient client = ValidatingClient("{\"nonce\":\"d1\"}");
+            var request = new AttestationRequest { Evidence = BinaryData.FromString("{}") };
+
+            Assert.ThrowsAsync<AttestationTokenValidationFailedException>(() => Attest(client, type, request, async));
+        }
+
+        [Test]
+        public void DraftPolicyAttestationStillChecksExpiration([Values] bool async)
+        {
+            long expired = DateTimeOffset.UtcNow.AddHours(-1).ToUnixTimeSeconds();
+            AttestationClient client = ValidatingClient($"{{\"exp\":{expired}}}");
+            var request = new AttestationRequest { Evidence = BinaryData.FromString("{}"), DraftPolicyForAttestation = Policy };
+
+            Exception ex = Assert.CatchAsync(() => Attest(client, "SevSnpVm", request, async));
+            Assert.AreEqual("Attestation token expired.", ex.Message);
+        }
+
+        [Test]
+        public void DraftPolicyAttestationStillRaisesTokenValidated([Values] bool async)
+        {
+            var tokenOptions = new AttestationTokenValidationOptions();
+            tokenOptions.TokenValidated += args =>
+            {
+                args.IsValid = false;
+                return System.Threading.Tasks.Task.CompletedTask;
+            };
+            AttestationClient client = ValidatingClient("{}", tokenOptions);
+            var request = new AttestationRequest { Evidence = BinaryData.FromString("{}"), DraftPolicyForAttestation = Policy };
+
+            Assert.ThrowsAsync<AttestationTokenValidationFailedException>(() => Attest(client, "SgxEnclave", request, async));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async System.Threading.Tasks.Task AttestAzureGuest(bool async)
+        {
+            var captured = new List<CapturedRequest>();
+            const string Sealed = "eyJlbmNyeXB0ZWRJbm5lcktleSI6IkFBQUEifQ";
+            var client = new AttestationClient(new Uri(Endpoint), new MockCredential(), Options(captured, $"{{\"token\":\"{Sealed}\"}}"));
+            const string AttestationInfo = "{\"AttestationProtocolVersion\":\"2.0\",\"TpmInfo\":{}}";
+
+            SealedAttestationResult result = async
+                ? (await client.AttestAzureGuestAsync(BinaryData.FromString(AttestationInfo))).Value
+                : client.AttestAzureGuest(BinaryData.FromString(AttestationInfo)).Value;
+
+            CapturedRequest request = captured.Single();
+            Assert.AreEqual(RequestMethod.Post, request.Method);
+            Assert.AreEqual($"{Endpoint}/attest/AzureGuest?{ApiVersion}", request.Uri);
+            Assert.AreEqual("application/json", request.ContentType);
+            AssertJsonEqual($@"{{""attestationInfo"":""{Base64Url.EncodeString(AttestationInfo)}""}}", request.Body);
+            Assert.AreEqual(Sealed, result.Token);
+        }
+
+        [Test]
+        public void AttestAzureGuestRejectsNullArgument()
+        {
+            var captured = new List<CapturedRequest>();
+            var client = new AttestationClient(new Uri(Endpoint), new MockCredential(), Options(captured, "{}"));
+
+            Assert.AreEqual("attestationInfo", Assert.Throws<ArgumentNullException>(() => client.AttestAzureGuest(null)).ParamName);
+            Assert.AreEqual("attestationInfo", Assert.ThrowsAsync<ArgumentNullException>(() => client.AttestAzureGuestAsync(null)).ParamName);
+            Assert.IsEmpty(captured);
+        }
+
+        [Test]
+        public void SealedAttestationResultFactory()
+        {
+            Assert.AreEqual("sealed", AttestationModelFactory.SealedAttestationResult("sealed").Token);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async System.Threading.Tasks.Task GetOpenIdMetadata(bool async)
+        {
+            var captured = new List<CapturedRequest>();
+            var client = new AttestationClient(new Uri(Endpoint), new MockCredential(), Options(captured,
+                $@"{{""response_types_supported"":[""token"",""none""],""id_token_signing_alg_values_supported"":[""RS256""],
+                    ""revocation_endpoint"":""{Endpoint}/revoke"",""issuer"":""{Endpoint}"",""jwks_uri"":""{Endpoint}/certs"",
+                    ""claims_supported"":[""cnf"",""nonce"",""x-ms-ver""]}}"));
+
+            AttestationOpenIdMetadata metadata = async ? (await client.GetOpenIdMetadataAsync()).Value : client.GetOpenIdMetadata().Value;
+
+            CapturedRequest request = captured.Single();
+            Assert.AreEqual(RequestMethod.Get, request.Method);
+            Assert.AreEqual($"{Endpoint}/.well-known/openid-configuration?{ApiVersion}", request.Uri);
+            Assert.AreEqual(new Uri(Endpoint), metadata.Issuer);
+            Assert.AreEqual(new Uri($"{Endpoint}/certs"), metadata.JsonWebKeySetUri);
+            CollectionAssert.AreEqual(new[] { "token", "none" }, metadata.ResponseTypesSupported);
+            CollectionAssert.AreEqual(new[] { "RS256" }, metadata.TokenSigningAlgorithmsSupported);
+            CollectionAssert.AreEqual(new[] { "cnf", "nonce", "x-ms-ver" }, metadata.SupportedClaims);
+        }
+
+        [Test]
+        public void OpenIdMetadataFactory()
+        {
+            AttestationOpenIdMetadata metadata = AttestationModelFactory.AttestationOpenIdMetadata(issuer: new Uri(Endpoint), supportedClaims: new[] { "nonce" });
+
+            Assert.AreEqual(new Uri(Endpoint), metadata.Issuer);
+            Assert.IsNull(metadata.JsonWebKeySetUri);
+            CollectionAssert.IsEmpty(metadata.ResponseTypesSupported);
+            CollectionAssert.AreEqual(new[] { "nonce" }, metadata.SupportedClaims);
+        }
+
         [Test]
         public void AttestTpm()
         {
@@ -232,8 +480,25 @@ namespace Azure.Security.Attestation.Tests
                 .CreateSelfSigned(DateTimeOffset.UtcNow.AddDays(-1), DateTimeOffset.UtcNow.AddDays(1));
 #endif
 
-        private static AttestationClientOptions Options(List<CapturedRequest> captured, string responseBody)
-            => new AttestationClientOptions(tokenOptions: new AttestationTokenValidationOptions { ValidateToken = false })
+        // Default token validation; /certs returns no keys, and every attestation returns an unsigned token.
+        private static AttestationClient ValidatingClient(string tokenBody, AttestationTokenValidationOptions tokenOptions = null)
+            => new AttestationClient(new Uri(Endpoint), new MockCredential(), new AttestationClientOptions(tokenOptions: tokenOptions)
+            {
+                Transport = new MockTransport(request => new MockResponse(200).SetContent(
+                    request.Uri.Path == "/certs" ? "{\"keys\":[]}" : TokenResponse(tokenBody))),
+            });
+
+        private static async System.Threading.Tasks.Task<AttestationResponse<AttestationResult>> Attest(AttestationClient client, string type, AttestationRequest request, bool async)
+            => type switch
+            {
+                "SgxEnclave" => async ? await client.AttestSgxEnclaveAsync(request) : client.AttestSgxEnclave(request),
+                "OpenEnclave" => async ? await client.AttestOpenEnclaveAsync(request) : client.AttestOpenEnclave(request),
+                "SevSnpVm" => async ? await client.AttestSevSnpVmAsync(request) : client.AttestSevSnpVm(request),
+                _ => async ? await client.AttestTdxVmAsync(request) : client.AttestTdxVm(request),
+            };
+
+        private static AttestationClientOptions Options(List<CapturedRequest> captured, string responseBody, AttestationClientOptions.ServiceVersion version = AttestationClientOptions.ServiceVersion.V2025_06_01)
+            => new AttestationClientOptions(version, new AttestationTokenValidationOptions { ValidateToken = false })
             {
                 Transport = new MockTransport(request =>
                 {
