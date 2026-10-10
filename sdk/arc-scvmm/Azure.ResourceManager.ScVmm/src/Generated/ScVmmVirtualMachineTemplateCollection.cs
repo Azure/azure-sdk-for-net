@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.ScVmm
         {
             TryGetApiVersion(ScVmmVirtualMachineTemplateResource.ResourceType, out string scVmmVirtualMachineTemplateApiVersion);
             _virtualMachineTemplatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ScVmm", ScVmmVirtualMachineTemplateResource.ResourceType.Namespace, Diagnostics);
-            _virtualMachineTemplatesRestClient = new VirtualMachineTemplates(_virtualMachineTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scVmmVirtualMachineTemplateApiVersion ?? "2025-03-13");
+            _virtualMachineTemplatesRestClient = new VirtualMachineTemplates(
+                _virtualMachineTemplatesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                scVmmVirtualMachineTemplateApiVersion ?? "2025-03-13",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

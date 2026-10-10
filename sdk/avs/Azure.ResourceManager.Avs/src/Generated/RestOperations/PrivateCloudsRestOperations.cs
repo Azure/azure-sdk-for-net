@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Avs
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
+        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of PrivateClouds for mocking. </summary>
         protected PrivateClouds()
@@ -29,12 +30,14 @@ namespace Azure.ResourceManager.Avs
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal PrivateClouds(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
+        internal PrivateClouds(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _getApiVersion = getApiVersion;
             _userAgent = new TelemetryDetails(typeof(PrivateClouds).Assembly, applicationId);
         }
 
@@ -53,10 +56,7 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.AVS/privateClouds", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.AVS/privateClouds") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,10 +77,7 @@ namespace Azure.ResourceManager.Avs
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.AVS/privateClouds") ?? "2026-03-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -97,10 +94,7 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.AVS/privateClouds", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.AVS/privateClouds") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -121,10 +115,7 @@ namespace Azure.ResourceManager.Avs
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.AVS/privateClouds") ?? "2026-03-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -144,10 +135,7 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
             uri.AppendPath(privateCloudName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.AVS/privateClouds") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -167,10 +155,7 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
             uri.AppendPath(privateCloudName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.AVS/privateClouds") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -192,10 +177,7 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
             uri.AppendPath(privateCloudName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.AVS/privateClouds") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -217,10 +199,7 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
             uri.AppendPath(privateCloudName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.AVS/privateClouds") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -240,10 +219,7 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/rotateVcenterPassword", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.AVS/privateClouds") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -263,10 +239,7 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/rotateNsxtPassword", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.AVS/privateClouds") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -286,10 +259,7 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/listAdminCredentials", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.AVS/privateClouds") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -310,10 +280,7 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
             uri.AppendPath(privateCloudName, true);
             uri.AppendPath("/getVcfLicense", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.AVS/privateClouds") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

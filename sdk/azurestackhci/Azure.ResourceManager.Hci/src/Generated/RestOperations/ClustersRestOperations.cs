@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Hci
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
+        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of Clusters for mocking. </summary>
         protected Clusters()
@@ -29,12 +30,14 @@ namespace Azure.ResourceManager.Hci
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Clusters(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
+        internal Clusters(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _getApiVersion = getApiVersion;
             _userAgent = new TelemetryDetails(typeof(Clusters).Assembly, applicationId);
         }
 
@@ -54,10 +57,7 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
             uri.AppendPath(clusterName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.AzureStackHCI/clusters") ?? "2026-04-30", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,10 +77,7 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
             uri.AppendPath(clusterName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.AzureStackHCI/clusters") ?? "2026-04-30", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -102,10 +99,7 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
             uri.AppendPath(clusterName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.AzureStackHCI/clusters") ?? "2026-04-30", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -127,10 +121,7 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
             uri.AppendPath(clusterName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.AzureStackHCI/clusters") ?? "2026-04-30", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -148,10 +139,7 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.AzureStackHCI/clusters") ?? "2026-04-30", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -172,10 +160,7 @@ namespace Azure.ResourceManager.Hci
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.AzureStackHCI/clusters") ?? "2026-04-30");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -192,10 +177,7 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.AzureStackHCI/clusters") ?? "2026-04-30", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -216,10 +198,7 @@ namespace Azure.ResourceManager.Hci
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.AzureStackHCI/clusters") ?? "2026-04-30");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -240,10 +219,7 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/updateSecretsLocations", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.AzureStackHCI/clusters") ?? "2026-04-30", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -266,10 +242,7 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/uploadCertificate", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.AzureStackHCI/clusters") ?? "2026-04-30", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -291,10 +264,7 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/createClusterIdentity", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.AzureStackHCI/clusters") ?? "2026-04-30", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -315,10 +285,7 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/extendSoftwareAssuranceBenefit", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.AzureStackHCI/clusters") ?? "2026-04-30", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -341,10 +308,7 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/triggerLogCollection", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.AzureStackHCI/clusters") ?? "2026-04-30", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -367,10 +331,7 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/configureRemoteSupport", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.AzureStackHCI/clusters") ?? "2026-04-30", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

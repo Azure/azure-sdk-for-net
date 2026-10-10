@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.AppNetwork
         {
             TryGetApiVersion(AppLinkResource.ResourceType, out string appLinkApiVersion);
             _appLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppNetwork", AppLinkResource.ResourceType.Namespace, Diagnostics);
-            _appLinksRestClient = new AppLinks(_appLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appLinkApiVersion ?? "2026-08-01-preview");
+            _appLinksRestClient = new AppLinks(
+                _appLinksClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                appLinkApiVersion ?? "2026-08-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.ResilienceManagement
         {
             TryGetApiVersion(UsagePlanResource.ResourceType, out string usagePlanApiVersion);
             _usagePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResilienceManagement", UsagePlanResource.ResourceType.Namespace, Diagnostics);
-            _usagePlansRestClient = new UsagePlans(_usagePlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, usagePlanApiVersion ?? "2026-04-01-preview");
+            _usagePlansRestClient = new UsagePlans(
+                _usagePlansClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                usagePlanApiVersion ?? "2026-04-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

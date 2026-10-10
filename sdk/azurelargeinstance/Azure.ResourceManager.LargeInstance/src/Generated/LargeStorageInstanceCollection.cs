@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.LargeInstance
         {
             TryGetApiVersion(LargeStorageInstanceResource.ResourceType, out string largeStorageInstanceApiVersion);
             _azureLargeStorageInstanceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LargeInstance", LargeStorageInstanceResource.ResourceType.Namespace, Diagnostics);
-            _azureLargeStorageInstanceRestClient = new AzureLargeStorageInstance(_azureLargeStorageInstanceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, largeStorageInstanceApiVersion ?? "2024-08-01-preview");
+            _azureLargeStorageInstanceRestClient = new AzureLargeStorageInstance(
+                _azureLargeStorageInstanceClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                largeStorageInstanceApiVersion ?? "2024-08-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

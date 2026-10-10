@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.ScVmm
         {
             TryGetApiVersion(ResourceType, out string scVmmAvailabilitySetApiVersion);
             _availabilitySetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ScVmm", ResourceType.Namespace, Diagnostics);
-            _availabilitySetsRestClient = new AvailabilitySets(_availabilitySetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scVmmAvailabilitySetApiVersion ?? "2025-03-13");
+            _availabilitySetsRestClient = new AvailabilitySets(
+                _availabilitySetsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                scVmmAvailabilitySetApiVersion ?? "2025-03-13",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

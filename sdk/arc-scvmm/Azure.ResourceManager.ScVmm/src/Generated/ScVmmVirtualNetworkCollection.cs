@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.ScVmm
         {
             TryGetApiVersion(ScVmmVirtualNetworkResource.ResourceType, out string scVmmVirtualNetworkApiVersion);
             _virtualNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ScVmm", ScVmmVirtualNetworkResource.ResourceType.Namespace, Diagnostics);
-            _virtualNetworksRestClient = new VirtualNetworks(_virtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scVmmVirtualNetworkApiVersion ?? "2025-03-13");
+            _virtualNetworksRestClient = new VirtualNetworks(
+                _virtualNetworksClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                scVmmVirtualNetworkApiVersion ?? "2025-03-13",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
