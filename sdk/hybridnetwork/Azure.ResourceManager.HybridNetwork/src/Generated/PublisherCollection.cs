@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             TryGetApiVersion(PublisherResource.ResourceType, out string publisherApiVersion);
             _publishersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", PublisherResource.ResourceType.Namespace, Diagnostics);
-            _publishersRestClient = new Publishers(_publishersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, publisherApiVersion ?? "2025-03-30");
+            _publishersRestClient = new Publishers(
+                _publishersClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                publisherApiVersion ?? "2025-03-30",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

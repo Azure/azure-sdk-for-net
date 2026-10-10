@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.HanaOnAzure
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
+        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of SapMonitors for mocking. </summary>
         protected SapMonitors()
@@ -29,12 +30,14 @@ namespace Azure.ResourceManager.HanaOnAzure
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal SapMonitors(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
+        internal SapMonitors(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _getApiVersion = getApiVersion;
             _userAgent = new TelemetryDetails(typeof(SapMonitors).Assembly, applicationId);
         }
 
@@ -54,10 +57,7 @@ namespace Azure.ResourceManager.HanaOnAzure
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HanaOnAzure/sapMonitors/", false);
             uri.AppendPath(sapMonitorName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.HanaOnAzure/sapMonitors") ?? "2020-02-07-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,10 +77,7 @@ namespace Azure.ResourceManager.HanaOnAzure
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HanaOnAzure/sapMonitors/", false);
             uri.AppendPath(sapMonitorName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.HanaOnAzure/sapMonitors") ?? "2020-02-07-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -102,10 +99,7 @@ namespace Azure.ResourceManager.HanaOnAzure
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HanaOnAzure/sapMonitors/", false);
             uri.AppendPath(sapMonitorName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.HanaOnAzure/sapMonitors") ?? "2020-02-07-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -127,10 +121,7 @@ namespace Azure.ResourceManager.HanaOnAzure
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HanaOnAzure/sapMonitors/", false);
             uri.AppendPath(sapMonitorName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.HanaOnAzure/sapMonitors") ?? "2020-02-07-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -146,10 +137,7 @@ namespace Azure.ResourceManager.HanaOnAzure
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.HanaOnAzure/sapMonitors", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.HanaOnAzure/sapMonitors") ?? "2020-02-07-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -170,10 +158,7 @@ namespace Azure.ResourceManager.HanaOnAzure
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.HanaOnAzure/sapMonitors") ?? "2020-02-07-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

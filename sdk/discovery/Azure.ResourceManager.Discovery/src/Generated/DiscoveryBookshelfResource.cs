@@ -53,7 +53,13 @@ namespace Azure.ResourceManager.Discovery
         {
             TryGetApiVersion(ResourceType, out string discoveryBookshelfApiVersion);
             _bookshelvesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", ResourceType.Namespace, Diagnostics);
-            _bookshelvesRestClient = new Bookshelves(_bookshelvesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoveryBookshelfApiVersion ?? "2026-06-01");
+            _bookshelvesRestClient = new Bookshelves(
+                _bookshelvesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                discoveryBookshelfApiVersion ?? "2026-06-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

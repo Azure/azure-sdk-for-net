@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Kusto
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
+        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of Clusters for mocking. </summary>
         protected Clusters()
@@ -29,12 +30,14 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Clusters(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
+        internal Clusters(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _getApiVersion = getApiVersion;
             _userAgent = new TelemetryDetails(typeof(Clusters).Assembly, applicationId);
         }
 
@@ -54,10 +57,7 @@ namespace Azure.ResourceManager.Kusto
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
             uri.AppendPath(clusterName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Kusto/clusters") ?? "2025-02-14", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,10 +77,7 @@ namespace Azure.ResourceManager.Kusto
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
             uri.AppendPath(clusterName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Kusto/clusters") ?? "2025-02-14", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -106,10 +103,7 @@ namespace Azure.ResourceManager.Kusto
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
             uri.AppendPath(clusterName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Kusto/clusters") ?? "2025-02-14", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -135,10 +129,7 @@ namespace Azure.ResourceManager.Kusto
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
             uri.AppendPath(clusterName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Kusto/clusters") ?? "2025-02-14", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -156,10 +147,7 @@ namespace Azure.ResourceManager.Kusto
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Kusto/clusters", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Kusto/clusters") ?? "2025-02-14", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -180,10 +168,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Kusto/clusters") ?? "2025-02-14");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -200,10 +185,7 @@ namespace Azure.ResourceManager.Kusto
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Kusto/clusters", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Kusto/clusters") ?? "2025-02-14", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -224,10 +206,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Kusto/clusters") ?? "2025-02-14");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -248,10 +227,7 @@ namespace Azure.ResourceManager.Kusto
             uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/stop", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Kusto/clusters") ?? "2025-02-14", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -271,10 +247,7 @@ namespace Azure.ResourceManager.Kusto
             uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/start", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Kusto/clusters") ?? "2025-02-14", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -294,10 +267,7 @@ namespace Azure.ResourceManager.Kusto
             uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/migrate", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Kusto/clusters") ?? "2025-02-14", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -319,10 +289,7 @@ namespace Azure.ResourceManager.Kusto
             uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/listFollowerDatabases", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Kusto/clusters") ?? "2025-02-14", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -343,10 +310,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Kusto/clusters") ?? "2025-02-14");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -367,10 +331,7 @@ namespace Azure.ResourceManager.Kusto
             uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/listFollowerDatabases", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Kusto/clusters") ?? "2025-02-14", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -391,10 +352,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Kusto/clusters") ?? "2025-02-14");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -415,10 +373,7 @@ namespace Azure.ResourceManager.Kusto
             uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/detachFollowerDatabases", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Kusto/clusters") ?? "2025-02-14", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -440,10 +395,7 @@ namespace Azure.ResourceManager.Kusto
             uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/diagnoseVirtualNetwork", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Kusto/clusters") ?? "2025-02-14", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -464,10 +416,7 @@ namespace Azure.ResourceManager.Kusto
             uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/skus", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Kusto/clusters") ?? "2025-02-14", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -488,10 +437,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Kusto/clusters") ?? "2025-02-14");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -512,10 +458,7 @@ namespace Azure.ResourceManager.Kusto
             uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/outboundNetworkDependenciesEndpoints", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Kusto/clusters") ?? "2025-02-14", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -536,10 +479,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Kusto/clusters") ?? "2025-02-14");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -560,10 +500,7 @@ namespace Azure.ResourceManager.Kusto
             uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/addCalloutPolicies", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Kusto/clusters") ?? "2025-02-14", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -585,10 +522,7 @@ namespace Azure.ResourceManager.Kusto
             uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/removeCalloutPolicy", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Kusto/clusters") ?? "2025-02-14", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -610,10 +544,7 @@ namespace Azure.ResourceManager.Kusto
             uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/listCalloutPolicies", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Kusto/clusters") ?? "2025-02-14", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -634,10 +565,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Kusto/clusters") ?? "2025-02-14");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -658,10 +586,7 @@ namespace Azure.ResourceManager.Kusto
             uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/listLanguageExtensions", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Kusto/clusters") ?? "2025-02-14", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -682,10 +607,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Kusto/clusters") ?? "2025-02-14");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -706,10 +628,7 @@ namespace Azure.ResourceManager.Kusto
             uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/addLanguageExtensions", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Kusto/clusters") ?? "2025-02-14", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -731,10 +650,7 @@ namespace Azure.ResourceManager.Kusto
             uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/removeLanguageExtensions", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Kusto/clusters") ?? "2025-02-14", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

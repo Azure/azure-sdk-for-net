@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Xml.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,6 +24,27 @@ public class ApiVersionOverrideWireTests
 {
     private const string SubscriptionId = "00000000-0000-0000-0000-000000000001";
     private static readonly ResourceIdentifier ResourceId = WireVersionTestResource.CreateResourceIdentifier(SubscriptionId, "group", "test");
+
+    [Test]
+    public void NullResolverUsesOperationDefault()
+    {
+        var options = new ArmClientOptions();
+        var restClientType = typeof(WireVersionTestResource).Assembly.GetType(
+            "Azure.Generator.MgmtApiVersionOverride.Tests.WireVersionOperations", throwOnError: true)!;
+        // Exercise the internal constructor with an absent resolver, without changing
+        // the public clients, which normally supply a non-null resolver lambda.
+        var constructor = restClientType.GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic)
+            .Single(c => c.GetParameters().Length == 6);
+        var restClient = constructor.Invoke(
+        [
+            null, HttpPipelineBuilder.Build(options), null,
+            new Uri("https://management.azure.com"), "constructor-version", null
+        ]);
+        using var message = (HttpMessage)restClientType.GetMethod("CreateGetRequest", BindingFlags.Instance | BindingFlags.NonPublic)!
+            .Invoke(restClient, [Guid.Parse(SubscriptionId), "group", "test", null])!;
+
+        Assert.That(message.Request.Uri.ToUri().Query, Is.EqualTo("?api-version=opaque-read"));
+    }
 
     [TestCase(false, "default")]
     [TestCase(true, "default")]
@@ -75,10 +97,61 @@ public class ApiVersionOverrideWireTests
         else subscription.GetWireVersionTests().ToArray();
         transport.AssertVersion(Expected("opaque-read"));
         if (async) await subscription.CheckWireVersionAsync(); else subscription.CheckWireVersion();
-        // This provider action has no associated resource type and no public per-operation
-        // runtime override contract. Resource/scope selections must not change its default.
+        // This non-resource provider action keeps its spec-defined wire default;
+        // resource-type and owning-scope overrides must not change it.
         transport.AssertVersion("opaque-non-resource");
         Assert.That(transport.Requests, Has.Count.EqualTo(8));
+    }
+
+    [TestCase(false, "default")]
+    [TestCase(true, "default")]
+    [TestCase(false, "owning-scope")]
+    [TestCase(true, "owning-scope")]
+    [TestCase(false, "targeted")]
+    [TestCase(true, "targeted")]
+    public async Task OrdinaryMockableClientsHonorResourceOverridesAndPreserveNonResourceDefaults(bool async, string configuration)
+    {
+        var transport = new VersionTransport();
+        var options = new ArmClientOptions { Transport = transport };
+        if (configuration == "owning-scope")
+        {
+            options.SetApiVersion(SubscriptionResource.ResourceType, "owning-version");
+        }
+        if (configuration == "targeted")
+        {
+            options.SetApiVersion(OrdinaryWireVersionTestResource.ResourceType, "runtime-resource");
+            options.SetApiVersion("MgmtTypeSpec/checkOrdinaryWireVersion", "runtime-operation-group");
+        }
+        var client = new ArmClient(new TestCredential(), SubscriptionId, options);
+        var subscription = client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SubscriptionId}"));
+
+        if (async)
+        {
+            await foreach (var _ in subscription.GetOrdinaryWireVersionTestsAsync()) { }
+        }
+        else subscription.GetOrdinaryWireVersionTests().ToArray();
+        transport.AssertVersion(configuration == "targeted" ? "runtime-resource" : "2024-05-01");
+
+        if (async) await subscription.CheckOrdinaryWireVersionAsync(); else subscription.CheckOrdinaryWireVersion();
+        // A provider-path-shaped key is not an associated ARM resource type.
+        transport.AssertVersion("2024-05-01");
+        Assert.That(transport.Requests, Has.Count.EqualTo(2));
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task NonResourceProviderActionPreservesSpecOverrideDespiteSyntheticRuntimeKey(bool async)
+    {
+        var transport = new VersionTransport();
+        var options = new ArmClientOptions { Transport = transport };
+        options.SetApiVersion("MgmtTypeSpec/checkWireVersion", "runtime-provider");
+        var client = new ArmClient(new TestCredential(), SubscriptionId, options);
+        var subscription = client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SubscriptionId}"));
+
+        if (async) await subscription.CheckWireVersionAsync(); else subscription.CheckWireVersion();
+
+        transport.AssertVersion("opaque-non-resource");
+        Assert.That(transport.Requests, Has.Count.EqualTo(1));
     }
 
     [Test]
@@ -111,9 +184,11 @@ public class ApiVersionOverrideWireTests
             var uri = message.Request.Uri.ToUri();
             Requests.Add(uri);
             var response = new TestResponse(200);
-            if (uri.AbsolutePath.EndsWith("/checkWireVersion", StringComparison.Ordinal))
+            if (uri.AbsolutePath.EndsWith("/checkWireVersion", StringComparison.Ordinal)
+                || uri.AbsolutePath.EndsWith("/checkOrdinaryWireVersion", StringComparison.Ordinal))
                 response.SetContent("\"ok\"");
-            else if (uri.AbsolutePath.EndsWith("/wireVersionTests", StringComparison.Ordinal))
+            else if (uri.AbsolutePath.EndsWith("/wireVersionTests", StringComparison.Ordinal)
+                || uri.AbsolutePath.EndsWith("/ordinaryWireVersionTests", StringComparison.Ordinal))
                 response.SetContent("{\"value\":[]}");
             else
                 response.SetContent($"{{\"id\":\"{ResourceId}\",\"name\":\"test\",\"type\":\"MgmtTypeSpec/wireVersionTests\",\"location\":\"westus\",\"properties\":{{}}}}");

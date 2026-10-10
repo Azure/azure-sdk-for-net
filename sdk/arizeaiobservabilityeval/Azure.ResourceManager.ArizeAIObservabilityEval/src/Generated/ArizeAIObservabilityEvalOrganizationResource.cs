@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
         {
             TryGetApiVersion(ResourceType, out string arizeAIObservabilityEvalOrganizationApiVersion);
             _organizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ArizeAIObservabilityEval", ResourceType.Namespace, Diagnostics);
-            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, arizeAIObservabilityEvalOrganizationApiVersion ?? "2024-10-01");
+            _organizationsRestClient = new Organizations(
+                _organizationsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                arizeAIObservabilityEvalOrganizationApiVersion ?? "2024-10-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

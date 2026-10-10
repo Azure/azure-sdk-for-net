@@ -41,6 +41,25 @@ interface WireVersionProviderActions {
   checkWireVersion is ArmProviderActionSync<Request = void, Response = string, Scope = SubscriptionActionScope>;
 }
 
+/** A resource with ordinary service-version defaults and no override decorators. */
+model OrdinaryWireVersionTest is TrackedResource<WireVersionTestProperties> {
+  ...ResourceNameParameter<OrdinaryWireVersionTest>;
+}
+
+interface OrdinaryWireVersionReads {
+  get is ArmResourceRead<OrdinaryWireVersionTest>;
+  listBySubscription is ArmListBySubscription<OrdinaryWireVersionTest>;
+}
+
+interface OrdinaryWireVersionProviderActions {
+  @autoRoute
+  checkOrdinaryWireVersion is ArmProviderActionSync<Request = void, Response = string, Scope = SubscriptionActionScope>;
+}
+
+@@clientLocation(OrdinaryWireVersionReads.get, "OrdinaryWireVersionOperations");
+@@clientLocation(OrdinaryWireVersionReads.listBySubscription, "OrdinaryWireVersionOperations");
+@@clientLocation(OrdinaryWireVersionProviderActions.checkOrdinaryWireVersion, "OrdinaryProviderOperations");
+
 @@clientLocation(WireVersionReads.get, "WireVersionOperations");
 @@clientLocation(WireVersionReads.listBySubscription, "WireVersionOperations");
 @@clientLocation(WireVersionReads.listByResourceGroup, "WireVersionOperations");

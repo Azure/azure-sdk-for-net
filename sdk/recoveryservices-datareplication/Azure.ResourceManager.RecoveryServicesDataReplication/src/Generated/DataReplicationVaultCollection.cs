@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             TryGetApiVersion(DataReplicationVaultResource.ResourceType, out string dataReplicationVaultApiVersion);
             _vaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationVaultResource.ResourceType.Namespace, Diagnostics);
-            _vaultRestClient = new Vault(_vaultClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationVaultApiVersion ?? "2024-09-01");
+            _vaultRestClient = new Vault(
+                _vaultClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                dataReplicationVaultApiVersion ?? "2024-09-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

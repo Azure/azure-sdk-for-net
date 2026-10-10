@@ -39,7 +39,13 @@ namespace Azure.ResourceManager.Automation.Mocking
 
         private ClientDiagnostics AutomationAccountClientDiagnostics => _automationAccountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Automation.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AutomationAccount AutomationAccountRestClient => _automationAccountRestClient ??= new AutomationAccount(AutomationAccountClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-10-23");
+        private AutomationAccount AutomationAccountRestClient => _automationAccountRestClient ??= new AutomationAccount(
+            AutomationAccountClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2024-10-23",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics DeletedAutomationAccountsClientDiagnostics => _deletedAutomationAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Automation.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

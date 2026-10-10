@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string identityIntegrationAuthenticationPolicyApiVersion);
             _authenticationPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _authenticationPoliciesRestClient = new AuthenticationPolicies(_authenticationPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, identityIntegrationAuthenticationPolicyApiVersion ?? "2026-01-01");
+            _authenticationPoliciesRestClient = new AuthenticationPolicies(
+                _authenticationPoliciesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                identityIntegrationAuthenticationPolicyApiVersion ?? "2026-01-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

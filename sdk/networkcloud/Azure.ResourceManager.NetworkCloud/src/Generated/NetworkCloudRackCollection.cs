@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             TryGetApiVersion(NetworkCloudRackResource.ResourceType, out string networkCloudRackApiVersion);
             _racksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudRackResource.ResourceType.Namespace, Diagnostics);
-            _racksRestClient = new Racks(_racksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudRackApiVersion ?? "2026-07-01");
+            _racksRestClient = new Racks(
+                _racksClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                networkCloudRackApiVersion ?? "2026-07-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.OracleDatabase
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
+        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of CloudVmClusters for mocking. </summary>
         protected CloudVmClusters()
@@ -29,12 +30,14 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal CloudVmClusters(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
+        internal CloudVmClusters(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _getApiVersion = getApiVersion;
             _userAgent = new TelemetryDetails(typeof(CloudVmClusters).Assembly, applicationId);
         }
 
@@ -51,10 +54,7 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Oracle.Database/cloudVmClusters", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Oracle.Database/cloudVmClusters") ?? "2025-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -75,10 +75,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Oracle.Database/cloudVmClusters") ?? "2025-09-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -98,10 +95,7 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Oracle.Database/cloudVmClusters/", false);
             uri.AppendPath(cloudvmclustername, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Oracle.Database/cloudVmClusters") ?? "2025-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -123,10 +117,7 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Oracle.Database/cloudVmClusters/", false);
             uri.AppendPath(cloudvmclustername, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Oracle.Database/cloudVmClusters") ?? "2025-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -146,10 +137,7 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Oracle.Database/cloudVmClusters/", false);
             uri.AppendPath(cloudvmclustername, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Oracle.Database/cloudVmClusters") ?? "2025-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -171,10 +159,7 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Oracle.Database/cloudVmClusters/", false);
             uri.AppendPath(cloudvmclustername, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Oracle.Database/cloudVmClusters") ?? "2025-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -192,10 +177,7 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Oracle.Database/cloudVmClusters", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Oracle.Database/cloudVmClusters") ?? "2025-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -216,10 +198,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Oracle.Database/cloudVmClusters") ?? "2025-09-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -240,10 +219,7 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath("/providers/Oracle.Database/cloudVmClusters/", false);
             uri.AppendPath(cloudvmclustername, true);
             uri.AppendPath("/addVms", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Oracle.Database/cloudVmClusters") ?? "2025-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -266,10 +242,7 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath("/providers/Oracle.Database/cloudVmClusters/", false);
             uri.AppendPath(cloudvmclustername, true);
             uri.AppendPath("/removeVms", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Oracle.Database/cloudVmClusters") ?? "2025-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -292,10 +265,7 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath("/providers/Oracle.Database/cloudVmClusters/", false);
             uri.AppendPath(cloudvmclustername, true);
             uri.AppendPath("/listPrivateIpAddresses", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Oracle.Database/cloudVmClusters") ?? "2025-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

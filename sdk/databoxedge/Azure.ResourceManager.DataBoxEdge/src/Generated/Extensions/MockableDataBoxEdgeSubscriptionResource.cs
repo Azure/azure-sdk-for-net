@@ -38,7 +38,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
 
         private ClientDiagnostics DevicesClientDiagnostics => _devicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Devices DevicesRestClient => _devicesRestClient ??= new Devices(DevicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-12-01");
+        private Devices DevicesRestClient => _devicesRestClient ??= new Devices(
+            DevicesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2023-12-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics AvailableSkusClientDiagnostics => _availableSkusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

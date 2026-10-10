@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.Monitor
         {
             TryGetApiVersion(ScheduledQueryRuleResource.ResourceType, out string scheduledQueryRuleApiVersion);
             _scheduledQueryRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ScheduledQueryRuleResource.ResourceType.Namespace, Diagnostics);
-            _scheduledQueryRulesRestClient = new ScheduledQueryRules(_scheduledQueryRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scheduledQueryRuleApiVersion ?? "2025-01-01-preview");
+            _scheduledQueryRulesRestClient = new ScheduledQueryRules(
+                _scheduledQueryRulesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                scheduledQueryRuleApiVersion ?? "2025-01-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

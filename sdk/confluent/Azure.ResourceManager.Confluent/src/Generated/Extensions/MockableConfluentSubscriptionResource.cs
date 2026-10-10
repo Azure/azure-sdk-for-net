@@ -43,7 +43,13 @@ namespace Azure.ResourceManager.Confluent.Mocking
 
         private ClientDiagnostics ConfluentOrganizationClientDiagnostics => _confluentOrganizationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Confluent.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ConfluentOrganization ConfluentOrganizationRestClient => _confluentOrganizationRestClient ??= new ConfluentOrganization(ConfluentOrganizationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-02-preview");
+        private ConfluentOrganization ConfluentOrganizationRestClient => _confluentOrganizationRestClient ??= new ConfluentOrganization(
+            ConfluentOrganizationClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-06-02-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics SaaSOperationGroupClientDiagnostics => _saaSOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Confluent.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

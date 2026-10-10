@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.ApplicationInsights
         {
             TryGetApiVersion(ApplicationInsightsWebTestResource.ResourceType, out string applicationInsightsWebTestApiVersion);
             _webTestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ApplicationInsightsWebTestResource.ResourceType.Namespace, Diagnostics);
-            _webTestsRestClient = new WebTests(_webTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsWebTestApiVersion ?? "2022-06-15");
+            _webTestsRestClient = new WebTests(
+                _webTestsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                applicationInsightsWebTestApiVersion ?? "2022-06-15",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

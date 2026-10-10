@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
+        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of BulkCreate for mocking. </summary>
         protected BulkCreate()
@@ -29,12 +30,14 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal BulkCreate(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
+        internal BulkCreate(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _getApiVersion = getApiVersion;
             _userAgent = new TelemetryDetails(typeof(BulkCreate).Assembly, applicationId);
         }
 
@@ -56,10 +59,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/bulkCreate/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/locations/bulkCreate") ?? "2026-10-06-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -104,10 +104,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/bulkCreate/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/locations/bulkCreate") ?? "2026-10-06-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -131,10 +128,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/bulkCreate/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/locations/bulkCreate") ?? "2026-10-06-preview", true);
             if (deleteInstances != null)
             {
                 uri.AppendQuery("deleteInstances", TypeFormatters.ConvertToString(deleteInstances), true);
@@ -160,10 +154,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             uri.AppendPath("/bulkCreate/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/cancel", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/locations/bulkCreate") ?? "2026-10-06-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -185,10 +176,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             uri.AppendPath("/bulkCreate/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/virtualMachinesGetOperationStatus", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/locations/bulkCreate") ?? "2026-10-06-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -209,10 +197,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/locations/bulkCreate") ?? "2026-10-06-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -233,10 +218,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/bulkCreate", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/locations/bulkCreate") ?? "2026-10-06-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -257,10 +239,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/locations/bulkCreate") ?? "2026-10-06-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -279,10 +258,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/bulkCreate", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/locations/bulkCreate") ?? "2026-10-06-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -303,10 +279,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/locations/bulkCreate") ?? "2026-10-06-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ExpressRoutePortResource.ResourceType, out string expressRoutePortApiVersion);
             _expressRoutePortsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRoutePortResource.ResourceType.Namespace, Diagnostics);
-            _expressRoutePortsRestClient = new ExpressRoutePorts(_expressRoutePortsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRoutePortApiVersion ?? "2026-01-01");
+            _expressRoutePortsRestClient = new ExpressRoutePorts(
+                _expressRoutePortsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                expressRoutePortApiVersion ?? "2026-01-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

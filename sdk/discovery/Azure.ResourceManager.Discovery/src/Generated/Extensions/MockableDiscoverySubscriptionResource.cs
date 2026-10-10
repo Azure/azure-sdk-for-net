@@ -44,23 +44,53 @@ namespace Azure.ResourceManager.Discovery.Mocking
 
         private ClientDiagnostics BookshelvesClientDiagnostics => _bookshelvesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Discovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Bookshelves BookshelvesRestClient => _bookshelvesRestClient ??= new Bookshelves(BookshelvesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
+        private Bookshelves BookshelvesRestClient => _bookshelvesRestClient ??= new Bookshelves(
+            BookshelvesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-06-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ToolsClientDiagnostics => _toolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Discovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Tools ToolsRestClient => _toolsRestClient ??= new Tools(ToolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
+        private Tools ToolsRestClient => _toolsRestClient ??= new Tools(
+            ToolsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-06-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics WorkspacesClientDiagnostics => _workspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Discovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Workspaces WorkspacesRestClient => _workspacesRestClient ??= new Workspaces(WorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
+        private Workspaces WorkspacesRestClient => _workspacesRestClient ??= new Workspaces(
+            WorkspacesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-06-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics SupercomputersClientDiagnostics => _supercomputersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Discovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Supercomputers SupercomputersRestClient => _supercomputersRestClient ??= new Supercomputers(SupercomputersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
+        private Supercomputers SupercomputersRestClient => _supercomputersRestClient ??= new Supercomputers(
+            SupercomputersClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-06-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics StorageContainersClientDiagnostics => _storageContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Discovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StorageContainers StorageContainersRestClient => _storageContainersRestClient ??= new StorageContainers(StorageContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
+        private StorageContainers StorageContainersRestClient => _storageContainersRestClient ??= new StorageContainers(
+            StorageContainersClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-06-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// List Bookshelf resources by subscription ID

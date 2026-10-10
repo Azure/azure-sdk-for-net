@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
+        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of NetworkDevices for mocking. </summary>
         protected NetworkDevices()
@@ -29,12 +30,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal NetworkDevices(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
+        internal NetworkDevices(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _getApiVersion = getApiVersion;
             _userAgent = new TelemetryDetails(typeof(NetworkDevices).Assembly, applicationId);
         }
 
@@ -54,10 +57,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices/", false);
             uri.AppendPath(networkDeviceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ManagedNetworkFabric/networkDevices") ?? "2025-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,10 +77,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices/", false);
             uri.AppendPath(networkDeviceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ManagedNetworkFabric/networkDevices") ?? "2025-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -102,10 +99,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices/", false);
             uri.AppendPath(networkDeviceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ManagedNetworkFabric/networkDevices") ?? "2025-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -127,10 +121,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices/", false);
             uri.AppendPath(networkDeviceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ManagedNetworkFabric/networkDevices") ?? "2025-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -148,10 +139,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ManagedNetworkFabric/networkDevices") ?? "2025-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -172,10 +160,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.ManagedNetworkFabric/networkDevices") ?? "2025-07-15");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -192,10 +177,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ManagedNetworkFabric/networkDevices") ?? "2025-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -216,10 +198,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.ManagedNetworkFabric/networkDevices") ?? "2025-07-15");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -240,10 +219,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices/", false);
             uri.AppendPath(networkDeviceName, true);
             uri.AppendPath("/reboot", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ManagedNetworkFabric/networkDevices") ?? "2025-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -266,10 +242,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices/", false);
             uri.AppendPath(networkDeviceName, true);
             uri.AppendPath("/refreshConfiguration", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ManagedNetworkFabric/networkDevices") ?? "2025-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -290,10 +263,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices/", false);
             uri.AppendPath(networkDeviceName, true);
             uri.AppendPath("/updateAdministrativeState", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ManagedNetworkFabric/networkDevices") ?? "2025-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -316,10 +286,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices/", false);
             uri.AppendPath(networkDeviceName, true);
             uri.AppendPath("/upgrade", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ManagedNetworkFabric/networkDevices") ?? "2025-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -342,10 +309,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices/", false);
             uri.AppendPath(networkDeviceName, true);
             uri.AppendPath("/runRoCommand", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ManagedNetworkFabric/networkDevices") ?? "2025-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -368,10 +332,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices/", false);
             uri.AppendPath(networkDeviceName, true);
             uri.AppendPath("/runRwCommand", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ManagedNetworkFabric/networkDevices") ?? "2025-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -394,10 +355,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices/", false);
             uri.AppendPath(networkDeviceName, true);
             uri.AppendPath("/resyncPasswords", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ManagedNetworkFabric/networkDevices") ?? "2025-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -418,10 +376,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices/", false);
             uri.AppendPath(networkDeviceName, true);
             uri.AppendPath("/resyncCertificates", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ManagedNetworkFabric/networkDevices") ?? "2025-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

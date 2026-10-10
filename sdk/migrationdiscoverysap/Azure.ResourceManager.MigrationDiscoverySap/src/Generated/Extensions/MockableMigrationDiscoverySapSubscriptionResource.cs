@@ -35,7 +35,13 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Mocking
 
         private ClientDiagnostics SAPDiscoverySitesClientDiagnostics => _sapDiscoverySitesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MigrationDiscoverySap.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SAPDiscoverySites SAPDiscoverySitesRestClient => _sapDiscoverySitesRestClient ??= new SAPDiscoverySites(SAPDiscoverySitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-10-01-preview");
+        private SAPDiscoverySites SAPDiscoverySitesRestClient => _sapDiscoverySitesRestClient ??= new SAPDiscoverySites(
+            SAPDiscoverySitesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2023-10-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// Gets all SAP Migration discovery site resources in a Subscription.

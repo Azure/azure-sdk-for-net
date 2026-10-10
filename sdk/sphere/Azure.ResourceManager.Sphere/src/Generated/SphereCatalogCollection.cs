@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.Sphere
         {
             TryGetApiVersion(SphereCatalogResource.ResourceType, out string sphereCatalogApiVersion);
             _catalogsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sphere", SphereCatalogResource.ResourceType.Namespace, Diagnostics);
-            _catalogsRestClient = new Catalogs(_catalogsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sphereCatalogApiVersion ?? "2024-04-01");
+            _catalogsRestClient = new Catalogs(
+                _catalogsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                sphereCatalogApiVersion ?? "2024-04-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

@@ -36,7 +36,13 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
 
         private ClientDiagnostics GraphQueryClientDiagnostics => _graphQueryClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceGraph.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GraphQuery GraphQueryRestClient => _graphQueryRestClient ??= new GraphQuery(GraphQueryClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-04-01");
+        private GraphQuery GraphQueryRestClient => _graphQueryRestClient ??= new GraphQuery(
+            GraphQueryClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2024-04-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// Get all graph queries defined within a specified subscription.

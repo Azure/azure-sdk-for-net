@@ -50,7 +50,13 @@ namespace Azure.ResourceManager.ApplicationInsights
         {
             TryGetApiVersion(ResourceType, out string applicationInsightsWorkbookRevisionApiVersion);
             _workbooksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ResourceType.Namespace, Diagnostics);
-            _workbooksRestClient = new Workbooks(_workbooksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsWorkbookRevisionApiVersion ?? "2023-06-01");
+            _workbooksRestClient = new Workbooks(
+                _workbooksClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                applicationInsightsWorkbookRevisionApiVersion ?? "2023-06-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

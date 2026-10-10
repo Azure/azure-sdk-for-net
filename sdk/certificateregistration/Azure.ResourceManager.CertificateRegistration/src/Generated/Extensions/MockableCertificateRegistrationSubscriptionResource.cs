@@ -39,7 +39,13 @@ namespace Azure.ResourceManager.CertificateRegistration.Mocking
 
         private ClientDiagnostics AppServiceCertificateOrdersClientDiagnostics => _appServiceCertificateOrdersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CertificateRegistration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AppServiceCertificateOrders AppServiceCertificateOrdersRestClient => _appServiceCertificateOrdersRestClient ??= new AppServiceCertificateOrders(AppServiceCertificateOrdersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-11-01");
+        private AppServiceCertificateOrders AppServiceCertificateOrdersRestClient => _appServiceCertificateOrdersRestClient ??= new AppServiceCertificateOrders(
+            AppServiceCertificateOrdersClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2024-11-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics AppServiceCertificateOrdersOperationGroupClientDiagnostics => _appServiceCertificateOrdersOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CertificateRegistration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

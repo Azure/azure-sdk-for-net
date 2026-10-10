@@ -63,59 +63,143 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
 
         private ClientDiagnostics AccessBridgesClientDiagnostics => _accessBridgesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AccessBridges AccessBridgesRestClient => _accessBridgesRestClient ??= new AccessBridges(AccessBridgesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private AccessBridges AccessBridgesRestClient => _accessBridgesRestClient ??= new AccessBridges(
+            AccessBridgesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-07-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics BareMetalMachinesClientDiagnostics => _bareMetalMachinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BareMetalMachines BareMetalMachinesRestClient => _bareMetalMachinesRestClient ??= new BareMetalMachines(BareMetalMachinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private BareMetalMachines BareMetalMachinesRestClient => _bareMetalMachinesRestClient ??= new BareMetalMachines(
+            BareMetalMachinesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-07-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics CloudServicesNetworksClientDiagnostics => _cloudServicesNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CloudServicesNetworks CloudServicesNetworksRestClient => _cloudServicesNetworksRestClient ??= new CloudServicesNetworks(CloudServicesNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private CloudServicesNetworks CloudServicesNetworksRestClient => _cloudServicesNetworksRestClient ??= new CloudServicesNetworks(
+            CloudServicesNetworksClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-07-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ClusterManagersClientDiagnostics => _clusterManagersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ClusterManagers ClusterManagersRestClient => _clusterManagersRestClient ??= new ClusterManagers(ClusterManagersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private ClusterManagers ClusterManagersRestClient => _clusterManagersRestClient ??= new ClusterManagers(
+            ClusterManagersClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-07-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ClustersClientDiagnostics => _clustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(
+            ClustersClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-07-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics KubernetesClustersClientDiagnostics => _kubernetesClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private KubernetesClusters KubernetesClustersRestClient => _kubernetesClustersRestClient ??= new KubernetesClusters(KubernetesClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private KubernetesClusters KubernetesClustersRestClient => _kubernetesClustersRestClient ??= new KubernetesClusters(
+            KubernetesClustersClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-07-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics KubernetesVersionsClientDiagnostics => _kubernetesVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private KubernetesVersions KubernetesVersionsRestClient => _kubernetesVersionsRestClient ??= new KubernetesVersions(KubernetesVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private KubernetesVersions KubernetesVersionsRestClient => _kubernetesVersionsRestClient ??= new KubernetesVersions(
+            KubernetesVersionsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-07-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics L2NetworksClientDiagnostics => _l2NetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private L2Networks L2NetworksRestClient => _l2NetworksRestClient ??= new L2Networks(L2NetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private L2Networks L2NetworksRestClient => _l2NetworksRestClient ??= new L2Networks(
+            L2NetworksClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-07-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics L3NetworksClientDiagnostics => _l3NetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private L3Networks L3NetworksRestClient => _l3NetworksRestClient ??= new L3Networks(L3NetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private L3Networks L3NetworksRestClient => _l3NetworksRestClient ??= new L3Networks(
+            L3NetworksClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-07-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics RacksClientDiagnostics => _racksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Racks RacksRestClient => _racksRestClient ??= new Racks(RacksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private Racks RacksRestClient => _racksRestClient ??= new Racks(
+            RacksClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-07-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics StorageAppliancesClientDiagnostics => _storageAppliancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StorageAppliances StorageAppliancesRestClient => _storageAppliancesRestClient ??= new StorageAppliances(StorageAppliancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private StorageAppliances StorageAppliancesRestClient => _storageAppliancesRestClient ??= new StorageAppliances(
+            StorageAppliancesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-07-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics TrunkedNetworksClientDiagnostics => _trunkedNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private TrunkedNetworks TrunkedNetworksRestClient => _trunkedNetworksRestClient ??= new TrunkedNetworks(TrunkedNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private TrunkedNetworks TrunkedNetworksRestClient => _trunkedNetworksRestClient ??= new TrunkedNetworks(
+            TrunkedNetworksClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-07-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics VirtualMachinesClientDiagnostics => _virtualMachinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachines VirtualMachinesRestClient => _virtualMachinesRestClient ??= new VirtualMachines(VirtualMachinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private VirtualMachines VirtualMachinesRestClient => _virtualMachinesRestClient ??= new VirtualMachines(
+            VirtualMachinesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-07-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics VolumesClientDiagnostics => _volumesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Volumes VolumesRestClient => _volumesRestClient ??= new Volumes(VolumesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private Volumes VolumesRestClient => _volumesRestClient ??= new Volumes(
+            VolumesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-07-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary> Gets a collection of NetworkCloudRackSkus in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of NetworkCloudRackSkus and their operations over a NetworkCloudRackSkuResource. </returns>

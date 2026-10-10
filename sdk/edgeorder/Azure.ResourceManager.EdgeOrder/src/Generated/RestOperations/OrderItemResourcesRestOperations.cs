@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.EdgeOrder
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
+        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of OrderItemResources for mocking. </summary>
         protected OrderItemResources()
@@ -29,12 +30,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal OrderItemResources(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
+        internal OrderItemResources(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _getApiVersion = getApiVersion;
             _userAgent = new TelemetryDetails(typeof(OrderItemResources).Assembly, applicationId);
         }
 
@@ -54,10 +57,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems/", false);
             uri.AppendPath(orderItemName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.EdgeOrder/orderItems") ?? "2024-02-01", true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -81,10 +81,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems/", false);
             uri.AppendPath(orderItemName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.EdgeOrder/orderItems") ?? "2024-02-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -106,10 +103,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems/", false);
             uri.AppendPath(orderItemName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.EdgeOrder/orderItems") ?? "2024-02-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -135,10 +129,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems/", false);
             uri.AppendPath(orderItemName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.EdgeOrder/orderItems") ?? "2024-02-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -156,10 +147,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.EdgeOrder/orderItems") ?? "2024-02-01", true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -196,10 +184,7 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.EdgeOrder/orderItems") ?? "2024-02-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -216,10 +201,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.EdgeOrder/orderItems") ?? "2024-02-01", true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -256,10 +238,7 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.EdgeOrder/orderItems") ?? "2024-02-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -280,10 +259,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems/", false);
             uri.AppendPath(orderItemName, true);
             uri.AppendPath("/cancel", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.EdgeOrder/orderItems") ?? "2024-02-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -305,10 +281,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems/", false);
             uri.AppendPath(orderItemName, true);
             uri.AppendPath("/return", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.EdgeOrder/orderItems") ?? "2024-02-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

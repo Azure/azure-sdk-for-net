@@ -53,7 +53,13 @@ namespace Azure.ResourceManager.Discovery
         {
             TryGetApiVersion(ResourceType, out string discoverySupercomputerApiVersion);
             _supercomputersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", ResourceType.Namespace, Diagnostics);
-            _supercomputersRestClient = new Supercomputers(_supercomputersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoverySupercomputerApiVersion ?? "2026-06-01");
+            _supercomputersRestClient = new Supercomputers(
+                _supercomputersClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                discoverySupercomputerApiVersion ?? "2026-06-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

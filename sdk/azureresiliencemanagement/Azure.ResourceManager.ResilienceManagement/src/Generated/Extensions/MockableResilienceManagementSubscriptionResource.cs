@@ -36,7 +36,13 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
 
         private ClientDiagnostics UsagePlansClientDiagnostics => _usagePlansClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResilienceManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private UsagePlans UsagePlansRestClient => _usagePlansRestClient ??= new UsagePlans(UsagePlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01-preview");
+        private UsagePlans UsagePlansRestClient => _usagePlansRestClient ??= new UsagePlans(
+            UsagePlansClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-04-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// List UsagePlan resources by subscription ID

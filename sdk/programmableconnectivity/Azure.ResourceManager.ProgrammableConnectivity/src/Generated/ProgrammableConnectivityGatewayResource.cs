@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
         {
             TryGetApiVersion(ResourceType, out string programmableConnectivityGatewayApiVersion);
             _gatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProgrammableConnectivity", ResourceType.Namespace, Diagnostics);
-            _gatewaysRestClient = new Gateways(_gatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, programmableConnectivityGatewayApiVersion ?? "2025-03-30-preview");
+            _gatewaysRestClient = new Gateways(
+                _gatewaysClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                programmableConnectivityGatewayApiVersion ?? "2025-03-30-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

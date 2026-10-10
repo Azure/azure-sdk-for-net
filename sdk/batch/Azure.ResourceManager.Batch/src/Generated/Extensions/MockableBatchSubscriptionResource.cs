@@ -40,7 +40,13 @@ namespace Azure.ResourceManager.Batch.Mocking
 
         private ClientDiagnostics BatchAccountClientDiagnostics => _batchAccountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Batch.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BatchAccount BatchAccountRestClient => _batchAccountRestClient ??= new BatchAccount(BatchAccountClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-06-01");
+        private BatchAccount BatchAccountRestClient => _batchAccountRestClient ??= new BatchAccount(
+            BatchAccountClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-06-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics LocationClientDiagnostics => _locationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Batch.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             TryGetApiVersion(ResourceType, out string networkBootstrapDeviceApiVersion);
             _networkBootstrapDevicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", ResourceType.Namespace, Diagnostics);
-            _networkBootstrapDevicesRestClient = new NetworkBootstrapDevices(_networkBootstrapDevicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkBootstrapDeviceApiVersion ?? "2025-07-15");
+            _networkBootstrapDevicesRestClient = new NetworkBootstrapDevices(
+                _networkBootstrapDevicesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                networkBootstrapDeviceApiVersion ?? "2025-07-15",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

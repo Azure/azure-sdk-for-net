@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.Nginx
         {
             TryGetApiVersion(ResourceType, out string nginxDeploymentApiVersion);
             _nginxDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Nginx", ResourceType.Namespace, Diagnostics);
-            _nginxDeploymentsRestClient = new NginxDeployments(_nginxDeploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, nginxDeploymentApiVersion ?? "2025-11-01");
+            _nginxDeploymentsRestClient = new NginxDeployments(
+                _nginxDeploymentsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                nginxDeploymentApiVersion ?? "2025-11-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

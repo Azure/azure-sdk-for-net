@@ -55,7 +55,13 @@ namespace Azure.ResourceManager.DnsResolver
         {
             TryGetApiVersion(ResourceType, out string dnsForwardingRulesetApiVersion);
             _dnsForwardingRulesetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", ResourceType.Namespace, Diagnostics);
-            _dnsForwardingRulesetsRestClient = new DnsForwardingRulesets(_dnsForwardingRulesetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dnsForwardingRulesetApiVersion ?? "2025-10-01-preview");
+            _dnsForwardingRulesetsRestClient = new DnsForwardingRulesets(
+                _dnsForwardingRulesetsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                dnsForwardingRulesetApiVersion ?? "2025-10-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

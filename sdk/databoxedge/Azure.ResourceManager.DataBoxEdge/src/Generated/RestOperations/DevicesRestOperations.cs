@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
+        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of Devices for mocking. </summary>
         protected Devices()
@@ -29,12 +30,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Devices(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
+        internal Devices(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _getApiVersion = getApiVersion;
             _userAgent = new TelemetryDetails(typeof(Devices).Assembly, applicationId);
         }
 
@@ -55,10 +58,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
             uri.AppendPath(deviceName, true);
             uri.AppendPath("/networkSettings/default", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataBoxEdge/dataBoxEdgeDevices/networkSettings") ?? "2023-12-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -78,10 +78,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
             uri.AppendPath(deviceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataBoxEdge/dataBoxEdgeDevices") ?? "2023-12-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -101,10 +98,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
             uri.AppendPath(deviceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataBoxEdge/dataBoxEdgeDevices") ?? "2023-12-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -126,10 +120,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
             uri.AppendPath(deviceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataBoxEdge/dataBoxEdgeDevices") ?? "2023-12-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -151,10 +142,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
             uri.AppendPath(deviceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataBoxEdge/dataBoxEdgeDevices") ?? "2023-12-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -172,10 +160,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataBoxEdge/dataBoxEdgeDevices") ?? "2023-12-01", true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -200,10 +185,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataBoxEdge/dataBoxEdgeDevices") ?? "2023-12-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -220,10 +202,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataBoxEdge/dataBoxEdgeDevices") ?? "2023-12-01", true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -248,10 +227,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataBoxEdge/dataBoxEdgeDevices") ?? "2023-12-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -272,10 +248,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
             uri.AppendPath(deviceName, true);
             uri.AppendPath("/downloadUpdates", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataBoxEdge/dataBoxEdgeDevices") ?? "2023-12-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -295,10 +268,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
             uri.AppendPath(deviceName, true);
             uri.AppendPath("/generateCertificate", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataBoxEdge/dataBoxEdgeDevices") ?? "2023-12-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -319,10 +289,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
             uri.AppendPath(deviceName, true);
             uri.AppendPath("/getExtendedInformation", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataBoxEdge/dataBoxEdgeDevices") ?? "2023-12-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -343,10 +310,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
             uri.AppendPath(deviceName, true);
             uri.AppendPath("/installUpdates", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataBoxEdge/dataBoxEdgeDevices") ?? "2023-12-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -366,10 +330,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
             uri.AppendPath(deviceName, true);
             uri.AppendPath("/scanForUpdates", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataBoxEdge/dataBoxEdgeDevices") ?? "2023-12-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -389,10 +350,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
             uri.AppendPath(deviceName, true);
             uri.AppendPath("/securitySettings/default/update", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataBoxEdge/dataBoxEdgeDevices") ?? "2023-12-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -414,10 +372,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
             uri.AppendPath(deviceName, true);
             uri.AppendPath("/updateExtendedInformation", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataBoxEdge/dataBoxEdgeDevices") ?? "2023-12-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -440,10 +395,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
             uri.AppendPath(deviceName, true);
             uri.AppendPath("/uploadCertificate", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataBoxEdge/dataBoxEdgeDevices") ?? "2023-12-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -466,10 +418,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
             uri.AppendPath(deviceName, true);
             uri.AppendPath("/updateSummary/default", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataBoxEdge/dataBoxEdgeDevices/updateSummary") ?? "2023-12-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

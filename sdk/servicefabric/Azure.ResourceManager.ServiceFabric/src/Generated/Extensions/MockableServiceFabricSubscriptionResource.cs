@@ -42,7 +42,13 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
 
         private ClientDiagnostics ClustersClientDiagnostics => _clustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
+        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(
+            ClustersClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-03-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ClusterVersionDetailsClientDiagnostics => _clusterVersionDetailsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

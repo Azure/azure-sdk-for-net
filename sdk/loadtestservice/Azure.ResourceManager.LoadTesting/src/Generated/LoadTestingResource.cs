@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.LoadTesting
         {
             TryGetApiVersion(ResourceType, out string loadTestingResourceApiVersion);
             _loadTestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LoadTesting", ResourceType.Namespace, Diagnostics);
-            _loadTestsRestClient = new LoadTests(_loadTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, loadTestingResourceApiVersion ?? "2024-12-01-preview");
+            _loadTestsRestClient = new LoadTests(
+                _loadTestsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                loadTestingResourceApiVersion ?? "2024-12-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

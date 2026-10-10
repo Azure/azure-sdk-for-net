@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.ApplicationInsights
         {
             TryGetApiVersion(ApplicationInsightsComponentResource.ResourceType, out string applicationInsightsComponentApiVersion);
             _componentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ApplicationInsightsComponentResource.ResourceType.Namespace, Diagnostics);
-            _componentsRestClient = new Components(_componentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsComponentApiVersion ?? "2020-02-02");
+            _componentsRestClient = new Components(
+                _componentsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                applicationInsightsComponentApiVersion ?? "2020-02-02",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

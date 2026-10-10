@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.DevHub
         {
             TryGetApiVersion(ResourceType, out string devHubWorkflowApiVersion);
             _workflowClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevHub", ResourceType.Namespace, Diagnostics);
-            _workflowRestClient = new Workflow(_workflowClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devHubWorkflowApiVersion ?? "2025-03-01-preview");
+            _workflowRestClient = new Workflow(
+                _workflowClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                devHubWorkflowApiVersion ?? "2025-03-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

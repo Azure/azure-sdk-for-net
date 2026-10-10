@@ -42,11 +42,23 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
 
         private ClientDiagnostics PublicCloudConnectorsClientDiagnostics => _publicCloudConnectorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PublicCloudConnectors PublicCloudConnectorsRestClient => _publicCloudConnectorsRestClient ??= new PublicCloudConnectors(PublicCloudConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-12-01");
+        private PublicCloudConnectors PublicCloudConnectorsRestClient => _publicCloudConnectorsRestClient ??= new PublicCloudConnectors(
+            PublicCloudConnectorsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2024-12-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics SolutionTypesClientDiagnostics => _solutionTypesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SolutionTypes SolutionTypesRestClient => _solutionTypesRestClient ??= new SolutionTypes(SolutionTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-12-01");
+        private SolutionTypes SolutionTypesRestClient => _solutionTypesRestClient ??= new SolutionTypes(
+            SolutionTypesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2024-12-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics GenerateAwsTemplateClientDiagnostics => _generateAwsTemplateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

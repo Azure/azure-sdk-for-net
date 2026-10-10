@@ -57,7 +57,13 @@ namespace Azure.ResourceManager.DataBox
         {
             TryGetApiVersion(ResourceType, out string dataBoxJobApiVersion);
             _jobResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBox", ResourceType.Namespace, Diagnostics);
-            _jobResourcesRestClient = new JobResources(_jobResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxJobApiVersion ?? "2025-07-01");
+            _jobResourcesRestClient = new JobResources(
+                _jobResourcesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                dataBoxJobApiVersion ?? "2025-07-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _dataBoxClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBox", ResourceType.Namespace, Diagnostics);
             _dataBoxClientRestClient = new DataBoxClient(_dataBoxClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxJobApiVersion ?? "2025-07-01");
             ValidateResourceId(id);

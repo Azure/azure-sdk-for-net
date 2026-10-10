@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.Compute
         {
             TryGetApiVersion(DiskEncryptionSetResource.ResourceType, out string diskEncryptionSetApiVersion);
             _diskEncryptionSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", DiskEncryptionSetResource.ResourceType.Namespace, Diagnostics);
-            _diskEncryptionSetsRestClient = new DiskEncryptionSets(_diskEncryptionSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, diskEncryptionSetApiVersion ?? "2026-03-02");
+            _diskEncryptionSetsRestClient = new DiskEncryptionSets(
+                _diskEncryptionSetsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                diskEncryptionSetApiVersion ?? "2026-03-02",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

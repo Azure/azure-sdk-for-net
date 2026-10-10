@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         {
             TryGetApiVersion(DatabaseFleetResource.ResourceType, out string databaseFleetApiVersion);
             _fleetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DatabaseFleetManager", DatabaseFleetResource.ResourceType.Namespace, Diagnostics);
-            _fleetsRestClient = new Fleets(_fleetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databaseFleetApiVersion ?? "2025-02-01-preview");
+            _fleetsRestClient = new Fleets(
+                _fleetsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                databaseFleetApiVersion ?? "2025-02-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

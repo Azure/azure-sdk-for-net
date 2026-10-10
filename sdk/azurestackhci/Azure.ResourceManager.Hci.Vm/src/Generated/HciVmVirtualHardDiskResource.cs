@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             TryGetApiVersion(ResourceType, out string hciVmVirtualHardDiskApiVersion);
             _virtualHardDisksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", ResourceType.Namespace, Diagnostics);
-            _virtualHardDisksRestClient = new VirtualHardDisks(_virtualHardDisksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmVirtualHardDiskApiVersion ?? "2025-09-01-preview");
+            _virtualHardDisksRestClient = new VirtualHardDisks(
+                _virtualHardDisksClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                hciVmVirtualHardDiskApiVersion ?? "2025-09-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

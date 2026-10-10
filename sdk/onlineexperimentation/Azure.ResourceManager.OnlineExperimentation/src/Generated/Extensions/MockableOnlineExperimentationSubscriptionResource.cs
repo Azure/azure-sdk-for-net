@@ -36,7 +36,13 @@ namespace Azure.ResourceManager.OnlineExperimentation.Mocking
 
         private ClientDiagnostics OnlineExperimentationWorkspacesClientDiagnostics => _onlineExperimentationWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OnlineExperimentation.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private OnlineExperimentationWorkspaces OnlineExperimentationWorkspacesRestClient => _onlineExperimentationWorkspacesRestClient ??= new OnlineExperimentationWorkspaces(OnlineExperimentationWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01-preview");
+        private OnlineExperimentationWorkspaces OnlineExperimentationWorkspacesRestClient => _onlineExperimentationWorkspacesRestClient ??= new OnlineExperimentationWorkspaces(
+            OnlineExperimentationWorkspacesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-08-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// Gets all online experimentation workspaces in the specified subscription.

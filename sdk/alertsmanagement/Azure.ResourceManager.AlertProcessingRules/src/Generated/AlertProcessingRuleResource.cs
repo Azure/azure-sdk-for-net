@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.AlertProcessingRules
         {
             TryGetApiVersion(ResourceType, out string alertProcessingRuleApiVersion);
             _alertProcessingRulesOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AlertProcessingRules", ResourceType.Namespace, Diagnostics);
-            _alertProcessingRulesOperationGroupRestClient = new AlertProcessingRulesOperationGroup(_alertProcessingRulesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, alertProcessingRuleApiVersion ?? "2021-08-08");
+            _alertProcessingRulesOperationGroupRestClient = new AlertProcessingRulesOperationGroup(
+                _alertProcessingRulesOperationGroupClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                alertProcessingRuleApiVersion ?? "2021-08-08",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

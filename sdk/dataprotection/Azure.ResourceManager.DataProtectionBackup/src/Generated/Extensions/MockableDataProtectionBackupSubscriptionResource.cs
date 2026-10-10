@@ -42,11 +42,23 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
 
         private ClientDiagnostics BackupVaultResourcesClientDiagnostics => _backupVaultResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BackupVaultResources BackupVaultResourcesRestClient => _backupVaultResourcesRestClient ??= new BackupVaultResources(BackupVaultResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
+        private BackupVaultResources BackupVaultResourcesRestClient => _backupVaultResourcesRestClient ??= new BackupVaultResources(
+            BackupVaultResourcesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-06-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ResourceGuardResourcesClientDiagnostics => _resourceGuardResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ResourceGuardResources ResourceGuardResourcesRestClient => _resourceGuardResourcesRestClient ??= new ResourceGuardResources(ResourceGuardResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
+        private ResourceGuardResources ResourceGuardResourcesRestClient => _resourceGuardResourcesRestClient ??= new ResourceGuardResources(
+            ResourceGuardResourcesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-06-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics DataProtectionOperationGroupClientDiagnostics => _dataProtectionOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

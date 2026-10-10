@@ -35,7 +35,13 @@ namespace Azure.ResourceManager.ImageBuilder.Mocking
 
         private ClientDiagnostics VirtualMachineImageTemplatesClientDiagnostics => _virtualMachineImageTemplatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ImageBuilder.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachineImageTemplates VirtualMachineImageTemplatesRestClient => _virtualMachineImageTemplatesRestClient ??= new VirtualMachineImageTemplates(VirtualMachineImageTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01");
+        private VirtualMachineImageTemplates VirtualMachineImageTemplatesRestClient => _virtualMachineImageTemplatesRestClient ??= new VirtualMachineImageTemplates(
+            VirtualMachineImageTemplatesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-10-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// Gets information about the VM image templates associated with the subscription.

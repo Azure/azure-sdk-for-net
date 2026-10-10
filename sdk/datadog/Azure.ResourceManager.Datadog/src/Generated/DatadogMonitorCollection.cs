@@ -45,7 +45,13 @@ namespace Azure.ResourceManager.Datadog
             _monitorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Datadog", DatadogMonitorResource.ResourceType.Namespace, Diagnostics);
             _monitorsRestClient = new Monitors(_monitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, datadogMonitorApiVersion ?? "2025-12-26-preview");
             _datadogMonitorResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Datadog", DatadogMonitorResource.ResourceType.Namespace, Diagnostics);
-            _datadogMonitorResourcesRestClient = new DatadogMonitorResources(_datadogMonitorResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, datadogMonitorApiVersion ?? "2025-12-26-preview");
+            _datadogMonitorResourcesRestClient = new DatadogMonitorResources(
+                _datadogMonitorResourcesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                datadogMonitorApiVersion ?? "2025-12-26-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

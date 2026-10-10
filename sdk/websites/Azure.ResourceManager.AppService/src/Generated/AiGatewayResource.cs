@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string aiGatewayApiVersion);
             _aiGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _aiGatewaysRestClient = new AiGateways(_aiGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, aiGatewayApiVersion ?? "2026-03-15");
+            _aiGatewaysRestClient = new AiGateways(
+                _aiGatewaysClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                aiGatewayApiVersion ?? "2026-03-15",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

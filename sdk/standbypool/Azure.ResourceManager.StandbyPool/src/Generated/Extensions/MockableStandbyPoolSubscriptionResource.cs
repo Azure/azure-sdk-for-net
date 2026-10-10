@@ -38,11 +38,23 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
 
         private ClientDiagnostics StandbyVirtualMachinePoolsClientDiagnostics => _standbyVirtualMachinePoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StandbyPool.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StandbyVirtualMachinePools StandbyVirtualMachinePoolsRestClient => _standbyVirtualMachinePoolsRestClient ??= new StandbyVirtualMachinePools(StandbyVirtualMachinePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01");
+        private StandbyVirtualMachinePools StandbyVirtualMachinePoolsRestClient => _standbyVirtualMachinePoolsRestClient ??= new StandbyVirtualMachinePools(
+            StandbyVirtualMachinePoolsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-10-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics StandbyContainerGroupPoolsClientDiagnostics => _standbyContainerGroupPoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StandbyPool.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StandbyContainerGroupPools StandbyContainerGroupPoolsRestClient => _standbyContainerGroupPoolsRestClient ??= new StandbyContainerGroupPools(StandbyContainerGroupPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01");
+        private StandbyContainerGroupPools StandbyContainerGroupPoolsRestClient => _standbyContainerGroupPoolsRestClient ??= new StandbyContainerGroupPools(
+            StandbyContainerGroupPoolsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-10-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// List StandbyVirtualMachinePoolResource resources by subscription ID

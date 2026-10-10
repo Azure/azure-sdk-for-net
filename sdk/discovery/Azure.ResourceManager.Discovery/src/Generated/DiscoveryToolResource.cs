@@ -53,7 +53,13 @@ namespace Azure.ResourceManager.Discovery
         {
             TryGetApiVersion(ResourceType, out string discoveryToolApiVersion);
             _toolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", ResourceType.Namespace, Diagnostics);
-            _toolsRestClient = new Tools(_toolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoveryToolApiVersion ?? "2026-06-01");
+            _toolsRestClient = new Tools(
+                _toolsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                discoveryToolApiVersion ?? "2026-06-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

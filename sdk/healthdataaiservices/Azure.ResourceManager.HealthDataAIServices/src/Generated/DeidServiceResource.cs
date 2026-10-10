@@ -56,7 +56,13 @@ namespace Azure.ResourceManager.HealthDataAIServices
         {
             TryGetApiVersion(ResourceType, out string deidServiceApiVersion);
             _deidServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthDataAIServices", ResourceType.Namespace, Diagnostics);
-            _deidServicesRestClient = new DeidServices(_deidServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deidServiceApiVersion ?? "2024-09-20");
+            _deidServicesRestClient = new DeidServices(
+                _deidServicesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                deidServiceApiVersion ?? "2024-09-20",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _privateLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthDataAIServices", ResourceType.Namespace, Diagnostics);
             _privateLinksRestClient = new PrivateLinks(_privateLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deidServiceApiVersion ?? "2024-09-20");
             ValidateResourceId(id);

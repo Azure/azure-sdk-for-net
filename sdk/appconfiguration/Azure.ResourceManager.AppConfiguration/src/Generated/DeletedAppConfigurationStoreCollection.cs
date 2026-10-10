@@ -39,7 +39,13 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             TryGetApiVersion(DeletedAppConfigurationStoreResource.ResourceType, out string deletedAppConfigurationStoreApiVersion);
             _configurationStoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", DeletedAppConfigurationStoreResource.ResourceType.Namespace, Diagnostics);
-            _configurationStoresRestClient = new ConfigurationStores(_configurationStoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deletedAppConfigurationStoreApiVersion ?? "2025-08-01-preview");
+            _configurationStoresRestClient = new ConfigurationStores(
+                _configurationStoresClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                deletedAppConfigurationStoreApiVersion ?? "2025-08-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

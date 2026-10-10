@@ -42,7 +42,13 @@ namespace Azure.ResourceManager.SignalR.Mocking
 
         private ClientDiagnostics SignalRResourcesClientDiagnostics => _signalRResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SignalR.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SignalRResources SignalRResourcesRestClient => _signalRResourcesRestClient ??= new SignalRResources(SignalRResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-01-01-preview");
+        private SignalRResources SignalRResourcesRestClient => _signalRResourcesRestClient ??= new SignalRResources(
+            SignalRResourcesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-01-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics SignalROperationGroupClientDiagnostics => _signalROperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SignalR.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

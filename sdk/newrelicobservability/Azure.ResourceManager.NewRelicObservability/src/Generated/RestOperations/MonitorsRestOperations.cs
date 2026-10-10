@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
+        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of Monitors for mocking. </summary>
         protected Monitors()
@@ -29,12 +30,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Monitors(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
+        internal Monitors(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _getApiVersion = getApiVersion;
             _userAgent = new TelemetryDetails(typeof(Monitors).Assembly, applicationId);
         }
 
@@ -54,10 +57,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("NewRelic.Observability/monitors") ?? "2026-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,10 +77,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("NewRelic.Observability/monitors") ?? "2026-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -102,10 +99,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("NewRelic.Observability/monitors") ?? "2026-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -127,10 +121,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("NewRelic.Observability/monitors") ?? "2026-06-01", true);
             uri.AppendQuery("userEmail", userEmail, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -149,10 +140,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/NewRelic.Observability/monitors", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("NewRelic.Observability/monitors") ?? "2026-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -173,10 +161,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("NewRelic.Observability/monitors") ?? "2026-06-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -193,10 +178,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/NewRelic.Observability/monitors", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("NewRelic.Observability/monitors") ?? "2026-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -217,10 +199,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("NewRelic.Observability/monitors") ?? "2026-06-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -241,10 +220,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/getMetricRules", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("NewRelic.Observability/monitors") ?? "2026-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -267,10 +243,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/getMetricStatus", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("NewRelic.Observability/monitors") ?? "2026-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -293,10 +266,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/listAppServices", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("NewRelic.Observability/monitors") ?? "2026-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -319,10 +289,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("NewRelic.Observability/monitors") ?? "2026-06-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -344,10 +311,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/switchBilling", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("NewRelic.Observability/monitors") ?? "2026-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -370,10 +334,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/listHosts", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("NewRelic.Observability/monitors") ?? "2026-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -396,10 +357,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("NewRelic.Observability/monitors") ?? "2026-06-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -421,10 +379,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/refreshIngestionKey", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("NewRelic.Observability/monitors") ?? "2026-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -444,10 +399,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/monitoredResources", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("NewRelic.Observability/monitors") ?? "2026-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -468,10 +420,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("NewRelic.Observability/monitors") ?? "2026-06-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -492,10 +441,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/listLinkedResources", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("NewRelic.Observability/monitors") ?? "2026-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -516,10 +462,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("NewRelic.Observability/monitors") ?? "2026-06-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -540,10 +483,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/vmHostPayloads", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("NewRelic.Observability/monitors") ?? "2026-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -564,10 +504,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/latestLinkedSaaS", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("NewRelic.Observability/monitors") ?? "2026-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -588,10 +525,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/linkSaaS", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("NewRelic.Observability/monitors") ?? "2026-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -614,10 +548,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/resubscribe", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("NewRelic.Observability/monitors") ?? "2026-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

@@ -35,7 +35,13 @@ namespace Azure.ResourceManager.NetworkFunction.Mocking
 
         private ClientDiagnostics AzureTrafficCollectorsBySubscriptionClientDiagnostics => _azureTrafficCollectorsBySubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkFunction.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AzureTrafficCollectorsBySubscription AzureTrafficCollectorsBySubscriptionRestClient => _azureTrafficCollectorsBySubscriptionRestClient ??= new AzureTrafficCollectorsBySubscription(AzureTrafficCollectorsBySubscriptionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-11-01");
+        private AzureTrafficCollectorsBySubscription AzureTrafficCollectorsBySubscriptionRestClient => _azureTrafficCollectorsBySubscriptionRestClient ??= new AzureTrafficCollectorsBySubscription(
+            AzureTrafficCollectorsBySubscriptionClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2022-11-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// Return list of Azure Traffic Collectors in a subscription

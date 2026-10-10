@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.Discovery
         {
             TryGetApiVersion(DiscoveryWorkspaceResource.ResourceType, out string discoveryWorkspaceApiVersion);
             _workspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", DiscoveryWorkspaceResource.ResourceType.Namespace, Diagnostics);
-            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoveryWorkspaceApiVersion ?? "2026-06-01");
+            _workspacesRestClient = new Workspaces(
+                _workspacesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                discoveryWorkspaceApiVersion ?? "2026-06-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

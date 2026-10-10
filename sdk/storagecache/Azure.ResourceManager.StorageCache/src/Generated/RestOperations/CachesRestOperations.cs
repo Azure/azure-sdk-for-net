@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.StorageCache
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
+        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of Caches for mocking. </summary>
         protected Caches()
@@ -29,12 +30,14 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Caches(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
+        internal Caches(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _getApiVersion = getApiVersion;
             _userAgent = new TelemetryDetails(typeof(Caches).Assembly, applicationId);
         }
 
@@ -54,10 +57,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/caches/", false);
             uri.AppendPath(cacheName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.StorageCache/caches") ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,10 +77,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/caches/", false);
             uri.AppendPath(cacheName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.StorageCache/caches") ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -102,10 +99,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/caches/", false);
             uri.AppendPath(cacheName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.StorageCache/caches") ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -130,10 +124,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/caches/", false);
             uri.AppendPath(cacheName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.StorageCache/caches") ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -151,10 +142,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/caches", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.StorageCache/caches") ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -175,10 +163,7 @@ namespace Azure.ResourceManager.StorageCache
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.StorageCache/caches") ?? "2026-08-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -195,10 +180,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/caches", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.StorageCache/caches") ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -219,10 +201,7 @@ namespace Azure.ResourceManager.StorageCache
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.StorageCache/caches") ?? "2026-08-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -243,10 +222,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath("/providers/Microsoft.StorageCache/caches/", false);
             uri.AppendPath(cacheName, true);
             uri.AppendPath("/debugInfo", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.StorageCache/caches") ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -266,10 +242,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath("/providers/Microsoft.StorageCache/caches/", false);
             uri.AppendPath(cacheName, true);
             uri.AppendPath("/flush", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.StorageCache/caches") ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -289,10 +262,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath("/providers/Microsoft.StorageCache/caches/", false);
             uri.AppendPath(cacheName, true);
             uri.AppendPath("/start", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.StorageCache/caches") ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -312,10 +282,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath("/providers/Microsoft.StorageCache/caches/", false);
             uri.AppendPath(cacheName, true);
             uri.AppendPath("/stop", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.StorageCache/caches") ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -335,10 +302,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath("/providers/Microsoft.StorageCache/caches/", false);
             uri.AppendPath(cacheName, true);
             uri.AppendPath("/startPrimingJob", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.StorageCache/caches") ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -363,10 +327,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath("/providers/Microsoft.StorageCache/caches/", false);
             uri.AppendPath(cacheName, true);
             uri.AppendPath("/stopPrimingJob", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.StorageCache/caches") ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -391,10 +352,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath("/providers/Microsoft.StorageCache/caches/", false);
             uri.AppendPath(cacheName, true);
             uri.AppendPath("/pausePrimingJob", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.StorageCache/caches") ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -419,10 +377,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath("/providers/Microsoft.StorageCache/caches/", false);
             uri.AppendPath(cacheName, true);
             uri.AppendPath("/resumePrimingJob", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.StorageCache/caches") ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -447,10 +402,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath("/providers/Microsoft.StorageCache/caches/", false);
             uri.AppendPath(cacheName, true);
             uri.AppendPath("/upgrade", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.StorageCache/caches") ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -470,10 +422,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath("/providers/Microsoft.StorageCache/caches/", false);
             uri.AppendPath(cacheName, true);
             uri.AppendPath("/spaceAllocation", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.StorageCache/caches") ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

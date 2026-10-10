@@ -60,7 +60,13 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             TryGetApiVersion(ResourceType, out string dataBoxEdgeDeviceApiVersion);
             _devicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ResourceType.Namespace, Diagnostics);
-            _devicesRestClient = new Devices(_devicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeDeviceApiVersion ?? "2023-12-01");
+            _devicesRestClient = new Devices(
+                _devicesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                dataBoxEdgeDeviceApiVersion ?? "2023-12-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _deviceCapacityCheckClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ResourceType.Namespace, Diagnostics);
             _deviceCapacityCheckRestClient = new DeviceCapacityCheck(_deviceCapacityCheckClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeDeviceApiVersion ?? "2023-12-01");
             _nodesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ResourceType.Namespace, Diagnostics);

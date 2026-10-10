@@ -41,6 +41,15 @@ internal static class InputClientExtensions
                 && parameter.DefaultValue?.Value is string version
                 && version != inputClient.CurrentApiVersion));
         /// <summary>
+        /// Whether the REST client needs a per-operation resolver. Ordinary resource and
+        /// collection clients already resolve their constructor version; mockable extension
+        /// operations need their own lookup even when every wire default is the client version.
+        /// </summary>
+        internal bool NeedsApiVersionResolver => inputClient.HasOperationApiVersionDefaults
+            || ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas.Any(resource =>
+                resource.CategorizeMethods().MethodsInExtension.Any(method => ReferenceEquals(method.InputClient, inputClient)));
+
+        /// <summary>
         /// Gets the API version for this client from its <see cref="InputClient.ApiVersions"/>.
         /// </summary>
         public string CurrentApiVersion

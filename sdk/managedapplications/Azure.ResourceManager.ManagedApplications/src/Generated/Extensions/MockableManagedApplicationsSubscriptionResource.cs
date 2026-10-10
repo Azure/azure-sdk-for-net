@@ -42,11 +42,23 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
 
         private ClientDiagnostics ApplicationsClientDiagnostics => _applicationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedApplications.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Applications ApplicationsRestClient => _applicationsRestClient ??= new Applications(ApplicationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-12-01-preview");
+        private Applications ApplicationsRestClient => _applicationsRestClient ??= new Applications(
+            ApplicationsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2023-12-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ApplicationDefinitionsClientDiagnostics => _applicationDefinitionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedApplications.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ApplicationDefinitions ApplicationDefinitionsRestClient => _applicationDefinitionsRestClient ??= new ApplicationDefinitions(ApplicationDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-12-01-preview");
+        private ApplicationDefinitions ApplicationDefinitionsRestClient => _applicationDefinitionsRestClient ??= new ApplicationDefinitions(
+            ApplicationDefinitionsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2023-12-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics JitRequestsClientDiagnostics => _jitRequestsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedApplications.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

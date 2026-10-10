@@ -36,7 +36,13 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec.Mocking
 
         private ClientDiagnostics PreparedImageSpecificationsClientDiagnostics => _preparedImageSpecificationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerServicePreparedImgSpec.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PreparedImageSpecifications PreparedImageSpecificationsRestClient => _preparedImageSpecificationsRestClient ??= new PreparedImageSpecifications(PreparedImageSpecificationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-02-preview");
+        private PreparedImageSpecifications PreparedImageSpecificationsRestClient => _preparedImageSpecificationsRestClient ??= new PreparedImageSpecifications(
+            PreparedImageSpecificationsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-05-02-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// List the prepared image specifications in a subscription at the latest version.

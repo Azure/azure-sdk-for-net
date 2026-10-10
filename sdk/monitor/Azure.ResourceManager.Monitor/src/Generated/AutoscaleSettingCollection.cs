@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.Monitor
         {
             TryGetApiVersion(AutoscaleSettingResource.ResourceType, out string autoscaleSettingApiVersion);
             _autoscaleSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", AutoscaleSettingResource.ResourceType.Namespace, Diagnostics);
-            _autoscaleSettingsRestClient = new AutoscaleSettings(_autoscaleSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, autoscaleSettingApiVersion ?? "2022-10-01");
+            _autoscaleSettingsRestClient = new AutoscaleSettings(
+                _autoscaleSettingsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                autoscaleSettingApiVersion ?? "2022-10-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

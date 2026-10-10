@@ -40,7 +40,13 @@ namespace Azure.ResourceManager.DataBox.Mocking
 
         private ClientDiagnostics JobResourcesClientDiagnostics => _jobResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataBox.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private JobResources JobResourcesRestClient => _jobResourcesRestClient ??= new JobResources(JobResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private JobResources JobResourcesRestClient => _jobResourcesRestClient ??= new JobResources(
+            JobResourcesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-07-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ServiceOperationGroupClientDiagnostics => _serviceOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataBox.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

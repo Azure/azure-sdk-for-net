@@ -45,7 +45,13 @@ namespace Azure.ResourceManager.CosmosDB
             _throughputPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBThroughputPoolResource.ResourceType.Namespace, Diagnostics);
             _throughputPoolRestClient = new ThroughputPool(_throughputPoolClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBThroughputPoolApiVersion ?? "2026-04-01-preview");
             _throughputPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBThroughputPoolResource.ResourceType.Namespace, Diagnostics);
-            _throughputPoolsRestClient = new ThroughputPools(_throughputPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBThroughputPoolApiVersion ?? "2026-04-01-preview");
+            _throughputPoolsRestClient = new ThroughputPools(
+                _throughputPoolsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                cosmosDBThroughputPoolApiVersion ?? "2026-04-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

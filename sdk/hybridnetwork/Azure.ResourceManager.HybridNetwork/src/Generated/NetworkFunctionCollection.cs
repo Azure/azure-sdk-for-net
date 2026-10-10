@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             TryGetApiVersion(NetworkFunctionResource.ResourceType, out string networkFunctionApiVersion);
             _networkFunctionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", NetworkFunctionResource.ResourceType.Namespace, Diagnostics);
-            _networkFunctionsRestClient = new NetworkFunctions(_networkFunctionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFunctionApiVersion ?? "2025-03-30");
+            _networkFunctionsRestClient = new NetworkFunctions(
+                _networkFunctionsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                networkFunctionApiVersion ?? "2025-03-30",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

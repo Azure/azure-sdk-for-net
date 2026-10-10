@@ -44,23 +44,53 @@ namespace Azure.ResourceManager.ScVmm.Mocking
 
         private ClientDiagnostics VmmServersClientDiagnostics => _vmmServersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ScVmm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VmmServers VmmServersRestClient => _vmmServersRestClient ??= new VmmServers(VmmServersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-13");
+        private VmmServers VmmServersRestClient => _vmmServersRestClient ??= new VmmServers(
+            VmmServersClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-03-13",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics CloudsClientDiagnostics => _cloudsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ScVmm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Clouds CloudsRestClient => _cloudsRestClient ??= new Clouds(CloudsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-13");
+        private Clouds CloudsRestClient => _cloudsRestClient ??= new Clouds(
+            CloudsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-03-13",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics VirtualNetworksClientDiagnostics => _virtualNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ScVmm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualNetworks VirtualNetworksRestClient => _virtualNetworksRestClient ??= new VirtualNetworks(VirtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-13");
+        private VirtualNetworks VirtualNetworksRestClient => _virtualNetworksRestClient ??= new VirtualNetworks(
+            VirtualNetworksClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-03-13",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics VirtualMachineTemplatesClientDiagnostics => _virtualMachineTemplatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ScVmm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachineTemplates VirtualMachineTemplatesRestClient => _virtualMachineTemplatesRestClient ??= new VirtualMachineTemplates(VirtualMachineTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-13");
+        private VirtualMachineTemplates VirtualMachineTemplatesRestClient => _virtualMachineTemplatesRestClient ??= new VirtualMachineTemplates(
+            VirtualMachineTemplatesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-03-13",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics AvailabilitySetsClientDiagnostics => _availabilitySetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ScVmm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AvailabilitySets AvailabilitySetsRestClient => _availabilitySetsRestClient ??= new AvailabilitySets(AvailabilitySetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-13");
+        private AvailabilitySets AvailabilitySetsRestClient => _availabilitySetsRestClient ??= new AvailabilitySets(
+            AvailabilitySetsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-03-13",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// List of VmmServers in a subscription.

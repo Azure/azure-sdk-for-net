@@ -27,8 +27,17 @@ internal class RestClientVisitor : ScmLibraryVisitor
     {
         var client = ManagementClientGenerator.Instance.InputLibrary.GetClientByMethod(serviceMethod)!;
         var apiVersionParameter = serviceMethod.Operation.Parameters.FirstOrDefault(p => p.IsApiVersion);
-        if (createRequestMethodProvider?.BodyStatements is null || !client.HasOperationApiVersionDefaults || apiVersionParameter is not InputQueryParameter apiVersionQuery)
+        if (createRequestMethodProvider?.BodyStatements is null || !client.NeedsApiVersionResolver || apiVersionParameter is not InputQueryParameter apiVersionQuery)
         {
+            return createRequestMethodProvider;
+        }
+
+        var resources = ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas
+            .Where(r => r.Methods.Any(m => ReferenceEquals(m.InputMethod, serviceMethod))).ToArray();
+        if (!client.HasOperationApiVersionDefaults && resources.Length == 0)
+        {
+            // Adding a resolver for another operation must not change the shared constructor
+            // version used by genuinely non-resource requests in this client.
             return createRequestMethodProvider;
         }
 
@@ -43,19 +52,17 @@ internal class RestClientVisitor : ScmLibraryVisitor
             _initialRequestSignatures[key] = initialSignature;
         }
 
-        var resources = ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas
-            .Where(r => r.Methods.Any(m => ReferenceEquals(m.InputMethod, serviceMethod))).ToArray();
         // A literal parameter is authoritative in the base input model, which deliberately
         // omits clientDefaultValue for constants. Preserve it in mixed clients as well.
         var wireDefault = apiVersionParameter.Type is InputLiteralType literal
             ? literal.Value
             : apiVersionParameter.DefaultValue?.Value;
         ValueExpression defaultVersion = Literal(wireDefault as string ?? client.CurrentApiVersion);
-        // SetApiVersion is targeted to the operation's resource type, never to the owning
-        // client/RP or extension scope. Truly non-resource operations have no such runtime key.
+        // Runtime overrides are resource-type keyed. Non-resource operations retain
+        // their spec-defined defaults and do not acquire a key from their request path.
         var effectiveVersion = resources.Length == 0
             ? defaultVersion
-            : ((ManagementClientProvider)enclosingType.ClientProvider).ApiVersionResolverField.As<Func<Azure.Core.ResourceType, string>>()
+            : ((ManagementClientProvider)enclosingType.ClientProvider).ApiVersionResolverField.As<Func<Azure.Core.ResourceType, string>>().NullConditional()
                 .Invoke("Invoke", BuildResourceTypeExpression(resources, serviceMethod, createRequestMethodProvider, initialSignature)).NullCoalesce(defaultVersion);
 
         var statements = new List<MethodBodyStatement>();

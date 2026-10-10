@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             TryGetApiVersion(HciVmNetworkInterfaceResource.ResourceType, out string hciVmNetworkInterfaceApiVersion);
             _networkInterfacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmNetworkInterfaceResource.ResourceType.Namespace, Diagnostics);
-            _networkInterfacesRestClient = new NetworkInterfaces(_networkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmNetworkInterfaceApiVersion ?? "2025-09-01-preview");
+            _networkInterfacesRestClient = new NetworkInterfaces(
+                _networkInterfacesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                hciVmNetworkInterfaceApiVersion ?? "2025-09-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

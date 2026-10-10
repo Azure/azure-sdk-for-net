@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.OnlineExperimentation
         {
             TryGetApiVersion(ResourceType, out string onlineExperimentationWorkspaceApiVersion);
             _onlineExperimentationWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OnlineExperimentation", ResourceType.Namespace, Diagnostics);
-            _onlineExperimentationWorkspacesRestClient = new OnlineExperimentationWorkspaces(_onlineExperimentationWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, onlineExperimentationWorkspaceApiVersion ?? "2025-08-01-preview");
+            _onlineExperimentationWorkspacesRestClient = new OnlineExperimentationWorkspaces(
+                _onlineExperimentationWorkspacesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                onlineExperimentationWorkspaceApiVersion ?? "2025-08-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

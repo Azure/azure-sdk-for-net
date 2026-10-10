@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.ManufacturingPlatform
         {
             TryGetApiVersion(ResourceType, out string manufacturingDataServiceApiVersion);
             _manufacturingDataServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManufacturingPlatform", ResourceType.Namespace, Diagnostics);
-            _manufacturingDataServicesRestClient = new ManufacturingDataServices(_manufacturingDataServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, manufacturingDataServiceApiVersion ?? "2025-03-01");
+            _manufacturingDataServicesRestClient = new ManufacturingDataServices(
+                _manufacturingDataServicesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                manufacturingDataServiceApiVersion ?? "2025-03-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

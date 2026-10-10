@@ -80,7 +80,13 @@ namespace Azure.ResourceManager.ApplicationInsights
         {
             TryGetApiVersion(ResourceType, out string applicationInsightsComponentApiVersion);
             _componentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ResourceType.Namespace, Diagnostics);
-            _componentsRestClient = new Components(_componentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsComponentApiVersion ?? "2020-02-02");
+            _componentsRestClient = new Components(
+                _componentsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                applicationInsightsComponentApiVersion ?? "2020-02-02",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _analyticsItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ResourceType.Namespace, Diagnostics);
             _analyticsItemsRestClient = new AnalyticsItems(_analyticsItemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsComponentApiVersion ?? "2015-05-01");
             _annotationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ResourceType.Namespace, Diagnostics);
@@ -106,7 +112,13 @@ namespace Azure.ResourceManager.ApplicationInsights
             _webTestLocationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ResourceType.Namespace, Diagnostics);
             _webTestLocationsRestClient = new WebTestLocations(_webTestLocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsComponentApiVersion ?? "2015-05-01");
             _webTestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ResourceType.Namespace, Diagnostics);
-            _webTestsRestClient = new WebTests(_webTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsComponentApiVersion ?? "2022-06-15");
+            _webTestsRestClient = new WebTests(
+                _webTestsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                applicationInsightsComponentApiVersion ?? "2022-06-15",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

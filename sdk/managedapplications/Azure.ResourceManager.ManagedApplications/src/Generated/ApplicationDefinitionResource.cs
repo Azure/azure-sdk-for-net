@@ -52,7 +52,13 @@ namespace Azure.ResourceManager.ManagedApplications
         {
             this.TryGetApiVersion(ResourceType, out string applicationDefinitionApiVersion);
             _applicationDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedApplications", ResourceType.Namespace, Diagnostics);
-            _applicationDefinitionsRestClient = new ApplicationDefinitions(_applicationDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationDefinitionApiVersion ?? "2023-12-01-preview");
+            _applicationDefinitionsRestClient = new ApplicationDefinitions(
+                _applicationDefinitionsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                applicationDefinitionApiVersion ?? "2023-12-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ApplicationDefinitionResource.ValidateResourceId(id);
         }
 

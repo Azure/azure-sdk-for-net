@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.HybridContainerService
         {
             TryGetApiVersion(ResourceType, out string hybridContainerServiceVirtualNetworkApiVersion);
             _virtualNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridContainerService", ResourceType.Namespace, Diagnostics);
-            _virtualNetworksRestClient = new VirtualNetworks(_virtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridContainerServiceVirtualNetworkApiVersion ?? "2026-04-01-preview");
+            _virtualNetworksRestClient = new VirtualNetworks(
+                _virtualNetworksClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                hybridContainerServiceVirtualNetworkApiVersion ?? "2026-04-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

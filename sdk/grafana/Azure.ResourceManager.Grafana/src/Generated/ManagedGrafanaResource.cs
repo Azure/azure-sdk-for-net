@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.Grafana
         {
             TryGetApiVersion(ResourceType, out string managedGrafanaApiVersion);
             _managedGrafanasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Grafana", ResourceType.Namespace, Diagnostics);
-            _managedGrafanasRestClient = new ManagedGrafanas(_managedGrafanasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedGrafanaApiVersion ?? "2025-09-01-preview");
+            _managedGrafanasRestClient = new ManagedGrafanas(
+                _managedGrafanasClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                managedGrafanaApiVersion ?? "2025-09-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

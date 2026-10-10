@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.ScVmm
         {
             TryGetApiVersion(ScVmmCloudResource.ResourceType, out string scVmmCloudApiVersion);
             _cloudsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ScVmm", ScVmmCloudResource.ResourceType.Namespace, Diagnostics);
-            _cloudsRestClient = new Clouds(_cloudsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scVmmCloudApiVersion ?? "2025-03-13");
+            _cloudsRestClient = new Clouds(
+                _cloudsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                scVmmCloudApiVersion ?? "2025-03-13",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

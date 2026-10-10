@@ -40,7 +40,13 @@ namespace Azure.ResourceManager.DurableTask
         {
             TryGetApiVersion(DurableTaskPrivateEndpointConnectionResource.ResourceType, out string durableTaskPrivateEndpointConnectionApiVersion);
             _schedulersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DurableTask", DurableTaskPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _schedulersRestClient = new Schedulers(_schedulersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, durableTaskPrivateEndpointConnectionApiVersion ?? "2026-02-01");
+            _schedulersRestClient = new Schedulers(
+                _schedulersClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                durableTaskPrivateEndpointConnectionApiVersion ?? "2026-02-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

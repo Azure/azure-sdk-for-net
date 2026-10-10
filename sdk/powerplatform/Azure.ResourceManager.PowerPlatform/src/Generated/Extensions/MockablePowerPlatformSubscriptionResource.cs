@@ -37,11 +37,23 @@ namespace Azure.ResourceManager.PowerPlatform.Mocking
 
         private ClientDiagnostics AccountsClientDiagnostics => _accountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PowerPlatform.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Accounts AccountsRestClient => _accountsRestClient ??= new Accounts(AccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-10-30-preview");
+        private Accounts AccountsRestClient => _accountsRestClient ??= new Accounts(
+            AccountsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2020-10-30-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics EnterprisePoliciesClientDiagnostics => _enterprisePoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PowerPlatform.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private EnterprisePolicies EnterprisePoliciesRestClient => _enterprisePoliciesRestClient ??= new EnterprisePolicies(EnterprisePoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-10-30-preview");
+        private EnterprisePolicies EnterprisePoliciesRestClient => _enterprisePoliciesRestClient ??= new EnterprisePolicies(
+            EnterprisePoliciesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2020-10-30-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// Retrieve a list of accounts within a subscription.

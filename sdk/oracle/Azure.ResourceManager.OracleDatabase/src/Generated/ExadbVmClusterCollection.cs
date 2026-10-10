@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(ExadbVmClusterResource.ResourceType, out string exadbVmClusterApiVersion);
             _exadbVmClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ExadbVmClusterResource.ResourceType.Namespace, Diagnostics);
-            _exadbVmClustersRestClient = new ExadbVmClusters(_exadbVmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, exadbVmClusterApiVersion ?? "2025-09-01");
+            _exadbVmClustersRestClient = new ExadbVmClusters(
+                _exadbVmClustersClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                exadbVmClusterApiVersion ?? "2025-09-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

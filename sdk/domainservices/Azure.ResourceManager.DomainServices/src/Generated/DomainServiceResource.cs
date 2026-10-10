@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.DomainServices
         {
             TryGetApiVersion(ResourceType, out string domainServiceApiVersion);
             _domainServiceOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DomainServices", ResourceType.Namespace, Diagnostics);
-            _domainServiceOperationGroupRestClient = new DomainServiceOperationGroup(_domainServiceOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, domainServiceApiVersion ?? "2025-10-01-preview");
+            _domainServiceOperationGroupRestClient = new DomainServiceOperationGroup(
+                _domainServiceOperationGroupClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                domainServiceApiVersion ?? "2025-10-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

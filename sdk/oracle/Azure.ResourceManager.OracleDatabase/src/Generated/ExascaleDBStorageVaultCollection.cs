@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(ExascaleDBStorageVaultResource.ResourceType, out string exascaleDBStorageVaultApiVersion);
             _exascaleDbStorageVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ExascaleDBStorageVaultResource.ResourceType.Namespace, Diagnostics);
-            _exascaleDbStorageVaultsRestClient = new ExascaleDbStorageVaults(_exascaleDbStorageVaultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, exascaleDBStorageVaultApiVersion ?? "2025-09-01");
+            _exascaleDbStorageVaultsRestClient = new ExascaleDbStorageVaults(
+                _exascaleDbStorageVaultsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                exascaleDBStorageVaultApiVersion ?? "2025-09-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
