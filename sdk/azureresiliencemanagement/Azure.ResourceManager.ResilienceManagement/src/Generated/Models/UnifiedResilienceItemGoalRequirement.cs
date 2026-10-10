@@ -11,28 +11,28 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ResilienceManagement.Models
 {
     /// <summary> Definition of a resilience goal requirement copied from the goal assignment. </summary>
-    public partial class UnifiedResilienceItemGoalRequirement
+    internal partial class UnifiedResilienceItemGoalRequirement
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UnifiedResilienceItemGoalRequirement"/>. </summary>
-        /// <param name="isRequired"> Whether the goal is required for the service group. </param>
-        internal UnifiedResilienceItemGoalRequirement(bool isRequired)
+        /// <param name="isZonalResiliencyRequired"> Whether the goal is required for the service group. </param>
+        internal UnifiedResilienceItemGoalRequirement(bool isZonalResiliencyRequired)
         {
-            IsRequired = isRequired;
+            IsZonalResiliencyRequired = isZonalResiliencyRequired;
         }
 
         /// <summary> Initializes a new instance of <see cref="UnifiedResilienceItemGoalRequirement"/>. </summary>
-        /// <param name="isRequired"> Whether the goal is required for the service group. </param>
+        /// <param name="isZonalResiliencyRequired"> Whether the goal is required for the service group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnifiedResilienceItemGoalRequirement(bool isRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UnifiedResilienceItemGoalRequirement(bool isZonalResiliencyRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IsRequired = isRequired;
+            IsZonalResiliencyRequired = isZonalResiliencyRequired;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether the goal is required for the service group. </summary>
-        public bool IsRequired { get; }
+        public bool IsZonalResiliencyRequired { get; }
     }
 }

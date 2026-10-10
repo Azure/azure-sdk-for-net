@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.ResilienceManagement.Tests
         public void ReprotectContentAcceptsSelectedResources()
         {
             var resourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test/providers/Microsoft.Compute/virtualMachines/test");
-            var properties = new ReprotectContent();
-            properties.ReprotectRequestSelectedResourceIds.Add(resourceId);
-            var content = new DrillRunReprotectContent(properties);
+            var data = BinaryData.FromString("{\"reprotectProperties\":{\"reprotectRequestProperties\":{\"selectedResourceIds\":[]}}}");
+            var content = ModelReaderWriter.Read<DrillRunReprotectContent>(data, WireOptions, AzureResourceManagerResilienceManagementContext.Default);
+            content.ReprotectRequestSelectedResourceIds.Add(resourceId);
 
-            Assert.That(content.ReprotectProperties, Is.SameAs(properties));
+            Assert.That(content.ReprotectRequestSelectedResourceIds, Is.EquivalentTo(new[] { resourceId }));
             using JsonDocument json = JsonDocument.Parse(ModelReaderWriter.Write(content, WireOptions, AzureResourceManagerResilienceManagementContext.Default));
             JsonElement selectedResources = json.RootElement.GetProperty("reprotectProperties").GetProperty("reprotectRequestProperties").GetProperty("selectedResourceIds");
             Assert.That(selectedResources.GetArrayLength(), Is.EqualTo(1));
@@ -32,22 +32,28 @@ namespace Azure.ResourceManager.ResilienceManagement.Tests
                 ModelReaderWriter.Write(content, WireOptions, AzureResourceManagerResilienceManagementContext.Default),
                 WireOptions,
                 AzureResourceManagerResilienceManagementContext.Default);
-            Assert.That(roundTrip.ReprotectProperties.ReprotectRequestSelectedResourceIds, Is.EquivalentTo(new[] { resourceId }));
+            Assert.That(roundTrip.ReprotectRequestSelectedResourceIds, Is.EquivalentTo(new[] { resourceId }));
         }
 
         [Test]
         public void ReprotectContentCanTargetAllResources()
         {
-            var content = new DrillRunReprotectContent(new ReprotectContent());
+            var data = BinaryData.FromString("{\"reprotectProperties\":{}}");
+            var content = ModelReaderWriter.Read<DrillRunReprotectContent>(data, WireOptions, AzureResourceManagerResilienceManagementContext.Default);
 
             using JsonDocument json = JsonDocument.Parse(ModelReaderWriter.Write(content, WireOptions, AzureResourceManagerResilienceManagementContext.Default));
             Assert.That(json.RootElement.GetProperty("reprotectProperties").ValueKind, Is.EqualTo(JsonValueKind.Object));
         }
 
         [Test]
-        public void ReprotectContentRequiresProperties()
+        public void ReprotectContentPreservesUnknownProperties()
         {
-            Assert.Throws<ArgumentNullException>(() => new DrillRunReprotectContent(null));
+            var data = BinaryData.FromString("{\"reprotectProperties\":{},\"futureProperty\":true}");
+            var options = new ModelReaderWriterOptions("J");
+            var content = ModelReaderWriter.Read<DrillRunReprotectContent>(data, options, AzureResourceManagerResilienceManagementContext.Default);
+
+            using JsonDocument json = JsonDocument.Parse(ModelReaderWriter.Write(content, options, AzureResourceManagerResilienceManagementContext.Default));
+            Assert.That(json.RootElement.GetProperty("futureProperty").GetBoolean(), Is.True);
         }
 
         [Test]
@@ -67,7 +73,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Tests
             var data = BinaryData.FromString("{\"assignmentId\":\"/providers/Microsoft.Management/serviceGroups/test/providers/Microsoft.AzureResilienceManagement/goalAssignments/test\",\"zonalResiliency\":{\"required\":true}}");
             var goals = ModelReaderWriter.Read<ResilienceManagementGoalsInfo>(data, WireOptions, AzureResourceManagerResilienceManagementContext.Default);
 
-            Assert.That(goals.ZonalResiliency.IsRequired, Is.True);
+            Assert.That(goals.IsZonalResiliencyRequired, Is.True);
             using JsonDocument json = JsonDocument.Parse(ModelReaderWriter.Write(goals, WireOptions, AzureResourceManagerResilienceManagementContext.Default));
             Assert.That(json.RootElement.GetProperty("zonalResiliency").GetProperty("required").GetBoolean(), Is.True);
         }

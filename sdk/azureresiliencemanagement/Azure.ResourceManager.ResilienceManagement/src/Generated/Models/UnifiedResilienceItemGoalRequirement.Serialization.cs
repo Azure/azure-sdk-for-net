@@ -14,7 +14,7 @@ using Azure.ResourceManager.ResilienceManagement;
 namespace Azure.ResourceManager.ResilienceManagement.Models
 {
     /// <summary> Definition of a resilience goal requirement copied from the goal assignment. </summary>
-    public partial class UnifiedResilienceItemGoalRequirement : IJsonModel<UnifiedResilienceItemGoalRequirement>
+    internal partial class UnifiedResilienceItemGoalRequirement : IJsonModel<UnifiedResilienceItemGoalRequirement>
     {
         /// <summary> Initializes a new instance of <see cref="UnifiedResilienceItemGoalRequirement"/> for deserialization. </summary>
         internal UnifiedResilienceItemGoalRequirement()
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 throw new FormatException($"The model {nameof(UnifiedResilienceItemGoalRequirement)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("required"u8);
-            writer.WriteBooleanValue(IsRequired);
+            writer.WriteBooleanValue(IsZonalResiliencyRequired);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            bool isRequired = default;
+            bool isZonalResiliencyRequired = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("required"u8))
                 {
-                    isRequired = prop.Value.GetBoolean();
+                    isZonalResiliencyRequired = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UnifiedResilienceItemGoalRequirement(isRequired, additionalBinaryDataProperties);
+            return new UnifiedResilienceItemGoalRequirement(isZonalResiliencyRequired, additionalBinaryDataProperties);
         }
     }
 }

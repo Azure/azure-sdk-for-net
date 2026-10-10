@@ -1799,12 +1799,11 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new DrillRunFailoverContent(autoFailover, failoverProperties, default);
         }
 
-        /// <summary> Request body for Reprotect API. </summary>
-        /// <param name="reprotectProperties"> The reprotect properties. </param>
+        /// <param name="reprotectRequestSelectedResourceIds"> Selected recovery resource Ids to be processed. If not provided, all qualified resources will be processed. </param>
         /// <returns> A new <see cref="Models.DrillRunReprotectContent"/> instance for mocking. </returns>
-        public static DrillRunReprotectContent DrillRunReprotectContent(ReprotectContent reprotectProperties = default)
+        public static DrillRunReprotectContent DrillRunReprotectContent(IEnumerable<ResourceIdentifier> reprotectRequestSelectedResourceIds = default)
         {
-            return new DrillRunReprotectContent(reprotectProperties, default);
+            return new DrillRunReprotectContent(reprotectRequestSelectedResourceIds is null ? default : new ReprotectContent(reprotectRequestSelectedResourceIds is null ? default : new ReprotectRequestProperties((reprotectRequestSelectedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default), default), default);
         }
 
         /// <summary> Request body for AddNotes API. </summary>
@@ -1896,21 +1895,12 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 default);
         }
 
-        /// <summary> Definition of goals data in unified resilience item. </summary>
         /// <param name="assignmentId"> Arm id of the goal assignment. </param>
-        /// <param name="zonalResiliency"> Zonal resiliency goal copied from the goal assignment. </param>
+        /// <param name="isZonalResiliencyRequired"> Whether the goal is required for the service group. </param>
         /// <returns> A new <see cref="Models.ResilienceManagementGoalsInfo"/> instance for mocking. </returns>
-        public static ResilienceManagementGoalsInfo ResilienceManagementGoalsInfo(ResourceIdentifier assignmentId = default, UnifiedResilienceItemGoalRequirement zonalResiliency = default)
+        public static ResilienceManagementGoalsInfo ResilienceManagementGoalsInfo(ResourceIdentifier assignmentId = default, bool? isZonalResiliencyRequired = default)
         {
-            return new ResilienceManagementGoalsInfo(assignmentId, zonalResiliency, default);
-        }
-
-        /// <summary> Definition of a resilience goal requirement copied from the goal assignment. </summary>
-        /// <param name="isRequired"> Whether the goal is required for the service group. </param>
-        /// <returns> A new <see cref="Models.UnifiedResilienceItemGoalRequirement"/> instance for mocking. </returns>
-        public static UnifiedResilienceItemGoalRequirement UnifiedResilienceItemGoalRequirement(bool isRequired = default)
-        {
-            return new UnifiedResilienceItemGoalRequirement(isRequired, default);
+            return new ResilienceManagementGoalsInfo(assignmentId, isZonalResiliencyRequired is null ? default : new UnifiedResilienceItemGoalRequirement(isZonalResiliencyRequired.GetValueOrDefault(), default), default);
         }
 
         /// <summary> Definition of the zonal resiliency posture computed for the unified resilience item. </summary>

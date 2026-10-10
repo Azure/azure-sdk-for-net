@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
     /// <summary> Request body for Reprotect API. </summary>
     public partial class DrillRunReprotectContent : IJsonModel<DrillRunReprotectContent>
     {
-        /// <summary> Initializes a new instance of <see cref="DrillRunReprotectContent"/> for deserialization. </summary>
-        internal DrillRunReprotectContent()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DrillRunReprotectContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
