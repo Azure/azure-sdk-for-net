@@ -721,6 +721,96 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary>
+        /// Triggers fetching the additional details of a recovery point, which are not returned by the recovery point GET
+        /// API. This is an asynchronous operation. Returns tracking headers which can be tracked using the
+        /// GetRPExtendedInfoOperationResult API.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesBackupResourceGroupResource.GetRPExtendedInfoAsync(WaitUntil, string, string, GetRPExtendedInfoRequestResource, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="fabricName"> Fabric name associated with the backed up items. </param>
+        /// <param name="getRPExtendedInfoRequestResource"> Request payload containing the ARM id of the recovery point whose additional details are to be fetched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> GetRPExtendedInfoAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string vaultName, string fabricName, GetRPExtendedInfoRequestResource getRPExtendedInfoRequestResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetRPExtendedInfoAsync(waitUntil, vaultName, fabricName, getRPExtendedInfoRequestResource, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Triggers fetching the additional details of a recovery point, which are not returned by the recovery point GET
+        /// API. This is an asynchronous operation. Returns tracking headers which can be tracked using the
+        /// GetRPExtendedInfoOperationResult API.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesBackupResourceGroupResource.GetRPExtendedInfo(WaitUntil, string, string, GetRPExtendedInfoRequestResource, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="fabricName"> Fabric name associated with the backed up items. </param>
+        /// <param name="getRPExtendedInfoRequestResource"> Request payload containing the ARM id of the recovery point whose additional details are to be fetched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation GetRPExtendedInfo(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string vaultName, string fabricName, GetRPExtendedInfoRequestResource getRPExtendedInfoRequestResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetRPExtendedInfo(waitUntil, vaultName, fabricName, getRPExtendedInfoRequestResource, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns the additional details of the recovery points fetched by a prior getRPExtendedInfo operation. Returns
+        /// 202 Accepted while the operation is still running.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesBackupResourceGroupResource.GetRPExtendedInfoOperationResultAsync(WaitUntil, string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="fabricName"> Fabric name associated with the backed up items. </param>
+        /// <param name="operationId"> OperationID which represents the prior getRPExtendedInfo operation whose result needs to be fetched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation> GetRPExtendedInfoOperationResultAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string vaultName, string fabricName, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetRPExtendedInfoOperationResultAsync(waitUntil, vaultName, fabricName, operationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns the additional details of the recovery points fetched by a prior getRPExtendedInfo operation. Returns
+        /// 202 Accepted while the operation is still running.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesBackupResourceGroupResource.GetRPExtendedInfoOperationResult(WaitUntil, string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="fabricName"> Fabric name associated with the backed up items. </param>
+        /// <param name="operationId"> OperationID which represents the prior getRPExtendedInfo operation whose result needs to be fetched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation GetRPExtendedInfoOperationResult(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string vaultName, string fabricName, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetRPExtendedInfoOperationResult(waitUntil, vaultName, fabricName, operationId, cancellationToken);
+        }
+
+        /// <summary>
         /// Provides a pageable list of all intents that are present within a vault.
         /// <item>
         /// <term> Mocking. </term>
@@ -1210,6 +1300,52 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetGetTieringCostOperationResult(vaultName, operationId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Fetches the status of the fabric level asynchronous operation identified by the given operation id. The status
+        /// can be in progress, completed or failed. You can refer to the OperationStatus enum for all the possible states of
+        /// an operation. This is the endpoint reported in the Azure-AsyncOperation header of the fabric level operations
+        /// that start one, such as RefreshContainers and GetRPExtendedInfo.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesBackupResourceGroupResource.GetAsync(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="fabricName"> Fabric name associated with the operation. </param>
+        /// <param name="operationId"> OperationID which represents the operation whose status needs to be fetched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<OperationStatus>> GetAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string fabricName, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetAsync(vaultName, fabricName, operationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Fetches the status of the fabric level asynchronous operation identified by the given operation id. The status
+        /// can be in progress, completed or failed. You can refer to the OperationStatus enum for all the possible states of
+        /// an operation. This is the endpoint reported in the Azure-AsyncOperation header of the fabric level operations
+        /// that start one, such as RefreshContainers and GetRPExtendedInfo.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesBackupResourceGroupResource.Get(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="fabricName"> Fabric name associated with the operation. </param>
+        /// <param name="operationId"> OperationID which represents the operation whose status needs to be fetched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<OperationStatus> Get(this ResourceGroupResource resourceGroupResource, string vaultName, string fabricName, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).Get(vaultName, fabricName, operationId, cancellationToken);
         }
 
         /// <summary>

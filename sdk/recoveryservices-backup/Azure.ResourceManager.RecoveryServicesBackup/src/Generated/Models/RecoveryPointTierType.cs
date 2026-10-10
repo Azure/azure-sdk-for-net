@@ -5,18 +5,78 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Recovery point tier type. </summary>
-    public enum RecoveryPointTierType
+    public readonly partial struct RecoveryPointTierType : IEquatable<RecoveryPointTierType>
     {
-        /// <summary> Invalid. </summary>
-        Invalid,
-        /// <summary> InstantRP. </summary>
-        InstantRP,
-        /// <summary> HardenedRP. </summary>
-        HardenedRP,
-        /// <summary> ArchivedRP. </summary>
-        ArchivedRP
+        private readonly string _value;
+        private const string InvalidValue = "Invalid";
+        private const string InstantRPValue = "InstantRP";
+        private const string HardenedRPValue = "HardenedRP";
+        private const string ArchivedRPValue = "ArchivedRP";
+        /// <summary> Instant Access snapshot tier, retained for the policy's instantAccessDurationMinutes. </summary>
+        private const string IASnapshotRPValue = "IASnapshotRP";
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointTierType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RecoveryPointTierType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
+        public static RecoveryPointTierType Invalid { get; } = new RecoveryPointTierType(InvalidValue);
+
+        /// <summary> Gets the InstantRP. </summary>
+        public static RecoveryPointTierType InstantRP { get; } = new RecoveryPointTierType(InstantRPValue);
+
+        /// <summary> Gets the HardenedRP. </summary>
+        public static RecoveryPointTierType HardenedRP { get; } = new RecoveryPointTierType(HardenedRPValue);
+
+        /// <summary> Gets the ArchivedRP. </summary>
+        public static RecoveryPointTierType ArchivedRP { get; } = new RecoveryPointTierType(ArchivedRPValue);
+
+        /// <summary> Instant Access snapshot tier, retained for the policy's instantAccessDurationMinutes. </summary>
+        public static RecoveryPointTierType IASnapshotRP { get; } = new RecoveryPointTierType(IASnapshotRPValue);
+
+        /// <summary> Determines if two <see cref="RecoveryPointTierType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(RecoveryPointTierType left, RecoveryPointTierType right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="RecoveryPointTierType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(RecoveryPointTierType left, RecoveryPointTierType right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="RecoveryPointTierType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RecoveryPointTierType(string value) => new RecoveryPointTierType(value);
+
+        /// <summary> Converts a string to a <see cref="RecoveryPointTierType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RecoveryPointTierType?(string value) => value == null ? null : new RecoveryPointTierType(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is RecoveryPointTierType other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(RecoveryPointTierType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

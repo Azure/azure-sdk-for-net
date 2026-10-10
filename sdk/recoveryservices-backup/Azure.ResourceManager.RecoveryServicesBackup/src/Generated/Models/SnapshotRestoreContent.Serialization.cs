@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
@@ -84,6 +85,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("logPointInTimeForDBRecovery"u8);
                 writer.WriteStringValue(LogPointInTimeForDBRecovery);
             }
+            if (Optional.IsCollectionDefined(DisksToDetachOnClash))
+            {
+                writer.WritePropertyName("disksToDetachOnClash"u8);
+                writer.WriteStartArray();
+                foreach (ResourceIdentifier item in DisksToDetachOnClash)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -128,6 +144,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             bool? skipAttachAndMount = default;
             string logPointInTimeForDBRecovery = default;
+            IList<ResourceIdentifier> disksToDetachOnClash = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -145,12 +162,33 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     logPointInTimeForDBRecovery = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("disksToDetachOnClash"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
+                    }
+                    disksToDetachOnClash = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SnapshotRestoreContent(skipAttachAndMount, logPointInTimeForDBRecovery, additionalBinaryDataProperties);
+            return new SnapshotRestoreContent(skipAttachAndMount, logPointInTimeForDBRecovery, disksToDetachOnClash ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
         }
     }
 }

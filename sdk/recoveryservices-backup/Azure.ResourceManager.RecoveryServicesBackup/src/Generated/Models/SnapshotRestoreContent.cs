@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -19,16 +21,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of <see cref="SnapshotRestoreContent"/>. </summary>
         public SnapshotRestoreContent()
         {
+            DisksToDetachOnClash = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SnapshotRestoreContent"/>. </summary>
         /// <param name="skipAttachAndMount"></param>
         /// <param name="logPointInTimeForDBRecovery"></param>
+        /// <param name="disksToDetachOnClash"> List of disk ARM IDs the customer should detach in case of filesystem clash. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SnapshotRestoreContent(bool? skipAttachAndMount, string logPointInTimeForDBRecovery, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SnapshotRestoreContent(bool? skipAttachAndMount, string logPointInTimeForDBRecovery, IList<ResourceIdentifier> disksToDetachOnClash, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SkipAttachAndMount = skipAttachAndMount;
             LogPointInTimeForDBRecovery = logPointInTimeForDBRecovery;
+            DisksToDetachOnClash = disksToDetachOnClash;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -37,5 +42,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Gets or sets the LogPointInTimeForDBRecovery. </summary>
         public string LogPointInTimeForDBRecovery { get; set; }
+
+        /// <summary> List of disk ARM IDs the customer should detach in case of filesystem clash. </summary>
+        public IList<ResourceIdentifier> DisksToDetachOnClash { get; }
     }
 }
