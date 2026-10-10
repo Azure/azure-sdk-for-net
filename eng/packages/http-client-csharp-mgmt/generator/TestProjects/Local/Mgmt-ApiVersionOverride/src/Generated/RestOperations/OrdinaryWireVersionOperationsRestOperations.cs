@@ -57,7 +57,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/ordinaryWireVersionTests/", false);
             uri.AppendPath(ordinaryWireVersionTestName, true);
-            uri.AppendQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/ordinaryWireVersionTests") ?? "2024-05-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/ordinaryWireVersionTests") ?? "2024-05-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +74,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/MgmtTypeSpec/ordinaryWireVersionTests", false);
-            uri.AppendQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/ordinaryWireVersionTests") ?? "2024-05-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/ordinaryWireVersionTests") ?? "2024-05-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -95,7 +95,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/ordinaryWireVersionTests") ?? "2024-05-01");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/ordinaryWireVersionTests") ?? "2024-05-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

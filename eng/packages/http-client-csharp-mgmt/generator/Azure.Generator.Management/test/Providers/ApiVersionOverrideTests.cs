@@ -112,6 +112,19 @@ internal class ApiVersionOverrideTests
     }
 
     [Test]
+    public void ResourceRequestAllowsMissingApiVersionResolver()
+    {
+        var (client, models) = InputResourceData.ClientWithResource();
+        AddWireDefaults(client);
+        var plugin = ManagementMockHelpers.LoadMockPlugin(clients: () => [client], inputModels: () => models);
+        var restClient = plugin.Object.TypeFactory.CreateClient(client)!;
+        var request = restClient.RestClient.Methods.First(m => m.Signature.Name.StartsWith("Create") && m.Signature.Name.EndsWith("Request"));
+
+        Assert.That(request.BodyStatements!.ToDisplayString(),
+            Does.Contain("_getApiVersion?.Invoke(\"Microsoft.Tests/tests\") ?? \"opaque-first\""));
+    }
+
+    [Test]
     public void MockableResourceResolvesTargetedOverrideRatherThanOwningScopeVersion()
     {
         var (client, models) = InputResourceData.ClientWithExtensionScopedResourceList();

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Xml.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,6 +24,27 @@ public class ApiVersionOverrideWireTests
 {
     private const string SubscriptionId = "00000000-0000-0000-0000-000000000001";
     private static readonly ResourceIdentifier ResourceId = WireVersionTestResource.CreateResourceIdentifier(SubscriptionId, "group", "test");
+
+    [Test]
+    public void NullResolverUsesOperationDefault()
+    {
+        var options = new ArmClientOptions();
+        var restClientType = typeof(WireVersionTestResource).Assembly.GetType(
+            "Azure.Generator.MgmtApiVersionOverride.Tests.WireVersionOperations", throwOnError: true)!;
+        // Exercise the internal constructor with an absent resolver, without changing
+        // the public clients, which normally supply a non-null resolver lambda.
+        var constructor = restClientType.GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic)
+            .Single(c => c.GetParameters().Length == 6);
+        var restClient = constructor.Invoke(
+        [
+            null, HttpPipelineBuilder.Build(options), null,
+            new Uri("https://management.azure.com"), "constructor-version", null
+        ]);
+        using var message = (HttpMessage)restClientType.GetMethod("CreateGetRequest", BindingFlags.Instance | BindingFlags.NonPublic)!
+            .Invoke(restClient, [Guid.Parse(SubscriptionId), "group", "test", null])!;
+
+        Assert.That(message.Request.Uri.ToUri().Query, Is.EqualTo("?api-version=opaque-read"));
+    }
 
     [TestCase(false, "default")]
     [TestCase(true, "default")]

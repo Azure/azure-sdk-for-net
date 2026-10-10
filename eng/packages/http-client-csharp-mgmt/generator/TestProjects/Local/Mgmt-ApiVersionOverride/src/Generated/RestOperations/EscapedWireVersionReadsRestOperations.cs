@@ -57,7 +57,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/escapedWireVersionTests/", false);
             uri.AppendPath(escapedWireVersionTestName, true);
-            uri.AppendQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/escapedWireVersionTests") ?? "opaque-read&channel=legacy%2Fplus+#hash", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/escapedWireVersionTests") ?? "opaque-read&channel=legacy%2Fplus+#hash", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +74,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/MgmtTypeSpec/escapedWireVersionTests", false);
-            uri.AppendQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/escapedWireVersionTests") ?? "opaque-read&channel=legacy%2Fplus+#hash", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/escapedWireVersionTests") ?? "opaque-read&channel=legacy%2Fplus+#hash", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -95,7 +95,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/escapedWireVersionTests") ?? "opaque-read&channel=legacy%2Fplus+#hash");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/escapedWireVersionTests") ?? "opaque-read&channel=legacy%2Fplus+#hash");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -114,7 +114,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/escapedWireVersionTests", false);
-            uri.AppendQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/escapedWireVersionTests") ?? "opaque-read&channel=legacy%2Fplus+#hash", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/escapedWireVersionTests") ?? "opaque-read&channel=legacy%2Fplus+#hash", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -135,7 +135,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/escapedWireVersionTests") ?? "opaque-read&channel=legacy%2Fplus+#hash");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/escapedWireVersionTests") ?? "opaque-read&channel=legacy%2Fplus+#hash");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

@@ -62,7 +62,7 @@ internal class RestClientVisitor : ScmLibraryVisitor
         // their spec-defined defaults and do not acquire a key from their request path.
         var effectiveVersion = resources.Length == 0
             ? defaultVersion
-            : ((ManagementClientProvider)enclosingType.ClientProvider).ApiVersionResolverField.As<Func<Azure.Core.ResourceType, string>>()
+            : ((ManagementClientProvider)enclosingType.ClientProvider).ApiVersionResolverField.As<Func<Azure.Core.ResourceType, string>>().NullConditional()
                 .Invoke("Invoke", BuildResourceTypeExpression(resources, serviceMethod, createRequestMethodProvider, initialSignature)).NullCoalesce(defaultVersion);
 
         var statements = new List<MethodBodyStatement>();
