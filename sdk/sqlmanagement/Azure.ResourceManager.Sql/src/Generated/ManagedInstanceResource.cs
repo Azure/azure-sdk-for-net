@@ -60,7 +60,13 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string managedInstanceApiVersion);
             _managedInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _managedInstancesRestClient = new ManagedInstances(_managedInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedInstanceApiVersion ?? "2025-08-01-preview");
+            _managedInstancesRestClient = new ManagedInstances(
+                _managedInstancesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                managedInstanceApiVersion ?? "2025-08-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _managedInstanceTdeCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             _managedInstanceTdeCertificatesRestClient = new ManagedInstanceTdeCertificates(_managedInstanceTdeCertificatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedInstanceApiVersion ?? "2025-08-01-preview");
             _serverTrustGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);

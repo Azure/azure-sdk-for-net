@@ -50,11 +50,23 @@ namespace Azure.ResourceManager.StorageCache.Mocking
 
         private ClientDiagnostics CachesClientDiagnostics => _cachesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageCache.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Caches CachesRestClient => _cachesRestClient ??= new Caches(CachesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01");
+        private Caches CachesRestClient => _cachesRestClient ??= new Caches(
+            CachesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-08-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics AmlFilesystemsClientDiagnostics => _amlFilesystemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageCache.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AmlFilesystems AmlFilesystemsRestClient => _amlFilesystemsRestClient ??= new AmlFilesystems(AmlFilesystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01");
+        private AmlFilesystems AmlFilesystemsRestClient => _amlFilesystemsRestClient ??= new AmlFilesystems(
+            AmlFilesystemsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-08-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics StorageCacheClientClientDiagnostics => _storageCacheClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageCache.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

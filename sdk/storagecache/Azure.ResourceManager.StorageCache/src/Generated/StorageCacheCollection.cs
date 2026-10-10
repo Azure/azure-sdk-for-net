@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.StorageCache
         {
             TryGetApiVersion(StorageCacheResource.ResourceType, out string storageCacheApiVersion);
             _cachesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageCache", StorageCacheResource.ResourceType.Namespace, Diagnostics);
-            _cachesRestClient = new Caches(_cachesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageCacheApiVersion ?? "2026-08-01");
+            _cachesRestClient = new Caches(
+                _cachesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                storageCacheApiVersion ?? "2026-08-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

@@ -58,9 +58,21 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string instancePoolApiVersion);
             _instancePoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _instancePoolsRestClient = new InstancePools(_instancePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, instancePoolApiVersion ?? "2025-08-01-preview");
+            _instancePoolsRestClient = new InstancePools(
+                _instancePoolsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                instancePoolApiVersion ?? "2025-08-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _managedInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _managedInstancesRestClient = new ManagedInstances(_managedInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, instancePoolApiVersion ?? "2025-08-01-preview");
+            _managedInstancesRestClient = new ManagedInstances(
+                _managedInstancesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                instancePoolApiVersion ?? "2025-08-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _usagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             _usagesRestClient = new Usages(_usagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, instancePoolApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
