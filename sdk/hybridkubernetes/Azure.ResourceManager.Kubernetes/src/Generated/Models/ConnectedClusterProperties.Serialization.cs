@@ -177,20 +177,34 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 writer.WritePropertyName("oidcIssuerProfile"u8);
                 writer.WriteObjectValue(OidcIssuerProfile, options);
             }
-            if (Optional.IsDefined(Gateway))
+            if (_gatewayIsDefined || Optional.IsDefined(Gateway))
             {
-                writer.WritePropertyName("gateway"u8);
-                writer.WriteObjectValue(Gateway, options);
+                if (Gateway != null)
+                {
+                    writer.WritePropertyName("gateway"u8);
+                    writer.WriteObjectValue(Gateway, options);
+                }
+                else
+                {
+                    writer.WriteNull("gateway"u8);
+                }
             }
             if (Optional.IsCollectionDefined(ArcAgentryConfigurations))
             {
-                writer.WritePropertyName("arcAgentryConfigurations"u8);
-                writer.WriteStartArray();
-                foreach (ConnectedClusterArcAgentryConfiguration item in ArcAgentryConfigurations)
+                if (ArcAgentryConfigurations != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("arcAgentryConfigurations"u8);
+                    writer.WriteStartArray();
+                    foreach (ConnectedClusterArcAgentryConfiguration item in ArcAgentryConfigurations)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("arcAgentryConfigurations"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(MiscellaneousProperties))
             {
@@ -270,8 +284,9 @@ namespace Azure.ResourceManager.Kubernetes.Models
             ConnectedClusterArcAgentProfile arcAgentProfile = default;
             ConnectedClusterSecurityProfile securityProfile = default;
             ConnectedClusterOidcIssuerProfile oidcIssuerProfile = default;
+            bool gatewayIsDefined = false;
             Gateway gateway = default;
-            IList<ConnectedClusterArcAgentryConfiguration> arcAgentryConfigurations = default;
+            IList<ConnectedClusterArcAgentryConfiguration> arcAgentryConfigurations = new ChangeTrackingList<ConnectedClusterArcAgentryConfiguration>();
             IReadOnlyDictionary<string, string> miscellaneousProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -430,6 +445,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 }
                 if (prop.NameEquals("gateway"u8))
                 {
+                    gatewayIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         gateway = null;
@@ -442,6 +458,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        arcAgentryConfigurations = null;
                         continue;
                     }
                     List<ConnectedClusterArcAgentryConfiguration> array = new List<ConnectedClusterArcAgentryConfiguration>();
@@ -500,9 +517,12 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 securityProfile,
                 oidcIssuerProfile,
                 gateway,
-                arcAgentryConfigurations ?? new ChangeTrackingList<ConnectedClusterArcAgentryConfiguration>(),
+                arcAgentryConfigurations,
                 miscellaneousProperties ?? new ChangeTrackingDictionary<string, string>(),
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _gatewayIsDefined = gatewayIsDefined
+            };
         }
     }
 }

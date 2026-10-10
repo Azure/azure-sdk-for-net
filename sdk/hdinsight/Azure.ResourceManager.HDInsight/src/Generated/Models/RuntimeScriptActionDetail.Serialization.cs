@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 name,
                 uri,
                 parameters,
-                roles,
+                roles ?? new ChangeTrackingList<string>(),
                 applicationName,
                 additionalBinaryDataProperties,
                 scriptExecutionId,

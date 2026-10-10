@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HealthDataAIServicesPrivateLinkResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new HealthDataAIServicesPrivateLinkResourceListResult(value ?? new ChangeTrackingList<HealthDataAIServicesPrivateLinkResourceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

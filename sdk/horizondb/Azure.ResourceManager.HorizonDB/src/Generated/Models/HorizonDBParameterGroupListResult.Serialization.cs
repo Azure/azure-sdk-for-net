@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HorizonDBParameterGroupListResult(value, nextLink, additionalBinaryDataProperties);
+            return new HorizonDBParameterGroupListResult(value ?? new ChangeTrackingList<HorizonDBParameterGroupData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

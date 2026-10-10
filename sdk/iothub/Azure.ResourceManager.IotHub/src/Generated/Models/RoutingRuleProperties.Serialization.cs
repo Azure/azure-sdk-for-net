@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 name,
                 source,
                 condition,
-                endpointNames,
+                endpointNames ?? new ChangeTrackingList<string>(),
                 isEnabled,
                 additionalBinaryDataProperties);
         }

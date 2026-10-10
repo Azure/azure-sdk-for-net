@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CheckDependenciesResult(count, id, references, additionalBinaryDataProperties);
+            return new CheckDependenciesResult(count, id, references ?? new ChangeTrackingList<ServerlessRuntimeDependency>(), additionalBinaryDataProperties);
         }
     }
 }
