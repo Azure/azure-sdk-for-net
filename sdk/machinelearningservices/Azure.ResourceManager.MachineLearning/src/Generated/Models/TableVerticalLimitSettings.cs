@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private double? _exitScore;
+        internal bool _exitScoreIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="TableVerticalLimitSettings"/>. </summary>
         public TableVerticalLimitSettings()
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal TableVerticalLimitSettings(bool? enableEarlyTermination, double? exitScore, int? maxConcurrentTrials, int? maxCoresPerTrial, int? maxTrials, TimeSpan? timeout, TimeSpan? trialTimeout, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EnableEarlyTermination = enableEarlyTermination;
-            ExitScore = exitScore;
+            _exitScore = exitScore;
             MaxConcurrentTrials = maxConcurrentTrials;
             MaxCoresPerTrial = maxCoresPerTrial;
             MaxTrials = maxTrials;
@@ -49,7 +51,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Exit score for the AutoML job. </summary>
         [WirePath("exitScore")]
-        public double? ExitScore { get; set; }
+        public double? ExitScore
+        {
+            get
+            {
+                return _exitScore;
+            }
+            set
+            {
+                _exitScore = value;
+                _exitScoreIsDefined = true;
+            }
+        }
 
         /// <summary> Maximum Concurrent iterations. </summary>
         [WirePath("maxConcurrentTrials")]

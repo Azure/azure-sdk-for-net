@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 filePath,
                 size,
                 exportPolicy,
-                protocolTypes,
+                protocolTypes ?? new ChangeTrackingList<ElasticProtocolType>(),
                 provisioningState,
                 availabilityStatus,
                 snapshotResourceId,

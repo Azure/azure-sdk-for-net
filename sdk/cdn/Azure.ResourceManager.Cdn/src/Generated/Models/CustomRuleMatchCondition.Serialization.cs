@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 selector,
                 matchOperator,
                 negateCondition,
-                matchValue,
+                matchValue ?? new ChangeTrackingList<string>(),
                 transforms ?? new ChangeTrackingList<TransformType>(),
                 additionalBinaryDataProperties);
         }

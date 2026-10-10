@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Batch.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ListPrivateLinkResourcesResult(value, nextLink, additionalBinaryDataProperties);
+            return new ListPrivateLinkResourcesResult(value ?? new ChangeTrackingList<BatchPrivateLinkResourceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

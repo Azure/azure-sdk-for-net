@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Discovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ChatModelDeploymentListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ChatModelDeploymentListResult(value ?? new ChangeTrackingList<DiscoveryChatModelDeploymentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

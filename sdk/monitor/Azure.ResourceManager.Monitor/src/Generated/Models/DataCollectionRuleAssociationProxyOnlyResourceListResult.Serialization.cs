@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DataCollectionRuleAssociationProxyOnlyResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DataCollectionRuleAssociationProxyOnlyResourceListResult(value ?? new ChangeTrackingList<DataCollectionRuleAssociationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

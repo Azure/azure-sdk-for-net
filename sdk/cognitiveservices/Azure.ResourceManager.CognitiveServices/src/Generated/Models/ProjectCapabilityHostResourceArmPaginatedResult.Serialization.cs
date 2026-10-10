@@ -82,10 +82,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 throw new FormatException($"The model {nameof(ProjectCapabilityHostResourceArmPaginatedResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(NextLink))
+            if (_nextLinkIsDefined || Optional.IsDefined(NextLink))
             {
-                writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
+                if (NextLink != null)
+                {
+                    writer.WritePropertyName("nextLink"u8);
+                    writer.WriteStringValue(NextLink);
+                }
+                else
+                {
+                    writer.WriteNull("nextLink"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Value))
             {
@@ -139,6 +146,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
+            bool nextLinkIsDefined = false;
             string nextLink = default;
             IList<CognitiveServicesProjectScopedCapabilityHostData> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -146,6 +154,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 if (prop.NameEquals("nextLink"u8))
                 {
+                    nextLinkIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         nextLink = null;
@@ -173,7 +182,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ProjectCapabilityHostResourceArmPaginatedResult(nextLink, value ?? new ChangeTrackingList<CognitiveServicesProjectScopedCapabilityHostData>(), additionalBinaryDataProperties);
+            return new ProjectCapabilityHostResourceArmPaginatedResult(nextLink, value ?? new ChangeTrackingList<CognitiveServicesProjectScopedCapabilityHostData>(), additionalBinaryDataProperties)
+            {
+                _nextLinkIsDefined = nextLinkIsDefined
+            };
         }
     }
 }

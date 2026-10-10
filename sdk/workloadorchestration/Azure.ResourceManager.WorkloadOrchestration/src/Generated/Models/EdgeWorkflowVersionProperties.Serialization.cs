@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             return new EdgeWorkflowVersionProperties(
                 revision,
                 configuration,
-                stageSpec,
+                stageSpec ?? new ChangeTrackingList<EdgeWorkflowStageSpec>(),
                 reviewId,
                 state,
                 specification ?? new ChangeTrackingDictionary<string, BinaryData>(),

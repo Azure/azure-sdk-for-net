@@ -18,6 +18,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private AzureLocation? _location;
+        internal bool _locationIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="StorageClassificationMappingData"/>. </summary>
         internal StorageClassificationMappingData()
@@ -35,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         internal StorageClassificationMappingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageClassificationMappingProperties properties, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
-            Location = location;
+            _location = location;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,7 +45,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         internal StorageClassificationMappingProperties Properties { get; }
 
         /// <summary> Resource Location. </summary>
-        public AzureLocation? Location { get; }
+        public AzureLocation? Location
+        {
+            get
+            {
+                return _location;
+            }
+        }
 
         /// <summary> Target storage object Id. </summary>
         public ResourceIdentifier TargetStorageClassificationId

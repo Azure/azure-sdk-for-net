@@ -83,20 +83,34 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 throw new FormatException($"The model {nameof(LinkerValidateOperationResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Properties))
+            if (_propertiesIsDefined || Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                if (Properties != null)
+                {
+                    writer.WritePropertyName("properties"u8);
+                    writer.WriteObjectValue(Properties, options);
+                }
+                else
+                {
+                    writer.WriteNull("properties"u8);
+                }
             }
             if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(Status))
+            if (_statusIsDefined || Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status);
+                if (Status != null)
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status);
+                }
+                else
+                {
+                    writer.WriteNull("status"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -140,14 +154,17 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
+            bool propertiesIsDefined = false;
             ValidateResult properties = default;
             ResourceIdentifier resourceId = default;
+            bool statusIsDefined = false;
             string status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("properties"u8))
                 {
+                    propertiesIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         properties = null;
@@ -167,6 +184,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (prop.NameEquals("status"u8))
                 {
+                    statusIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         status = null;
@@ -180,7 +198,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LinkerValidateOperationResult(properties, resourceId, status, additionalBinaryDataProperties);
+            return new LinkerValidateOperationResult(properties, resourceId, status, additionalBinaryDataProperties)
+            {
+                _propertiesIsDefined = propertiesIsDefined,
+                _statusIsDefined = statusIsDefined
+            };
         }
     }
 }

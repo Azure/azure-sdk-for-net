@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 instanceType,
                 additionalBinaryDataProperties,
                 vmwareMachineId,
-                disksToInclude,
+                disksToInclude ?? new ChangeTrackingList<VMwareCbtDiskContent>(),
                 licenseType,
                 sqlServerLicenseType,
                 linuxLicenseType,

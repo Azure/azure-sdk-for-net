@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Purview.Models
         /// <param name="accountProvisioningState"> Gets the account status code. </param>
         /// <param name="error"> Gets the account error details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PurviewAccountStatus(PurviewAccountProvisioningState? accountProvisioningState, ErrorResponse error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PurviewAccountStatus(PurviewAccountProvisioningState? accountProvisioningState, ErrorResult error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccountProvisioningState = accountProvisioningState;
             Error = error;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Purview.Models
         public PurviewAccountProvisioningState? AccountProvisioningState { get; }
 
         /// <summary> Gets the account error details. </summary>
-        internal ErrorResponse Error { get; }
+        internal ErrorResult Error { get; }
 
         /// <summary> The error object. </summary>
         public ResponseError ErrorDetails

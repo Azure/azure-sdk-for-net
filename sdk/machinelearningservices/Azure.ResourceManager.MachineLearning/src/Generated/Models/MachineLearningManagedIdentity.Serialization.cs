@@ -76,15 +76,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningManagedIdentity)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(ClientId))
+            if (_clientIdIsDefined || Optional.IsDefined(ClientId))
             {
-                writer.WritePropertyName("clientId"u8);
-                writer.WriteStringValue(ClientId.Value);
+                if (ClientId != null)
+                {
+                    writer.WritePropertyName("clientId"u8);
+                    writer.WriteStringValue(ClientId.Value);
+                }
+                else
+                {
+                    writer.WriteNull("clientId"u8);
+                }
             }
-            if (Optional.IsDefined(ObjectId))
+            if (_objectIdIsDefined || Optional.IsDefined(ObjectId))
             {
-                writer.WritePropertyName("objectId"u8);
-                writer.WriteStringValue(ObjectId.Value);
+                if (ObjectId != null)
+                {
+                    writer.WritePropertyName("objectId"u8);
+                    writer.WriteStringValue(ObjectId.Value);
+                }
+                else
+                {
+                    writer.WriteNull("objectId"u8);
+                }
             }
             if (Optional.IsDefined(ResourceId))
             {
@@ -120,7 +134,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             IdentityConfigurationType identityType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool clientIdIsDefined = false;
             Guid? clientId = default;
+            bool objectIdIsDefined = false;
             Guid? objectId = default;
             ResourceIdentifier resourceId = default;
             foreach (var prop in element.EnumerateObject())
@@ -132,6 +148,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("clientId"u8))
                 {
+                    clientIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         clientId = null;
@@ -142,6 +159,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("objectId"u8))
                 {
+                    objectIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         objectId = null;
@@ -164,7 +182,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MachineLearningManagedIdentity(identityType, additionalBinaryDataProperties, clientId, objectId, resourceId);
+            return new MachineLearningManagedIdentity(identityType, additionalBinaryDataProperties, clientId, objectId, resourceId)
+            {
+                _clientIdIsDefined = clientIdIsDefined,
+                _objectIdIsDefined = objectIdIsDefined
+            };
         }
     }
 }

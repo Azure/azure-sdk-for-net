@@ -109,15 +109,29 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(ScopeType))
+            if (_scopeTypeIsDefined || Optional.IsDefined(ScopeType))
             {
-                writer.WritePropertyName("scopeType"u8);
-                writer.WriteStringValue(ScopeType.Value.ToString());
+                if (ScopeType != null)
+                {
+                    writer.WritePropertyName("scopeType"u8);
+                    writer.WriteStringValue(ScopeType.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("scopeType"u8);
+                }
             }
-            if (Optional.IsDefined(ScopeId))
+            if (_scopeIdIsDefined || Optional.IsDefined(ScopeId))
             {
-                writer.WritePropertyName("scopeId"u8);
-                writer.WriteStringValue(ScopeId);
+                if (ScopeId != null)
+                {
+                    writer.WritePropertyName("scopeId"u8);
+                    writer.WriteStringValue(ScopeId);
+                }
+                else
+                {
+                    writer.WriteNull("scopeId"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -168,7 +182,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             double? currentValue = default;
             string nextResetTime = default;
             ServiceAccountQuotaUsageStatus? status = default;
+            bool scopeTypeIsDefined = false;
             CognitiveServicesQuotaScopeType? scopeType = default;
+            bool scopeIdIsDefined = false;
             string scopeId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -230,6 +246,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("scopeType"u8))
                 {
+                    scopeTypeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         scopeType = null;
@@ -240,6 +257,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("scopeId"u8))
                 {
+                    scopeIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         scopeId = null;
@@ -263,7 +281,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 status,
                 scopeType,
                 scopeId,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _scopeTypeIsDefined = scopeTypeIsDefined,
+                _scopeIdIsDefined = scopeIdIsDefined
+            };
         }
     }
 }

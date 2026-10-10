@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VirtualNetworkPeeringListResult(value, nextLink, additionalBinaryDataProperties);
+            return new VirtualNetworkPeeringListResult(value ?? new ChangeTrackingList<VirtualNetworkPeeringData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

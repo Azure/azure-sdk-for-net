@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private FluxObjectReference _appliedBy;
+        internal bool _appliedByIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FluxObjectStatus"/>. </summary>
         internal FluxObjectStatus()
@@ -38,7 +40,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             Namespace = @namespace;
             Kind = kind;
             ComplianceState = complianceState;
-            AppliedBy = appliedBy;
+            _appliedBy = appliedBy;
             StatusConditions = statusConditions;
             HelmReleaseProperties = helmReleaseProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -57,7 +59,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         public FluxComplianceState? ComplianceState { get; }
 
         /// <summary> Object reference to the Kustomization that applied this object. </summary>
-        public FluxObjectReference AppliedBy { get; }
+        public FluxObjectReference AppliedBy
+        {
+            get
+            {
+                return _appliedBy;
+            }
+        }
 
         /// <summary> List of Kubernetes object status conditions present on the cluster. </summary>
         public IList<FluxObjectStatusCondition> StatusConditions { get; }

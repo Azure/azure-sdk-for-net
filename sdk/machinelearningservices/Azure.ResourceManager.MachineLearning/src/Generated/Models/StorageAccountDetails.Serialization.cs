@@ -74,10 +74,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(StorageAccountDetails)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SystemCreatedStorageAccount))
+            if (_systemCreatedStorageAccountIsDefined || Optional.IsDefined(SystemCreatedStorageAccount))
             {
-                writer.WritePropertyName("systemCreatedStorageAccount"u8);
-                writer.WriteObjectValue(SystemCreatedStorageAccount, options);
+                if (SystemCreatedStorageAccount != null)
+                {
+                    writer.WritePropertyName("systemCreatedStorageAccount"u8);
+                    writer.WriteObjectValue(SystemCreatedStorageAccount, options);
+                }
+                else
+                {
+                    writer.WriteNull("systemCreatedStorageAccount"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,12 +128,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool systemCreatedStorageAccountIsDefined = false;
             SystemCreatedStorageAccount systemCreatedStorageAccount = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("systemCreatedStorageAccount"u8))
                 {
+                    systemCreatedStorageAccountIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         systemCreatedStorageAccount = null;
@@ -140,7 +149,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StorageAccountDetails(systemCreatedStorageAccount, additionalBinaryDataProperties);
+            return new StorageAccountDetails(systemCreatedStorageAccount, additionalBinaryDataProperties)
+            {
+                _systemCreatedStorageAccountIsDefined = systemCreatedStorageAccountIsDefined
+            };
         }
     }
 }

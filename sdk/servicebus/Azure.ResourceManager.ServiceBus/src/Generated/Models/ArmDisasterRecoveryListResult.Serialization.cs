@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ArmDisasterRecoveryListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ArmDisasterRecoveryListResult(value ?? new ChangeTrackingList<ServiceBusDisasterRecoveryData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

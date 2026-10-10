@@ -232,9 +232,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             return new ScheduledActionsSchedule(
                 scheduledTime,
                 timeZone,
-                requestedWeekDays,
-                requestedMonths,
-                requestedDaysOfTheMonth,
+                requestedWeekDays ?? new ChangeTrackingList<ScheduledActionsScheduleWeekDay>(),
+                requestedMonths ?? new ChangeTrackingList<ScheduledActionsScheduleMonth>(),
+                requestedDaysOfTheMonth ?? new ChangeTrackingList<int>(),
                 executionParameters,
                 deadlineType,
                 additionalBinaryDataProperties);

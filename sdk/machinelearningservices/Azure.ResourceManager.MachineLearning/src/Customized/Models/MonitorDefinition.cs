@@ -27,16 +27,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             get => AlertNotificationEmails;
             set
             {
-                AlertNotificationEmails.Clear();
-                if (value is null)
-                {
-                    return;
-                }
-
-                foreach (string email in value)
-                {
-                    AlertNotificationEmails.Add(email);
-                }
+                AlertNotificationSettings ??= new MonitorNotificationSettings();
+                AlertNotificationSettings.EmailNotificationSettings ??= new MonitorEmailNotificationSettings();
+                AlertNotificationSettings.EmailNotificationSettings.Emails = value;
             }
         }
     }

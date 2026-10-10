@@ -5336,7 +5336,7 @@ namespace Azure.ResourceManager.AppService.Models
                 startTime,
                 endTime,
                 staticSiteProperties,
-                errorInfo is null ? default : new WebAppErrorResponse(errorInfo, default),
+                errorInfo is null ? default : new WebAppErrorResult(errorInfo, default),
                 default);
         }
 
@@ -7198,7 +7198,7 @@ namespace Azure.ResourceManager.AppService.Models
                 code,
                 clientRequestId,
                 serviceRequestId,
-                errorInfo is null ? default : new WebAppErrorResponse(errorInfo, default),
+                errorInfo is null ? default : new WebAppErrorResult(errorInfo, default),
                 default);
         }
 

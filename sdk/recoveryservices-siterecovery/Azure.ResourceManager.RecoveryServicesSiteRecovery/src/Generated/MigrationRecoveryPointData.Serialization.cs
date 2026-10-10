@@ -91,10 +91,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(Location))
+            if (_locationIsDefined || Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
+                if (Location != null)
+                {
+                    writer.WritePropertyName("location"u8);
+                    writer.WriteStringValue(Location.Value);
+                }
+                else
+                {
+                    writer.WriteNull("location"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -143,6 +150,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             ResourceType resourceType = default;
             SystemData systemData = default;
             MigrationRecoveryPointProperties properties = default;
+            bool locationIsDefined = false;
             AzureLocation? location = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -190,6 +198,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 }
                 if (prop.NameEquals("location"u8))
                 {
+                    locationIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         location = null;
@@ -210,7 +219,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 systemData,
                 properties,
                 location,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _locationIsDefined = locationIsDefined
+            };
         }
     }
 }

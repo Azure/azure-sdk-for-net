@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Avs.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HcxEnterpriseSiteList(value, nextLink, additionalBinaryDataProperties);
+            return new HcxEnterpriseSiteList(value ?? new ChangeTrackingList<HcxEnterpriseSiteData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

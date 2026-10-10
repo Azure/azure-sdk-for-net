@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RoutingPolicy(name, destinations, nextHop, additionalBinaryDataProperties);
+            return new RoutingPolicy(name, destinations ?? new ChangeTrackingList<string>(), nextHop, additionalBinaryDataProperties);
         }
     }
 }

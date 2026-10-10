@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ProtectionContainerMappingListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ProtectionContainerMappingListResult(value ?? new ChangeTrackingList<ProtectionContainerMappingData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

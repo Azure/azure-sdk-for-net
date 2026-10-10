@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Avs.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AvsResourceSkuRestrictions(@type, values, restrictionInfo, reasonCode, additionalBinaryDataProperties);
+            return new AvsResourceSkuRestrictions(@type, values ?? new ChangeTrackingList<string>(), restrictionInfo, reasonCode, additionalBinaryDataProperties);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     public partial class NetworkFabricIPPrefixCollection : ArmCollection, IEnumerable<NetworkFabricIPPrefixResource>, IAsyncEnumerable<NetworkFabricIPPrefixResource>
     {
         private readonly ClientDiagnostics _ipPrefixesClientDiagnostics;
-        private readonly IpPrefixes _ipPrefixesRestClient;
+        private readonly IPPrefixes _ipPrefixesRestClient;
 
         /// <summary> Initializes a new instance of NetworkFabricIPPrefixCollection for mocking. </summary>
         protected NetworkFabricIPPrefixCollection()
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             TryGetApiVersion(NetworkFabricIPPrefixResource.ResourceType, out string networkFabricIPPrefixApiVersion);
             _ipPrefixesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkFabricIPPrefixResource.ResourceType.Namespace, Diagnostics);
-            _ipPrefixesRestClient = new IpPrefixes(_ipPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFabricIPPrefixApiVersion ?? "2025-07-15");
+            _ipPrefixesRestClient = new IPPrefixes(_ipPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFabricIPPrefixApiVersion ?? "2025-07-15");
             ValidateResourceId(id);
         }
 

@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.Authorization.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DateTimeOffset? _insightCreatedOn;
+        internal bool _insightCreatedOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AccessReviewDecisionInsightProperties"/>. </summary>
         /// <param name="type"> The type of insight. </param>
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.Authorization.Models
         internal AccessReviewDecisionInsightProperties(AccessReviewDecisionInsightType @type, DateTimeOffset? insightCreatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
-            InsightCreatedOn = insightCreatedOn;
+            _insightCreatedOn = insightCreatedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -44,6 +46,12 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Date Time when the insight was created. </summary>
         [WirePath("insightCreatedDateTime")]
-        public DateTimeOffset? InsightCreatedOn { get; }
+        public DateTimeOffset? InsightCreatedOn
+        {
+            get
+            {
+                return _insightCreatedOn;
+            }
+        }
     }
 }

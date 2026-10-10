@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DevHub
         private readonly ADOOAuth _adooAuthRestClient;
         private readonly ClientDiagnostics _devHubClientClientDiagnostics;
         private readonly DevHubClient _devHubClientRestClient;
-        private readonly AdoOAuthResponseData _data;
+        private readonly AdoOAuthResultData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DevHub/locations/adooauth";
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DevHub
         /// <summary> Initializes a new instance of <see cref="AdoOAuthResponseResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AdoOAuthResponseResource(ArmClient client, AdoOAuthResponseData data) : this(client, data.Id)
+        internal AdoOAuthResponseResource(ArmClient client, AdoOAuthResultData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DevHub
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual AdoOAuthResponseData Data
+        public virtual AdoOAuthResultData Data
         {
             get
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DevHub
                 };
                 HttpMessage message = _adooAuthRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AdoOAuthResponseData> response = Response.FromValue(AdoOAuthResponseData.FromResponse(result), result);
+                Response<AdoOAuthResultData> response = Response.FromValue(AdoOAuthResultData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DevHub
                 };
                 HttpMessage message = _adooAuthRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AdoOAuthResponseData> response = Response.FromValue(AdoOAuthResponseData.FromResponse(result), result);
+                Response<AdoOAuthResultData> response = Response.FromValue(AdoOAuthResultData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

@@ -84,10 +84,17 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (options.Format != "W" && Optional.IsDefined(Time))
+            if (options.Format != "W" && (_timeIsDefined || Optional.IsDefined(Time)))
             {
-                writer.WritePropertyName("time"u8);
-                writer.WriteStringValue(Time.Value, "O");
+                if (Time != null)
+                {
+                    writer.WritePropertyName("time"u8);
+                    writer.WriteStringValue(Time.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("time"u8);
+                }
             }
             if (Optional.IsDefined(StreamType))
             {
@@ -166,6 +173,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             string sourceControlSyncJobStreamId = default;
             string summary = default;
+            bool timeIsDefined = false;
             DateTimeOffset? time = default;
             SourceControlStreamType? streamType = default;
             string streamText = default;
@@ -185,6 +193,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("time"u8))
                 {
+                    timeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         time = null;
@@ -240,7 +249,10 @@ namespace Azure.ResourceManager.Automation.Models
                 streamType,
                 streamText,
                 value ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _timeIsDefined = timeIsDefined
+            };
         }
     }
 }

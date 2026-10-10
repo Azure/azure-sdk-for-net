@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EdgenodeResult(value, nextLink, additionalBinaryDataProperties);
+            return new EdgenodeResult(value ?? new ChangeTrackingList<EdgeNode>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

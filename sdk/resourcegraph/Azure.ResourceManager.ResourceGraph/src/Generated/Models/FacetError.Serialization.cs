@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FacetError(expression, resultType, additionalBinaryDataProperties, errors);
+            return new FacetError(expression, resultType, additionalBinaryDataProperties, errors ?? new ChangeTrackingList<FacetErrorDetails>());
         }
     }
 }

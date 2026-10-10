@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _datasetLanguage;
+        internal bool _datasetLanguageIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningFeaturizationSettings"/>. </summary>
         public MachineLearningFeaturizationSettings()
@@ -27,12 +29,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MachineLearningFeaturizationSettings(string datasetLanguage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            DatasetLanguage = datasetLanguage;
+            _datasetLanguage = datasetLanguage;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Dataset language, useful for the text data. </summary>
         [WirePath("datasetLanguage")]
-        public string DatasetLanguage { get; set; }
+        public string DatasetLanguage
+        {
+            get
+            {
+                return _datasetLanguage;
+            }
+            set
+            {
+                _datasetLanguage = value;
+                _datasetLanguageIsDefined = true;
+            }
+        }
     }
 }

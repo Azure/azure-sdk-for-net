@@ -13,7 +13,6 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The RequestLogging. </summary>
     internal partial class RequestLogging : IJsonModel<RequestLogging>
     {
         /// <param name="data"> The data to parse. </param>
@@ -76,18 +75,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(CaptureHeaders))
             {
-                writer.WritePropertyName("captureHeaders"u8);
-                writer.WriteStartArray();
-                foreach (string item in CaptureHeaders)
+                if (CaptureHeaders != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("captureHeaders"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in CaptureHeaders)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("captureHeaders"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -131,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            IList<string> captureHeaders = default;
+            IList<string> captureHeaders = new ChangeTrackingList<string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -139,6 +145,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        captureHeaders = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -161,7 +168,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RequestLogging(captureHeaders ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new RequestLogging(captureHeaders, additionalBinaryDataProperties);
         }
     }
 }

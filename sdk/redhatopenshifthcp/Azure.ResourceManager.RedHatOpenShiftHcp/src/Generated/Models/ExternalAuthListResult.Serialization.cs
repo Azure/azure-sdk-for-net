@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ExternalAuthListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ExternalAuthListResult(value ?? new ChangeTrackingList<HcpOpenShiftClusterExternalAuthData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

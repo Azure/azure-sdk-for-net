@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LogAlertRuleDimension(name, @operator, values, additionalBinaryDataProperties);
+            return new LogAlertRuleDimension(name, @operator, values ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

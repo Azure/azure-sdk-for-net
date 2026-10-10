@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Peering.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PeeringServiceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new PeeringServiceListResult(value ?? new ChangeTrackingList<PeeringServiceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

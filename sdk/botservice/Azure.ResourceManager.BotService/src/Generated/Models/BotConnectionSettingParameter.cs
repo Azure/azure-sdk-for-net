@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.BotService.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _value;
+        internal bool _valueIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="BotConnectionSettingParameter"/>. </summary>
         public BotConnectionSettingParameter()
@@ -28,7 +30,7 @@ namespace Azure.ResourceManager.BotService.Models
         internal BotConnectionSettingParameter(string key, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Key = key;
-            Value = value;
+            _value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +38,17 @@ namespace Azure.ResourceManager.BotService.Models
         public string Key { get; set; }
 
         /// <summary> Value associated with the Connection Setting Parameter. </summary>
-        public string Value { get; set; }
+        public string Value
+        {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                _value = value;
+                _valueIsDefined = true;
+            }
+        }
     }
 }

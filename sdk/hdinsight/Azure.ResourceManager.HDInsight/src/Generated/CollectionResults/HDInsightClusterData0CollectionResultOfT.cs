@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <returns> The pages of HDInsightClusterData0CollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<HDInsightClusterData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

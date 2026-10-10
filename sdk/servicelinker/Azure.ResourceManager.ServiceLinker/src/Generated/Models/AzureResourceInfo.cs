@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The azure resource info when target service type is AzureResource. </summary>
     public partial class AzureResourceInfo : TargetServiceBaseInfo
     {
+        private AzureResourceBaseProperties _resourceProperties;
+        internal bool _resourcePropertiesIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="AzureResourceInfo"/>. </summary>
         public AzureResourceInfo() : base(TargetServiceType.AzureResource)
         {
@@ -27,13 +30,24 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         internal AzureResourceInfo(TargetServiceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier id, AzureResourceBaseProperties resourceProperties) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
-            ResourceProperties = resourceProperties;
+            _resourceProperties = resourceProperties;
         }
 
         /// <summary> The Id of azure resource. </summary>
         public ResourceIdentifier Id { get; set; }
 
         /// <summary> The azure resource connection related properties. </summary>
-        public AzureResourceBaseProperties ResourceProperties { get; set; }
+        public AzureResourceBaseProperties ResourceProperties
+        {
+            get
+            {
+                return _resourceProperties;
+            }
+            set
+            {
+                _resourceProperties = value;
+                _resourcePropertiesIsDefined = true;
+            }
+        }
     }
 }

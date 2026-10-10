@@ -315,17 +315,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             return new ResourceTypeEndpointBase(
                 enabled,
-                apiVersions,
+                apiVersions ?? new ChangeTrackingList<string>(),
                 endpointUri,
-                locations,
-                requiredFeatures,
+                locations ?? new ChangeTrackingList<string>(),
+                requiredFeatures ?? new ChangeTrackingList<string>(),
                 featuresRule,
                 timeout,
                 endpointType,
                 dstsConfiguration,
                 skuLink,
                 apiVersion,
-                zones,
+                zones ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
     }

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> The pages of EligibleChildResourceCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<EligibleChildResource>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

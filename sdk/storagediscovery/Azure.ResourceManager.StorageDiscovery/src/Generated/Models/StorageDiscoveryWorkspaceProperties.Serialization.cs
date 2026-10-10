@@ -238,8 +238,8 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                 sku,
                 description,
                 capabilities,
-                workspaceRoots,
-                scopes,
+                workspaceRoots ?? new ChangeTrackingList<ResourceIdentifier>(),
+                scopes ?? new ChangeTrackingList<StorageDiscoveryScope>(),
                 provisioningState,
                 additionalBinaryDataProperties);
         }

@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MongoDBAtlasTierLimitReachedResult(limits, additionalBinaryDataProperties);
+            return new MongoDBAtlasTierLimitReachedResult(limits ?? new ChangeTrackingList<MongoDBAtlasProjectLimitStatus>(), additionalBinaryDataProperties);
         }
     }
 }

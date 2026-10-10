@@ -16,6 +16,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private ContentSafety _contentSafety;
+        internal bool _contentSafetyIsDefined;
+        private ServerlessInferenceEndpoint _inferenceEndpoint;
+        internal bool _inferenceEndpointIsDefined;
+        private string _marketplaceSubscriptionId;
+        internal bool _marketplaceSubscriptionIdIsDefined;
+        private ModelSettings _modelSettings;
+        internal bool _modelSettingsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ServerlessEndpointProperties"/>. </summary>
         /// <param name="authMode"> [Required] Specifies the authentication mode for the Serverless endpoint. </param>
@@ -36,11 +44,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal ServerlessEndpointProperties(ServerlessInferenceEndpointAuthMode authMode, ContentSafety contentSafety, ServerlessEndpointState? endpointState, ServerlessInferenceEndpoint inferenceEndpoint, string marketplaceSubscriptionId, ModelSettings modelSettings, MachineLearningEndpointProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthMode = authMode;
-            ContentSafety = contentSafety;
+            _contentSafety = contentSafety;
             EndpointState = endpointState;
-            InferenceEndpoint = inferenceEndpoint;
-            MarketplaceSubscriptionId = marketplaceSubscriptionId;
-            ModelSettings = modelSettings;
+            _inferenceEndpoint = inferenceEndpoint;
+            _marketplaceSubscriptionId = marketplaceSubscriptionId;
+            _modelSettings = modelSettings;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -51,7 +59,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Specifies the content safety options. If omitted, the default content safety settings will be configured. </summary>
         [WirePath("contentSafety")]
-        internal ContentSafety ContentSafety { get; set; }
+        internal ContentSafety ContentSafety
+        {
+            get
+            {
+                return _contentSafety;
+            }
+            set
+            {
+                _contentSafety = value;
+                _contentSafetyIsDefined = true;
+            }
+        }
 
         /// <summary> The current state of the ServerlessEndpoint. </summary>
         [WirePath("endpointState")]
@@ -59,15 +78,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The inference uri to target when making requests against the serverless endpoint. </summary>
         [WirePath("inferenceEndpoint")]
-        public ServerlessInferenceEndpoint InferenceEndpoint { get; }
+        public ServerlessInferenceEndpoint InferenceEndpoint
+        {
+            get
+            {
+                return _inferenceEndpoint;
+            }
+        }
 
         /// <summary> The MarketplaceSubscription Azure ID associated to this ServerlessEndpoint. </summary>
         [WirePath("marketplaceSubscriptionId")]
-        public string MarketplaceSubscriptionId { get; }
+        public string MarketplaceSubscriptionId
+        {
+            get
+            {
+                return _marketplaceSubscriptionId;
+            }
+        }
 
         /// <summary> The model settings (model id) for the model being serviced on the ServerlessEndpoint. </summary>
         [WirePath("modelSettings")]
-        internal ModelSettings ModelSettings { get; set; }
+        internal ModelSettings ModelSettings
+        {
+            get
+            {
+                return _modelSettings;
+            }
+            set
+            {
+                _modelSettings = value;
+                _modelSettingsIsDefined = true;
+            }
+        }
 
         /// <summary> State of endpoint provisioning. </summary>
         [WirePath("provisioningState")]

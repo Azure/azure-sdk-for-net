@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Billing.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SavingsPlanOrderModelList(value, nextLink, additionalBinaryDataProperties);
+            return new SavingsPlanOrderModelList(value ?? new ChangeTrackingList<SavingsPlanOrderModelData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

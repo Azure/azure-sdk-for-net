@@ -16,6 +16,18 @@ namespace Azure.ResourceManager.BotService.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _acsEndpoint;
+        internal bool _acsEndpointIsDefined;
+        private string _acsSecret;
+        internal bool _acsSecretIsDefined;
+        private string _cognitiveServiceSubscriptionKey;
+        internal bool _cognitiveServiceSubscriptionKeyIsDefined;
+        private string _cognitiveServiceRegion;
+        internal bool _cognitiveServiceRegionIsDefined;
+        private string _defaultLocale;
+        internal bool _defaultLocaleIsDefined;
+        private string _offerType;
+        internal bool _offerTypeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="TelephonyPhoneNumbers"/>. </summary>
         public TelephonyPhoneNumbers()
@@ -38,14 +50,14 @@ namespace Azure.ResourceManager.BotService.Models
         {
             Id = id;
             PhoneNumber = phoneNumber;
-            AcsEndpoint = acsEndpoint;
-            AcsSecret = acsSecret;
+            _acsEndpoint = acsEndpoint;
+            _acsSecret = acsSecret;
             AcsResourceId = acsResourceId;
-            CognitiveServiceSubscriptionKey = cognitiveServiceSubscriptionKey;
-            CognitiveServiceRegion = cognitiveServiceRegion;
+            _cognitiveServiceSubscriptionKey = cognitiveServiceSubscriptionKey;
+            _cognitiveServiceRegion = cognitiveServiceRegion;
             CognitiveServiceResourceId = cognitiveServiceResourceId;
-            DefaultLocale = defaultLocale;
-            OfferType = offerType;
+            _defaultLocale = defaultLocale;
+            _offerType = offerType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -56,27 +68,93 @@ namespace Azure.ResourceManager.BotService.Models
         public string PhoneNumber { get; set; }
 
         /// <summary> The endpoint of ACS. </summary>
-        public string AcsEndpoint { get; set; }
+        public string AcsEndpoint
+        {
+            get
+            {
+                return _acsEndpoint;
+            }
+            set
+            {
+                _acsEndpoint = value;
+                _acsEndpointIsDefined = true;
+            }
+        }
 
         /// <summary> The secret of ACS. </summary>
-        public string AcsSecret { get; set; }
+        public string AcsSecret
+        {
+            get
+            {
+                return _acsSecret;
+            }
+            set
+            {
+                _acsSecret = value;
+                _acsSecretIsDefined = true;
+            }
+        }
 
         /// <summary> The resource id of ACS. </summary>
         public ResourceIdentifier AcsResourceId { get; set; }
 
         /// <summary> The subscription key of cognitive service. </summary>
-        public string CognitiveServiceSubscriptionKey { get; set; }
+        public string CognitiveServiceSubscriptionKey
+        {
+            get
+            {
+                return _cognitiveServiceSubscriptionKey;
+            }
+            set
+            {
+                _cognitiveServiceSubscriptionKey = value;
+                _cognitiveServiceSubscriptionKeyIsDefined = true;
+            }
+        }
 
         /// <summary> The service region of cognitive service. </summary>
-        public string CognitiveServiceRegion { get; set; }
+        public string CognitiveServiceRegion
+        {
+            get
+            {
+                return _cognitiveServiceRegion;
+            }
+            set
+            {
+                _cognitiveServiceRegion = value;
+                _cognitiveServiceRegionIsDefined = true;
+            }
+        }
 
         /// <summary> The resource id of cognitive service. </summary>
         public ResourceIdentifier CognitiveServiceResourceId { get; set; }
 
         /// <summary> The default locale of the phone number. </summary>
-        public string DefaultLocale { get; set; }
+        public string DefaultLocale
+        {
+            get
+            {
+                return _defaultLocale;
+            }
+            set
+            {
+                _defaultLocale = value;
+                _defaultLocaleIsDefined = true;
+            }
+        }
 
         /// <summary> Optional Property that will determine the offering type of the phone. </summary>
-        public string OfferType { get; set; }
+        public string OfferType
+        {
+            get
+            {
+                return _offerType;
+            }
+            set
+            {
+                _offerType = value;
+                _offerTypeIsDefined = true;
+            }
+        }
     }
 }

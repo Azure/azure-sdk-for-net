@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             string startTime = default;
             string endTime = default;
             string status = default;
-            ErrorResponse errorResponse = default;
+            ErrorResult errorResponse = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    errorResponse = ErrorResponse.DeserializeErrorResponse(prop.Value, options);
+                    errorResponse = ErrorResult.DeserializeErrorResult(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

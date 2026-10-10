@@ -85,10 +85,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsDefined(Properties))
+            if (_propertiesIsDefined || Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                if (Properties != null)
+                {
+                    writer.WritePropertyName("properties"u8);
+                    writer.WriteObjectValue(Properties, options);
+                }
+                else
+                {
+                    writer.WriteNull("properties"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -134,6 +141,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             ResourceIdentifier id = default;
             AzureLocation? location = default;
+            bool propertiesIsDefined = false;
             RegistryPrivateEndpointConnectionProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -158,6 +166,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("properties"u8))
                 {
+                    propertiesIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         properties = null;
@@ -171,7 +180,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RegistryPrivateEndpointConnection(id, location, properties, additionalBinaryDataProperties);
+            return new RegistryPrivateEndpointConnection(id, location, properties, additionalBinaryDataProperties)
+            {
+                _propertiesIsDefined = propertiesIsDefined
+            };
         }
     }
 }

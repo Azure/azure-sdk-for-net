@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PrivateLinksList(value, nextLink, additionalBinaryDataProperties);
+            return new PrivateLinksList(value ?? new ChangeTrackingList<SecurityCenterPrivateLinkResourceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

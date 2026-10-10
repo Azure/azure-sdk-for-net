@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EnvironmentTypeListResult(value, nextLink, additionalBinaryDataProperties);
+            return new EnvironmentTypeListResult(value ?? new ChangeTrackingList<DevCenterEnvironmentTypeData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.Automation.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DateTimeOffset? _endsOn;
+        internal bool _endsOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationRunProperties"/>. </summary>
         internal SoftwareUpdateConfigurationRunProperties()
@@ -43,7 +45,7 @@ namespace Azure.ResourceManager.Automation.Models
             ConfiguredDuration = configuredDuration;
             OSType = osType;
             StartsOn = startsOn;
-            EndsOn = endsOn;
+            _endsOn = endsOn;
             ComputerCount = computerCount;
             FailedCount = failedCount;
             CreatedOn = createdOn;
@@ -70,7 +72,13 @@ namespace Azure.ResourceManager.Automation.Models
         public DateTimeOffset? StartsOn { get; }
 
         /// <summary> End time of the software update configuration run. </summary>
-        public DateTimeOffset? EndsOn { get; }
+        public DateTimeOffset? EndsOn
+        {
+            get
+            {
+                return _endsOn;
+            }
+        }
 
         /// <summary> Number of computers in the software update configuration run. </summary>
         public int? ComputerCount { get; }

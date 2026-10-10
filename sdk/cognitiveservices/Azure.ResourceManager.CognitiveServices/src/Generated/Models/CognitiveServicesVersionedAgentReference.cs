@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> Type modeling a reference to a version of an agent definition. </summary>
     public partial class CognitiveServicesVersionedAgentReference : CognitiveServicesAgentReferenceProperties
     {
+        private string _agentVersion;
+        internal bool _agentVersionIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesVersionedAgentReference"/>. </summary>
         public CognitiveServicesVersionedAgentReference()
         {
@@ -26,11 +29,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="agentVersion"> Gets the agent's version (unique for each agent lineage). </param>
         internal CognitiveServicesVersionedAgentReference(string agentId, string agentName, IDictionary<string, BinaryData> additionalBinaryDataProperties, string agentVersion) : base(agentId, agentName, additionalBinaryDataProperties)
         {
-            AgentVersion = agentVersion;
+            _agentVersion = agentVersion;
         }
 
         /// <summary> Gets the agent's version (unique for each agent lineage). </summary>
         [WirePath("agentVersion")]
-        public string AgentVersion { get; set; }
+        public string AgentVersion
+        {
+            get
+            {
+                return _agentVersion;
+            }
+            set
+            {
+                _agentVersion = value;
+                _agentVersionIsDefined = true;
+            }
+        }
     }
 }

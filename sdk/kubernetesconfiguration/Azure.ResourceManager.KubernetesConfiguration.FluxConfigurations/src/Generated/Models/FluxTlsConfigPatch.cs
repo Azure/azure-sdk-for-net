@@ -15,6 +15,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _clientCertificate;
+        internal bool _clientCertificateIsDefined;
+        private string _privateKey;
+        internal bool _privateKeyIsDefined;
+        private string _caCertificate;
+        internal bool _caCertificateIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FluxTlsConfigPatch"/>. </summary>
         public FluxTlsConfigPatch()
@@ -28,19 +34,52 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal FluxTlsConfigPatch(string clientCertificate, string privateKey, string caCertificate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ClientCertificate = clientCertificate;
-            PrivateKey = privateKey;
-            CaCertificate = caCertificate;
+            _clientCertificate = clientCertificate;
+            _privateKey = privateKey;
+            _caCertificate = caCertificate;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Base64-encoded certificate used to authenticate a client with the OCI repository. </summary>
-        public string ClientCertificate { get; set; }
+        public string ClientCertificate
+        {
+            get
+            {
+                return _clientCertificate;
+            }
+            set
+            {
+                _clientCertificate = value;
+                _clientCertificateIsDefined = true;
+            }
+        }
 
         /// <summary> Base64-encoded private key used to authenticate a client with the OCI repository. </summary>
-        public string PrivateKey { get; set; }
+        public string PrivateKey
+        {
+            get
+            {
+                return _privateKey;
+            }
+            set
+            {
+                _privateKey = value;
+                _privateKeyIsDefined = true;
+            }
+        }
 
         /// <summary> Base64-encoded CA certificate used to verify the server. </summary>
-        public string CaCertificate { get; set; }
+        public string CaCertificate
+        {
+            get
+            {
+                return _caCertificate;
+            }
+            set
+            {
+                _caCertificate = value;
+                _caCertificateIsDefined = true;
+            }
+        }
     }
 }

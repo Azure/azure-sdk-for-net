@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EdlMatchCategory(urlCustom, feeds, additionalBinaryDataProperties);
+            return new EdlMatchCategory(urlCustom ?? new ChangeTrackingList<string>(), feeds ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

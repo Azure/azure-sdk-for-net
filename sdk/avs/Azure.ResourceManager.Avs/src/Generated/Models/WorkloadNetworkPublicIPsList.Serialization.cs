@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Avs.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WorkloadNetworkPublicIPsList(value, nextLink, additionalBinaryDataProperties);
+            return new WorkloadNetworkPublicIPsList(value ?? new ChangeTrackingList<WorkloadNetworkPublicIPData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

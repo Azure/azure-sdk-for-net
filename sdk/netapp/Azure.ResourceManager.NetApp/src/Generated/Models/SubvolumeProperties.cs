@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private long? _size;
+        internal bool _sizeIsDefined;
+        private string _parentPath;
+        internal bool _parentPathIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SubvolumeProperties"/>. </summary>
         public SubvolumeProperties()
@@ -30,8 +34,8 @@ namespace Azure.ResourceManager.NetApp.Models
         internal SubvolumeProperties(string path, long? size, string parentPath, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Path = path;
-            Size = size;
-            ParentPath = parentPath;
+            _size = size;
+            _parentPath = parentPath;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -40,10 +44,32 @@ namespace Azure.ResourceManager.NetApp.Models
         public string Path { get; set; }
 
         /// <summary> Truncate subvolume to the provided size in bytes. </summary>
-        public long? Size { get; set; }
+        public long? Size
+        {
+            get
+            {
+                return _size;
+            }
+            set
+            {
+                _size = value;
+                _sizeIsDefined = true;
+            }
+        }
 
         /// <summary> parent path to the subvolume. </summary>
-        public string ParentPath { get; set; }
+        public string ParentPath
+        {
+            get
+            {
+                return _parentPath;
+            }
+            set
+            {
+                _parentPath = value;
+                _parentPathIsDefined = true;
+            }
+        }
 
         /// <summary> Azure lifecycle management. </summary>
         public string ProvisioningState { get; }

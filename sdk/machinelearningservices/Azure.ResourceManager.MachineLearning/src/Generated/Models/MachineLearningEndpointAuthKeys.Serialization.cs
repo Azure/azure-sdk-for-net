@@ -82,15 +82,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningEndpointAuthKeys)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(PrimaryKey))
+            if (_primaryKeyIsDefined || Optional.IsDefined(PrimaryKey))
             {
-                writer.WritePropertyName("primaryKey"u8);
-                writer.WriteStringValue(PrimaryKey);
+                if (PrimaryKey != null)
+                {
+                    writer.WritePropertyName("primaryKey"u8);
+                    writer.WriteStringValue(PrimaryKey);
+                }
+                else
+                {
+                    writer.WriteNull("primaryKey"u8);
+                }
             }
-            if (Optional.IsDefined(SecondaryKey))
+            if (_secondaryKeyIsDefined || Optional.IsDefined(SecondaryKey))
             {
-                writer.WritePropertyName("secondaryKey"u8);
-                writer.WriteStringValue(SecondaryKey);
+                if (SecondaryKey != null)
+                {
+                    writer.WritePropertyName("secondaryKey"u8);
+                    writer.WriteStringValue(SecondaryKey);
+                }
+                else
+                {
+                    writer.WriteNull("secondaryKey"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -134,13 +148,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool primaryKeyIsDefined = false;
             string primaryKey = default;
+            bool secondaryKeyIsDefined = false;
             string secondaryKey = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("primaryKey"u8))
                 {
+                    primaryKeyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         primaryKey = null;
@@ -151,6 +168,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("secondaryKey"u8))
                 {
+                    secondaryKeyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         secondaryKey = null;
@@ -164,7 +182,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MachineLearningEndpointAuthKeys(primaryKey, secondaryKey, additionalBinaryDataProperties);
+            return new MachineLearningEndpointAuthKeys(primaryKey, secondaryKey, additionalBinaryDataProperties)
+            {
+                _primaryKeyIsDefined = primaryKeyIsDefined,
+                _secondaryKeyIsDefined = secondaryKeyIsDefined
+            };
         }
     }
 }

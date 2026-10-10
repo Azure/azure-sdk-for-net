@@ -16,6 +16,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _countryOrRegionForHolidays;
+        internal bool _countryOrRegionForHolidaysIsDefined;
+        private int? _cvStepSize;
+        internal bool _cvStepSizeIsDefined;
+        private string _frequency;
+        internal bool _frequencyIsDefined;
+        private TargetLags _targetLags;
+        internal bool _targetLagsIsDefined;
+        private TargetRollingWindowSize _targetRollingWindowSize;
+        internal bool _targetRollingWindowSizeIsDefined;
+        private string _timeColumnName;
+        internal bool _timeColumnNameIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ForecastingSettings"/>. </summary>
         public ForecastingSettings()
@@ -53,17 +65,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ForecastingSettings(string countryOrRegionForHolidays, int? cvStepSize, MachineLearningFeatureLag? featureLags, ForecastHorizon forecastHorizon, string frequency, ForecastingSeasonality seasonality, MachineLearningShortSeriesHandlingConfiguration? shortSeriesHandlingConfig, TargetAggregationFunction? targetAggregateFunction, TargetLags targetLags, TargetRollingWindowSize targetRollingWindowSize, string timeColumnName, IList<string> timeSeriesIdColumnNames, MachineLearningUseStl? useStl, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            CountryOrRegionForHolidays = countryOrRegionForHolidays;
-            CvStepSize = cvStepSize;
+            _countryOrRegionForHolidays = countryOrRegionForHolidays;
+            _cvStepSize = cvStepSize;
             FeatureLags = featureLags;
             ForecastHorizon = forecastHorizon;
-            Frequency = frequency;
+            _frequency = frequency;
             Seasonality = seasonality;
             ShortSeriesHandlingConfig = shortSeriesHandlingConfig;
             TargetAggregateFunction = targetAggregateFunction;
-            TargetLags = targetLags;
-            TargetRollingWindowSize = targetRollingWindowSize;
-            TimeColumnName = timeColumnName;
+            _targetLags = targetLags;
+            _targetRollingWindowSize = targetRollingWindowSize;
+            _timeColumnName = timeColumnName;
             TimeSeriesIdColumnNames = timeSeriesIdColumnNames;
             UseStl = useStl;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -74,7 +86,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// These should be ISO 3166 two-letter country/region codes, for example 'US' or 'GB'.
         /// </summary>
         [WirePath("countryOrRegionForHolidays")]
-        public string CountryOrRegionForHolidays { get; set; }
+        public string CountryOrRegionForHolidays
+        {
+            get
+            {
+                return _countryOrRegionForHolidays;
+            }
+            set
+            {
+                _countryOrRegionForHolidays = value;
+                _countryOrRegionForHolidaysIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Number of periods between the origin time of one CV fold and the next fold. For
@@ -82,7 +105,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// three days apart.
         /// </summary>
         [WirePath("cvStepSize")]
-        public int? CvStepSize { get; set; }
+        public int? CvStepSize
+        {
+            get
+            {
+                return _cvStepSize;
+            }
+            set
+            {
+                _cvStepSize = value;
+                _cvStepSizeIsDefined = true;
+            }
+        }
 
         /// <summary> Flag for generating lags for the numeric features. </summary>
         [WirePath("featureLags")]
@@ -94,7 +128,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> When forecasting, this parameter represents the period with which the forecast is desired, for example daily, weekly, yearly, etc. The forecast frequency is dataset frequency by default. </summary>
         [WirePath("frequency")]
-        public string Frequency { get; set; }
+        public string Frequency
+        {
+            get
+            {
+                return _frequency;
+            }
+            set
+            {
+                _frequency = value;
+                _frequencyIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Set time series seasonality as an integer multiple of the series frequency.
@@ -113,15 +158,48 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The number of past periods to lag from the target column. </summary>
         [WirePath("targetLags")]
-        public TargetLags TargetLags { get; set; }
+        public TargetLags TargetLags
+        {
+            get
+            {
+                return _targetLags;
+            }
+            set
+            {
+                _targetLags = value;
+                _targetLagsIsDefined = true;
+            }
+        }
 
         /// <summary> The number of past periods used to create a rolling window average of the target column. </summary>
         [WirePath("targetRollingWindowSize")]
-        public TargetRollingWindowSize TargetRollingWindowSize { get; set; }
+        public TargetRollingWindowSize TargetRollingWindowSize
+        {
+            get
+            {
+                return _targetRollingWindowSize;
+            }
+            set
+            {
+                _targetRollingWindowSize = value;
+                _targetRollingWindowSizeIsDefined = true;
+            }
+        }
 
         /// <summary> The name of the time column. This parameter is required when forecasting to specify the datetime column in the input data used for building the time series and inferring its frequency. </summary>
         [WirePath("timeColumnName")]
-        public string TimeColumnName { get; set; }
+        public string TimeColumnName
+        {
+            get
+            {
+                return _timeColumnName;
+            }
+            set
+            {
+                _timeColumnName = value;
+                _timeColumnNameIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// The names of columns used to group a timeseries. It can be used to create multiple series.

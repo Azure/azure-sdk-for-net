@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NamedPartitionScheme(partitionScheme, additionalBinaryDataProperties, names);
+            return new NamedPartitionScheme(partitionScheme, additionalBinaryDataProperties, names ?? new ChangeTrackingList<string>());
         }
     }
 }

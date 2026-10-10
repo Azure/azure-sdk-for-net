@@ -75,15 +75,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningBatchDeploymentProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Compute))
+            if (_computeIsDefined || Optional.IsDefined(Compute))
             {
-                writer.WritePropertyName("compute"u8);
-                writer.WriteStringValue(Compute);
+                if (Compute != null)
+                {
+                    writer.WritePropertyName("compute"u8);
+                    writer.WriteStringValue(Compute);
+                }
+                else
+                {
+                    writer.WriteNull("compute"u8);
+                }
             }
-            if (Optional.IsDefined(DeploymentConfiguration))
+            if (_deploymentConfigurationIsDefined || Optional.IsDefined(DeploymentConfiguration))
             {
-                writer.WritePropertyName("deploymentConfiguration"u8);
-                writer.WriteObjectValue(DeploymentConfiguration, options);
+                if (DeploymentConfiguration != null)
+                {
+                    writer.WritePropertyName("deploymentConfiguration"u8);
+                    writer.WriteObjectValue(DeploymentConfiguration, options);
+                }
+                else
+                {
+                    writer.WriteNull("deploymentConfiguration"u8);
+                }
             }
             if (Optional.IsDefined(ErrorThreshold))
             {
@@ -105,10 +119,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("miniBatchSize"u8);
                 writer.WriteNumberValue(MiniBatchSize.Value);
             }
-            if (Optional.IsDefined(Model))
+            if (_modelIsDefined || Optional.IsDefined(Model))
             {
-                writer.WritePropertyName("model"u8);
-                writer.WriteObjectValue(Model, options);
+                if (Model != null)
+                {
+                    writer.WritePropertyName("model"u8);
+                    writer.WriteObjectValue(Model, options);
+                }
+                else
+                {
+                    writer.WriteNull("model"u8);
+                }
             }
             if (Optional.IsDefined(OutputAction))
             {
@@ -125,15 +146,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Resources))
+            if (_resourcesIsDefined || Optional.IsDefined(Resources))
             {
-                writer.WritePropertyName("resources"u8);
-                writer.WriteObjectValue(Resources, options);
+                if (Resources != null)
+                {
+                    writer.WritePropertyName("resources"u8);
+                    writer.WriteObjectValue(Resources, options);
+                }
+                else
+                {
+                    writer.WriteNull("resources"u8);
+                }
             }
-            if (Optional.IsDefined(RetrySettings))
+            if (_retrySettingsIsDefined || Optional.IsDefined(RetrySettings))
             {
-                writer.WritePropertyName("retrySettings"u8);
-                writer.WriteObjectValue(RetrySettings, options);
+                if (RetrySettings != null)
+                {
+                    writer.WritePropertyName("retrySettings"u8);
+                    writer.WriteObjectValue(RetrySettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("retrySettings"u8);
+                }
             }
         }
 
@@ -162,28 +197,37 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool codeConfigurationIsDefined = false;
             MachineLearningCodeConfiguration codeConfiguration = default;
+            bool descriptionIsDefined = false;
             string description = default;
+            bool environmentIdIsDefined = false;
             string environmentId = default;
-            IDictionary<string, string> environmentVariables = default;
-            IDictionary<string, string> properties = default;
+            IDictionary<string, string> environmentVariables = new ChangeTrackingDictionary<string, string>();
+            IDictionary<string, string> properties = new ChangeTrackingDictionary<string, string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool computeIsDefined = false;
             string compute = default;
+            bool deploymentConfigurationIsDefined = false;
             BatchDeploymentConfiguration deploymentConfiguration = default;
             int? errorThreshold = default;
             MachineLearningBatchLoggingLevel? loggingLevel = default;
             int? maxConcurrencyPerInstance = default;
             long? miniBatchSize = default;
+            bool modelIsDefined = false;
             MachineLearningAssetReferenceBase model = default;
             MachineLearningBatchOutputAction? outputAction = default;
             string outputFileName = default;
             MachineLearningDeploymentProvisioningState? provisioningState = default;
+            bool resourcesIsDefined = false;
             MachineLearningDeploymentResourceConfiguration resources = default;
+            bool retrySettingsIsDefined = false;
             MachineLearningBatchRetrySettings retrySettings = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("codeConfiguration"u8))
                 {
+                    codeConfigurationIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         codeConfiguration = null;
@@ -194,6 +238,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -204,6 +249,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("environmentId"u8))
                 {
+                    environmentIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         environmentId = null;
@@ -216,6 +262,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        environmentVariables = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -237,6 +284,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -256,6 +304,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("compute"u8))
                 {
+                    computeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         compute = null;
@@ -266,6 +315,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("deploymentConfiguration"u8))
                 {
+                    deploymentConfigurationIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         deploymentConfiguration = null;
@@ -312,6 +362,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("model"u8))
                 {
+                    modelIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         model = null;
@@ -345,6 +396,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("resources"u8))
                 {
+                    resourcesIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         resources = null;
@@ -355,6 +407,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("retrySettings"u8))
                 {
+                    retrySettingsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         retrySettings = null;
@@ -372,8 +425,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 codeConfiguration,
                 description,
                 environmentId,
-                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
-                properties ?? new ChangeTrackingDictionary<string, string>(),
+                environmentVariables,
+                properties,
                 additionalBinaryDataProperties,
                 compute,
                 deploymentConfiguration,
@@ -386,7 +439,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 outputFileName,
                 provisioningState,
                 resources,
-                retrySettings);
+                retrySettings)
+            {
+                _codeConfigurationIsDefined = codeConfigurationIsDefined,
+                _descriptionIsDefined = descriptionIsDefined,
+                _environmentIdIsDefined = environmentIdIsDefined,
+                _computeIsDefined = computeIsDefined,
+                _deploymentConfigurationIsDefined = deploymentConfigurationIsDefined,
+                _modelIsDefined = modelIsDefined,
+                _resourcesIsDefined = resourcesIsDefined,
+                _retrySettingsIsDefined = retrySettingsIsDefined
+            };
         }
     }
 }

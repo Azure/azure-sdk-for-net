@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private GetBlobReferenceForConsumptionDto _blobReferenceForConsumption;
+        internal bool _blobReferenceForConsumptionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="BlobReferenceSasResult"/>. </summary>
         internal BlobReferenceSasResult()
@@ -27,12 +29,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal BlobReferenceSasResult(GetBlobReferenceForConsumptionDto blobReferenceForConsumption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            BlobReferenceForConsumption = blobReferenceForConsumption;
+            _blobReferenceForConsumption = blobReferenceForConsumption;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Blob reference for consumption details. </summary>
         [WirePath("blobReferenceForConsumption")]
-        public GetBlobReferenceForConsumptionDto BlobReferenceForConsumption { get; }
+        public GetBlobReferenceForConsumptionDto BlobReferenceForConsumption
+        {
+            get
+            {
+                return _blobReferenceForConsumption;
+            }
+        }
     }
 }

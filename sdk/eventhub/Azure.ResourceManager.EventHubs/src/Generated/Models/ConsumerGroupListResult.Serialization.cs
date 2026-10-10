@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ConsumerGroupListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ConsumerGroupListResult(value ?? new ChangeTrackingList<EventHubsConsumerGroupData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

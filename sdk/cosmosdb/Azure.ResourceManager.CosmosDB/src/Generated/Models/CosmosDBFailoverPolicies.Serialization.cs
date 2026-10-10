@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CosmosDBFailoverPolicies(failoverPolicies, additionalBinaryDataProperties);
+            return new CosmosDBFailoverPolicies(failoverPolicies ?? new ChangeTrackingList<CosmosDBFailoverPolicy>(), additionalBinaryDataProperties);
         }
     }
 }

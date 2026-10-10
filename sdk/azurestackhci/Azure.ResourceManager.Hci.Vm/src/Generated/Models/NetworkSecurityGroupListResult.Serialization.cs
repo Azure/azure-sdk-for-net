@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NetworkSecurityGroupListResult(value, nextLink, additionalBinaryDataProperties);
+            return new NetworkSecurityGroupListResult(value ?? new ChangeTrackingList<HciVmNetworkSecurityGroupData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

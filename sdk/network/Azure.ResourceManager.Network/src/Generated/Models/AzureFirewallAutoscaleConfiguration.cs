@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private int? _minCapacity;
+        internal bool _minCapacityIsDefined;
+        private int? _maxCapacity;
+        internal bool _maxCapacityIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AzureFirewallAutoscaleConfiguration"/>. </summary>
         public AzureFirewallAutoscaleConfiguration()
@@ -28,17 +32,39 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal AzureFirewallAutoscaleConfiguration(int? minCapacity, int? maxCapacity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            MinCapacity = minCapacity;
-            MaxCapacity = maxCapacity;
+            _minCapacity = minCapacity;
+            _maxCapacity = maxCapacity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The minimum number of capacity units for this azure firewall. Use null to reset the value to the service default. </summary>
         [WirePath("minCapacity")]
-        public int? MinCapacity { get; set; }
+        public int? MinCapacity
+        {
+            get
+            {
+                return _minCapacity;
+            }
+            set
+            {
+                _minCapacity = value;
+                _minCapacityIsDefined = true;
+            }
+        }
 
         /// <summary> The maximum number of capacity units for this azure firewall. Use null to reset the value to the service default. </summary>
         [WirePath("maxCapacity")]
-        public int? MaxCapacity { get; set; }
+        public int? MaxCapacity
+        {
+            get
+            {
+                return _maxCapacity;
+            }
+            set
+            {
+                _maxCapacity = value;
+                _maxCapacityIsDefined = true;
+            }
+        }
     }
 }

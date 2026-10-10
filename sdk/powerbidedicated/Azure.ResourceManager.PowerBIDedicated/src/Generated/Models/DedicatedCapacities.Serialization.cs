@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DedicatedCapacities(value, nextLink, additionalBinaryDataProperties);
+            return new DedicatedCapacities(value ?? new ChangeTrackingList<DedicatedCapacityData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

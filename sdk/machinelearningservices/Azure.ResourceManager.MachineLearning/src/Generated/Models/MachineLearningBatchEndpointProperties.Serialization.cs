@@ -80,10 +80,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningBatchEndpointProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Defaults))
+            if (_defaultsIsDefined || Optional.IsDefined(Defaults))
             {
-                writer.WritePropertyName("defaults"u8);
-                writer.WriteObjectValue(Defaults, options);
+                if (Defaults != null)
+                {
+                    writer.WritePropertyName("defaults"u8);
+                    writer.WriteObjectValue(Defaults, options);
+                }
+                else
+                {
+                    writer.WriteNull("defaults"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -118,12 +125,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             MachineLearningEndpointAuthMode authMode = default;
+            bool descriptionIsDefined = false;
             string description = default;
+            bool keysIsDefined = false;
             MachineLearningEndpointAuthKeys keys = default;
-            IDictionary<string, string> properties = default;
+            IDictionary<string, string> properties = new ChangeTrackingDictionary<string, string>();
+            bool scoringUriIsDefined = false;
             Uri scoringUri = default;
+            bool swaggerUriIsDefined = false;
             Uri swaggerUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool defaultsIsDefined = false;
             BatchEndpointDefaults defaults = default;
             MachineLearningEndpointProvisioningState? provisioningState = default;
             foreach (var prop in element.EnumerateObject())
@@ -135,6 +147,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -145,6 +158,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("keys"u8))
                 {
+                    keysIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         keys = null;
@@ -157,6 +171,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -176,6 +191,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("scoringUri"u8))
                 {
+                    scoringUriIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         scoringUri = null;
@@ -186,6 +202,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("swaggerUri"u8))
                 {
+                    swaggerUriIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         swaggerUri = null;
@@ -196,6 +213,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("defaults"u8))
                 {
+                    defaultsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         defaults = null;
@@ -222,12 +240,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 authMode,
                 description,
                 keys,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
+                properties,
                 scoringUri,
                 swaggerUri,
                 additionalBinaryDataProperties,
                 defaults,
-                provisioningState);
+                provisioningState)
+            {
+                _descriptionIsDefined = descriptionIsDefined,
+                _keysIsDefined = keysIsDefined,
+                _scoringUriIsDefined = scoringUriIsDefined,
+                _swaggerUriIsDefined = swaggerUriIsDefined,
+                _defaultsIsDefined = defaultsIsDefined
+            };
         }
     }
 }

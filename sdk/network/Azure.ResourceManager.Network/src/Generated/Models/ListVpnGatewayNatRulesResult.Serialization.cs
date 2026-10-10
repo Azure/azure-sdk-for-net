@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ListVpnGatewayNatRulesResult(value, nextLink, additionalBinaryDataProperties);
+            return new ListVpnGatewayNatRulesResult(value ?? new ChangeTrackingList<VpnGatewayNatRuleData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

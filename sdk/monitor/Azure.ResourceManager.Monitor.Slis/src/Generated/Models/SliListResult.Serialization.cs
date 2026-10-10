@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SliListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SliListResult(value ?? new ChangeTrackingList<MonitorSliData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

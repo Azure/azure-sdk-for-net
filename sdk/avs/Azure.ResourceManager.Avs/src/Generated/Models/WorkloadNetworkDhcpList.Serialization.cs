@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Avs.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WorkloadNetworkDhcpList(value, nextLink, additionalBinaryDataProperties);
+            return new WorkloadNetworkDhcpList(value ?? new ChangeTrackingList<WorkloadNetworkDhcpData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

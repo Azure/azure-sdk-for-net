@@ -82,10 +82,17 @@ namespace Azure.ResourceManager.Cdn.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("queryStringBehavior"u8);
             writer.WriteStringValue(QueryStringBehavior.ToString());
-            if (Optional.IsDefined(QueryParameters))
+            if (_queryParametersIsDefined || Optional.IsDefined(QueryParameters))
             {
-                writer.WritePropertyName("queryParameters"u8);
-                writer.WriteStringValue(QueryParameters);
+                if (QueryParameters != null)
+                {
+                    writer.WritePropertyName("queryParameters"u8);
+                    writer.WriteStringValue(QueryParameters);
+                }
+                else
+                {
+                    writer.WriteNull("queryParameters"u8);
+                }
             }
         }
 
@@ -117,6 +124,7 @@ namespace Azure.ResourceManager.Cdn.Models
             DeliveryRuleActionParametersType typeName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             QueryStringBehavior queryStringBehavior = default;
+            bool queryParametersIsDefined = false;
             string queryParameters = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -132,6 +140,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("queryParameters"u8))
                 {
+                    queryParametersIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         queryParameters = null;
@@ -145,7 +154,10 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CacheKeyQueryStringActionProperties(typeName, additionalBinaryDataProperties, queryStringBehavior, queryParameters);
+            return new CacheKeyQueryStringActionProperties(typeName, additionalBinaryDataProperties, queryStringBehavior, queryParameters)
+            {
+                _queryParametersIsDefined = queryParametersIsDefined
+            };
         }
     }
 }

@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WorkspaceManagerAssignmentProperties(targetResourceName, lastJobEndsOn, lastJobProvisioningState, items, additionalBinaryDataProperties);
+            return new WorkspaceManagerAssignmentProperties(targetResourceName, lastJobEndsOn, lastJobProvisioningState, items ?? new ChangeTrackingList<WorkspaceManagerAssignmentItem>(), additionalBinaryDataProperties);
         }
     }
 }

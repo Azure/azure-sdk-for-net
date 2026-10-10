@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VirtualNetworkGatewayConnectionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new VirtualNetworkGatewayConnectionListResult(value ?? new ChangeTrackingList<VirtualNetworkGatewayConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

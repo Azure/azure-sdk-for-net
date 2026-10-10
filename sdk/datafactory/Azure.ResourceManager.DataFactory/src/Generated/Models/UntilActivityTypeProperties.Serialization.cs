@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UntilActivityTypeProperties(expression, timeout, activities, additionalBinaryDataProperties);
+            return new UntilActivityTypeProperties(expression, timeout, activities ?? new ChangeTrackingList<PipelineActivity>(), additionalBinaryDataProperties);
         }
     }
 }

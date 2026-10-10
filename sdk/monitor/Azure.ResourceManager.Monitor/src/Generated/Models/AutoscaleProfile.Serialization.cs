@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new AutoscaleProfile(
                 name,
                 capacity,
-                rules,
+                rules ?? new ChangeTrackingList<AutoscaleRule>(),
                 fixedDate,
                 recurrence,
                 additionalBinaryDataProperties);

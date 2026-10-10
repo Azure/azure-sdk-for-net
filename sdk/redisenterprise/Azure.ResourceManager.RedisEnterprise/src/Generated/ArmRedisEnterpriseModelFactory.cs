@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 startOn,
                 endOn,
                 status,
-                error is null ? default : new ErrorResponse(error, default),
+                error is null ? default : new ErrorResult(error, default),
                 default);
         }
 

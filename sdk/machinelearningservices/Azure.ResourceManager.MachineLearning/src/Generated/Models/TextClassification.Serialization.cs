@@ -83,20 +83,41 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(TextClassification)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(FeaturizationSettings))
+            if (_featurizationSettingsIsDefined || Optional.IsDefined(FeaturizationSettings))
             {
-                writer.WritePropertyName("featurizationSettings"u8);
-                writer.WriteObjectValue(FeaturizationSettings, options);
+                if (FeaturizationSettings != null)
+                {
+                    writer.WritePropertyName("featurizationSettings"u8);
+                    writer.WriteObjectValue(FeaturizationSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("featurizationSettings"u8);
+                }
             }
-            if (Optional.IsDefined(LimitSettings))
+            if (_limitSettingsIsDefined || Optional.IsDefined(LimitSettings))
             {
-                writer.WritePropertyName("limitSettings"u8);
-                writer.WriteObjectValue(LimitSettings, options);
+                if (LimitSettings != null)
+                {
+                    writer.WritePropertyName("limitSettings"u8);
+                    writer.WriteObjectValue(LimitSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("limitSettings"u8);
+                }
             }
-            if (Optional.IsDefined(ValidationData))
+            if (_validationDataIsDefined || Optional.IsDefined(ValidationData))
             {
-                writer.WritePropertyName("validationData"u8);
-                writer.WriteObjectValue(ValidationData, options);
+                if (ValidationData != null)
+                {
+                    writer.WritePropertyName("validationData"u8);
+                    writer.WriteObjectValue(ValidationData, options);
+                }
+                else
+                {
+                    writer.WriteNull("validationData"u8);
+                }
             }
             if (Optional.IsDefined(PrimaryMetric))
             {
@@ -131,12 +152,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             MachineLearningLogVerbosity? logVerbosity = default;
+            bool targetColumnNameIsDefined = false;
             string targetColumnName = default;
             TaskType taskType = default;
             MachineLearningTableJobInput trainingData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool featurizationSettingsIsDefined = false;
             NlpVerticalFeaturizationSettings featurizationSettings = default;
+            bool limitSettingsIsDefined = false;
             NlpVerticalLimitSettings limitSettings = default;
+            bool validationDataIsDefined = false;
             MachineLearningTableJobInput validationData = default;
             ClassificationPrimaryMetric? primaryMetric = default;
             foreach (var prop in element.EnumerateObject())
@@ -152,6 +177,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("targetColumnName"u8))
                 {
+                    targetColumnNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         targetColumnName = null;
@@ -172,6 +198,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("featurizationSettings"u8))
                 {
+                    featurizationSettingsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         featurizationSettings = null;
@@ -182,6 +209,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("limitSettings"u8))
                 {
+                    limitSettingsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         limitSettings = null;
@@ -192,6 +220,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("validationData"u8))
                 {
+                    validationDataIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         validationData = null;
@@ -223,7 +252,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 featurizationSettings,
                 limitSettings,
                 validationData,
-                primaryMetric);
+                primaryMetric)
+            {
+                _targetColumnNameIsDefined = targetColumnNameIsDefined,
+                _featurizationSettingsIsDefined = featurizationSettingsIsDefined,
+                _limitSettingsIsDefined = limitSettingsIsDefined,
+                _validationDataIsDefined = validationDataIsDefined
+            };
         }
     }
 }

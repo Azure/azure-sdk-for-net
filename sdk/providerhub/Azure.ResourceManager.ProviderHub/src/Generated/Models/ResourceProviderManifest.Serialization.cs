@@ -209,10 +209,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("reRegisterSubscriptionMetadata"u8);
                 writer.WriteObjectValue(ReRegisterSubscriptionMetadata, options);
             }
-            if (Optional.IsDefined(IsTenantLinkedNotificationEnabled))
+            if (_isTenantLinkedNotificationEnabledIsDefined || Optional.IsDefined(IsTenantLinkedNotificationEnabled))
             {
-                writer.WritePropertyName("enableTenantLinkedNotification"u8);
-                writer.WriteBooleanValue(IsTenantLinkedNotificationEnabled.Value);
+                if (IsTenantLinkedNotificationEnabled != null)
+                {
+                    writer.WritePropertyName("enableTenantLinkedNotification"u8);
+                    writer.WriteBooleanValue(IsTenantLinkedNotificationEnabled.Value);
+                }
+                else
+                {
+                    writer.WriteNull("enableTenantLinkedNotification"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Notifications))
             {
@@ -303,6 +310,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             BinaryData metadata = default;
             IReadOnlyList<ResourceProviderEndpoint> globalNotificationEndpoints = default;
             ReRegisterSubscriptionMetadata reRegisterSubscriptionMetadata = default;
+            bool isTenantLinkedNotificationEnabledIsDefined = false;
             bool? isTenantLinkedNotificationEnabled = default;
             IReadOnlyList<ProviderNotification> notifications = default;
             IReadOnlyList<FanoutLinkedNotificationRule> linkedNotificationRules = default;
@@ -491,6 +499,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 if (prop.NameEquals("enableTenantLinkedNotification"u8))
                 {
+                    isTenantLinkedNotificationEnabledIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         isTenantLinkedNotificationEnabled = null;
@@ -573,7 +582,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 linkedNotificationRules ?? new ChangeTrackingList<FanoutLinkedNotificationRule>(),
                 resourceProviderAuthorizationRules,
                 tokenAuthConfiguration,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _isTenantLinkedNotificationEnabledIsDefined = isTenantLinkedNotificationEnabledIsDefined
+            };
         }
     }
 }

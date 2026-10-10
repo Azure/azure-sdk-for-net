@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         private ClientDiagnostics _internetGatewaysClientDiagnostics;
         private InternetGateways _internetGatewaysRestClient;
         private ClientDiagnostics _ipCommunitiesClientDiagnostics;
-        private IpCommunities _ipCommunitiesRestClient;
+        private IPCommunities _ipCommunitiesRestClient;
         private ClientDiagnostics _ipExtendedCommunitiesClientDiagnostics;
-        private IpExtendedCommunities _ipExtendedCommunitiesRestClient;
+        private IPExtendedCommunities _ipExtendedCommunitiesRestClient;
         private ClientDiagnostics _ipPrefixesClientDiagnostics;
-        private IpPrefixes _ipPrefixesRestClient;
+        private IPPrefixes _ipPrefixesRestClient;
         private ClientDiagnostics _l2IsolationDomainsClientDiagnostics;
         private L2IsolationDomains _l2IsolationDomainsRestClient;
         private ClientDiagnostics _l3IsolationDomainsClientDiagnostics;
@@ -83,17 +83,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
 
         private InternetGateways InternetGatewaysRestClient => _internetGatewaysRestClient ??= new InternetGateways(InternetGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15");
 
-        private ClientDiagnostics IpCommunitiesClientDiagnostics => _ipCommunitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics IPCommunitiesClientDiagnostics => _ipCommunitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private IpCommunities IpCommunitiesRestClient => _ipCommunitiesRestClient ??= new IpCommunities(IpCommunitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15");
+        private IPCommunities IPCommunitiesRestClient => _ipCommunitiesRestClient ??= new IPCommunities(IPCommunitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15");
 
-        private ClientDiagnostics IpExtendedCommunitiesClientDiagnostics => _ipExtendedCommunitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics IPExtendedCommunitiesClientDiagnostics => _ipExtendedCommunitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private IpExtendedCommunities IpExtendedCommunitiesRestClient => _ipExtendedCommunitiesRestClient ??= new IpExtendedCommunities(IpExtendedCommunitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15");
+        private IPExtendedCommunities IPExtendedCommunitiesRestClient => _ipExtendedCommunitiesRestClient ??= new IPExtendedCommunities(IPExtendedCommunitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15");
 
-        private ClientDiagnostics IpPrefixesClientDiagnostics => _ipPrefixesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics IPPrefixesClientDiagnostics => _ipPrefixesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private IpPrefixes IpPrefixesRestClient => _ipPrefixesRestClient ??= new IpPrefixes(IpPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15");
+        private IPPrefixes IPPrefixesRestClient => _ipPrefixesRestClient ??= new IPPrefixes(IPPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15");
 
         private ClientDiagnostics L2IsolationDomainsClientDiagnostics => _l2IsolationDomainsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFabricIPCommunityData, NetworkFabricIPCommunityResource>(new NetworkFabricIPCommunityDataAsync0CollectionResultOfT(IpCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricIPCommunities"), data => new NetworkFabricIPCommunityResource(Client, data));
+            return new AsyncPageableWrapper<NetworkFabricIPCommunityData, NetworkFabricIPCommunityResource>(new NetworkFabricIPCommunityDataAsync0CollectionResultOfT(IPCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricIPCommunities"), data => new NetworkFabricIPCommunityResource(Client, data));
         }
 
         /// <summary>
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFabricIPCommunityData, NetworkFabricIPCommunityResource>(new NetworkFabricIPCommunityData0CollectionResultOfT(IpCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricIPCommunities"), data => new NetworkFabricIPCommunityResource(Client, data));
+            return new PageableWrapper<NetworkFabricIPCommunityData, NetworkFabricIPCommunityResource>(new NetworkFabricIPCommunityData0CollectionResultOfT(IPCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricIPCommunities"), data => new NetworkFabricIPCommunityResource(Client, data));
         }
 
         /// <summary>
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFabricIPExtendedCommunityData, NetworkFabricIPExtendedCommunityResource>(new NetworkFabricIPExtendedCommunityDataAsync0CollectionResultOfT(IpExtendedCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricIPExtendedCommunities"), data => new NetworkFabricIPExtendedCommunityResource(Client, data));
+            return new AsyncPageableWrapper<NetworkFabricIPExtendedCommunityData, NetworkFabricIPExtendedCommunityResource>(new NetworkFabricIPExtendedCommunityDataAsync0CollectionResultOfT(IPExtendedCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricIPExtendedCommunities"), data => new NetworkFabricIPExtendedCommunityResource(Client, data));
         }
 
         /// <summary>
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFabricIPExtendedCommunityData, NetworkFabricIPExtendedCommunityResource>(new NetworkFabricIPExtendedCommunityData0CollectionResultOfT(IpExtendedCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricIPExtendedCommunities"), data => new NetworkFabricIPExtendedCommunityResource(Client, data));
+            return new PageableWrapper<NetworkFabricIPExtendedCommunityData, NetworkFabricIPExtendedCommunityResource>(new NetworkFabricIPExtendedCommunityData0CollectionResultOfT(IPExtendedCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricIPExtendedCommunities"), data => new NetworkFabricIPExtendedCommunityResource(Client, data));
         }
 
         /// <summary>
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFabricIPPrefixData, NetworkFabricIPPrefixResource>(new NetworkFabricIPPrefixDataAsync0CollectionResultOfT(IpPrefixesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricIPPrefixes"), data => new NetworkFabricIPPrefixResource(Client, data));
+            return new AsyncPageableWrapper<NetworkFabricIPPrefixData, NetworkFabricIPPrefixResource>(new NetworkFabricIPPrefixDataAsync0CollectionResultOfT(IPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricIPPrefixes"), data => new NetworkFabricIPPrefixResource(Client, data));
         }
 
         /// <summary>
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFabricIPPrefixData, NetworkFabricIPPrefixResource>(new NetworkFabricIPPrefixData0CollectionResultOfT(IpPrefixesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricIPPrefixes"), data => new NetworkFabricIPPrefixResource(Client, data));
+            return new PageableWrapper<NetworkFabricIPPrefixData, NetworkFabricIPPrefixResource>(new NetworkFabricIPPrefixData0CollectionResultOfT(IPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricIPPrefixes"), data => new NetworkFabricIPPrefixResource(Client, data));
         }
 
         /// <summary>

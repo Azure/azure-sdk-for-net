@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StorageListResult(value, nextLink, additionalBinaryDataProperties);
+            return new StorageListResult(value ?? new ChangeTrackingList<CommvaultStorageData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

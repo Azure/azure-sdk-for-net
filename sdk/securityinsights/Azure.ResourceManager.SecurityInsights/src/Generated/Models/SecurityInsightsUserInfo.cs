@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private Guid? _objectId;
+        internal bool _objectIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsUserInfo"/>. </summary>
         public SecurityInsightsUserInfo()
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             Email = email;
             Name = name;
-            ObjectId = objectId;
+            _objectId = objectId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -45,6 +47,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The object id of the user. </summary>
         [WirePath("objectId")]
-        public Guid? ObjectId { get; set; }
+        public Guid? ObjectId
+        {
+            get
+            {
+                return _objectId;
+            }
+            set
+            {
+                _objectId = value;
+                _objectIdIsDefined = true;
+            }
+        }
     }
 }

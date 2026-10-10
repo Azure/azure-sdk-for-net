@@ -124,10 +124,17 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
-            if (Optional.IsDefined(PrivateIPAddressPrefixLength))
+            if (_privateIPAddressPrefixLengthIsDefined || Optional.IsDefined(PrivateIPAddressPrefixLength))
             {
-                writer.WritePropertyName("privateIPAddressPrefixLength"u8);
-                writer.WriteNumberValue(PrivateIPAddressPrefixLength.Value);
+                if (PrivateIPAddressPrefixLength != null)
+                {
+                    writer.WritePropertyName("privateIPAddressPrefixLength"u8);
+                    writer.WriteNumberValue(PrivateIPAddressPrefixLength.Value);
+                }
+                else
+                {
+                    writer.WriteNull("privateIPAddressPrefixLength"u8);
+                }
             }
             if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
@@ -222,6 +229,7 @@ namespace Azure.ResourceManager.Network.Models
             IList<BackendAddressPoolData> loadBalancerBackendAddressPools = default;
             IList<InboundNatRuleData> loadBalancerInboundNatRules = default;
             string privateIPAddress = default;
+            bool privateIPAddressPrefixLengthIsDefined = false;
             int? privateIPAddressPrefixLength = default;
             NetworkIPAllocationMethod? privateIPAllocationMethod = default;
             NetworkIPVersion? privateIPAddressVersion = default;
@@ -306,6 +314,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("privateIPAddressPrefixLength"u8))
                 {
+                    privateIPAddressPrefixLengthIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         privateIPAddressPrefixLength = null;
@@ -412,7 +421,10 @@ namespace Azure.ResourceManager.Network.Models
                 applicationSecurityGroups ?? new ChangeTrackingList<ApplicationSecurityGroupData>(),
                 provisioningState,
                 privateLinkConnectionProperties,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _privateIPAddressPrefixLengthIsDefined = privateIPAddressPrefixLengthIsDefined
+            };
         }
     }
 }

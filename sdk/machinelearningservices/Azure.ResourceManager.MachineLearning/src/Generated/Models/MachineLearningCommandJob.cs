@@ -16,6 +16,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Command job definition. </summary>
     public partial class MachineLearningCommandJob : MachineLearningJobProperties
     {
+        private MachineLearningDistributionConfiguration _distribution;
+        internal bool _distributionIsDefined;
+        private BinaryData _parameters;
+        internal bool _parametersIsDefined;
+        private QueueSettings _queueSettings;
+        internal bool _queueSettingsIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningCommandJob"/>. </summary>
         /// <param name="command"> [Required] The command to execute on startup of the job. eg. "python train.py". </param>
         /// <param name="environmentId"> [Required] The ARM resource ID of the Environment specification for the job. </param>
@@ -68,14 +75,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             CodeId = codeId;
             Command = command;
-            Distribution = distribution;
+            _distribution = distribution;
             EnvironmentId = environmentId;
             EnvironmentVariables = environmentVariables;
             Inputs = inputs;
             Limits = limits;
             Outputs = outputs;
-            Parameters = parameters;
-            QueueSettings = queueSettings;
+            _parameters = parameters;
+            _queueSettings = queueSettings;
             Resources = resources;
         }
 
@@ -89,7 +96,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null. </summary>
         [WirePath("distribution")]
-        public MachineLearningDistributionConfiguration Distribution { get; set; }
+        public MachineLearningDistributionConfiguration Distribution
+        {
+            get
+            {
+                return _distribution;
+            }
+            set
+            {
+                _distribution = value;
+                _distributionIsDefined = true;
+            }
+        }
 
         /// <summary> [Required] The ARM resource ID of the Environment specification for the job. </summary>
         [WirePath("environmentId")]
@@ -134,11 +152,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </para>
         /// </summary>
         [WirePath("parameters")]
-        public BinaryData Parameters { get; }
+        public BinaryData Parameters
+        {
+            get
+            {
+                return _parameters;
+            }
+        }
 
         /// <summary> Queue settings for the job. </summary>
         [WirePath("queueSettings")]
-        internal QueueSettings QueueSettings { get; set; }
+        internal QueueSettings QueueSettings
+        {
+            get
+            {
+                return _queueSettings;
+            }
+            set
+            {
+                _queueSettings = value;
+                _queueSettingsIsDefined = true;
+            }
+        }
 
         /// <summary> Compute Resource configuration for the job. </summary>
         [WirePath("resources")]

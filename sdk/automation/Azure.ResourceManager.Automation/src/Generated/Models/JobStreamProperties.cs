@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.Automation.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _summary;
+        internal bool _summaryIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="JobStreamProperties"/>. </summary>
         internal JobStreamProperties()
@@ -38,7 +40,7 @@ namespace Azure.ResourceManager.Automation.Models
             Time = time;
             StreamType = streamType;
             StreamText = streamText;
-            Summary = summary;
+            _summary = summary;
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -56,7 +58,13 @@ namespace Azure.ResourceManager.Automation.Models
         public string StreamText { get; }
 
         /// <summary> Gets or sets the summary. </summary>
-        public string Summary { get; }
+        public string Summary
+        {
+            get
+            {
+                return _summary;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the values of the job stream.

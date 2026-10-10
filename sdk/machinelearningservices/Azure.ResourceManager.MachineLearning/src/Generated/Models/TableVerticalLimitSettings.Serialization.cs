@@ -79,10 +79,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("enableEarlyTermination"u8);
                 writer.WriteBooleanValue(EnableEarlyTermination.Value);
             }
-            if (Optional.IsDefined(ExitScore))
+            if (_exitScoreIsDefined || Optional.IsDefined(ExitScore))
             {
-                writer.WritePropertyName("exitScore"u8);
-                writer.WriteNumberValue(ExitScore.Value);
+                if (ExitScore != null)
+                {
+                    writer.WritePropertyName("exitScore"u8);
+                    writer.WriteNumberValue(ExitScore.Value);
+                }
+                else
+                {
+                    writer.WriteNull("exitScore"u8);
+                }
             }
             if (Optional.IsDefined(MaxConcurrentTrials))
             {
@@ -152,6 +159,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             bool? enableEarlyTermination = default;
+            bool exitScoreIsDefined = false;
             double? exitScore = default;
             int? maxConcurrentTrials = default;
             int? maxCoresPerTrial = default;
@@ -172,6 +180,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("exitScore"u8))
                 {
+                    exitScoreIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         exitScore = null;
@@ -238,7 +247,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 maxTrials,
                 timeout,
                 trialTimeout,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _exitScoreIsDefined = exitScoreIsDefined
+            };
         }
     }
 }

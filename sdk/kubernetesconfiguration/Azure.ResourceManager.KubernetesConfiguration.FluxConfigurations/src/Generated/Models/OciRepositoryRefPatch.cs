@@ -15,6 +15,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _tag;
+        internal bool _tagIsDefined;
+        private string _semver;
+        internal bool _semverIsDefined;
+        private string _digest;
+        internal bool _digestIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="OciRepositoryRefPatch"/>. </summary>
         public OciRepositoryRefPatch()
@@ -28,19 +34,52 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal OciRepositoryRefPatch(string tag, string semver, string digest, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Tag = tag;
-            Semver = semver;
-            Digest = digest;
+            _tag = tag;
+            _semver = semver;
+            _digest = digest;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The OCI repository image tag name to pull. This defaults to 'latest'. </summary>
-        public string Tag { get; set; }
+        public string Tag
+        {
+            get
+            {
+                return _tag;
+            }
+            set
+            {
+                _tag = value;
+                _tagIsDefined = true;
+            }
+        }
 
         /// <summary> The semver range used to match against OCI repository tags. This takes precedence over tag. </summary>
-        public string Semver { get; set; }
+        public string Semver
+        {
+            get
+            {
+                return _semver;
+            }
+            set
+            {
+                _semver = value;
+                _semverIsDefined = true;
+            }
+        }
 
         /// <summary> The image digest to pull from OCI repository, the value should be in the format ‘sha256:’. This takes precedence over semver. </summary>
-        public string Digest { get; set; }
+        public string Digest
+        {
+            get
+            {
+                return _digest;
+            }
+            set
+            {
+                _digest = value;
+                _digestIsDefined = true;
+            }
+        }
     }
 }

@@ -75,10 +75,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningCertificateDatastoreSecrets)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Certificate))
+            if (_certificateIsDefined || Optional.IsDefined(Certificate))
             {
-                writer.WritePropertyName("certificate"u8);
-                writer.WriteStringValue(Certificate);
+                if (Certificate != null)
+                {
+                    writer.WritePropertyName("certificate"u8);
+                    writer.WriteStringValue(Certificate);
+                }
+                else
+                {
+                    writer.WriteNull("certificate"u8);
+                }
             }
         }
 
@@ -109,6 +116,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             SecretsType secretsType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool certificateIsDefined = false;
             string certificate = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -119,6 +127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("certificate"u8))
                 {
+                    certificateIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         certificate = null;
@@ -132,7 +141,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MachineLearningCertificateDatastoreSecrets(secretsType, additionalBinaryDataProperties, certificate);
+            return new MachineLearningCertificateDatastoreSecrets(secretsType, additionalBinaryDataProperties, certificate)
+            {
+                _certificateIsDefined = certificateIsDefined
+            };
         }
     }
 }

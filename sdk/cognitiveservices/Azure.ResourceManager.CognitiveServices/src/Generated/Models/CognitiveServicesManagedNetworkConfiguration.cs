@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _firewallPublicIPAddress;
+        internal bool _firewallPublicIPAddressIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesManagedNetworkConfiguration"/>. </summary>
         public CognitiveServicesManagedNetworkConfiguration()
@@ -41,7 +43,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Status = status;
             FirewallSku = firewallSku;
             ManagedNetworkKind = managedNetworkKind;
-            FirewallPublicIPAddress = firewallPublicIPAddress;
+            _firewallPublicIPAddress = firewallPublicIPAddress;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -72,7 +74,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Public IP address assigned to the Azure Firewall. </summary>
         [WirePath("firewallPublicIpAddress")]
-        public string FirewallPublicIPAddress { get; }
+        public string FirewallPublicIPAddress
+        {
+            get
+            {
+                return _firewallPublicIPAddress;
+            }
+        }
 
         /// <summary> The provisioning state of the managed network settings. </summary>
         [WirePath("provisioningState")]

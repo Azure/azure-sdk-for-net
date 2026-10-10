@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class ConnectToMongoDBTaskProperties : DataMigrationProjectTaskProperties
     {
         /// <summary> Initializes a new instance of <see cref="ConnectToMongoDBTaskProperties"/>. </summary>
-        public ConnectToMongoDBTaskProperties() : base(DataMigrationTaskType.ConnectMongoDb)
+        public ConnectToMongoDBTaskProperties() : base(DataMigrationTaskType.ConnectMongoDB)
         {
             Output = new ChangeTrackingList<DataMigrationMongoDBClusterInfo>();
         }

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _primaryKey;
+        internal bool _primaryKeyIsDefined;
+        private string _secondaryKey;
+        internal bool _secondaryKeyIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointAuthKeys"/>. </summary>
         public MachineLearningEndpointAuthKeys()
@@ -28,17 +32,39 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MachineLearningEndpointAuthKeys(string primaryKey, string secondaryKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            PrimaryKey = primaryKey;
-            SecondaryKey = secondaryKey;
+            _primaryKey = primaryKey;
+            _secondaryKey = secondaryKey;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The primary key. </summary>
         [WirePath("primaryKey")]
-        public string PrimaryKey { get; set; }
+        public string PrimaryKey
+        {
+            get
+            {
+                return _primaryKey;
+            }
+            set
+            {
+                _primaryKey = value;
+                _primaryKeyIsDefined = true;
+            }
+        }
 
         /// <summary> The secondary key. </summary>
         [WirePath("secondaryKey")]
-        public string SecondaryKey { get; set; }
+        public string SecondaryKey
+        {
+            get
+            {
+                return _secondaryKey;
+            }
+            set
+            {
+                _secondaryKey = value;
+                _secondaryKeyIsDefined = true;
+            }
+        }
     }
 }

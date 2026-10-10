@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RouteListResult(value, nextLink, additionalBinaryDataProperties);
+            return new RouteListResult(value ?? new ChangeTrackingList<RouteData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

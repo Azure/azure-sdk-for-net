@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Sql.Models
                 readOnlyEndpoint,
                 replicationRole,
                 replicationState,
-                partnerServers,
+                partnerServers ?? new ChangeTrackingList<PartnerServerInfo>(),
                 failoverDatabases ?? new ChangeTrackingList<ResourceIdentifier>(),
                 secondaryType,
                 additionalBinaryDataProperties);

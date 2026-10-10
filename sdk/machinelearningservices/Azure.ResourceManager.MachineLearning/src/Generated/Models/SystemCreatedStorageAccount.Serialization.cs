@@ -79,25 +79,46 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("allowBlobPublicAccess"u8);
                 writer.WriteBooleanValue(AllowBlobPublicAccess.Value);
             }
-            if (Optional.IsDefined(ArmResourceIdentifier))
+            if (_armResourceIdentifierIsDefined || Optional.IsDefined(ArmResourceIdentifier))
             {
-                writer.WritePropertyName("armResourceId"u8);
-                writer.WriteObjectValue(ArmResourceIdentifier, options);
+                if (ArmResourceIdentifier != null)
+                {
+                    writer.WritePropertyName("armResourceId"u8);
+                    writer.WriteObjectValue(ArmResourceIdentifier, options);
+                }
+                else
+                {
+                    writer.WriteNull("armResourceId"u8);
+                }
             }
             if (Optional.IsDefined(StorageAccountHnsEnabled))
             {
                 writer.WritePropertyName("storageAccountHnsEnabled"u8);
                 writer.WriteBooleanValue(StorageAccountHnsEnabled.Value);
             }
-            if (Optional.IsDefined(StorageAccountName))
+            if (_storageAccountNameIsDefined || Optional.IsDefined(StorageAccountName))
             {
-                writer.WritePropertyName("storageAccountName"u8);
-                writer.WriteStringValue(StorageAccountName);
+                if (StorageAccountName != null)
+                {
+                    writer.WritePropertyName("storageAccountName"u8);
+                    writer.WriteStringValue(StorageAccountName);
+                }
+                else
+                {
+                    writer.WriteNull("storageAccountName"u8);
+                }
             }
-            if (Optional.IsDefined(StorageAccountType))
+            if (_storageAccountTypeIsDefined || Optional.IsDefined(StorageAccountType))
             {
-                writer.WritePropertyName("storageAccountType"u8);
-                writer.WriteStringValue(StorageAccountType);
+                if (StorageAccountType != null)
+                {
+                    writer.WritePropertyName("storageAccountType"u8);
+                    writer.WriteStringValue(StorageAccountType);
+                }
+                else
+                {
+                    writer.WriteNull("storageAccountType"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -142,9 +163,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             bool? allowBlobPublicAccess = default;
+            bool armResourceIdentifierIsDefined = false;
             ArmResourceId armResourceIdentifier = default;
             bool? storageAccountHnsEnabled = default;
+            bool storageAccountNameIsDefined = false;
             string storageAccountName = default;
+            bool storageAccountTypeIsDefined = false;
             string storageAccountType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -160,6 +184,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("armResourceId"u8))
                 {
+                    armResourceIdentifierIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         armResourceIdentifier = null;
@@ -179,6 +204,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("storageAccountName"u8))
                 {
+                    storageAccountNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         storageAccountName = null;
@@ -189,6 +215,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("storageAccountType"u8))
                 {
+                    storageAccountTypeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         storageAccountType = null;
@@ -208,7 +235,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 storageAccountHnsEnabled,
                 storageAccountName,
                 storageAccountType,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _armResourceIdentifierIsDefined = armResourceIdentifierIsDefined,
+                _storageAccountNameIsDefined = storageAccountNameIsDefined,
+                _storageAccountTypeIsDefined = storageAccountTypeIsDefined
+            };
         }
     }
 }

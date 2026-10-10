@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Online endpoint configuration. </summary>
     public partial class MachineLearningOnlineEndpointProperties : MachineLearningEndpointProperties
     {
+        private string _compute;
+        internal bool _computeIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineEndpointProperties"/>. </summary>
         /// <param name="authMode"> [Required] The authentication method for invoking the endpoint (data plane operation). Use 'Key' for key-based authentication. Use 'AMLToken' for Azure Machine Learning token-based authentication. Use 'AADToken' for Microsoft Entra token-based authentication. </param>
         public MachineLearningOnlineEndpointProperties(MachineLearningEndpointAuthMode authMode) : base(authMode)
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="traffic"> Percentage of traffic from endpoint to divert to each deployment. Traffic values need to sum to 100. </param>
         internal MachineLearningOnlineEndpointProperties(MachineLearningEndpointAuthMode authMode, string description, MachineLearningEndpointAuthKeys keys, IDictionary<string, string> properties, Uri scoringUri, Uri swaggerUri, IDictionary<string, BinaryData> additionalBinaryDataProperties, string compute, IDictionary<string, int> mirrorTraffic, MachineLearningEndpointProvisioningState? provisioningState, MachineLearningPublicNetworkAccessType? publicNetworkAccess, IDictionary<string, int> traffic) : base(authMode, description, keys, properties, scoringUri, swaggerUri, additionalBinaryDataProperties)
         {
-            Compute = compute;
+            _compute = compute;
             MirrorTraffic = mirrorTraffic;
             ProvisioningState = provisioningState;
             PublicNetworkAccess = publicNetworkAccess;
@@ -55,7 +58,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// optional
         /// </summary>
         [WirePath("compute")]
-        public string Compute { get; set; }
+        public string Compute
+        {
+            get
+            {
+                return _compute;
+            }
+            set
+            {
+                _compute = value;
+                _computeIsDefined = true;
+            }
+        }
 
         /// <summary> Percentage of traffic to be mirrored to each deployment without using returned scoring. Traffic values need to sum to utmost 50. </summary>
         [WirePath("mirrorTraffic")]

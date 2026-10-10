@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ScopingAnswer(questionId, answers, additionalBinaryDataProperties);
+            return new ScopingAnswer(questionId, answers ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

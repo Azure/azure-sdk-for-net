@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Datastore Service Principal secrets. </summary>
     public partial class MachineLearningServicePrincipalDatastoreSecrets : MachineLearningDatastoreSecrets
     {
+        private string _clientSecret;
+        internal bool _clientSecretIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningServicePrincipalDatastoreSecrets"/>. </summary>
         public MachineLearningServicePrincipalDatastoreSecrets() : base(SecretsType.ServicePrincipal)
         {
@@ -25,11 +28,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="clientSecret"> Service principal secret. </param>
         internal MachineLearningServicePrincipalDatastoreSecrets(SecretsType secretsType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string clientSecret) : base(secretsType, additionalBinaryDataProperties)
         {
-            ClientSecret = clientSecret;
+            _clientSecret = clientSecret;
         }
 
         /// <summary> Service principal secret. </summary>
         [WirePath("clientSecret")]
-        public string ClientSecret { get; set; }
+        public string ClientSecret
+        {
+            get
+            {
+                return _clientSecret;
+            }
+            set
+            {
+                _clientSecret = value;
+                _clientSecretIsDefined = true;
+            }
+        }
     }
 }

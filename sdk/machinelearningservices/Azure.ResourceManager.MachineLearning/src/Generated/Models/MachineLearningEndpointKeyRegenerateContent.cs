@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _keyValue;
+        internal bool _keyValueIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointKeyRegenerateContent"/>. </summary>
         /// <param name="keyType"> [Required] Specification for which type of key to generate. Primary or Secondary. </param>
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal MachineLearningEndpointKeyRegenerateContent(MachineLearningKeyType keyType, string keyValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyType = keyType;
-            KeyValue = keyValue;
+            _keyValue = keyValue;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,6 +43,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The value the key is set to. </summary>
         [WirePath("keyValue")]
-        public string KeyValue { get; set; }
+        public string KeyValue
+        {
+            get
+            {
+                return _keyValue;
+            }
+            set
+            {
+                _keyValue = value;
+                _keyValueIsDefined = true;
+            }
+        }
     }
 }

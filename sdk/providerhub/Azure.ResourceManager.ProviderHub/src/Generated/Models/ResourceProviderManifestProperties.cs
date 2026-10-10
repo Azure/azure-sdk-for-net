@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private bool? _enableTenantLinkedNotification;
+        internal bool _enableTenantLinkedNotificationIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ResourceProviderManifestProperties"/>. </summary>
         public ResourceProviderManifestProperties()
@@ -85,7 +87,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Metadata = metadata;
             TemplateDeploymentOptions = templateDeploymentOptions;
             GlobalNotificationEndpoints = globalNotificationEndpoints;
-            EnableTenantLinkedNotification = enableTenantLinkedNotification;
+            _enableTenantLinkedNotification = enableTenantLinkedNotification;
             Notifications = notifications;
             LinkedNotificationRules = linkedNotificationRules;
             ResourceProviderAuthorizationRules = resourceProviderAuthorizationRules;
@@ -177,7 +179,18 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public IList<ResourceProviderEndpoint> GlobalNotificationEndpoints { get; }
 
         /// <summary> The enable tenant linked notification. </summary>
-        public bool? EnableTenantLinkedNotification { get; set; }
+        public bool? EnableTenantLinkedNotification
+        {
+            get
+            {
+                return _enableTenantLinkedNotification;
+            }
+            set
+            {
+                _enableTenantLinkedNotification = value;
+                _enableTenantLinkedNotificationIsDefined = true;
+            }
+        }
 
         /// <summary> The notifications. </summary>
         public IList<ProviderNotification> Notifications { get; }

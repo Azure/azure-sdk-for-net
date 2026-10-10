@@ -96,10 +96,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("successStatusJsonPath"u8);
                 writer.WriteStringValue(SuccessStatusJsonPath);
             }
-            if (Optional.IsDefined(SuccessStatusValue))
+            if (_successStatusValueIsDefined || Optional.IsDefined(SuccessStatusValue))
             {
-                writer.WritePropertyName("successStatusValue"u8);
-                writer.WriteStringValue(SuccessStatusValue);
+                if (SuccessStatusValue != null)
+                {
+                    writer.WritePropertyName("successStatusValue"u8);
+                    writer.WriteStringValue(SuccessStatusValue);
+                }
+                else
+                {
+                    writer.WriteNull("successStatusValue"u8);
+                }
             }
             if (Optional.IsDefined(IsGzipCompressed))
             {
@@ -121,25 +128,53 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("csvDelimiter"u8);
                 writer.WriteStringValue(CsvDelimiter);
             }
-            if (Optional.IsDefined(HasCsvBoundary))
+            if (_hasCsvBoundaryIsDefined || Optional.IsDefined(HasCsvBoundary))
             {
-                writer.WritePropertyName("hasCsvBoundary"u8);
-                writer.WriteBooleanValue(HasCsvBoundary.Value);
+                if (HasCsvBoundary != null)
+                {
+                    writer.WritePropertyName("hasCsvBoundary"u8);
+                    writer.WriteBooleanValue(HasCsvBoundary.Value);
+                }
+                else
+                {
+                    writer.WriteNull("hasCsvBoundary"u8);
+                }
             }
-            if (Optional.IsDefined(HasCsvHeader))
+            if (_hasCsvHeaderIsDefined || Optional.IsDefined(HasCsvHeader))
             {
-                writer.WritePropertyName("hasCsvHeader"u8);
-                writer.WriteBooleanValue(HasCsvHeader.Value);
+                if (HasCsvHeader != null)
+                {
+                    writer.WritePropertyName("hasCsvHeader"u8);
+                    writer.WriteBooleanValue(HasCsvHeader.Value);
+                }
+                else
+                {
+                    writer.WriteNull("hasCsvHeader"u8);
+                }
             }
-            if (Optional.IsDefined(IsConvertChildPropertiesToArray))
+            if (_isConvertChildPropertiesToArrayIsDefined || Optional.IsDefined(IsConvertChildPropertiesToArray))
             {
-                writer.WritePropertyName("convertChildPropertiesToArray"u8);
-                writer.WriteBooleanValue(IsConvertChildPropertiesToArray.Value);
+                if (IsConvertChildPropertiesToArray != null)
+                {
+                    writer.WritePropertyName("convertChildPropertiesToArray"u8);
+                    writer.WriteBooleanValue(IsConvertChildPropertiesToArray.Value);
+                }
+                else
+                {
+                    writer.WriteNull("convertChildPropertiesToArray"u8);
+                }
             }
-            if (Optional.IsDefined(CsvEscape))
+            if (_csvEscapeIsDefined || Optional.IsDefined(CsvEscape))
             {
-                writer.WritePropertyName("csvEscape"u8);
-                writer.WriteStringValue(CsvEscape);
+                if (CsvEscape != null)
+                {
+                    writer.WritePropertyName("csvEscape"u8);
+                    writer.WriteStringValue(CsvEscape);
+                }
+                else
+                {
+                    writer.WriteNull("csvEscape"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -185,14 +220,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             IList<string> eventsJsonPaths = default;
             string successStatusJsonPath = default;
+            bool successStatusValueIsDefined = false;
             string successStatusValue = default;
             bool? isGzipCompressed = default;
             string compressionAlgo = default;
             string format = default;
             string csvDelimiter = default;
+            bool hasCsvBoundaryIsDefined = false;
             bool? hasCsvBoundary = default;
+            bool hasCsvHeaderIsDefined = false;
             bool? hasCsvHeader = default;
+            bool isConvertChildPropertiesToArrayIsDefined = false;
             bool? isConvertChildPropertiesToArray = default;
+            bool csvEscapeIsDefined = false;
             string csvEscape = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -221,6 +261,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (prop.NameEquals("successStatusValue"u8))
                 {
+                    successStatusValueIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         successStatusValue = null;
@@ -255,6 +296,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (prop.NameEquals("hasCsvBoundary"u8))
                 {
+                    hasCsvBoundaryIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         hasCsvBoundary = null;
@@ -265,6 +307,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (prop.NameEquals("hasCsvHeader"u8))
                 {
+                    hasCsvHeaderIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         hasCsvHeader = null;
@@ -275,6 +318,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (prop.NameEquals("convertChildPropertiesToArray"u8))
                 {
+                    isConvertChildPropertiesToArrayIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         isConvertChildPropertiesToArray = null;
@@ -285,6 +329,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (prop.NameEquals("csvEscape"u8))
                 {
+                    csvEscapeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         csvEscape = null;
@@ -299,7 +344,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             return new CcpResponseConfig(
-                eventsJsonPaths,
+                eventsJsonPaths ?? new ChangeTrackingList<string>(),
                 successStatusJsonPath,
                 successStatusValue,
                 isGzipCompressed,
@@ -310,7 +355,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 hasCsvHeader,
                 isConvertChildPropertiesToArray,
                 csvEscape,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _successStatusValueIsDefined = successStatusValueIsDefined,
+                _hasCsvBoundaryIsDefined = hasCsvBoundaryIsDefined,
+                _hasCsvHeaderIsDefined = hasCsvHeaderIsDefined,
+                _isConvertChildPropertiesToArrayIsDefined = isConvertChildPropertiesToArrayIsDefined,
+                _csvEscapeIsDefined = csvEscapeIsDefined
+            };
         }
     }
 }

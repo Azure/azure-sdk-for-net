@@ -226,10 +226,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             return new MatchCondition(
-                matchVariables,
+                matchVariables ?? new ChangeTrackingList<MatchVariable>(),
                 @operator,
                 negationConditon,
-                matchValues,
+                matchValues ?? new ChangeTrackingList<string>(),
                 transforms ?? new ChangeTrackingList<WebApplicationFirewallTransform>(),
                 additionalBinaryDataProperties);
         }

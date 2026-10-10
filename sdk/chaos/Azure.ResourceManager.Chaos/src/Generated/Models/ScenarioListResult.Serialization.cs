@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ScenarioListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ScenarioListResult(value ?? new ChangeTrackingList<ChaosScenarioData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Sphere.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GenerateCapabilityImageContent(capabilities, additionalBinaryDataProperties);
+            return new GenerateCapabilityImageContent(capabilities ?? new ChangeTrackingList<SphereCapabilityType>(), additionalBinaryDataProperties);
         }
     }
 }

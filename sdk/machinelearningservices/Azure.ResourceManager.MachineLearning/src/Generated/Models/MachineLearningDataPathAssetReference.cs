@@ -14,6 +14,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Reference to an asset via its path in a datastore. </summary>
     public partial class MachineLearningDataPathAssetReference : MachineLearningAssetReferenceBase
     {
+        private string _datastoreId;
+        internal bool _datastoreIdIsDefined;
+        private string _path;
+        internal bool _pathIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningDataPathAssetReference"/>. </summary>
         public MachineLearningDataPathAssetReference() : base(ReferenceType.DataPath)
         {
@@ -26,16 +31,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="path"> The path of the file/directory in the datastore. </param>
         internal MachineLearningDataPathAssetReference(ReferenceType referenceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string datastoreId, string path) : base(referenceType, additionalBinaryDataProperties)
         {
-            DatastoreId = datastoreId;
-            Path = path;
+            _datastoreId = datastoreId;
+            _path = path;
         }
 
         /// <summary> ARM resource ID of the datastore where the asset is located. </summary>
         [WirePath("datastoreId")]
-        public string DatastoreId { get; set; }
+        public string DatastoreId
+        {
+            get
+            {
+                return _datastoreId;
+            }
+            set
+            {
+                _datastoreId = value;
+                _datastoreIdIsDefined = true;
+            }
+        }
 
         /// <summary> The path of the file/directory in the datastore. </summary>
         [WirePath("path")]
-        public string Path { get; set; }
+        public string Path
+        {
+            get
+            {
+                return _path;
+            }
+            set
+            {
+                _path = value;
+                _pathIsDefined = true;
+            }
+        }
     }
 }

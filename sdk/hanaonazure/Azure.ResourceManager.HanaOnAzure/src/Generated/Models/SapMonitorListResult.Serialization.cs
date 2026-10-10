@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SapMonitorListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SapMonitorListResult(value ?? new ChangeTrackingList<SapMonitorData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

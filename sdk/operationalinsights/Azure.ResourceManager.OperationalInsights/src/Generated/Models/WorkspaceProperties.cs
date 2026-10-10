@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private int? _retentionInDays;
+        internal bool _retentionInDaysIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceProperties"/>. </summary>
         public WorkspaceProperties()
@@ -46,7 +48,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             ProvisioningState = provisioningState;
             CustomerId = customerId;
             Sku = sku;
-            RetentionInDays = retentionInDays;
+            _retentionInDays = retentionInDays;
             WorkspaceCapping = workspaceCapping;
             CreatedOn = createdOn;
             ModifiedOn = modifiedOn;
@@ -75,7 +77,18 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> The workspace data retention in days. Allowed values are per pricing plan. See pricing tiers documentation for details. </summary>
         [WirePath("retentionInDays")]
-        public int? RetentionInDays { get; set; }
+        public int? RetentionInDays
+        {
+            get
+            {
+                return _retentionInDays;
+            }
+            set
+            {
+                _retentionInDays = value;
+                _retentionInDaysIsDefined = true;
+            }
+        }
 
         /// <summary> The daily volume cap for ingestion. </summary>
         [WirePath("workspaceCapping")]

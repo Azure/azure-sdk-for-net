@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MajorVersionUpgradePrecheckResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new MajorVersionUpgradePrecheckResourceListResult(value ?? new ChangeTrackingList<MajorVersionUpgradePrecheckData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private CognitiveServicesDeploymentServiceTier? _serviceTier;
+        internal bool _serviceTierIsDefined;
+        private CognitiveServicesDeploymentState? _deploymentState;
+        internal bool _deploymentStateIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountDeploymentProperties"/>. </summary>
         public CognitiveServicesAccountDeploymentProperties()
@@ -57,8 +61,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CapacitySettings = capacitySettings;
             ParentDeploymentName = parentDeploymentName;
             SpilloverDeploymentName = spilloverDeploymentName;
-            ServiceTier = serviceTier;
-            DeploymentState = deploymentState;
+            _serviceTier = serviceTier;
+            _deploymentState = deploymentState;
             Routing = routing;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -117,11 +121,33 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> The service tier for the deployment. Determines the pricing and performance level for request processing. Use 'Default' for standard pricing or 'Priority' for higher-priority processing with premium pricing. Note: Pause operations are only supported on Standard, DataZoneStandard, and GlobalStandard SKUs. </summary>
         [WirePath("serviceTier")]
-        public CognitiveServicesDeploymentServiceTier? ServiceTier { get; set; }
+        public CognitiveServicesDeploymentServiceTier? ServiceTier
+        {
+            get
+            {
+                return _serviceTier;
+            }
+            set
+            {
+                _serviceTier = value;
+                _serviceTierIsDefined = true;
+            }
+        }
 
         /// <summary> The state of the deployment. Controls whether the deployment is accepting inference requests. Use 'Running' for active deployments that process requests, or 'Paused' to temporarily stop inference while preserving the deployment configuration. </summary>
         [WirePath("deploymentState")]
-        public CognitiveServicesDeploymentState? DeploymentState { get; set; }
+        public CognitiveServicesDeploymentState? DeploymentState
+        {
+            get
+            {
+                return _deploymentState;
+            }
+            set
+            {
+                _deploymentState = value;
+                _deploymentStateIsDefined = true;
+            }
+        }
 
         /// <summary> Routing configuration for the model-router deployment. This property is only applicable when the deployed model is 'model-router' version 2025-11-18 or later. Allows you to select the models subset for routing and the routing mode (balanced, quality, cost) for routing across all supported models or the model subset. </summary>
         [WirePath("routing")]

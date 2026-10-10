@@ -84,10 +84,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("interval"u8);
                 writer.WriteNumberValue(Interval.Value);
             }
-            if (Optional.IsDefined(StartTime))
+            if (_startTimeIsDefined || Optional.IsDefined(StartTime))
             {
-                writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartTime);
+                if (StartTime != null)
+                {
+                    writer.WritePropertyName("startTime"u8);
+                    writer.WriteStringValue(StartTime);
+                }
+                else
+                {
+                    writer.WriteNull("startTime"u8);
+                }
             }
             if (Optional.IsDefined(TimeZone))
             {
@@ -143,6 +150,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             MachineLearningComputeRecurrenceFrequency? frequency = default;
             int? interval = default;
+            bool startTimeIsDefined = false;
             string startTime = default;
             string timeZone = default;
             MachineLearningComputeRecurrenceSchedule schedule = default;
@@ -169,6 +177,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
+                    startTimeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         startTime = null;
@@ -202,7 +211,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 startTime,
                 timeZone,
                 schedule,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _startTimeIsDefined = startTimeIsDefined
+            };
         }
     }
 }

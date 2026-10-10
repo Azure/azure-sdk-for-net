@@ -84,10 +84,17 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("startTimeOffsetMinutes"u8);
                 writer.WriteNumberValue(StartInMinutes.Value);
             }
-            if (Optional.IsDefined(ExpiresOn))
+            if (_expiresOnIsDefined || Optional.IsDefined(ExpiresOn))
             {
-                writer.WritePropertyName("expiryTime"u8);
-                writer.WriteStringValue(ExpiresOn.Value, "O");
+                if (ExpiresOn != null)
+                {
+                    writer.WritePropertyName("expiryTime"u8);
+                    writer.WriteStringValue(ExpiresOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("expiryTime"u8);
+                }
             }
             if (Optional.IsDefined(ExpireInMinutes))
             {
@@ -99,10 +106,17 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(NextRunOn))
+            if (_nextRunOnIsDefined || Optional.IsDefined(NextRunOn))
             {
-                writer.WritePropertyName("nextRun"u8);
-                writer.WriteStringValue(NextRunOn.Value, "O");
+                if (NextRunOn != null)
+                {
+                    writer.WritePropertyName("nextRun"u8);
+                    writer.WriteStringValue(NextRunOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("nextRun"u8);
+                }
             }
             if (Optional.IsDefined(NextRunInMinutes))
             {
@@ -195,9 +209,11 @@ namespace Azure.ResourceManager.Automation.Models
             }
             DateTimeOffset? startsOn = default;
             double? startInMinutes = default;
+            bool expiresOnIsDefined = false;
             DateTimeOffset? expiresOn = default;
             double? expireInMinutes = default;
             bool? isEnabled = default;
+            bool nextRunOnIsDefined = false;
             DateTimeOffset? nextRunOn = default;
             double? nextRunInMinutes = default;
             BinaryData interval = default;
@@ -230,6 +246,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("expiryTime"u8))
                 {
+                    expiresOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         expiresOn = null;
@@ -258,6 +275,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("nextRun"u8))
                 {
+                    nextRunOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         nextRunOn = null;
@@ -350,7 +368,11 @@ namespace Azure.ResourceManager.Automation.Models
                 createdOn,
                 lastModifiedOn,
                 description,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _expiresOnIsDefined = expiresOnIsDefined,
+                _nextRunOnIsDefined = nextRunOnIsDefined
+            };
         }
     }
 }

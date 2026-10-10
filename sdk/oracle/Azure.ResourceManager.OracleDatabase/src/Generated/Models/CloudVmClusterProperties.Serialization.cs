@@ -951,7 +951,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 cloudExadataInfrastructureId,
                 isSparseDiskgroupEnabled,
                 systemVersion,
-                sshPublicKeys,
+                sshPublicKeys ?? new ChangeTrackingList<string>(),
                 licenseModel,
                 diskRedundancy,
                 scanIPIds ?? new ChangeTrackingList<string>(),

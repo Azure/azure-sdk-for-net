@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Rolling input data definition. </summary>
     public partial class RollingInputData : MonitoringInputDataBase
     {
+        private string _preprocessingComponentId;
+        internal bool _preprocessingComponentIdIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="RollingInputData"/>. </summary>
         /// <param name="columns"> Mapping of column names to special uses. </param>
         /// <param name="dataContext"> The context metadata of the data source. </param>
@@ -26,14 +29,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="windowSize"> [Required] The size of the rolling data window. </param>
         internal RollingInputData(IDictionary<string, string> columns, string dataContext, MonitoringInputDataType inputDataType, JobInputType jobInputType, Uri uri, IDictionary<string, BinaryData> additionalBinaryDataProperties, string preprocessingComponentId, TimeSpan windowOffset, TimeSpan windowSize) : base(columns, dataContext, inputDataType, jobInputType, uri, additionalBinaryDataProperties)
         {
-            PreprocessingComponentId = preprocessingComponentId;
+            _preprocessingComponentId = preprocessingComponentId;
             WindowOffset = windowOffset;
             WindowSize = windowSize;
         }
 
         /// <summary> Reference to the component asset used to preprocess the data. </summary>
         [WirePath("preprocessingComponentId")]
-        public string PreprocessingComponentId { get; set; }
+        public string PreprocessingComponentId
+        {
+            get
+            {
+                return _preprocessingComponentId;
+            }
+            set
+            {
+                _preprocessingComponentId = value;
+                _preprocessingComponentIdIsDefined = true;
+            }
+        }
 
         /// <summary> [Required] The time offset between the end of the data window and the monitor's current run time. </summary>
         [WirePath("windowOffset")]

@@ -77,38 +77,66 @@ namespace Azure.ResourceManager.MachineLearning.Models
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(Entities))
             {
-                writer.WritePropertyName("entities"u8);
-                writer.WriteStartArray();
-                foreach (string item in Entities)
+                if (Entities != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("entities"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in Entities)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("entities"u8);
+                }
             }
-            if (Optional.IsDefined(MaterializationSettings))
+            if (_materializationSettingsIsDefined || Optional.IsDefined(MaterializationSettings))
             {
-                writer.WritePropertyName("materializationSettings"u8);
-                writer.WriteObjectValue(MaterializationSettings, options);
+                if (MaterializationSettings != null)
+                {
+                    writer.WritePropertyName("materializationSettings"u8);
+                    writer.WriteObjectValue(MaterializationSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("materializationSettings"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Specification))
+            if (_specificationIsDefined || Optional.IsDefined(Specification))
             {
-                writer.WritePropertyName("specification"u8);
-                writer.WriteObjectValue(Specification, options);
+                if (Specification != null)
+                {
+                    writer.WritePropertyName("specification"u8);
+                    writer.WriteObjectValue(Specification, options);
+                }
+                else
+                {
+                    writer.WriteNull("specification"u8);
+                }
             }
-            if (Optional.IsDefined(Stage))
+            if (_stageIsDefined || Optional.IsDefined(Stage))
             {
-                writer.WritePropertyName("stage"u8);
-                writer.WriteStringValue(Stage);
+                if (Stage != null)
+                {
+                    writer.WritePropertyName("stage"u8);
+                    writer.WriteStringValue(Stage);
+                }
+                else
+                {
+                    writer.WriteNull("stage"u8);
+                }
             }
         }
 
@@ -137,21 +165,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool descriptionIsDefined = false;
             string description = default;
-            IDictionary<string, string> properties = default;
-            IDictionary<string, string> tags = default;
+            IDictionary<string, string> properties = new ChangeTrackingDictionary<string, string>();
+            IDictionary<string, string> tags = new ChangeTrackingDictionary<string, string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             bool? isAnonymous = default;
             bool? isArchived = default;
-            IList<string> entities = default;
+            IList<string> entities = new ChangeTrackingList<string>();
+            bool materializationSettingsIsDefined = false;
             MaterializationSettings materializationSettings = default;
             RegistryAssetProvisioningState? provisioningState = default;
+            bool specificationIsDefined = false;
             FeaturesetSpecification specification = default;
+            bool stageIsDefined = false;
             string stage = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -164,6 +197,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -185,6 +219,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        tags = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -224,6 +259,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        entities = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -243,6 +279,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("materializationSettings"u8))
                 {
+                    materializationSettingsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         materializationSettings = null;
@@ -262,6 +299,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("specification"u8))
                 {
+                    specificationIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         specification = null;
@@ -272,6 +310,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("stage"u8))
                 {
+                    stageIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         stage = null;
@@ -287,16 +326,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             return new MachineLearningFeatureSetVersionProperties(
                 description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                properties,
+                tags,
                 additionalBinaryDataProperties,
                 isAnonymous,
                 isArchived,
-                entities ?? new ChangeTrackingList<string>(),
+                entities,
                 materializationSettings,
                 provisioningState,
                 specification,
-                stage);
+                stage)
+            {
+                _descriptionIsDefined = descriptionIsDefined,
+                _materializationSettingsIsDefined = materializationSettingsIsDefined,
+                _specificationIsDefined = specificationIsDefined,
+                _stageIsDefined = stageIsDefined
+            };
         }
     }
 }

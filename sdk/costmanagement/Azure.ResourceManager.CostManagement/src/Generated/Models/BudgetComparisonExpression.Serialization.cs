@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BudgetComparisonExpression(name, @operator, values, additionalBinaryDataProperties);
+            return new BudgetComparisonExpression(name, @operator, values ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

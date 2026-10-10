@@ -15,10 +15,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(AgentPoolListResult))]
-    [ModelReaderWriterBuildable(typeof(AgentPoolProperties))]
-    [ModelReaderWriterBuildable(typeof(AgentPoolPropertiesUpdateParameters))]
-    [ModelReaderWriterBuildable(typeof(AgentProperties))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryAgentPoolData))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryAgentPoolPatch))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryAgentPoolQueueStatus))]
@@ -75,18 +71,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
     [ModelReaderWriterBuildable(typeof(ContainerRegistryTaskTriggerProperties))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryTaskTriggerUpdateContent))]
     [ModelReaderWriterBuildable(typeof(ContainerRegistryTaskUserIdentityProperties))]
-    [ModelReaderWriterBuildable(typeof(RunListResult))]
-    [ModelReaderWriterBuildable(typeof(RunProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(TaskListResult))]
-    [ModelReaderWriterBuildable(typeof(TaskProperties))]
-    [ModelReaderWriterBuildable(typeof(TaskPropertiesUpdateParameters))]
-    [ModelReaderWriterBuildable(typeof(TaskRunListResult))]
-    [ModelReaderWriterBuildable(typeof(TaskRunProperties))]
-    [ModelReaderWriterBuildable(typeof(TaskRunPropertiesUpdateParameters))]
-    [ModelReaderWriterBuildable(typeof(UnknownContainerRegistryRunContent))]
-    [ModelReaderWriterBuildable(typeof(UnknownContainerRegistryTaskStepProperties))]
-    [ModelReaderWriterBuildable(typeof(UnknownContainerRegistryTaskStepUpdateContent))]
     public partial class AzureResourceManagerContainerRegistryTasksContext : ModelReaderWriterContext
     {
     }

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Consumption
         /// <returns> The pages of ConsumptionEventSummary0CollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ConsumptionEventSummary>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

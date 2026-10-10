@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new IPCommunityProperties(
                 annotation,
                 networkFabricId,
-                ipCommunityRules,
+                ipCommunityRules ?? new ChangeTrackingList<IPCommunityRule>(),
                 lastOperation,
                 configurationState,
                 provisioningState,

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FlexComponentListResult(value, nextLink, additionalBinaryDataProperties);
+            return new FlexComponentListResult(value ?? new ChangeTrackingList<OracleFlexComponentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

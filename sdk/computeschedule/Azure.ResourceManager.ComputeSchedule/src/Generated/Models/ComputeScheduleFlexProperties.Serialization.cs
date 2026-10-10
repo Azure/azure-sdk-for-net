@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ComputeScheduleFlexProperties(vmSizeProfiles, osType, priorityProfile, zoneAllocationPolicy, additionalBinaryDataProperties);
+            return new ComputeScheduleFlexProperties(vmSizeProfiles ?? new ChangeTrackingList<ComputeScheduleVmSizeProfile>(), osType, priorityProfile, zoneAllocationPolicy, additionalBinaryDataProperties);
         }
     }
 }

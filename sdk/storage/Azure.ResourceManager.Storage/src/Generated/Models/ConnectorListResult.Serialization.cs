@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ConnectorListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ConnectorListResult(value ?? new ChangeTrackingList<StorageConnectorData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

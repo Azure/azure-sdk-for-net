@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DateTimeOffset? _snapshotCreatedOn;
+        internal bool _snapshotCreatedOnIsDefined;
+        private DateTimeOffset? _completionOn;
+        internal bool _completionOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="BackupProperties"/>. </summary>
         /// <param name="volumeResourceId"> ResourceId used to identify the Volume. </param>
@@ -48,8 +52,8 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             BackupId = backupId;
             CreatedOn = createdOn;
-            SnapshotCreatedOn = snapshotCreatedOn;
-            CompletionOn = completionOn;
+            _snapshotCreatedOn = snapshotCreatedOn;
+            _completionOn = completionOn;
             ProvisioningState = provisioningState;
             Size = size;
             Label = label;
@@ -70,10 +74,22 @@ namespace Azure.ResourceManager.NetApp.Models
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The snapshot creation date of the backup. </summary>
-        public DateTimeOffset? SnapshotCreatedOn { get; }
+        public DateTimeOffset? SnapshotCreatedOn
+        {
+            get
+            {
+                return _snapshotCreatedOn;
+            }
+        }
 
         /// <summary> The completion date of the backup. </summary>
-        public DateTimeOffset? CompletionOn { get; }
+        public DateTimeOffset? CompletionOn
+        {
+            get
+            {
+                return _completionOn;
+            }
+        }
 
         /// <summary> Azure lifecycle management. </summary>
         public string ProvisioningState { get; }

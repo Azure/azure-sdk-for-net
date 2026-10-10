@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Avs.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DatastoreList(value, nextLink, additionalBinaryDataProperties);
+            return new DatastoreList(value ?? new ChangeTrackingList<AvsPrivateCloudDatastoreData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

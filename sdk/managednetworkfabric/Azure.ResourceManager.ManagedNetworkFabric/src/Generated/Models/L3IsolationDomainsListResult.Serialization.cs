@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new L3IsolationDomainsListResult(value, nextLink, additionalBinaryDataProperties);
+            return new L3IsolationDomainsListResult(value ?? new ChangeTrackingList<NetworkFabricL3IsolationDomainData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

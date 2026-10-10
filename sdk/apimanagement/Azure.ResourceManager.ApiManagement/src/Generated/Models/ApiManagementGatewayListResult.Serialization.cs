@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ApiManagementGatewayListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ApiManagementGatewayListResult(value ?? new ChangeTrackingList<ApiGatewayData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

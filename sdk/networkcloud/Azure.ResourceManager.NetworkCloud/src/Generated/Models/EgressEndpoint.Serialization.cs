@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EgressEndpoint(category, endpoints, additionalBinaryDataProperties);
+            return new EgressEndpoint(category, endpoints ?? new ChangeTrackingList<EndpointDependency>(), additionalBinaryDataProperties);
         }
     }
 }

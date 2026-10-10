@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IncidentAlertList(value, additionalBinaryDataProperties);
+            return new IncidentAlertList(value ?? new ChangeTrackingList<SecurityInsightsAlert>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -74,15 +74,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(RegistryPrivateLinkServiceConnectionState)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ActionsRequired))
+            if (_actionsRequiredIsDefined || Optional.IsDefined(ActionsRequired))
             {
-                writer.WritePropertyName("actionsRequired"u8);
-                writer.WriteStringValue(ActionsRequired);
+                if (ActionsRequired != null)
+                {
+                    writer.WritePropertyName("actionsRequired"u8);
+                    writer.WriteStringValue(ActionsRequired);
+                }
+                else
+                {
+                    writer.WriteNull("actionsRequired"u8);
+                }
             }
-            if (Optional.IsDefined(Description))
+            if (_descriptionIsDefined || Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
+                if (Description != null)
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+                else
+                {
+                    writer.WriteNull("description"u8);
+                }
             }
             if (Optional.IsDefined(Status))
             {
@@ -131,7 +145,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool actionsRequiredIsDefined = false;
             string actionsRequired = default;
+            bool descriptionIsDefined = false;
             string description = default;
             EndpointServiceConnectionStatus? status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -139,6 +155,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (prop.NameEquals("actionsRequired"u8))
                 {
+                    actionsRequiredIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         actionsRequired = null;
@@ -149,6 +166,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -171,7 +189,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RegistryPrivateLinkServiceConnectionState(actionsRequired, description, status, additionalBinaryDataProperties);
+            return new RegistryPrivateLinkServiceConnectionState(actionsRequired, description, status, additionalBinaryDataProperties)
+            {
+                _actionsRequiredIsDefined = actionsRequiredIsDefined,
+                _descriptionIsDefined = descriptionIsDefined
+            };
         }
     }
 }

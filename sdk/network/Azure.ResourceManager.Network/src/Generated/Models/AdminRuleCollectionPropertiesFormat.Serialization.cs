@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AdminRuleCollectionPropertiesFormat(description, appliesToGroups, provisioningState, resourceGuid, additionalBinaryDataProperties);
+            return new AdminRuleCollectionPropertiesFormat(description, appliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>(), provisioningState, resourceGuid, additionalBinaryDataProperties);
         }
     }
 }

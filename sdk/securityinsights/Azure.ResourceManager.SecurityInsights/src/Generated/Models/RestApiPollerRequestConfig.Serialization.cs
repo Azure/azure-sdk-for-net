@@ -81,15 +81,29 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             writer.WritePropertyName("apiEndpoint"u8);
             writer.WriteStringValue(ApiEndpoint);
-            if (Optional.IsDefined(RateLimitQPS))
+            if (_rateLimitQPSIsDefined || Optional.IsDefined(RateLimitQPS))
             {
-                writer.WritePropertyName("rateLimitQPS"u8);
-                writer.WriteNumberValue(RateLimitQPS.Value);
+                if (RateLimitQPS != null)
+                {
+                    writer.WritePropertyName("rateLimitQPS"u8);
+                    writer.WriteNumberValue(RateLimitQPS.Value);
+                }
+                else
+                {
+                    writer.WriteNull("rateLimitQPS"u8);
+                }
             }
-            if (Optional.IsDefined(QueryWindowInMin))
+            if (_queryWindowInMinIsDefined || Optional.IsDefined(QueryWindowInMin))
             {
-                writer.WritePropertyName("queryWindowInMin"u8);
-                writer.WriteNumberValue(QueryWindowInMin.Value);
+                if (QueryWindowInMin != null)
+                {
+                    writer.WritePropertyName("queryWindowInMin"u8);
+                    writer.WriteNumberValue(QueryWindowInMin.Value);
+                }
+                else
+                {
+                    writer.WriteNull("queryWindowInMin"u8);
+                }
             }
             if (Optional.IsDefined(HttpMethod))
             {
@@ -101,20 +115,41 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("queryTimeFormat"u8);
                 writer.WriteStringValue(QueryTimeFormat);
             }
-            if (Optional.IsDefined(RetryCount))
+            if (_retryCountIsDefined || Optional.IsDefined(RetryCount))
             {
-                writer.WritePropertyName("retryCount"u8);
-                writer.WriteNumberValue(RetryCount.Value);
+                if (RetryCount != null)
+                {
+                    writer.WritePropertyName("retryCount"u8);
+                    writer.WriteNumberValue(RetryCount.Value);
+                }
+                else
+                {
+                    writer.WriteNull("retryCount"u8);
+                }
             }
-            if (Optional.IsDefined(TimeoutInSeconds))
+            if (_timeoutInSecondsIsDefined || Optional.IsDefined(TimeoutInSeconds))
             {
-                writer.WritePropertyName("timeoutInSeconds"u8);
-                writer.WriteNumberValue(TimeoutInSeconds.Value);
+                if (TimeoutInSeconds != null)
+                {
+                    writer.WritePropertyName("timeoutInSeconds"u8);
+                    writer.WriteNumberValue(TimeoutInSeconds.Value);
+                }
+                else
+                {
+                    writer.WriteNull("timeoutInSeconds"u8);
+                }
             }
-            if (Optional.IsDefined(IsPostPayloadJson))
+            if (_isPostPayloadJsonIsDefined || Optional.IsDefined(IsPostPayloadJson))
             {
-                writer.WritePropertyName("isPostPayloadJson"u8);
-                writer.WriteBooleanValue(IsPostPayloadJson.Value);
+                if (IsPostPayloadJson != null)
+                {
+                    writer.WritePropertyName("isPostPayloadJson"u8);
+                    writer.WriteBooleanValue(IsPostPayloadJson.Value);
+                }
+                else
+                {
+                    writer.WriteNull("isPostPayloadJson"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Headers))
             {
@@ -228,12 +263,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             string apiEndpoint = default;
+            bool rateLimitQPSIsDefined = false;
             int? rateLimitQPS = default;
+            bool queryWindowInMinIsDefined = false;
             int? queryWindowInMin = default;
             ConnectorHttpMethodVerb? httpMethod = default;
             string queryTimeFormat = default;
+            bool retryCountIsDefined = false;
             int? retryCount = default;
+            bool timeoutInSecondsIsDefined = false;
             int? timeoutInSeconds = default;
+            bool isPostPayloadJsonIsDefined = false;
             bool? isPostPayloadJson = default;
             IDictionary<string, string> headers = default;
             IDictionary<string, BinaryData> queryParameters = default;
@@ -253,6 +293,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (prop.NameEquals("rateLimitQPS"u8))
                 {
+                    rateLimitQPSIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         rateLimitQPS = null;
@@ -263,6 +304,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (prop.NameEquals("queryWindowInMin"u8))
                 {
+                    queryWindowInMinIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         queryWindowInMin = null;
@@ -287,6 +329,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (prop.NameEquals("retryCount"u8))
                 {
+                    retryCountIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         retryCount = null;
@@ -297,6 +340,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (prop.NameEquals("timeoutInSeconds"u8))
                 {
+                    timeoutInSecondsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         timeoutInSeconds = null;
@@ -307,6 +351,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (prop.NameEquals("isPostPayloadJson"u8))
                 {
+                    isPostPayloadJsonIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         isPostPayloadJson = null;
@@ -409,7 +454,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 queryTimeIntervalAttributeName,
                 queryTimeIntervalPrepend,
                 queryTimeIntervalDelimiter,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _rateLimitQPSIsDefined = rateLimitQPSIsDefined,
+                _queryWindowInMinIsDefined = queryWindowInMinIsDefined,
+                _retryCountIsDefined = retryCountIsDefined,
+                _timeoutInSecondsIsDefined = timeoutInSecondsIsDefined,
+                _isPostPayloadJsonIsDefined = isPostPayloadJsonIsDefined
+            };
         }
     }
 }

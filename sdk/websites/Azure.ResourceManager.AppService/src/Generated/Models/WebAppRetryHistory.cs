@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="serviceRequestId"> Gets the service request Id. </param>
         /// <param name="error"> Gets the error response. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppRetryHistory(DateTimeOffset? startOn, DateTimeOffset? endOn, string code, string clientRequestId, string serviceRequestId, WebAppErrorResponse error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebAppRetryHistory(DateTimeOffset? startOn, DateTimeOffset? endOn, string code, string clientRequestId, string serviceRequestId, WebAppErrorResult error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Gets the error response. </summary>
         [WirePath("error")]
-        internal WebAppErrorResponse Error { get; set; }
+        internal WebAppErrorResult Error { get; set; }
 
         /// <summary> The error properties. </summary>
         [WirePath("error.error")]
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (Error is null)
                 {
-                    Error = new WebAppErrorResponse();
+                    Error = new WebAppErrorResult();
                 }
                 Error.ErrorInfo = value;
             }

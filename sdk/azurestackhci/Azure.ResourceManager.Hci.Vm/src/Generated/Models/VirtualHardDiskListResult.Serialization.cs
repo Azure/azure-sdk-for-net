@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VirtualHardDiskListResult(value, nextLink, additionalBinaryDataProperties);
+            return new VirtualHardDiskListResult(value ?? new ChangeTrackingList<HciVmVirtualHardDiskData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

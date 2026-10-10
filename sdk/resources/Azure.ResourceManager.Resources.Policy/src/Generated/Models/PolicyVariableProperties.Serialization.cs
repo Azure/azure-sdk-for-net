@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PolicyVariableProperties(columns, additionalBinaryDataProperties);
+            return new PolicyVariableProperties(columns ?? new ChangeTrackingList<PolicyVariableColumn>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DdosProtectionPlanListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DdosProtectionPlanListResult(value ?? new ChangeTrackingList<DdosProtectionPlanData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

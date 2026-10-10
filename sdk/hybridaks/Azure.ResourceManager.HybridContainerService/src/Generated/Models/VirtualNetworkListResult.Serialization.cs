@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VirtualNetworkListResult(value, nextLink, additionalBinaryDataProperties);
+            return new VirtualNetworkListResult(value ?? new ChangeTrackingList<HybridContainerServiceVirtualNetworkData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

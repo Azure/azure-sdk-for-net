@@ -82,10 +82,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("appInsightsEnabled"u8);
                 writer.WriteBooleanValue(AppInsightsEnabled.Value);
             }
-            if (Optional.IsDefined(DataCollector))
+            if (_dataCollectorIsDefined || Optional.IsDefined(DataCollector))
             {
-                writer.WritePropertyName("dataCollector"u8);
-                writer.WriteObjectValue(DataCollector, options);
+                if (DataCollector != null)
+                {
+                    writer.WritePropertyName("dataCollector"u8);
+                    writer.WriteObjectValue(DataCollector, options);
+                }
+                else
+                {
+                    writer.WriteNull("dataCollector"u8);
+                }
             }
             if (Optional.IsDefined(EgressPublicNetworkAccess))
             {
@@ -94,50 +101,106 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("endpointComputeType"u8);
             writer.WriteStringValue(EndpointComputeType.ToString());
-            if (Optional.IsDefined(InstanceType))
+            if (_instanceTypeIsDefined || Optional.IsDefined(InstanceType))
             {
-                writer.WritePropertyName("instanceType"u8);
-                writer.WriteStringValue(InstanceType);
+                if (InstanceType != null)
+                {
+                    writer.WritePropertyName("instanceType"u8);
+                    writer.WriteStringValue(InstanceType);
+                }
+                else
+                {
+                    writer.WriteNull("instanceType"u8);
+                }
             }
-            if (Optional.IsDefined(LivenessProbe))
+            if (_livenessProbeIsDefined || Optional.IsDefined(LivenessProbe))
             {
-                writer.WritePropertyName("livenessProbe"u8);
-                writer.WriteObjectValue(LivenessProbe, options);
+                if (LivenessProbe != null)
+                {
+                    writer.WritePropertyName("livenessProbe"u8);
+                    writer.WriteObjectValue(LivenessProbe, options);
+                }
+                else
+                {
+                    writer.WriteNull("livenessProbe"u8);
+                }
             }
-            if (Optional.IsDefined(Model))
+            if (_modelIsDefined || Optional.IsDefined(Model))
             {
-                writer.WritePropertyName("model"u8);
-                writer.WriteStringValue(Model);
+                if (Model != null)
+                {
+                    writer.WritePropertyName("model"u8);
+                    writer.WriteStringValue(Model);
+                }
+                else
+                {
+                    writer.WriteNull("model"u8);
+                }
             }
-            if (Optional.IsDefined(ModelMountPath))
+            if (_modelMountPathIsDefined || Optional.IsDefined(ModelMountPath))
             {
-                writer.WritePropertyName("modelMountPath"u8);
-                writer.WriteStringValue(ModelMountPath);
+                if (ModelMountPath != null)
+                {
+                    writer.WritePropertyName("modelMountPath"u8);
+                    writer.WriteStringValue(ModelMountPath);
+                }
+                else
+                {
+                    writer.WriteNull("modelMountPath"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(ReadinessProbe))
+            if (_readinessProbeIsDefined || Optional.IsDefined(ReadinessProbe))
             {
-                writer.WritePropertyName("readinessProbe"u8);
-                writer.WriteObjectValue(ReadinessProbe, options);
+                if (ReadinessProbe != null)
+                {
+                    writer.WritePropertyName("readinessProbe"u8);
+                    writer.WriteObjectValue(ReadinessProbe, options);
+                }
+                else
+                {
+                    writer.WriteNull("readinessProbe"u8);
+                }
             }
-            if (Optional.IsDefined(RequestSettings))
+            if (_requestSettingsIsDefined || Optional.IsDefined(RequestSettings))
             {
-                writer.WritePropertyName("requestSettings"u8);
-                writer.WriteObjectValue(RequestSettings, options);
+                if (RequestSettings != null)
+                {
+                    writer.WritePropertyName("requestSettings"u8);
+                    writer.WriteObjectValue(RequestSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("requestSettings"u8);
+                }
             }
-            if (Optional.IsDefined(ScaleSettings))
+            if (_scaleSettingsIsDefined || Optional.IsDefined(ScaleSettings))
             {
-                writer.WritePropertyName("scaleSettings"u8);
-                writer.WriteObjectValue(ScaleSettings, options);
+                if (ScaleSettings != null)
+                {
+                    writer.WritePropertyName("scaleSettings"u8);
+                    writer.WriteObjectValue(ScaleSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("scaleSettings"u8);
+                }
             }
-            if (Optional.IsDefined(StartupProbe))
+            if (_startupProbeIsDefined || Optional.IsDefined(StartupProbe))
             {
-                writer.WritePropertyName("startupProbe"u8);
-                writer.WriteObjectValue(StartupProbe, options);
+                if (StartupProbe != null)
+                {
+                    writer.WritePropertyName("startupProbe"u8);
+                    writer.WriteObjectValue(StartupProbe, options);
+                }
+                else
+                {
+                    writer.WriteNull("startupProbe"u8);
+                }
             }
         }
 

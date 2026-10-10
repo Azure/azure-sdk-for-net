@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 displayName,
                 description,
                 repoType,
-                contentTypes,
+                contentTypes ?? new ChangeTrackingList<SourceControlContentType>(),
                 repository,
                 servicePrincipal,
                 workloadIdentityFederation,

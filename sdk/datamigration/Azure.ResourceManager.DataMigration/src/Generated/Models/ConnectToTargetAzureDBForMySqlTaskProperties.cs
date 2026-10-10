@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class ConnectToTargetAzureDBForMySqlTaskProperties : DataMigrationProjectTaskProperties
     {
         /// <summary> Initializes a new instance of <see cref="ConnectToTargetAzureDBForMySqlTaskProperties"/>. </summary>
-        public ConnectToTargetAzureDBForMySqlTaskProperties() : base(DataMigrationTaskType.ConnectToTargetAzureDbForMySql)
+        public ConnectToTargetAzureDBForMySqlTaskProperties() : base(DataMigrationTaskType.ConnectToTargetAzureDBForMySql)
         {
             Output = new ChangeTrackingList<ConnectToTargetAzureDBForMySqlTaskOutput>();
         }

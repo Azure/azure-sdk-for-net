@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 isEventStoreServiceEnabled,
                 fabricSettings ?? new ChangeTrackingList<SettingsSectionDescription>(),
                 managementEndpoint,
-                nodeTypes,
+                nodeTypes ?? new ChangeTrackingList<ClusterNodeTypeDescription>(),
                 provisioningState,
                 reliabilityLevel,
                 reverseProxyCertificate,

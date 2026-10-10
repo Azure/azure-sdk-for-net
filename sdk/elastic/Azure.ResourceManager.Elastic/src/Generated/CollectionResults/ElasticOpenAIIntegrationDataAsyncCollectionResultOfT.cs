@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Elastic
         /// <returns> The pages of ElasticOpenAIIntegrationDataAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<ElasticOpenAIIntegrationData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     yield break;
                 }
-                OpenAIIntegrationRPModelListResponse result = OpenAIIntegrationRPModelListResponse.FromResponse(response);
+                OpenAIIntegrationRPModelListResult result = OpenAIIntegrationRPModelListResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<ElasticOpenAIIntegrationData>.FromValues((IReadOnlyList<ElasticOpenAIIntegrationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

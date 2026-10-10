@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 name,
                 qualifiedName,
                 additionalBinaryDataProperties,
-                collections,
+                collections ?? new ChangeTrackingList<DataMigrationMongoDBCollectionInfo>(),
                 isShardingSupported);
         }
     }

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IotHubQuotaMetricInfoListResult(value, nextLink, additionalBinaryDataProperties);
+            return new IotHubQuotaMetricInfoListResult(value ?? new ChangeTrackingList<IotHubQuotaMetricInfo>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

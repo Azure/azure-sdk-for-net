@@ -79,10 +79,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Optional.IsDefined(Version))
+            if (_versionIsDefined || Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version);
+                if (Version != null)
+                {
+                    writer.WritePropertyName("version"u8);
+                    writer.WriteStringValue(Version);
+                }
+                else
+                {
+                    writer.WriteNull("version"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,6 +134,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             CognitiveServicesAgentProtocol? protocol = default;
+            bool versionIsDefined = false;
             string version = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -142,6 +150,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("version"u8))
                 {
+                    versionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         version = null;
@@ -155,7 +164,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CognitiveServicesAgentProtocolVersion(protocol, version, additionalBinaryDataProperties);
+            return new CognitiveServicesAgentProtocolVersion(protocol, version, additionalBinaryDataProperties)
+            {
+                _versionIsDefined = versionIsDefined
+            };
         }
     }
 }

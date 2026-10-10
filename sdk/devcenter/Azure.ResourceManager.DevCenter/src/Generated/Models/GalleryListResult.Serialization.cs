@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GalleryListResult(value, nextLink, additionalBinaryDataProperties);
+            return new GalleryListResult(value ?? new ChangeTrackingList<DevCenterGalleryData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

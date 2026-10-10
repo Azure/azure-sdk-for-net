@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NetworkVirtualApplianceSkuListResult(value, nextLink, additionalBinaryDataProperties);
+            return new NetworkVirtualApplianceSkuListResult(value ?? new ChangeTrackingList<NetworkVirtualApplianceSkuData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

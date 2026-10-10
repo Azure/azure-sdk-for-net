@@ -95,23 +95,37 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(MonthDays))
             {
-                writer.WritePropertyName("monthDays"u8);
-                writer.WriteStartArray();
-                foreach (int item in MonthDays)
+                if (MonthDays != null)
                 {
-                    writer.WriteNumberValue(item);
+                    writer.WritePropertyName("monthDays"u8);
+                    writer.WriteStartArray();
+                    foreach (int item in MonthDays)
+                    {
+                        writer.WriteNumberValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("monthDays"u8);
+                }
             }
             if (Optional.IsCollectionDefined(WeekDays))
             {
-                writer.WritePropertyName("weekDays"u8);
-                writer.WriteStartArray();
-                foreach (MachineLearningDayOfWeek item in WeekDays)
+                if (WeekDays != null)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WritePropertyName("weekDays"u8);
+                    writer.WriteStartArray();
+                    foreach (MachineLearningDayOfWeek item in WeekDays)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("weekDays"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -157,8 +171,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             IList<int> hours = default;
             IList<int> minutes = default;
-            IList<int> monthDays = default;
-            IList<MachineLearningDayOfWeek> weekDays = default;
+            IList<int> monthDays = new ChangeTrackingList<int>();
+            IList<MachineLearningDayOfWeek> weekDays = new ChangeTrackingList<MachineLearningDayOfWeek>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -186,6 +200,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        monthDays = null;
                         continue;
                     }
                     List<int> array = new List<int>();
@@ -200,6 +215,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        weekDays = null;
                         continue;
                     }
                     List<MachineLearningDayOfWeek> array = new List<MachineLearningDayOfWeek>();
@@ -215,7 +231,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MachineLearningRecurrenceSchedule(hours, minutes, monthDays ?? new ChangeTrackingList<int>(), weekDays ?? new ChangeTrackingList<MachineLearningDayOfWeek>(), additionalBinaryDataProperties);
+            return new MachineLearningRecurrenceSchedule(hours ?? new ChangeTrackingList<int>(), minutes ?? new ChangeTrackingList<int>(), monthDays, weekDays, additionalBinaryDataProperties);
         }
     }
 }

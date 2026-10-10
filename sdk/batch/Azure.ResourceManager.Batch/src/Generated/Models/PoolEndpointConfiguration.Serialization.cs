@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Batch.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PoolEndpointConfiguration(inboundNatPools, additionalBinaryDataProperties);
+            return new PoolEndpointConfiguration(inboundNatPools ?? new ChangeTrackingList<BatchInboundNatPool>(), additionalBinaryDataProperties);
         }
     }
 }

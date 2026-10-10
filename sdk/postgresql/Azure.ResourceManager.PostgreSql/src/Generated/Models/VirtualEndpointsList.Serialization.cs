@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VirtualEndpointsList(value, nextLink, additionalBinaryDataProperties);
+            return new VirtualEndpointsList(value ?? new ChangeTrackingList<VirtualEndpointResourceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

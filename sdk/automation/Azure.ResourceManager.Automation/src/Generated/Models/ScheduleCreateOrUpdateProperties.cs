@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.Automation.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DateTimeOffset? _expiresOn;
+        internal bool _expiresOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ScheduleCreateOrUpdateProperties"/>. </summary>
         /// <param name="startsOn"> Gets or sets the start time of the schedule. </param>
@@ -39,7 +41,7 @@ namespace Azure.ResourceManager.Automation.Models
         {
             Description = description;
             StartsOn = startsOn;
-            ExpiresOn = expiresOn;
+            _expiresOn = expiresOn;
             Interval = interval;
             Frequency = frequency;
             TimeZone = timeZone;
@@ -54,7 +56,18 @@ namespace Azure.ResourceManager.Automation.Models
         public DateTimeOffset StartsOn { get; }
 
         /// <summary> Gets or sets the end time of the schedule. </summary>
-        public DateTimeOffset? ExpiresOn { get; set; }
+        public DateTimeOffset? ExpiresOn
+        {
+            get
+            {
+                return _expiresOn;
+            }
+            set
+            {
+                _expiresOn = value;
+                _expiresOnIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the interval of the schedule.

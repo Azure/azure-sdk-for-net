@@ -243,8 +243,8 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new IotOperationsDataflowGraphProperties(
                 mode,
                 requestDiskPersistence,
-                nodes,
-                nodeConnections,
+                nodes ?? new ChangeTrackingList<DataflowGraphNode>(),
+                nodeConnections ?? new ChangeTrackingList<DataflowGraphNodeConnection>(),
                 provisioningState,
                 status,
                 healthState,

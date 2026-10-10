@@ -76,45 +76,66 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             if (Optional.IsCollectionDefined(ExcludeBlobsWithPrefix))
             {
-                writer.WritePropertyName("excludeBlobsWithPrefix"u8);
-                writer.WriteStartArray();
-                foreach (string item in ExcludeBlobsWithPrefix)
+                if (ExcludeBlobsWithPrefix != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("excludeBlobsWithPrefix"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in ExcludeBlobsWithPrefix)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("excludeBlobsWithPrefix"u8);
+                }
             }
             if (Optional.IsCollectionDefined(ExcludeBlobsWithSuffix))
             {
-                writer.WritePropertyName("excludeBlobsWithSuffix"u8);
-                writer.WriteStartArray();
-                foreach (string item in ExcludeBlobsWithSuffix)
+                if (ExcludeBlobsWithSuffix != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("excludeBlobsWithSuffix"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in ExcludeBlobsWithSuffix)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(ExcludeBlobsLargerThan))
-            {
-                writer.WritePropertyName("excludeBlobsLargerThan"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(ExcludeBlobsLargerThan);
-#else
-                using (JsonDocument document = JsonDocument.Parse(ExcludeBlobsLargerThan))
+                else
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    writer.WriteNull("excludeBlobsWithSuffix"u8);
                 }
+            }
+            if (_excludeBlobsLargerThanIsDefined || Optional.IsDefined(ExcludeBlobsLargerThan))
+            {
+                if (ExcludeBlobsLargerThan != null)
+                {
+                    writer.WritePropertyName("excludeBlobsLargerThan"u8);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(ExcludeBlobsLargerThan);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(ExcludeBlobsLargerThan))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                else
+                {
+                    writer.WriteNull("excludeBlobsLargerThan"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -158,8 +179,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            IList<string> excludeBlobsWithPrefix = default;
-            IList<string> excludeBlobsWithSuffix = default;
+            IList<string> excludeBlobsWithPrefix = new ChangeTrackingList<string>();
+            IList<string> excludeBlobsWithSuffix = new ChangeTrackingList<string>();
+            bool excludeBlobsLargerThanIsDefined = false;
             BinaryData excludeBlobsLargerThan = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -168,6 +190,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        excludeBlobsWithPrefix = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -189,6 +212,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        excludeBlobsWithSuffix = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -208,6 +232,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (prop.NameEquals("excludeBlobsLargerThan"u8))
                 {
+                    excludeBlobsLargerThanIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         excludeBlobsLargerThan = null;
@@ -221,7 +246,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new OnUploadFilters(excludeBlobsWithPrefix ?? new ChangeTrackingList<string>(), excludeBlobsWithSuffix ?? new ChangeTrackingList<string>(), excludeBlobsLargerThan, additionalBinaryDataProperties);
+            return new OnUploadFilters(excludeBlobsWithPrefix, excludeBlobsWithSuffix, excludeBlobsLargerThan, additionalBinaryDataProperties)
+            {
+                _excludeBlobsLargerThanIsDefined = excludeBlobsLargerThanIsDefined
+            };
         }
     }
 }

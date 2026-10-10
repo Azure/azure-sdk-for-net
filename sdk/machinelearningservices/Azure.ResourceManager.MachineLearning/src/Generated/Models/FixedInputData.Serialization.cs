@@ -107,7 +107,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            IDictionary<string, string> columns = default;
+            IDictionary<string, string> columns = new ChangeTrackingDictionary<string, string>();
+            bool dataContextIsDefined = false;
             string dataContext = default;
             MonitoringInputDataType inputDataType = default;
             JobInputType jobInputType = default;
@@ -119,6 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        columns = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -138,6 +140,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("dataContext"u8))
                 {
+                    dataContextIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         dataContext = null;
@@ -167,12 +170,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             return new FixedInputData(
-                columns ?? new ChangeTrackingDictionary<string, string>(),
+                columns,
                 dataContext,
                 inputDataType,
                 jobInputType,
                 uri,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _dataContextIsDefined = dataContextIsDefined
+            };
         }
     }
 }

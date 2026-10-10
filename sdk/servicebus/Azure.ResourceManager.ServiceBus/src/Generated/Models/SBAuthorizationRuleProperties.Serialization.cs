@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SBAuthorizationRuleProperties(rights, additionalBinaryDataProperties);
+            return new SBAuthorizationRuleProperties(rights ?? new ChangeTrackingList<ServiceBusAccessRight>(), additionalBinaryDataProperties);
         }
     }
 }

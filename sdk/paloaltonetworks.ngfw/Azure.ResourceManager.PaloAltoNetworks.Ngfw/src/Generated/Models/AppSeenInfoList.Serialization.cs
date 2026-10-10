@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AppSeenInfoList(count, appSeenList, additionalBinaryDataProperties);
+            return new AppSeenInfoList(count, appSeenList ?? new ChangeTrackingList<AppSeenInfo>(), additionalBinaryDataProperties);
         }
     }
 }

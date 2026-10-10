@@ -93,15 +93,29 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                 writer.WritePropertyName("mongoDbVersion"u8);
                 writer.WriteStringValue(MongoDBVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsBackupsEnabled))
+            if (options.Format != "W" && (_isBackupsEnabledIsDefined || Optional.IsDefined(IsBackupsEnabled)))
             {
-                writer.WritePropertyName("backups"u8);
-                writer.WriteBooleanValue(IsBackupsEnabled.Value);
+                if (IsBackupsEnabled != null)
+                {
+                    writer.WritePropertyName("backups"u8);
+                    writer.WriteBooleanValue(IsBackupsEnabled.Value);
+                }
+                else
+                {
+                    writer.WriteNull("backups"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && (_stateIsDefined || Optional.IsDefined(State)))
             {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State);
+                if (State != null)
+                {
+                    writer.WritePropertyName("state"u8);
+                    writer.WriteStringValue(State);
+                }
+                else
+                {
+                    writer.WriteNull("state"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -154,7 +168,9 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             MongoDBAtlasClusterTier clusterTier = default;
             string regionName = default;
             string mongoDBVersion = default;
+            bool isBackupsEnabledIsDefined = false;
             bool? isBackupsEnabled = default;
+            bool stateIsDefined = false;
             string state = default;
             MongoDBAtlasResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -182,6 +198,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                 }
                 if (prop.NameEquals("backups"u8))
                 {
+                    isBackupsEnabledIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         isBackupsEnabled = null;
@@ -192,6 +209,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                 }
                 if (prop.NameEquals("state"u8))
                 {
+                    stateIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         state = null;
@@ -222,7 +240,11 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                 isBackupsEnabled,
                 state,
                 provisioningState,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _isBackupsEnabledIsDefined = isBackupsEnabledIsDefined,
+                _stateIsDefined = stateIsDefined
+            };
         }
     }
 }

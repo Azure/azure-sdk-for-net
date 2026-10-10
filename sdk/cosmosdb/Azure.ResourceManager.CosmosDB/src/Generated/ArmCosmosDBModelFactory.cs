@@ -839,7 +839,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 totalCount,
                 lastUpdatedUtcOn,
                 workerCount,
-                error is null ? default : new ErrorResponse(error, default),
+                error is null ? default : new ErrorResult(error, default),
                 duration,
                 mode,
                 default);

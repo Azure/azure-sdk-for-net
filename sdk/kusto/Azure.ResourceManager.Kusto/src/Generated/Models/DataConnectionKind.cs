@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> IotHub. </summary>
         private const string IotHubValue = "IotHub";
         /// <summary> CosmosDb. </summary>
-        private const string CosmosDbValue = "CosmosDb";
+        private const string CosmosDBValue = "CosmosDb";
         /// <summary> EventHubWithManagedIdentity. </summary>
         private const string EventHubWithManagedIdentityValue = "EventHubWithManagedIdentity";
         /// <summary> EventGridWithManagedIdentity. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public static DataConnectionKind IotHub { get; } = new DataConnectionKind(IotHubValue);
 
         /// <summary> CosmosDb. </summary>
-        public static DataConnectionKind CosmosDb { get; } = new DataConnectionKind(CosmosDbValue);
+        public static DataConnectionKind CosmosDB { get; } = new DataConnectionKind(CosmosDBValue);
 
         /// <summary> EventHubWithManagedIdentity. </summary>
         public static DataConnectionKind EventHubWithManagedIdentity { get; } = new DataConnectionKind(EventHubWithManagedIdentityValue);

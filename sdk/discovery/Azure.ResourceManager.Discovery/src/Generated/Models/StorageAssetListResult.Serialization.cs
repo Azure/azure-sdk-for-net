@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Discovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StorageAssetListResult(value, nextLink, additionalBinaryDataProperties);
+            return new StorageAssetListResult(value ?? new ChangeTrackingList<DiscoveryStorageAssetData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

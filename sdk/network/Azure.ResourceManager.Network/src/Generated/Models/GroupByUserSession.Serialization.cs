@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GroupByUserSession(groupByVariables, additionalBinaryDataProperties);
+            return new GroupByUserSession(groupByVariables ?? new ChangeTrackingList<GroupByVariable>(), additionalBinaryDataProperties);
         }
     }
 }

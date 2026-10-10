@@ -15,6 +15,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private long? _lastRevisionApplied;
+        internal bool _lastRevisionAppliedIsDefined;
+        private long? _failureCount;
+        internal bool _failureCountIsDefined;
+        private long? _installFailureCount;
+        internal bool _installFailureCountIsDefined;
+        private long? _upgradeFailureCount;
+        internal bool _upgradeFailureCountIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="HelmReleaseProperties"/>. </summary>
         internal HelmReleaseProperties()
@@ -30,27 +38,51 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal HelmReleaseProperties(long? lastRevisionApplied, FluxObjectReference helmChartRef, long? failureCount, long? installFailureCount, long? upgradeFailureCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            LastRevisionApplied = lastRevisionApplied;
+            _lastRevisionApplied = lastRevisionApplied;
             HelmChartRef = helmChartRef;
-            FailureCount = failureCount;
-            InstallFailureCount = installFailureCount;
-            UpgradeFailureCount = upgradeFailureCount;
+            _failureCount = failureCount;
+            _installFailureCount = installFailureCount;
+            _upgradeFailureCount = upgradeFailureCount;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The revision number of the last released object change. </summary>
-        public long? LastRevisionApplied { get; }
+        public long? LastRevisionApplied
+        {
+            get
+            {
+                return _lastRevisionApplied;
+            }
+        }
 
         /// <summary> The reference to the HelmChart object used as the source to this HelmRelease. </summary>
         public FluxObjectReference HelmChartRef { get; }
 
         /// <summary> Total number of times that the HelmRelease failed to install or upgrade. </summary>
-        public long? FailureCount { get; }
+        public long? FailureCount
+        {
+            get
+            {
+                return _failureCount;
+            }
+        }
 
         /// <summary> Number of times that the HelmRelease failed to install. </summary>
-        public long? InstallFailureCount { get; }
+        public long? InstallFailureCount
+        {
+            get
+            {
+                return _installFailureCount;
+            }
+        }
 
         /// <summary> Number of times that the HelmRelease failed to upgrade. </summary>
-        public long? UpgradeFailureCount { get; }
+        public long? UpgradeFailureCount
+        {
+            get
+            {
+                return _upgradeFailureCount;
+            }
+        }
     }
 }

@@ -15,6 +15,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The DataQualityMonitoringSignal. </summary>
     public partial class DataQualityMonitoringSignal : MonitoringSignalBase
     {
+        private FeatureImportanceSettings _featureImportanceSettings;
+        internal bool _featureImportanceSettingsIsDefined;
+        private MonitoringFeatureFilterBase _features;
+        internal bool _featuresIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="DataQualityMonitoringSignal"/>. </summary>
         /// <param name="metricThresholds"> [Required] A list of metrics to calculate and their associated thresholds. </param>
         /// <param name="productionData"> [Required] The data produced by the production service which drift will be calculated for. </param>
@@ -46,8 +51,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal DataQualityMonitoringSignal(IList<MonitoringNotificationType> notificationTypes, IDictionary<string, string> properties, MonitoringSignalType signalType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, MonitoringFeatureDataType> featureDataTypeOverride, FeatureImportanceSettings featureImportanceSettings, MonitoringFeatureFilterBase features, IList<DataQualityMetricThresholdBase> metricThresholds, MonitoringInputDataBase productionData, MonitoringInputDataBase referenceData) : base(notificationTypes, properties, signalType, additionalBinaryDataProperties)
         {
             FeatureDataTypeOverride = featureDataTypeOverride;
-            FeatureImportanceSettings = featureImportanceSettings;
-            Features = features;
+            _featureImportanceSettings = featureImportanceSettings;
+            _features = features;
             MetricThresholds = metricThresholds;
             ProductionData = productionData;
             ReferenceData = referenceData;
@@ -59,11 +64,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The settings for computing feature importance. </summary>
         [WirePath("featureImportanceSettings")]
-        public FeatureImportanceSettings FeatureImportanceSettings { get; set; }
+        public FeatureImportanceSettings FeatureImportanceSettings
+        {
+            get
+            {
+                return _featureImportanceSettings;
+            }
+            set
+            {
+                _featureImportanceSettings = value;
+                _featureImportanceSettingsIsDefined = true;
+            }
+        }
 
         /// <summary> The features to calculate drift over. </summary>
         [WirePath("features")]
-        public MonitoringFeatureFilterBase Features { get; set; }
+        public MonitoringFeatureFilterBase Features
+        {
+            get
+            {
+                return _features;
+            }
+            set
+            {
+                _features = value;
+                _featuresIsDefined = true;
+            }
+        }
 
         /// <summary> [Required] A list of metrics to calculate and their associated thresholds. </summary>
         [WirePath("metricThresholds")]

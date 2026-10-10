@@ -233,8 +233,8 @@ namespace Azure.ResourceManager.Chaos.Models
                 createdFrom,
                 version,
                 description,
-                parameters,
-                actions,
+                parameters ?? new ChangeTrackingList<ChaosScenarioParameterInfo>(),
+                actions ?? new ChangeTrackingList<ScenarioAction>(),
                 recommendation,
                 additionalBinaryDataProperties);
         }

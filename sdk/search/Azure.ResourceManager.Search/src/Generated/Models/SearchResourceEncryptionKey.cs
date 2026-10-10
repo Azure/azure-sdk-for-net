@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.Search.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private SearchDataIdentity _identity;
+        internal bool _identityIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SearchResourceEncryptionKey"/>. </summary>
         public SearchResourceEncryptionKey()
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.Search.Models
             KeyName = keyName;
             KeyVersion = keyVersion;
             VaultUri = vaultUri;
-            Identity = identity;
+            _identity = identity;
             AccessCredentials = accessCredentials;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -53,7 +55,18 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> An explicit managed identity to use for this encryption key. If not specified and the access credentials property is null, the system-assigned managed identity is used. On update to the resource, if the explicit identity is unspecified, it remains unchanged. If "none" is specified, the value of this property is cleared. </summary>
         [WirePath("identity")]
-        public SearchDataIdentity Identity { get; set; }
+        public SearchDataIdentity Identity
+        {
+            get
+            {
+                return _identity;
+            }
+            set
+            {
+                _identity = value;
+                _identityIsDefined = true;
+            }
+        }
 
         /// <summary> Optional Azure Active Directory credentials used for accessing your Azure Key Vault. Not required if using managed identity instead. </summary>
         [WirePath("accessCredentials")]

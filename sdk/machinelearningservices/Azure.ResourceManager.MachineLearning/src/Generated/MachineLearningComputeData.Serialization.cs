@@ -106,10 +106,17 @@ namespace Azure.ResourceManager.MachineLearning
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(Sku))
+            if (_skuIsDefined || Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                if (Sku != null)
+                {
+                    writer.WritePropertyName("sku"u8);
+                    writer.WriteObjectValue(Sku, options);
+                }
+                else
+                {
+                    writer.WriteNull("sku"u8);
+                }
             }
             if (Optional.IsDefined(Identity))
             {
@@ -165,6 +172,7 @@ namespace Azure.ResourceManager.MachineLearning
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             MachineLearningComputeProperties properties = default;
+            bool skuIsDefined = false;
             MachineLearningSku sku = default;
             ManagedServiceIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -239,6 +247,7 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 if (prop.NameEquals("sku"u8))
                 {
+                    skuIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         sku = null;
@@ -271,7 +280,10 @@ namespace Azure.ResourceManager.MachineLearning
                 properties,
                 sku,
                 identity,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _skuIsDefined = skuIsDefined
+            };
         }
     }
 }

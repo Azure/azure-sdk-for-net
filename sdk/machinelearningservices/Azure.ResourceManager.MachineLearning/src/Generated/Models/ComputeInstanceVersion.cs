@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _runtime;
+        internal bool _runtimeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ComputeInstanceVersion"/>. </summary>
         internal ComputeInstanceVersion()
@@ -27,12 +29,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ComputeInstanceVersion(string runtime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Runtime = runtime;
+            _runtime = runtime;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Runtime of compute instance. </summary>
         [WirePath("runtime")]
-        public string Runtime { get; }
+        public string Runtime
+        {
+            get
+            {
+                return _runtime;
+            }
+        }
     }
 }

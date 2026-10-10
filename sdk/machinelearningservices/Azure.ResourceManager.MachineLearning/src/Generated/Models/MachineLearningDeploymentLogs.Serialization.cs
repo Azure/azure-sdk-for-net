@@ -82,10 +82,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningDeploymentLogs)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Content))
+            if (_contentIsDefined || Optional.IsDefined(Content))
             {
-                writer.WritePropertyName("content"u8);
-                writer.WriteStringValue(Content);
+                if (Content != null)
+                {
+                    writer.WritePropertyName("content"u8);
+                    writer.WriteStringValue(Content);
+                }
+                else
+                {
+                    writer.WriteNull("content"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -129,12 +136,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool contentIsDefined = false;
             string content = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("content"u8))
                 {
+                    contentIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         content = null;
@@ -148,7 +157,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MachineLearningDeploymentLogs(content, additionalBinaryDataProperties);
+            return new MachineLearningDeploymentLogs(content, additionalBinaryDataProperties)
+            {
+                _contentIsDefined = contentIsDefined
+            };
         }
     }
 }

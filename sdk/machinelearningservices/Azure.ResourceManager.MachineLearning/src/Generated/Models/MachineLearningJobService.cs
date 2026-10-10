@@ -16,6 +16,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _endpoint;
+        internal bool _endpointIsDefined;
+        private string _errorMessage;
+        internal bool _errorMessageIsDefined;
+        private string _jobServiceType;
+        internal bool _jobServiceTypeIsDefined;
+        private JobNodes _nodes;
+        internal bool _nodesIsDefined;
+        private int? _port;
+        internal bool _portIsDefined;
+        private string _status;
+        internal bool _statusIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningJobService"/>. </summary>
         public MachineLearningJobService()
@@ -37,38 +49,88 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MachineLearningJobService(string endpoint, string errorMessage, string jobServiceType, JobNodes nodes, int? port, IDictionary<string, string> properties, string status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Endpoint = endpoint;
-            ErrorMessage = errorMessage;
-            JobServiceType = jobServiceType;
-            Nodes = nodes;
-            Port = port;
+            _endpoint = endpoint;
+            _errorMessage = errorMessage;
+            _jobServiceType = jobServiceType;
+            _nodes = nodes;
+            _port = port;
             Properties = properties;
-            Status = status;
+            _status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Url for endpoint. </summary>
         [WirePath("endpoint")]
-        public string Endpoint { get; set; }
+        public string Endpoint
+        {
+            get
+            {
+                return _endpoint;
+            }
+            set
+            {
+                _endpoint = value;
+                _endpointIsDefined = true;
+            }
+        }
 
         /// <summary> Any error in the service. </summary>
         [WirePath("errorMessage")]
-        public string ErrorMessage { get; }
+        public string ErrorMessage
+        {
+            get
+            {
+                return _errorMessage;
+            }
+        }
 
         /// <summary> Endpoint type. </summary>
         [WirePath("jobServiceType")]
-        public string JobServiceType { get; set; }
+        public string JobServiceType
+        {
+            get
+            {
+                return _jobServiceType;
+            }
+            set
+            {
+                _jobServiceType = value;
+                _jobServiceTypeIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Nodes that user would like to start the service on.
         /// If Nodes is not set or set to null, the service will only be started on leader node.
         /// </summary>
         [WirePath("nodes")]
-        public JobNodes Nodes { get; set; }
+        public JobNodes Nodes
+        {
+            get
+            {
+                return _nodes;
+            }
+            set
+            {
+                _nodes = value;
+                _nodesIsDefined = true;
+            }
+        }
 
         /// <summary> Port for endpoint. </summary>
         [WirePath("port")]
-        public int? Port { get; set; }
+        public int? Port
+        {
+            get
+            {
+                return _port;
+            }
+            set
+            {
+                _port = value;
+                _portIsDefined = true;
+            }
+        }
 
         /// <summary> Additional properties to set on the endpoint. </summary>
         [WirePath("properties")]
@@ -76,6 +138,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Status of endpoint. </summary>
         [WirePath("status")]
-        public string Status { get; }
+        public string Status
+        {
+            get
+            {
+                return _status;
+            }
+        }
     }
 }

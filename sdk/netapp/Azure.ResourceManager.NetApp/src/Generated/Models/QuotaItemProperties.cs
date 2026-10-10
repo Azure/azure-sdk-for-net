@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private int? _usage;
+        internal bool _usageIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="QuotaItemProperties"/>. </summary>
         public QuotaItemProperties()
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             Current = current;
             Default = @default;
-            Usage = usage;
+            _usage = usage;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,6 +43,12 @@ namespace Azure.ResourceManager.NetApp.Models
         public int? Default { get; }
 
         /// <summary> The usage quota value. </summary>
-        public int? Usage { get; }
+        public int? Usage
+        {
+            get
+            {
+                return _usage;
+            }
+        }
     }
 }

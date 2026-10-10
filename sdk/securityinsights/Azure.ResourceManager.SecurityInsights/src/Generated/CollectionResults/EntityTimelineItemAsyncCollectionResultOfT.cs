@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityInsights
         public override async IAsyncEnumerable<Page<EntityTimelineItem>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
-            EntityTimelineResponse result = EntityTimelineResponse.FromResponse(response);
+            EntityTimelineResult result = EntityTimelineResult.FromResponse(response);
             yield return Page<EntityTimelineItem>.FromValues((IReadOnlyList<EntityTimelineItem>)result.Value, null, response);
         }
 

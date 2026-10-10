@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Properties specific to a KubernetesOnlineDeployment. </summary>
     public partial class MachineLearningKubernetesOnlineDeployment : MachineLearningOnlineDeploymentProperties
     {
+        private MachineLearningContainerResourceRequirements _containerResourceRequirements;
+        internal bool _containerResourceRequirementsIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningKubernetesOnlineDeployment"/>. </summary>
         public MachineLearningKubernetesOnlineDeployment() : base(MachineLearningEndpointComputeType.Kubernetes)
         {
@@ -47,11 +50,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="containerResourceRequirements"> The resource requirements for the container (cpu and memory). </param>
         internal MachineLearningKubernetesOnlineDeployment(MachineLearningCodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? appInsightsEnabled, DataCollector dataCollector, MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess, MachineLearningEndpointComputeType endpointComputeType, string instanceType, MachineLearningProbeSettings livenessProbe, string model, string modelMountPath, MachineLearningDeploymentProvisioningState? provisioningState, MachineLearningProbeSettings readinessProbe, MachineLearningOnlineRequestSettings requestSettings, MachineLearningOnlineScaleSettings scaleSettings, MachineLearningProbeSettings startupProbe, MachineLearningContainerResourceRequirements containerResourceRequirements) : base(codeConfiguration, description, environmentId, environmentVariables, properties, additionalBinaryDataProperties, appInsightsEnabled, dataCollector, egressPublicNetworkAccess, endpointComputeType, instanceType, livenessProbe, model, modelMountPath, provisioningState, readinessProbe, requestSettings, scaleSettings, startupProbe)
         {
-            ContainerResourceRequirements = containerResourceRequirements;
+            _containerResourceRequirements = containerResourceRequirements;
         }
 
         /// <summary> The resource requirements for the container (cpu and memory). </summary>
         [WirePath("containerResourceRequirements")]
-        public MachineLearningContainerResourceRequirements ContainerResourceRequirements { get; set; }
+        public MachineLearningContainerResourceRequirements ContainerResourceRequirements
+        {
+            get
+            {
+                return _containerResourceRequirements;
+            }
+            set
+            {
+                _containerResourceRequirements = value;
+                _containerResourceRequirementsIsDefined = true;
+            }
+        }
     }
 }

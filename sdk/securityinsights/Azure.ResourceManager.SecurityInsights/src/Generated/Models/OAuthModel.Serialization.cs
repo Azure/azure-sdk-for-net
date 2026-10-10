@@ -89,10 +89,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStringValue(ClientSecret);
             writer.WritePropertyName("clientId"u8);
             writer.WriteStringValue(ClientId);
-            if (Optional.IsDefined(IsCredentialsInHeaders))
+            if (_isCredentialsInHeadersIsDefined || Optional.IsDefined(IsCredentialsInHeaders))
             {
-                writer.WritePropertyName("isCredentialsInHeaders"u8);
-                writer.WriteBooleanValue(IsCredentialsInHeaders.Value);
+                if (IsCredentialsInHeaders != null)
+                {
+                    writer.WritePropertyName("isCredentialsInHeaders"u8);
+                    writer.WriteBooleanValue(IsCredentialsInHeaders.Value);
+                }
+                else
+                {
+                    writer.WriteNull("isCredentialsInHeaders"u8);
+                }
             }
             if (Optional.IsDefined(Scope))
             {
@@ -219,6 +226,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string authorizationCode = default;
             string clientSecret = default;
             string clientId = default;
+            bool isCredentialsInHeadersIsDefined = false;
             bool? isCredentialsInHeaders = default;
             string scope = default;
             Uri redirectUri = default;
@@ -255,6 +263,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (prop.NameEquals("isCredentialsInHeaders"u8))
                 {
+                    isCredentialsInHeadersIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         isCredentialsInHeaders = null;
@@ -412,7 +421,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 authorizationEndpointHeaders ?? new ChangeTrackingDictionary<string, string>(),
                 authorizationEndpointQueryParameters ?? new ChangeTrackingDictionary<string, string>(),
                 isJwtBearerFlow,
-                accessTokenPrepend);
+                accessTokenPrepend)
+            {
+                _isCredentialsInHeadersIsDefined = isCredentialsInHeadersIsDefined
+            };
         }
     }
 }

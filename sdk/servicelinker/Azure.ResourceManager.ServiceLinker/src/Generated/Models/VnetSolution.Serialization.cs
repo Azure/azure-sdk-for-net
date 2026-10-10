@@ -74,10 +74,17 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 throw new FormatException($"The model {nameof(VnetSolution)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SolutionType))
+            if (_solutionTypeIsDefined || Optional.IsDefined(SolutionType))
             {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(SolutionType.Value.ToString());
+                if (SolutionType != null)
+                {
+                    writer.WritePropertyName("type"u8);
+                    writer.WriteStringValue(SolutionType.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("type"u8);
+                }
             }
             if (Optional.IsDefined(DeleteOrUpdateBehavior))
             {
@@ -126,6 +133,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
+            bool solutionTypeIsDefined = false;
             VnetSolutionType? solutionType = default;
             LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -133,6 +141,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
+                    solutionTypeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         solutionType = null;
@@ -155,7 +164,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VnetSolution(solutionType, deleteOrUpdateBehavior, additionalBinaryDataProperties);
+            return new VnetSolution(solutionType, deleteOrUpdateBehavior, additionalBinaryDataProperties)
+            {
+                _solutionTypeIsDefined = solutionTypeIsDefined
+            };
         }
     }
 }

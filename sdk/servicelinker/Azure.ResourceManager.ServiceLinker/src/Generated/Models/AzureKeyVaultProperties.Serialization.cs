@@ -75,10 +75,17 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 throw new FormatException($"The model {nameof(AzureKeyVaultProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(DoesConnectAsKubernetesCsiDriver))
+            if (_doesConnectAsKubernetesCsiDriverIsDefined || Optional.IsDefined(DoesConnectAsKubernetesCsiDriver))
             {
-                writer.WritePropertyName("connectAsKubernetesCsiDriver"u8);
-                writer.WriteBooleanValue(DoesConnectAsKubernetesCsiDriver.Value);
+                if (DoesConnectAsKubernetesCsiDriver != null)
+                {
+                    writer.WritePropertyName("connectAsKubernetesCsiDriver"u8);
+                    writer.WriteBooleanValue(DoesConnectAsKubernetesCsiDriver.Value);
+                }
+                else
+                {
+                    writer.WriteNull("connectAsKubernetesCsiDriver"u8);
+                }
             }
         }
 
@@ -109,6 +116,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
             AzureResourceType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool doesConnectAsKubernetesCsiDriverIsDefined = false;
             bool? doesConnectAsKubernetesCsiDriver = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -119,6 +127,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (prop.NameEquals("connectAsKubernetesCsiDriver"u8))
                 {
+                    doesConnectAsKubernetesCsiDriverIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         doesConnectAsKubernetesCsiDriver = null;
@@ -132,7 +141,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AzureKeyVaultProperties(@type, additionalBinaryDataProperties, doesConnectAsKubernetesCsiDriver);
+            return new AzureKeyVaultProperties(@type, additionalBinaryDataProperties, doesConnectAsKubernetesCsiDriver)
+            {
+                _doesConnectAsKubernetesCsiDriverIsDefined = doesConnectAsKubernetesCsiDriverIsDefined
+            };
         }
     }
 }

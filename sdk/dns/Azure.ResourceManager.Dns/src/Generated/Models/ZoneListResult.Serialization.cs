@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Dns.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ZoneListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ZoneListResult(value ?? new ChangeTrackingList<DnsZoneData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new OrderItemResourceList(value, nextLink, additionalBinaryDataProperties);
+            return new OrderItemResourceList(value ?? new ChangeTrackingList<EdgeOrderItemData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

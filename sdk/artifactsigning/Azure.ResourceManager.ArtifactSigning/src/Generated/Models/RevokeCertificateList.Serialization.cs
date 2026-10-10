@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RevokeCertificateList(revokeCertificates, additionalBinaryDataProperties);
+            return new RevokeCertificateList(revokeCertificates ?? new ChangeTrackingList<RevokeCertificateContent>(), additionalBinaryDataProperties);
         }
     }
 }

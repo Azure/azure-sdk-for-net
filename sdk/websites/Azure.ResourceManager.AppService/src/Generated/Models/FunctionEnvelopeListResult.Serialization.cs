@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FunctionEnvelopeListResult(value, nextLink, additionalBinaryDataProperties);
+            return new FunctionEnvelopeListResult(value ?? new ChangeTrackingList<FunctionEnvelopeData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

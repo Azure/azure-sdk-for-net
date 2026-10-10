@@ -75,10 +75,17 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 throw new FormatException($"The model {nameof(NetAppAccountActiveDirectory)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ActiveDirectoryId))
+            if (_activeDirectoryIdIsDefined || Optional.IsDefined(ActiveDirectoryId))
             {
-                writer.WritePropertyName("activeDirectoryId"u8);
-                writer.WriteStringValue(ActiveDirectoryId);
+                if (ActiveDirectoryId != null)
+                {
+                    writer.WritePropertyName("activeDirectoryId"u8);
+                    writer.WriteStringValue(ActiveDirectoryId);
+                }
+                else
+                {
+                    writer.WriteNull("activeDirectoryId"u8);
+                }
             }
             if (Optional.IsDefined(Username))
             {
@@ -262,6 +269,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
+            bool activeDirectoryIdIsDefined = false;
             string activeDirectoryId = default;
             string username = default;
             string password = default;
@@ -290,6 +298,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 if (prop.NameEquals("activeDirectoryId"u8))
                 {
+                    activeDirectoryIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         activeDirectoryId = null;
@@ -517,7 +526,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 encryptDCConnections,
                 ldapSearchScope,
                 preferredServersForLdapClient,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _activeDirectoryIdIsDefined = activeDirectoryIdIsDefined
+            };
         }
     }
 }

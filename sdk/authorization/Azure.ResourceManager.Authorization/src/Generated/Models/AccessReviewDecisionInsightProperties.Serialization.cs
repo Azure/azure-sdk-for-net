@@ -84,10 +84,17 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (options.Format != "W" && Optional.IsDefined(InsightCreatedOn))
+            if (options.Format != "W" && (_insightCreatedOnIsDefined || Optional.IsDefined(InsightCreatedOn)))
             {
-                writer.WritePropertyName("insightCreatedDateTime"u8);
-                writer.WriteStringValue(InsightCreatedOn.Value, "O");
+                if (InsightCreatedOn != null)
+                {
+                    writer.WritePropertyName("insightCreatedDateTime"u8);
+                    writer.WriteStringValue(InsightCreatedOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("insightCreatedDateTime"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

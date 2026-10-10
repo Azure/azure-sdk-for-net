@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new OtelMetricsDirectDataSource(streams, enrichWithResourceAttributes ?? new ChangeTrackingList<string>(), enrichWithReference, name, additionalBinaryDataProperties);
+            return new OtelMetricsDirectDataSource(streams ?? new ChangeTrackingList<string>(), enrichWithResourceAttributes ?? new ChangeTrackingList<string>(), enrichWithReference, name, additionalBinaryDataProperties);
         }
     }
 }

@@ -99,10 +99,17 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndsOn))
+            if (options.Format != "W" && (_endsOnIsDefined || Optional.IsDefined(EndsOn)))
             {
-                writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndsOn.Value, "O");
+                if (EndsOn != null)
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteStringValue(EndsOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("endTime"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ComputerCount))
             {
@@ -186,6 +193,7 @@ namespace Azure.ResourceManager.Automation.Models
             TimeSpan? configuredDuration = default;
             string osType = default;
             DateTimeOffset? startsOn = default;
+            bool endsOnIsDefined = false;
             DateTimeOffset? endsOn = default;
             int? computerCount = default;
             int? failedCount = default;
@@ -236,6 +244,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
+                    endsOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         endsOn = null;
@@ -318,7 +327,10 @@ namespace Azure.ResourceManager.Automation.Models
                 lastModifiedOn,
                 lastModifiedBy,
                 tasks,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _endsOnIsDefined = endsOnIsDefined
+            };
         }
     }
 }

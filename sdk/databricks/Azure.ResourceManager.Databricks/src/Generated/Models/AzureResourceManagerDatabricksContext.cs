@@ -15,9 +15,6 @@ namespace Azure.ResourceManager.Databricks
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(AccessConnectorListResult))]
-    [ModelReaderWriterBuildable(typeof(AddressSpace))]
-    [ModelReaderWriterBuildable(typeof(AutomaticClusterUpdateDefinition))]
     [ModelReaderWriterBuildable(typeof(DatabricksAccessConnectorData))]
     [ModelReaderWriterBuildable(typeof(DatabricksAccessConnectorPatch))]
     [ModelReaderWriterBuildable(typeof(DatabricksAccessConnectorProperties))]
@@ -51,26 +48,15 @@ namespace Azure.ResourceManager.Databricks
     [ModelReaderWriterBuildable(typeof(DatabricksWorkspacePatch))]
     [ModelReaderWriterBuildable(typeof(DatabricksWorkspaceProviderAuthorization))]
     [ModelReaderWriterBuildable(typeof(DatabricksWorkspaceResource))]
-    [ModelReaderWriterBuildable(typeof(EnhancedSecurityMonitoringDefinition))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
-    [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
-    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionsList))]
-    [ModelReaderWriterBuildable(typeof(PrivateLinkResourcesList))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
-    [ModelReaderWriterBuildable(typeof(VirtualNetworkPeeringList))]
-    [ModelReaderWriterBuildable(typeof(VirtualNetworkPeeringPropertiesFormat))]
-    [ModelReaderWriterBuildable(typeof(VirtualNetworkPeeringPropertiesFormatDatabricksVirtualNetwork))]
-    [ModelReaderWriterBuildable(typeof(VirtualNetworkPeeringPropertiesFormatRemoteVirtualNetwork))]
     [ModelReaderWriterBuildable(typeof(WorkspaceCustomBooleanParameterValue))]
     [ModelReaderWriterBuildable(typeof(WorkspaceCustomObjectParameterValue))]
     [ModelReaderWriterBuildable(typeof(WorkspaceCustomProperties))]
     [ModelReaderWriterBuildable(typeof(WorkspaceCustomStringParameterValue))]
     [ModelReaderWriterBuildable(typeof(WorkspaceEncryptionParameterValue))]
-    [ModelReaderWriterBuildable(typeof(WorkspaceListResult))]
     [ModelReaderWriterBuildable(typeof(WorkspaceNoPublicIPBooleanParameterValue))]
-    [ModelReaderWriterBuildable(typeof(WorkspaceProperties))]
-    [ModelReaderWriterBuildable(typeof(WorkspacePropertiesEncryption))]
     public partial class AzureResourceManagerDatabricksContext : ModelReaderWriterContext
     {
     }

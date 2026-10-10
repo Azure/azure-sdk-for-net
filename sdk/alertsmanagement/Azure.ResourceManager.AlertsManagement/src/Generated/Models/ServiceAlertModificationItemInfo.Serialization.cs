@@ -109,10 +109,17 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Details))
+            if (_detailsIsDefined || Optional.IsDefined(Details))
             {
-                writer.WritePropertyName("details"u8);
-                writer.WriteObjectValue(Details, options);
+                if (Details != null)
+                {
+                    writer.WritePropertyName("details"u8);
+                    writer.WriteObjectValue(Details, options);
+                }
+                else
+                {
+                    writer.WriteNull("details"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -163,6 +170,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             string modifiedBy = default;
             string comments = default;
             string description = default;
+            bool detailsIsDefined = false;
             AlertsManagementBaseDetails details = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -208,6 +216,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
                 if (prop.NameEquals("details"u8))
                 {
+                    detailsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         details = null;
@@ -230,7 +239,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 comments,
                 description,
                 details,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _detailsIsDefined = detailsIsDefined
+            };
         }
     }
 }

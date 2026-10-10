@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ImageBuilder
         /// <returns> The pages of ImageTemplateRunOutputDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ImageTemplateRunOutputData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 }
             }
             return new ConnectedClusterLoadBalancerProperties(
-                addresses,
+                addresses ?? new ChangeTrackingList<string>(),
                 serviceSelector ?? new ChangeTrackingDictionary<string, string>(),
                 advertiseMode,
                 bgpPeers ?? new ChangeTrackingList<string>(),

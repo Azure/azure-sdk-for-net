@@ -16,6 +16,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _cert;
+        internal bool _certIsDefined;
+        private string _key;
+        internal bool _keyIsDefined;
+        private string _cname;
+        internal bool _cnameIsDefined;
+        private string _leafDomainLabel;
+        internal bool _leafDomainLabelIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningSslConfiguration"/>. </summary>
         public MachineLearningSslConfiguration()
@@ -33,10 +41,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal MachineLearningSslConfiguration(MachineLearningSslConfigStatus? status, string cert, string key, string cname, string leafDomainLabel, bool? overwriteExistingDomain, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
-            Cert = cert;
-            Key = key;
-            Cname = cname;
-            LeafDomainLabel = leafDomainLabel;
+            _cert = cert;
+            _key = key;
+            _cname = cname;
+            _leafDomainLabel = leafDomainLabel;
             OverwriteExistingDomain = overwriteExistingDomain;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -47,19 +55,63 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Cert data. </summary>
         [WirePath("cert")]
-        public string Cert { get; set; }
+        public string Cert
+        {
+            get
+            {
+                return _cert;
+            }
+            set
+            {
+                _cert = value;
+                _certIsDefined = true;
+            }
+        }
 
         /// <summary> Key data. </summary>
         [WirePath("key")]
-        public string Key { get; set; }
+        public string Key
+        {
+            get
+            {
+                return _key;
+            }
+            set
+            {
+                _key = value;
+                _keyIsDefined = true;
+            }
+        }
 
         /// <summary> CNAME of the cert. </summary>
         [WirePath("cname")]
-        public string Cname { get; set; }
+        public string Cname
+        {
+            get
+            {
+                return _cname;
+            }
+            set
+            {
+                _cname = value;
+                _cnameIsDefined = true;
+            }
+        }
 
         /// <summary> Leaf domain label of public endpoint. </summary>
         [WirePath("leafDomainLabel")]
-        public string LeafDomainLabel { get; set; }
+        public string LeafDomainLabel
+        {
+            get
+            {
+                return _leafDomainLabel;
+            }
+            set
+            {
+                _leafDomainLabel = value;
+                _leafDomainLabelIsDefined = true;
+            }
+        }
 
         /// <summary> Indicates whether to overwrite existing domain label. </summary>
         [WirePath("overwriteExistingDomain")]

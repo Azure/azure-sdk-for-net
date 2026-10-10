@@ -34,14 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     RequestLogging = new RequestLogging();
                 }
 
-                RequestLogging.CaptureHeaders.Clear();
-                if (value is not null)
-                {
-                    foreach (var header in value)
-                    {
-                        RequestLogging.CaptureHeaders.Add(header);
-                    }
-                }
+                RequestLogging.CaptureHeaders = value;
             }
         }
     }

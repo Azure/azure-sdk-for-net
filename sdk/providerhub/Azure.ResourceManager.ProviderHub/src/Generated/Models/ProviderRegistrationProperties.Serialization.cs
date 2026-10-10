@@ -153,6 +153,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             BinaryData metadata = default;
             TemplateDeploymentOptions templateDeploymentOptions = default;
             IList<ResourceProviderEndpoint> globalNotificationEndpoints = default;
+            bool enableTenantLinkedNotificationIsDefined = false;
             bool? enableTenantLinkedNotification = default;
             IList<ProviderNotification> notifications = default;
             IList<FanoutLinkedNotificationRule> linkedNotificationRules = default;
@@ -344,6 +345,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 if (prop.NameEquals("enableTenantLinkedNotification"u8))
                 {
+                    enableTenantLinkedNotificationIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         enableTenantLinkedNotification = null;
@@ -617,7 +619,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 privateResourceProviderConfiguration,
                 tokenAuthConfiguration,
                 oboSubscriptionId,
-                enablePresetResourceTypes);
+                enablePresetResourceTypes)
+            {
+                _enableTenantLinkedNotificationIsDefined = enableTenantLinkedNotificationIsDefined
+            };
         }
     }
 }

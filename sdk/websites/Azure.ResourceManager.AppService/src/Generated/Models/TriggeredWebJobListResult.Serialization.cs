@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TriggeredWebJobListResult(value, nextLink, additionalBinaryDataProperties);
+            return new TriggeredWebJobListResult(value ?? new ChangeTrackingList<TriggeredWebJobData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

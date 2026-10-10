@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.OracleDatabase
     public partial class CloudVmClusterDBNodeResource : ArmResource
     {
         private readonly ClientDiagnostics _dbNodesClientDiagnostics;
-        private readonly DbNodes _dbNodesRestClient;
+        private readonly DBNodes _dbNodesRestClient;
         private readonly CloudVmClusterDBNodeData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Oracle.Database/cloudVmClusters/dbNodes";
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(ResourceType, out string cloudVmClusterDBNodeApiVersion);
             _dbNodesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ResourceType.Namespace, Diagnostics);
-            _dbNodesRestClient = new DbNodes(_dbNodesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudVmClusterDBNodeApiVersion ?? "2025-09-01");
+            _dbNodesRestClient = new DBNodes(_dbNodesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudVmClusterDBNodeApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

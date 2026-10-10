@@ -18,6 +18,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class ImageModelSettingsObjectDetection : ImageModelSettings
     {
+        private int? _boxDetectionsPerImage;
+        internal bool _boxDetectionsPerImageIsDefined;
+        private float? _boxScoreThreshold;
+        internal bool _boxScoreThresholdIsDefined;
+        private int? _imageSize;
+        internal bool _imageSizeIsDefined;
+        private int? _maxSize;
+        internal bool _maxSizeIsDefined;
+        private int? _minSize;
+        internal bool _minSizeIsDefined;
+        private bool? _multiScale;
+        internal bool _multiScaleIsDefined;
+        private float? _nmsIouThreshold;
+        internal bool _nmsIouThresholdIsDefined;
+        private string _tileGridSize;
+        internal bool _tileGridSizeIsDefined;
+        private float? _tileOverlapRatio;
+        internal bool _tileOverlapRatioIsDefined;
+        private float? _tilePredictionsNmsThreshold;
+        internal bool _tilePredictionsNmsThresholdIsDefined;
+        private float? _validationIouThreshold;
+        internal bool _validationIouThresholdIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="ImageModelSettingsObjectDetection"/>. </summary>
         public ImageModelSettingsObjectDetection()
         {
@@ -124,18 +147,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="validationMetricType"> Metric computation method to use for validation metrics in image tasks. </param>
         internal ImageModelSettingsObjectDetection(string advancedSettings, bool? amsGradient, string augmentations, float? beta1, float? beta2, int? checkpointFrequency, MachineLearningFlowModelJobInput checkpointModel, string checkpointRunId, bool? distributed, bool? earlyStopping, int? earlyStoppingDelay, int? earlyStoppingPatience, bool? enableOnnxNormalization, int? evaluationFrequency, int? gradientAccumulationStep, int? layersToFreeze, float? learningRate, LearningRateScheduler? learningRateScheduler, string modelName, float? momentum, bool? nesterov, int? numberOfEpochs, int? numberOfWorkers, StochasticOptimizer? optimizer, int? randomSeed, float? stepLRGamma, int? stepLRStepSize, int? trainingBatchSize, int? validationBatchSize, float? warmupCosineLRCycles, int? warmupCosineLRWarmupEpochs, float? weightDecay, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? boxDetectionsPerImage, float? boxScoreThreshold, int? imageSize, int? maxSize, int? minSize, MachineLearningModelSize? modelSize, bool? multiScale, float? nmsIouThreshold, string tileGridSize, float? tileOverlapRatio, float? tilePredictionsNmsThreshold, float? validationIouThreshold, ValidationMetricType? validationMetricType) : base(advancedSettings, amsGradient, augmentations, beta1, beta2, checkpointFrequency, checkpointModel, checkpointRunId, distributed, earlyStopping, earlyStoppingDelay, earlyStoppingPatience, enableOnnxNormalization, evaluationFrequency, gradientAccumulationStep, layersToFreeze, learningRate, learningRateScheduler, modelName, momentum, nesterov, numberOfEpochs, numberOfWorkers, optimizer, randomSeed, stepLRGamma, stepLRStepSize, trainingBatchSize, validationBatchSize, warmupCosineLRCycles, warmupCosineLRWarmupEpochs, weightDecay, additionalBinaryDataProperties)
         {
-            BoxDetectionsPerImage = boxDetectionsPerImage;
-            BoxScoreThreshold = boxScoreThreshold;
-            ImageSize = imageSize;
-            MaxSize = maxSize;
-            MinSize = minSize;
+            _boxDetectionsPerImage = boxDetectionsPerImage;
+            _boxScoreThreshold = boxScoreThreshold;
+            _imageSize = imageSize;
+            _maxSize = maxSize;
+            _minSize = minSize;
             ModelSize = modelSize;
-            MultiScale = multiScale;
-            NmsIouThreshold = nmsIouThreshold;
-            TileGridSize = tileGridSize;
-            TileOverlapRatio = tileOverlapRatio;
-            TilePredictionsNmsThreshold = tilePredictionsNmsThreshold;
-            ValidationIouThreshold = validationIouThreshold;
+            _multiScale = multiScale;
+            _nmsIouThreshold = nmsIouThreshold;
+            _tileGridSize = tileGridSize;
+            _tileOverlapRatio = tileOverlapRatio;
+            _tilePredictionsNmsThreshold = tilePredictionsNmsThreshold;
+            _validationIouThreshold = validationIouThreshold;
             ValidationMetricType = validationMetricType;
         }
 
@@ -144,14 +167,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Note: This settings is not supported for the 'yolov5' algorithm.
         /// </summary>
         [WirePath("boxDetectionsPerImage")]
-        public int? BoxDetectionsPerImage { get; set; }
+        public int? BoxDetectionsPerImage
+        {
+            get
+            {
+                return _boxDetectionsPerImage;
+            }
+            set
+            {
+                _boxDetectionsPerImage = value;
+                _boxDetectionsPerImageIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// During inference, only return proposals with a classification score greater than
         /// BoxScoreThreshold. Must be a float in the range[0, 1].
         /// </summary>
         [WirePath("boxScoreThreshold")]
-        public float? BoxScoreThreshold { get; set; }
+        public float? BoxScoreThreshold
+        {
+            get
+            {
+                return _boxScoreThreshold;
+            }
+            set
+            {
+                _boxScoreThreshold = value;
+                _boxScoreThresholdIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Image size for train and validation. Must be a positive integer.
@@ -159,7 +204,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Note: This settings is only supported for the 'yolov5' algorithm.
         /// </summary>
         [WirePath("imageSize")]
-        public int? ImageSize { get; set; }
+        public int? ImageSize
+        {
+            get
+            {
+                return _imageSize;
+            }
+            set
+            {
+                _imageSize = value;
+                _imageSizeIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Maximum size of the image to be rescaled before feeding it to the backbone.
@@ -167,7 +223,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Note: This settings is not supported for the 'yolov5' algorithm.
         /// </summary>
         [WirePath("maxSize")]
-        public int? MaxSize { get; set; }
+        public int? MaxSize
+        {
+            get
+            {
+                return _maxSize;
+            }
+            set
+            {
+                _maxSize = value;
+                _maxSizeIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Minimum size of the image to be rescaled before feeding it to the backbone.
@@ -175,7 +242,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Note: This settings is not supported for the 'yolov5' algorithm.
         /// </summary>
         [WirePath("minSize")]
-        public int? MinSize { get; set; }
+        public int? MinSize
+        {
+            get
+            {
+                return _minSize;
+            }
+            set
+            {
+                _minSize = value;
+                _minSizeIsDefined = true;
+            }
+        }
 
         /// <summary> Image model size. </summary>
         [WirePath("modelSize")]
@@ -187,11 +265,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Note: This settings is only supported for the 'yolov5' algorithm.
         /// </summary>
         [WirePath("multiScale")]
-        public bool? MultiScale { get; set; }
+        public bool? MultiScale
+        {
+            get
+            {
+                return _multiScale;
+            }
+            set
+            {
+                _multiScale = value;
+                _multiScaleIsDefined = true;
+            }
+        }
 
         /// <summary> IOU threshold used during inference in NMS post processing. Must be a float in the range [0, 1]. </summary>
         [WirePath("nmsIouThreshold")]
-        public float? NmsIouThreshold { get; set; }
+        public float? NmsIouThreshold
+        {
+            get
+            {
+                return _nmsIouThreshold;
+            }
+            set
+            {
+                _nmsIouThreshold = value;
+                _nmsIouThresholdIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// The grid size to use for tiling each image. Note: TileGridSize must not be
@@ -199,14 +299,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Note: This settings is not supported for the 'yolov5' algorithm.
         /// </summary>
         [WirePath("tileGridSize")]
-        public string TileGridSize { get; set; }
+        public string TileGridSize
+        {
+            get
+            {
+                return _tileGridSize;
+            }
+            set
+            {
+                _tileGridSize = value;
+                _tileGridSizeIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Overlap ratio between adjacent tiles in each dimension. Must be float in the range [0, 1).
         /// Note: This settings is not supported for the 'yolov5' algorithm.
         /// </summary>
         [WirePath("tileOverlapRatio")]
-        public float? TileOverlapRatio { get; set; }
+        public float? TileOverlapRatio
+        {
+            get
+            {
+                return _tileOverlapRatio;
+            }
+            set
+            {
+                _tileOverlapRatio = value;
+                _tileOverlapRatioIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// The IOU threshold to use to perform NMS while merging predictions from tiles and image.
@@ -214,11 +336,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Note: This settings is not supported for the 'yolov5' algorithm.
         /// </summary>
         [WirePath("tilePredictionsNmsThreshold")]
-        public float? TilePredictionsNmsThreshold { get; set; }
+        public float? TilePredictionsNmsThreshold
+        {
+            get
+            {
+                return _tilePredictionsNmsThreshold;
+            }
+            set
+            {
+                _tilePredictionsNmsThreshold = value;
+                _tilePredictionsNmsThresholdIsDefined = true;
+            }
+        }
 
         /// <summary> IOU threshold to use when computing validation metric. Must be float in the range [0, 1]. </summary>
         [WirePath("validationIouThreshold")]
-        public float? ValidationIouThreshold { get; set; }
+        public float? ValidationIouThreshold
+        {
+            get
+            {
+                return _validationIouThreshold;
+            }
+            set
+            {
+                _validationIouThreshold = value;
+                _validationIouThresholdIsDefined = true;
+            }
+        }
 
         /// <summary> Metric computation method to use for validation metrics in image tasks. </summary>
         [WirePath("validationMetricType")]

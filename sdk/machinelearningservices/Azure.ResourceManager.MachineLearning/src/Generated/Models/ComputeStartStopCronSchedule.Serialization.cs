@@ -74,10 +74,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(ComputeStartStopCronSchedule)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(StartTime))
+            if (_startTimeIsDefined || Optional.IsDefined(StartTime))
             {
-                writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartTime);
+                if (StartTime != null)
+                {
+                    writer.WritePropertyName("startTime"u8);
+                    writer.WriteStringValue(StartTime);
+                }
+                else
+                {
+                    writer.WriteNull("startTime"u8);
+                }
             }
             if (Optional.IsDefined(TimeZone))
             {
@@ -131,6 +138,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool startTimeIsDefined = false;
             string startTime = default;
             string timeZone = default;
             string expression = default;
@@ -139,6 +147,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (prop.NameEquals("startTime"u8))
                 {
+                    startTimeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         startTime = null;
@@ -162,7 +171,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ComputeStartStopCronSchedule(startTime, timeZone, expression, additionalBinaryDataProperties);
+            return new ComputeStartStopCronSchedule(startTime, timeZone, expression, additionalBinaryDataProperties)
+            {
+                _startTimeIsDefined = startTimeIsDefined
+            };
         }
     }
 }

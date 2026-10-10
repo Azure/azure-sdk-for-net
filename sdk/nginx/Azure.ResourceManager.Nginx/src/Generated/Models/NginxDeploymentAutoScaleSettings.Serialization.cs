@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NginxDeploymentAutoScaleSettings(profiles, additionalBinaryDataProperties);
+            return new NginxDeploymentAutoScaleSettings(profiles ?? new ChangeTrackingList<NginxScaleProfile>(), additionalBinaryDataProperties);
         }
     }
 }

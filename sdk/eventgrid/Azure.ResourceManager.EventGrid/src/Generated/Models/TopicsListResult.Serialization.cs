@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TopicsListResult(value, nextLink, additionalBinaryDataProperties);
+            return new TopicsListResult(value ?? new ChangeTrackingList<EventGridTopicData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

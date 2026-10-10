@@ -14,6 +14,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningAssetContainer. </summary>
     public partial class MachineLearningAssetContainer : MachineLearningResourceBase
     {
+        private string _latestVersion;
+        internal bool _latestVersionIsDefined;
+        private string _nextVersion;
+        internal bool _nextVersionIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningAssetContainer"/>. </summary>
         public MachineLearningAssetContainer()
         {
@@ -30,8 +35,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal MachineLearningAssetContainer(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? isArchived, string latestVersion, string nextVersion) : base(description, properties, tags, additionalBinaryDataProperties)
         {
             IsArchived = isArchived;
-            LatestVersion = latestVersion;
-            NextVersion = nextVersion;
+            _latestVersion = latestVersion;
+            _nextVersion = nextVersion;
         }
 
         /// <summary> Is the asset archived?. </summary>
@@ -40,10 +45,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The latest version inside this container. </summary>
         [WirePath("latestVersion")]
-        public string LatestVersion { get; }
+        public string LatestVersion
+        {
+            get
+            {
+                return _latestVersion;
+            }
+        }
 
         /// <summary> The next auto incremental version. </summary>
         [WirePath("nextVersion")]
-        public string NextVersion { get; }
+        public string NextVersion
+        {
+            get
+            {
+                return _nextVersion;
+            }
+        }
     }
 }

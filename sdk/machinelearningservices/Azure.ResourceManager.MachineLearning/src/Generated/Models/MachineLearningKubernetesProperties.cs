@@ -16,6 +16,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _relayConnectionString;
+        internal bool _relayConnectionStringIsDefined;
+        private string _serviceBusConnectionString;
+        internal bool _serviceBusConnectionStringIsDefined;
+        private string _extensionPrincipalId;
+        internal bool _extensionPrincipalIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningKubernetesProperties"/>. </summary>
         public MachineLearningKubernetesProperties()
@@ -35,9 +41,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MachineLearningKubernetesProperties(string relayConnectionString, string serviceBusConnectionString, string extensionPrincipalId, string extensionInstanceReleaseTrain, string vcName, string @namespace, string defaultInstanceType, IDictionary<string, MachineLearningInstanceTypeSchema> instanceTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            RelayConnectionString = relayConnectionString;
-            ServiceBusConnectionString = serviceBusConnectionString;
-            ExtensionPrincipalId = extensionPrincipalId;
+            _relayConnectionString = relayConnectionString;
+            _serviceBusConnectionString = serviceBusConnectionString;
+            _extensionPrincipalId = extensionPrincipalId;
             ExtensionInstanceReleaseTrain = extensionInstanceReleaseTrain;
             VcName = vcName;
             Namespace = @namespace;
@@ -48,15 +54,48 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Relay connection string. </summary>
         [WirePath("relayConnectionString")]
-        public string RelayConnectionString { get; set; }
+        public string RelayConnectionString
+        {
+            get
+            {
+                return _relayConnectionString;
+            }
+            set
+            {
+                _relayConnectionString = value;
+                _relayConnectionStringIsDefined = true;
+            }
+        }
 
         /// <summary> ServiceBus connection string. </summary>
         [WirePath("serviceBusConnectionString")]
-        public string ServiceBusConnectionString { get; set; }
+        public string ServiceBusConnectionString
+        {
+            get
+            {
+                return _serviceBusConnectionString;
+            }
+            set
+            {
+                _serviceBusConnectionString = value;
+                _serviceBusConnectionStringIsDefined = true;
+            }
+        }
 
         /// <summary> Extension principal-id. </summary>
         [WirePath("extensionPrincipalId")]
-        public string ExtensionPrincipalId { get; set; }
+        public string ExtensionPrincipalId
+        {
+            get
+            {
+                return _extensionPrincipalId;
+            }
+            set
+            {
+                _extensionPrincipalId = value;
+                _extensionPrincipalIdIsDefined = true;
+            }
+        }
 
         /// <summary> Extension instance release train. </summary>
         [WirePath("extensionInstanceReleaseTrain")]

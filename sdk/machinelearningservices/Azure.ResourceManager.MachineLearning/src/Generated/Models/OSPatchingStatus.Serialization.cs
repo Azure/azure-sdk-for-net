@@ -96,13 +96,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(OSPatchingErrors))
             {
-                writer.WritePropertyName("osPatchingErrors"u8);
-                writer.WriteStartArray();
-                foreach (MachineLearningError item in OSPatchingErrors)
+                if (OSPatchingErrors != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("osPatchingErrors"u8);
+                    writer.WriteStartArray();
+                    foreach (MachineLearningError item in OSPatchingErrors)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("osPatchingErrors"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -150,7 +157,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string latestPatchTime = default;
             bool? isRebootPending = default;
             string scheduledRebootTime = default;
-            IList<MachineLearningError> osPatchingErrors = default;
+            IList<MachineLearningError> osPatchingErrors = new ChangeTrackingList<MachineLearningError>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -186,6 +193,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        osPatchingErrors = null;
                         continue;
                     }
                     List<MachineLearningError> array = new List<MachineLearningError>();
@@ -206,7 +214,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 latestPatchTime,
                 isRebootPending,
                 scheduledRebootTime,
-                osPatchingErrors ?? new ChangeTrackingList<MachineLearningError>(),
+                osPatchingErrors,
                 additionalBinaryDataProperties);
         }
     }

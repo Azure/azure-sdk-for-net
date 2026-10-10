@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.BotService.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private bool? _isBlockUserUploadEnabled;
+        internal bool _isBlockUserUploadEnabledIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="BotChannelSite"/>. </summary>
         /// <param name="siteName"> Site name. </param>
@@ -63,7 +65,7 @@ namespace Azure.ResourceManager.BotService.Models
             IsTokenEnabled = isTokenEnabled;
             IsEndpointParametersEnabled = isEndpointParametersEnabled;
             IsDetailedLoggingEnabled = isDetailedLoggingEnabled;
-            IsBlockUserUploadEnabled = isBlockUserUploadEnabled;
+            _isBlockUserUploadEnabled = isBlockUserUploadEnabled;
             IsNoStorageEnabled = isNoStorageEnabled;
             ETag = eTag;
             AppId = appId;
@@ -104,7 +106,18 @@ namespace Azure.ResourceManager.BotService.Models
         public bool? IsDetailedLoggingEnabled { get; set; }
 
         /// <summary> Whether this site is enabled for block user upload. </summary>
-        public bool? IsBlockUserUploadEnabled { get; set; }
+        public bool? IsBlockUserUploadEnabled
+        {
+            get
+            {
+                return _isBlockUserUploadEnabled;
+            }
+            set
+            {
+                _isBlockUserUploadEnabled = value;
+                _isBlockUserUploadEnabledIsDefined = true;
+            }
+        }
 
         /// <summary> Whether this no-storage site is disabled detailed logging for. </summary>
         public bool? IsNoStorageEnabled { get; set; }

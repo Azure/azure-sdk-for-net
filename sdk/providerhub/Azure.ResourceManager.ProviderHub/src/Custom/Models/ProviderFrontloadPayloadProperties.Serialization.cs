@@ -290,11 +290,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 copyFromLocation,
                 environmentType,
                 serviceFeatureFlag,
-                includeResourceTypes,
-                excludeResourceTypes,
+                includeResourceTypes ?? new ChangeTrackingList<string>(),
+                excludeResourceTypes ?? new ChangeTrackingList<string>(),
                 overrideManifestLevelFields,
                 overrideEndpointLevelFields,
-                ignoreFields,
+                ignoreFields ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
     }

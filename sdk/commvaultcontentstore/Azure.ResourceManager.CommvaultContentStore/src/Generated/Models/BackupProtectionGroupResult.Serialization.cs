@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BackupProtectionGroupResult(taskId, jobIds, additionalBinaryDataProperties);
+            return new BackupProtectionGroupResult(taskId, jobIds ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

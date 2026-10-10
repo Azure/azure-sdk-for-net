@@ -15,6 +15,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _branch;
+        internal bool _branchIsDefined;
+        private string _tag;
+        internal bool _tagIsDefined;
+        private string _semver;
+        internal bool _semverIsDefined;
+        private string _commit;
+        internal bool _commitIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FluxRepositoryReference"/>. </summary>
         public FluxRepositoryReference()
@@ -29,23 +37,67 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal FluxRepositoryReference(string branch, string tag, string semver, string commit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Branch = branch;
-            Tag = tag;
-            Semver = semver;
-            Commit = commit;
+            _branch = branch;
+            _tag = tag;
+            _semver = semver;
+            _commit = commit;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The git repository branch name to checkout. </summary>
-        public string Branch { get; set; }
+        public string Branch
+        {
+            get
+            {
+                return _branch;
+            }
+            set
+            {
+                _branch = value;
+                _branchIsDefined = true;
+            }
+        }
 
         /// <summary> The git repository tag name to checkout. This takes precedence over branch. </summary>
-        public string Tag { get; set; }
+        public string Tag
+        {
+            get
+            {
+                return _tag;
+            }
+            set
+            {
+                _tag = value;
+                _tagIsDefined = true;
+            }
+        }
 
         /// <summary> The semver range used to match against git repository tags. This takes precedence over tag. </summary>
-        public string Semver { get; set; }
+        public string Semver
+        {
+            get
+            {
+                return _semver;
+            }
+            set
+            {
+                _semver = value;
+                _semverIsDefined = true;
+            }
+        }
 
         /// <summary> The commit SHA to checkout. This value must be combined with the branch name to be valid. This takes precedence over semver. </summary>
-        public string Commit { get; set; }
+        public string Commit
+        {
+            get
+            {
+                return _commit;
+            }
+            set
+            {
+                _commit = value;
+                _commitIsDefined = true;
+            }
+        }
     }
 }

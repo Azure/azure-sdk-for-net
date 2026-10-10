@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.OracleDatabase
     public partial class OracleDBVersionCollection : ArmCollection, IEnumerable<OracleDBVersionResource>, IAsyncEnumerable<OracleDBVersionResource>
     {
         private readonly ClientDiagnostics _dbVersionsClientDiagnostics;
-        private readonly DbVersions _dbVersionsRestClient;
+        private readonly DBVersions _dbVersionsRestClient;
         /// <summary> The location. </summary>
         private readonly AzureLocation _location;
 
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.OracleDatabase
             TryGetApiVersion(OracleDBVersionResource.ResourceType, out string oracleDBVersionApiVersion);
             _location = location;
             _dbVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleDBVersionResource.ResourceType.Namespace, Diagnostics);
-            _dbVersionsRestClient = new DbVersions(_dbVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDBVersionApiVersion ?? "2025-09-01");
+            _dbVersionsRestClient = new DBVersions(_dbVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDBVersionApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

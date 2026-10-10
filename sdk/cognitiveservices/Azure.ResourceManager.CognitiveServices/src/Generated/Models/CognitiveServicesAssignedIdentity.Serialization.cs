@@ -89,10 +89,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             writer.WriteStringValue(PrincipalId);
             writer.WritePropertyName("tenantId"u8);
             writer.WriteStringValue(TenantId);
-            if (Optional.IsDefined(Subject))
+            if (_subjectIsDefined || Optional.IsDefined(Subject))
             {
-                writer.WritePropertyName("subject"u8);
-                writer.WriteStringValue(Subject);
+                if (Subject != null)
+                {
+                    writer.WritePropertyName("subject"u8);
+                    writer.WriteStringValue(Subject);
+                }
+                else
+                {
+                    writer.WriteNull("subject"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -146,6 +153,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             string clientId = default;
             string principalId = default;
             string tenantId = default;
+            bool subjectIsDefined = false;
             string subject = default;
             CognitiveServicesIdentityProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -178,6 +186,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("subject"u8))
                 {
+                    subjectIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         subject = null;
@@ -208,7 +217,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 tenantId,
                 subject,
                 provisioningState,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _subjectIsDefined = subjectIsDefined
+            };
         }
     }
 }

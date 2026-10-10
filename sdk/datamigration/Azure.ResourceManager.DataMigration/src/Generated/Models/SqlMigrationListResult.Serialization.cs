@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SqlMigrationListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SqlMigrationListResult(value ?? new ChangeTrackingList<SqlMigrationServiceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

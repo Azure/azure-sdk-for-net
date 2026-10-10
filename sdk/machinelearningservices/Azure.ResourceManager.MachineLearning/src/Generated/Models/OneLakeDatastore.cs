@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> OneLake (Trident) datastore configuration. </summary>
     public partial class OneLakeDatastore : MachineLearningDatastoreProperties
     {
+        private string _endpoint;
+        internal bool _endpointIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="OneLakeDatastore"/>. </summary>
         /// <param name="credentials"> [Required] Account credentials. </param>
         /// <param name="artifact"> [Required] OneLake artifact backing the datastore. </param>
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal OneLakeDatastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, OneLakeArtifact artifact, string endpoint, string oneLakeWorkspaceName, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity) : base(description, properties, tags, additionalBinaryDataProperties, credentials, datastoreType, isDefault)
         {
             Artifact = artifact;
-            Endpoint = endpoint;
+            _endpoint = endpoint;
             OneLakeWorkspaceName = oneLakeWorkspaceName;
             ServiceDataAccessAuthIdentity = serviceDataAccessAuthIdentity;
         }
@@ -55,7 +58,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> OneLake endpoint to use for the datastore. </summary>
         [WirePath("endpoint")]
-        public string Endpoint { get; set; }
+        public string Endpoint
+        {
+            get
+            {
+                return _endpoint;
+            }
+            set
+            {
+                _endpoint = value;
+                _endpointIsDefined = true;
+            }
+        }
 
         /// <summary> [Required] OneLake workspace name. </summary>
         [WirePath("oneLakeWorkspaceName")]

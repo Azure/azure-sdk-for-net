@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new OutboundNetworkDependenciesEndpointListResult(value, nextLink, additionalBinaryDataProperties);
+            return new OutboundNetworkDependenciesEndpointListResult(value ?? new ChangeTrackingList<OutboundNetworkDependenciesEndpoint>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

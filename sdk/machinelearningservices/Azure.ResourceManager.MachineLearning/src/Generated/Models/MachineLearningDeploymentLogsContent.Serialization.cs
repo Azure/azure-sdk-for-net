@@ -90,10 +90,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("containerType"u8);
                 writer.WriteStringValue(ContainerType.Value.ToString());
             }
-            if (Optional.IsDefined(Tail))
+            if (_tailIsDefined || Optional.IsDefined(Tail))
             {
-                writer.WritePropertyName("tail"u8);
-                writer.WriteNumberValue(Tail.Value);
+                if (Tail != null)
+                {
+                    writer.WritePropertyName("tail"u8);
+                    writer.WriteNumberValue(Tail.Value);
+                }
+                else
+                {
+                    writer.WriteNull("tail"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -138,6 +145,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             MachineLearningContainerType? containerType = default;
+            bool tailIsDefined = false;
             int? tail = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -153,6 +161,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("tail"u8))
                 {
+                    tailIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         tail = null;
@@ -166,7 +175,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MachineLearningDeploymentLogsContent(containerType, tail, additionalBinaryDataProperties);
+            return new MachineLearningDeploymentLogsContent(containerType, tail, additionalBinaryDataProperties)
+            {
+                _tailIsDefined = tailIsDefined
+            };
         }
     }
 }

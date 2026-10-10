@@ -15,12 +15,9 @@ namespace Azure.ResourceManager.PowerPlatform
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(AccountList))]
-    [ModelReaderWriterBuildable(typeof(AccountProperties))]
     [ModelReaderWriterBuildable(typeof(EnterprisePolicyData))]
     [ModelReaderWriterBuildable(typeof(EnterprisePolicyEncryptionProperties))]
     [ModelReaderWriterBuildable(typeof(EnterprisePolicyIdentity))]
-    [ModelReaderWriterBuildable(typeof(EnterprisePolicyList))]
     [ModelReaderWriterBuildable(typeof(EnterprisePolicyPatch))]
     [ModelReaderWriterBuildable(typeof(EnterprisePolicyResource))]
     [ModelReaderWriterBuildable(typeof(PowerPlatformAccountData))]
@@ -29,21 +26,12 @@ namespace Azure.ResourceManager.PowerPlatform
     [ModelReaderWriterBuildable(typeof(PowerPlatformKeyProperties))]
     [ModelReaderWriterBuildable(typeof(PowerPlatformKeyVaultProperties))]
     [ModelReaderWriterBuildable(typeof(PowerPlatformPrivateEndpointConnectionData))]
-    [ModelReaderWriterBuildable(typeof(PowerPlatformPrivateEndpointConnectionListResult))]
     [ModelReaderWriterBuildable(typeof(PowerPlatformPrivateEndpointConnectionResource))]
     [ModelReaderWriterBuildable(typeof(PowerPlatformPrivateLinkResource))]
     [ModelReaderWriterBuildable(typeof(PowerPlatformPrivateLinkResourceData))]
-    [ModelReaderWriterBuildable(typeof(PowerPlatformPrivateLinkResourceListResult))]
-    [ModelReaderWriterBuildable(typeof(PowerPlatformPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(PowerPlatformPrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(PowerPlatformTrackedResourcePatch))]
     [ModelReaderWriterBuildable(typeof(PowerPlatformVirtualNetworkProperties))]
-    [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
-    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
-    [ModelReaderWriterBuildable(typeof(Properties))]
-    [ModelReaderWriterBuildable(typeof(PropertiesLockbox))]
-    [ModelReaderWriterBuildable(typeof(PropertiesNetworkInjection))]
-    [ModelReaderWriterBuildable(typeof(SubnetProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerPowerPlatformContext : ModelReaderWriterContext
     {

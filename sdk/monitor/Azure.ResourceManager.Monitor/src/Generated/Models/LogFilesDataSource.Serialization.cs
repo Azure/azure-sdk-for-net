@@ -235,8 +235,8 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             return new LogFilesDataSource(
-                streams,
-                filePatterns,
+                streams ?? new ChangeTrackingList<string>(),
+                filePatterns ?? new ChangeTrackingList<string>(),
                 format,
                 settings,
                 transformKql,

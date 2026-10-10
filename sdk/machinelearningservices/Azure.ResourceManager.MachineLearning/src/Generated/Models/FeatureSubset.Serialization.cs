@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FeatureSubset(filterType, additionalBinaryDataProperties, features);
+            return new FeatureSubset(filterType, additionalBinaryDataProperties, features ?? new ChangeTrackingList<string>());
         }
     }
 }

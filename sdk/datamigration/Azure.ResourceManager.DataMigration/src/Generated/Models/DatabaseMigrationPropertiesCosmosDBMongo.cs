@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class DatabaseMigrationPropertiesCosmosDBMongo : DatabaseMigrationBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="DatabaseMigrationPropertiesCosmosDBMongo"/>. </summary>
-        public DatabaseMigrationPropertiesCosmosDBMongo() : base(ResourceType.MongoToCosmosDbMongo)
+        public DatabaseMigrationPropertiesCosmosDBMongo() : base(ResourceType.MongoToCosmosDBMongo)
         {
             CollectionList = new ChangeTrackingList<DataMigrationMongoMigrationCollectionInfo>();
         }

@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups
     [ModelReaderWriterBuildable(typeof(PrometheusRuleGroupAction))]
     [ModelReaderWriterBuildable(typeof(PrometheusRuleGroupData))]
     [ModelReaderWriterBuildable(typeof(PrometheusRuleGroupPatch))]
-    [ModelReaderWriterBuildable(typeof(PrometheusRuleGroupProperties))]
     [ModelReaderWriterBuildable(typeof(PrometheusRuleGroupResource))]
-    [ModelReaderWriterBuildable(typeof(PrometheusRuleGroupResourceCollection))]
-    [ModelReaderWriterBuildable(typeof(PrometheusRuleGroupResourcePatchParametersProperties))]
     [ModelReaderWriterBuildable(typeof(PrometheusRuleResolveConfiguration))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerPrometheusRuleGroupsContext : ModelReaderWriterContext

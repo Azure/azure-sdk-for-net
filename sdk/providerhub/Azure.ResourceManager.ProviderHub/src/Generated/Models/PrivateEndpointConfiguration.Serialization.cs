@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PrivateEndpointConfiguration(minApiVersion, groupConnectivityInformation, additionalBinaryDataProperties);
+            return new PrivateEndpointConfiguration(minApiVersion, groupConnectivityInformation ?? new ChangeTrackingList<GroupConnectivityInformation>(), additionalBinaryDataProperties);
         }
     }
 }

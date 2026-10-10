@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DBNodeListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DBNodeListResult(value ?? new ChangeTrackingList<CloudVmClusterDBNodeData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

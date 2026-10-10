@@ -74,20 +74,34 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(DataCollectionConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ClientId))
+            if (_clientIdIsDefined || Optional.IsDefined(ClientId))
             {
-                writer.WritePropertyName("clientId"u8);
-                writer.WriteStringValue(ClientId);
+                if (ClientId != null)
+                {
+                    writer.WritePropertyName("clientId"u8);
+                    writer.WriteStringValue(ClientId);
+                }
+                else
+                {
+                    writer.WriteNull("clientId"u8);
+                }
             }
             if (Optional.IsDefined(DataCollectionMode))
             {
                 writer.WritePropertyName("dataCollectionMode"u8);
                 writer.WriteStringValue(DataCollectionMode.Value.ToString());
             }
-            if (Optional.IsDefined(DataId))
+            if (_dataIdIsDefined || Optional.IsDefined(DataId))
             {
-                writer.WritePropertyName("dataId"u8);
-                writer.WriteStringValue(DataId);
+                if (DataId != null)
+                {
+                    writer.WritePropertyName("dataId"u8);
+                    writer.WriteStringValue(DataId);
+                }
+                else
+                {
+                    writer.WriteNull("dataId"u8);
+                }
             }
             if (Optional.IsDefined(SamplingRate))
             {
@@ -136,8 +150,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool clientIdIsDefined = false;
             string clientId = default;
             DataCollectionMode? dataCollectionMode = default;
+            bool dataIdIsDefined = false;
             string dataId = default;
             double? samplingRate = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -145,6 +161,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (prop.NameEquals("clientId"u8))
                 {
+                    clientIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         clientId = null;
@@ -164,6 +181,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("dataId"u8))
                 {
+                    dataIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         dataId = null;
@@ -186,7 +204,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DataCollectionConfiguration(clientId, dataCollectionMode, dataId, samplingRate, additionalBinaryDataProperties);
+            return new DataCollectionConfiguration(clientId, dataCollectionMode, dataId, samplingRate, additionalBinaryDataProperties)
+            {
+                _clientIdIsDefined = clientIdIsDefined,
+                _dataIdIsDefined = dataIdIsDefined
+            };
         }
     }
 }

@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The authentication info when authType is systemAssignedIdentity. </summary>
     public partial class SystemAssignedIdentityAuthInfo : AuthBaseInfo
     {
+        private string _userName;
+        internal bool _userNameIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="SystemAssignedIdentityAuthInfo"/>. </summary>
         public SystemAssignedIdentityAuthInfo() : base(LinkerAuthType.SystemAssignedIdentity)
         {
@@ -29,13 +32,24 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="roles"> Optional, this value specifies the Azure role to be assigned. </param>
         internal SystemAssignedIdentityAuthInfo(LinkerAuthType authType, LinkerAuthMode? authMode, IDictionary<string, BinaryData> additionalBinaryDataProperties, string userName, LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior, IList<string> roles) : base(authType, authMode, additionalBinaryDataProperties)
         {
-            UserName = userName;
+            _userName = userName;
             DeleteOrUpdateBehavior = deleteOrUpdateBehavior;
             Roles = roles;
         }
 
         /// <summary> Username created in the database which is mapped to a user in AAD. </summary>
-        public string UserName { get; set; }
+        public string UserName
+        {
+            get
+            {
+                return _userName;
+            }
+            set
+            {
+                _userName = value;
+                _userNameIsDefined = true;
+            }
+        }
 
         /// <summary> Indicates whether to clean up previous operation when Linker is updating or deleting. </summary>
         public LinkerDeleteOrUpdateBehavior? DeleteOrUpdateBehavior { get; set; }

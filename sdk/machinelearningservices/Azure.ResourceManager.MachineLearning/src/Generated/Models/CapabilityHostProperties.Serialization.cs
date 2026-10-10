@@ -77,43 +77,64 @@ namespace Azure.ResourceManager.MachineLearning.Models
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(AcaEnvironmentConnections))
             {
-                writer.WritePropertyName("acaEnvironmentConnections"u8);
-                writer.WriteStartArray();
-                foreach (string item in AcaEnvironmentConnections)
+                if (AcaEnvironmentConnections != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("acaEnvironmentConnections"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in AcaEnvironmentConnections)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("acaEnvironmentConnections"u8);
+                }
             }
             if (Optional.IsCollectionDefined(AiServicesConnections))
             {
-                writer.WritePropertyName("aiServicesConnections"u8);
-                writer.WriteStartArray();
-                foreach (string item in AiServicesConnections)
+                if (AiServicesConnections != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("aiServicesConnections"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in AiServicesConnections)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("aiServicesConnections"u8);
+                }
             }
             if (Optional.IsDefined(CapabilityHostKind))
             {
                 writer.WritePropertyName("capabilityHostKind"u8);
                 writer.WriteStringValue(CapabilityHostKind.Value.ToString());
             }
-            if (Optional.IsDefined(CustomerSubnet))
+            if (_customerSubnetIsDefined || Optional.IsDefined(CustomerSubnet))
             {
-                writer.WritePropertyName("customerSubnet"u8);
-                writer.WriteStringValue(CustomerSubnet);
+                if (CustomerSubnet != null)
+                {
+                    writer.WritePropertyName("customerSubnet"u8);
+                    writer.WriteStringValue(CustomerSubnet);
+                }
+                else
+                {
+                    writer.WriteNull("customerSubnet"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -122,63 +143,91 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(StorageConnections))
             {
-                writer.WritePropertyName("storageConnections"u8);
-                writer.WriteStartArray();
-                foreach (string item in StorageConnections)
+                if (StorageConnections != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("storageConnections"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in StorageConnections)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("storageConnections"u8);
+                }
             }
             if (Optional.IsCollectionDefined(ThreadStorageConnections))
             {
-                writer.WritePropertyName("threadStorageConnections"u8);
-                writer.WriteStartArray();
-                foreach (string item in ThreadStorageConnections)
+                if (ThreadStorageConnections != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("threadStorageConnections"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in ThreadStorageConnections)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("threadStorageConnections"u8);
+                }
             }
             if (Optional.IsCollectionDefined(VectorStoreConnections))
             {
-                writer.WritePropertyName("vectorStoreConnections"u8);
-                writer.WriteStartArray();
-                foreach (string item in VectorStoreConnections)
+                if (VectorStoreConnections != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("vectorStoreConnections"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in VectorStoreConnections)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("vectorStoreConnections"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Messages))
             {
-                writer.WritePropertyName("messages"u8);
-                writer.WriteStartArray();
-                foreach (string item in Messages)
+                if (Messages != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("messages"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in Messages)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("messages"u8);
+                }
             }
         }
 
@@ -207,23 +256,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool descriptionIsDefined = false;
             string description = default;
-            IDictionary<string, string> properties = default;
-            IDictionary<string, string> tags = default;
+            IDictionary<string, string> properties = new ChangeTrackingDictionary<string, string>();
+            IDictionary<string, string> tags = new ChangeTrackingDictionary<string, string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<string> acaEnvironmentConnections = default;
-            IList<string> aiServicesConnections = default;
+            IList<string> acaEnvironmentConnections = new ChangeTrackingList<string>();
+            IList<string> aiServicesConnections = new ChangeTrackingList<string>();
             CapabilityHostKind? capabilityHostKind = default;
+            bool customerSubnetIsDefined = false;
             string customerSubnet = default;
             CapabilityHostProvisioningState? provisioningState = default;
-            IList<string> storageConnections = default;
-            IList<string> threadStorageConnections = default;
-            IList<string> vectorStoreConnections = default;
-            IReadOnlyList<string> messages = default;
+            IList<string> storageConnections = new ChangeTrackingList<string>();
+            IList<string> threadStorageConnections = new ChangeTrackingList<string>();
+            IList<string> vectorStoreConnections = new ChangeTrackingList<string>();
+            IReadOnlyList<string> messages = new ChangeTrackingList<string>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -236,6 +288,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -257,6 +310,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        tags = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -278,6 +332,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        acaEnvironmentConnections = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -299,6 +354,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        aiServicesConnections = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -327,6 +383,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("customerSubnet"u8))
                 {
+                    customerSubnetIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         customerSubnet = null;
@@ -348,6 +405,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        storageConnections = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -369,6 +427,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        threadStorageConnections = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -390,6 +449,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        vectorStoreConnections = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -411,6 +471,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        messages = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -435,18 +496,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             return new CapabilityHostProperties(
                 description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                properties,
+                tags,
                 additionalBinaryDataProperties,
-                acaEnvironmentConnections ?? new ChangeTrackingList<string>(),
-                aiServicesConnections ?? new ChangeTrackingList<string>(),
+                acaEnvironmentConnections,
+                aiServicesConnections,
                 capabilityHostKind,
                 customerSubnet,
                 provisioningState,
-                storageConnections ?? new ChangeTrackingList<string>(),
-                threadStorageConnections ?? new ChangeTrackingList<string>(),
-                vectorStoreConnections ?? new ChangeTrackingList<string>(),
-                messages ?? new ChangeTrackingList<string>());
+                storageConnections,
+                threadStorageConnections,
+                vectorStoreConnections,
+                messages)
+            {
+                _descriptionIsDefined = descriptionIsDefined,
+                _customerSubnetIsDefined = customerSubnetIsDefined
+            };
         }
     }
 }

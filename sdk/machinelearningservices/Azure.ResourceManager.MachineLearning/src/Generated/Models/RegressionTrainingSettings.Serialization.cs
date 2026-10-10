@@ -77,23 +77,37 @@ namespace Azure.ResourceManager.MachineLearning.Models
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(AllowedTrainingAlgorithms))
             {
-                writer.WritePropertyName("allowedTrainingAlgorithms"u8);
-                writer.WriteStartArray();
-                foreach (AutoMLVerticalRegressionModel item in AllowedTrainingAlgorithms)
+                if (AllowedTrainingAlgorithms != null)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WritePropertyName("allowedTrainingAlgorithms"u8);
+                    writer.WriteStartArray();
+                    foreach (AutoMLVerticalRegressionModel item in AllowedTrainingAlgorithms)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("allowedTrainingAlgorithms"u8);
+                }
             }
             if (Optional.IsCollectionDefined(BlockedTrainingAlgorithms))
             {
-                writer.WritePropertyName("blockedTrainingAlgorithms"u8);
-                writer.WriteStartArray();
-                foreach (AutoMLVerticalRegressionModel item in BlockedTrainingAlgorithms)
+                if (BlockedTrainingAlgorithms != null)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WritePropertyName("blockedTrainingAlgorithms"u8);
+                    writer.WriteStartArray();
+                    foreach (AutoMLVerticalRegressionModel item in BlockedTrainingAlgorithms)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("blockedTrainingAlgorithms"u8);
+                }
             }
         }
 
@@ -128,10 +142,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             bool? enableStackEnsemble = default;
             bool? enableVoteEnsemble = default;
             TimeSpan? ensembleModelDownloadTimeout = default;
+            bool stackEnsembleSettingsIsDefined = false;
             MachineLearningStackEnsembleSettings stackEnsembleSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<AutoMLVerticalRegressionModel> allowedTrainingAlgorithms = default;
-            IList<AutoMLVerticalRegressionModel> blockedTrainingAlgorithms = default;
+            IList<AutoMLVerticalRegressionModel> allowedTrainingAlgorithms = new ChangeTrackingList<AutoMLVerticalRegressionModel>();
+            IList<AutoMLVerticalRegressionModel> blockedTrainingAlgorithms = new ChangeTrackingList<AutoMLVerticalRegressionModel>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("enableDnnTraining"u8))
@@ -190,6 +205,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("stackEnsembleSettings"u8))
                 {
+                    stackEnsembleSettingsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         stackEnsembleSettings = null;
@@ -202,6 +218,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        allowedTrainingAlgorithms = null;
                         continue;
                     }
                     List<AutoMLVerticalRegressionModel> array = new List<AutoMLVerticalRegressionModel>();
@@ -216,6 +233,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        blockedTrainingAlgorithms = null;
                         continue;
                     }
                     List<AutoMLVerticalRegressionModel> array = new List<AutoMLVerticalRegressionModel>();
@@ -240,8 +258,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 ensembleModelDownloadTimeout,
                 stackEnsembleSettings,
                 additionalBinaryDataProperties,
-                allowedTrainingAlgorithms ?? new ChangeTrackingList<AutoMLVerticalRegressionModel>(),
-                blockedTrainingAlgorithms ?? new ChangeTrackingList<AutoMLVerticalRegressionModel>());
+                allowedTrainingAlgorithms,
+                blockedTrainingAlgorithms)
+            {
+                _stackEnsembleSettingsIsDefined = stackEnsembleSettingsIsDefined
+            };
         }
     }
 }

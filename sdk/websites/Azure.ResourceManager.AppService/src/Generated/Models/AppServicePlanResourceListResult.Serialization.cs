@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AppServicePlanResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AppServicePlanResourceListResult(value ?? new ChangeTrackingList<string>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

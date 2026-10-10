@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _version;
+        internal bool _versionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesAgentProtocolVersion"/>. </summary>
         public CognitiveServicesAgentProtocolVersion()
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         internal CognitiveServicesAgentProtocolVersion(CognitiveServicesAgentProtocol? protocol, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Protocol = protocol;
-            Version = version;
+            _version = version;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -39,6 +41,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> The version of the protocol. </summary>
         [WirePath("version")]
-        public string Version { get; set; }
+        public string Version
+        {
+            get
+            {
+                return _version;
+            }
+            set
+            {
+                _version = value;
+                _versionIsDefined = true;
+            }
+        }
     }
 }

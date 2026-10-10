@@ -79,10 +79,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DefinitionType.Value.ToString());
             }
-            if (Optional.IsDefined(ReadOnly))
+            if (_readOnlyIsDefined || Optional.IsDefined(ReadOnly))
             {
-                writer.WritePropertyName("readOnly"u8);
-                writer.WriteBooleanValue(ReadOnly.Value);
+                if (ReadOnly != null)
+                {
+                    writer.WritePropertyName("readOnly"u8);
+                    writer.WriteBooleanValue(ReadOnly.Value);
+                }
+                else
+                {
+                    writer.WriteNull("readOnly"u8);
+                }
             }
             if (Optional.IsDefined(Source))
             {
@@ -94,25 +101,53 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (Optional.IsDefined(Consistency))
+            if (_consistencyIsDefined || Optional.IsDefined(Consistency))
             {
-                writer.WritePropertyName("consistency"u8);
-                writer.WriteStringValue(Consistency);
+                if (Consistency != null)
+                {
+                    writer.WritePropertyName("consistency"u8);
+                    writer.WriteStringValue(Consistency);
+                }
+                else
+                {
+                    writer.WriteNull("consistency"u8);
+                }
             }
-            if (Optional.IsDefined(Bind))
+            if (_bindIsDefined || Optional.IsDefined(Bind))
             {
-                writer.WritePropertyName("bind"u8);
-                writer.WriteObjectValue(Bind, options);
+                if (Bind != null)
+                {
+                    writer.WritePropertyName("bind"u8);
+                    writer.WriteObjectValue(Bind, options);
+                }
+                else
+                {
+                    writer.WriteNull("bind"u8);
+                }
             }
-            if (Optional.IsDefined(Volume))
+            if (_volumeIsDefined || Optional.IsDefined(Volume))
             {
-                writer.WritePropertyName("volume"u8);
-                writer.WriteObjectValue(Volume, options);
+                if (Volume != null)
+                {
+                    writer.WritePropertyName("volume"u8);
+                    writer.WriteObjectValue(Volume, options);
+                }
+                else
+                {
+                    writer.WriteNull("volume"u8);
+                }
             }
-            if (Optional.IsDefined(Tmpfs))
+            if (_tmpfsIsDefined || Optional.IsDefined(Tmpfs))
             {
-                writer.WritePropertyName("tmpfs"u8);
-                writer.WriteObjectValue(Tmpfs, options);
+                if (Tmpfs != null)
+                {
+                    writer.WritePropertyName("tmpfs"u8);
+                    writer.WriteObjectValue(Tmpfs, options);
+                }
+                else
+                {
+                    writer.WriteNull("tmpfs"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -157,12 +192,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             VolumeDefinitionType? definitionType = default;
+            bool readOnlyIsDefined = false;
             bool? readOnly = default;
             string source = default;
             string target = default;
+            bool consistencyIsDefined = false;
             string consistency = default;
+            bool bindIsDefined = false;
             MountBindOptions bind = default;
+            bool volumeIsDefined = false;
             VolumeOptions volume = default;
+            bool tmpfsIsDefined = false;
             TmpfsOptions tmpfs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -178,6 +218,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("readOnly"u8))
                 {
+                    readOnlyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         readOnly = null;
@@ -198,6 +239,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("consistency"u8))
                 {
+                    consistencyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         consistency = null;
@@ -208,6 +250,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("bind"u8))
                 {
+                    bindIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         bind = null;
@@ -218,6 +261,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("volume"u8))
                 {
+                    volumeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         volume = null;
@@ -228,6 +272,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("tmpfs"u8))
                 {
+                    tmpfsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         tmpfs = null;
@@ -250,7 +295,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 bind,
                 volume,
                 tmpfs,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _readOnlyIsDefined = readOnlyIsDefined,
+                _consistencyIsDefined = consistencyIsDefined,
+                _bindIsDefined = bindIsDefined,
+                _volumeIsDefined = volumeIsDefined,
+                _tmpfsIsDefined = tmpfsIsDefined
+            };
         }
     }
 }

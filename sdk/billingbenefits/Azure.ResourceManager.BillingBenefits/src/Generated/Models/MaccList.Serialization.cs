@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MaccList(value, nextLink, additionalBinaryDataProperties);
+            return new MaccList(value ?? new ChangeTrackingList<MaccData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

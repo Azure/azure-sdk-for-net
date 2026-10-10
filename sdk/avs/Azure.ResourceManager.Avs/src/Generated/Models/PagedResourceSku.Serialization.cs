@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Avs.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedResourceSku(value, nextLink, additionalBinaryDataProperties);
+            return new PagedResourceSku(value ?? new ChangeTrackingList<AvsResourceSku>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

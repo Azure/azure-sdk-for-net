@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EncryptionSetListResult(value, nextLink, additionalBinaryDataProperties);
+            return new EncryptionSetListResult(value ?? new ChangeTrackingList<DevCenterEncryptionSetData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

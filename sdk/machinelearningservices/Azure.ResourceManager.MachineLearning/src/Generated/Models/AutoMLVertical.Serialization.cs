@@ -88,10 +88,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("logVerbosity"u8);
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
-            if (Optional.IsDefined(TargetColumnName))
+            if (_targetColumnNameIsDefined || Optional.IsDefined(TargetColumnName))
             {
-                writer.WritePropertyName("targetColumnName"u8);
-                writer.WriteStringValue(TargetColumnName);
+                if (TargetColumnName != null)
+                {
+                    writer.WritePropertyName("targetColumnName"u8);
+                    writer.WriteStringValue(TargetColumnName);
+                }
+                else
+                {
+                    writer.WriteNull("targetColumnName"u8);
+                }
             }
             writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _unixPermissions;
+        internal bool _unixPermissionsIsDefined;
+        private SmbAccessBasedEnumeration? _smbAccessBasedEnumeration;
+        internal bool _smbAccessBasedEnumerationIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="VolumePatchProperties"/>. </summary>
         public VolumePatchProperties()
@@ -65,13 +69,13 @@ namespace Azure.ResourceManager.NetApp.Models
             IsDefaultQuotaEnabled = isDefaultQuotaEnabled;
             DefaultUserQuotaInKiBs = defaultUserQuotaInKiBs;
             DefaultGroupQuotaInKiBs = defaultGroupQuotaInKiBs;
-            UnixPermissions = unixPermissions;
+            _unixPermissions = unixPermissions;
             IsCoolAccessEnabled = isCoolAccessEnabled;
             CoolnessPeriod = coolnessPeriod;
             CoolAccessRetrievalPolicy = coolAccessRetrievalPolicy;
             CoolAccessTieringPolicy = coolAccessTieringPolicy;
             IsSnapshotDirectoryVisible = isSnapshotDirectoryVisible;
-            SmbAccessBasedEnumeration = smbAccessBasedEnumeration;
+            _smbAccessBasedEnumeration = smbAccessBasedEnumeration;
             SmbNonBrowsable = smbNonBrowsable;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -111,7 +115,18 @@ namespace Azure.ResourceManager.NetApp.Models
         public long? DefaultGroupQuotaInKiBs { get; set; }
 
         /// <summary> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </summary>
-        public string UnixPermissions { get; set; }
+        public string UnixPermissions
+        {
+            get
+            {
+                return _unixPermissions;
+            }
+            set
+            {
+                _unixPermissions = value;
+                _unixPermissionsIsDefined = true;
+            }
+        }
 
         /// <summary> Specifies whether Cool Access(tiering) is enabled for the volume. </summary>
         public bool? IsCoolAccessEnabled { get; set; }
@@ -134,7 +149,18 @@ namespace Azure.ResourceManager.NetApp.Models
         public bool? IsSnapshotDirectoryVisible { get; set; }
 
         /// <summary> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
-        public SmbAccessBasedEnumeration? SmbAccessBasedEnumeration { get; set; }
+        public SmbAccessBasedEnumeration? SmbAccessBasedEnumeration
+        {
+            get
+            {
+                return _smbAccessBasedEnumeration;
+            }
+            set
+            {
+                _smbAccessBasedEnumeration = value;
+                _smbAccessBasedEnumerationIsDefined = true;
+            }
+        }
 
         /// <summary> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
         public SmbNonBrowsable? SmbNonBrowsable { get; set; }

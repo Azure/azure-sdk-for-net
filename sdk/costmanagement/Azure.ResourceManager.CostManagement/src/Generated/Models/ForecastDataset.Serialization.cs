@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ForecastDataset(granularity, configuration, aggregation, filter, additionalBinaryDataProperties);
+            return new ForecastDataset(granularity, configuration, aggregation ?? new ChangeTrackingDictionary<string, ForecastAggregation>(), filter, additionalBinaryDataProperties);
         }
     }
 }

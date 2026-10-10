@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _runId;
+        internal bool _runIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AmlComputeNodeInformation"/>. </summary>
         internal AmlComputeNodeInformation()
@@ -38,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             PublicIPAddress = publicIPAddress;
             Port = port;
             NodeState = nodeState;
-            RunId = runId;
+            _runId = runId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -56,6 +58,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> ID of the Experiment running on the node, if any else null. </summary>
         [WirePath("runId")]
-        public string RunId { get; }
+        public string RunId
+        {
+            get
+            {
+                return _runId;
+            }
+        }
     }
 }

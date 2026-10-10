@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new JobVersionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new JobVersionListResult(value ?? new ChangeTrackingList<SqlServerJobVersionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

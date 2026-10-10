@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new KubeEnvironmentListResult(value, nextLink, additionalBinaryDataProperties);
+            return new KubeEnvironmentListResult(value ?? new ChangeTrackingList<KubeEnvironmentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

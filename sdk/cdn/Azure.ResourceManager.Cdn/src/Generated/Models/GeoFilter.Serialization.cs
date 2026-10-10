@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GeoFilter(relativePath, action, countryCodes, additionalBinaryDataProperties);
+            return new GeoFilter(relativePath, action, countryCodes ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

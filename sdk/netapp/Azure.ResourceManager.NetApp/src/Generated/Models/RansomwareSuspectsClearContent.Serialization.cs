@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RansomwareSuspectsClearContent(resolution, extensions, additionalBinaryDataProperties);
+            return new RansomwareSuspectsClearContent(resolution, extensions ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

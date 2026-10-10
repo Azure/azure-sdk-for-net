@@ -308,11 +308,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return new BareMetalMachineKeySetProperties(
                 azureGroupId,
                 expiresOn,
-                jumpHostsAllowed,
+                jumpHostsAllowed ?? new ChangeTrackingList<IPAddress>(),
                 osGroupName,
                 privilegeLevel,
                 privilegeLevelName,
-                userList,
+                userList ?? new ChangeTrackingList<KeySetUser>(),
                 detailedStatus,
                 detailedStatusMessage,
                 lastValidatedOn,

@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _columnName;
+        internal bool _columnNameIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="IndexColumn"/>. </summary>
         public IndexColumn()
@@ -28,14 +30,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal IndexColumn(string columnName, FeatureDataType? dataType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ColumnName = columnName;
+            _columnName = columnName;
             DataType = dataType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the column name. </summary>
         [WirePath("columnName")]
-        public string ColumnName { get; set; }
+        public string ColumnName
+        {
+            get
+            {
+                return _columnName;
+            }
+            set
+            {
+                _columnName = value;
+                _columnNameIsDefined = true;
+            }
+        }
 
         /// <summary> Specifies the data type. </summary>
         [WirePath("dataType")]

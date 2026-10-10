@@ -82,18 +82,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(ReferencedUris))
             {
-                writer.WritePropertyName("referencedUris"u8);
-                writer.WriteStartArray();
-                foreach (Uri item in ReferencedUris)
+                if (ReferencedUris != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("referencedUris"u8);
+                    writer.WriteStartArray();
+                    foreach (Uri item in ReferencedUris)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.AbsoluteUri);
                     }
-                    writer.WriteStringValue(item.AbsoluteUri);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("referencedUris"u8);
+                }
             }
         }
 
@@ -122,19 +129,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool descriptionIsDefined = false;
             string description = default;
-            IDictionary<string, string> properties = default;
-            IDictionary<string, string> tags = default;
+            IDictionary<string, string> properties = new ChangeTrackingDictionary<string, string>();
+            IDictionary<string, string> tags = new ChangeTrackingDictionary<string, string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             bool? isAnonymous = default;
             bool? isArchived = default;
             MachineLearningDataType dataType = default;
             Uri dataUri = default;
-            IList<Uri> referencedUris = default;
+            IList<Uri> referencedUris = new ChangeTrackingList<Uri>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -147,6 +156,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -168,6 +178,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        tags = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -217,6 +228,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        referencedUris = null;
                         continue;
                     }
                     List<Uri> array = new List<Uri>();
@@ -241,14 +253,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             return new MachineLearningTable(
                 description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                properties,
+                tags,
                 additionalBinaryDataProperties,
                 isAnonymous,
                 isArchived,
                 dataType,
                 dataUri,
-                referencedUris ?? new ChangeTrackingList<Uri>());
+                referencedUris)
+            {
+                _descriptionIsDefined = descriptionIsDefined
+            };
         }
     }
 }

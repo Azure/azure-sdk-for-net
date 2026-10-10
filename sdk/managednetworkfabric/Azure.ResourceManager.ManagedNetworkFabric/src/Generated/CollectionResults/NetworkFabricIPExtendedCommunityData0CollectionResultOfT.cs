@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     internal partial class NetworkFabricIPExtendedCommunityData0CollectionResultOfT : Pageable<NetworkFabricIPExtendedCommunityData>
     {
-        private readonly IpExtendedCommunities _client;
+        private readonly IPExtendedCommunities _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of NetworkFabricIPExtendedCommunityData0CollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The IpExtendedCommunities client used to send requests. </param>
+        /// <param name="client"> The IPExtendedCommunities client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public NetworkFabricIPExtendedCommunityData0CollectionResultOfT(IpExtendedCommunities client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public NetworkFabricIPExtendedCommunityData0CollectionResultOfT(IPExtendedCommunities client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> The pages of NetworkFabricIPExtendedCommunityData0CollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<NetworkFabricIPExtendedCommunityData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private RawGraphicalRunbookContent _rawContent;
+        internal bool _rawContentIsDefined;
+        private string _graphRunbookJson;
+        internal bool _graphRunbookJsonIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="GraphicalRunbookContent"/>. </summary>
         public GraphicalRunbookContent()
@@ -27,15 +31,37 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal GraphicalRunbookContent(RawGraphicalRunbookContent rawContent, string graphRunbookJson, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            RawContent = rawContent;
-            GraphRunbookJson = graphRunbookJson;
+            _rawContent = rawContent;
+            _graphRunbookJson = graphRunbookJson;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Raw graphical Runbook content. </summary>
-        public RawGraphicalRunbookContent RawContent { get; set; }
+        public RawGraphicalRunbookContent RawContent
+        {
+            get
+            {
+                return _rawContent;
+            }
+            set
+            {
+                _rawContent = value;
+                _rawContentIsDefined = true;
+            }
+        }
 
         /// <summary> Graphical Runbook content as JSON. </summary>
-        public string GraphRunbookJson { get; set; }
+        public string GraphRunbookJson
+        {
+            get
+            {
+                return _graphRunbookJson;
+            }
+            set
+            {
+                _graphRunbookJson = value;
+                _graphRunbookJsonIsDefined = true;
+            }
+        }
     }
 }

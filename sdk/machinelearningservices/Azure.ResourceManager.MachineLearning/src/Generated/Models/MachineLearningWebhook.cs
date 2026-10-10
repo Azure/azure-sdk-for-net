@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _eventType;
+        internal bool _eventTypeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningWebhook"/>. </summary>
         /// <param name="webhookType"> [Required] Specifies the type of service to send a callback. </param>
@@ -33,14 +35,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MachineLearningWebhook(string eventType, WebhookType webhookType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            EventType = eventType;
+            _eventType = eventType;
             WebhookType = webhookType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Send callback on a specified notification event. </summary>
         [WirePath("eventType")]
-        public string EventType { get; set; }
+        public string EventType
+        {
+            get
+            {
+                return _eventType;
+            }
+            set
+            {
+                _eventType = value;
+                _eventTypeIsDefined = true;
+            }
+        }
 
         /// <summary> [Required] Specifies the type of service to send a callback. </summary>
         [WirePath("webhookType")]

@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FirewallRuleList(value, nextLink, additionalBinaryDataProperties);
+            return new FirewallRuleList(value ?? new ChangeTrackingList<PostgreSqlFlexibleServerFirewallRuleData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

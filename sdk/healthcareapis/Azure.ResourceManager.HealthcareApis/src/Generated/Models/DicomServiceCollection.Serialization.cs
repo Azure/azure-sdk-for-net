@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DicomServiceCollection(value, nextLink, additionalBinaryDataProperties);
+            return new DicomServiceCollection(value ?? new ChangeTrackingList<DicomServiceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _availabilityZone;
+        internal bool _availabilityZoneIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="NetAppFilePathAvailabilityContent"/>. </summary>
         /// <param name="name"> File path to verify. </param>
@@ -40,7 +42,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             Name = name;
             SubnetId = subnetId;
-            AvailabilityZone = availabilityZone;
+            _availabilityZone = availabilityZone;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,6 +53,17 @@ namespace Azure.ResourceManager.NetApp.Models
         public ResourceIdentifier SubnetId { get; }
 
         /// <summary> The Azure Resource logical availability zone which is used within zone mapping lookup for the subscription and region. The lookup will retrieve the physical zone where volume is placed. </summary>
-        public string AvailabilityZone { get; set; }
+        public string AvailabilityZone
+        {
+            get
+            {
+                return _availabilityZone;
+            }
+            set
+            {
+                _availabilityZone = value;
+                _availabilityZoneIsDefined = true;
+            }
+        }
     }
 }

@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _dataContext;
+        internal bool _dataContextIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MonitoringInputDataBase"/>. </summary>
         /// <param name="inputDataType"> [Required] Specifies the type of signal to monitor. </param>
@@ -42,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal MonitoringInputDataBase(IDictionary<string, string> columns, string dataContext, MonitoringInputDataType inputDataType, JobInputType jobInputType, Uri uri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Columns = columns;
-            DataContext = dataContext;
+            _dataContext = dataContext;
             InputDataType = inputDataType;
             JobInputType = jobInputType;
             Uri = uri;
@@ -55,7 +57,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The context metadata of the data source. </summary>
         [WirePath("dataContext")]
-        public string DataContext { get; set; }
+        public string DataContext
+        {
+            get
+            {
+                return _dataContext;
+            }
+            set
+            {
+                _dataContext = value;
+                _dataContextIsDefined = true;
+            }
+        }
 
         /// <summary> [Required] Specifies the type of signal to monitor. </summary>
         [WirePath("inputDataType")]

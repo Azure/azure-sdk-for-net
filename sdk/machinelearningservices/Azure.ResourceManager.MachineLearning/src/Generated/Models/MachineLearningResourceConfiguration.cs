@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _instanceType;
+        internal bool _instanceTypeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningResourceConfiguration"/>. </summary>
         public MachineLearningResourceConfiguration()
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal MachineLearningResourceConfiguration(int? instanceCount, string instanceType, IDictionary<string, BinaryData> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InstanceCount = instanceCount;
-            InstanceType = instanceType;
+            _instanceType = instanceType;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -43,7 +45,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Optional type of VM used as supported by the compute target. </summary>
         [WirePath("instanceType")]
-        public string InstanceType { get; set; }
+        public string InstanceType
+        {
+            get
+            {
+                return _instanceType;
+            }
+            set
+            {
+                _instanceType = value;
+                _instanceTypeIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Additional properties bag.

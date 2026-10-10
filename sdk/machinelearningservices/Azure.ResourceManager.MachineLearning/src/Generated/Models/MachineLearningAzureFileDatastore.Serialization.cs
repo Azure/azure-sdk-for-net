@@ -80,29 +80,57 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningAzureFileDatastore)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(ResourceGroup))
+            if (_resourceGroupIsDefined || Optional.IsDefined(ResourceGroup))
             {
-                writer.WritePropertyName("resourceGroup"u8);
-                writer.WriteStringValue(ResourceGroup);
+                if (ResourceGroup != null)
+                {
+                    writer.WritePropertyName("resourceGroup"u8);
+                    writer.WriteStringValue(ResourceGroup);
+                }
+                else
+                {
+                    writer.WriteNull("resourceGroup"u8);
+                }
             }
-            if (Optional.IsDefined(SubscriptionId))
+            if (_subscriptionIdIsDefined || Optional.IsDefined(SubscriptionId))
             {
-                writer.WritePropertyName("subscriptionId"u8);
-                writer.WriteStringValue(SubscriptionId);
+                if (SubscriptionId != null)
+                {
+                    writer.WritePropertyName("subscriptionId"u8);
+                    writer.WriteStringValue(SubscriptionId);
+                }
+                else
+                {
+                    writer.WriteNull("subscriptionId"u8);
+                }
             }
             writer.WritePropertyName("accountName"u8);
             writer.WriteStringValue(AccountName);
-            if (Optional.IsDefined(Endpoint))
+            if (_endpointIsDefined || Optional.IsDefined(Endpoint))
             {
-                writer.WritePropertyName("endpoint"u8);
-                writer.WriteStringValue(Endpoint);
+                if (Endpoint != null)
+                {
+                    writer.WritePropertyName("endpoint"u8);
+                    writer.WriteStringValue(Endpoint);
+                }
+                else
+                {
+                    writer.WriteNull("endpoint"u8);
+                }
             }
             writer.WritePropertyName("fileShareName"u8);
             writer.WriteStringValue(FileShareName);
-            if (Optional.IsDefined(Protocol))
+            if (_protocolIsDefined || Optional.IsDefined(Protocol))
             {
-                writer.WritePropertyName("protocol"u8);
-                writer.WriteStringValue(Protocol);
+                if (Protocol != null)
+                {
+                    writer.WritePropertyName("protocol"u8);
+                    writer.WriteStringValue(Protocol);
+                }
+                else
+                {
+                    writer.WriteNull("protocol"u8);
+                }
             }
             if (Optional.IsDefined(ServiceDataAccessAuthIdentity))
             {
@@ -136,24 +164,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool descriptionIsDefined = false;
             string description = default;
-            IDictionary<string, string> properties = default;
-            IDictionary<string, string> tags = default;
+            IDictionary<string, string> properties = new ChangeTrackingDictionary<string, string>();
+            IDictionary<string, string> tags = new ChangeTrackingDictionary<string, string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             MachineLearningDatastoreCredentials credentials = default;
             DatastoreType datastoreType = default;
             bool? isDefault = default;
+            bool resourceGroupIsDefined = false;
             string resourceGroup = default;
+            bool subscriptionIdIsDefined = false;
             string subscriptionId = default;
             string accountName = default;
+            bool endpointIsDefined = false;
             string endpoint = default;
             string fileShareName = default;
+            bool protocolIsDefined = false;
             string protocol = default;
             MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -166,6 +200,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -187,6 +222,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        tags = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -225,6 +261,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("resourceGroup"u8))
                 {
+                    resourceGroupIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         resourceGroup = null;
@@ -235,6 +272,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("subscriptionId"u8))
                 {
+                    subscriptionIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         subscriptionId = null;
@@ -250,6 +288,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("endpoint"u8))
                 {
+                    endpointIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         endpoint = null;
@@ -265,6 +304,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("protocol"u8))
                 {
+                    protocolIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         protocol = null;
@@ -289,8 +329,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             return new MachineLearningAzureFileDatastore(
                 description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                properties,
+                tags,
                 additionalBinaryDataProperties,
                 credentials,
                 datastoreType,
@@ -301,7 +341,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 endpoint,
                 fileShareName,
                 protocol,
-                serviceDataAccessAuthIdentity);
+                serviceDataAccessAuthIdentity)
+            {
+                _descriptionIsDefined = descriptionIsDefined,
+                _resourceGroupIsDefined = resourceGroupIsDefined,
+                _subscriptionIdIsDefined = subscriptionIdIsDefined,
+                _endpointIsDefined = endpointIsDefined,
+                _protocolIsDefined = protocolIsDefined
+            };
         }
     }
 }

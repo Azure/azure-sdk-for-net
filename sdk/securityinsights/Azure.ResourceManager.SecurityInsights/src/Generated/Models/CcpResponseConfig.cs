@@ -17,6 +17,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _successStatusValue;
+        internal bool _successStatusValueIsDefined;
+        private bool? _hasCsvBoundary;
+        internal bool _hasCsvBoundaryIsDefined;
+        private bool? _hasCsvHeader;
+        internal bool _hasCsvHeaderIsDefined;
+        private bool? _isConvertChildPropertiesToArray;
+        internal bool _isConvertChildPropertiesToArrayIsDefined;
+        private string _csvEscape;
+        internal bool _csvEscapeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CcpResponseConfig"/>. </summary>
         /// <param name="eventsJsonPaths"> The json paths, '$' char is the json root. </param>
@@ -45,15 +55,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             EventsJsonPaths = eventsJsonPaths;
             SuccessStatusJsonPath = successStatusJsonPath;
-            SuccessStatusValue = successStatusValue;
+            _successStatusValue = successStatusValue;
             IsGzipCompressed = isGzipCompressed;
             CompressionAlgo = compressionAlgo;
             Format = format;
             CsvDelimiter = csvDelimiter;
-            HasCsvBoundary = hasCsvBoundary;
-            HasCsvHeader = hasCsvHeader;
-            IsConvertChildPropertiesToArray = isConvertChildPropertiesToArray;
-            CsvEscape = csvEscape;
+            _hasCsvBoundary = hasCsvBoundary;
+            _hasCsvHeader = hasCsvHeader;
+            _isConvertChildPropertiesToArray = isConvertChildPropertiesToArray;
+            _csvEscape = csvEscape;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -67,7 +77,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The status value. </summary>
         [WirePath("successStatusValue")]
-        public string SuccessStatusValue { get; set; }
+        public string SuccessStatusValue
+        {
+            get
+            {
+                return _successStatusValue;
+            }
+            set
+            {
+                _successStatusValue = value;
+                _successStatusValueIsDefined = true;
+            }
+        }
 
         /// <summary> The value indicating whether the remote server support Gzip and we should expect Gzip response. </summary>
         [WirePath("isGzipCompressed")]
@@ -87,18 +108,62 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The value indicating whether the response has CSV boundary in case the response in CSV format. </summary>
         [WirePath("hasCsvBoundary")]
-        public bool? HasCsvBoundary { get; set; }
+        public bool? HasCsvBoundary
+        {
+            get
+            {
+                return _hasCsvBoundary;
+            }
+            set
+            {
+                _hasCsvBoundary = value;
+                _hasCsvBoundaryIsDefined = true;
+            }
+        }
 
         /// <summary> The value indicating whether the response has headers in case the response in CSV format. </summary>
         [WirePath("hasCsvHeader")]
-        public bool? HasCsvHeader { get; set; }
+        public bool? HasCsvHeader
+        {
+            get
+            {
+                return _hasCsvHeader;
+            }
+            set
+            {
+                _hasCsvHeader = value;
+                _hasCsvHeaderIsDefined = true;
+            }
+        }
 
         /// <summary> The value indicating whether the response isn't an array of events / logs.  By setting this flag to true it means the remote server will response with an object which each property has as a value an array of events / logs. </summary>
         [WirePath("convertChildPropertiesToArray")]
-        public bool? IsConvertChildPropertiesToArray { get; set; }
+        public bool? IsConvertChildPropertiesToArray
+        {
+            get
+            {
+                return _isConvertChildPropertiesToArray;
+            }
+            set
+            {
+                _isConvertChildPropertiesToArray = value;
+                _isConvertChildPropertiesToArrayIsDefined = true;
+            }
+        }
 
         /// <summary> The character used to escape characters in CSV. </summary>
         [WirePath("csvEscape")]
-        public string CsvEscape { get; set; }
+        public string CsvEscape
+        {
+            get
+            {
+                return _csvEscape;
+            }
+            set
+            {
+                _csvEscape = value;
+                _csvEscapeIsDefined = true;
+            }
+        }
     }
 }

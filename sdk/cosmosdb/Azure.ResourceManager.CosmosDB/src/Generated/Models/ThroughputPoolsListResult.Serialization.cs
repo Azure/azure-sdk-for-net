@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ThroughputPoolsListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ThroughputPoolsListResult(value ?? new ChangeTrackingList<CosmosDBThroughputPoolData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

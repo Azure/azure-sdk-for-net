@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 startedOn,
                 completedOn,
                 isWhatIfMode,
-                roleAssignments,
+                roleAssignments ?? new ChangeTrackingList<RoleAssignmentResult>(),
                 summary,
                 additionalBinaryDataProperties);
         }

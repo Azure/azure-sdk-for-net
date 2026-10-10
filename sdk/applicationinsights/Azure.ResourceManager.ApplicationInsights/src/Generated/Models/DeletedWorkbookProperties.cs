@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _description;
+        internal bool _descriptionIsDefined;
+        private string _revision;
+        internal bool _revisionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DeletedWorkbookProperties"/>. </summary>
         /// <param name="displayName"> The user-defined name (display name) of the workbook. </param>
@@ -54,8 +58,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             UserId = userId;
             SourceId = sourceId;
             StorageUri = storageUri;
-            Description = description;
-            Revision = revision;
+            _description = description;
+            _revision = revision;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -97,10 +101,22 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> The description of the workbook. </summary>
         [WirePath("description")]
-        public string Description { get; }
+        public string Description
+        {
+            get
+            {
+                return _description;
+            }
+        }
 
         /// <summary> The unique revision id for this workbook definition. </summary>
         [WirePath("revision")]
-        public string Revision { get; }
+        public string Revision
+        {
+            get
+            {
+                return _revision;
+            }
+        }
     }
 }

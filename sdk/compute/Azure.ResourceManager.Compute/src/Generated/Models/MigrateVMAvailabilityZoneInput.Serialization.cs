@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MigrateVMAvailabilityZoneInput(instanceIds, targetZone, additionalBinaryDataProperties);
+            return new MigrateVMAvailabilityZoneInput(instanceIds ?? new ChangeTrackingList<string>(), targetZone, additionalBinaryDataProperties);
         }
     }
 }

@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 clientCertificateId,
                 clientCertificatethumbprint,
                 maxPartitionResolutionRetries,
-                managementEndpoints,
+                managementEndpoints ?? new ChangeTrackingList<string>(),
                 serverCertificateThumbprints ?? new ChangeTrackingList<string>(),
                 serverX509Names ?? new ChangeTrackingList<X509CertificateName>(),
                 additionalBinaryDataProperties);

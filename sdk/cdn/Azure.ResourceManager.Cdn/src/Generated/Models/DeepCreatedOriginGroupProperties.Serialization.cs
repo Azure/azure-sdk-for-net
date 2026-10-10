@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DeepCreatedOriginGroupProperties(healthProbeSettings, origins, trafficRestorationTimeToHealedOrNewEndpointsInMinutes, responseBasedOriginErrorDetectionSettings, additionalBinaryDataProperties);
+            return new DeepCreatedOriginGroupProperties(healthProbeSettings, origins ?? new ChangeTrackingList<WritableSubResource>(), trafficRestorationTimeToHealedOrNewEndpointsInMinutes, responseBasedOriginErrorDetectionSettings, additionalBinaryDataProperties);
         }
     }
 }

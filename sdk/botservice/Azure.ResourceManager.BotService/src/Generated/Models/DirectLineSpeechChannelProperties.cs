@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.BotService.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _cognitiveServiceRegion;
+        internal bool _cognitiveServiceRegionIsDefined;
+        private string _cognitiveServiceSubscriptionKey;
+        internal bool _cognitiveServiceSubscriptionKeyIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DirectLineSpeechChannelProperties"/>. </summary>
         public DirectLineSpeechChannelProperties()
@@ -34,8 +38,8 @@ namespace Azure.ResourceManager.BotService.Models
         internal DirectLineSpeechChannelProperties(ResourceIdentifier cognitiveServiceResourceId, string cognitiveServiceRegion, string cognitiveServiceSubscriptionKey, bool? isEnabled, string customVoiceDeploymentId, string customSpeechModelId, bool? isDefaultBotForCogSvcAccount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CognitiveServiceResourceId = cognitiveServiceResourceId;
-            CognitiveServiceRegion = cognitiveServiceRegion;
-            CognitiveServiceSubscriptionKey = cognitiveServiceSubscriptionKey;
+            _cognitiveServiceRegion = cognitiveServiceRegion;
+            _cognitiveServiceSubscriptionKey = cognitiveServiceSubscriptionKey;
             IsEnabled = isEnabled;
             CustomVoiceDeploymentId = customVoiceDeploymentId;
             CustomSpeechModelId = customSpeechModelId;
@@ -47,10 +51,32 @@ namespace Azure.ResourceManager.BotService.Models
         public ResourceIdentifier CognitiveServiceResourceId { get; set; }
 
         /// <summary> The cognitive service region with this channel registration. </summary>
-        public string CognitiveServiceRegion { get; set; }
+        public string CognitiveServiceRegion
+        {
+            get
+            {
+                return _cognitiveServiceRegion;
+            }
+            set
+            {
+                _cognitiveServiceRegion = value;
+                _cognitiveServiceRegionIsDefined = true;
+            }
+        }
 
         /// <summary> The cognitive service subscription key to use with this channel registration. </summary>
-        public string CognitiveServiceSubscriptionKey { get; set; }
+        public string CognitiveServiceSubscriptionKey
+        {
+            get
+            {
+                return _cognitiveServiceSubscriptionKey;
+            }
+            set
+            {
+                _cognitiveServiceSubscriptionKey = value;
+                _cognitiveServiceSubscriptionKeyIsDefined = true;
+            }
+        }
 
         /// <summary> Whether this channel is enabled or not. </summary>
         public bool? IsEnabled { get; set; }

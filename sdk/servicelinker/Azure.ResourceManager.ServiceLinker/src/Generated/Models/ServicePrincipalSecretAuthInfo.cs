@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The authentication info when authType is servicePrincipal secret. </summary>
     public partial class ServicePrincipalSecretAuthInfo : AuthBaseInfo
     {
+        private string _userName;
+        internal bool _userNameIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="ServicePrincipalSecretAuthInfo"/>. </summary>
         /// <param name="clientId"> ServicePrincipal application clientId for servicePrincipal auth. </param>
         /// <param name="principalId"> Principal Id for servicePrincipal auth. </param>
@@ -42,7 +45,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="roles"> Optional, this value specifies the Azure roles to be assigned. Automatically. </param>
         internal ServicePrincipalSecretAuthInfo(LinkerAuthType authType, LinkerAuthMode? authMode, IDictionary<string, BinaryData> additionalBinaryDataProperties, string userName, string clientId, Guid principalId, string secret, LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior, IList<string> roles) : base(authType, authMode, additionalBinaryDataProperties)
         {
-            UserName = userName;
+            _userName = userName;
             ClientId = clientId;
             PrincipalId = principalId;
             Secret = secret;
@@ -51,7 +54,18 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         }
 
         /// <summary> Username created in the database which is mapped to a user in AAD. </summary>
-        public string UserName { get; set; }
+        public string UserName
+        {
+            get
+            {
+                return _userName;
+            }
+            set
+            {
+                _userName = value;
+                _userNameIsDefined = true;
+            }
+        }
 
         /// <summary> ServicePrincipal application clientId for servicePrincipal auth. </summary>
         public string ClientId { get; set; }

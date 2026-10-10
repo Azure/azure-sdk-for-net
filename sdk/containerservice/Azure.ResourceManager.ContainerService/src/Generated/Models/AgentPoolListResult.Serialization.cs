@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentPoolListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AgentPoolListResult(value ?? new ChangeTrackingList<ContainerServiceAgentPoolData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

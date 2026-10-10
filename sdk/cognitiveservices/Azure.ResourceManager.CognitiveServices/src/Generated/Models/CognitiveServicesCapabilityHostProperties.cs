@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> The CognitiveServicesCapabilityHostProperties. </summary>
     public partial class CognitiveServicesCapabilityHostProperties : CognitiveServicesResourceBase
     {
+        private string _customerSubnet;
+        internal bool _customerSubnetIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesCapabilityHostProperties"/>. </summary>
         public CognitiveServicesCapabilityHostProperties()
         {
@@ -39,7 +42,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         {
             AiServicesConnections = aiServicesConnections;
             CapabilityHostKind = capabilityHostKind;
-            CustomerSubnet = customerSubnet;
+            _customerSubnet = customerSubnet;
             ProvisioningState = provisioningState;
             StorageConnections = storageConnections;
             ThreadStorageConnections = threadStorageConnections;
@@ -57,7 +60,18 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Customer subnet info to help set up this capability host. </summary>
         [WirePath("customerSubnet")]
-        public string CustomerSubnet { get; set; }
+        public string CustomerSubnet
+        {
+            get
+            {
+                return _customerSubnet;
+            }
+            set
+            {
+                _customerSubnet = value;
+                _customerSubnetIsDefined = true;
+            }
+        }
 
         /// <summary> Provisioning state for the CapabilityHost. </summary>
         [WirePath("provisioningState")]
