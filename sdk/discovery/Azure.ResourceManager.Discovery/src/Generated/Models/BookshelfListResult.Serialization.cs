@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Discovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BookshelfListResult(value, nextLink, additionalBinaryDataProperties);
+            return new BookshelfListResult(value ?? new ChangeTrackingList<DiscoveryBookshelfData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Education.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new OperationListResult(value, nextLink, additionalBinaryDataProperties);
+            return new OperationListResult(value ?? new ChangeTrackingList<EducationOperationInfo>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

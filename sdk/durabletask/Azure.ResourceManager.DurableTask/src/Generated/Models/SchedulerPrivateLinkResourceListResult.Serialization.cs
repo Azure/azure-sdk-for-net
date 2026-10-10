@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DurableTask.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SchedulerPrivateLinkResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SchedulerPrivateLinkResourceListResult(value ?? new ChangeTrackingList<DurableTaskSchedulerPrivateLinkResourceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <returns> The pages of DynatraceOneAgentEnabledAppServiceInfoCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<DynatraceOneAgentEnabledAppServiceInfo>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Dynatrace
                 {
                     yield break;
                 }
-                AppServiceListResponse result = AppServiceListResponse.FromResponse(response);
+                AppServiceListResult result = AppServiceListResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<DynatraceOneAgentEnabledAppServiceInfo>.FromValues((IReadOnlyList<DynatraceOneAgentEnabledAppServiceInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

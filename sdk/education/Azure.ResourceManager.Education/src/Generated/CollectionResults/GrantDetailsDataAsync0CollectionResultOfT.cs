@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Education
         /// <returns> The pages of GrantDetailsDataAsync0CollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<GrantDetailsData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Education
                 {
                     yield break;
                 }
-                GrantListResponse result = GrantListResponse.FromResponse(response);
+                GrantListResult result = GrantListResult.FromResponse(response);
                 string nextPageString = result.NextLink;
                 nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
                 yield return Page<GrantDetailsData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);

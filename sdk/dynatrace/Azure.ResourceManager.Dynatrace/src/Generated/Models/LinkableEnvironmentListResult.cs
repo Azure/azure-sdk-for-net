@@ -11,32 +11,32 @@ using System.Linq;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    /// <summary> List of all the resources being monitored by Dynatrace monitor resource. </summary>
-    internal partial class MonitoredResourceListResponse
+    /// <summary> Response for getting all the linkable environments. </summary>
+    internal partial class LinkableEnvironmentListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MonitoredResourceListResponse"/>. </summary>
-        /// <param name="value"> The MonitoredResource items on this page. </param>
-        internal MonitoredResourceListResponse(IEnumerable<DynatraceMonitoredResourceDetails> value)
+        /// <summary> Initializes a new instance of <see cref="LinkableEnvironmentListResult"/>. </summary>
+        /// <param name="value"> The LinkableEnvironmentResponse items on this page. </param>
+        internal LinkableEnvironmentListResult(IEnumerable<LinkableEnvironmentResult> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonitoredResourceListResponse"/>. </summary>
-        /// <param name="value"> The MonitoredResource items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="LinkableEnvironmentListResult"/>. </summary>
+        /// <param name="value"> The LinkableEnvironmentResponse items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoredResourceListResponse(IList<DynatraceMonitoredResourceDetails> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LinkableEnvironmentListResult(IList<LinkableEnvironmentResult> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The MonitoredResource items on this page. </summary>
-        public IList<DynatraceMonitoredResourceDetails> Value { get; }
+        /// <summary> The LinkableEnvironmentResponse items on this page. </summary>
+        public IList<LinkableEnvironmentResult> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

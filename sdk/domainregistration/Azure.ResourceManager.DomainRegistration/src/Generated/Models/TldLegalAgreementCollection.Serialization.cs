@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TldLegalAgreementCollection(value, nextLink, additionalBinaryDataProperties);
+            return new TldLegalAgreementCollection(value ?? new ChangeTrackingList<TopLevelDomainLegalAgreement>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DnsResolverPolicyVirtualNetworkLinkListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DnsResolverPolicyVirtualNetworkLinkListResult(value ?? new ChangeTrackingList<DnsResolverPolicyVirtualNetworkLinkData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

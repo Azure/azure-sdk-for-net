@@ -13,31 +13,31 @@ using Azure.ResourceManager.Elastic;
 namespace Azure.ResourceManager.Elastic.Models
 {
     /// <summary> Response of a list operation. </summary>
-    internal partial class OpenAIIntegrationRPModelListResponse
+    internal partial class MonitoringTagRulesListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OpenAIIntegrationRPModelListResponse"/>. </summary>
-        /// <param name="value"> The OpenAIIntegrationRPModel items on this page. </param>
-        internal OpenAIIntegrationRPModelListResponse(IEnumerable<ElasticOpenAIIntegrationData> value)
+        /// <summary> Initializes a new instance of <see cref="MonitoringTagRulesListResult"/>. </summary>
+        /// <param name="value"> The MonitoringTagRules items on this page. </param>
+        internal MonitoringTagRulesListResult(IEnumerable<ElasticTagRuleData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OpenAIIntegrationRPModelListResponse"/>. </summary>
-        /// <param name="value"> The OpenAIIntegrationRPModel items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="MonitoringTagRulesListResult"/>. </summary>
+        /// <param name="value"> The MonitoringTagRules items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OpenAIIntegrationRPModelListResponse(IList<ElasticOpenAIIntegrationData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MonitoringTagRulesListResult(IList<ElasticTagRuleData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The OpenAIIntegrationRPModel items on this page. </summary>
-        public IList<ElasticOpenAIIntegrationData> Value { get; }
+        /// <summary> The MonitoringTagRules items on this page. </summary>
+        public IList<ElasticTagRuleData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
