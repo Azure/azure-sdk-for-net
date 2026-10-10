@@ -15,6 +15,12 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private double? _rerankerScore;
+        internal bool _rerankerScoreIsDefined;
+        private double? _rerankerBoostedScore;
+        internal bool _rerankerBoostedScoreIsDefined;
+        private DocumentDebugInfo _documentDebugInfo;
+        internal bool _documentDebugInfoIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SearchResult"/>. </summary>
         public SearchResult()
@@ -35,11 +41,11 @@ namespace Azure.Search.Documents.Models
         internal SearchResult(double score, double? rerankerScore, double? rerankerBoostedScore, IReadOnlyDictionary<string, IList<string>> highlights, IReadOnlyList<QueryCaptionResult> captions, DocumentDebugInfo documentDebugInfo, IDictionary<string, BinaryData> additionalProperties)
         {
             Score = score;
-            RerankerScore = rerankerScore;
-            RerankerBoostedScore = rerankerBoostedScore;
+            _rerankerScore = rerankerScore;
+            _rerankerBoostedScore = rerankerBoostedScore;
             Highlights = highlights;
             Captions = captions;
-            DocumentDebugInfo = documentDebugInfo;
+            _documentDebugInfo = documentDebugInfo;
             _additionalBinaryDataProperties = additionalProperties;
         }
 
@@ -47,10 +53,22 @@ namespace Azure.Search.Documents.Models
         public double Score { get; }
 
         /// <summary> The relevance score computed by the semantic ranker for the top search results. Search results are sorted by the RerankerScore first and then by the Score. RerankerScore is only returned for queries of type 'semantic'. </summary>
-        public double? RerankerScore { get; }
+        public double? RerankerScore
+        {
+            get
+            {
+                return _rerankerScore;
+            }
+        }
 
         /// <summary> The relevance score computed by boosting the Reranker Score. Search results are sorted by the RerankerScore/RerankerBoostedScore based on useScoringProfileBoostedRanking in the Semantic Config. RerankerBoostedScore is only returned for queries of type 'semantic'. </summary>
-        public double? RerankerBoostedScore { get; }
+        public double? RerankerBoostedScore
+        {
+            get
+            {
+                return _rerankerBoostedScore;
+            }
+        }
 
         /// <summary> Text fragments from the document that indicate the matching search terms, organized by each applicable field; null if hit highlighting was not enabled for the query. </summary>
         public IReadOnlyDictionary<string, IList<string>> Highlights { get; }
@@ -59,7 +77,13 @@ namespace Azure.Search.Documents.Models
         public IReadOnlyList<QueryCaptionResult> Captions { get; }
 
         /// <summary> Contains debugging information that can be used to further explore your search results. </summary>
-        public DocumentDebugInfo DocumentDebugInfo { get; }
+        public DocumentDebugInfo DocumentDebugInfo
+        {
+            get
+            {
+                return _documentDebugInfo;
+            }
+        }
 
         /// <summary> Gets the AdditionalProperties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;

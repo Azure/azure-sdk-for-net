@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BackupProtectionIntentData, BackupProtectionIntentResource>(new BackupProtectionIntentGetBackupProtectionIntentsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BackupProtectionIntentData, BackupProtectionIntentResource>(new BackupProtectionIntentDataAsyncCollectionResultOfT(
                 BackupProtectionIntentRestClient,
                 vaultName,
                 Id.ResourceGroupName,
@@ -757,7 +757,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BackupProtectionIntentData, BackupProtectionIntentResource>(new BackupProtectionIntentGetBackupProtectionIntentsCollectionResultOfT(
+            return new PageableWrapper<BackupProtectionIntentData, BackupProtectionIntentResource>(new BackupProtectionIntentDataCollectionResultOfT(
                 BackupProtectionIntentRestClient,
                 vaultName,
                 Id.ResourceGroupName,
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BackupUsageSummariesGetBackupUsageSummariesAsyncCollectionResultOfT(
+            return new BackupManagementUsageAsyncCollectionResultOfT(
                 BackupUsageSummariesRestClient,
                 vaultName,
                 Id.ResourceGroupName,
@@ -843,7 +843,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BackupUsageSummariesGetBackupUsageSummariesCollectionResultOfT(
+            return new BackupManagementUsageCollectionResultOfT(
                 BackupUsageSummariesRestClient,
                 vaultName,
                 Id.ResourceGroupName,
@@ -976,7 +976,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BackupProtectedItemData, BackupProtectedItemResource>(new BackupProtectedItemsGetBackupProtectedItemsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BackupProtectedItemData, BackupProtectedItemResource>(new BackupProtectedItemDataAsyncCollectionResultOfT(
                 BackupProtectedItemsRestClient,
                 vaultName,
                 Id.ResourceGroupName,
@@ -1019,7 +1019,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BackupProtectedItemData, BackupProtectedItemResource>(new BackupProtectedItemsGetBackupProtectedItemsCollectionResultOfT(
+            return new PageableWrapper<BackupProtectedItemData, BackupProtectedItemResource>(new BackupProtectedItemDataCollectionResultOfT(
                 BackupProtectedItemsRestClient,
                 vaultName,
                 Id.ResourceGroupName,
@@ -1063,7 +1063,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ProtectableContainersGetProtectableContainersAsyncCollectionResultOfT(
+            return new ProtectableContainerResourceAsyncCollectionResultOfT(
                 ProtectableContainersRestClient,
                 vaultName,
                 Id.ResourceGroupName,
@@ -1107,7 +1107,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ProtectableContainersGetProtectableContainersCollectionResultOfT(
+            return new ProtectableContainerResourceCollectionResultOfT(
                 ProtectableContainersRestClient,
                 vaultName,
                 Id.ResourceGroupName,
@@ -1247,7 +1247,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BackupProtectableItemsGetBackupProtectableItemsAsyncCollectionResultOfT(
+            return new WorkloadProtectableItemResourceAsyncCollectionResultOfT(
                 BackupProtectableItemsRestClient,
                 vaultName,
                 Id.ResourceGroupName,
@@ -1291,7 +1291,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BackupProtectableItemsGetBackupProtectableItemsCollectionResultOfT(
+            return new WorkloadProtectableItemResourceCollectionResultOfT(
                 BackupProtectableItemsRestClient,
                 vaultName,
                 Id.ResourceGroupName,
@@ -1333,7 +1333,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BackupProtectionContainerData, BackupProtectionContainerResource>(new BackupProtectionContainersGetBackupProtectionContainersAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BackupProtectionContainerData, BackupProtectionContainerResource>(new BackupProtectionContainerDataAsyncCollectionResultOfT(
                 BackupProtectionContainersRestClient,
                 vaultName,
                 Id.ResourceGroupName,
@@ -1374,7 +1374,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BackupProtectionContainerData, BackupProtectionContainerResource>(new BackupProtectionContainersGetBackupProtectionContainersCollectionResultOfT(
+            return new PageableWrapper<BackupProtectionContainerData, BackupProtectionContainerResource>(new BackupProtectionContainerDataCollectionResultOfT(
                 BackupProtectionContainersRestClient,
                 vaultName,
                 Id.ResourceGroupName,
@@ -1415,7 +1415,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BackupProtectionContainerData, BackupProtectionContainerResource>(new DeletedProtectionContainersGetSoftDeletedProtectionContainersAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BackupProtectionContainerData, BackupProtectionContainerResource>(new BackupProtectionContainerDataAsync0CollectionResultOfT(
                 DeletedProtectionContainersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1456,7 +1456,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BackupProtectionContainerData, BackupProtectionContainerResource>(new DeletedProtectionContainersGetSoftDeletedProtectionContainersCollectionResultOfT(
+            return new PageableWrapper<BackupProtectionContainerData, BackupProtectionContainerResource>(new BackupProtectionContainerData0CollectionResultOfT(
                 DeletedProtectionContainersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

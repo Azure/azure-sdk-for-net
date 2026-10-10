@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The credentials used to login to the image repository that has access to the specified image. </summary>
-        public ImageRepositoryCredentials VmImageRepositoryCredentials
+        public ImageRepositoryCredentialsPatch VmImageRepositoryCredentialsPatch
         {
             get
             {
-                return Properties is null ? default : Properties.VmImageRepositoryCredentials;
+                return Properties is null ? default : Properties.VmImageRepositoryCredentialsPatch;
             }
             set
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 {
                     Properties = new VirtualMachinePatchProperties();
                 }
-                Properties.VmImageRepositoryCredentials = value;
+                Properties.VmImageRepositoryCredentialsPatch = value;
             }
         }
     }

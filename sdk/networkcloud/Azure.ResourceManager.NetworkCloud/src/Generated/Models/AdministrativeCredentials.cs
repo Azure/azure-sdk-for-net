@@ -40,11 +40,5 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Username = username;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The password of the administrator of the device used during initialization. </summary>
-        public string Password { get; set; }
-
-        /// <summary> The username of the administrator of the device used during initialization. </summary>
-        public string Username { get; set; }
     }
 }

@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServiceEnvironmentsGetWebWorkerMetricDefinitionsAsyncCollectionResultOfT(
+            return new ResourceMetricDefinitionAsync0CollectionResultOfT(
                 _appServiceEnvironmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServiceEnvironmentsGetWebWorkerMetricDefinitionsCollectionResultOfT(
+            return new ResourceMetricDefinition0CollectionResultOfT(
                 _appServiceEnvironmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServiceEnvironmentsGetWebWorkerUsagesAsyncCollectionResultOfT(
+            return new AppServiceUsageAsyncCollectionResultOfT(
                 _appServiceEnvironmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServiceEnvironmentsGetWebWorkerUsagesCollectionResultOfT(
+            return new AppServiceUsageCollectionResultOfT(
                 _appServiceEnvironmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServiceEnvironmentsGetWorkerPoolInstanceMetricDefinitionsAsyncCollectionResultOfT(
+            return new ResourceMetricDefinitionAsyncCollectionResultOfT(
                 _appServiceEnvironmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServiceEnvironmentsGetWorkerPoolInstanceMetricDefinitionsCollectionResultOfT(
+            return new ResourceMetricDefinitionCollectionResultOfT(
                 _appServiceEnvironmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServiceEnvironmentsGetWorkerPoolSkusAsyncCollectionResultOfT(
+            return new AppServicePoolSkuInfoAsyncCollectionResultOfT(
                 _appServiceEnvironmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServiceEnvironmentsGetWorkerPoolSkusCollectionResultOfT(
+            return new AppServicePoolSkuInfoCollectionResultOfT(
                 _appServiceEnvironmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

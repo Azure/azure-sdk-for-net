@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new GatewayApiGetByServiceAsyncCollectionResultOfT(
+            return new ApiDataAsync2CollectionResultOfT(
                 _gatewayApiRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -793,7 +793,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new GatewayApiGetByServiceCollectionResultOfT(
+            return new ApiData2CollectionResultOfT(
                 _gatewayApiRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

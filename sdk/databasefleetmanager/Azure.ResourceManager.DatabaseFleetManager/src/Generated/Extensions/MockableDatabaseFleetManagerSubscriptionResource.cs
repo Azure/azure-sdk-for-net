@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatabaseFleetData, DatabaseFleetResource>(new FleetsGetAllAsyncCollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabaseFleetManagerSubscriptionResource.GetDatabaseFleets"), data => new DatabaseFleetResource(Client, data));
+            return new AsyncPageableWrapper<DatabaseFleetData, DatabaseFleetResource>(new DatabaseFleetDataAsync0CollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabaseFleetManagerSubscriptionResource.GetDatabaseFleets"), data => new DatabaseFleetResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatabaseFleetData, DatabaseFleetResource>(new FleetsGetAllCollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabaseFleetManagerSubscriptionResource.GetDatabaseFleets"), data => new DatabaseFleetResource(Client, data));
+            return new PageableWrapper<DatabaseFleetData, DatabaseFleetResource>(new DatabaseFleetData0CollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabaseFleetManagerSubscriptionResource.GetDatabaseFleets"), data => new DatabaseFleetResource(Client, data));
         }
     }
 }

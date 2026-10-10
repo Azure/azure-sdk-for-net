@@ -17,6 +17,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Kusto.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
@@ -1197,7 +1198,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetCalloutPoliciesAsyncCollectionResultOfT(
+            return new KustoCalloutPolicyAsyncCollectionResultOfT(
                 _clustersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1235,7 +1236,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetCalloutPoliciesCollectionResultOfT(
+            return new KustoCalloutPolicyCollectionResultOfT(
                 _clustersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1273,7 +1274,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetFollowerDatabasesAsyncCollectionResultOfT(
+            return new KustoFollowerDatabaseDefinitionAsyncCollectionResultOfT(
                 _clustersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1311,7 +1312,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetFollowerDatabasesCollectionResultOfT(
+            return new KustoFollowerDatabaseDefinitionCollectionResultOfT(
                 _clustersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1349,7 +1350,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetFollowerDatabasesGetAsyncCollectionResultOfT(
+            return new KustoFollowerDatabaseAsyncCollectionResultOfT(
                 _clustersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1387,7 +1388,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetFollowerDatabasesGetCollectionResultOfT(
+            return new KustoFollowerDatabaseCollectionResultOfT(
                 _clustersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1425,7 +1426,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetLanguageExtensionsAsyncCollectionResultOfT(
+            return new KustoLanguageExtensionAsyncCollectionResultOfT(
                 _clustersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1463,7 +1464,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetLanguageExtensionsCollectionResultOfT(
+            return new KustoLanguageExtensionCollectionResultOfT(
                 _clustersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1501,7 +1502,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(
+            return new OutboundNetworkDependenciesEndpointAsyncCollectionResultOfT(
                 _clustersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1539,7 +1540,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(
+            return new OutboundNetworkDependenciesEndpointCollectionResultOfT(
                 _clustersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1577,7 +1578,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetAvailableSkusAsyncCollectionResultOfT(
+            return new KustoAvailableSkuDetailsAsyncCollectionResultOfT(
                 _clustersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1615,7 +1616,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetAvailableSkusCollectionResultOfT(
+            return new KustoAvailableSkuDetailsCollectionResultOfT(
                 _clustersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -2456,10 +2457,9 @@ namespace Azure.ResourceManager.Kusto
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -2499,10 +2499,9 @@ namespace Azure.ResourceManager.Kusto
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

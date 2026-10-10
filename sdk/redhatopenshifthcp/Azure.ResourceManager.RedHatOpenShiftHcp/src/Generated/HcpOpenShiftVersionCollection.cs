@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HcpOpenShiftVersionData, HcpOpenShiftVersionResource>(new HcpOpenShiftVersionsGetAllAsyncCollectionResultOfT(_hcpOpenShiftVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "HcpOpenShiftVersionCollection.GetAll"), data => new HcpOpenShiftVersionResource(Client, data));
+            return new AsyncPageableWrapper<HcpOpenShiftVersionData, HcpOpenShiftVersionResource>(new HcpOpenShiftVersionDataAsyncCollectionResultOfT(_hcpOpenShiftVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "HcpOpenShiftVersionCollection.GetAll"), data => new HcpOpenShiftVersionResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HcpOpenShiftVersionData, HcpOpenShiftVersionResource>(new HcpOpenShiftVersionsGetAllCollectionResultOfT(_hcpOpenShiftVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "HcpOpenShiftVersionCollection.GetAll"), data => new HcpOpenShiftVersionResource(Client, data));
+            return new PageableWrapper<HcpOpenShiftVersionData, HcpOpenShiftVersionResource>(new HcpOpenShiftVersionDataCollectionResultOfT(_hcpOpenShiftVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "HcpOpenShiftVersionCollection.GetAll"), data => new HcpOpenShiftVersionResource(Client, data));
         }
 
         /// <summary>

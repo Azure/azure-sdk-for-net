@@ -358,9 +358,10 @@ namespace Azure.ResourceManager.Relay.Models
         /// The service defaults to 1.2 when the property is omitted.
         /// Existing namespaces configured with TLS 1.0 or 1.1 are reported as TLS 1.2.
         /// </param>
+        /// <param name="clusterArmId"> Cluster ARM ID of the Namespace. </param>
         /// <param name="sku"> SKU of the namespace. </param>
         /// <returns> A new <see cref="Relay.RelayNamespaceData"/> instance for mocking. </returns>
-        public static RelayNamespaceData RelayNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections, RelayPublicNetworkAccess? publicNetworkAccess, RelayTlsVersion? minimumTlsVersion, RelaySku sku)
+        public static RelayNamespaceData RelayNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections, RelayPublicNetworkAccess? publicNetworkAccess, RelayTlsVersion? minimumTlsVersion, ResourceIdentifier clusterArmId, RelaySku sku)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -371,7 +372,7 @@ namespace Azure.ResourceManager.Relay.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && metricId is null && privateEndpointConnections is null && publicNetworkAccess is null && minimumTlsVersion is null ? default : new RelayNamespaceProperties(
+                provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && metricId is null && privateEndpointConnections is null && publicNetworkAccess is null && minimumTlsVersion is null && clusterArmId is null ? default : new RelayNamespaceProperties(
                     provisioningState,
                     status,
                     createdOn,
@@ -381,6 +382,7 @@ namespace Azure.ResourceManager.Relay.Models
                     (privateEndpointConnections ?? new ChangeTrackingList<RelayPrivateEndpointConnectionData>()).ToList(),
                     publicNetworkAccess,
                     minimumTlsVersion,
+                    clusterArmId,
                     default),
                 sku,
                 default);
@@ -414,9 +416,10 @@ namespace Azure.ResourceManager.Relay.Models
         /// The service defaults to 1.2 when the property is omitted.
         /// Existing namespaces configured with TLS 1.0 or 1.1 are reported as TLS 1.2.
         /// </param>
+        /// <param name="clusterArmId"> Cluster ARM ID of the Namespace. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.RelayNamespacePatch"/> instance for mocking. </returns>
-        public static RelayNamespacePatch RelayNamespacePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RelaySku sku, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections, RelayPublicNetworkAccess? publicNetworkAccess, RelayTlsVersion? minimumTlsVersion, IDictionary<string, string> tags)
+        public static RelayNamespacePatch RelayNamespacePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RelaySku sku, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections, RelayPublicNetworkAccess? publicNetworkAccess, RelayTlsVersion? minimumTlsVersion, ResourceIdentifier clusterArmId, IDictionary<string, string> tags)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -426,7 +429,7 @@ namespace Azure.ResourceManager.Relay.Models
                 resourceType,
                 systemData,
                 sku,
-                provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && metricId is null && privateEndpointConnections is null && publicNetworkAccess is null && minimumTlsVersion is null ? default : new RelayNamespaceProperties(
+                provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && metricId is null && privateEndpointConnections is null && publicNetworkAccess is null && minimumTlsVersion is null && clusterArmId is null ? default : new RelayNamespaceProperties(
                     provisioningState,
                     status,
                     createdOn,
@@ -436,6 +439,7 @@ namespace Azure.ResourceManager.Relay.Models
                     (privateEndpointConnections ?? new ChangeTrackingList<RelayPrivateEndpointConnectionData>()).ToList(),
                     publicNetworkAccess,
                     minimumTlsVersion,
+                    clusterArmId,
                     default),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
@@ -493,6 +497,102 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> Provisioning state of the Namespace. </param>
+        /// <param name="status"> Status of the Namespace. </param>
+        /// <param name="createdOn"> The time the namespace was created. </param>
+        /// <param name="updatedOn"> The time the namespace was updated. </param>
+        /// <param name="serviceBusEndpoint"> Endpoint you can use to perform Service Bus operations. </param>
+        /// <param name="metricId"> Identifier for Azure Insights metrics. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
+        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
+        /// <param name="minimumTlsVersion">
+        /// The minimum TLS version for the namespace.
+        /// Supported values are 1.2 and 1.3.
+        /// The service defaults to 1.2 when the property is omitted.
+        /// Existing namespaces configured with TLS 1.0 or 1.1 are reported as TLS 1.2.
+        /// </param>
+        /// <param name="sku"> SKU of the namespace. </param>
+        /// <returns> A new <see cref="Relay.RelayNamespaceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RelayNamespaceData RelayNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections, RelayPublicNetworkAccess? publicNetworkAccess, RelayTlsVersion? minimumTlsVersion, RelaySku sku)
+        {
+            return new RelayNamespaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && metricId is null && privateEndpointConnections is null && publicNetworkAccess is null && minimumTlsVersion is null ? default : new RelayNamespaceProperties(
+                    provisioningState,
+                    status,
+                    createdOn,
+                    updatedOn,
+                    serviceBusEndpoint,
+                    metricId,
+                    (privateEndpointConnections ?? new ChangeTrackingList<RelayPrivateEndpointConnectionData>()).ToList(),
+                    publicNetworkAccess,
+                    minimumTlsVersion,
+                    default,
+                    default),
+                sku,
+                default);
+        }
+
+        /// <summary> Description of a namespace resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="sku"> SKU of the namespace. </param>
+        /// <param name="provisioningState"> Provisioning state of the Namespace. </param>
+        /// <param name="status"> Status of the Namespace. </param>
+        /// <param name="createdOn"> The time the namespace was created. </param>
+        /// <param name="updatedOn"> The time the namespace was updated. </param>
+        /// <param name="serviceBusEndpoint"> Endpoint you can use to perform Service Bus operations. </param>
+        /// <param name="metricId"> Identifier for Azure Insights metrics. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
+        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
+        /// <param name="minimumTlsVersion">
+        /// The minimum TLS version for the namespace.
+        /// Supported values are 1.2 and 1.3.
+        /// The service defaults to 1.2 when the property is omitted.
+        /// Existing namespaces configured with TLS 1.0 or 1.1 are reported as TLS 1.2.
+        /// </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.RelayNamespacePatch"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RelayNamespacePatch RelayNamespacePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RelaySku sku, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections, RelayPublicNetworkAccess? publicNetworkAccess, RelayTlsVersion? minimumTlsVersion, IDictionary<string, string> tags)
+        {
+            return new RelayNamespacePatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                sku,
+                provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && metricId is null && privateEndpointConnections is null && publicNetworkAccess is null && minimumTlsVersion is null ? default : new RelayNamespaceProperties(
+                    provisioningState,
+                    status,
+                    createdOn,
+                    updatedOn,
+                    serviceBusEndpoint,
+                    metricId,
+                    (privateEndpointConnections ?? new ChangeTrackingList<RelayPrivateEndpointConnectionData>()).ToList(),
+                    publicNetworkAccess,
+                    minimumTlsVersion,
+                    default,
+                    default),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
+        }
+
+        /// <summary> Description of a namespace resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="sku"> SKU of the namespace. </param>
         /// <param name="provisioningState"> Provisioning state of the Namespace. </param>
         /// <param name="status"> Status of the Namespace. </param>
@@ -522,6 +622,7 @@ namespace Azure.ResourceManager.Relay.Models
                     metricId,
                     (privateEndpointConnections ?? new ChangeTrackingList<RelayPrivateEndpointConnectionData>()).ToList(),
                     publicNetworkAccess,
+                    default,
                     default,
                     default),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
@@ -564,6 +665,7 @@ namespace Azure.ResourceManager.Relay.Models
                     metricId,
                     (privateEndpointConnections ?? new ChangeTrackingList<RelayPrivateEndpointConnectionData>()).ToList(),
                     publicNetworkAccess,
+                    default,
                     default,
                     default),
                 sku,

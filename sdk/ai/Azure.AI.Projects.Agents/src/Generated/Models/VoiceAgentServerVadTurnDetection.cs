@@ -12,6 +12,11 @@ namespace Azure.AI.Projects.Agents
     [Experimental("AAIP001")]
     public partial class VoiceAgentServerVadTurnDetection : VoiceAgentTurnDetectionConfig
     {
+        private long? _idleTimeoutMs;
+        internal bool _idleTimeoutMsIsDefined;
+        private VoiceAgentEndOfUtteranceDetection _endOfUtteranceDetection;
+        internal bool _endOfUtteranceDetectionIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="VoiceAgentServerVadTurnDetection"/>. </summary>
         public VoiceAgentServerVadTurnDetection() : base(VoiceAgentTurnDetectionType.ServerVad)
         {
@@ -36,9 +41,9 @@ namespace Azure.AI.Projects.Agents
             SilenceDurationMs = silenceDurationMs;
             CreateResponse = createResponse;
             InterruptResponse = interruptResponse;
-            IdleTimeoutMs = idleTimeoutMs;
+            _idleTimeoutMs = idleTimeoutMs;
             SpeechDurationMs = speechDurationMs;
-            EndOfUtteranceDetection = endOfUtteranceDetection;
+            _endOfUtteranceDetection = endOfUtteranceDetection;
         }
 
         /// <summary> Gets or sets the Threshold. </summary>
@@ -57,12 +62,34 @@ namespace Azure.AI.Projects.Agents
         public bool? InterruptResponse { get; set; }
 
         /// <summary> Gets or sets the IdleTimeoutMs. </summary>
-        public long? IdleTimeoutMs { get; set; }
+        public long? IdleTimeoutMs
+        {
+            get
+            {
+                return _idleTimeoutMs;
+            }
+            set
+            {
+                _idleTimeoutMs = value;
+                _idleTimeoutMsIsDefined = true;
+            }
+        }
 
         /// <summary> Minimum speech duration required to trigger detection, in milliseconds. </summary>
         public TimeSpan? SpeechDurationMs { get; set; }
 
         /// <summary> Semantic end-of-utterance detection configuration. Set to null to disable it. </summary>
-        public VoiceAgentEndOfUtteranceDetection EndOfUtteranceDetection { get; set; }
+        public VoiceAgentEndOfUtteranceDetection EndOfUtteranceDetection
+        {
+            get
+            {
+                return _endOfUtteranceDetection;
+            }
+            set
+            {
+                _endOfUtteranceDetection = value;
+                _endOfUtteranceDetectionIsDefined = true;
+            }
+        }
     }
 }

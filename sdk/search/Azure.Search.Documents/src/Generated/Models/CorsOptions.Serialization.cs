@@ -91,10 +91,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(MaxAgeInSeconds))
+            if (_maxAgeInSecondsIsDefined || Optional.IsDefined(MaxAgeInSeconds))
             {
-                writer.WritePropertyName("maxAgeInSeconds"u8);
-                writer.WriteNumberValue(MaxAgeInSeconds.Value);
+                if (MaxAgeInSeconds != null)
+                {
+                    writer.WritePropertyName("maxAgeInSeconds"u8);
+                    writer.WriteNumberValue(MaxAgeInSeconds.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maxAgeInSeconds"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,6 +146,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             IList<string> allowedOrigins = default;
+            bool maxAgeInSecondsIsDefined = false;
             long? maxAgeInSeconds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -162,6 +170,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("maxAgeInSeconds"u8))
                 {
+                    maxAgeInSecondsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         maxAgeInSeconds = null;
@@ -175,7 +184,10 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CorsOptions(allowedOrigins ?? new ChangeTrackingList<string>(), maxAgeInSeconds, additionalBinaryDataProperties);
+            return new CorsOptions(allowedOrigins ?? new ChangeTrackingList<string>(), maxAgeInSeconds, additionalBinaryDataProperties)
+            {
+                _maxAgeInSecondsIsDefined = maxAgeInSecondsIsDefined
+            };
         }
     }
 }

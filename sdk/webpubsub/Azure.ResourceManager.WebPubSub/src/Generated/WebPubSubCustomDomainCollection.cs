@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WebPubSubCustomDomainData, WebPubSubCustomDomainResource>(new CustomDomainsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WebPubSubCustomDomainData, WebPubSubCustomDomainResource>(new WebPubSubCustomDomainDataAsyncCollectionResultOfT(
                 _customDomainsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WebPubSubCustomDomainData, WebPubSubCustomDomainResource>(new CustomDomainsGetAllCollectionResultOfT(
+            return new PageableWrapper<WebPubSubCustomDomainData, WebPubSubCustomDomainResource>(new WebPubSubCustomDomainDataCollectionResultOfT(
                 _customDomainsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

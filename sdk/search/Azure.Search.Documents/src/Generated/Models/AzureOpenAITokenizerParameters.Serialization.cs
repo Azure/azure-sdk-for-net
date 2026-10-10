@@ -74,10 +74,17 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 throw new FormatException($"The model {nameof(AzureOpenAITokenizerParameters)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(EncoderModelName))
+            if (_encoderModelNameIsDefined || Optional.IsDefined(EncoderModelName))
             {
-                writer.WritePropertyName("encoderModelName"u8);
-                writer.WriteStringValue(EncoderModelName.Value.ToString());
+                if (EncoderModelName != null)
+                {
+                    writer.WritePropertyName("encoderModelName"u8);
+                    writer.WriteStringValue(EncoderModelName.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("encoderModelName"u8);
+                }
             }
             if (Optional.IsCollectionDefined(AllowedSpecialTokens))
             {
@@ -136,6 +143,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
+            bool encoderModelNameIsDefined = false;
             SplitSkillEncoderModelName? encoderModelName = default;
             IList<string> allowedSpecialTokens = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,6 +151,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (prop.NameEquals("encoderModelName"u8))
                 {
+                    encoderModelNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         encoderModelName = null;
@@ -177,7 +186,10 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AzureOpenAITokenizerParameters(encoderModelName, allowedSpecialTokens ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new AzureOpenAITokenizerParameters(encoderModelName, allowedSpecialTokens ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties)
+            {
+                _encoderModelNameIsDefined = encoderModelNameIsDefined
+            };
         }
     }
 }

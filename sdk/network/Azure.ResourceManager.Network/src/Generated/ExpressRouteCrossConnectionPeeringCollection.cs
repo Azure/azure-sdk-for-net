@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExpressRouteCrossConnectionPeeringData, ExpressRouteCrossConnectionPeeringResource>(new ExpressRouteCrossConnectionPeeringsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ExpressRouteCrossConnectionPeeringData, ExpressRouteCrossConnectionPeeringResource>(new ExpressRouteCrossConnectionPeeringDataAsyncCollectionResultOfT(
                 _expressRouteCrossConnectionPeeringsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExpressRouteCrossConnectionPeeringData, ExpressRouteCrossConnectionPeeringResource>(new ExpressRouteCrossConnectionPeeringsGetAllCollectionResultOfT(
+            return new PageableWrapper<ExpressRouteCrossConnectionPeeringData, ExpressRouteCrossConnectionPeeringResource>(new ExpressRouteCrossConnectionPeeringDataCollectionResultOfT(
                 _expressRouteCrossConnectionPeeringsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

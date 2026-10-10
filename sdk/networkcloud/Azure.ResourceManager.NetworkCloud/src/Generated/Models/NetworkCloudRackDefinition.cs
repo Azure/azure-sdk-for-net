@@ -56,26 +56,5 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             StorageApplianceConfigurationData = storageApplianceConfigurationData;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The zone name used for this rack when created. Availability zones are used for workload placement. </summary>
-        public string AvailabilityZone { get; set; }
-
-        /// <summary> The unordered list of bare metal machine configuration. </summary>
-        public IList<BareMetalMachineConfiguration> BareMetalMachineConfigurationData { get; }
-
-        /// <summary> The resource ID of the network rack that matches this rack definition. </summary>
-        public ResourceIdentifier NetworkRackId { get; set; }
-
-        /// <summary> The free-form description of the rack's location. </summary>
-        public string RackLocation { get; set; }
-
-        /// <summary> The unique identifier for the rack within Network Cloud cluster. An alternate unique alphanumeric value other than a serial number may be provided if desired. </summary>
-        public string RackSerialNumber { get; set; }
-
-        /// <summary> The resource ID of the sku for the rack being added. </summary>
-        public ResourceIdentifier RackSkuId { get; set; }
-
-        /// <summary> The list of storage appliance configuration data for this rack. </summary>
-        public IList<StorageApplianceConfiguration> StorageApplianceConfigurationData { get; }
     }
 }

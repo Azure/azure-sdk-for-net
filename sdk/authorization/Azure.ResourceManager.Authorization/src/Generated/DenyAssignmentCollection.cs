@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentsGetForScopeAsyncCollectionResultOfT(_denyAssignmentsRestClient, Id.ToString(), filter, context, "DenyAssignmentCollection.GetAll"), data => new DenyAssignmentResource(Client, data));
+            return new AsyncPageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentDataAsync0CollectionResultOfT(_denyAssignmentsRestClient, Id.ToString(), filter, context, "DenyAssignmentCollection.GetAll"), data => new DenyAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentsGetForScopeCollectionResultOfT(_denyAssignmentsRestClient, Id.ToString(), filter, context, "DenyAssignmentCollection.GetAll"), data => new DenyAssignmentResource(Client, data));
+            return new PageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentData0CollectionResultOfT(_denyAssignmentsRestClient, Id.ToString(), filter, context, "DenyAssignmentCollection.GetAll"), data => new DenyAssignmentResource(Client, data));
         }
 
         /// <summary>

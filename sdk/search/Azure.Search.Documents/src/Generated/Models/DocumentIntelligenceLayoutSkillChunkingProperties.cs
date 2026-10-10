@@ -15,6 +15,12 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DocumentIntelligenceLayoutSkillChunkingUnit? _unit;
+        internal bool _unitIsDefined;
+        private int? _maximumLength;
+        internal bool _maximumLengthIsDefined;
+        private int? _overlapLength;
+        internal bool _overlapLengthIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligenceLayoutSkillChunkingProperties"/>. </summary>
         public DocumentIntelligenceLayoutSkillChunkingProperties()
@@ -28,19 +34,52 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal DocumentIntelligenceLayoutSkillChunkingProperties(DocumentIntelligenceLayoutSkillChunkingUnit? unit, int? maximumLength, int? overlapLength, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Unit = unit;
-            MaximumLength = maximumLength;
-            OverlapLength = overlapLength;
+            _unit = unit;
+            _maximumLength = maximumLength;
+            _overlapLength = overlapLength;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The unit of the chunk. </summary>
-        public DocumentIntelligenceLayoutSkillChunkingUnit? Unit { get; set; }
+        public DocumentIntelligenceLayoutSkillChunkingUnit? Unit
+        {
+            get
+            {
+                return _unit;
+            }
+            set
+            {
+                _unit = value;
+                _unitIsDefined = true;
+            }
+        }
 
         /// <summary> The maximum chunk length in characters. Default is 500. </summary>
-        public int? MaximumLength { get; set; }
+        public int? MaximumLength
+        {
+            get
+            {
+                return _maximumLength;
+            }
+            set
+            {
+                _maximumLength = value;
+                _maximumLengthIsDefined = true;
+            }
+        }
 
         /// <summary> The length of overlap provided between two text chunks. Default is 0. </summary>
-        public int? OverlapLength { get; set; }
+        public int? OverlapLength
+        {
+            get
+            {
+                return _overlapLength;
+            }
+            set
+            {
+                _overlapLength = value;
+                _overlapLengthIsDefined = true;
+            }
+        }
     }
 }

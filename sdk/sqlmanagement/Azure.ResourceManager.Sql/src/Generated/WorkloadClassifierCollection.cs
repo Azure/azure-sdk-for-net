@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkloadClassifierData, WorkloadClassifierResource>(new WorkloadClassifiersGetByWorkloadGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WorkloadClassifierData, WorkloadClassifierResource>(new WorkloadClassifierDataAsyncCollectionResultOfT(
                 _workloadClassifiersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkloadClassifierData, WorkloadClassifierResource>(new WorkloadClassifiersGetByWorkloadGroupCollectionResultOfT(
+            return new PageableWrapper<WorkloadClassifierData, WorkloadClassifierResource>(new WorkloadClassifierDataCollectionResultOfT(
                 _workloadClassifiersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

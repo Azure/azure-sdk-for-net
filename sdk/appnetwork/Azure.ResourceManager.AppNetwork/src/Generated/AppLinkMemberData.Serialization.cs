@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppNetwork
 {
-    /// <summary> AppLink Member resource. </summary>
+    /// <summary> A member of an Azure Kubernetes Application Network resource. </summary>
     public partial class AppLinkMemberData : TrackedResourceData, IJsonModel<AppLinkMemberData>
     {
         /// <summary> Initializes a new instance of <see cref="AppLinkMemberData"/> for deserialization. </summary>

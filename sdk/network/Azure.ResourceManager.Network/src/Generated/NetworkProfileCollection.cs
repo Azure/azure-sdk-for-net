@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkProfileData, NetworkProfileResource>(new NetworkProfilesListAsyncCollectionResultOfT(_networkProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkProfileCollection.GetAll"), data => new NetworkProfileResource(Client, data));
+            return new AsyncPageableWrapper<NetworkProfileData, NetworkProfileResource>(new NetworkProfileDataAsyncCollectionResultOfT(_networkProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkProfileCollection.GetAll"), data => new NetworkProfileResource(Client, data));
         }
 
         /// <summary>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkProfileData, NetworkProfileResource>(new NetworkProfilesListCollectionResultOfT(_networkProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkProfileCollection.GetAll"), data => new NetworkProfileResource(Client, data));
+            return new PageableWrapper<NetworkProfileData, NetworkProfileResource>(new NetworkProfileDataCollectionResultOfT(_networkProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkProfileCollection.GetAll"), data => new NetworkProfileResource(Client, data));
         }
 
         /// <summary>

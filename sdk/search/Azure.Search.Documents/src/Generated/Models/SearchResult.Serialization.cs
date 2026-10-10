@@ -78,15 +78,29 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("@search.score"u8);
                 writer.WriteNumberValue(Score);
             }
-            if (options.Format != "W" && Optional.IsDefined(RerankerScore))
+            if (options.Format != "W" && (_rerankerScoreIsDefined || Optional.IsDefined(RerankerScore)))
             {
-                writer.WritePropertyName("@search.rerankerScore"u8);
-                writer.WriteNumberValue(RerankerScore.Value);
+                if (RerankerScore != null)
+                {
+                    writer.WritePropertyName("@search.rerankerScore"u8);
+                    writer.WriteNumberValue(RerankerScore.Value);
+                }
+                else
+                {
+                    writer.WriteNull("@search.rerankerScore"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(RerankerBoostedScore))
+            if (options.Format != "W" && (_rerankerBoostedScoreIsDefined || Optional.IsDefined(RerankerBoostedScore)))
             {
-                writer.WritePropertyName("@search.rerankerBoostedScore"u8);
-                writer.WriteNumberValue(RerankerBoostedScore.Value);
+                if (RerankerBoostedScore != null)
+                {
+                    writer.WritePropertyName("@search.rerankerBoostedScore"u8);
+                    writer.WriteNumberValue(RerankerBoostedScore.Value);
+                }
+                else
+                {
+                    writer.WriteNull("@search.rerankerBoostedScore"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Highlights))
             {
@@ -116,18 +130,32 @@ namespace Azure.Search.Documents.Models
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Captions))
             {
-                writer.WritePropertyName("@search.captions"u8);
-                writer.WriteStartArray();
-                foreach (QueryCaptionResult item in Captions)
+                if (Captions != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("@search.captions"u8);
+                    writer.WriteStartArray();
+                    foreach (QueryCaptionResult item in Captions)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("@search.captions"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(DocumentDebugInfo))
+            if (options.Format != "W" && (_documentDebugInfoIsDefined || Optional.IsDefined(DocumentDebugInfo)))
             {
-                writer.WritePropertyName("@search.documentDebugInfo"u8);
-                writer.WriteObjectValue(DocumentDebugInfo, options);
+                if (DocumentDebugInfo != null)
+                {
+                    writer.WritePropertyName("@search.documentDebugInfo"u8);
+                    writer.WriteObjectValue(DocumentDebugInfo, options);
+                }
+                else
+                {
+                    writer.WriteNull("@search.documentDebugInfo"u8);
+                }
             }
             foreach (var item in AdditionalProperties)
             {
@@ -169,10 +197,13 @@ namespace Azure.Search.Documents.Models
                 return null;
             }
             double score = default;
+            bool rerankerScoreIsDefined = false;
             double? rerankerScore = default;
+            bool rerankerBoostedScoreIsDefined = false;
             double? rerankerBoostedScore = default;
             IReadOnlyDictionary<string, IList<string>> highlights = default;
-            IReadOnlyList<QueryCaptionResult> captions = default;
+            IReadOnlyList<QueryCaptionResult> captions = new ChangeTrackingList<QueryCaptionResult>();
+            bool documentDebugInfoIsDefined = false;
             DocumentDebugInfo documentDebugInfo = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -184,6 +215,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (prop.NameEquals("@search.rerankerScore"u8))
                 {
+                    rerankerScoreIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         rerankerScore = null;
@@ -194,6 +226,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (prop.NameEquals("@search.rerankerBoostedScore"u8))
                 {
+                    rerankerBoostedScoreIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         rerankerBoostedScore = null;
@@ -239,6 +272,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        captions = null;
                         continue;
                     }
                     List<QueryCaptionResult> array = new List<QueryCaptionResult>();
@@ -251,6 +285,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (prop.NameEquals("@search.documentDebugInfo"u8))
                 {
+                    documentDebugInfoIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         documentDebugInfo = null;
@@ -266,9 +301,14 @@ namespace Azure.Search.Documents.Models
                 rerankerScore,
                 rerankerBoostedScore,
                 highlights ?? new ChangeTrackingDictionary<string, IList<string>>(),
-                captions ?? new ChangeTrackingList<QueryCaptionResult>(),
+                captions,
                 documentDebugInfo,
-                additionalProperties);
+                additionalProperties)
+            {
+                _rerankerScoreIsDefined = rerankerScoreIsDefined,
+                _rerankerBoostedScoreIsDefined = rerankerBoostedScoreIsDefined,
+                _documentDebugInfoIsDefined = documentDebugInfoIsDefined
+            };
         }
     }
 }

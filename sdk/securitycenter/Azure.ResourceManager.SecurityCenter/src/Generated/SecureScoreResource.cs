@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new SecureScoreControlsGetBySecureScoreAsyncCollectionResultOfT(
+            return new SecureScoreControlDetailsAsyncCollectionResultOfT(
                 _secureScoreControlsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Name,
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new SecureScoreControlsGetBySecureScoreCollectionResultOfT(
+            return new SecureScoreControlDetailsCollectionResultOfT(
                 _secureScoreControlsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Name,

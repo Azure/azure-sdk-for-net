@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Kusto.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KustoClusterData, KustoClusterResource>(new ClustersGetAllAsyncCollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context, "MockableKustoSubscriptionResource.GetKustoClusters"), data => new KustoClusterResource(Client, data));
+            return new AsyncPageableWrapper<KustoClusterData, KustoClusterResource>(new KustoClusterDataAsync0CollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context, "MockableKustoSubscriptionResource.GetKustoClusters"), data => new KustoClusterResource(Client, data));
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Kusto.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KustoClusterData, KustoClusterResource>(new ClustersGetAllCollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context, "MockableKustoSubscriptionResource.GetKustoClusters"), data => new KustoClusterResource(Client, data));
+            return new PageableWrapper<KustoClusterData, KustoClusterResource>(new KustoClusterData0CollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context, "MockableKustoSubscriptionResource.GetKustoClusters"), data => new KustoClusterResource(Client, data));
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Kusto.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetKustoEligibleSkusAsyncCollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context, "MockableKustoSubscriptionResource.GetKustoEligibleSkus");
+            return new KustoSkuDescriptionAsyncCollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context, "MockableKustoSubscriptionResource.GetKustoEligibleSkus");
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Kusto.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetKustoEligibleSkusCollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context, "MockableKustoSubscriptionResource.GetKustoEligibleSkus");
+            return new KustoSkuDescriptionCollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context, "MockableKustoSubscriptionResource.GetKustoEligibleSkus");
         }
 
         /// <summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Kusto.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SkusGetSkusAsyncCollectionResultOfT(SkusRestClient, Id.SubscriptionId, location, context, "MockableKustoSubscriptionResource.GetSkus");
+            return new KustoSkuDescriptionAsync0CollectionResultOfT(SkusRestClient, Id.SubscriptionId, location, context, "MockableKustoSubscriptionResource.GetSkus");
         }
 
         /// <summary>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Kusto.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SkusGetSkusCollectionResultOfT(SkusRestClient, Id.SubscriptionId, location, context, "MockableKustoSubscriptionResource.GetSkus");
+            return new KustoSkuDescription0CollectionResultOfT(SkusRestClient, Id.SubscriptionId, location, context, "MockableKustoSubscriptionResource.GetSkus");
         }
 
         /// <summary>
