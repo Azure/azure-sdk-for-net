@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
     /// <summary>
     /// Base Job Step Statistics
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DeployJobStepStatistics"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DeployJobStepStatistics"/>, <see cref="PublishJobStepStatistics"/>, and <see cref="UninstallJobStepStatistics"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownEdgeJobStepStatistics))]
     public abstract partial class EdgeJobStepStatistics : IJsonModel<EdgeJobStepStatistics>
@@ -127,6 +127,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 {
                     case "deploy":
                         return DeployJobStepStatistics.DeserializeDeployJobStepStatistics(element, options);
+                    case "publish":
+                        return PublishJobStepStatistics.DeserializePublishJobStepStatistics(element, options);
+                    case "uninstall":
+                        return UninstallJobStepStatistics.DeserializeUninstallJobStepStatistics(element, options);
                 }
             }
             return UnknownEdgeJobStepStatistics.DeserializeUnknownEdgeJobStepStatistics(element, options);

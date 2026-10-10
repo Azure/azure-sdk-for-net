@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> Solution Version ARM Id. </summary>
-        public ResourceIdentifier SolutionVersionId { get; }
+        public ResourceIdentifier SolutionVersionId { get; set; }
     }
 }
