@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.AvsPrivateCloudAddonProperties"/> instance for mocking. </returns>
         public static AvsPrivateCloudAddonProperties AvsPrivateCloudAddonProperties(string addonType = default, AddonProvisioningState? provisioningState = default)
         {
-            return new UnknownAddonProperties(default, provisioningState, default);
+            return new UnknownAddonProperties(addonType is null ? default : new AddonType(addonType), provisioningState, default);
         }
 
         /// <summary> The properties of a Site Recovery Manager (SRM) addon. </summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.AddonSrmProperties"/> instance for mocking. </returns>
         public static AddonSrmProperties AddonSrmProperties(AddonProvisioningState? provisioningState = default, string licenseKey = default)
         {
-            return new AddonSrmProperties(default, provisioningState, default, licenseKey);
+            return new AddonSrmProperties(AddonType.SRM, provisioningState, default, licenseKey);
         }
 
         /// <summary> The properties of a vSphere Replication (VR) addon. </summary>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.AddonVrProperties"/> instance for mocking. </returns>
         public static AddonVrProperties AddonVrProperties(AddonProvisioningState? provisioningState = default, int vrsCount = default)
         {
-            return new AddonVrProperties(default, provisioningState, default, vrsCount);
+            return new AddonVrProperties(AddonType.VR, provisioningState, default, vrsCount);
         }
 
         /// <summary> The properties of an HCX addon. </summary>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static AddonHcxProperties AddonHcxProperties(AddonProvisioningState? provisioningState = default, string offer = default, string managementNetwork = default, string uplinkNetwork = default)
         {
             return new AddonHcxProperties(
-                default,
+                AddonType.HCX,
                 provisioningState,
                 default,
                 offer,
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.AddonArcProperties"/> instance for mocking. </returns>
         public static AddonArcProperties AddonArcProperties(AddonProvisioningState? provisioningState = default, string vCenter = default)
         {
-            return new AddonArcProperties(default, provisioningState, default, vCenter);
+            return new AddonArcProperties(AddonType.Arc, provisioningState, default, vCenter);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Avs.Models
             licenses ??= new ChangeTrackingList<HostLicense>();
 
             return new UnknownAvsHostProperties(
-                default,
+                kind is null ? default : new HostKind(kind),
                 provisioningState,
                 displayName,
                 moRefId,
@@ -383,14 +383,14 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.HostLicense"/> instance for mocking. </returns>
         public static HostLicense HostLicense(string kind = default)
         {
-            return new UnknownHostLicense(default, default);
+            return new UnknownHostLicense(kind is null ? default : new HostLicenseKind(kind), default);
         }
 
         /// <summary> The host is to be used with Azure Hybrid Benefit for Windows Server. </summary>
         /// <returns> A new <see cref="Models.WindowsServerLicense"/> instance for mocking. </returns>
         public static WindowsServerLicense WindowsServerLicense()
         {
-            return new WindowsServerLicense(default, default);
+            return new WindowsServerLicense(HostLicenseKind.WindowsServer, default);
         }
 
         /// <summary> The properties of a general host. </summary>
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Avs.Models
             licenses ??= new ChangeTrackingList<HostLicense>();
 
             return new GeneralAvsHostProperties(
-                default,
+                HostKind.General,
                 provisioningState,
                 displayName,
                 moRefId,
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.Avs.Models
             licenses ??= new ChangeTrackingList<HostLicense>();
 
             return new SpecializedAvsHostProperties(
-                default,
+                HostKind.Specialized,
                 provisioningState,
                 displayName,
                 moRefId,
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.AvsLicenseProperties"/> instance for mocking. </returns>
         public static AvsLicenseProperties AvsLicenseProperties(string kind = default, AvsLicenseProvisioningState? provisioningState = default)
         {
-            return new UnknownAvsLicenseProperties(default, provisioningState, default);
+            return new UnknownAvsLicenseProperties(kind is null ? default : new LicenseKind(kind), provisioningState, default);
         }
 
         /// <summary> The properties of a VMware Firewall license. </summary>
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.Avs.Models
             labels ??= new ChangeTrackingList<AvsLicenseLabel>();
 
             return new VMwareFirewallLicenseProperties(
-                default,
+                LicenseKind.VMwareFirewall,
                 provisioningState,
                 default,
                 licenseKey,
@@ -670,7 +670,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.AvsMaintenanceManagementOperation"/> instance for mocking. </returns>
         public static AvsMaintenanceManagementOperation AvsMaintenanceManagementOperation(string kind = default)
         {
-            return new UnknownAvsMaintenanceManagementOperation(default, default);
+            return new UnknownAvsMaintenanceManagementOperation(kind is null ? default : new MaintenanceManagementOperationKind(kind), default);
         }
 
         /// <param name="isDisabled"> If scheduling is disabled. </param>
@@ -683,7 +683,7 @@ namespace Azure.ResourceManager.Avs.Models
             constraints ??= new ChangeTrackingList<AvsScheduleOperationConstraint>();
 
             return new AvsScheduleOperation(
-                default,
+                MaintenanceManagementOperationKind.Schedule,
                 default,
                 isDisabled,
                 disabledReason,
@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.AvsScheduleOperationConstraint"/> instance for mocking. </returns>
         public static AvsScheduleOperationConstraint AvsScheduleOperationConstraint(string kind = default)
         {
-            return new UnknownAvsScheduleOperationConstraint(default, default);
+            return new UnknownAvsScheduleOperationConstraint(kind is null ? default : new ScheduleOperationConstraintKind(kind), default);
         }
 
         /// <summary> Time window in which Customer has option to schedule maintenance. </summary>
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.AvsSchedulingWindow"/> instance for mocking. </returns>
         public static AvsSchedulingWindow AvsSchedulingWindow(DateTimeOffset startsOn = default, DateTimeOffset endsOn = default)
         {
-            return new AvsSchedulingWindow(default, default, startsOn, endsOn);
+            return new AvsSchedulingWindow(ScheduleOperationConstraintKind.SchedulingWindow, default, startsOn, endsOn);
         }
 
         /// <summary> Constraint defining weekend scheduling restrictions. </summary>
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.WeekendSchedulingConstraint"/> instance for mocking. </returns>
         public static WeekendSchedulingConstraint WeekendSchedulingConstraint(bool? isDisabled = default, string disabledReason = default)
         {
-            return new WeekendSchedulingConstraint(default, default, isDisabled, disabledReason);
+            return new WeekendSchedulingConstraint(ScheduleOperationConstraintKind.WeekendScheduling, default, isDisabled, disabledReason);
         }
 
         /// <summary> Time window in which Customer can to schedule maintenance. </summary>
@@ -726,7 +726,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.AvailableWindowForMaintenanceWhileScheduleOperation"/> instance for mocking. </returns>
         public static AvailableWindowForMaintenanceWhileScheduleOperation AvailableWindowForMaintenanceWhileScheduleOperation(DateTimeOffset startsOn = default, DateTimeOffset endsOn = default)
         {
-            return new AvailableWindowForMaintenanceWhileScheduleOperation(default, default, startsOn, endsOn);
+            return new AvailableWindowForMaintenanceWhileScheduleOperation(ScheduleOperationConstraintKind.AvailableWindowForMaintenanceWhileScheduleOperation, default, startsOn, endsOn);
         }
 
         /// <summary> Time ranges blocked for scheduling maintenance. </summary>
@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.Avs.Models
         {
             timeRanges ??= new ChangeTrackingList<BlockedDatesConstraintTimeRange>();
 
-            return new BlockedWhileScheduleOperation(default, default, category, (timeRanges ?? new ChangeTrackingList<BlockedDatesConstraintTimeRange>()).ToList());
+            return new BlockedWhileScheduleOperation(ScheduleOperationConstraintKind.BlockedWhileScheduleOperation, default, category, (timeRanges ?? new ChangeTrackingList<BlockedDatesConstraintTimeRange>()).ToList());
         }
 
         /// <summary> Blocked Time range Constraints for maintenance. </summary>
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.Avs.Models
             constraints ??= new ChangeTrackingList<AvsRescheduleOperationConstraint>();
 
             return new AvsRescheduleOperation(
-                default,
+                MaintenanceManagementOperationKind.Reschedule,
                 default,
                 isDisabled,
                 disabledReason,
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.AvsRescheduleOperationConstraint"/> instance for mocking. </returns>
         public static AvsRescheduleOperationConstraint AvsRescheduleOperationConstraint(string kind = default)
         {
-            return new UnknownAvsRescheduleOperationConstraint(default, default);
+            return new UnknownAvsRescheduleOperationConstraint(kind is null ? default : new RescheduleOperationConstraintKind(kind), default);
         }
 
         /// <summary> Constraint defining allowed time window for rescheduling. </summary>
@@ -794,7 +794,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.ReschedulingWindowConstraint"/> instance for mocking. </returns>
         public static ReschedulingWindowConstraint ReschedulingWindowConstraint(DateTimeOffset startsOn = default, DateTimeOffset endsOn = default)
         {
-            return new ReschedulingWindowConstraint(default, default, startsOn, endsOn);
+            return new ReschedulingWindowConstraint(RescheduleOperationConstraintKind.ReschedulingWindow, default, startsOn, endsOn);
         }
 
         /// <summary> Constraint defining weekend rescheduling restrictions. </summary>
@@ -803,7 +803,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.WeekendReschedulingConstraint"/> instance for mocking. </returns>
         public static WeekendReschedulingConstraint WeekendReschedulingConstraint(bool? isDisabled = default, string disabledReason = default)
         {
-            return new WeekendReschedulingConstraint(default, default, isDisabled, disabledReason);
+            return new WeekendReschedulingConstraint(RescheduleOperationConstraintKind.WeekendRescheduling, default, isDisabled, disabledReason);
         }
 
         /// <summary> Time window in which Customer can reschedule maintenance. </summary>
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.AvailableWindowForMaintenanceWhileRescheduleOperation"/> instance for mocking. </returns>
         public static AvailableWindowForMaintenanceWhileRescheduleOperation AvailableWindowForMaintenanceWhileRescheduleOperation(DateTimeOffset startsOn = default, DateTimeOffset endsOn = default)
         {
-            return new AvailableWindowForMaintenanceWhileRescheduleOperation(default, default, startsOn, endsOn);
+            return new AvailableWindowForMaintenanceWhileRescheduleOperation(RescheduleOperationConstraintKind.AvailableWindowForMaintenanceWhileRescheduleOperation, default, startsOn, endsOn);
         }
 
         /// <summary> Time ranges blocked for rescheduling maintenance. </summary>
@@ -823,7 +823,7 @@ namespace Azure.ResourceManager.Avs.Models
         {
             timeRanges ??= new ChangeTrackingList<BlockedDatesConstraintTimeRange>();
 
-            return new BlockedWhileRescheduleOperation(default, default, category, (timeRanges ?? new ChangeTrackingList<BlockedDatesConstraintTimeRange>()).ToList());
+            return new BlockedWhileRescheduleOperation(RescheduleOperationConstraintKind.BlockedWhileRescheduleOperation, default, category, (timeRanges ?? new ChangeTrackingList<BlockedDatesConstraintTimeRange>()).ToList());
         }
 
         /// <summary> Refresh MaintenanceReadiness status. </summary>
@@ -836,7 +836,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static AvsMaintenanceReadinessRefreshOperation AvsMaintenanceReadinessRefreshOperation(bool? isDisabled = default, string disabledReason = default, AvsMaintenanceReadinessRefreshOperationStatus? status = default, bool? isRefreshedByMicrosoft = default, string message = default)
         {
             return new AvsMaintenanceReadinessRefreshOperation(
-                default,
+                MaintenanceManagementOperationKind.MaintenanceReadinessRefresh,
                 default,
                 isDisabled,
                 disabledReason,
@@ -954,7 +954,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.PlacementPolicyProperties"/> instance for mocking. </returns>
         public static PlacementPolicyProperties PlacementPolicyProperties(string @type = default, PlacementPolicyState? state = default, string displayName = default, PlacementPolicyProvisioningState? provisioningState = default)
         {
-            return new UnknownPlacementPolicyProperties(default, state, displayName, provisioningState, default);
+            return new UnknownPlacementPolicyProperties(@type is null ? default : new PlacementPolicyType(@type), state, displayName, provisioningState, default);
         }
 
         /// <summary> VM-VM placement policy properties. </summary>
@@ -969,7 +969,7 @@ namespace Azure.ResourceManager.Avs.Models
             vmMembers ??= new ChangeTrackingList<ResourceIdentifier>();
 
             return new VmPlacementPolicyProperties(
-                default,
+                PlacementPolicyType.VmVm,
                 state,
                 displayName,
                 provisioningState,
@@ -994,7 +994,7 @@ namespace Azure.ResourceManager.Avs.Models
             hostMembers ??= new ChangeTrackingList<string>();
 
             return new VmHostPlacementPolicyProperties(
-                default,
+                PlacementPolicyType.VmHost,
                 state,
                 displayName,
                 provisioningState,
@@ -1227,7 +1227,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.VcfLicense"/> instance for mocking. </returns>
         public static VcfLicense VcfLicense(string kind = default, AvsLicenseProvisioningState? provisioningState = default)
         {
-            return new UnknownVcfLicense(default, provisioningState, default);
+            return new UnknownVcfLicense(kind is null ? default : new VcfLicenseKind(kind), provisioningState, default);
         }
 
         /// <summary> A VMware Cloud Foundation (VCF) 5.0 license. </summary>
@@ -1244,7 +1244,7 @@ namespace Azure.ResourceManager.Avs.Models
             labels ??= new ChangeTrackingList<AvsLicenseLabel>();
 
             return new Vcf5License(
-                default,
+                VcfLicenseKind.Vcf5,
                 provisioningState,
                 default,
                 licenseKey,
@@ -1466,7 +1466,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.ScriptExecutionParameterDetails"/> instance for mocking. </returns>
         public static ScriptExecutionParameterDetails ScriptExecutionParameterDetails(string @type = default, string name = default)
         {
-            return new UnknownScriptExecutionParameter(default, name, default);
+            return new UnknownScriptExecutionParameter(@type is null ? default : new ScriptExecutionParameterType(@type), name, default);
         }
 
         /// <summary> a plain text value execution parameter. </summary>
@@ -1475,7 +1475,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.ScriptSecureStringExecutionParameterDetails"/> instance for mocking. </returns>
         public static ScriptSecureStringExecutionParameterDetails ScriptSecureStringExecutionParameterDetails(string name = default, string secureValue = default)
         {
-            return new ScriptSecureStringExecutionParameterDetails(default, name, default, secureValue);
+            return new ScriptSecureStringExecutionParameterDetails(ScriptExecutionParameterType.SecureValue, name, default, secureValue);
         }
 
         /// <summary> a plain text value execution parameter. </summary>
@@ -1484,7 +1484,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.ScriptStringExecutionParameterDetails"/> instance for mocking. </returns>
         public static ScriptStringExecutionParameterDetails ScriptStringExecutionParameterDetails(string name = default, string value = default)
         {
-            return new ScriptStringExecutionParameterDetails(default, name, default, value);
+            return new ScriptStringExecutionParameterDetails(ScriptExecutionParameterType.Value, name, default, value);
         }
 
         /// <summary> a powershell credential object. </summary>
@@ -1494,7 +1494,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.PSCredentialExecutionParameterDetails"/> instance for mocking. </returns>
         public static PSCredentialExecutionParameterDetails PSCredentialExecutionParameterDetails(string name = default, string username = default, string password = default)
         {
-            return new PSCredentialExecutionParameterDetails(default, name, default, username, password);
+            return new PSCredentialExecutionParameterDetails(ScriptExecutionParameterType.Credential, name, default, username, password);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1700,7 +1700,7 @@ namespace Azure.ResourceManager.Avs.Models
             segments ??= new ChangeTrackingList<string>();
 
             return new UnknownWorkloadNetworkDhcpEntity(
-                default,
+                dhcpType is null ? default : new DhcpTypeEnum(dhcpType),
                 displayName,
                 (segments ?? new ChangeTrackingList<string>()).ToList(),
                 provisioningState,
@@ -1721,7 +1721,7 @@ namespace Azure.ResourceManager.Avs.Models
             segments ??= new ChangeTrackingList<string>();
 
             return new WorkloadNetworkDhcpServer(
-                default,
+                DhcpTypeEnum.Server,
                 displayName,
                 (segments ?? new ChangeTrackingList<string>()).ToList(),
                 provisioningState,
@@ -1744,7 +1744,7 @@ namespace Azure.ResourceManager.Avs.Models
             serverAddresses ??= new ChangeTrackingList<string>();
 
             return new WorkloadNetworkDhcpRelay(
-                default,
+                DhcpTypeEnum.Relay,
                 displayName,
                 (segments ?? new ChangeTrackingList<string>()).ToList(),
                 provisioningState,
@@ -2229,7 +2229,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static GeneralAvsHostProperties GeneralAvsHostProperties(AvsHostProvisioningState? provisioningState = default, string displayName = default, string moRefId = default, string fqdn = default, AvsHostMaintenance? maintenance = default, string faultDomain = default)
         {
             return new GeneralAvsHostProperties(
-                default,
+                HostKind.General,
                 provisioningState,
                 displayName,
                 moRefId,
@@ -2252,7 +2252,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static SpecializedAvsHostProperties SpecializedAvsHostProperties(AvsHostProvisioningState? provisioningState = default, string displayName = default, string moRefId = default, string fqdn = default, AvsHostMaintenance? maintenance = default, string faultDomain = default)
         {
             return new SpecializedAvsHostProperties(
-                default,
+                HostKind.Specialized,
                 provisioningState,
                 displayName,
                 moRefId,
@@ -2308,7 +2308,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static AvsScheduleOperation AvsScheduleOperation(bool? isDisabled = default, string disabledReason = default, IEnumerable<AvsScheduleOperationConstraint> constraints = default)
         {
             return new AvsScheduleOperation(
-                default,
+                MaintenanceManagementOperationKind.Schedule,
                 default,
                 isDisabled,
                 disabledReason,
@@ -2325,7 +2325,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static AvsRescheduleOperation AvsRescheduleOperation(bool? isDisabled = default, string disabledReason = default, IEnumerable<AvsRescheduleOperationConstraint> constraints = default)
         {
             return new AvsRescheduleOperation(
-                default,
+                MaintenanceManagementOperationKind.Reschedule,
                 default,
                 isDisabled,
                 disabledReason,
@@ -2580,7 +2580,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static AddonHcxProperties AddonHcxProperties(AddonProvisioningState? provisioningState, string offer)
         {
             return new AddonHcxProperties(
-                default,
+                AddonType.HCX,
                 provisioningState,
                 default,
                 offer,
