@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.MultiServiceSharedModels.Combined;
 
@@ -15,6 +16,30 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmMultiServiceSharedModelsCombinedModelFactory
     {
+        /// <summary> Describes a Virtual Machine. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Combined.VirtualMachineData"/> instance for mocking. </returns>
+        public static VirtualMachineData VirtualMachineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualMachineProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new VirtualMachineData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
         /// <summary> The VirtualMachineProperties. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="metadata"> Shared metadata for the virtual machine. </param>
@@ -34,6 +59,30 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new SharedMetadata(createdOn, createdBy, tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <summary> Storage account resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Combined.StorageAccountData"/> instance for mocking. </returns>
+        public static StorageAccountData StorageAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, StorageAccountProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new StorageAccountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
         }
 
         /// <summary> Storage account properties. </summary>

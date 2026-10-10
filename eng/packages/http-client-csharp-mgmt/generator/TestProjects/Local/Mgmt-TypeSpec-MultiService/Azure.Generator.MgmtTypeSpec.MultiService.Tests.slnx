@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="src/Azure.Generator.MgmtTypeSpec.MultiService.Tests.csproj" />
+  <Project Path="tests/Azure.Generator.MgmtTypeSpec.MultiService.Tests.Tests.csproj" />
 </Solution>

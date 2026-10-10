@@ -11,24 +11,24 @@ using System.Linq;
 
 namespace Azure.ResourceManager.OperationTemplates.Models
 {
-    /// <summary> The MonitoredResourceListResponse. </summary>
-    internal partial class MonitoredResourceListResponse
+    /// <summary> The MonitoredResourceListResult. </summary>
+    internal partial class MonitoredResourceListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MonitoredResourceListResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoredResourceListResult"/>. </summary>
         /// <param name="value"> The list of monitored resources. </param>
-        internal MonitoredResourceListResponse(IEnumerable<MonitoredResource> value)
+        internal MonitoredResourceListResult(IEnumerable<MonitoredResource> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonitoredResourceListResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoredResourceListResult"/>. </summary>
         /// <param name="value"> The list of monitored resources. </param>
         /// <param name="nextLink"> The link to the next page of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoredResourceListResponse(IList<MonitoredResource> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MonitoredResourceListResult(IList<MonitoredResource> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;

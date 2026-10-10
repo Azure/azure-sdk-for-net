@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.ManagementGroup
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ManagementGroupChildResource))]
     [ModelReaderWriterBuildable(typeof(ManagementGroupChildResourceData))]
-    [ModelReaderWriterBuildable(typeof(ManagementGroupChildResourceListResult))]
     [ModelReaderWriterBuildable(typeof(ManagementGroupChildResourceProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerManagementGroupContext : ModelReaderWriterContext
