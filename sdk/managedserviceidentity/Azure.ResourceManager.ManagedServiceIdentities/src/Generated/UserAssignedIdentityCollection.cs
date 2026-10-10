@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<UserAssignedIdentityData, UserAssignedIdentityResource>(new UserAssignedIdentitiesGetByResourceGroupAsyncCollectionResultOfT(_userAssignedIdentitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "UserAssignedIdentityCollection.GetAll"), data => new UserAssignedIdentityResource(Client, data));
+            return new AsyncPageableWrapper<UserAssignedIdentityData, UserAssignedIdentityResource>(new UserAssignedIdentityDataAsyncCollectionResultOfT(_userAssignedIdentitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "UserAssignedIdentityCollection.GetAll"), data => new UserAssignedIdentityResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<UserAssignedIdentityData, UserAssignedIdentityResource>(new UserAssignedIdentitiesGetByResourceGroupCollectionResultOfT(_userAssignedIdentitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "UserAssignedIdentityCollection.GetAll"), data => new UserAssignedIdentityResource(Client, data));
+            return new PageableWrapper<UserAssignedIdentityData, UserAssignedIdentityResource>(new UserAssignedIdentityDataCollectionResultOfT(_userAssignedIdentitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "UserAssignedIdentityCollection.GetAll"), data => new UserAssignedIdentityResource(Client, data));
         }
 
         /// <summary>

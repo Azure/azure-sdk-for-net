@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutoProvisioningSettingData, AutoProvisioningSettingResource>(new AutoProvisioningSettingsGetAllAsyncCollectionResultOfT(_autoProvisioningSettingsRestClient, Guid.Parse(Id.SubscriptionId), context, "AutoProvisioningSettingCollection.GetAll"), data => new AutoProvisioningSettingResource(Client, data));
+            return new AsyncPageableWrapper<AutoProvisioningSettingData, AutoProvisioningSettingResource>(new AutoProvisioningSettingDataAsyncCollectionResultOfT(_autoProvisioningSettingsRestClient, Guid.Parse(Id.SubscriptionId), context, "AutoProvisioningSettingCollection.GetAll"), data => new AutoProvisioningSettingResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutoProvisioningSettingData, AutoProvisioningSettingResource>(new AutoProvisioningSettingsGetAllCollectionResultOfT(_autoProvisioningSettingsRestClient, Guid.Parse(Id.SubscriptionId), context, "AutoProvisioningSettingCollection.GetAll"), data => new AutoProvisioningSettingResource(Client, data));
+            return new PageableWrapper<AutoProvisioningSettingData, AutoProvisioningSettingResource>(new AutoProvisioningSettingDataCollectionResultOfT(_autoProvisioningSettingsRestClient, Guid.Parse(Id.SubscriptionId), context, "AutoProvisioningSettingCollection.GetAll"), data => new AutoProvisioningSettingResource(Client, data));
         }
 
         /// <summary>

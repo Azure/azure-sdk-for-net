@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AIModelData, AIModelResource>(new AIModelsGetAllAsyncCollectionResultOfT(_aiModelsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "AIModelCollection.GetAll"), data => new AIModelResource(Client, data));
+            return new AsyncPageableWrapper<AIModelData, AIModelResource>(new AIModelDataAsyncCollectionResultOfT(_aiModelsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "AIModelCollection.GetAll"), data => new AIModelResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AIModelData, AIModelResource>(new AIModelsGetAllCollectionResultOfT(_aiModelsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "AIModelCollection.GetAll"), data => new AIModelResource(Client, data));
+            return new PageableWrapper<AIModelData, AIModelResource>(new AIModelDataCollectionResultOfT(_aiModelsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "AIModelCollection.GetAll"), data => new AIModelResource(Client, data));
         }
 
         /// <summary>

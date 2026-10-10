@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudTrunkedNetworkData, NetworkCloudTrunkedNetworkResource>(new TrunkedNetworksGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkCloudTrunkedNetworkData, NetworkCloudTrunkedNetworkResource>(new NetworkCloudTrunkedNetworkDataAsyncCollectionResultOfT(
                 _trunkedNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudTrunkedNetworkData, NetworkCloudTrunkedNetworkResource>(new TrunkedNetworksGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<NetworkCloudTrunkedNetworkData, NetworkCloudTrunkedNetworkResource>(new NetworkCloudTrunkedNetworkDataCollectionResultOfT(
                 _trunkedNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

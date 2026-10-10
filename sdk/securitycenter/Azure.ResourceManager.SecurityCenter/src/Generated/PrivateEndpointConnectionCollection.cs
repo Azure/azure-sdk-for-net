@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityCenterPrivateEndpointConnectionData, PrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SecurityCenterPrivateEndpointConnectionData, PrivateEndpointConnectionResource>(new SecurityCenterPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityCenterPrivateEndpointConnectionData, PrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllCollectionResultOfT(
+            return new PageableWrapper<SecurityCenterPrivateEndpointConnectionData, PrivateEndpointConnectionResource>(new SecurityCenterPrivateEndpointConnectionDataCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

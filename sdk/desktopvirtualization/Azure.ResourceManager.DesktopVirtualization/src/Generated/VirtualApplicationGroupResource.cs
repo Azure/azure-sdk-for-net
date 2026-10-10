@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new StartMenuItemsGetStartMenuItemsAsyncCollectionResultOfT(
+            return new DesktopVirtualizationStartMenuItemAsyncCollectionResultOfT(
                 _startMenuItemsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new StartMenuItemsGetStartMenuItemsCollectionResultOfT(
+            return new DesktopVirtualizationStartMenuItemCollectionResultOfT(
                 _startMenuItemsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

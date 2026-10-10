@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PlacementPolicyData, PlacementPolicyResource>(new PlacementPoliciesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PlacementPolicyData, PlacementPolicyResource>(new PlacementPolicyDataAsyncCollectionResultOfT(
                 _placementPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PlacementPolicyData, PlacementPolicyResource>(new PlacementPoliciesGetAllCollectionResultOfT(
+            return new PageableWrapper<PlacementPolicyData, PlacementPolicyResource>(new PlacementPolicyDataCollectionResultOfT(
                 _placementPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

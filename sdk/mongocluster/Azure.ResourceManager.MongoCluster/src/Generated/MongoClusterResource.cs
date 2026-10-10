@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinksGetPrivateLinksAsyncCollectionResultOfT(
+            return new MongoClusterPrivateLinkResourceDataAsyncCollectionResultOfT(
                 _privateLinksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -683,7 +683,7 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinksGetPrivateLinksCollectionResultOfT(
+            return new MongoClusterPrivateLinkResourceDataCollectionResultOfT(
                 _privateLinksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 CancellationToken = cancellationToken
             };
-            return new ReplicasGetReplicasByParentAsyncCollectionResultOfT(
+            return new MongoClusterReplicaAsyncCollectionResultOfT(
                 _replicasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -759,7 +759,7 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 CancellationToken = cancellationToken
             };
-            return new ReplicasGetReplicasByParentCollectionResultOfT(
+            return new MongoClusterReplicaCollectionResultOfT(
                 _replicasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -1035,7 +1035,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new NodesGetEdgeNodesAsyncCollectionResultOfT(
+            return new DataBoxEdgeNodeAsyncCollectionResultOfT(
                 _nodesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1073,7 +1073,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new NodesGetEdgeNodesCollectionResultOfT(
+            return new DataBoxEdgeNodeCollectionResultOfT(
                 _nodesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

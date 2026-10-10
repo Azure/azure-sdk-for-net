@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkResourcesGetPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new ElasticSanPrivateLinkResourceAsyncCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkResourcesGetPrivateLinkResourcesCollectionResultOfT(
+            return new ElasticSanPrivateLinkResourceCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

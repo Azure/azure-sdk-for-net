@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 CancellationToken = cancellationToken
             };
-            return new ProvisioningServiceDescriptionsGetKeysAsyncCollectionResultOfT(
+            return new DeviceProvisioningServicesSharedAccessKeyAsyncCollectionResultOfT(
                 _provisioningServiceDescriptionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 CancellationToken = cancellationToken
             };
-            return new ProvisioningServiceDescriptionsGetKeysCollectionResultOfT(
+            return new DeviceProvisioningServicesSharedAccessKeyCollectionResultOfT(
                 _provisioningServiceDescriptionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 CancellationToken = cancellationToken
             };
-            return new ProvisioningServiceDescriptionsGetValidSkusAsyncCollectionResultOfT(
+            return new DeviceProvisioningServicesSkuDefinitionAsyncCollectionResultOfT(
                 _provisioningServiceDescriptionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 CancellationToken = cancellationToken
             };
-            return new ProvisioningServiceDescriptionsGetValidSkusCollectionResultOfT(
+            return new DeviceProvisioningServicesSkuDefinitionCollectionResultOfT(
                 _provisioningServiceDescriptionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

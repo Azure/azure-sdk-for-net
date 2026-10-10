@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Monitor.Slis
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MonitorSliData, MonitorSliResource>(new SliOperationsGetByParentAsyncCollectionResultOfT(_sliOperationsRestClient, Id.Name, context, "MonitorSliCollection.GetAll"), data => new MonitorSliResource(Client, data));
+            return new AsyncPageableWrapper<MonitorSliData, MonitorSliResource>(new MonitorSliDataAsyncCollectionResultOfT(_sliOperationsRestClient, Id.Name, context, "MonitorSliCollection.GetAll"), data => new MonitorSliResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Monitor.Slis
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MonitorSliData, MonitorSliResource>(new SliOperationsGetByParentCollectionResultOfT(_sliOperationsRestClient, Id.Name, context, "MonitorSliCollection.GetAll"), data => new MonitorSliResource(Client, data));
+            return new PageableWrapper<MonitorSliData, MonitorSliResource>(new MonitorSliDataCollectionResultOfT(_sliOperationsRestClient, Id.Name, context, "MonitorSliCollection.GetAll"), data => new MonitorSliResource(Client, data));
         }
 
         /// <summary>

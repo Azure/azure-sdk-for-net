@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CloudHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HealthModelDiscoveryRuleData, HealthModelDiscoveryRuleResource>(new DiscoveryRulesGetByHealthModelAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HealthModelDiscoveryRuleData, HealthModelDiscoveryRuleResource>(new HealthModelDiscoveryRuleDataAsyncCollectionResultOfT(
                 _discoveryRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.CloudHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HealthModelDiscoveryRuleData, HealthModelDiscoveryRuleResource>(new DiscoveryRulesGetByHealthModelCollectionResultOfT(
+            return new PageableWrapper<HealthModelDiscoveryRuleData, HealthModelDiscoveryRuleResource>(new HealthModelDiscoveryRuleDataCollectionResultOfT(
                 _discoveryRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

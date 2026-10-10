@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KubernetesConfigurationExtensionTypeVersionForReleaseTrainData, ClusterExtensionTypeVersionResource>(new ExtensionTypeInterfaceClusterListVersionsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<KubernetesConfigurationExtensionTypeVersionForReleaseTrainData, ClusterExtensionTypeVersionResource>(new KubernetesConfigurationExtensionTypeVersionForReleaseTrainDataAsync0CollectionResultOfT(
                 _extensionTypeInterfaceRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KubernetesConfigurationExtensionTypeVersionForReleaseTrainData, ClusterExtensionTypeVersionResource>(new ExtensionTypeInterfaceClusterListVersionsCollectionResultOfT(
+            return new PageableWrapper<KubernetesConfigurationExtensionTypeVersionForReleaseTrainData, ClusterExtensionTypeVersionResource>(new KubernetesConfigurationExtensionTypeVersionForReleaseTrainData0CollectionResultOfT(
                 _extensionTypeInterfaceRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

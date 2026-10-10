@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new MetricAlertsStatusGetAllMetricAlertsStatusAsyncCollectionResultOfT(
+            return new MetricAlertStatusAsyncCollectionResultOfT(
                 _metricAlertsStatusRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new MetricAlertsStatusGetAllMetricAlertsStatusCollectionResultOfT(
+            return new MetricAlertStatusCollectionResultOfT(
                 _metricAlertsStatusRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new MetricAlertsStatusGetAllMetricAlertsStatusByNameAsyncCollectionResultOfT(
+            return new MetricAlertStatusAsync0CollectionResultOfT(
                 _metricAlertsStatusRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new MetricAlertsStatusGetAllMetricAlertsStatusByNameCollectionResultOfT(
+            return new MetricAlertStatus0CollectionResultOfT(
                 _metricAlertsStatusRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkflowRunActionsGetExpressionTracesAsyncCollectionResultOfT(
+            return new WorkflowExpressionRootAsyncCollectionResultOfT(
                 _workflowRunActionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkflowRunActionsGetExpressionTracesCollectionResultOfT(
+            return new WorkflowExpressionRootCollectionResultOfT(
                 _workflowRunActionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

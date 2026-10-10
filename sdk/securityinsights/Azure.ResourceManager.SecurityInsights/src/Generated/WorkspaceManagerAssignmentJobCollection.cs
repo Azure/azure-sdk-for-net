@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkspaceManagerAssignmentJobData, WorkspaceManagerAssignmentJobResource>(new WorkspaceManagerAssignmentJobsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WorkspaceManagerAssignmentJobData, WorkspaceManagerAssignmentJobResource>(new WorkspaceManagerAssignmentJobDataAsyncCollectionResultOfT(
                 _workspaceManagerAssignmentJobsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkspaceManagerAssignmentJobData, WorkspaceManagerAssignmentJobResource>(new WorkspaceManagerAssignmentJobsGetAllCollectionResultOfT(
+            return new PageableWrapper<WorkspaceManagerAssignmentJobData, WorkspaceManagerAssignmentJobResource>(new WorkspaceManagerAssignmentJobDataCollectionResultOfT(
                 _workspaceManagerAssignmentJobsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KeyVaultSecretData, KeyVaultSecretResource>(new SecretsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<KeyVaultSecretData, KeyVaultSecretResource>(new KeyVaultSecretDataAsyncCollectionResultOfT(
                 _secretsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KeyVaultSecretData, KeyVaultSecretResource>(new SecretsGetAllCollectionResultOfT(
+            return new PageableWrapper<KeyVaultSecretData, KeyVaultSecretResource>(new KeyVaultSecretDataCollectionResultOfT(
                 _secretsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

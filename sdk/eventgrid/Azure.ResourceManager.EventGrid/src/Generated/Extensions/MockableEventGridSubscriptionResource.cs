@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventGridNamespaceData, EventGridNamespaceResource>(new NamespacesGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EventGridNamespaceData, EventGridNamespaceResource>(new EventGridNamespaceDataAsync0CollectionResultOfT(
                 NamespacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventGridNamespaceData, EventGridNamespaceResource>(new NamespacesGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<EventGridNamespaceData, EventGridNamespaceResource>(new EventGridNamespaceData0CollectionResultOfT(
                 NamespacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PartnerNamespaceData, PartnerNamespaceResource>(new PartnerNamespacesGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PartnerNamespaceData, PartnerNamespaceResource>(new PartnerNamespaceDataAsync0CollectionResultOfT(
                 PartnerNamespacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PartnerNamespaceData, PartnerNamespaceResource>(new PartnerNamespacesGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<PartnerNamespaceData, PartnerNamespaceResource>(new PartnerNamespaceData0CollectionResultOfT(
                 PartnerNamespacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventGridDomainData, EventGridDomainResource>(new DomainsGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EventGridDomainData, EventGridDomainResource>(new EventGridDomainDataAsync0CollectionResultOfT(
                 DomainsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventGridDomainData, EventGridDomainResource>(new DomainsGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<EventGridDomainData, EventGridDomainResource>(new EventGridDomainData0CollectionResultOfT(
                 DomainsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PartnerConfigurationData, PartnerConfigurationResource>(new PartnerConfigurationsGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PartnerConfigurationData, PartnerConfigurationResource>(new PartnerConfigurationDataAsync0CollectionResultOfT(
                 PartnerConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PartnerConfigurationData, PartnerConfigurationResource>(new PartnerConfigurationsGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<PartnerConfigurationData, PartnerConfigurationResource>(new PartnerConfigurationData0CollectionResultOfT(
                 PartnerConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PartnerDestinationData, PartnerDestinationResource>(new PartnerDestinationsGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PartnerDestinationData, PartnerDestinationResource>(new PartnerDestinationDataAsync0CollectionResultOfT(
                 PartnerDestinationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PartnerDestinationData, PartnerDestinationResource>(new PartnerDestinationsGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<PartnerDestinationData, PartnerDestinationResource>(new PartnerDestinationData0CollectionResultOfT(
                 PartnerDestinationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PartnerRegistrationData, PartnerRegistrationResource>(new PartnerRegistrationsGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PartnerRegistrationData, PartnerRegistrationResource>(new PartnerRegistrationDataAsync0CollectionResultOfT(
                 PartnerRegistrationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PartnerRegistrationData, PartnerRegistrationResource>(new PartnerRegistrationsGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<PartnerRegistrationData, PartnerRegistrationResource>(new PartnerRegistrationData0CollectionResultOfT(
                 PartnerRegistrationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PartnerTopicData, PartnerTopicResource>(new PartnerTopicsGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PartnerTopicData, PartnerTopicResource>(new PartnerTopicDataAsync0CollectionResultOfT(
                 PartnerTopicsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PartnerTopicData, PartnerTopicResource>(new PartnerTopicsGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<PartnerTopicData, PartnerTopicResource>(new PartnerTopicData0CollectionResultOfT(
                 PartnerTopicsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SystemTopicData, SystemTopicResource>(new SystemTopicsGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SystemTopicData, SystemTopicResource>(new SystemTopicDataAsync0CollectionResultOfT(
                 SystemTopicsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SystemTopicData, SystemTopicResource>(new SystemTopicsGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<SystemTopicData, SystemTopicResource>(new SystemTopicData0CollectionResultOfT(
                 SystemTopicsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -695,7 +695,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventGridTopicData, EventGridTopicResource>(new TopicsGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EventGridTopicData, EventGridTopicResource>(new EventGridTopicDataAsync0CollectionResultOfT(
                 TopicsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventGridTopicData, EventGridTopicResource>(new TopicsGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<EventGridTopicData, EventGridTopicResource>(new EventGridTopicData0CollectionResultOfT(
                 TopicsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,

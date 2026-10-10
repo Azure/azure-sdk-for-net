@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BackupRecoveryPointData, BackupRecoveryPointResource>(new RecoveryPointsRecommendedForMoveGetRecoveryPointsRecommendedForMoveAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BackupRecoveryPointData, BackupRecoveryPointResource>(new BackupRecoveryPointDataAsyncCollectionResultOfT(
                 _recoveryPointsRecommendedForMoveRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BackupRecoveryPointData, BackupRecoveryPointResource>(new RecoveryPointsRecommendedForMoveGetRecoveryPointsRecommendedForMoveCollectionResultOfT(
+            return new PageableWrapper<BackupRecoveryPointData, BackupRecoveryPointResource>(new BackupRecoveryPointDataCollectionResultOfT(
                 _recoveryPointsRecommendedForMoveRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
