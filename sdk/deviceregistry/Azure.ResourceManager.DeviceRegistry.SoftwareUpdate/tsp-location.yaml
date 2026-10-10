@@ -1,0 +1,6 @@
+directory: specification/deviceupdate/resource-manager/Microsoft.DeviceUpdate/DuDeviceRegistry
+commit: 1937998d2d092451f08d4aa5f35dd93ebf2cf6cf
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
