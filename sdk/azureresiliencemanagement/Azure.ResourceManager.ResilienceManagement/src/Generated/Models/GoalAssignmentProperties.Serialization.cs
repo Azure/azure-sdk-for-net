@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 throw new FormatException($"The model {nameof(GoalAssignmentProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("requireZonalResiliency"u8);
-            writer.WriteBooleanValue(RequireZonalResiliency);
+            writer.WriteBooleanValue(IsZonalResiliencyRequired);
             if (Optional.IsCollectionDefined(ServiceLevelResources))
             {
                 writer.WritePropertyName("serviceLevelResources"u8);
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            bool requireZonalResiliency = default;
+            bool isZonalResiliencyRequired = default;
             IList<ServiceLevelTarget> serviceLevelResources = default;
             ResilienceManagementProvisioningState? provisioningState = default;
             ResponseError errorDetails = default;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 if (prop.NameEquals("requireZonalResiliency"u8))
                 {
-                    requireZonalResiliency = prop.Value.GetBoolean();
+                    isZonalResiliencyRequired = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("serviceLevelResources"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GoalAssignmentProperties(requireZonalResiliency, serviceLevelResources ?? new ChangeTrackingList<ServiceLevelTarget>(), provisioningState, errorDetails, additionalBinaryDataProperties);
+            return new GoalAssignmentProperties(isZonalResiliencyRequired, serviceLevelResources ?? new ChangeTrackingList<ServiceLevelTarget>(), provisioningState, errorDetails, additionalBinaryDataProperties);
         }
     }
 }

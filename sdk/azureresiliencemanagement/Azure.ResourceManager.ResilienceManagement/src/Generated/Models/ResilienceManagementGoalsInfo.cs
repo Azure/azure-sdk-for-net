@@ -39,15 +39,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public ResourceIdentifier AssignmentId { get; }
 
         /// <summary> Zonal resiliency goal copied from the goal assignment. </summary>
-        internal UnifiedResilienceItemGoalRequirement ZonalResiliency { get; }
-
-        /// <summary> Whether the goal is required for the service group. </summary>
-        public bool? Required
-        {
-            get
-            {
-                return ZonalResiliency is null ? (bool?)default : ZonalResiliency.Required;
-            }
-        }
+        public UnifiedResilienceItemGoalRequirement ZonalResiliency { get; }
     }
 }

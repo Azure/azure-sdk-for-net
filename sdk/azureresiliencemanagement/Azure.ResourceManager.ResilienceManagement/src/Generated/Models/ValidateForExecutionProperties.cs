@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="operationName"> Operation name for which the validation is being done. This is needed to determine the set of validations to be done for the operation. </param>
         /// <param name="sourceLocations"> Physiscal Source locations from where resources to be failed-over or faulted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ValidateForExecutionProperties(DrillRunTasks? operationName, IList<string> sourceLocations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ValidateForExecutionProperties(DrillRunTask? operationName, IList<string> sourceLocations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationName = operationName;
             SourceLocations = sourceLocations;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> Operation name for which the validation is being done. This is needed to determine the set of validations to be done for the operation. </summary>
-        public DrillRunTasks? OperationName { get; set; }
+        public DrillRunTask? OperationName { get; set; }
 
         /// <summary> Physiscal Source locations from where resources to be failed-over or faulted. </summary>
         public IList<string> SourceLocations { get; }

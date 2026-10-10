@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="ResilienceManagementFailoverContent"/>. </summary>
         /// <param name="failoverDirection"> Type of Failover direction. </param>
-        public ResilienceManagementFailoverContent(FailoverDirectionTypes failoverDirection)
+        public ResilienceManagementFailoverContent(ResilienceManagementFailoverDirection failoverDirection)
         {
             FailoverDirection = failoverDirection;
         }
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="failoverDirection"> Type of Failover direction. </param>
         /// <param name="failoverRequestProperties"> Additional properties for Failover. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResilienceManagementFailoverContent(FailoverDirectionTypes failoverDirection, FailoverRequestProperties failoverRequestProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResilienceManagementFailoverContent(ResilienceManagementFailoverDirection failoverDirection, ResilienceManagementFailoverProperties failoverRequestProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FailoverDirection = failoverDirection;
             FailoverRequestProperties = failoverRequestProperties;
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> Type of Failover direction. </summary>
-        public FailoverDirectionTypes FailoverDirection { get; }
+        public ResilienceManagementFailoverDirection FailoverDirection { get; }
 
         /// <summary> Additional properties for Failover. </summary>
-        public FailoverRequestProperties FailoverRequestProperties { get; set; }
+        public ResilienceManagementFailoverProperties FailoverRequestProperties { get; set; }
     }
 }

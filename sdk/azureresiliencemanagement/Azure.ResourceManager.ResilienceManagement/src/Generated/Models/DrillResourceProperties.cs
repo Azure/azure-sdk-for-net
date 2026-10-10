@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Initializes a new instance of <see cref="DrillResourceProperties"/>. </summary>
         /// <param name="resourceId"> ARM Id of the underlying resource. </param>
         /// <param name="resourceType"> Type of the Drill resource. </param>
-        private protected DrillResourceProperties(ResourceIdentifier resourceId, string resourceType)
+        private protected DrillResourceProperties(ResourceIdentifier resourceId, ResourceType resourceType)
         {
             ResourceId = resourceId;
             ResourceType = resourceType;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="drillType"> The discriminator for the Drill Resource object hierarchy. Matches the parent Drill type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DrillResourceProperties(ResourceIdentifier resourceId, string resourceType, IReadOnlyList<string> activeLocations, IReadOnlyList<string> recoveryLocations, DrillResourceInclusionState? inclusionState, ResourceInclusionState? recoveryPlanInclusionState, RecoveryPlanExclusionReason? recoveryPlanExclusionReason, ResourceProtectionSolutionType? resourceProtectionSolutionType, DrillResourceReadinessState? readinessState, DrillResourceFaultState? faultState, FaultProperties faultProperties, ForceInclusionState? forceInclusionState, DrillResourceAttentionReason attentionReason, string advisorRecommendationTypeId, ResilienceManagementErrorDetail rbacAssignmentError, ResilienceManagementErrorDetail monitoringRbacAssignmentError, ResilienceManagementProvisioningState? provisioningState, DrillType drillType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DrillResourceProperties(ResourceIdentifier resourceId, ResourceType resourceType, IReadOnlyList<string> activeLocations, IReadOnlyList<string> recoveryLocations, DrillResourceInclusionState? inclusionState, ResourceInclusionState? recoveryPlanInclusionState, RecoveryPlanExclusionReason? recoveryPlanExclusionReason, ResourceProtectionSolutionType? resourceProtectionSolutionType, DrillResourceReadinessState? readinessState, DrillResourceFaultState? faultState, FaultProperties faultProperties, DrillResourceForceInclusionState? forceInclusionState, DrillResourceAttentionReason attentionReason, string advisorRecommendationTypeId, ResilienceManagementErrorDetail rbacAssignmentError, ResilienceManagementErrorDetail monitoringRbacAssignmentError, ResilienceManagementProvisioningState? provisioningState, DrillType drillType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             ResourceType = resourceType;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public ResourceIdentifier ResourceId { get; }
 
         /// <summary> Type of the Drill resource. </summary>
-        public string ResourceType { get; }
+        public ResourceType ResourceType { get; }
 
         /// <summary> Active location and zones of the Azure resource. </summary>
         public IReadOnlyList<string> ActiveLocations { get; }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public FaultProperties FaultProperties { get; }
 
         /// <summary> ForceInclusion status for this resource. Has the customer forceIncluded it?. </summary>
-        public ForceInclusionState? ForceInclusionState { get; }
+        public DrillResourceForceInclusionState? ForceInclusionState { get; }
 
         /// <summary> Attention reason if the Status is 'NeedsAttention'. </summary>
         public DrillResourceAttentionReason AttentionReason { get; }

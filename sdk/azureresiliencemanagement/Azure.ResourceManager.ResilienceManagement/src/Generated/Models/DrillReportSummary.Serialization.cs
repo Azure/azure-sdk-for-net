@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 writer.WritePropertyName("stageStatuses"u8);
                 writer.WriteStartArray();
-                foreach (ReportStageStatus item in StageStatuses)
+                foreach (DrillReportStageStatus item in StageStatuses)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 return null;
             }
             DrillReportGenerationStatus? generationStatus = default;
-            IReadOnlyList<ReportStageStatus> stageStatuses = default;
+            IReadOnlyList<DrillReportStageStatus> stageStatuses = default;
             IReadOnlyList<DrillReportFormat> availableFormats = default;
             DateTimeOffset? lastGeneratedOn = default;
             string schemaVersion = default;
@@ -194,10 +194,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    List<ReportStageStatus> array = new List<ReportStageStatus>();
+                    List<DrillReportStageStatus> array = new List<DrillReportStageStatus>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ReportStageStatus.DeserializeReportStageStatus(item, options));
+                        array.Add(DrillReportStageStatus.DeserializeDrillReportStageStatus(item, options));
                     }
                     stageStatuses = array;
                     continue;
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             }
             return new DrillReportSummary(
                 generationStatus,
-                stageStatuses ?? new ChangeTrackingList<ReportStageStatus>(),
+                stageStatuses ?? new ChangeTrackingList<DrillReportStageStatus>(),
                 availableFormats ?? new ChangeTrackingList<DrillReportFormat>(),
                 lastGeneratedOn,
                 schemaVersion,

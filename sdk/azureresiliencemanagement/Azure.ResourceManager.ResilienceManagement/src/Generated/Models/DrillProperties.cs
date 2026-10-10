@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="sliMonitoringProperties"> SLI monitoring properties of the Drill. </param>
         /// <param name="errorDetails"> Error details associated with the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DrillProperties(ResilienceManagementProvisioningState? provisioningState, ResourceIdentifier serviceGroupId, RecoveryPlanPropertiesOfDrill recoveryPlanProperties, GoalAssignmentPropertiesOfDrill goalAssignmentProperties, AssetPropertiesOfDrill drillAssetProperties, ChaosResourcePropertiesOfDrill chaosResourceProperties, ExecutionState? executionState, ExecutionReadinessState? executionReadinessState, ResilienceManagementRbacSetupMode? rbacSetupMode, AttentionReason attentionReason, DrillSystemMetadata systemMetadata, LastRunProperties lastRunProperties, DateTimeOffset? lastSyncOn, DateTimeOffset? lastResyncReadinessCheckOn, DrillType drillType, MonitoringPropertiesOfDrill monitoringProperties, HealthModelMonitoringProperties healthModelMonitoringProperties, SliMonitoringProperties sliMonitoringProperties, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DrillProperties(ResilienceManagementProvisioningState? provisioningState, ResourceIdentifier serviceGroupId, RecoveryPlanPropertiesOfDrill recoveryPlanProperties, GoalAssignmentPropertiesOfDrill goalAssignmentProperties, AssetPropertiesOfDrill drillAssetProperties, ChaosResourcePropertiesOfDrill chaosResourceProperties, DrillExecutionState? executionState, DrillExecutionReadinessState? executionReadinessState, ResilienceManagementRbacSetupMode? rbacSetupMode, DrillAttentionReason attentionReason, DrillSystemMetadata systemMetadata, DrillLastRunProperties lastRunProperties, DateTimeOffset? lastSyncOn, DateTimeOffset? lastResyncReadinessCheckOn, DrillType drillType, MonitoringPropertiesOfDrill monitoringProperties, HealthModelMonitoringProperties healthModelMonitoringProperties, SliMonitoringProperties sliMonitoringProperties, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ServiceGroupId = serviceGroupId;
@@ -92,22 +92,22 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public ChaosResourcePropertiesOfDrill ChaosResourceProperties { get; set; }
 
         /// <summary> Execution state of the Drill. Whether it is currently running or not. </summary>
-        public ExecutionState? ExecutionState { get; }
+        public DrillExecutionState? ExecutionState { get; }
 
         /// <summary> Readiness state of the Drill. </summary>
-        public ExecutionReadinessState? ExecutionReadinessState { get; }
+        public DrillExecutionReadinessState? ExecutionReadinessState { get; }
 
         /// <summary> RBAC setup mode. </summary>
         public ResilienceManagementRbacSetupMode? RbacSetupMode { get; set; }
 
         /// <summary> Attention reason if the ReadinessState is 'NeedsAttention'. </summary>
-        public AttentionReason AttentionReason { get; }
+        public DrillAttentionReason AttentionReason { get; }
 
         /// <summary> Internal System Metadata, to be used by internal components only. </summary>
         public DrillSystemMetadata SystemMetadata { get; }
 
         /// <summary> Last run properties. </summary>
-        public LastRunProperties LastRunProperties { get; }
+        public DrillLastRunProperties LastRunProperties { get; }
 
         /// <summary> Last sync time. </summary>
         public DateTimeOffset? LastSyncOn { get; }

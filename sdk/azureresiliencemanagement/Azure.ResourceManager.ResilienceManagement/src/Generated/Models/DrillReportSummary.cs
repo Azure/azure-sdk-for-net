@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Initializes a new instance of <see cref="DrillReportSummary"/>. </summary>
         internal DrillReportSummary()
         {
-            StageStatuses = new ChangeTrackingList<ReportStageStatus>();
+            StageStatuses = new ChangeTrackingList<DrillReportStageStatus>();
             AvailableFormats = new ChangeTrackingList<DrillReportFormat>();
         }
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="finalizationState"> Finalization state of the report. A finalized report is immutable. </param>
         /// <param name="lastError"> Error from the last failed report generation attempt. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DrillReportSummary(DrillReportGenerationStatus? generationStatus, IReadOnlyList<ReportStageStatus> stageStatuses, IReadOnlyList<DrillReportFormat> availableFormats, DateTimeOffset? lastGeneratedOn, string schemaVersion, DrillReportFinalizationState? finalizationState, ResilienceManagementErrorDetail lastError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DrillReportSummary(DrillReportGenerationStatus? generationStatus, IReadOnlyList<DrillReportStageStatus> stageStatuses, IReadOnlyList<DrillReportFormat> availableFormats, DateTimeOffset? lastGeneratedOn, string schemaVersion, DrillReportFinalizationState? finalizationState, ResilienceManagementErrorDetail lastError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GenerationStatus = generationStatus;
             StageStatuses = stageStatuses;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public DrillReportGenerationStatus? GenerationStatus { get; }
 
         /// <summary> Per-stage report generation statuses. </summary>
-        public IReadOnlyList<ReportStageStatus> StageStatuses { get; }
+        public IReadOnlyList<DrillReportStageStatus> StageStatuses { get; }
 
         /// <summary> Formats the report is currently available for download in. </summary>
         public IReadOnlyList<DrillReportFormat> AvailableFormats { get; }

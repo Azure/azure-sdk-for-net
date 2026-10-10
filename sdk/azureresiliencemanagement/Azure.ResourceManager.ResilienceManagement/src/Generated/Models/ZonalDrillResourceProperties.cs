@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Initializes a new instance of <see cref="ZonalDrillResourceProperties"/>. </summary>
         /// <param name="resourceId"> ARM Id of the underlying resource. </param>
         /// <param name="resourceType"> Type of the Drill resource. </param>
-        internal ZonalDrillResourceProperties(ResourceIdentifier resourceId, string resourceType) : base(resourceId, resourceType)
+        internal ZonalDrillResourceProperties(ResourceIdentifier resourceId, ResourceType resourceType) : base(resourceId, resourceType)
         {
             ActivePhysicalZones = new ChangeTrackingList<string>();
             RecoveryPhysicalZones = new ChangeTrackingList<string>();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="recoveryPhysicalZones"> Recovery Resource location and physical zones of HA Azure Resource. </param>
         /// <param name="haStatus"> HA status of the Drill resource. </param>
         /// <param name="advisorHaRecommendationId"> Associated Advisor Recommendation link, if HA is not enabled on this resource. </param>
-        internal ZonalDrillResourceProperties(ResourceIdentifier resourceId, string resourceType, IReadOnlyList<string> activeLocations, IReadOnlyList<string> recoveryLocations, DrillResourceInclusionState? inclusionState, ResourceInclusionState? recoveryPlanInclusionState, RecoveryPlanExclusionReason? recoveryPlanExclusionReason, ResourceProtectionSolutionType? resourceProtectionSolutionType, DrillResourceReadinessState? readinessState, DrillResourceFaultState? faultState, FaultProperties faultProperties, ForceInclusionState? forceInclusionState, DrillResourceAttentionReason attentionReason, string advisorRecommendationTypeId, ResilienceManagementErrorDetail rbacAssignmentError, ResilienceManagementErrorDetail monitoringRbacAssignmentError, ResilienceManagementProvisioningState? provisioningState, DrillType drillType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<string> activePhysicalZones, IReadOnlyList<string> recoveryPhysicalZones, HighAvailabilityStatus? haStatus, ResourceIdentifier advisorHaRecommendationId) : base(resourceId, resourceType, activeLocations, recoveryLocations, inclusionState, recoveryPlanInclusionState, recoveryPlanExclusionReason, resourceProtectionSolutionType, readinessState, faultState, faultProperties, forceInclusionState, attentionReason, advisorRecommendationTypeId, rbacAssignmentError, monitoringRbacAssignmentError, provisioningState, drillType, additionalBinaryDataProperties)
+        internal ZonalDrillResourceProperties(ResourceIdentifier resourceId, ResourceType resourceType, IReadOnlyList<string> activeLocations, IReadOnlyList<string> recoveryLocations, DrillResourceInclusionState? inclusionState, ResourceInclusionState? recoveryPlanInclusionState, RecoveryPlanExclusionReason? recoveryPlanExclusionReason, ResourceProtectionSolutionType? resourceProtectionSolutionType, DrillResourceReadinessState? readinessState, DrillResourceFaultState? faultState, FaultProperties faultProperties, DrillResourceForceInclusionState? forceInclusionState, DrillResourceAttentionReason attentionReason, string advisorRecommendationTypeId, ResilienceManagementErrorDetail rbacAssignmentError, ResilienceManagementErrorDetail monitoringRbacAssignmentError, ResilienceManagementProvisioningState? provisioningState, DrillType drillType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<string> activePhysicalZones, IReadOnlyList<string> recoveryPhysicalZones, DrillResourceHighAvailabilityStatus? haStatus, ResourceIdentifier advisorHaRecommendationId) : base(resourceId, resourceType, activeLocations, recoveryLocations, inclusionState, recoveryPlanInclusionState, recoveryPlanExclusionReason, resourceProtectionSolutionType, readinessState, faultState, faultProperties, forceInclusionState, attentionReason, advisorRecommendationTypeId, rbacAssignmentError, monitoringRbacAssignmentError, provisioningState, drillType, additionalBinaryDataProperties)
         {
             ActivePhysicalZones = activePhysicalZones;
             RecoveryPhysicalZones = recoveryPhysicalZones;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public IReadOnlyList<string> RecoveryPhysicalZones { get; }
 
         /// <summary> HA status of the Drill resource. </summary>
-        public HighAvailabilityStatus? HaStatus { get; }
+        public DrillResourceHighAvailabilityStatus? HaStatus { get; }
 
         /// <summary> Associated Advisor Recommendation link, if HA is not enabled on this resource. </summary>
         public ResourceIdentifier AdvisorHaRecommendationId { get; }

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="drillRbacOnDestinationAmw"> Rolled-up RBAC state: NotSet if the Drill identity is missing Monitoring Reader on any of the SLI's destination Azure Monitor Workspaces. </param>
         /// <param name="rbacNeededOnDestinationAmws"> The destination Azure Monitor Workspaces that are still missing the Monitoring Reader grant for the Drill identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SliAttentionStatus(ResourceIdentifier sliId, SliType @type, ExtensionObjectState? exists, SliTypeMatchState? typeMatch, ResilienceManagementRbacState? drillRbacOnDestinationAmw, IReadOnlyList<string> rbacNeededOnDestinationAmws, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SliAttentionStatus(ResourceIdentifier sliId, SliType @type, DrillExtensionObjectState? exists, SliTypeMatchState? typeMatch, ResilienceManagementRbacState? drillRbacOnDestinationAmw, IReadOnlyList<string> rbacNeededOnDestinationAmws, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SliId = sliId;
             Type = @type;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public SliType Type { get; }
 
         /// <summary> Whether the selected SLI still exists. </summary>
-        public ExtensionObjectState? Exists { get; }
+        public DrillExtensionObjectState? Exists { get; }
 
         /// <summary> Whether the user-declared SLI type matches the SLI's actual category. </summary>
         public SliTypeMatchState? TypeMatch { get; }

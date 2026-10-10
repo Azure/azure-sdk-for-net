@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            DrillRunTasks? operationName = default;
+            DrillRunTask? operationName = default;
             IList<string> sourceLocations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    operationName = new DrillRunTasks(prop.Value.GetString());
+                    operationName = new DrillRunTask(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sourceLocations"u8))

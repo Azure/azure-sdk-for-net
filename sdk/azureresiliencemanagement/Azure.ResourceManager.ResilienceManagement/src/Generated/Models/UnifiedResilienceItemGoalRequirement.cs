@@ -11,28 +11,28 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ResilienceManagement.Models
 {
     /// <summary> Definition of a resilience goal requirement copied from the goal assignment. </summary>
-    internal partial class UnifiedResilienceItemGoalRequirement
+    public partial class UnifiedResilienceItemGoalRequirement
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UnifiedResilienceItemGoalRequirement"/>. </summary>
-        /// <param name="required"> Whether the goal is required for the service group. </param>
-        internal UnifiedResilienceItemGoalRequirement(bool @required)
+        /// <param name="isRequired"> Whether the goal is required for the service group. </param>
+        internal UnifiedResilienceItemGoalRequirement(bool isRequired)
         {
-            Required = @required;
+            IsRequired = isRequired;
         }
 
         /// <summary> Initializes a new instance of <see cref="UnifiedResilienceItemGoalRequirement"/>. </summary>
-        /// <param name="required"> Whether the goal is required for the service group. </param>
+        /// <param name="isRequired"> Whether the goal is required for the service group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnifiedResilienceItemGoalRequirement(bool @required, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UnifiedResilienceItemGoalRequirement(bool isRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Required = @required;
+            IsRequired = isRequired;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether the goal is required for the service group. </summary>
-        public bool Required { get; }
+        public bool IsRequired { get; }
     }
 }

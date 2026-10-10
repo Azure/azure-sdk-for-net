@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 writer.WritePropertyName("resourceTypeCategories"u8);
                 writer.WriteStartArray();
-                foreach (ResourceTypeCategories item in ResourceTypeCategories)
+                foreach (DrillResourceTypeCategory item in ResourceTypeCategories)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -133,14 +133,14 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            InitialConfig initialConfig = default;
-            IReadOnlyList<ResourceTypeCategories> resourceTypeCategories = default;
+            DrillInitialConfig initialConfig = default;
+            IReadOnlyList<DrillResourceTypeCategory> resourceTypeCategories = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("initialConfig"u8))
                 {
-                    initialConfig = new InitialConfig(prop.Value.GetString());
+                    initialConfig = new DrillInitialConfig(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("resourceTypeCategories"u8))
@@ -149,10 +149,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    List<ResourceTypeCategories> array = new List<ResourceTypeCategories>();
+                    List<DrillResourceTypeCategory> array = new List<DrillResourceTypeCategory>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new ResourceTypeCategories(item.GetString()));
+                        array.Add(new DrillResourceTypeCategory(item.GetString()));
                     }
                     resourceTypeCategories = array;
                     continue;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DrillSystemMetadata(initialConfig, resourceTypeCategories ?? new ChangeTrackingList<ResourceTypeCategories>(), additionalBinaryDataProperties);
+            return new DrillSystemMetadata(initialConfig, resourceTypeCategories ?? new ChangeTrackingList<DrillResourceTypeCategory>(), additionalBinaryDataProperties);
         }
     }
 }

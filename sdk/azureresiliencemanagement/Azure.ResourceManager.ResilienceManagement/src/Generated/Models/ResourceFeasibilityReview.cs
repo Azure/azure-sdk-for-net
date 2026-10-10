@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ResilienceManagement;
 
 namespace Azure.ResourceManager.ResilienceManagement.Models
@@ -21,12 +22,12 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="feasibilityType"> The resource feasibility review type. </param>
         /// <param name="resourceType"> Fully qualified ARM resource type evaluated, e.g. `Microsoft.Compute/virtualMachines`. </param>
         /// <param name="status"> Outcome of this feasibility review. </param>
-        internal ResourceFeasibilityReview(ResourceFeasibilityReviewType feasibilityType, string resourceType, ResourceFeasibilityReviewStatus status)
+        internal ResourceFeasibilityReview(ResourceFeasibilityReviewType feasibilityType, ResourceType resourceType, ResourceFeasibilityReviewStatus status)
         {
             FeasibilityType = feasibilityType;
             ResourceType = resourceType;
             Status = status;
-            RecommendedTargetSkus = new ChangeTrackingList<SkuDetails>();
+            RecommendedTargetSkus = new ChangeTrackingList<ResourceFeasibilitySkuDetails>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceFeasibilityReview"/>. </summary>
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="status"> Outcome of this feasibility review. </param>
         /// <param name="recommendedTargetSkus"> Alternative SKUs surfaced for this review. Absent or empty means a `Flagged` review has no alternatives, an `Unavailable` review has no applicable recommendations to surface, or the review has a minimal `Passed` / `NotApplicable` outcome. Callers should treat an absent array and an empty array identically. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceFeasibilityReview(ResourceFeasibilityReviewType feasibilityType, string resourceType, SkuDetails currentTargetSku, ResourceFeasibilityReviewStatus status, IList<SkuDetails> recommendedTargetSkus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceFeasibilityReview(ResourceFeasibilityReviewType feasibilityType, ResourceType resourceType, ResourceFeasibilitySkuDetails currentTargetSku, ResourceFeasibilityReviewStatus status, IList<ResourceFeasibilitySkuDetails> recommendedTargetSkus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FeasibilityType = feasibilityType;
             ResourceType = resourceType;
@@ -50,15 +51,15 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public ResourceFeasibilityReviewType FeasibilityType { get; }
 
         /// <summary> Fully qualified ARM resource type evaluated, e.g. `Microsoft.Compute/virtualMachines`. </summary>
-        public string ResourceType { get; }
+        public ResourceType ResourceType { get; }
 
         /// <summary> The SKU the resource is currently configured to recover into, enriched for comparison against the recommendations. Absent when it could not be resolved, and always absent on `Passed` and `NotApplicable` reviews. </summary>
-        public SkuDetails CurrentTargetSku { get; }
+        public ResourceFeasibilitySkuDetails CurrentTargetSku { get; }
 
         /// <summary> Outcome of this feasibility review. </summary>
         public ResourceFeasibilityReviewStatus Status { get; }
 
         /// <summary> Alternative SKUs surfaced for this review. Absent or empty means a `Flagged` review has no alternatives, an `Unavailable` review has no applicable recommendations to surface, or the review has a minimal `Passed` / `NotApplicable` outcome. Callers should treat an absent array and an empty array identically. </summary>
-        public IList<SkuDetails> RecommendedTargetSkus { get; }
+        public IList<ResourceFeasibilitySkuDetails> RecommendedTargetSkus { get; }
     }
 }

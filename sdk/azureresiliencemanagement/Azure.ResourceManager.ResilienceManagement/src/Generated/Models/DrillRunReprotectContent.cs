@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.ResilienceManagement;
 
 namespace Azure.ResourceManager.ResilienceManagement.Models
 {
@@ -18,9 +18,13 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DrillRunReprotectContent"/>. </summary>
-        public DrillRunReprotectContent()
+        /// <param name="reprotectProperties"> The reprotect properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reprotectProperties"/> is null. </exception>
+        public DrillRunReprotectContent(ReprotectContent reprotectProperties)
         {
+            Argument.AssertNotNull(reprotectProperties, nameof(reprotectProperties));
 
+            ReprotectProperties = reprotectProperties;
         }
 
         /// <summary> Initializes a new instance of <see cref="DrillRunReprotectContent"/>. </summary>
@@ -33,15 +37,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> The reprotect properties. </summary>
-        internal ReprotectContent ReprotectProperties { get; }
-
-        /// <summary> Selected recovery resource Ids to be processed. If not provided, all qualified resources will be processed. </summary>
-        public IList<ResourceIdentifier> ReprotectRequestSelectedResourceIds
-        {
-            get
-            {
-                return ReprotectProperties is null ? default : ReprotectProperties.ReprotectRequestSelectedResourceIds;
-            }
-        }
+        public ReprotectContent ReprotectProperties { get; }
     }
 }

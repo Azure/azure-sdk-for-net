@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 return null;
             }
             ResourceIdentifier resourceId = default;
-            string resourceType = default;
+            ResourceType resourceType = default;
             IReadOnlyList<string> activeLocations = default;
             IReadOnlyList<string> recoveryLocations = default;
             DrillResourceInclusionState? inclusionState = default;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             DrillResourceReadinessState? readinessState = default;
             DrillResourceFaultState? faultState = default;
             FaultProperties faultProperties = default;
-            ForceInclusionState? forceInclusionState = default;
+            DrillResourceForceInclusionState? forceInclusionState = default;
             DrillResourceAttentionReason attentionReason = default;
             string advisorRecommendationTypeId = default;
             ResilienceManagementErrorDetail rbacAssignmentError = default;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IReadOnlyList<string> activePhysicalZones = default;
             IReadOnlyList<string> recoveryPhysicalZones = default;
-            HighAvailabilityStatus? haStatus = default;
+            DrillResourceHighAvailabilityStatus? haStatus = default;
             ResourceIdentifier advisorHaRecommendationId = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 }
                 if (prop.NameEquals("resourceType"u8))
                 {
-                    resourceType = prop.Value.GetString();
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("activeLocations"u8))
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    forceInclusionState = new ForceInclusionState(prop.Value.GetString());
+                    forceInclusionState = new DrillResourceForceInclusionState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("attentionReason"u8))
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    haStatus = new HighAvailabilityStatus(prop.Value.GetString());
+                    haStatus = new DrillResourceHighAvailabilityStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("advisorHaRecommendationId"u8))

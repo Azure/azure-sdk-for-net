@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UsagePlanEnrollmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EnrollmentProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal UsagePlanEnrollmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, UsagePlanEnrollmentProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public EnrollmentProperties Properties { get; set; }
+        public UsagePlanEnrollmentProperties Properties { get; set; }
     }
 }

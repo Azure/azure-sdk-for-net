@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.ResilienceManagement
     public partial class UsagePlanEnrollmentData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.UsagePlanEnrollmentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.UsagePlanEnrollmentData>
     {
         public UsagePlanEnrollmentData() { }
-        public Azure.ResourceManager.ResilienceManagement.Models.EnrollmentProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.ResilienceManagement.Models.UsagePlanEnrollmentProperties Properties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -839,7 +839,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
     {
         public AddOrUpdateResourcesContent(int faultDurationInMin) { }
         public int FaultDurationInMin { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ForceInclusionState? ForceInclusionAndUpdate { get { throw null; } set { } }
+        public Azure.ResourceManager.ResilienceManagement.Models.DrillResourceForceInclusionState? ForceInclusionAndUpdate { get { throw null; } set { } }
         public Azure.ResourceManager.ResilienceManagement.Models.DrillResourcesList ResourceLists { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ResilienceManagement.Models.AddOrUpdateResourcesContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -853,54 +853,48 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
     }
     public static partial class ArmResilienceManagementModelFactory
     {
-        public static Azure.ResourceManager.ResilienceManagement.Models.AddOrUpdateResourcesContent AddOrUpdateResourcesContent(int faultDurationInMin = 0, Azure.ResourceManager.ResilienceManagement.Models.DrillResourcesList resourceLists = null, Azure.ResourceManager.ResilienceManagement.Models.ForceInclusionState? forceInclusionAndUpdate = default(Azure.ResourceManager.ResilienceManagement.Models.ForceInclusionState?)) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.AddOrUpdateResourcesContent AddOrUpdateResourcesContent(int faultDurationInMin = 0, Azure.ResourceManager.ResilienceManagement.Models.DrillResourcesList resourceLists = null, Azure.ResourceManager.ResilienceManagement.Models.DrillResourceForceInclusionState? forceInclusionAndUpdate = default(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceForceInclusionState?)) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.ArmResponseErrorResponseResult ArmResponseErrorResponseResult(Azure.ResponseError bodyError = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.AssetPropertiesOfDrill AssetPropertiesOfDrill(string subscription = null, string region = null, string resourceGroup = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.AttentionReason AttentionReason(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? drillRbacOnChaosResource = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState?), System.Collections.Generic.IEnumerable<string> rbacNeededForDrillOnChaosResource = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? drillRbacOnRecoveryPlan = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState?), System.Collections.Generic.IEnumerable<string> rbacNeededForDrillOnRecoveryPlan = null, Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanState? roReadiness = default(Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanState?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? rbacOnTargetResources = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? runbookFaultRbacOnTargets = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState?), Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState? chaosResource = default(Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState?), System.Collections.Generic.IEnumerable<string> chaosResourceCreationFailureReasons = null, Azure.ResourceManager.ResilienceManagement.Models.RelativeResourceCompositionState? recoveryPlanAndDrillResourcesState = default(Azure.ResourceManager.ResilienceManagement.Models.RelativeResourceCompositionState?), Azure.ResourceManager.ResilienceManagement.Models.RelativeResourceCompositionState? serviceGroupAndDrillResourcesState = default(Azure.ResourceManager.ResilienceManagement.Models.RelativeResourceCompositionState?), Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState? drillUserMsi = default(Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState?), Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState? chaosResourceUserMsi = default(Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState?), Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState? includedResourceInDrill = default(Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? drillRbacOnMonitoringResources = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementErrorDetail> drillMonitoringErrors = null, Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState? drillMonitoringResources = default(Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? monitoringRbacOnDrillResources = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState?), System.Collections.Generic.IEnumerable<string> rbacNeededForDrillOnDrillMonitoringResources = null, System.Collections.Generic.IEnumerable<string> rbacNeededForDrillOnDrillResources = null, System.Collections.Generic.IEnumerable<string> missingRequiredResourceProviders = null, bool? monitoringSourceNotConfigured = default(bool?), Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState? healthModelExists = default(Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState?), Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState? discoveryRuleExists = default(Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? drillRbacOnHealthModel = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState?), System.Collections.Generic.IEnumerable<string> rbacNeededForDrillOnHealthModel = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? drillRbacOnSli = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.SliAttentionStatus> sliAttentionStatuses = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? drillRbacOnGoalAssignment = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState?), System.Collections.Generic.IEnumerable<string> rbacNeededForDrillOnGoalAssignment = null, Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState? goalAssignment = default(Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState?), Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState? recoveryPlan = default(Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState?), Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState? healthModelAssociatedWithServiceGroup = default(Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState?)) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.ChaosResourcePropertiesOfDrill ChaosResourcePropertiesOfDrill(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementAssociatedIdentity identity = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementAssociatedIdentity chaosResourceIdentityForFaults = null, Azure.Core.ResourceIdentifier chaosResourceId = null, int? faultDurationInMin = default(int?)) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.CustomFaultDetails CustomFaultDetails(string faultName = null, Azure.Core.ResourceIdentifier scriptResourceId = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.DiskReprotectInputDetails DiskReprotectInputDetails(Azure.Core.ResourceIdentifier diskResourceId = null, Azure.Core.ResourceIdentifier stagingStorageAccountResourceId = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillAttentionReason DrillAttentionReason(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? drillRbacOnChaosResource = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState?), System.Collections.Generic.IEnumerable<string> rbacNeededForDrillOnChaosResource = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? drillRbacOnRecoveryPlan = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState?), System.Collections.Generic.IEnumerable<string> rbacNeededForDrillOnRecoveryPlan = null, Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanState? roReadiness = default(Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanState?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? rbacOnTargetResources = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? runbookFaultRbacOnTargets = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState?), Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState? chaosResource = default(Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState?), System.Collections.Generic.IEnumerable<string> chaosResourceCreationFailureReasons = null, Azure.ResourceManager.ResilienceManagement.Models.RelativeResourceCompositionState? recoveryPlanAndDrillResourcesState = default(Azure.ResourceManager.ResilienceManagement.Models.RelativeResourceCompositionState?), Azure.ResourceManager.ResilienceManagement.Models.RelativeResourceCompositionState? serviceGroupAndDrillResourcesState = default(Azure.ResourceManager.ResilienceManagement.Models.RelativeResourceCompositionState?), Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState? drillUserMsi = default(Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState?), Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState? chaosResourceUserMsi = default(Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState?), Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState? includedResourceInDrill = default(Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? drillRbacOnMonitoringResources = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementErrorDetail> drillMonitoringErrors = null, Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState? drillMonitoringResources = default(Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? monitoringRbacOnDrillResources = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState?), System.Collections.Generic.IEnumerable<string> rbacNeededForDrillOnDrillMonitoringResources = null, System.Collections.Generic.IEnumerable<string> rbacNeededForDrillOnDrillResources = null, System.Collections.Generic.IEnumerable<string> missingRequiredResourceProviders = null, bool? isMonitoringSourceNotConfigured = default(bool?), Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState? healthModelExists = default(Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState?), Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState? discoveryRuleExists = default(Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? drillRbacOnHealthModel = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState?), System.Collections.Generic.IEnumerable<string> rbacNeededForDrillOnHealthModel = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? drillRbacOnSli = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.SliAttentionStatus> sliAttentionStatuses = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? drillRbacOnGoalAssignment = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState?), System.Collections.Generic.IEnumerable<string> rbacNeededForDrillOnGoalAssignment = null, Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState? goalAssignment = default(Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState?), Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState? recoveryPlan = default(Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState?), Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState? healthModelAssociatedWithServiceGroup = default(Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState?)) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.DrillEndContent DrillEndContent(Azure.ResourceManager.ResilienceManagement.Models.DrillAttestation attestation = default(Azure.ResourceManager.ResilienceManagement.Models.DrillAttestation), string attestationNotes = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.DrillProperties DrillProperties(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? provisioningState = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState?), Azure.Core.ResourceIdentifier serviceGroupId = null, Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanPropertiesOfDrill recoveryPlanProperties = null, Azure.ResourceManager.ResilienceManagement.Models.GoalAssignmentPropertiesOfDrill goalAssignmentProperties = null, Azure.ResourceManager.ResilienceManagement.Models.AssetPropertiesOfDrill drillAssetProperties = null, Azure.ResourceManager.ResilienceManagement.Models.ChaosResourcePropertiesOfDrill chaosResourceProperties = null, Azure.ResourceManager.ResilienceManagement.Models.ExecutionState? executionState = default(Azure.ResourceManager.ResilienceManagement.Models.ExecutionState?), Azure.ResourceManager.ResilienceManagement.Models.ExecutionReadinessState? executionReadinessState = default(Azure.ResourceManager.ResilienceManagement.Models.ExecutionReadinessState?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacSetupMode? rbacSetupMode = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacSetupMode?), Azure.ResourceManager.ResilienceManagement.Models.AttentionReason attentionReason = null, Azure.ResourceManager.ResilienceManagement.Models.DrillSystemMetadata systemMetadata = null, Azure.ResourceManager.ResilienceManagement.Models.LastRunProperties lastRunProperties = null, System.DateTimeOffset? lastSyncOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastResyncReadinessCheckOn = default(System.DateTimeOffset?), string drillType = null, Azure.ResourceManager.ResilienceManagement.Models.MonitoringPropertiesOfDrill monitoringProperties = null, Azure.ResourceManager.ResilienceManagement.Models.HealthModelMonitoringProperties healthModelMonitoringProperties = null, Azure.ResourceManager.ResilienceManagement.Models.SliMonitoringProperties sliMonitoringProperties = null, Azure.ResponseError errorDetails = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.DrillReportSummary DrillReportSummary(Azure.ResourceManager.ResilienceManagement.Models.DrillReportGenerationStatus? generationStatus = default(Azure.ResourceManager.ResilienceManagement.Models.DrillReportGenerationStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.ReportStageStatus> stageStatuses = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.DrillReportFormat> availableFormats = null, System.DateTimeOffset? lastGeneratedOn = default(System.DateTimeOffset?), string schemaVersion = null, Azure.ResourceManager.ResilienceManagement.Models.DrillReportFinalizationState? finalizationState = default(Azure.ResourceManager.ResilienceManagement.Models.DrillReportFinalizationState?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementErrorDetail lastError = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillLastRunProperties DrillLastRunProperties(System.DateTimeOffset? lastRunOn = default(System.DateTimeOffset?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus? lastRunState = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus?), System.TimeSpan? lastRunDuration = default(System.TimeSpan?), Azure.ResourceManager.ResilienceManagement.Models.DrillAttestation? lastRunAttestation = default(Azure.ResourceManager.ResilienceManagement.Models.DrillAttestation?)) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillProperties DrillProperties(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? provisioningState = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState?), Azure.Core.ResourceIdentifier serviceGroupId = null, Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanPropertiesOfDrill recoveryPlanProperties = null, Azure.ResourceManager.ResilienceManagement.Models.GoalAssignmentPropertiesOfDrill goalAssignmentProperties = null, Azure.ResourceManager.ResilienceManagement.Models.AssetPropertiesOfDrill drillAssetProperties = null, Azure.ResourceManager.ResilienceManagement.Models.ChaosResourcePropertiesOfDrill chaosResourceProperties = null, Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionState? executionState = default(Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionState?), Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionReadinessState? executionReadinessState = default(Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionReadinessState?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacSetupMode? rbacSetupMode = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacSetupMode?), Azure.ResourceManager.ResilienceManagement.Models.DrillAttentionReason attentionReason = null, Azure.ResourceManager.ResilienceManagement.Models.DrillSystemMetadata systemMetadata = null, Azure.ResourceManager.ResilienceManagement.Models.DrillLastRunProperties lastRunProperties = null, System.DateTimeOffset? lastSyncOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastResyncReadinessCheckOn = default(System.DateTimeOffset?), string drillType = null, Azure.ResourceManager.ResilienceManagement.Models.MonitoringPropertiesOfDrill monitoringProperties = null, Azure.ResourceManager.ResilienceManagement.Models.HealthModelMonitoringProperties healthModelMonitoringProperties = null, Azure.ResourceManager.ResilienceManagement.Models.SliMonitoringProperties sliMonitoringProperties = null, Azure.ResponseError errorDetails = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillReportStageStatus DrillReportStageStatus(Azure.ResourceManager.ResilienceManagement.Models.DrillRunStage drillRunStage = default(Azure.ResourceManager.ResilienceManagement.Models.DrillRunStage), Azure.ResourceManager.ResilienceManagement.Models.DrillReportGenerationStatus? generationStatus = default(Azure.ResourceManager.ResilienceManagement.Models.DrillReportGenerationStatus?), System.DateTimeOffset? lastAttemptOn = default(System.DateTimeOffset?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementErrorDetail lastError = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillReportSummary DrillReportSummary(Azure.ResourceManager.ResilienceManagement.Models.DrillReportGenerationStatus? generationStatus = default(Azure.ResourceManager.ResilienceManagement.Models.DrillReportGenerationStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.DrillReportStageStatus> stageStatuses = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.DrillReportFormat> availableFormats = null, System.DateTimeOffset? lastGeneratedOn = default(System.DateTimeOffset?), string schemaVersion = null, Azure.ResourceManager.ResilienceManagement.Models.DrillReportFinalizationState? finalizationState = default(Azure.ResourceManager.ResilienceManagement.Models.DrillReportFinalizationState?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementErrorDetail lastError = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.DrillResourceAttentionReason DrillResourceAttentionReason(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? faultRbacOnTargetResource = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? runbookFaultRbacOnTargets = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? monitoringRbacOnTargets = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.DrillResourceState> resourceState = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.DrillResourceProperties DrillResourceProperties(Azure.Core.ResourceIdentifier resourceId = null, string resourceType = null, System.Collections.Generic.IEnumerable<string> activeLocations = null, System.Collections.Generic.IEnumerable<string> recoveryLocations = null, Azure.ResourceManager.ResilienceManagement.Models.DrillResourceInclusionState? inclusionState = default(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceInclusionState?), Azure.ResourceManager.ResilienceManagement.Models.ResourceInclusionState? recoveryPlanInclusionState = default(Azure.ResourceManager.ResilienceManagement.Models.ResourceInclusionState?), Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanExclusionReason? recoveryPlanExclusionReason = default(Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanExclusionReason?), Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionSolutionType? resourceProtectionSolutionType = default(Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionSolutionType?), Azure.ResourceManager.ResilienceManagement.Models.DrillResourceReadinessState? readinessState = default(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceReadinessState?), Azure.ResourceManager.ResilienceManagement.Models.DrillResourceFaultState? faultState = default(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceFaultState?), Azure.ResourceManager.ResilienceManagement.Models.FaultProperties faultProperties = null, Azure.ResourceManager.ResilienceManagement.Models.ForceInclusionState? forceInclusionState = default(Azure.ResourceManager.ResilienceManagement.Models.ForceInclusionState?), Azure.ResourceManager.ResilienceManagement.Models.DrillResourceAttentionReason attentionReason = null, string advisorRecommendationTypeId = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementErrorDetail rbacAssignmentError = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementErrorDetail monitoringRbacAssignmentError = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? provisioningState = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState?), string drillType = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillResourceProperties DrillResourceProperties(Azure.Core.ResourceIdentifier resourceId = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), System.Collections.Generic.IEnumerable<string> activeLocations = null, System.Collections.Generic.IEnumerable<string> recoveryLocations = null, Azure.ResourceManager.ResilienceManagement.Models.DrillResourceInclusionState? inclusionState = default(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceInclusionState?), Azure.ResourceManager.ResilienceManagement.Models.ResourceInclusionState? recoveryPlanInclusionState = default(Azure.ResourceManager.ResilienceManagement.Models.ResourceInclusionState?), Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanExclusionReason? recoveryPlanExclusionReason = default(Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanExclusionReason?), Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionSolutionType? resourceProtectionSolutionType = default(Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionSolutionType?), Azure.ResourceManager.ResilienceManagement.Models.DrillResourceReadinessState? readinessState = default(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceReadinessState?), Azure.ResourceManager.ResilienceManagement.Models.DrillResourceFaultState? faultState = default(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceFaultState?), Azure.ResourceManager.ResilienceManagement.Models.FaultProperties faultProperties = null, Azure.ResourceManager.ResilienceManagement.Models.DrillResourceForceInclusionState? forceInclusionState = default(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceForceInclusionState?), Azure.ResourceManager.ResilienceManagement.Models.DrillResourceAttentionReason attentionReason = null, string advisorRecommendationTypeId = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementErrorDetail rbacAssignmentError = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementErrorDetail monitoringRbacAssignmentError = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? provisioningState = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState?), string drillType = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.DrillResourcesList DrillResourcesList(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.IncludeOrUpdateContent> includeResources = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> excludeResources = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.IncludeOrUpdateContent> updateResources = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunAddNotesContent DrillRunAddNotesContent(string notes = null, System.DateTimeOffset? recordedOn = default(System.DateTimeOffset?), string author = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.DrillRunData DrillRunData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ResilienceManagement.Models.DrillRunProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunFailoverContent DrillRunFailoverContent(Azure.ResourceManager.ResilienceManagement.Models.AutoFailover autoFailover = default(Azure.ResourceManager.ResilienceManagement.Models.AutoFailover), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverContent failoverProperties = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunProperties DrillRunProperties(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus? status = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus?), System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), System.TimeSpan? duration = default(System.TimeSpan?), Azure.ResourceManager.ResilienceManagement.Models.JobErrorInfo errorDetails = null, Azure.Core.ResourceIdentifier resourceId = null, string operation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.JobRetryDetails> retryDetails = null, Azure.ResourceManager.ResilienceManagement.Models.JobExtendedInfo jobExtendedInfo = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.JobUserComment> userComments = null, Azure.ResourceManager.ResilienceManagement.Models.UserConsent? executionConfigurationsUserConsent = default(Azure.ResourceManager.ResilienceManagement.Models.UserConsent?), Azure.ResourceManager.ResilienceManagement.Models.JobTriggeredBy? triggeredBy = default(Azure.ResourceManager.ResilienceManagement.Models.JobTriggeredBy?), Azure.Core.ResourceIdentifier drillId = null, Azure.ResourceManager.ResilienceManagement.Models.DrillMode? drillMode = default(Azure.ResourceManager.ResilienceManagement.Models.DrillMode?), Azure.ResourceManager.ResilienceManagement.Models.DrillAttestation? attestation = default(Azure.ResourceManager.ResilienceManagement.Models.DrillAttestation?), System.Collections.Generic.IEnumerable<string> notes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.SupportedVerbsForStage> supportedVerbsForStage = null, string currentActiveOperationId = null, Azure.ResourceManager.ResilienceManagement.Models.DrillReportSummary report = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunReprotectContent DrillRunReprotectContent(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> reprotectRequestSelectedResourceIds = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunResourceProperties DrillRunResourceProperties(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus? status = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus?), System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), System.TimeSpan? duration = default(System.TimeSpan?), Azure.ResourceManager.ResilienceManagement.Models.JobErrorInfo errorDetails = null, Azure.Core.ResourceIdentifier resourceId = null, string operation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.JobRetryDetails> retryDetails = null, Azure.ResourceManager.ResilienceManagement.Models.JobExtendedInfo jobExtendedInfo = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.JobUserComment> userComments = null, string jobId = null, string taskId = null, string taskName = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? provisioningState = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunFailoverContent DrillRunFailoverContent(Azure.ResourceManager.ResilienceManagement.Models.DrillRunAutoFailover autoFailover = default(Azure.ResourceManager.ResilienceManagement.Models.DrillRunAutoFailover), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverContent failoverProperties = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunProperties DrillRunProperties(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus? status = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus?), System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), System.TimeSpan? duration = default(System.TimeSpan?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobErrorInfo errorDetails = null, Azure.Core.ResourceIdentifier resourceId = null, string operation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobRetryDetails> retryDetails = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobExtendedInfo jobExtendedInfo = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobUserComment> userComments = null, Azure.ResourceManager.ResilienceManagement.Models.RecoveryActionUserConsent? executionConfigurationsUserConsent = default(Azure.ResourceManager.ResilienceManagement.Models.RecoveryActionUserConsent?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTriggeredBy? triggeredBy = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTriggeredBy?), Azure.Core.ResourceIdentifier drillId = null, Azure.ResourceManager.ResilienceManagement.Models.DrillMode? drillMode = default(Azure.ResourceManager.ResilienceManagement.Models.DrillMode?), Azure.ResourceManager.ResilienceManagement.Models.DrillAttestation? attestation = default(Azure.ResourceManager.ResilienceManagement.Models.DrillAttestation?), System.Collections.Generic.IEnumerable<string> notes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.DrillRunStageSupportedVerbs> supportedVerbsForStage = null, string currentActiveOperationId = null, Azure.ResourceManager.ResilienceManagement.Models.DrillReportSummary report = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunReprotectContent DrillRunReprotectContent(Azure.ResourceManager.ResilienceManagement.Models.ReprotectContent reprotectProperties = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunResourceProperties DrillRunResourceProperties(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus? status = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus?), System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), System.TimeSpan? duration = default(System.TimeSpan?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobErrorInfo errorDetails = null, Azure.Core.ResourceIdentifier resourceId = null, string operation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobRetryDetails> retryDetails = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobExtendedInfo jobExtendedInfo = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobUserComment> userComments = null, string jobId = null, string taskId = null, string taskName = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? provisioningState = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunStageSupportedVerbs DrillRunStageSupportedVerbs(Azure.ResourceManager.ResilienceManagement.Models.DrillRunStage drillRunStage = default(Azure.ResourceManager.ResilienceManagement.Models.DrillRunStage), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.DrillRunOperationVerb> supportedVerbs = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.DrillRunTargetData DrillRunTargetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ResilienceManagement.Models.DrillRunResourceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.DrillStartContent DrillStartContent(Azure.ResourceManager.ResilienceManagement.Models.DrillMode mode = default(Azure.ResourceManager.ResilienceManagement.Models.DrillMode)) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.DrillSystemMetadata DrillSystemMetadata(Azure.ResourceManager.ResilienceManagement.Models.InitialConfig initialConfig = default(Azure.ResourceManager.ResilienceManagement.Models.InitialConfig), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.ResourceTypeCategories> resourceTypeCategories = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillSystemMetadata DrillSystemMetadata(Azure.ResourceManager.ResilienceManagement.Models.DrillInitialConfig initialConfig = default(Azure.ResourceManager.ResilienceManagement.Models.DrillInitialConfig), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.DrillResourceTypeCategory> resourceTypeCategories = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.DrillTargetData DrillTargetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ResilienceManagement.Models.DrillResourceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.DrillUpdateProperties DrillUpdateProperties(Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanPropertiesOfDrill recoveryPlanProperties = null, Azure.ResourceManager.ResilienceManagement.Models.GoalAssignmentPropertiesOfDrill goalAssignmentProperties = null, Azure.ResourceManager.ResilienceManagement.Models.AssetPropertiesOfDrill drillAssetProperties = null, Azure.ResourceManager.ResilienceManagement.Models.ChaosResourcePropertiesOfDrill chaosResourceProperties = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacSetupMode? rbacSetupMode = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacSetupMode?), Azure.ResourceManager.ResilienceManagement.Models.MonitoringPropertiesOfDrill monitoringProperties = null, Azure.ResourceManager.ResilienceManagement.Models.HealthModelMonitoringProperties healthModelMonitoringProperties = null, Azure.ResourceManager.ResilienceManagement.Models.SliMonitoringProperties sliMonitoringProperties = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.EnrollmentProperties EnrollmentProperties(Azure.Core.ResourceIdentifier serviceGroupId = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? provisioningState = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState?), Azure.ResponseError errorDetails = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.FailoverRequestProperties FailoverRequestProperties(System.Collections.Generic.IEnumerable<string> sourceLocations = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> selectedResourceIds = null, Azure.ResourceManager.ResilienceManagement.Models.UserConsent? executionConfigurationsUserConsent = default(Azure.ResourceManager.ResilienceManagement.Models.UserConsent?)) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.FaultDetails FaultDetails(string faultUrn = null, string faultName = null, Azure.Core.ResourceIdentifier targetResourceId = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.FaultProperties FaultProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.FaultDetails> availableFaults = null, Azure.ResourceManager.ResilienceManagement.Models.FaultDetails defaultFault = null, Azure.ResourceManager.ResilienceManagement.Models.FaultDetails overriddenDefaultFault = null, Azure.ResourceManager.ResilienceManagement.Models.CustomFaultDetails customFault = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.GoalAssignmentData GoalAssignmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ResilienceManagement.Models.GoalAssignmentProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.GoalAssignmentProperties GoalAssignmentProperties(bool requireZonalResiliency = false, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.ServiceLevelTarget> serviceLevelResources = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? provisioningState = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState?), Azure.ResponseError errorDetails = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.GoalAssignmentProperties GoalAssignmentProperties(bool isZonalResiliencyRequired = false, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.ServiceLevelTarget> serviceLevelResources = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? provisioningState = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState?), Azure.ResponseError errorDetails = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.GoalAssignmentPropertiesOfDrill GoalAssignmentPropertiesOfDrill(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementAssociatedIdentity identity = null, Azure.Core.ResourceIdentifier goalAssignmentId = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.GoalMembersData GoalMembersData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ResilienceManagement.Models.GoalResourceProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.GoalResourceProperties GoalResourceProperties(Azure.Core.ResourceIdentifier resourceArmId = null, Azure.ResourceManager.ResilienceManagement.Models.ResiliencyProperties zonalResiliency = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? provisioningState = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.GoalResourceProperties GoalResourceProperties(Azure.Core.ResourceIdentifier resourceArmId = null, Azure.ResourceManager.ResilienceManagement.Models.GoalResourceResiliencyProperties zonalResiliency = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? provisioningState = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.GoalResourceResiliencyProperties GoalResourceResiliencyProperties(Azure.ResourceManager.ResilienceManagement.Models.GoalResourceExclusionState? goalParticipation = default(Azure.ResourceManager.ResilienceManagement.Models.GoalResourceExclusionState?), Azure.ResourceManager.ResilienceManagement.Models.GoalResourceAttestationState? attestationStatus = default(Azure.ResourceManager.ResilienceManagement.Models.GoalResourceAttestationState?), Azure.ResourceManager.ResilienceManagement.Models.GoalResourceExclusionReason? exclusionReason = default(Azure.ResourceManager.ResilienceManagement.Models.GoalResourceExclusionReason?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.GoalResourceUserConfirmation> userConfirmation = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.GoalResourceUserConfirmation GoalResourceUserConfirmation(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementSolutionDisplayName solutionDisplayName = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementSolutionDisplayName), Azure.ResourceManager.ResilienceManagement.Models.GoalResourceConfirmationStatus confirmationStatus = default(Azure.ResourceManager.ResilienceManagement.Models.GoalResourceConfirmationStatus), Azure.ResourceManager.ResilienceManagement.Models.GoalResourceConfirmationReason? reasonForRequestingConfirmation = default(Azure.ResourceManager.ResilienceManagement.Models.GoalResourceConfirmationReason?)) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.HealthModelMonitoringProperties HealthModelMonitoringProperties(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementAssociatedIdentity identity = null, Azure.Core.ResourceIdentifier healthModelId = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.IncludeOrUpdateContent IncludeOrUpdateContent(Azure.Core.ResourceIdentifier id = null, Azure.ResourceManager.ResilienceManagement.Models.FaultProperties faultProperties = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.JobErrorInfo JobErrorInfo(string errorCode = null, string errorMessage = null, System.Collections.Generic.IEnumerable<string> recommendations = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.JobExtendedInfo JobExtendedInfo(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.JobTaskDetail> tasksList = null, string dynamicErrorMessage = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.JobProperties JobProperties(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus? status = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus?), System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), System.TimeSpan? duration = default(System.TimeSpan?), Azure.ResourceManager.ResilienceManagement.Models.JobErrorInfo errorDetails = null, Azure.Core.ResourceIdentifier resourceId = null, string operation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.JobRetryDetails> retryDetails = null, Azure.ResourceManager.ResilienceManagement.Models.JobExtendedInfo jobExtendedInfo = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.JobUserComment> userComments = null, string jobType = null, Azure.ResourceManager.ResilienceManagement.Models.UserConsent? executionConfigurationsUserConsent = default(Azure.ResourceManager.ResilienceManagement.Models.UserConsent?), Azure.ResourceManager.ResilienceManagement.Models.JobTriggeredBy? triggeredBy = default(Azure.ResourceManager.ResilienceManagement.Models.JobTriggeredBy?)) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.JobResourceProperties JobResourceProperties(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus? status = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus?), System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), System.TimeSpan? duration = default(System.TimeSpan?), Azure.ResourceManager.ResilienceManagement.Models.JobErrorInfo errorDetails = null, Azure.Core.ResourceIdentifier resourceId = null, string operation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.JobRetryDetails> retryDetails = null, Azure.ResourceManager.ResilienceManagement.Models.JobExtendedInfo jobExtendedInfo = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.JobUserComment> userComments = null, string jobId = null, string taskId = null, string taskName = null, string jobResourceType = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.JobRetryDetails JobRetryDetails(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus? status = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus?), System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), System.TimeSpan? duration = default(System.TimeSpan?), Azure.ResourceManager.ResilienceManagement.Models.JobErrorInfo errorDetails = null, int retryAttempt = 0, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.JobUserComment> userComments = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.JobTaskDetail JobTaskDetail(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus? status = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus?), System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), System.TimeSpan? duration = default(System.TimeSpan?), Azure.ResourceManager.ResilienceManagement.Models.JobErrorInfo errorDetails = null, string taskId = null, string taskName = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> linkedJobIds = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.JobUserComment> userComments = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.JobTaskDetail> subTasksList = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.JobRetryDetails> retryDetails = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.JobUserComment JobUserComment(Azure.ResourceManager.ResilienceManagement.Models.CommentType? commentType = default(Azure.ResourceManager.ResilienceManagement.Models.CommentType?), System.DateTimeOffset? commentOn = default(System.DateTimeOffset?), string comments = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.LastRunProperties LastRunProperties(System.DateTimeOffset? lastRunOn = default(System.DateTimeOffset?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus? lastRunState = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus?), System.TimeSpan? lastRunDuration = default(System.TimeSpan?), Azure.ResourceManager.ResilienceManagement.Models.DrillAttestation? lastRunAttestation = default(Azure.ResourceManager.ResilienceManagement.Models.DrillAttestation?)) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.ListReportDownloadUrlContent ListReportDownloadUrlContent(Azure.ResourceManager.ResilienceManagement.Models.DrillReportFormat? format = default(Azure.ResourceManager.ResilienceManagement.Models.DrillReportFormat?)) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.ListReportDownloadUrlResult ListReportDownloadUrlResult(Azure.ResourceManager.ResilienceManagement.Models.DrillReportFormat? format = default(Azure.ResourceManager.ResilienceManagement.Models.DrillReportFormat?), System.Uri downloadUri = null, System.DateTimeOffset? expiryOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.MarkAsCompleteContent MarkAsCompleteContent(Azure.ResourceManager.ResilienceManagement.Models.DrillRunSubtasks drillRunStage = default(Azure.ResourceManager.ResilienceManagement.Models.DrillRunSubtasks)) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.MarkAsCompleteContent MarkAsCompleteContent(Azure.ResourceManager.ResilienceManagement.Models.DrillRunStage drillRunStage = default(Azure.ResourceManager.ResilienceManagement.Models.DrillRunStage)) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.MonitoringPropertiesOfDrill MonitoringPropertiesOfDrill(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementAssociatedIdentity identity = null, Azure.Core.ResourceIdentifier logAnalyticsWorkspaceId = null, Azure.Core.ResourceIdentifier rawMetricsDataCollectionRuleId = null, Azure.Core.ResourceIdentifier serviceGroupMetricsDataCollectionRuleId = null, Azure.Core.ResourceIdentifier dataCollectionEndpointId = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.OperationQualificationDetails OperationQualificationDetails(Azure.ResourceManager.ResilienceManagement.Models.QualificationState qualificationState = default(Azure.ResourceManager.ResilienceManagement.Models.QualificationState), System.Collections.Generic.IEnumerable<string> notQualifiedReasons = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilityReview> resourceFeasibilityReviews = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.RecommendCapacityContent RecommendCapacityContent(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resourceIds = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryActionContent RecoveryActionContent(string description = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryGroup RecoveryGroup(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ResilienceManagement.Models.RecoveryGroupProperties properties = null) { throw null; }
@@ -911,10 +905,11 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryGroupProperties RecoveryGroupProperties(string groupUniqueId = null, int orderId = 0, string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.RecoveryGroupBaseAction> preActions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.RecoveryGroupBaseAction> postActions = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryGroupsSetting RecoveryGroupsSetting(Azure.ResourceManager.ResilienceManagement.Models.RecoveryGroup defaultGroup = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.RecoveryGroup> additionalGroups = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.RecoveryJobData RecoveryJobData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ResilienceManagement.Models.RecoveryJobProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryJobProperties RecoveryJobProperties(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus? status = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus?), System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), System.TimeSpan? duration = default(System.TimeSpan?), Azure.ResourceManager.ResilienceManagement.Models.JobErrorInfo errorDetails = null, Azure.Core.ResourceIdentifier resourceId = null, string operation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.JobRetryDetails> retryDetails = null, Azure.ResourceManager.ResilienceManagement.Models.JobExtendedInfo jobExtendedInfo = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.JobUserComment> userComments = null, Azure.ResourceManager.ResilienceManagement.Models.UserConsent? executionConfigurationsUserConsent = default(Azure.ResourceManager.ResilienceManagement.Models.UserConsent?), Azure.ResourceManager.ResilienceManagement.Models.JobTriggeredBy? triggeredBy = default(Azure.ResourceManager.ResilienceManagement.Models.JobTriggeredBy?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? provisioningState = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryJobResourceProperties RecoveryJobResourceProperties(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus? status = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus?), System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), System.TimeSpan? duration = default(System.TimeSpan?), Azure.ResourceManager.ResilienceManagement.Models.JobErrorInfo errorDetails = null, Azure.Core.ResourceIdentifier resourceId = null, string operation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.JobRetryDetails> retryDetails = null, Azure.ResourceManager.ResilienceManagement.Models.JobExtendedInfo jobExtendedInfo = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.JobUserComment> userComments = null, string jobId = null, string taskId = null, string taskName = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? provisioningState = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState?), Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionSolutionType? protectionSolutionType = default(Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionSolutionType?), Azure.ResourceManager.ResilienceManagement.Models.RecoveryGroupActionSettings recoveryGroupActionSettings = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryJobProperties RecoveryJobProperties(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus? status = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus?), System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), System.TimeSpan? duration = default(System.TimeSpan?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobErrorInfo errorDetails = null, Azure.Core.ResourceIdentifier resourceId = null, string operation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobRetryDetails> retryDetails = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobExtendedInfo jobExtendedInfo = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobUserComment> userComments = null, Azure.ResourceManager.ResilienceManagement.Models.RecoveryActionUserConsent? executionConfigurationsUserConsent = default(Azure.ResourceManager.ResilienceManagement.Models.RecoveryActionUserConsent?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTriggeredBy? triggeredBy = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTriggeredBy?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? provisioningState = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryJobResourceProperties RecoveryJobResourceProperties(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus? status = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus?), System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), System.TimeSpan? duration = default(System.TimeSpan?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobErrorInfo errorDetails = null, Azure.Core.ResourceIdentifier resourceId = null, string operation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobRetryDetails> retryDetails = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobExtendedInfo jobExtendedInfo = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobUserComment> userComments = null, string jobId = null, string taskId = null, string taskName = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? provisioningState = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState?), Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionSolutionType? protectionSolutionType = default(Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionSolutionType?), Azure.ResourceManager.ResilienceManagement.Models.RecoveryGroupActionSettings recoveryGroupActionSettings = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.RecoveryJobTargetData RecoveryJobTargetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ResilienceManagement.Models.RecoveryJobResourceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.RecoveryMembersData RecoveryMembersData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationQualificationDetails RecoveryOperationQualificationDetails(Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceQualificationState qualificationState = default(Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceQualificationState), System.Collections.Generic.IEnumerable<string> notQualifiedReasons = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilityReview> resourceFeasibilityReviews = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanActionBaseResult RecoveryPlanActionBaseResult(string jobId = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.RecoveryPlanData RecoveryPlanData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanFailoverOperationStatus RecoveryPlanFailoverOperationStatus(System.DateTimeOffset? lastExecutedOn = default(System.DateTimeOffset?), Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationStatus? operationStatus = default(Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationStatus?), Azure.ResponseError errorDetails = null, System.TimeSpan? recoveryTimeActual = default(System.TimeSpan?)) { throw null; }
@@ -922,50 +917,56 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanProperties RecoveryPlanProperties(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? provisioningState = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState?), Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanType planType = default(Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanType), Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanState? planState = default(Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanState?), string planDescription = null, Azure.ResourceManager.ResilienceManagement.Models.RecoveryGroupsSetting recoveryGroupsSetting = null, Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanFailoverOperationStatus latestFailoverStatus = null, Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanOperationStatus latestValidationStatus = null, Azure.ResponseError errorDetails = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanPropertiesOfDrill RecoveryPlanPropertiesOfDrill(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementAssociatedIdentity identity = null, Azure.Core.ResourceIdentifier recoveryPlanId = null, int? recoveryPlanResourceExcludedCount = default(int?)) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceProperties RecoveryResourceProperties(string recoveryResourceUniqueId = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? provisioningState = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState?), Azure.Core.ResourceIdentifier resourceId = null, Azure.Core.AzureLocation? resourceLocation = default(Azure.Core.AzureLocation?), System.Collections.Generic.IEnumerable<string> resourcePhysicalZones = null, Azure.ResourceManager.ResilienceManagement.Models.ResourceInclusionState? inclusionState = default(Azure.ResourceManager.ResilienceManagement.Models.ResourceInclusionState?), bool? isAttentionRequired = default(bool?), System.Collections.Generic.IEnumerable<string> attentionReasons = null, Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionStatus? protectionStatus = default(Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionSolutionSettings> resourceProtectionSolutions = null, Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionSolutionType? selectedProtectionSolutionType = default(Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionSolutionType?), Azure.ResourceManager.ResilienceManagement.Models.ResourceBaseProtectionSolutionSetting selectedProtectionSolutionSetting = null, string recoveryGroupId = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementAssociatedIdentity associatedIdentity = null, Azure.ResponseError errorDetails = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceQualification RecoveryResourceQualification(Azure.ResourceManager.ResilienceManagement.RecoveryMembersData recoveryResource = null, Azure.ResourceManager.ResilienceManagement.Models.OperationQualificationDetails operationQualificationDetails = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.RegionalDrillProperties RegionalDrillProperties(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? provisioningState = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState?), Azure.Core.ResourceIdentifier serviceGroupId = null, Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanPropertiesOfDrill recoveryPlanProperties = null, Azure.ResourceManager.ResilienceManagement.Models.GoalAssignmentPropertiesOfDrill goalAssignmentProperties = null, Azure.ResourceManager.ResilienceManagement.Models.AssetPropertiesOfDrill drillAssetProperties = null, Azure.ResourceManager.ResilienceManagement.Models.ChaosResourcePropertiesOfDrill chaosResourceProperties = null, Azure.ResourceManager.ResilienceManagement.Models.ExecutionState? executionState = default(Azure.ResourceManager.ResilienceManagement.Models.ExecutionState?), Azure.ResourceManager.ResilienceManagement.Models.ExecutionReadinessState? executionReadinessState = default(Azure.ResourceManager.ResilienceManagement.Models.ExecutionReadinessState?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacSetupMode? rbacSetupMode = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacSetupMode?), Azure.ResourceManager.ResilienceManagement.Models.AttentionReason attentionReason = null, Azure.ResourceManager.ResilienceManagement.Models.DrillSystemMetadata systemMetadata = null, Azure.ResourceManager.ResilienceManagement.Models.LastRunProperties lastRunProperties = null, System.DateTimeOffset? lastSyncOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastResyncReadinessCheckOn = default(System.DateTimeOffset?), Azure.ResourceManager.ResilienceManagement.Models.MonitoringPropertiesOfDrill monitoringProperties = null, Azure.ResourceManager.ResilienceManagement.Models.HealthModelMonitoringProperties healthModelMonitoringProperties = null, Azure.ResourceManager.ResilienceManagement.Models.SliMonitoringProperties sliMonitoringProperties = null, Azure.ResponseError errorDetails = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.RegionalDrillResourceProperties RegionalDrillResourceProperties(Azure.Core.ResourceIdentifier resourceId = null, string resourceType = null, System.Collections.Generic.IEnumerable<string> activeLocations = null, System.Collections.Generic.IEnumerable<string> recoveryLocations = null, Azure.ResourceManager.ResilienceManagement.Models.DrillResourceInclusionState? inclusionState = default(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceInclusionState?), Azure.ResourceManager.ResilienceManagement.Models.ResourceInclusionState? recoveryPlanInclusionState = default(Azure.ResourceManager.ResilienceManagement.Models.ResourceInclusionState?), Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanExclusionReason? recoveryPlanExclusionReason = default(Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanExclusionReason?), Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionSolutionType? resourceProtectionSolutionType = default(Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionSolutionType?), Azure.ResourceManager.ResilienceManagement.Models.DrillResourceReadinessState? readinessState = default(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceReadinessState?), Azure.ResourceManager.ResilienceManagement.Models.DrillResourceFaultState? faultState = default(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceFaultState?), Azure.ResourceManager.ResilienceManagement.Models.FaultProperties faultProperties = null, Azure.ResourceManager.ResilienceManagement.Models.ForceInclusionState? forceInclusionState = default(Azure.ResourceManager.ResilienceManagement.Models.ForceInclusionState?), Azure.ResourceManager.ResilienceManagement.Models.DrillResourceAttentionReason attentionReason = null, string advisorRecommendationTypeId = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementErrorDetail rbacAssignmentError = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementErrorDetail monitoringRbacAssignmentError = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? provisioningState = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ReportStageStatus ReportStageStatus(Azure.ResourceManager.ResilienceManagement.Models.DrillRunSubtasks drillRunStage = default(Azure.ResourceManager.ResilienceManagement.Models.DrillRunSubtasks), Azure.ResourceManager.ResilienceManagement.Models.DrillReportGenerationStatus? generationStatus = default(Azure.ResourceManager.ResilienceManagement.Models.DrillReportGenerationStatus?), System.DateTimeOffset? lastAttemptOn = default(System.DateTimeOffset?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementErrorDetail lastError = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceQualification RecoveryResourceQualification(Azure.ResourceManager.ResilienceManagement.RecoveryMembersData recoveryResource = null, Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationQualificationDetails operationQualificationDetails = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.RegionalDrillProperties RegionalDrillProperties(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? provisioningState = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState?), Azure.Core.ResourceIdentifier serviceGroupId = null, Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanPropertiesOfDrill recoveryPlanProperties = null, Azure.ResourceManager.ResilienceManagement.Models.GoalAssignmentPropertiesOfDrill goalAssignmentProperties = null, Azure.ResourceManager.ResilienceManagement.Models.AssetPropertiesOfDrill drillAssetProperties = null, Azure.ResourceManager.ResilienceManagement.Models.ChaosResourcePropertiesOfDrill chaosResourceProperties = null, Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionState? executionState = default(Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionState?), Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionReadinessState? executionReadinessState = default(Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionReadinessState?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacSetupMode? rbacSetupMode = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacSetupMode?), Azure.ResourceManager.ResilienceManagement.Models.DrillAttentionReason attentionReason = null, Azure.ResourceManager.ResilienceManagement.Models.DrillSystemMetadata systemMetadata = null, Azure.ResourceManager.ResilienceManagement.Models.DrillLastRunProperties lastRunProperties = null, System.DateTimeOffset? lastSyncOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastResyncReadinessCheckOn = default(System.DateTimeOffset?), Azure.ResourceManager.ResilienceManagement.Models.MonitoringPropertiesOfDrill monitoringProperties = null, Azure.ResourceManager.ResilienceManagement.Models.HealthModelMonitoringProperties healthModelMonitoringProperties = null, Azure.ResourceManager.ResilienceManagement.Models.SliMonitoringProperties sliMonitoringProperties = null, Azure.ResponseError errorDetails = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.RegionalDrillResourceProperties RegionalDrillResourceProperties(Azure.Core.ResourceIdentifier resourceId = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), System.Collections.Generic.IEnumerable<string> activeLocations = null, System.Collections.Generic.IEnumerable<string> recoveryLocations = null, Azure.ResourceManager.ResilienceManagement.Models.DrillResourceInclusionState? inclusionState = default(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceInclusionState?), Azure.ResourceManager.ResilienceManagement.Models.ResourceInclusionState? recoveryPlanInclusionState = default(Azure.ResourceManager.ResilienceManagement.Models.ResourceInclusionState?), Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanExclusionReason? recoveryPlanExclusionReason = default(Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanExclusionReason?), Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionSolutionType? resourceProtectionSolutionType = default(Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionSolutionType?), Azure.ResourceManager.ResilienceManagement.Models.DrillResourceReadinessState? readinessState = default(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceReadinessState?), Azure.ResourceManager.ResilienceManagement.Models.DrillResourceFaultState? faultState = default(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceFaultState?), Azure.ResourceManager.ResilienceManagement.Models.FaultProperties faultProperties = null, Azure.ResourceManager.ResilienceManagement.Models.DrillResourceForceInclusionState? forceInclusionState = default(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceForceInclusionState?), Azure.ResourceManager.ResilienceManagement.Models.DrillResourceAttentionReason attentionReason = null, string advisorRecommendationTypeId = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementErrorDetail rbacAssignmentError = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementErrorDetail monitoringRbacAssignmentError = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? provisioningState = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.ReprotectContent ReprotectContent(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> reprotectRequestSelectedResourceIds = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementAssociatedIdentity ResilienceManagementAssociatedIdentity(Azure.ResourceManager.Models.ManagedServiceIdentityType type = default(Azure.ResourceManager.Models.ManagedServiceIdentityType), Azure.Core.ResourceIdentifier userAssignedIdentity = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.ResilienceManagementDrillData ResilienceManagementDrillData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ResilienceManagement.Models.DrillProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementDrillPatch ResilienceManagementDrillPatch(Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.ResilienceManagement.Models.DrillUpdateProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementErrorDetail ResilienceManagementErrorDetail(string code = null, string message = null, System.Collections.Generic.IEnumerable<string> recommendations = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverContent ResilienceManagementFailoverContent(Azure.ResourceManager.ResilienceManagement.Models.FailoverDirectionTypes failoverDirection = default(Azure.ResourceManager.ResilienceManagement.Models.FailoverDirectionTypes), Azure.ResourceManager.ResilienceManagement.Models.FailoverRequestProperties failoverRequestProperties = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementGoalsInfo ResilienceManagementGoalsInfo(Azure.Core.ResourceIdentifier assignmentId = null, bool? required = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ResiliencyProperties ResiliencyProperties(Azure.ResourceManager.ResilienceManagement.Models.ExclusionState? goalParticipation = default(Azure.ResourceManager.ResilienceManagement.Models.ExclusionState?), Azure.ResourceManager.ResilienceManagement.Models.AttestationState? attestationStatus = default(Azure.ResourceManager.ResilienceManagement.Models.AttestationState?), Azure.ResourceManager.ResilienceManagement.Models.ExclusionReason? exclusionReason = default(Azure.ResourceManager.ResilienceManagement.Models.ExclusionReason?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.UserConfirmationItem> userConfirmation = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverContent ResilienceManagementFailoverContent(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverDirection failoverDirection = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverDirection), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverProperties failoverRequestProperties = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverProperties ResilienceManagementFailoverProperties(System.Collections.Generic.IEnumerable<string> sourceLocations = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> selectedResourceIds = null, Azure.ResourceManager.ResilienceManagement.Models.RecoveryActionUserConsent? executionConfigurationsUserConsent = default(Azure.ResourceManager.ResilienceManagement.Models.RecoveryActionUserConsent?)) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementGoalsInfo ResilienceManagementGoalsInfo(Azure.Core.ResourceIdentifier assignmentId = null, Azure.ResourceManager.ResilienceManagement.Models.UnifiedResilienceItemGoalRequirement zonalResiliency = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobErrorInfo ResilienceManagementJobErrorInfo(string errorCode = null, string errorMessage = null, System.Collections.Generic.IEnumerable<string> recommendations = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobExtendedInfo ResilienceManagementJobExtendedInfo(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTaskDetail> tasksList = null, string dynamicErrorMessage = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobProperties ResilienceManagementJobProperties(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus? status = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus?), System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), System.TimeSpan? duration = default(System.TimeSpan?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobErrorInfo errorDetails = null, Azure.Core.ResourceIdentifier resourceId = null, string operation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobRetryDetails> retryDetails = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobExtendedInfo jobExtendedInfo = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobUserComment> userComments = null, string jobType = null, Azure.ResourceManager.ResilienceManagement.Models.RecoveryActionUserConsent? executionConfigurationsUserConsent = default(Azure.ResourceManager.ResilienceManagement.Models.RecoveryActionUserConsent?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTriggeredBy? triggeredBy = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTriggeredBy?)) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobResourceProperties ResilienceManagementJobResourceProperties(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus? status = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus?), System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), System.TimeSpan? duration = default(System.TimeSpan?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobErrorInfo errorDetails = null, Azure.Core.ResourceIdentifier resourceId = null, string operation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobRetryDetails> retryDetails = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobExtendedInfo jobExtendedInfo = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobUserComment> userComments = null, string jobId = null, string taskId = null, string taskName = null, string jobResourceType = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobRetryDetails ResilienceManagementJobRetryDetails(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus? status = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus?), System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), System.TimeSpan? duration = default(System.TimeSpan?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobErrorInfo errorDetails = null, int retryAttempt = 0, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobUserComment> userComments = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTaskDetail ResilienceManagementJobTaskDetail(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus? status = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus?), System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), System.TimeSpan? duration = default(System.TimeSpan?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobErrorInfo errorDetails = null, string taskId = null, string taskName = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> linkedJobIds = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobUserComment> userComments = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTaskDetail> subTasksList = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobRetryDetails> retryDetails = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobUserComment ResilienceManagementJobUserComment(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobCommentType? commentType = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobCommentType?), System.DateTimeOffset? commentOn = default(System.DateTimeOffset?), string comments = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.ResourceBaseProtectionSolutionSetting ResourceBaseProtectionSolutionSetting(string protectionSolutionType = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.ResourceCrossZoneVmRecoveryProtectionSetting ResourceCrossZoneVmRecoveryProtectionSetting(string targetZone = null, Azure.Core.ResourceIdentifier capacityReservationGroupId = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.ResourceCustomProtectionSetting ResourceCustomProtectionSetting(Azure.Core.ResourceIdentifier failoverActionResourceId = null, Azure.Core.ResourceIdentifier failoverCommitActionResourceId = null, Azure.Core.ResourceIdentifier testFailoverActionResourceId = null, Azure.Core.ResourceIdentifier testFailoverCleanupActionResourceId = null, Azure.Core.ResourceIdentifier reprotectActionResourceId = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilityReview ResourceFeasibilityReview(Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilityReviewType feasibilityType = default(Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilityReviewType), string resourceType = null, Azure.ResourceManager.ResilienceManagement.Models.SkuDetails currentTargetSku = null, Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilityReviewStatus status = default(Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilityReviewStatus), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.SkuDetails> recommendedTargetSkus = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilityReview ResourceFeasibilityReview(Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilityReviewType feasibilityType = default(Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilityReviewType), Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilitySkuDetails currentTargetSku = null, Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilityReviewStatus status = default(Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilityReviewStatus), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilitySkuDetails> recommendedTargetSkus = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilitySkuDetails ResourceFeasibilitySkuDetails(string sku = null, int? vCpu = default(int?), int? ram = default(int?), double? monthlyPrice = default(double?), string currency = null, string offeringId = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.ResourceNativeProtectionSolutionSetting ResourceNativeProtectionSolutionSetting() { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionSolutionSettings ResourceProtectionSolutionSettings(Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionSolutionType? protectionSolutionType = default(Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionSolutionType?), Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionStatus? protectionStatus = default(Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionStatus?), Azure.Core.ResourceIdentifier resourceId = null, Azure.Core.AzureLocation? activeLocation = default(Azure.Core.AzureLocation?), System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> activeLocations = null, System.Collections.Generic.IEnumerable<string> activePhysicalZones = null, System.Collections.Generic.IEnumerable<string> recoveryLocations = null, Azure.ResourceManager.ResilienceManagement.Models.ResourceReplicationRole? replicationRole = default(Azure.ResourceManager.ResilienceManagement.Models.ResourceReplicationRole?), Azure.Core.ResourceIdentifier primaryResource = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> replicaResources = null, bool isAutoFailover = false, Azure.ResourceManager.ResilienceManagement.Models.FailoverState? failoverState = default(Azure.ResourceManager.ResilienceManagement.Models.FailoverState?), Azure.ResourceManager.ResilienceManagement.Models.TestFailoverState? testFailoverState = default(Azure.ResourceManager.ResilienceManagement.Models.TestFailoverState?)) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionSolutionSettings ResourceProtectionSolutionSettings(Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionSolutionType? protectionSolutionType = default(Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionSolutionType?), Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionStatus? protectionStatus = default(Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionStatus?), Azure.Core.ResourceIdentifier resourceId = null, Azure.Core.AzureLocation? activeLocation = default(Azure.Core.AzureLocation?), System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> activeLocations = null, System.Collections.Generic.IEnumerable<string> activePhysicalZones = null, System.Collections.Generic.IEnumerable<string> recoveryLocations = null, Azure.ResourceManager.ResilienceManagement.Models.ResourceReplicationRole? replicationRole = default(Azure.ResourceManager.ResilienceManagement.Models.ResourceReplicationRole?), Azure.Core.ResourceIdentifier primaryResource = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> replicaResources = null, bool isAutoFailover = false, Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceFailoverState? failoverState = default(Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceFailoverState?), Azure.ResourceManager.ResilienceManagement.Models.TestFailoverState? testFailoverState = default(Azure.ResourceManager.ResilienceManagement.Models.TestFailoverState?)) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.ResourceSiteRecoveryProtectionSetting ResourceSiteRecoveryProtectionSetting(Azure.Core.ResourceIdentifier testFailoverParamsNetworkResourceId = null, string testFailoverCleanupParamsComments = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.DiskReprotectInputDetails> diskReprotectInputDetails = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.ServiceLevelTarget ServiceLevelTarget(Azure.Core.ResourceIdentifier serviceLevelIndicatorResourceId = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.SkuDetails SkuDetails(string sku = null, int? vCpu = default(int?), int? ram = default(int?), double? monthlyPrice = default(double?), string currency = null, string offeringId = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.SliAttentionStatus SliAttentionStatus(Azure.Core.ResourceIdentifier sliId = null, Azure.ResourceManager.ResilienceManagement.Models.SliType type = default(Azure.ResourceManager.ResilienceManagement.Models.SliType), Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState? exists = default(Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState?), Azure.ResourceManager.ResilienceManagement.Models.SliTypeMatchState? typeMatch = default(Azure.ResourceManager.ResilienceManagement.Models.SliTypeMatchState?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? drillRbacOnDestinationAmw = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState?), System.Collections.Generic.IEnumerable<string> rbacNeededOnDestinationAmws = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.SliAttentionStatus SliAttentionStatus(Azure.Core.ResourceIdentifier sliId = null, Azure.ResourceManager.ResilienceManagement.Models.SliType type = default(Azure.ResourceManager.ResilienceManagement.Models.SliType), Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState? exists = default(Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState?), Azure.ResourceManager.ResilienceManagement.Models.SliTypeMatchState? typeMatch = default(Azure.ResourceManager.ResilienceManagement.Models.SliTypeMatchState?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? drillRbacOnDestinationAmw = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState?), System.Collections.Generic.IEnumerable<string> rbacNeededOnDestinationAmws = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.SliMonitoringProperties SliMonitoringProperties(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementAssociatedIdentity identity = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.SliSelection> slis = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.SliSelection SliSelection(Azure.Core.ResourceIdentifier sliId = null, Azure.ResourceManager.ResilienceManagement.Models.SliType type = default(Azure.ResourceManager.ResilienceManagement.Models.SliType)) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.SupportedVerbsForStage SupportedVerbsForStage(Azure.ResourceManager.ResilienceManagement.Models.DrillRunSubtasks drillRunStage = default(Azure.ResourceManager.ResilienceManagement.Models.DrillRunSubtasks), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.DrillRunOperationVerbs> supportedVerbs = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.TestFailoverCleanupContent TestFailoverCleanupContent(string comments = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.UnifiedResilienceItemBillingInfo UnifiedResilienceItemBillingInfo(Azure.Core.ResourceIdentifier usagePlanArmId = null, Azure.Core.ResourceIdentifier usagePlanEnrollmentArmId = null, System.DateTimeOffset? usagePlanEnrollmentCreatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? usagePlanEnrollmentLastUpdatedOn = default(System.DateTimeOffset?), Azure.ResponseError errorDetails = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.UnifiedResilienceItemData UnifiedResilienceItemData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ResilienceManagement.Models.UnifiedResilienceItemProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.UnifiedResilienceItemGoalRequirement UnifiedResilienceItemGoalRequirement(bool isRequired = false) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.UnifiedResilienceItemProperties UnifiedResilienceItemProperties(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? provisioningState = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementGoalsInfo goals = null, Azure.ResourceManager.ResilienceManagement.Models.UnifiedResilienceItemZonalResiliencyPosture zonalResiliency = null, Azure.ResourceManager.ResilienceManagement.Models.UnifiedResilienceItemBillingInfo billingInfo = null, System.DateTimeOffset lastModifiedOn = default(System.DateTimeOffset)) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.UnifiedResilienceItemZonalResiliencyPosture UnifiedResilienceItemZonalResiliencyPosture(long? enabledResourceCount = default(long?), long? notEnabledResourceCount = default(long?), long? notEvaluatedResourceCount = default(long?), long? userConfirmationNeededCount = default(long?), System.DateTimeOffset? evaluationOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.UpdateGoalResourceContent UpdateGoalResourceContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.GoalMembersData> resources = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.UpdateRecoveryResourcesContent UpdateRecoveryResourcesContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.RecoveryMembersData> resourcesToUpdate = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resourcesToRemove = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.UpdateRecoveryResourcesResult UpdateRecoveryResourcesResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.RecoveryMembersData> failedResources = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.UsagePlanData UsagePlanData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ResilienceManagement.Models.UsagePlanProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.UsagePlanEnrollmentData UsagePlanEnrollmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ResilienceManagement.Models.EnrollmentProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.UsagePlanEnrollmentData UsagePlanEnrollmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ResilienceManagement.Models.UsagePlanEnrollmentProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.UsagePlanEnrollmentProperties UsagePlanEnrollmentProperties(Azure.Core.ResourceIdentifier serviceGroupId = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? provisioningState = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState?), Azure.ResponseError errorDetails = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.UsagePlanPatch UsagePlanPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.UsagePlanProperties UsagePlanProperties(Azure.ResourceManager.ResilienceManagement.Models.UsagePlanType? planType = default(Azure.ResourceManager.ResilienceManagement.Models.UsagePlanType?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? provisioningState = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState?), Azure.ResponseError errorDetails = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.UserConfirmationItem UserConfirmationItem(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementSolutionDisplayName solutionDisplayName = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementSolutionDisplayName), Azure.ResourceManager.ResilienceManagement.Models.ConfirmationStatus confirmationStatus = default(Azure.ResourceManager.ResilienceManagement.Models.ConfirmationStatus), Azure.ResourceManager.ResilienceManagement.Models.ReasonForRequestingConfirmation? reasonForRequestingConfirmation = default(Azure.ResourceManager.ResilienceManagement.Models.ReasonForRequestingConfirmation?)) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.ValidateForExecutionContent ValidateForExecutionContent(Azure.ResourceManager.ResilienceManagement.Models.ValidateForExecutionProperties validateForExecutionProperties = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ValidateForExecutionProperties ValidateForExecutionProperties(Azure.ResourceManager.ResilienceManagement.Models.DrillRunTasks? operationName = default(Azure.ResourceManager.ResilienceManagement.Models.DrillRunTasks?), System.Collections.Generic.IEnumerable<string> sourceLocations = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ValidateForOperationContent ValidateForOperationContent(Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationNames operationName = default(Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationNames)) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.ValidateForExecutionProperties ValidateForExecutionProperties(Azure.ResourceManager.ResilienceManagement.Models.DrillRunTask? operationName = default(Azure.ResourceManager.ResilienceManagement.Models.DrillRunTask?), System.Collections.Generic.IEnumerable<string> sourceLocations = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.ValidateForOperationContent ValidateForOperationContent(Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationName operationName = default(Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationName)) { throw null; }
         public static Azure.ResourceManager.ResilienceManagement.Models.ValidateForRecoveryOperationBaseResult ValidateForRecoveryOperationBaseResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceQualification> recoveryResourceQualifications = null) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ZonalDrillProperties ZonalDrillProperties(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? provisioningState = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState?), Azure.Core.ResourceIdentifier serviceGroupId = null, Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanPropertiesOfDrill recoveryPlanProperties = null, Azure.ResourceManager.ResilienceManagement.Models.GoalAssignmentPropertiesOfDrill goalAssignmentProperties = null, Azure.ResourceManager.ResilienceManagement.Models.AssetPropertiesOfDrill drillAssetProperties = null, Azure.ResourceManager.ResilienceManagement.Models.ChaosResourcePropertiesOfDrill chaosResourceProperties = null, Azure.ResourceManager.ResilienceManagement.Models.ExecutionState? executionState = default(Azure.ResourceManager.ResilienceManagement.Models.ExecutionState?), Azure.ResourceManager.ResilienceManagement.Models.ExecutionReadinessState? executionReadinessState = default(Azure.ResourceManager.ResilienceManagement.Models.ExecutionReadinessState?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacSetupMode? rbacSetupMode = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacSetupMode?), Azure.ResourceManager.ResilienceManagement.Models.AttentionReason attentionReason = null, Azure.ResourceManager.ResilienceManagement.Models.DrillSystemMetadata systemMetadata = null, Azure.ResourceManager.ResilienceManagement.Models.LastRunProperties lastRunProperties = null, System.DateTimeOffset? lastSyncOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastResyncReadinessCheckOn = default(System.DateTimeOffset?), Azure.ResourceManager.ResilienceManagement.Models.MonitoringPropertiesOfDrill monitoringProperties = null, Azure.ResourceManager.ResilienceManagement.Models.HealthModelMonitoringProperties healthModelMonitoringProperties = null, Azure.ResourceManager.ResilienceManagement.Models.SliMonitoringProperties sliMonitoringProperties = null, Azure.ResponseError errorDetails = null, Azure.ResourceManager.ResilienceManagement.Models.VmPresent? vmsPresent = default(Azure.ResourceManager.ResilienceManagement.Models.VmPresent?)) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ZonalDrillResourceProperties ZonalDrillResourceProperties(Azure.Core.ResourceIdentifier resourceId = null, string resourceType = null, System.Collections.Generic.IEnumerable<string> activeLocations = null, System.Collections.Generic.IEnumerable<string> recoveryLocations = null, Azure.ResourceManager.ResilienceManagement.Models.DrillResourceInclusionState? inclusionState = default(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceInclusionState?), Azure.ResourceManager.ResilienceManagement.Models.ResourceInclusionState? recoveryPlanInclusionState = default(Azure.ResourceManager.ResilienceManagement.Models.ResourceInclusionState?), Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanExclusionReason? recoveryPlanExclusionReason = default(Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanExclusionReason?), Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionSolutionType? resourceProtectionSolutionType = default(Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionSolutionType?), Azure.ResourceManager.ResilienceManagement.Models.DrillResourceReadinessState? readinessState = default(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceReadinessState?), Azure.ResourceManager.ResilienceManagement.Models.DrillResourceFaultState? faultState = default(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceFaultState?), Azure.ResourceManager.ResilienceManagement.Models.FaultProperties faultProperties = null, Azure.ResourceManager.ResilienceManagement.Models.ForceInclusionState? forceInclusionState = default(Azure.ResourceManager.ResilienceManagement.Models.ForceInclusionState?), Azure.ResourceManager.ResilienceManagement.Models.DrillResourceAttentionReason attentionReason = null, string advisorRecommendationTypeId = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementErrorDetail rbacAssignmentError = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementErrorDetail monitoringRbacAssignmentError = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? provisioningState = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState?), System.Collections.Generic.IEnumerable<string> activePhysicalZones = null, System.Collections.Generic.IEnumerable<string> recoveryPhysicalZones = null, Azure.ResourceManager.ResilienceManagement.Models.HighAvailabilityStatus? haStatus = default(Azure.ResourceManager.ResilienceManagement.Models.HighAvailabilityStatus?), Azure.Core.ResourceIdentifier advisorHaRecommendationId = null) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.ZonalDrillProperties ZonalDrillProperties(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? provisioningState = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState?), Azure.Core.ResourceIdentifier serviceGroupId = null, Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanPropertiesOfDrill recoveryPlanProperties = null, Azure.ResourceManager.ResilienceManagement.Models.GoalAssignmentPropertiesOfDrill goalAssignmentProperties = null, Azure.ResourceManager.ResilienceManagement.Models.AssetPropertiesOfDrill drillAssetProperties = null, Azure.ResourceManager.ResilienceManagement.Models.ChaosResourcePropertiesOfDrill chaosResourceProperties = null, Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionState? executionState = default(Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionState?), Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionReadinessState? executionReadinessState = default(Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionReadinessState?), Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacSetupMode? rbacSetupMode = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacSetupMode?), Azure.ResourceManager.ResilienceManagement.Models.DrillAttentionReason attentionReason = null, Azure.ResourceManager.ResilienceManagement.Models.DrillSystemMetadata systemMetadata = null, Azure.ResourceManager.ResilienceManagement.Models.DrillLastRunProperties lastRunProperties = null, System.DateTimeOffset? lastSyncOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastResyncReadinessCheckOn = default(System.DateTimeOffset?), Azure.ResourceManager.ResilienceManagement.Models.MonitoringPropertiesOfDrill monitoringProperties = null, Azure.ResourceManager.ResilienceManagement.Models.HealthModelMonitoringProperties healthModelMonitoringProperties = null, Azure.ResourceManager.ResilienceManagement.Models.SliMonitoringProperties sliMonitoringProperties = null, Azure.ResponseError errorDetails = null, Azure.ResourceManager.ResilienceManagement.Models.ZonalDrillVmPresence? vmsPresent = default(Azure.ResourceManager.ResilienceManagement.Models.ZonalDrillVmPresence?)) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.ZonalDrillResourceProperties ZonalDrillResourceProperties(Azure.Core.ResourceIdentifier resourceId = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), System.Collections.Generic.IEnumerable<string> activeLocations = null, System.Collections.Generic.IEnumerable<string> recoveryLocations = null, Azure.ResourceManager.ResilienceManagement.Models.DrillResourceInclusionState? inclusionState = default(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceInclusionState?), Azure.ResourceManager.ResilienceManagement.Models.ResourceInclusionState? recoveryPlanInclusionState = default(Azure.ResourceManager.ResilienceManagement.Models.ResourceInclusionState?), Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanExclusionReason? recoveryPlanExclusionReason = default(Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanExclusionReason?), Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionSolutionType? resourceProtectionSolutionType = default(Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionSolutionType?), Azure.ResourceManager.ResilienceManagement.Models.DrillResourceReadinessState? readinessState = default(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceReadinessState?), Azure.ResourceManager.ResilienceManagement.Models.DrillResourceFaultState? faultState = default(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceFaultState?), Azure.ResourceManager.ResilienceManagement.Models.FaultProperties faultProperties = null, Azure.ResourceManager.ResilienceManagement.Models.DrillResourceForceInclusionState? forceInclusionState = default(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceForceInclusionState?), Azure.ResourceManager.ResilienceManagement.Models.DrillResourceAttentionReason attentionReason = null, string advisorRecommendationTypeId = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementErrorDetail rbacAssignmentError = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementErrorDetail monitoringRbacAssignmentError = null, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? provisioningState = default(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState?), System.Collections.Generic.IEnumerable<string> activePhysicalZones = null, System.Collections.Generic.IEnumerable<string> recoveryPhysicalZones = null, Azure.ResourceManager.ResilienceManagement.Models.DrillResourceHighAvailabilityStatus? haStatus = default(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceHighAvailabilityStatus?), Azure.Core.ResourceIdentifier advisorHaRecommendationId = null) { throw null; }
     }
     public partial class ArmResponseErrorResponseResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ArmResponseErrorResponseResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ArmResponseErrorResponseResult>
     {
@@ -997,86 +998,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.AssetPropertiesOfDrill>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.AssetPropertiesOfDrill>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AttentionReason : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.AttentionReason>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.AttentionReason>
-    {
-        internal AttentionReason() { }
-        public Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState? ChaosResource { get { throw null; } }
-        public System.Collections.Generic.IList<string> ChaosResourceCreationFailureReasons { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState? ChaosResourceUserMsi { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState? DiscoveryRuleExists { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementErrorDetail> DrillMonitoringErrors { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState? DrillMonitoringResources { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? DrillRbacOnChaosResource { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? DrillRbacOnGoalAssignment { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? DrillRbacOnHealthModel { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? DrillRbacOnMonitoringResources { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? DrillRbacOnRecoveryPlan { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? DrillRbacOnSli { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState? DrillUserMsi { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState? GoalAssignment { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState? HealthModelAssociatedWithServiceGroup { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState? HealthModelExists { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState? IncludedResourceInDrill { get { throw null; } }
-        public System.Collections.Generic.IList<string> MissingRequiredResourceProviders { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? MonitoringRbacOnDrillResources { get { throw null; } }
-        public bool? MonitoringSourceNotConfigured { get { throw null; } }
-        public System.Collections.Generic.IList<string> RbacNeededForDrillOnChaosResource { get { throw null; } }
-        public System.Collections.Generic.IList<string> RbacNeededForDrillOnDrillMonitoringResources { get { throw null; } }
-        public System.Collections.Generic.IList<string> RbacNeededForDrillOnDrillResources { get { throw null; } }
-        public System.Collections.Generic.IList<string> RbacNeededForDrillOnGoalAssignment { get { throw null; } }
-        public System.Collections.Generic.IList<string> RbacNeededForDrillOnHealthModel { get { throw null; } }
-        public System.Collections.Generic.IList<string> RbacNeededForDrillOnRecoveryPlan { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? RbacOnTargetResources { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState? RecoveryPlan { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.RelativeResourceCompositionState? RecoveryPlanAndDrillResourcesState { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanState? RoReadiness { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? RunbookFaultRbacOnTargets { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.RelativeResourceCompositionState? ServiceGroupAndDrillResourcesState { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ResilienceManagement.Models.SliAttentionStatus> SliAttentionStatuses { get { throw null; } }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.AttentionReason JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.AttentionReason PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ResilienceManagement.Models.AttentionReason System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.AttentionReason>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.AttentionReason>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ResilienceManagement.Models.AttentionReason System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.AttentionReason>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.AttentionReason>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.AttentionReason>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AttestationState : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.AttestationState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AttestationState(string value) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.AttestationState ManuallyAttested { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.AttestationState NotAttested { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.AttestationState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.AttestationState left, Azure.ResourceManager.ResilienceManagement.Models.AttestationState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.AttestationState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.AttestationState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.AttestationState left, Azure.ResourceManager.ResilienceManagement.Models.AttestationState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AutoFailover : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.AutoFailover>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AutoFailover(string value) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.AutoFailover Disable { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.AutoFailover Enable { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.AutoFailover other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.AutoFailover left, Azure.ResourceManager.ResilienceManagement.Models.AutoFailover right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.AutoFailover (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.AutoFailover? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.AutoFailover left, Azure.ResourceManager.ResilienceManagement.Models.AutoFailover right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ChaosResourcePropertiesOfDrill : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ChaosResourcePropertiesOfDrill>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ChaosResourcePropertiesOfDrill>
     {
         public ChaosResourcePropertiesOfDrill(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementAssociatedIdentity identity, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementAssociatedIdentity chaosResourceIdentityForFaults) { }
@@ -1093,42 +1014,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         Azure.ResourceManager.ResilienceManagement.Models.ChaosResourcePropertiesOfDrill System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ChaosResourcePropertiesOfDrill>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ChaosResourcePropertiesOfDrill>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ChaosResourcePropertiesOfDrill>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CommentType : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.CommentType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CommentType(string value) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.CommentType Description { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.CommentType ResumeReason { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.CommentType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.CommentType left, Azure.ResourceManager.ResilienceManagement.Models.CommentType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.CommentType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.CommentType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.CommentType left, Azure.ResourceManager.ResilienceManagement.Models.CommentType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ConfirmationStatus : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.ConfirmationStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ConfirmationStatus(string value) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ConfirmationStatus ApprovalNotNeeded { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ConfirmationStatus ApprovalPending { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ConfirmationStatus ApprovedByUser { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ConfirmationStatus RejectedByUser { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.ConfirmationStatus other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.ConfirmationStatus left, Azure.ResourceManager.ResilienceManagement.Models.ConfirmationStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.ConfirmationStatus (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.ConfirmationStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.ConfirmationStatus left, Azure.ResourceManager.ResilienceManagement.Models.ConfirmationStatus right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class CustomFaultDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.CustomFaultDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.CustomFaultDetails>
     {
@@ -1159,6 +1044,52 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         Azure.ResourceManager.ResilienceManagement.Models.DiskReprotectInputDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DiskReprotectInputDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DiskReprotectInputDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DiskReprotectInputDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DrillAttentionReason : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.DrillAttentionReason>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillAttentionReason>
+    {
+        internal DrillAttentionReason() { }
+        public Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState? ChaosResource { get { throw null; } }
+        public System.Collections.Generic.IList<string> ChaosResourceCreationFailureReasons { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState? ChaosResourceUserMsi { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState? DiscoveryRuleExists { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementErrorDetail> DrillMonitoringErrors { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState? DrillMonitoringResources { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? DrillRbacOnChaosResource { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? DrillRbacOnGoalAssignment { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? DrillRbacOnHealthModel { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? DrillRbacOnMonitoringResources { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? DrillRbacOnRecoveryPlan { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? DrillRbacOnSli { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState? DrillUserMsi { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState? GoalAssignment { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState? HealthModelAssociatedWithServiceGroup { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState? HealthModelExists { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState? IncludedResourceInDrill { get { throw null; } }
+        public bool? IsMonitoringSourceNotConfigured { get { throw null; } }
+        public System.Collections.Generic.IList<string> MissingRequiredResourceProviders { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? MonitoringRbacOnDrillResources { get { throw null; } }
+        public System.Collections.Generic.IList<string> RbacNeededForDrillOnChaosResource { get { throw null; } }
+        public System.Collections.Generic.IList<string> RbacNeededForDrillOnDrillMonitoringResources { get { throw null; } }
+        public System.Collections.Generic.IList<string> RbacNeededForDrillOnDrillResources { get { throw null; } }
+        public System.Collections.Generic.IList<string> RbacNeededForDrillOnGoalAssignment { get { throw null; } }
+        public System.Collections.Generic.IList<string> RbacNeededForDrillOnHealthModel { get { throw null; } }
+        public System.Collections.Generic.IList<string> RbacNeededForDrillOnRecoveryPlan { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? RbacOnTargetResources { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState? RecoveryPlan { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.RelativeResourceCompositionState? RecoveryPlanAndDrillResourcesState { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanState? RoReadiness { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? RunbookFaultRbacOnTargets { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.RelativeResourceCompositionState? ServiceGroupAndDrillResourcesState { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ResilienceManagement.Models.SliAttentionStatus> SliAttentionStatuses { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.DrillAttentionReason JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.DrillAttentionReason PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ResilienceManagement.Models.DrillAttentionReason System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.DrillAttentionReason>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.DrillAttentionReason>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ResilienceManagement.Models.DrillAttentionReason System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillAttentionReason>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillAttentionReason>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillAttentionReason>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DrillAttestation : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.DrillAttestation>
@@ -1193,6 +1124,92 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillEndContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DrillExecutionReadinessState : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionReadinessState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DrillExecutionReadinessState(string value) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionReadinessState NeedsAttention { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionReadinessState Ready { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionReadinessState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionReadinessState left, Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionReadinessState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionReadinessState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionReadinessState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionReadinessState left, Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionReadinessState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DrillExecutionState : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DrillExecutionState(string value) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionState NotRunning { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionState Paused { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionState Running { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionState left, Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionState left, Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DrillExtensionObjectState : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DrillExtensionObjectState(string value) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState Exists { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState NotExists { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState left, Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState left, Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DrillInitialConfig : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.DrillInitialConfig>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DrillInitialConfig(string value) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillInitialConfig Complete { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillInitialConfig Pending { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.DrillInitialConfig other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.DrillInitialConfig left, Azure.ResourceManager.ResilienceManagement.Models.DrillInitialConfig right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.DrillInitialConfig (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.DrillInitialConfig? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.DrillInitialConfig left, Azure.ResourceManager.ResilienceManagement.Models.DrillInitialConfig right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DrillLastRunProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.DrillLastRunProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillLastRunProperties>
+    {
+        internal DrillLastRunProperties() { }
+        public Azure.ResourceManager.ResilienceManagement.Models.DrillAttestation? LastRunAttestation { get { throw null; } }
+        public System.TimeSpan? LastRunDuration { get { throw null; } }
+        public System.DateTimeOffset? LastRunOn { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus? LastRunState { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.DrillLastRunProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.DrillLastRunProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ResilienceManagement.Models.DrillLastRunProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.DrillLastRunProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.DrillLastRunProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ResilienceManagement.Models.DrillLastRunProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillLastRunProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillLastRunProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillLastRunProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DrillMode : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.DrillMode>
     {
         private readonly object _dummy;
@@ -1211,16 +1228,16 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
     public abstract partial class DrillProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.DrillProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillProperties>
     {
         internal DrillProperties() { }
-        public Azure.ResourceManager.ResilienceManagement.Models.AttentionReason AttentionReason { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.DrillAttentionReason AttentionReason { get { throw null; } }
         public Azure.ResourceManager.ResilienceManagement.Models.ChaosResourcePropertiesOfDrill ChaosResourceProperties { get { throw null; } set { } }
         public Azure.ResourceManager.ResilienceManagement.Models.AssetPropertiesOfDrill DrillAssetProperties { get { throw null; } set { } }
         public Azure.ResponseError ErrorDetails { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ExecutionReadinessState? ExecutionReadinessState { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ExecutionState? ExecutionState { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionReadinessState? ExecutionReadinessState { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.DrillExecutionState? ExecutionState { get { throw null; } }
         public Azure.ResourceManager.ResilienceManagement.Models.GoalAssignmentPropertiesOfDrill GoalAssignmentProperties { get { throw null; } set { } }
         public Azure.ResourceManager.ResilienceManagement.Models.HealthModelMonitoringProperties HealthModelMonitoringProperties { get { throw null; } set { } }
         public System.DateTimeOffset? LastResyncReadinessCheckOn { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.LastRunProperties LastRunProperties { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.DrillLastRunProperties LastRunProperties { get { throw null; } }
         public System.DateTimeOffset? LastSyncOn { get { throw null; } }
         public Azure.ResourceManager.ResilienceManagement.Models.MonitoringPropertiesOfDrill MonitoringProperties { get { throw null; } set { } }
         public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? ProvisioningState { get { throw null; } }
@@ -1291,6 +1308,23 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.DrillReportGenerationStatus left, Azure.ResourceManager.ResilienceManagement.Models.DrillReportGenerationStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class DrillReportStageStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.DrillReportStageStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillReportStageStatus>
+    {
+        internal DrillReportStageStatus() { }
+        public Azure.ResourceManager.ResilienceManagement.Models.DrillRunStage DrillRunStage { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.DrillReportGenerationStatus? GenerationStatus { get { throw null; } }
+        public System.DateTimeOffset? LastAttemptOn { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementErrorDetail LastError { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.DrillReportStageStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.DrillReportStageStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ResilienceManagement.Models.DrillReportStageStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.DrillReportStageStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.DrillReportStageStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ResilienceManagement.Models.DrillReportStageStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillReportStageStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillReportStageStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillReportStageStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class DrillReportSummary : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.DrillReportSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillReportSummary>
     {
         internal DrillReportSummary() { }
@@ -1300,7 +1334,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementErrorDetail LastError { get { throw null; } }
         public System.DateTimeOffset? LastGeneratedOn { get { throw null; } }
         public string SchemaVersion { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResilienceManagement.Models.ReportStageStatus> StageStatuses { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResilienceManagement.Models.DrillReportStageStatus> StageStatuses { get { throw null; } }
         protected virtual Azure.ResourceManager.ResilienceManagement.Models.DrillReportSummary JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ResilienceManagement.Models.DrillReportSummary PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1347,6 +1381,40 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DrillResourceForceInclusionState : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.DrillResourceForceInclusionState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DrillResourceForceInclusionState(string value) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillResourceForceInclusionState Disable { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillResourceForceInclusionState Enable { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceForceInclusionState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceForceInclusionState left, Azure.ResourceManager.ResilienceManagement.Models.DrillResourceForceInclusionState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.DrillResourceForceInclusionState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.DrillResourceForceInclusionState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceForceInclusionState left, Azure.ResourceManager.ResilienceManagement.Models.DrillResourceForceInclusionState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DrillResourceHighAvailabilityStatus : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.DrillResourceHighAvailabilityStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DrillResourceHighAvailabilityStatus(string value) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillResourceHighAvailabilityStatus Enabled { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillResourceHighAvailabilityStatus NotEnabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceHighAvailabilityStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceHighAvailabilityStatus left, Azure.ResourceManager.ResilienceManagement.Models.DrillResourceHighAvailabilityStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.DrillResourceHighAvailabilityStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.DrillResourceHighAvailabilityStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceHighAvailabilityStatus left, Azure.ResourceManager.ResilienceManagement.Models.DrillResourceHighAvailabilityStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DrillResourceInclusionState : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.DrillResourceInclusionState>
     {
         private readonly object _dummy;
@@ -1371,7 +1439,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public Azure.ResourceManager.ResilienceManagement.Models.DrillResourceAttentionReason AttentionReason { get { throw null; } }
         public Azure.ResourceManager.ResilienceManagement.Models.FaultProperties FaultProperties { get { throw null; } }
         public Azure.ResourceManager.ResilienceManagement.Models.DrillResourceFaultState? FaultState { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ForceInclusionState? ForceInclusionState { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.DrillResourceForceInclusionState? ForceInclusionState { get { throw null; } }
         public Azure.ResourceManager.ResilienceManagement.Models.DrillResourceInclusionState? InclusionState { get { throw null; } }
         public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementErrorDetail MonitoringRbacAssignmentError { get { throw null; } }
         public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? ProvisioningState { get { throw null; } }
@@ -1382,7 +1450,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public Azure.ResourceManager.ResilienceManagement.Models.ResourceInclusionState? RecoveryPlanInclusionState { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         public Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionSolutionType? ResourceProtectionSolutionType { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.Core.ResourceType ResourceType { get { throw null; } }
         protected virtual Azure.ResourceManager.ResilienceManagement.Models.DrillResourceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ResilienceManagement.Models.DrillResourceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1446,6 +1514,22 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceState left, Azure.ResourceManager.ResilienceManagement.Models.DrillResourceState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DrillResourceTypeCategory : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.DrillResourceTypeCategory>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DrillResourceTypeCategory(string value) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillResourceTypeCategory AzureSiteRecoveryVmsPresent { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceTypeCategory other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceTypeCategory left, Azure.ResourceManager.ResilienceManagement.Models.DrillResourceTypeCategory right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.DrillResourceTypeCategory (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.DrillResourceTypeCategory? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.DrillResourceTypeCategory left, Azure.ResourceManager.ResilienceManagement.Models.DrillResourceTypeCategory right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DrillRunAddNotesContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunAddNotesContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunAddNotesContent>
     {
         public DrillRunAddNotesContent() { }
@@ -1462,10 +1546,27 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunAddNotesContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunAddNotesContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DrillRunAutoFailover : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.DrillRunAutoFailover>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DrillRunAutoFailover(string value) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunAutoFailover Disable { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunAutoFailover Enable { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.DrillRunAutoFailover other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.DrillRunAutoFailover left, Azure.ResourceManager.ResilienceManagement.Models.DrillRunAutoFailover right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.DrillRunAutoFailover (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.DrillRunAutoFailover? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.DrillRunAutoFailover left, Azure.ResourceManager.ResilienceManagement.Models.DrillRunAutoFailover right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DrillRunFailoverContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunFailoverContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunFailoverContent>
     {
-        public DrillRunFailoverContent(Azure.ResourceManager.ResilienceManagement.Models.AutoFailover autoFailover, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverContent failoverProperties) { }
-        public Azure.ResourceManager.ResilienceManagement.Models.AutoFailover AutoFailover { get { throw null; } }
+        public DrillRunFailoverContent(Azure.ResourceManager.ResilienceManagement.Models.DrillRunAutoFailover autoFailover, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverContent failoverProperties) { }
+        public Azure.ResourceManager.ResilienceManagement.Models.DrillRunAutoFailover AutoFailover { get { throw null; } }
         public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverContent FailoverProperties { get { throw null; } }
         protected virtual Azure.ResourceManager.ResilienceManagement.Models.DrillRunFailoverContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1478,25 +1579,25 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunFailoverContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DrillRunOperationVerbs : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.DrillRunOperationVerbs>
+    public readonly partial struct DrillRunOperationVerb : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.DrillRunOperationVerb>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public DrillRunOperationVerbs(string value) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunOperationVerbs Cancel { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunOperationVerbs MarkAsComplete { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunOperationVerbs Retry { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunOperationVerbs Start { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.DrillRunOperationVerbs other) { throw null; }
+        public DrillRunOperationVerb(string value) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunOperationVerb Cancel { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunOperationVerb MarkAsComplete { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunOperationVerb Retry { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunOperationVerb Start { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.DrillRunOperationVerb other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.DrillRunOperationVerbs left, Azure.ResourceManager.ResilienceManagement.Models.DrillRunOperationVerbs right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.DrillRunOperationVerbs (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.DrillRunOperationVerbs? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.DrillRunOperationVerbs left, Azure.ResourceManager.ResilienceManagement.Models.DrillRunOperationVerbs right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.DrillRunOperationVerb left, Azure.ResourceManager.ResilienceManagement.Models.DrillRunOperationVerb right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.DrillRunOperationVerb (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.DrillRunOperationVerb? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.DrillRunOperationVerb left, Azure.ResourceManager.ResilienceManagement.Models.DrillRunOperationVerb right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DrillRunProperties : Azure.ResourceManager.ResilienceManagement.Models.JobProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunProperties>
+    public partial class DrillRunProperties : Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunProperties>
     {
         internal DrillRunProperties() { }
         public Azure.ResourceManager.ResilienceManagement.Models.DrillAttestation? Attestation { get { throw null; } }
@@ -1505,10 +1606,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public Azure.ResourceManager.ResilienceManagement.Models.DrillMode? DrillMode { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Notes { get { throw null; } }
         public Azure.ResourceManager.ResilienceManagement.Models.DrillReportSummary Report { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResilienceManagement.Models.SupportedVerbsForStage> SupportedVerbsForStage { get { throw null; } }
-        protected override Azure.ResourceManager.ResilienceManagement.Models.JobProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResilienceManagement.Models.DrillRunStageSupportedVerbs> SupportedVerbsForStage { get { throw null; } }
+        protected override Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.ResilienceManagement.Models.JobProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ResilienceManagement.Models.DrillRunProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1518,8 +1619,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
     }
     public partial class DrillRunReprotectContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunReprotectContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunReprotectContent>
     {
-        public DrillRunReprotectContent() { }
-        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ReprotectRequestSelectedResourceIds { get { throw null; } }
+        public DrillRunReprotectContent(Azure.ResourceManager.ResilienceManagement.Models.ReprotectContent reprotectProperties) { }
+        public Azure.ResourceManager.ResilienceManagement.Models.ReprotectContent ReprotectProperties { get { throw null; } }
         protected virtual Azure.ResourceManager.ResilienceManagement.Models.DrillRunReprotectContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ResilienceManagement.Models.DrillRunReprotectContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1530,13 +1631,13 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunReprotectContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunReprotectContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DrillRunResourceProperties : Azure.ResourceManager.ResilienceManagement.Models.JobResourceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunResourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunResourceProperties>
+    public partial class DrillRunResourceProperties : Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobResourceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunResourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunResourceProperties>
     {
         internal DrillRunResourceProperties() { }
         public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? ProvisioningState { get { throw null; } }
-        protected override Azure.ResourceManager.ResilienceManagement.Models.JobResourceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobResourceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.ResilienceManagement.Models.JobResourceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobResourceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ResilienceManagement.Models.DrillRunResourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1545,42 +1646,57 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunResourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DrillRunSubtasks : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.DrillRunSubtasks>
+    public readonly partial struct DrillRunStage : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.DrillRunStage>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public DrillRunSubtasks(string value) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunSubtasks Failover { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunSubtasks FailoverReverse { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunSubtasks FaultInjection { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunSubtasks Reprotect { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunSubtasks ReprotectReverse { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.DrillRunSubtasks other) { throw null; }
+        public DrillRunStage(string value) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunStage Failover { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunStage FailoverReverse { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunStage FaultInjection { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunStage Reprotect { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunStage ReprotectReverse { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.DrillRunStage other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.DrillRunSubtasks left, Azure.ResourceManager.ResilienceManagement.Models.DrillRunSubtasks right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.DrillRunSubtasks (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.DrillRunSubtasks? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.DrillRunSubtasks left, Azure.ResourceManager.ResilienceManagement.Models.DrillRunSubtasks right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.DrillRunStage left, Azure.ResourceManager.ResilienceManagement.Models.DrillRunStage right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.DrillRunStage (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.DrillRunStage? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.DrillRunStage left, Azure.ResourceManager.ResilienceManagement.Models.DrillRunStage right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class DrillRunStageSupportedVerbs : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunStageSupportedVerbs>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunStageSupportedVerbs>
+    {
+        internal DrillRunStageSupportedVerbs() { }
+        public Azure.ResourceManager.ResilienceManagement.Models.DrillRunStage DrillRunStage { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ResilienceManagement.Models.DrillRunOperationVerb> SupportedVerbs { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.DrillRunStageSupportedVerbs JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.DrillRunStageSupportedVerbs PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ResilienceManagement.Models.DrillRunStageSupportedVerbs System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunStageSupportedVerbs>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunStageSupportedVerbs>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ResilienceManagement.Models.DrillRunStageSupportedVerbs System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunStageSupportedVerbs>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunStageSupportedVerbs>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillRunStageSupportedVerbs>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DrillRunTasks : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.DrillRunTasks>
+    public readonly partial struct DrillRunTask : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.DrillRunTask>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public DrillRunTasks(string value) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunTasks Failover { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunTasks FailoverReverse { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunTasks Reprotect { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunTasks ReprotectReverse { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.DrillRunTasks other) { throw null; }
+        public DrillRunTask(string value) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunTask Failover { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunTask FailoverReverse { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunTask Reprotect { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.DrillRunTask ReprotectReverse { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.DrillRunTask other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.DrillRunTasks left, Azure.ResourceManager.ResilienceManagement.Models.DrillRunTasks right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.DrillRunTasks (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.DrillRunTasks? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.DrillRunTasks left, Azure.ResourceManager.ResilienceManagement.Models.DrillRunTasks right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.DrillRunTask left, Azure.ResourceManager.ResilienceManagement.Models.DrillRunTask right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.DrillRunTask (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.DrillRunTask? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.DrillRunTask left, Azure.ResourceManager.ResilienceManagement.Models.DrillRunTask right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class DrillStartContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.DrillStartContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillStartContent>
@@ -1600,8 +1716,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
     public partial class DrillSystemMetadata : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.DrillSystemMetadata>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillSystemMetadata>
     {
         internal DrillSystemMetadata() { }
-        public Azure.ResourceManager.ResilienceManagement.Models.InitialConfig InitialConfig { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResilienceManagement.Models.ResourceTypeCategories> ResourceTypeCategories { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.DrillInitialConfig InitialConfig { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResilienceManagement.Models.DrillResourceTypeCategory> ResourceTypeCategories { get { throw null; } }
         protected virtual Azure.ResourceManager.ResilienceManagement.Models.DrillSystemMetadata JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ResilienceManagement.Models.DrillSystemMetadata PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1632,160 +1748,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         Azure.ResourceManager.ResilienceManagement.Models.DrillUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.DrillUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class EnrollmentProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.EnrollmentProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.EnrollmentProperties>
-    {
-        public EnrollmentProperties(Azure.Core.ResourceIdentifier serviceGroupId) { }
-        public Azure.ResponseError ErrorDetails { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.Core.ResourceIdentifier ServiceGroupId { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.EnrollmentProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.EnrollmentProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ResilienceManagement.Models.EnrollmentProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.EnrollmentProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.EnrollmentProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ResilienceManagement.Models.EnrollmentProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.EnrollmentProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.EnrollmentProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.EnrollmentProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ExclusionReason : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.ExclusionReason>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ExclusionReason(string value) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ExclusionReason FailedOverResource { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ExclusionReason UnsupportedResource { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ExclusionReason UserSelectedExclusion { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.ExclusionReason other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.ExclusionReason left, Azure.ResourceManager.ResilienceManagement.Models.ExclusionReason right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.ExclusionReason (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.ExclusionReason? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.ExclusionReason left, Azure.ResourceManager.ResilienceManagement.Models.ExclusionReason right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ExclusionState : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.ExclusionState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ExclusionState(string value) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ExclusionState Excluded { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ExclusionState Included { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.ExclusionState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.ExclusionState left, Azure.ResourceManager.ResilienceManagement.Models.ExclusionState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.ExclusionState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.ExclusionState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.ExclusionState left, Azure.ResourceManager.ResilienceManagement.Models.ExclusionState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ExecutionReadinessState : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.ExecutionReadinessState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ExecutionReadinessState(string value) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ExecutionReadinessState NeedsAttention { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ExecutionReadinessState Ready { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.ExecutionReadinessState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.ExecutionReadinessState left, Azure.ResourceManager.ResilienceManagement.Models.ExecutionReadinessState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.ExecutionReadinessState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.ExecutionReadinessState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.ExecutionReadinessState left, Azure.ResourceManager.ResilienceManagement.Models.ExecutionReadinessState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ExecutionState : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.ExecutionState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ExecutionState(string value) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ExecutionState NotRunning { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ExecutionState Paused { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ExecutionState Running { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.ExecutionState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.ExecutionState left, Azure.ResourceManager.ResilienceManagement.Models.ExecutionState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.ExecutionState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.ExecutionState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.ExecutionState left, Azure.ResourceManager.ResilienceManagement.Models.ExecutionState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ExtensionObjectState : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ExtensionObjectState(string value) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState Exists { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState NotExists { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState left, Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState left, Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FailoverDirectionTypes : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.FailoverDirectionTypes>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FailoverDirectionTypes(string value) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.FailoverDirectionTypes FromSpecificLocations { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.FailoverDirectionTypes other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.FailoverDirectionTypes left, Azure.ResourceManager.ResilienceManagement.Models.FailoverDirectionTypes right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.FailoverDirectionTypes (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.FailoverDirectionTypes? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.FailoverDirectionTypes left, Azure.ResourceManager.ResilienceManagement.Models.FailoverDirectionTypes right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class FailoverRequestProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.FailoverRequestProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.FailoverRequestProperties>
-    {
-        public FailoverRequestProperties(System.Collections.Generic.IEnumerable<string> sourceLocations) { }
-        public Azure.ResourceManager.ResilienceManagement.Models.UserConsent? ExecutionConfigurationsUserConsent { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> SelectedResourceIds { get { throw null; } }
-        public System.Collections.Generic.IList<string> SourceLocations { get { throw null; } }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.FailoverRequestProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.FailoverRequestProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ResilienceManagement.Models.FailoverRequestProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.FailoverRequestProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.FailoverRequestProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ResilienceManagement.Models.FailoverRequestProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.FailoverRequestProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.FailoverRequestProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.FailoverRequestProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FailoverState : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.FailoverState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FailoverState(string value) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.FailoverState FailedOver { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.FailoverState FailedOverCommitPending { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.FailoverState FailedOverReprotectPending { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.FailoverState None { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.FailoverState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.FailoverState left, Azure.ResourceManager.ResilienceManagement.Models.FailoverState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.FailoverState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.FailoverState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.FailoverState left, Azure.ResourceManager.ResilienceManagement.Models.FailoverState right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class FaultDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.FaultDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.FaultDetails>
     {
@@ -1820,29 +1782,12 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.FaultProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.FaultProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ForceInclusionState : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.ForceInclusionState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ForceInclusionState(string value) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ForceInclusionState Disable { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ForceInclusionState Enable { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.ForceInclusionState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.ForceInclusionState left, Azure.ResourceManager.ResilienceManagement.Models.ForceInclusionState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.ForceInclusionState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.ForceInclusionState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.ForceInclusionState left, Azure.ResourceManager.ResilienceManagement.Models.ForceInclusionState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class GoalAssignmentProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.GoalAssignmentProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.GoalAssignmentProperties>
     {
-        public GoalAssignmentProperties(bool requireZonalResiliency) { }
+        public GoalAssignmentProperties(bool isZonalResiliencyRequired) { }
         public Azure.ResponseError ErrorDetails { get { throw null; } }
+        public bool IsZonalResiliencyRequired { get { throw null; } set { } }
         public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? ProvisioningState { get { throw null; } }
-        public bool RequireZonalResiliency { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ResilienceManagement.Models.ServiceLevelTarget> ServiceLevelResources { get { throw null; } }
         protected virtual Azure.ResourceManager.ResilienceManagement.Models.GoalAssignmentProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1869,12 +1814,100 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.GoalAssignmentPropertiesOfDrill>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.GoalAssignmentPropertiesOfDrill>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct GoalResourceAttestationState : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.GoalResourceAttestationState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public GoalResourceAttestationState(string value) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.GoalResourceAttestationState ManuallyAttested { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.GoalResourceAttestationState NotAttested { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.GoalResourceAttestationState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.GoalResourceAttestationState left, Azure.ResourceManager.ResilienceManagement.Models.GoalResourceAttestationState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.GoalResourceAttestationState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.GoalResourceAttestationState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.GoalResourceAttestationState left, Azure.ResourceManager.ResilienceManagement.Models.GoalResourceAttestationState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct GoalResourceConfirmationReason : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.GoalResourceConfirmationReason>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public GoalResourceConfirmationReason(string value) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.GoalResourceConfirmationReason VmInMultiZoneScaleSetStatelessOnly { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.GoalResourceConfirmationReason ZonePinnedZrsDataDisksConditional { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.GoalResourceConfirmationReason other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.GoalResourceConfirmationReason left, Azure.ResourceManager.ResilienceManagement.Models.GoalResourceConfirmationReason right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.GoalResourceConfirmationReason (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.GoalResourceConfirmationReason? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.GoalResourceConfirmationReason left, Azure.ResourceManager.ResilienceManagement.Models.GoalResourceConfirmationReason right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct GoalResourceConfirmationStatus : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.GoalResourceConfirmationStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public GoalResourceConfirmationStatus(string value) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.GoalResourceConfirmationStatus ApprovalNotNeeded { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.GoalResourceConfirmationStatus ApprovalPending { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.GoalResourceConfirmationStatus ApprovedByUser { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.GoalResourceConfirmationStatus RejectedByUser { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.GoalResourceConfirmationStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.GoalResourceConfirmationStatus left, Azure.ResourceManager.ResilienceManagement.Models.GoalResourceConfirmationStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.GoalResourceConfirmationStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.GoalResourceConfirmationStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.GoalResourceConfirmationStatus left, Azure.ResourceManager.ResilienceManagement.Models.GoalResourceConfirmationStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct GoalResourceExclusionReason : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.GoalResourceExclusionReason>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public GoalResourceExclusionReason(string value) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.GoalResourceExclusionReason FailedOverResource { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.GoalResourceExclusionReason UnsupportedResource { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.GoalResourceExclusionReason UserSelectedExclusion { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.GoalResourceExclusionReason other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.GoalResourceExclusionReason left, Azure.ResourceManager.ResilienceManagement.Models.GoalResourceExclusionReason right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.GoalResourceExclusionReason (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.GoalResourceExclusionReason? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.GoalResourceExclusionReason left, Azure.ResourceManager.ResilienceManagement.Models.GoalResourceExclusionReason right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct GoalResourceExclusionState : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.GoalResourceExclusionState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public GoalResourceExclusionState(string value) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.GoalResourceExclusionState Excluded { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.GoalResourceExclusionState Included { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.GoalResourceExclusionState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.GoalResourceExclusionState left, Azure.ResourceManager.ResilienceManagement.Models.GoalResourceExclusionState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.GoalResourceExclusionState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.GoalResourceExclusionState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.GoalResourceExclusionState left, Azure.ResourceManager.ResilienceManagement.Models.GoalResourceExclusionState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class GoalResourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.GoalResourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.GoalResourceProperties>
     {
         public GoalResourceProperties(Azure.Core.ResourceIdentifier resourceArmId) { }
         public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceArmId { get { throw null; } set { } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ResiliencyProperties ZonalResiliency { get { throw null; } set { } }
+        public Azure.ResourceManager.ResilienceManagement.Models.GoalResourceResiliencyProperties ZonalResiliency { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ResilienceManagement.Models.GoalResourceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ResilienceManagement.Models.GoalResourceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1884,6 +1917,39 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         Azure.ResourceManager.ResilienceManagement.Models.GoalResourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.GoalResourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.GoalResourceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.GoalResourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class GoalResourceResiliencyProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.GoalResourceResiliencyProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.GoalResourceResiliencyProperties>
+    {
+        public GoalResourceResiliencyProperties() { }
+        public Azure.ResourceManager.ResilienceManagement.Models.GoalResourceAttestationState? AttestationStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.ResilienceManagement.Models.GoalResourceExclusionReason? ExclusionReason { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.GoalResourceExclusionState? GoalParticipation { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ResilienceManagement.Models.GoalResourceUserConfirmation> UserConfirmation { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.GoalResourceResiliencyProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.GoalResourceResiliencyProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ResilienceManagement.Models.GoalResourceResiliencyProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.GoalResourceResiliencyProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.GoalResourceResiliencyProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ResilienceManagement.Models.GoalResourceResiliencyProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.GoalResourceResiliencyProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.GoalResourceResiliencyProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.GoalResourceResiliencyProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class GoalResourceUserConfirmation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.GoalResourceUserConfirmation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.GoalResourceUserConfirmation>
+    {
+        public GoalResourceUserConfirmation(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementSolutionDisplayName solutionDisplayName, Azure.ResourceManager.ResilienceManagement.Models.GoalResourceConfirmationStatus confirmationStatus) { }
+        public Azure.ResourceManager.ResilienceManagement.Models.GoalResourceConfirmationStatus ConfirmationStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.ResilienceManagement.Models.GoalResourceConfirmationReason? ReasonForRequestingConfirmation { get { throw null; } set { } }
+        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementSolutionDisplayName SolutionDisplayName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.GoalResourceUserConfirmation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.GoalResourceUserConfirmation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ResilienceManagement.Models.GoalResourceUserConfirmation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.GoalResourceUserConfirmation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.GoalResourceUserConfirmation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ResilienceManagement.Models.GoalResourceUserConfirmation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.GoalResourceUserConfirmation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.GoalResourceUserConfirmation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.GoalResourceUserConfirmation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class HealthModelMonitoringProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.HealthModelMonitoringProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.HealthModelMonitoringProperties>
     {
@@ -1900,23 +1966,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.HealthModelMonitoringProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.HealthModelMonitoringProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct HighAvailabilityStatus : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.HighAvailabilityStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public HighAvailabilityStatus(string value) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.HighAvailabilityStatus Enabled { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.HighAvailabilityStatus NotEnabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.HighAvailabilityStatus other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.HighAvailabilityStatus left, Azure.ResourceManager.ResilienceManagement.Models.HighAvailabilityStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.HighAvailabilityStatus (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.HighAvailabilityStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.HighAvailabilityStatus left, Azure.ResourceManager.ResilienceManagement.Models.HighAvailabilityStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class IncludeOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.IncludeOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.IncludeOrUpdateContent>
     {
         public IncludeOrUpdateContent(Azure.Core.ResourceIdentifier id) { }
@@ -1931,199 +1980,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         Azure.ResourceManager.ResilienceManagement.Models.IncludeOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.IncludeOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.IncludeOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.IncludeOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct InitialConfig : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.InitialConfig>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public InitialConfig(string value) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.InitialConfig Complete { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.InitialConfig Pending { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.InitialConfig other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.InitialConfig left, Azure.ResourceManager.ResilienceManagement.Models.InitialConfig right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.InitialConfig (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.InitialConfig? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.InitialConfig left, Azure.ResourceManager.ResilienceManagement.Models.InitialConfig right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class JobErrorInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.JobErrorInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.JobErrorInfo>
-    {
-        internal JobErrorInfo() { }
-        public string ErrorCode { get { throw null; } }
-        public string ErrorMessage { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> Recommendations { get { throw null; } }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.JobErrorInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.JobErrorInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ResilienceManagement.Models.JobErrorInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.JobErrorInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.JobErrorInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ResilienceManagement.Models.JobErrorInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.JobErrorInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.JobErrorInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.JobErrorInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class JobExtendedInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.JobExtendedInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.JobExtendedInfo>
-    {
-        internal JobExtendedInfo() { }
-        public string DynamicErrorMessage { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResilienceManagement.Models.JobTaskDetail> TasksList { get { throw null; } }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.JobExtendedInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.JobExtendedInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ResilienceManagement.Models.JobExtendedInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.JobExtendedInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.JobExtendedInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ResilienceManagement.Models.JobExtendedInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.JobExtendedInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.JobExtendedInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.JobExtendedInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public abstract partial class JobProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.JobProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.JobProperties>
-    {
-        internal JobProperties() { }
-        public System.TimeSpan? Duration { get { throw null; } }
-        public System.DateTimeOffset? EndsOn { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.JobErrorInfo ErrorDetails { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.UserConsent? ExecutionConfigurationsUserConsent { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.JobExtendedInfo JobExtendedInfo { get { throw null; } }
-        public string Operation { get { throw null; } }
-        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ResilienceManagement.Models.JobRetryDetails> RetryDetails { get { throw null; } }
-        public System.DateTimeOffset? StartsOn { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus? Status { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.JobTriggeredBy? TriggeredBy { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResilienceManagement.Models.JobUserComment> UserComments { get { throw null; } }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.JobProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.JobProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ResilienceManagement.Models.JobProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.JobProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.JobProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ResilienceManagement.Models.JobProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.JobProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.JobProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.JobProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public abstract partial class JobResourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.JobResourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.JobResourceProperties>
-    {
-        internal JobResourceProperties() { }
-        public System.TimeSpan? Duration { get { throw null; } }
-        public System.DateTimeOffset? EndsOn { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.JobErrorInfo ErrorDetails { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.JobExtendedInfo JobExtendedInfo { get { throw null; } }
-        public string JobId { get { throw null; } }
-        public string Operation { get { throw null; } }
-        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ResilienceManagement.Models.JobRetryDetails> RetryDetails { get { throw null; } }
-        public System.DateTimeOffset? StartsOn { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus? Status { get { throw null; } }
-        public string TaskId { get { throw null; } }
-        public string TaskName { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResilienceManagement.Models.JobUserComment> UserComments { get { throw null; } }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.JobResourceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.JobResourceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ResilienceManagement.Models.JobResourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.JobResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.JobResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ResilienceManagement.Models.JobResourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.JobResourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.JobResourceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.JobResourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class JobRetryDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.JobRetryDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.JobRetryDetails>
-    {
-        internal JobRetryDetails() { }
-        public System.TimeSpan? Duration { get { throw null; } }
-        public System.DateTimeOffset? EndsOn { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.JobErrorInfo ErrorDetails { get { throw null; } }
-        public int RetryAttempt { get { throw null; } }
-        public System.DateTimeOffset? StartsOn { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus? Status { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResilienceManagement.Models.JobUserComment> UserComments { get { throw null; } }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.JobRetryDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.JobRetryDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ResilienceManagement.Models.JobRetryDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.JobRetryDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.JobRetryDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ResilienceManagement.Models.JobRetryDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.JobRetryDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.JobRetryDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.JobRetryDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class JobTaskDetail : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.JobTaskDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.JobTaskDetail>
-    {
-        internal JobTaskDetail() { }
-        public System.TimeSpan? Duration { get { throw null; } }
-        public System.DateTimeOffset? EndsOn { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.JobErrorInfo ErrorDetails { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> LinkedJobIds { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResilienceManagement.Models.JobRetryDetails> RetryDetails { get { throw null; } }
-        public System.DateTimeOffset? StartsOn { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus? Status { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResilienceManagement.Models.JobTaskDetail> SubTasksList { get { throw null; } }
-        public string TaskId { get { throw null; } }
-        public string TaskName { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResilienceManagement.Models.JobUserComment> UserComments { get { throw null; } }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.JobTaskDetail JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.JobTaskDetail PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ResilienceManagement.Models.JobTaskDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.JobTaskDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.JobTaskDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ResilienceManagement.Models.JobTaskDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.JobTaskDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.JobTaskDetail>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.JobTaskDetail>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct JobTriggeredBy : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.JobTriggeredBy>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public JobTriggeredBy(string value) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.JobTriggeredBy System { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.JobTriggeredBy User { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.JobTriggeredBy other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.JobTriggeredBy left, Azure.ResourceManager.ResilienceManagement.Models.JobTriggeredBy right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.JobTriggeredBy (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.JobTriggeredBy? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.JobTriggeredBy left, Azure.ResourceManager.ResilienceManagement.Models.JobTriggeredBy right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class JobUserComment : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.JobUserComment>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.JobUserComment>
-    {
-        internal JobUserComment() { }
-        public System.DateTimeOffset? CommentOn { get { throw null; } }
-        public string Comments { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.CommentType? CommentType { get { throw null; } }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.JobUserComment JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.JobUserComment PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ResilienceManagement.Models.JobUserComment System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.JobUserComment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.JobUserComment>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ResilienceManagement.Models.JobUserComment System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.JobUserComment>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.JobUserComment>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.JobUserComment>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class LastRunProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.LastRunProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.LastRunProperties>
-    {
-        internal LastRunProperties() { }
-        public Azure.ResourceManager.ResilienceManagement.Models.DrillAttestation? LastRunAttestation { get { throw null; } }
-        public System.TimeSpan? LastRunDuration { get { throw null; } }
-        public System.DateTimeOffset? LastRunOn { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus? LastRunState { get { throw null; } }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.LastRunProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.LastRunProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ResilienceManagement.Models.LastRunProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.LastRunProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.LastRunProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ResilienceManagement.Models.LastRunProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.LastRunProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.LastRunProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.LastRunProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ListReportDownloadUrlContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ListReportDownloadUrlContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ListReportDownloadUrlContent>
     {
@@ -2157,8 +2013,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
     }
     public partial class MarkAsCompleteContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.MarkAsCompleteContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.MarkAsCompleteContent>
     {
-        public MarkAsCompleteContent(Azure.ResourceManager.ResilienceManagement.Models.DrillRunSubtasks drillRunStage) { }
-        public Azure.ResourceManager.ResilienceManagement.Models.DrillRunSubtasks DrillRunStage { get { throw null; } }
+        public MarkAsCompleteContent(Azure.ResourceManager.ResilienceManagement.Models.DrillRunStage drillRunStage) { }
+        public Azure.ResourceManager.ResilienceManagement.Models.DrillRunStage DrillRunStage { get { throw null; } }
         protected virtual Azure.ResourceManager.ResilienceManagement.Models.MarkAsCompleteContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ResilienceManagement.Models.MarkAsCompleteContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2187,58 +2043,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.MonitoringPropertiesOfDrill>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.MonitoringPropertiesOfDrill>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OperationQualificationDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.OperationQualificationDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.OperationQualificationDetails>
-    {
-        internal OperationQualificationDetails() { }
-        public System.Collections.Generic.IList<string> NotQualifiedReasons { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.QualificationState QualificationState { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilityReview> ResourceFeasibilityReviews { get { throw null; } }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.OperationQualificationDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.OperationQualificationDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ResilienceManagement.Models.OperationQualificationDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.OperationQualificationDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.OperationQualificationDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ResilienceManagement.Models.OperationQualificationDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.OperationQualificationDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.OperationQualificationDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.OperationQualificationDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct QualificationState : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.QualificationState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public QualificationState(string value) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.QualificationState Excluded { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.QualificationState NotQualified { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.QualificationState Qualified { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.QualificationState Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.QualificationState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.QualificationState left, Azure.ResourceManager.ResilienceManagement.Models.QualificationState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.QualificationState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.QualificationState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.QualificationState left, Azure.ResourceManager.ResilienceManagement.Models.QualificationState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ReasonForRequestingConfirmation : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.ReasonForRequestingConfirmation>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ReasonForRequestingConfirmation(string value) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ReasonForRequestingConfirmation VmInMultiZoneScaleSetStatelessOnly { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ReasonForRequestingConfirmation ZonePinnedZrsDataDisksConditional { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.ReasonForRequestingConfirmation other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.ReasonForRequestingConfirmation left, Azure.ResourceManager.ResilienceManagement.Models.ReasonForRequestingConfirmation right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.ReasonForRequestingConfirmation (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.ReasonForRequestingConfirmation? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.ReasonForRequestingConfirmation left, Azure.ResourceManager.ResilienceManagement.Models.ReasonForRequestingConfirmation right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class RecommendCapacityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.RecommendCapacityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.RecommendCapacityContent>
     {
         public RecommendCapacityContent(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resourceIds) { }
@@ -2266,6 +2070,23 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         Azure.ResourceManager.ResilienceManagement.Models.RecoveryActionContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryActionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryActionContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryActionContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RecoveryActionUserConsent : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.RecoveryActionUserConsent>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RecoveryActionUserConsent(string value) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryActionUserConsent Allowed { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryActionUserConsent Unspecified { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.RecoveryActionUserConsent other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.RecoveryActionUserConsent left, Azure.ResourceManager.ResilienceManagement.Models.RecoveryActionUserConsent right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.RecoveryActionUserConsent (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.RecoveryActionUserConsent? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.RecoveryActionUserConsent left, Azure.ResourceManager.ResilienceManagement.Models.RecoveryActionUserConsent right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class RecoveryGroup : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryGroup>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryGroup>
     {
@@ -2394,13 +2215,13 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryGroupsSetting>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryGroupsSetting>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RecoveryJobProperties : Azure.ResourceManager.ResilienceManagement.Models.JobProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryJobProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryJobProperties>
+    public partial class RecoveryJobProperties : Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryJobProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryJobProperties>
     {
         internal RecoveryJobProperties() { }
         public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? ProvisioningState { get { throw null; } }
-        protected override Azure.ResourceManager.ResilienceManagement.Models.JobProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.ResilienceManagement.Models.JobProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ResilienceManagement.Models.RecoveryJobProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryJobProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryJobProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2408,15 +2229,15 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryJobProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryJobProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RecoveryJobResourceProperties : Azure.ResourceManager.ResilienceManagement.Models.JobResourceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryJobResourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryJobResourceProperties>
+    public partial class RecoveryJobResourceProperties : Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobResourceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryJobResourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryJobResourceProperties>
     {
         internal RecoveryJobResourceProperties() { }
         public Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionSolutionType? ProtectionSolutionType { get { throw null; } }
         public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ResilienceManagement.Models.RecoveryGroupActionSettings RecoveryGroupActionSettings { get { throw null; } }
-        protected override Azure.ResourceManager.ResilienceManagement.Models.JobResourceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobResourceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.ResilienceManagement.Models.JobResourceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobResourceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ResilienceManagement.Models.RecoveryJobResourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryJobResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryJobResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2425,24 +2246,40 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryJobResourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RecoveryOperationNames : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationNames>
+    public readonly partial struct RecoveryOperationName : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationName>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public RecoveryOperationNames(string value) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationNames Failover { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationNames FailoverCommit { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationNames Reprotect { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationNames TestFailover { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationNames TestFailoverCleanup { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationNames other) { throw null; }
+        public RecoveryOperationName(string value) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationName Failover { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationName FailoverCommit { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationName Reprotect { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationName TestFailover { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationName TestFailoverCleanup { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationName other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationNames left, Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationNames right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationNames (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationNames? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationNames left, Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationNames right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationName left, Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationName? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationName left, Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationName right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class RecoveryOperationQualificationDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationQualificationDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationQualificationDetails>
+    {
+        internal RecoveryOperationQualificationDetails() { }
+        public System.Collections.Generic.IList<string> NotQualifiedReasons { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceQualificationState QualificationState { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilityReview> ResourceFeasibilityReviews { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationQualificationDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationQualificationDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationQualificationDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationQualificationDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationQualificationDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationQualificationDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationQualificationDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationQualificationDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationQualificationDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RecoveryOperationStatus : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationStatus>
@@ -2603,6 +2440,25 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanType left, Azure.ResourceManager.ResilienceManagement.Models.RecoveryPlanType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RecoveryResourceFailoverState : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceFailoverState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RecoveryResourceFailoverState(string value) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceFailoverState FailedOver { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceFailoverState FailedOverCommitPending { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceFailoverState FailedOverReprotectPending { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceFailoverState None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceFailoverState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceFailoverState left, Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceFailoverState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceFailoverState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceFailoverState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceFailoverState left, Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceFailoverState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class RecoveryResourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceProperties>
     {
         public RecoveryResourceProperties(string recoveryResourceUniqueId) { }
@@ -2634,7 +2490,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
     public partial class RecoveryResourceQualification : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceQualification>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceQualification>
     {
         internal RecoveryResourceQualification() { }
-        public Azure.ResourceManager.ResilienceManagement.Models.OperationQualificationDetails OperationQualificationDetails { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationQualificationDetails OperationQualificationDetails { get { throw null; } }
         public Azure.ResourceManager.ResilienceManagement.RecoveryMembersData RecoveryResource { get { throw null; } }
         protected virtual Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceQualification JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2645,6 +2501,25 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceQualification System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceQualification>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceQualification>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceQualification>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RecoveryResourceQualificationState : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceQualificationState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RecoveryResourceQualificationState(string value) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceQualificationState Excluded { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceQualificationState NotQualified { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceQualificationState Qualified { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceQualificationState Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceQualificationState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceQualificationState left, Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceQualificationState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceQualificationState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceQualificationState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceQualificationState left, Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceQualificationState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class RegionalDrillProperties : Azure.ResourceManager.ResilienceManagement.Models.DrillProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.RegionalDrillProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.RegionalDrillProperties>
     {
@@ -2688,23 +2563,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.RelativeResourceCompositionState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.RelativeResourceCompositionState left, Azure.ResourceManager.ResilienceManagement.Models.RelativeResourceCompositionState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class ReportStageStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ReportStageStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ReportStageStatus>
-    {
-        internal ReportStageStatus() { }
-        public Azure.ResourceManager.ResilienceManagement.Models.DrillRunSubtasks DrillRunStage { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.DrillReportGenerationStatus? GenerationStatus { get { throw null; } }
-        public System.DateTimeOffset? LastAttemptOn { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementErrorDetail LastError { get { throw null; } }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.ReportStageStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.ReportStageStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ResilienceManagement.Models.ReportStageStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ReportStageStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ReportStageStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ResilienceManagement.Models.ReportStageStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ReportStageStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ReportStageStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ReportStageStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ReprotectContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ReprotectContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ReprotectContent>
     {
@@ -2786,9 +2644,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
     }
     public partial class ResilienceManagementFailoverContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverContent>
     {
-        public ResilienceManagementFailoverContent(Azure.ResourceManager.ResilienceManagement.Models.FailoverDirectionTypes failoverDirection) { }
-        public Azure.ResourceManager.ResilienceManagement.Models.FailoverDirectionTypes FailoverDirection { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.FailoverRequestProperties FailoverRequestProperties { get { throw null; } set { } }
+        public ResilienceManagementFailoverContent(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverDirection failoverDirection) { }
+        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverDirection FailoverDirection { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverProperties FailoverRequestProperties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2799,11 +2657,43 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResilienceManagementFailoverDirection : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverDirection>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResilienceManagementFailoverDirection(string value) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverDirection FromSpecificLocations { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverDirection other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverDirection left, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverDirection right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverDirection (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverDirection? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverDirection left, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverDirection right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ResilienceManagementFailoverProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverProperties>
+    {
+        public ResilienceManagementFailoverProperties(System.Collections.Generic.IEnumerable<string> sourceLocations) { }
+        public Azure.ResourceManager.ResilienceManagement.Models.RecoveryActionUserConsent? ExecutionConfigurationsUserConsent { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> SelectedResourceIds { get { throw null; } }
+        public System.Collections.Generic.IList<string> SourceLocations { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementFailoverProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ResilienceManagementGoalsInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementGoalsInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementGoalsInfo>
     {
         internal ResilienceManagementGoalsInfo() { }
         public Azure.Core.ResourceIdentifier AssignmentId { get { throw null; } }
-        public bool? Required { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.UnifiedResilienceItemGoalRequirement ZonalResiliency { get { throw null; } }
         protected virtual Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementGoalsInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementGoalsInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2813,6 +2703,125 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementGoalsInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementGoalsInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementGoalsInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementGoalsInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResilienceManagementJobCommentType : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobCommentType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResilienceManagementJobCommentType(string value) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobCommentType Description { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobCommentType ResumeReason { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobCommentType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobCommentType left, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobCommentType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobCommentType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobCommentType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobCommentType left, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobCommentType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ResilienceManagementJobErrorInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobErrorInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobErrorInfo>
+    {
+        internal ResilienceManagementJobErrorInfo() { }
+        public string ErrorCode { get { throw null; } }
+        public string ErrorMessage { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> Recommendations { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobErrorInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobErrorInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobErrorInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobErrorInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobErrorInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobErrorInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobErrorInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobErrorInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobErrorInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ResilienceManagementJobExtendedInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobExtendedInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobExtendedInfo>
+    {
+        internal ResilienceManagementJobExtendedInfo() { }
+        public string DynamicErrorMessage { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTaskDetail> TasksList { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobExtendedInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobExtendedInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobExtendedInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobExtendedInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobExtendedInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobExtendedInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobExtendedInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobExtendedInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobExtendedInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public abstract partial class ResilienceManagementJobProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobProperties>
+    {
+        internal ResilienceManagementJobProperties() { }
+        public System.TimeSpan? Duration { get { throw null; } }
+        public System.DateTimeOffset? EndsOn { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobErrorInfo ErrorDetails { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.RecoveryActionUserConsent? ExecutionConfigurationsUserConsent { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobExtendedInfo JobExtendedInfo { get { throw null; } }
+        public string Operation { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobRetryDetails> RetryDetails { get { throw null; } }
+        public System.DateTimeOffset? StartsOn { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus? Status { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTriggeredBy? TriggeredBy { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobUserComment> UserComments { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public abstract partial class ResilienceManagementJobResourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobResourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobResourceProperties>
+    {
+        internal ResilienceManagementJobResourceProperties() { }
+        public System.TimeSpan? Duration { get { throw null; } }
+        public System.DateTimeOffset? EndsOn { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobErrorInfo ErrorDetails { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobExtendedInfo JobExtendedInfo { get { throw null; } }
+        public string JobId { get { throw null; } }
+        public string Operation { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobRetryDetails> RetryDetails { get { throw null; } }
+        public System.DateTimeOffset? StartsOn { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus? Status { get { throw null; } }
+        public string TaskId { get { throw null; } }
+        public string TaskName { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobUserComment> UserComments { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobResourceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobResourceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobResourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobResourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobResourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobResourceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobResourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ResilienceManagementJobRetryDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobRetryDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobRetryDetails>
+    {
+        internal ResilienceManagementJobRetryDetails() { }
+        public System.TimeSpan? Duration { get { throw null; } }
+        public System.DateTimeOffset? EndsOn { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobErrorInfo ErrorDetails { get { throw null; } }
+        public int RetryAttempt { get { throw null; } }
+        public System.DateTimeOffset? StartsOn { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus? Status { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobUserComment> UserComments { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobRetryDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobRetryDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobRetryDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobRetryDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobRetryDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobRetryDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobRetryDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobRetryDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobRetryDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResilienceManagementJobStatus : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus>
@@ -2839,6 +2848,63 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus left, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ResilienceManagementJobTaskDetail : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTaskDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTaskDetail>
+    {
+        internal ResilienceManagementJobTaskDetail() { }
+        public System.TimeSpan? Duration { get { throw null; } }
+        public System.DateTimeOffset? EndsOn { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobErrorInfo ErrorDetails { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> LinkedJobIds { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobRetryDetails> RetryDetails { get { throw null; } }
+        public System.DateTimeOffset? StartsOn { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobStatus? Status { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTaskDetail> SubTasksList { get { throw null; } }
+        public string TaskId { get { throw null; } }
+        public string TaskName { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobUserComment> UserComments { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTaskDetail JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTaskDetail PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTaskDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTaskDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTaskDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTaskDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTaskDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTaskDetail>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTaskDetail>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResilienceManagementJobTriggeredBy : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTriggeredBy>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResilienceManagementJobTriggeredBy(string value) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTriggeredBy System { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTriggeredBy User { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTriggeredBy other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTriggeredBy left, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTriggeredBy right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTriggeredBy (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTriggeredBy? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTriggeredBy left, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobTriggeredBy right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ResilienceManagementJobUserComment : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobUserComment>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobUserComment>
+    {
+        internal ResilienceManagementJobUserComment() { }
+        public System.DateTimeOffset? CommentOn { get { throw null; } }
+        public string Comments { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobCommentType? CommentType { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobUserComment JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobUserComment PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobUserComment System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobUserComment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobUserComment>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobUserComment System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobUserComment>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobUserComment>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementJobUserComment>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResilienceManagementProvisioningState : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState>
@@ -2915,23 +2981,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementSolutionDisplayName left, Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementSolutionDisplayName right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ResiliencyProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResiliencyProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResiliencyProperties>
-    {
-        public ResiliencyProperties() { }
-        public Azure.ResourceManager.ResilienceManagement.Models.AttestationState? AttestationStatus { get { throw null; } set { } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ExclusionReason? ExclusionReason { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ExclusionState? GoalParticipation { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ResilienceManagement.Models.UserConfirmationItem> UserConfirmation { get { throw null; } }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.ResiliencyProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.ResiliencyProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ResilienceManagement.Models.ResiliencyProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResiliencyProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResiliencyProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ResilienceManagement.Models.ResiliencyProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResiliencyProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResiliencyProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResiliencyProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public abstract partial class ResourceBaseProtectionSolutionSetting : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResourceBaseProtectionSolutionSetting>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResourceBaseProtectionSolutionSetting>
     {
         internal ResourceBaseProtectionSolutionSetting() { }
@@ -2981,10 +3030,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
     public partial class ResourceFeasibilityReview : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilityReview>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilityReview>
     {
         internal ResourceFeasibilityReview() { }
-        public Azure.ResourceManager.ResilienceManagement.Models.SkuDetails CurrentTargetSku { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilitySkuDetails CurrentTargetSku { get { throw null; } }
         public Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilityReviewType FeasibilityType { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ResilienceManagement.Models.SkuDetails> RecommendedTargetSkus { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilitySkuDetails> RecommendedTargetSkus { get { throw null; } }
+        public Azure.Core.ResourceType ResourceType { get { throw null; } }
         public Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilityReviewStatus Status { get { throw null; } }
         protected virtual Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilityReview JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3031,6 +3080,25 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilityReviewType left, Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilityReviewType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ResourceFeasibilitySkuDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilitySkuDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilitySkuDetails>
+    {
+        internal ResourceFeasibilitySkuDetails() { }
+        public string Currency { get { throw null; } }
+        public double? MonthlyPrice { get { throw null; } }
+        public string OfferingId { get { throw null; } }
+        public int? Ram { get { throw null; } }
+        public string Sku { get { throw null; } }
+        public int? VCpu { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilitySkuDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilitySkuDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilitySkuDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilitySkuDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilitySkuDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilitySkuDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilitySkuDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilitySkuDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResourceFeasibilitySkuDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResourceInclusionState : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.ResourceInclusionState>
     {
@@ -3067,7 +3135,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public Azure.Core.AzureLocation? ActiveLocation { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.AzureLocation> ActiveLocations { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ActivePhysicalZones { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.FailoverState? FailoverState { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.RecoveryResourceFailoverState? FailoverState { get { throw null; } }
         public bool IsAutoFailover { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrimaryResource { get { throw null; } }
         public Azure.ResourceManager.ResilienceManagement.Models.ResourceProtectionSolutionType? ProtectionSolutionType { get { throw null; } }
@@ -3160,22 +3228,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResourceSiteRecoveryProtectionSetting>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ResourceSiteRecoveryProtectionSetting>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResourceTypeCategories : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.ResourceTypeCategories>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ResourceTypeCategories(string value) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.ResourceTypeCategories AzureSiteRecoveryVMsPresent { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.ResourceTypeCategories other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.ResourceTypeCategories left, Azure.ResourceManager.ResilienceManagement.Models.ResourceTypeCategories right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.ResourceTypeCategories (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.ResourceTypeCategories? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.ResourceTypeCategories left, Azure.ResourceManager.ResilienceManagement.Models.ResourceTypeCategories right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ServiceLevelTarget : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ServiceLevelTarget>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ServiceLevelTarget>
     {
         public ServiceLevelTarget(Azure.Core.ResourceIdentifier serviceLevelIndicatorResourceId) { }
@@ -3190,30 +3242,11 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ServiceLevelTarget>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ServiceLevelTarget>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SkuDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.SkuDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.SkuDetails>
-    {
-        internal SkuDetails() { }
-        public string Currency { get { throw null; } }
-        public double? MonthlyPrice { get { throw null; } }
-        public string OfferingId { get { throw null; } }
-        public int? Ram { get { throw null; } }
-        public string Sku { get { throw null; } }
-        public int? VCpu { get { throw null; } }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.SkuDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.SkuDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ResilienceManagement.Models.SkuDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.SkuDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.SkuDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ResilienceManagement.Models.SkuDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.SkuDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.SkuDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.SkuDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class SliAttentionStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.SliAttentionStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.SliAttentionStatus>
     {
         internal SliAttentionStatus() { }
         public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementRbacState? DrillRbacOnDestinationAmw { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ExtensionObjectState? Exists { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.DrillExtensionObjectState? Exists { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RbacNeededOnDestinationAmws { get { throw null; } }
         public Azure.Core.ResourceIdentifier SliId { get { throw null; } }
         public Azure.ResourceManager.ResilienceManagement.Models.SliType Type { get { throw null; } }
@@ -3292,21 +3325,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.SliTypeMatchState left, Azure.ResourceManager.ResilienceManagement.Models.SliTypeMatchState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SupportedVerbsForStage : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.SupportedVerbsForStage>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.SupportedVerbsForStage>
-    {
-        internal SupportedVerbsForStage() { }
-        public Azure.ResourceManager.ResilienceManagement.Models.DrillRunSubtasks DrillRunStage { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ResilienceManagement.Models.DrillRunOperationVerbs> SupportedVerbs { get { throw null; } }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.SupportedVerbsForStage JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.SupportedVerbsForStage PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ResilienceManagement.Models.SupportedVerbsForStage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.SupportedVerbsForStage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.SupportedVerbsForStage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ResilienceManagement.Models.SupportedVerbsForStage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.SupportedVerbsForStage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.SupportedVerbsForStage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.SupportedVerbsForStage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class TestFailoverCleanupContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.TestFailoverCleanupContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.TestFailoverCleanupContent>
     {
         public TestFailoverCleanupContent() { }
@@ -3355,6 +3373,20 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         Azure.ResourceManager.ResilienceManagement.Models.UnifiedResilienceItemBillingInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.UnifiedResilienceItemBillingInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.UnifiedResilienceItemBillingInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.UnifiedResilienceItemBillingInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class UnifiedResilienceItemGoalRequirement : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.UnifiedResilienceItemGoalRequirement>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.UnifiedResilienceItemGoalRequirement>
+    {
+        internal UnifiedResilienceItemGoalRequirement() { }
+        public bool IsRequired { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.UnifiedResilienceItemGoalRequirement JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.UnifiedResilienceItemGoalRequirement PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ResilienceManagement.Models.UnifiedResilienceItemGoalRequirement System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.UnifiedResilienceItemGoalRequirement>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.UnifiedResilienceItemGoalRequirement>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ResilienceManagement.Models.UnifiedResilienceItemGoalRequirement System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.UnifiedResilienceItemGoalRequirement>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.UnifiedResilienceItemGoalRequirement>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.UnifiedResilienceItemGoalRequirement>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class UnifiedResilienceItemProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.UnifiedResilienceItemProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.UnifiedResilienceItemProperties>
     {
@@ -3435,6 +3467,22 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.UpdateRecoveryResourcesResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.UpdateRecoveryResourcesResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class UsagePlanEnrollmentProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.UsagePlanEnrollmentProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.UsagePlanEnrollmentProperties>
+    {
+        public UsagePlanEnrollmentProperties(Azure.Core.ResourceIdentifier serviceGroupId) { }
+        public Azure.ResponseError ErrorDetails { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ServiceGroupId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.UsagePlanEnrollmentProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResilienceManagement.Models.UsagePlanEnrollmentProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ResilienceManagement.Models.UsagePlanEnrollmentProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.UsagePlanEnrollmentProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.UsagePlanEnrollmentProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ResilienceManagement.Models.UsagePlanEnrollmentProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.UsagePlanEnrollmentProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.UsagePlanEnrollmentProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.UsagePlanEnrollmentProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class UsagePlanPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.UsagePlanPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.UsagePlanPatch>
     {
         public UsagePlanPatch() { }
@@ -3481,39 +3529,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.UsagePlanType left, Azure.ResourceManager.ResilienceManagement.Models.UsagePlanType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class UserConfirmationItem : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.UserConfirmationItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.UserConfirmationItem>
-    {
-        public UserConfirmationItem(Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementSolutionDisplayName solutionDisplayName, Azure.ResourceManager.ResilienceManagement.Models.ConfirmationStatus confirmationStatus) { }
-        public Azure.ResourceManager.ResilienceManagement.Models.ConfirmationStatus ConfirmationStatus { get { throw null; } set { } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ReasonForRequestingConfirmation? ReasonForRequestingConfirmation { get { throw null; } set { } }
-        public Azure.ResourceManager.ResilienceManagement.Models.ResilienceManagementSolutionDisplayName SolutionDisplayName { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.UserConfirmationItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ResilienceManagement.Models.UserConfirmationItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ResilienceManagement.Models.UserConfirmationItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.UserConfirmationItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.UserConfirmationItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ResilienceManagement.Models.UserConfirmationItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.UserConfirmationItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.UserConfirmationItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.UserConfirmationItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct UserConsent : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.UserConsent>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public UserConsent(string value) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.UserConsent Allowed { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.UserConsent Unspecified { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.UserConsent other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.UserConsent left, Azure.ResourceManager.ResilienceManagement.Models.UserConsent right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.UserConsent (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.UserConsent? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.UserConsent left, Azure.ResourceManager.ResilienceManagement.Models.UserConsent right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ValidateForExecutionContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ValidateForExecutionContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ValidateForExecutionContent>
     {
         public ValidateForExecutionContent() { }
@@ -3531,7 +3546,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
     public partial class ValidateForExecutionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ValidateForExecutionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ValidateForExecutionProperties>
     {
         public ValidateForExecutionProperties() { }
-        public Azure.ResourceManager.ResilienceManagement.Models.DrillRunTasks? OperationName { get { throw null; } set { } }
+        public Azure.ResourceManager.ResilienceManagement.Models.DrillRunTask? OperationName { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SourceLocations { get { throw null; } }
         protected virtual Azure.ResourceManager.ResilienceManagement.Models.ValidateForExecutionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3545,8 +3560,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
     }
     public partial class ValidateForOperationContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ValidateForOperationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ValidateForOperationContent>
     {
-        public ValidateForOperationContent(Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationNames operationName) { }
-        public Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationNames OperationName { get { throw null; } }
+        public ValidateForOperationContent(Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationName operationName) { }
+        public Azure.ResourceManager.ResilienceManagement.Models.RecoveryOperationName OperationName { get { throw null; } }
         protected virtual Azure.ResourceManager.ResilienceManagement.Models.ValidateForOperationContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ResilienceManagement.Models.ValidateForOperationContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3571,27 +3586,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ValidateForRecoveryOperationBaseResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ValidateForRecoveryOperationBaseResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VmPresent : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.VmPresent>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public VmPresent(string value) { throw null; }
-        public static Azure.ResourceManager.ResilienceManagement.Models.VmPresent Absent { get { throw null; } }
-        public static Azure.ResourceManager.ResilienceManagement.Models.VmPresent Present { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.VmPresent other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.VmPresent left, Azure.ResourceManager.ResilienceManagement.Models.VmPresent right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.VmPresent (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.VmPresent? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.VmPresent left, Azure.ResourceManager.ResilienceManagement.Models.VmPresent right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ZonalDrillProperties : Azure.ResourceManager.ResilienceManagement.Models.DrillProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResilienceManagement.Models.ZonalDrillProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ZonalDrillProperties>
     {
         public ZonalDrillProperties() { }
-        public Azure.ResourceManager.ResilienceManagement.Models.VmPresent? VmsPresent { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.ZonalDrillVmPresence? VmsPresent { get { throw null; } }
         protected override Azure.ResourceManager.ResilienceManagement.Models.DrillProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.ResilienceManagement.Models.DrillProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3607,7 +3605,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         internal ZonalDrillResourceProperties() { }
         public System.Collections.Generic.IReadOnlyList<string> ActivePhysicalZones { get { throw null; } }
         public Azure.Core.ResourceIdentifier AdvisorHaRecommendationId { get { throw null; } }
-        public Azure.ResourceManager.ResilienceManagement.Models.HighAvailabilityStatus? HaStatus { get { throw null; } }
+        public Azure.ResourceManager.ResilienceManagement.Models.DrillResourceHighAvailabilityStatus? HaStatus { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RecoveryPhysicalZones { get { throw null; } }
         protected override Azure.ResourceManager.ResilienceManagement.Models.DrillResourceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3618,5 +3616,22 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         Azure.ResourceManager.ResilienceManagement.Models.ZonalDrillResourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ZonalDrillResourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ZonalDrillResourceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResilienceManagement.Models.ZonalDrillResourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ZonalDrillVmPresence : System.IEquatable<Azure.ResourceManager.ResilienceManagement.Models.ZonalDrillVmPresence>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ZonalDrillVmPresence(string value) { throw null; }
+        public static Azure.ResourceManager.ResilienceManagement.Models.ZonalDrillVmPresence Absent { get { throw null; } }
+        public static Azure.ResourceManager.ResilienceManagement.Models.ZonalDrillVmPresence Present { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ResilienceManagement.Models.ZonalDrillVmPresence other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ResilienceManagement.Models.ZonalDrillVmPresence left, Azure.ResourceManager.ResilienceManagement.Models.ZonalDrillVmPresence right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.ZonalDrillVmPresence (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResilienceManagement.Models.ZonalDrillVmPresence? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ResilienceManagement.Models.ZonalDrillVmPresence left, Azure.ResourceManager.ResilienceManagement.Models.ZonalDrillVmPresence right) { throw null; }
+        public override string ToString() { throw null; }
     }
 }

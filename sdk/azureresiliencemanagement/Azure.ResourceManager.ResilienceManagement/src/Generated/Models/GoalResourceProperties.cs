@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="zonalResiliency"> The zonal resiliency posture for the ARM resource, including participation, attestation, exclusion reason, and user confirmations. </param>
         /// <param name="provisioningState"> The provisioning state of the goal resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GoalResourceProperties(ResourceIdentifier resourceArmId, ResiliencyProperties zonalResiliency, ResilienceManagementProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GoalResourceProperties(ResourceIdentifier resourceArmId, GoalResourceResiliencyProperties zonalResiliency, ResilienceManagementProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceArmId = resourceArmId;
             ZonalResiliency = zonalResiliency;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public ResourceIdentifier ResourceArmId { get; set; }
 
         /// <summary> The zonal resiliency posture for the ARM resource, including participation, attestation, exclusion reason, and user confirmations. </summary>
-        public ResiliencyProperties ZonalResiliency { get; set; }
+        public GoalResourceResiliencyProperties ZonalResiliency { get; set; }
 
         /// <summary> The provisioning state of the goal resource. </summary>
         public ResilienceManagementProvisioningState? ProvisioningState { get; }

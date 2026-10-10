@@ -121,12 +121,12 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             GoalAssignmentPropertiesOfDrill goalAssignmentProperties = default;
             AssetPropertiesOfDrill drillAssetProperties = default;
             ChaosResourcePropertiesOfDrill chaosResourceProperties = default;
-            ExecutionState? executionState = default;
-            ExecutionReadinessState? executionReadinessState = default;
+            DrillExecutionState? executionState = default;
+            DrillExecutionReadinessState? executionReadinessState = default;
             ResilienceManagementRbacSetupMode? rbacSetupMode = default;
-            AttentionReason attentionReason = default;
+            DrillAttentionReason attentionReason = default;
             DrillSystemMetadata systemMetadata = default;
-            LastRunProperties lastRunProperties = default;
+            DrillLastRunProperties lastRunProperties = default;
             DateTimeOffset? lastSyncOn = default;
             DateTimeOffset? lastResyncReadinessCheckOn = default;
             DrillType drillType = default;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    executionState = new ExecutionState(prop.Value.GetString());
+                    executionState = new DrillExecutionState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("executionReadinessState"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    executionReadinessState = new ExecutionReadinessState(prop.Value.GetString());
+                    executionReadinessState = new DrillExecutionReadinessState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("rbacSetupMode"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    attentionReason = AttentionReason.DeserializeAttentionReason(prop.Value, options);
+                    attentionReason = DrillAttentionReason.DeserializeDrillAttentionReason(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("systemMetadata"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    lastRunProperties = LastRunProperties.DeserializeLastRunProperties(prop.Value, options);
+                    lastRunProperties = DrillLastRunProperties.DeserializeDrillLastRunProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("lastSyncTime"u8))

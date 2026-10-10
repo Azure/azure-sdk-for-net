@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             }
             ResourceIdentifier sliId = default;
             SliType @type = default;
-            ExtensionObjectState? exists = default;
+            DrillExtensionObjectState? exists = default;
             SliTypeMatchState? typeMatch = default;
             ResilienceManagementRbacState? drillRbacOnDestinationAmw = default;
             IReadOnlyList<string> rbacNeededOnDestinationAmws = default;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    exists = new ExtensionObjectState(prop.Value.GetString());
+                    exists = new DrillExtensionObjectState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("typeMatch"u8))

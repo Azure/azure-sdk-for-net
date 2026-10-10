@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ResilienceManagement;
 
 namespace Azure.ResourceManager.ResilienceManagement.Models
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 writer.WritePropertyName("recommendedTargetSkus"u8);
                 writer.WriteStartArray();
-                foreach (SkuDetails item in RecommendedTargetSkus)
+                foreach (ResourceFeasibilitySkuDetails item in RecommendedTargetSkus)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -143,10 +144,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 return null;
             }
             ResourceFeasibilityReviewType feasibilityType = default;
-            string resourceType = default;
-            SkuDetails currentTargetSku = default;
+            ResourceType resourceType = default;
+            ResourceFeasibilitySkuDetails currentTargetSku = default;
             ResourceFeasibilityReviewStatus status = default;
-            IList<SkuDetails> recommendedTargetSkus = default;
+            IList<ResourceFeasibilitySkuDetails> recommendedTargetSkus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 }
                 if (prop.NameEquals("resourceType"u8))
                 {
-                    resourceType = prop.Value.GetString();
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("currentTargetSku"u8))
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    currentTargetSku = SkuDetails.DeserializeSkuDetails(prop.Value, options);
+                    currentTargetSku = ResourceFeasibilitySkuDetails.DeserializeResourceFeasibilitySkuDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -180,10 +181,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    List<SkuDetails> array = new List<SkuDetails>();
+                    List<ResourceFeasibilitySkuDetails> array = new List<ResourceFeasibilitySkuDetails>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SkuDetails.DeserializeSkuDetails(item, options));
+                        array.Add(ResourceFeasibilitySkuDetails.DeserializeResourceFeasibilitySkuDetails(item, options));
                     }
                     recommendedTargetSkus = array;
                     continue;
@@ -198,7 +199,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 resourceType,
                 currentTargetSku,
                 status,
-                recommendedTargetSkus ?? new ChangeTrackingList<SkuDetails>(),
+                recommendedTargetSkus ?? new ChangeTrackingList<ResourceFeasibilitySkuDetails>(),
                 additionalBinaryDataProperties);
         }
     }
