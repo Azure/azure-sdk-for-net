@@ -12,33 +12,33 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Generator.MgmtApiVersionOverride.Tests
 {
-    internal partial class EscapedWireVersionReads
+    internal partial class OrdinaryWireVersionOperations
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
         private readonly Func<ResourceType, string> _getApiVersion;
 
-        /// <summary> Initializes a new instance of EscapedWireVersionReads for mocking. </summary>
-        protected EscapedWireVersionReads()
+        /// <summary> Initializes a new instance of OrdinaryWireVersionOperations for mocking. </summary>
+        protected OrdinaryWireVersionOperations()
         {
         }
 
-        /// <summary> Initializes a new instance of EscapedWireVersionReads. </summary>
+        /// <summary> Initializes a new instance of OrdinaryWireVersionOperations. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
         /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
-        internal EscapedWireVersionReads(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion, Func<ResourceType, string> getApiVersion)
+        internal OrdinaryWireVersionOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
             _getApiVersion = getApiVersion;
-            _userAgent = new TelemetryDetails(typeof(EscapedWireVersionReads).Assembly, applicationId);
+            _userAgent = new TelemetryDetails(typeof(OrdinaryWireVersionOperations).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -47,7 +47,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string escapedWireVersionTestName, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string ordinaryWireVersionTestName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -55,9 +55,9 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/MgmtTypeSpec/escapedWireVersionTests/", false);
-            uri.AppendPath(escapedWireVersionTestName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/escapedWireVersionTests") ?? "opaque-read&channel=legacy%2Fplus+#hash", true);
+            uri.AppendPath("/providers/MgmtTypeSpec/ordinaryWireVersionTests/", false);
+            uri.AppendPath(ordinaryWireVersionTestName, true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/ordinaryWireVersionTests") ?? "2024-05-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -73,8 +73,8 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/providers/MgmtTypeSpec/escapedWireVersionTests", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/escapedWireVersionTests") ?? "opaque-read&channel=legacy%2Fplus+#hash", true);
+            uri.AppendPath("/providers/MgmtTypeSpec/ordinaryWireVersionTests", false);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/ordinaryWireVersionTests") ?? "2024-05-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -95,47 +95,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/escapedWireVersionTests") ?? "opaque-read&channel=legacy%2Fplus+#hash");
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            _userAgent.Apply(message);
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/MgmtTypeSpec/escapedWireVersionTests", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/escapedWireVersionTests") ?? "opaque-read&channel=legacy%2Fplus+#hash", true);
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            _userAgent.Apply(message);
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateNextGetByResourceGroupRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/escapedWireVersionTests") ?? "opaque-read&channel=legacy%2Fplus+#hash");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/ordinaryWireVersionTests") ?? "2024-05-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

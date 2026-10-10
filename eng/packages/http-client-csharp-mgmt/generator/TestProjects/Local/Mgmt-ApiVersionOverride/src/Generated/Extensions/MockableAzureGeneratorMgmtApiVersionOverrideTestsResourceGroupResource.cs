@@ -160,5 +160,70 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests.Mocking
 
             return GetWireVersionTests().Get(wireVersionTestName, cancellationToken);
         }
+
+        /// <summary> Gets a collection of OrdinaryWireVersionTests in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of OrdinaryWireVersionTests and their operations over a OrdinaryWireVersionTestResource. </returns>
+        public virtual OrdinaryWireVersionTestCollection GetOrdinaryWireVersionTests()
+        {
+            return GetCachedClient(client => new OrdinaryWireVersionTestCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a OrdinaryWireVersionTest
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/ordinaryWireVersionTests/{ordinaryWireVersionTestName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OrdinaryWireVersionReads_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ordinaryWireVersionTestName"> The name of the OrdinaryWireVersionTest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ordinaryWireVersionTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ordinaryWireVersionTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<OrdinaryWireVersionTestResource>> GetOrdinaryWireVersionTestAsync(string ordinaryWireVersionTestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ordinaryWireVersionTestName, nameof(ordinaryWireVersionTestName));
+
+            return await GetOrdinaryWireVersionTests().GetAsync(ordinaryWireVersionTestName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a OrdinaryWireVersionTest
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/ordinaryWireVersionTests/{ordinaryWireVersionTestName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OrdinaryWireVersionReads_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ordinaryWireVersionTestName"> The name of the OrdinaryWireVersionTest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ordinaryWireVersionTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ordinaryWireVersionTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<OrdinaryWireVersionTestResource> GetOrdinaryWireVersionTest(string ordinaryWireVersionTestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ordinaryWireVersionTestName, nameof(ordinaryWireVersionTestName));
+
+            return GetOrdinaryWireVersionTests().Get(ordinaryWireVersionTestName, cancellationToken);
+        }
     }
 }

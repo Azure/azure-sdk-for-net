@@ -56,7 +56,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string zooApiVersion);
             _zoosClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _zoosRestClient = new Zoos(_zoosClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, zooApiVersion ?? "2024-05-01");
+            _zoosRestClient = new Zoos(
+                _zoosClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                zooApiVersion ?? "2024-05-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _zooRecommendationClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
             _zooRecommendationRestClient = new ZooRecommendation(_zooRecommendationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, zooApiVersion ?? "2024-05-01");
             ValidateResourceId(id);

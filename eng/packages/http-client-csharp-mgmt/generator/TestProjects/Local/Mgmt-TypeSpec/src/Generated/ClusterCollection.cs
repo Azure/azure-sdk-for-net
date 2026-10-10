@@ -41,7 +41,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ClusterResource.ResourceType, out string clusterApiVersion);
             _clustersClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ClusterResource.ResourceType.Namespace, Diagnostics);
-            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, clusterApiVersion ?? "2024-05-01");
+            _clustersRestClient = new Clusters(
+                _clustersClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                clusterApiVersion ?? "2024-05-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
