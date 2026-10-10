@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `JsonPatch.ContainsValue` to check whether a value can be read at a JSON path, including values supplied by getter propagators. Existing `Contains` behavior is unchanged for compatibility with model serializers.
+
 ### Breaking Changes
 
 ### Bugs Fixed

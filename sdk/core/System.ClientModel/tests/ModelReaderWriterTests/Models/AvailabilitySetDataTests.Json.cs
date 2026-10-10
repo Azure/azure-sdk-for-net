@@ -349,6 +349,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual(
                 "[{\"op\":\"replace\",\"path\":\"/\",\"value\":{\"name\":\"replaced-name\",\"foo\":123}}]",
                 model.Sku.Patch.ToString());
+            Assert.IsTrue(model.Patch.ContainsValue(pointer));
+            Assert.IsFalse(model.Patch.Contains(pointer));
 
             var data = ModelReaderWriter.Write(model);
             Assert.AreEqual(
