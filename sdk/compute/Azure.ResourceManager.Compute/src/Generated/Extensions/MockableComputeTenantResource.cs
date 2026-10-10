@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Mocking
 
         private ClientDiagnostics TenantLevelSharedGalleryInvitesClientDiagnostics => _tenantLevelSharedGalleryInvitesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private TenantLevelSharedGalleryInvites TenantLevelSharedGalleryInvitesRestClient => _tenantLevelSharedGalleryInvitesRestClient ??= new TenantLevelSharedGalleryInvites(TenantLevelSharedGalleryInvitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-03");
+        private TenantLevelSharedGalleryInvites TenantLevelSharedGalleryInvitesRestClient => _tenantLevelSharedGalleryInvitesRestClient ??= new TenantLevelSharedGalleryInvites(TenantLevelSharedGalleryInvitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-03");
 
         /// <summary>
         /// Accept sharing of a tenant-level shared gallery.
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
