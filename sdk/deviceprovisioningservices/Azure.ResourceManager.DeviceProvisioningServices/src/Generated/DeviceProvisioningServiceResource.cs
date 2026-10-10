@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             TryGetApiVersion(ResourceType, out string deviceProvisioningServiceApiVersion);
             _provisioningServiceDescriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", ResourceType.Namespace, Diagnostics);
-            _provisioningServiceDescriptionsRestClient = new ProvisioningServiceDescriptions(_provisioningServiceDescriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceProvisioningServiceApiVersion ?? "2026-08-31");
+            _provisioningServiceDescriptionsRestClient = new ProvisioningServiceDescriptions(_provisioningServiceDescriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceProvisioningServiceApiVersion ?? "2026-11-01");
             ValidateResourceId(id);
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

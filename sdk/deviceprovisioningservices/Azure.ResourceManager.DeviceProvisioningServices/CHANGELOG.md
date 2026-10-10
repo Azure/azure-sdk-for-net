@@ -1,8 +1,10 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0 (Unreleased)
 
 ### Features Added
+
+- Added support for Device Registry namespaces linked to a Device Provisioning Service.
 
 ### Breaking Changes
 
