@@ -12,32 +12,32 @@ using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    /// <summary> Result of GET request to list topics in the cluster of a confluent organization. </summary>
-    internal partial class ListTopicsSuccessResponse
+    /// <summary> Result of GET request to list clusters in the environment of a confluent organization. </summary>
+    internal partial class ListClustersSuccessResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ListTopicsSuccessResponse"/>. </summary>
-        /// <param name="value"> The TopicRecord items on this page. </param>
-        internal ListTopicsSuccessResponse(IEnumerable<TopicRecordData> value)
+        /// <summary> Initializes a new instance of <see cref="ListClustersSuccessResult"/>. </summary>
+        /// <param name="value"> The SCClusterRecord items on this page. </param>
+        internal ListClustersSuccessResult(IEnumerable<SCClusterRecordData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ListTopicsSuccessResponse"/>. </summary>
-        /// <param name="value"> The TopicRecord items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="ListClustersSuccessResult"/>. </summary>
+        /// <param name="value"> The SCClusterRecord items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListTopicsSuccessResponse(IList<TopicRecordData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListClustersSuccessResult(IList<SCClusterRecordData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The TopicRecord items on this page. </summary>
-        public IList<TopicRecordData> Value { get; }
+        /// <summary> The SCClusterRecord items on this page. </summary>
+        public IList<SCClusterRecordData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

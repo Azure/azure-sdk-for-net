@@ -12,32 +12,32 @@ using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    /// <summary> Result of GET request to list connectors in the cluster of a confluent organization. </summary>
-    internal partial class ListConnectorsSuccessResponse
+    /// <summary> Result of GET request to list Confluent operations. </summary>
+    internal partial class GetEnvironmentsResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ListConnectorsSuccessResponse"/>. </summary>
-        /// <param name="value"> The ConnectorResource items on this page. </param>
-        internal ListConnectorsSuccessResponse(IEnumerable<ConfluentConnectorData> value)
+        /// <summary> Initializes a new instance of <see cref="GetEnvironmentsResult"/>. </summary>
+        /// <param name="value"> The SCEnvironmentRecord items on this page. </param>
+        internal GetEnvironmentsResult(IEnumerable<SCEnvironmentRecordData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ListConnectorsSuccessResponse"/>. </summary>
-        /// <param name="value"> The ConnectorResource items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="GetEnvironmentsResult"/>. </summary>
+        /// <param name="value"> The SCEnvironmentRecord items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListConnectorsSuccessResponse(IList<ConfluentConnectorData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GetEnvironmentsResult(IList<SCEnvironmentRecordData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The ConnectorResource items on this page. </summary>
-        public IList<ConfluentConnectorData> Value { get; }
+        /// <summary> The SCEnvironmentRecord items on this page. </summary>
+        public IList<SCEnvironmentRecordData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

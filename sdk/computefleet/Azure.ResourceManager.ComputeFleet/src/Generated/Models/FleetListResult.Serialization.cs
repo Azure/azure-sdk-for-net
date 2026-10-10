@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FleetListResult(value, nextLink, additionalBinaryDataProperties);
+            return new FleetListResult(value ?? new ChangeTrackingList<ComputeFleetData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

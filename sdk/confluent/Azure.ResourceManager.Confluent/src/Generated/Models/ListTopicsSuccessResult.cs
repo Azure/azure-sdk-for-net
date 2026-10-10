@@ -12,32 +12,32 @@ using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    /// <summary> Result of GET request to list Confluent operations. </summary>
-    internal partial class GetEnvironmentsResponse
+    /// <summary> Result of GET request to list topics in the cluster of a confluent organization. </summary>
+    internal partial class ListTopicsSuccessResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GetEnvironmentsResponse"/>. </summary>
-        /// <param name="value"> The SCEnvironmentRecord items on this page. </param>
-        internal GetEnvironmentsResponse(IEnumerable<SCEnvironmentRecordData> value)
+        /// <summary> Initializes a new instance of <see cref="ListTopicsSuccessResult"/>. </summary>
+        /// <param name="value"> The TopicRecord items on this page. </param>
+        internal ListTopicsSuccessResult(IEnumerable<TopicRecordData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="GetEnvironmentsResponse"/>. </summary>
-        /// <param name="value"> The SCEnvironmentRecord items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="ListTopicsSuccessResult"/>. </summary>
+        /// <param name="value"> The TopicRecord items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GetEnvironmentsResponse(IList<SCEnvironmentRecordData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListTopicsSuccessResult(IList<TopicRecordData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The SCEnvironmentRecord items on this page. </summary>
-        public IList<SCEnvironmentRecordData> Value { get; }
+        /// <summary> The TopicRecord items on this page. </summary>
+        public IList<TopicRecordData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

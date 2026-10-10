@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ComputeLimit.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SetMemberCapOverridesResult(memberCapOverrides, additionalBinaryDataProperties);
+            return new SetMemberCapOverridesResult(memberCapOverrides ?? new ChangeTrackingList<MemberCap>(), additionalBinaryDataProperties);
         }
     }
 }

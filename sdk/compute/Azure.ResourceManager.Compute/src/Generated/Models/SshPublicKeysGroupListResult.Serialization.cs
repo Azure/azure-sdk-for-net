@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SshPublicKeysGroupListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SshPublicKeysGroupListResult(value ?? new ChangeTrackingList<SshPublicKeyData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

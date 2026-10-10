@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BulkCreateListResult(value, nextLink, additionalBinaryDataProperties);
+            return new BulkCreateListResult(value ?? new ChangeTrackingList<LocationBasedBulkCreateData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

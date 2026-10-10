@@ -10,68 +10,68 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.ResourceManager.ComputeSchedule;
+using Azure.ResourceManager.Confluent;
 
-namespace Azure.ResourceManager.ComputeSchedule.Models
+namespace Azure.ResourceManager.Confluent.Models
 {
-    /// <summary> Paged collection of OccurrenceResource items. </summary>
-    internal partial class OccurrenceResourceListResponse : IJsonModel<OccurrenceResourceListResponse>
+    /// <summary> Result of GET request to list schema registry clusters in the environment of a confluent organization. </summary>
+    internal partial class ListSchemaRegistryClustersResult : IJsonModel<ListSchemaRegistryClustersResult>
     {
-        /// <summary> Initializes a new instance of <see cref="OccurrenceResourceListResponse"/> for deserialization. </summary>
-        internal OccurrenceResourceListResponse()
+        /// <summary> Initializes a new instance of <see cref="ListSchemaRegistryClustersResult"/> for deserialization. </summary>
+        internal ListSchemaRegistryClustersResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OccurrenceResourceListResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ListSchemaRegistryClustersResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OccurrenceResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ListSchemaRegistryClustersResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOccurrenceResourceListResponse(document.RootElement, options);
+                        return DeserializeListSchemaRegistryClustersResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OccurrenceResourceListResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListSchemaRegistryClustersResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OccurrenceResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ListSchemaRegistryClustersResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeScheduleContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConfluentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OccurrenceResourceListResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListSchemaRegistryClustersResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OccurrenceResourceListResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ListSchemaRegistryClustersResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OccurrenceResourceListResponse IPersistableModel<OccurrenceResourceListResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ListSchemaRegistryClustersResult IPersistableModel<ListSchemaRegistryClustersResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OccurrenceResourceListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ListSchemaRegistryClustersResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="OccurrenceResourceListResponse"/> from. </param>
-        internal static OccurrenceResourceListResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ListSchemaRegistryClustersResult"/> from. </param>
+        internal static ListSchemaRegistryClustersResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeOccurrenceResourceListResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeListSchemaRegistryClustersResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OccurrenceResourceListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ListSchemaRegistryClustersResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OccurrenceResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ListSchemaRegistryClustersResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OccurrenceResourceListResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ListSchemaRegistryClustersResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (OccurrenceDetails item in Value)
+            foreach (SchemaRegistryClusterRecord item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -118,40 +118,40 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OccurrenceResourceListResponse IJsonModel<OccurrenceResourceListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ListSchemaRegistryClustersResult IJsonModel<ListSchemaRegistryClustersResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OccurrenceResourceListResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ListSchemaRegistryClustersResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OccurrenceResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ListSchemaRegistryClustersResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OccurrenceResourceListResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ListSchemaRegistryClustersResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOccurrenceResourceListResponse(document.RootElement, options);
+            return DeserializeListSchemaRegistryClustersResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static OccurrenceResourceListResponse DeserializeOccurrenceResourceListResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static ListSchemaRegistryClustersResult DeserializeListSchemaRegistryClustersResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<OccurrenceDetails> value = default;
+            IList<SchemaRegistryClusterRecord> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<OccurrenceDetails> array = new List<OccurrenceDetails>();
+                    List<SchemaRegistryClusterRecord> array = new List<SchemaRegistryClusterRecord>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OccurrenceDetails.DeserializeOccurrenceDetails(item, options));
+                        array.Add(SchemaRegistryClusterRecord.DeserializeSchemaRegistryClusterRecord(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new OccurrenceResourceListResponse(value, nextLink, additionalBinaryDataProperties);
+            return new ListSchemaRegistryClustersResult(value ?? new ChangeTrackingList<SchemaRegistryClusterRecord>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

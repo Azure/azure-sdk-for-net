@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LaunchBulkInstancesOperationListResult(value, nextLink, additionalBinaryDataProperties);
+            return new LaunchBulkInstancesOperationListResult(value ?? new ChangeTrackingList<BulkActionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

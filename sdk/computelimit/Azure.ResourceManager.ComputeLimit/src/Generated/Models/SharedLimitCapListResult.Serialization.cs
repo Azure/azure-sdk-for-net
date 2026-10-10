@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ComputeLimit.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SharedLimitCapListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SharedLimitCapListResult(value ?? new ChangeTrackingList<SharedLimitCapData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

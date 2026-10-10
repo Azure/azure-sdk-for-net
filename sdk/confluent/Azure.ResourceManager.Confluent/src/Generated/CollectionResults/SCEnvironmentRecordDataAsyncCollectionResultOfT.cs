@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> The pages of SCEnvironmentRecordDataAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<SCEnvironmentRecordData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     yield break;
                 }
-                GetEnvironmentsResponse result = GetEnvironmentsResponse.FromResponse(response);
+                GetEnvironmentsResult result = GetEnvironmentsResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<SCEnvironmentRecordData>.FromValues((IReadOnlyList<SCEnvironmentRecordData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

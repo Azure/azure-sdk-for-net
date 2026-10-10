@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 provisioningState,
                 spotPriorityProfile,
                 regularPriorityProfile,
-                vmSizesProfile,
+                vmSizesProfile ?? new ChangeTrackingList<ComputeFleetVmSizeProfile>(),
                 vmAttributes,
                 additionalLocationsProfile,
                 computeProfile,

@@ -12,23 +12,23 @@ using System.Linq;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> Paged collection of ScheduledActionResource items. </summary>
-    internal partial class ResourceListResponse
+    internal partial class ResourceListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceListResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceListResult"/>. </summary>
         /// <param name="value"> The ScheduledActionResource items on this page. </param>
-        internal ResourceListResponse(IEnumerable<ScheduledActionResourceDetails> value)
+        internal ResourceListResult(IEnumerable<ScheduledActionResourceDetails> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceListResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceListResult"/>. </summary>
         /// <param name="value"> The ScheduledActionResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceListResponse(IList<ScheduledActionResourceDetails> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceListResult(IList<ScheduledActionResourceDetails> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;

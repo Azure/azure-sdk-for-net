@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IspCacheNodeResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new IspCacheNodeResourceListResult(value ?? new ChangeTrackingList<IspCacheNodeData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

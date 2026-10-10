@@ -14,64 +14,64 @@ using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    /// <summary> Result of GET request to list Confluent operations. </summary>
-    internal partial class GetEnvironmentsResponse : IJsonModel<GetEnvironmentsResponse>
+    /// <summary> Result of GET request to list topics in the cluster of a confluent organization. </summary>
+    internal partial class ListTopicsSuccessResult : IJsonModel<ListTopicsSuccessResult>
     {
-        /// <summary> Initializes a new instance of <see cref="GetEnvironmentsResponse"/> for deserialization. </summary>
-        internal GetEnvironmentsResponse()
+        /// <summary> Initializes a new instance of <see cref="ListTopicsSuccessResult"/> for deserialization. </summary>
+        internal ListTopicsSuccessResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GetEnvironmentsResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ListTopicsSuccessResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GetEnvironmentsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ListTopicsSuccessResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGetEnvironmentsResponse(document.RootElement, options);
+                        return DeserializeListTopicsSuccessResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GetEnvironmentsResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListTopicsSuccessResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GetEnvironmentsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ListTopicsSuccessResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerConfluentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GetEnvironmentsResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListTopicsSuccessResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GetEnvironmentsResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ListTopicsSuccessResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GetEnvironmentsResponse IPersistableModel<GetEnvironmentsResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ListTopicsSuccessResult IPersistableModel<ListTopicsSuccessResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GetEnvironmentsResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ListTopicsSuccessResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GetEnvironmentsResponse"/> from. </param>
-        internal static GetEnvironmentsResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ListTopicsSuccessResult"/> from. </param>
+        internal static ListTopicsSuccessResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeGetEnvironmentsResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeListTopicsSuccessResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GetEnvironmentsResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ListTopicsSuccessResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GetEnvironmentsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ListTopicsSuccessResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetEnvironmentsResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ListTopicsSuccessResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (SCEnvironmentRecordData item in Value)
+            foreach (TopicRecordData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -118,40 +118,40 @@ namespace Azure.ResourceManager.Confluent.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GetEnvironmentsResponse IJsonModel<GetEnvironmentsResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ListTopicsSuccessResult IJsonModel<ListTopicsSuccessResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GetEnvironmentsResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ListTopicsSuccessResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GetEnvironmentsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ListTopicsSuccessResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetEnvironmentsResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ListTopicsSuccessResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGetEnvironmentsResponse(document.RootElement, options);
+            return DeserializeListTopicsSuccessResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GetEnvironmentsResponse DeserializeGetEnvironmentsResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static ListTopicsSuccessResult DeserializeListTopicsSuccessResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<SCEnvironmentRecordData> value = default;
+            IList<TopicRecordData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<SCEnvironmentRecordData> array = new List<SCEnvironmentRecordData>();
+                    List<TopicRecordData> array = new List<TopicRecordData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SCEnvironmentRecordData.DeserializeSCEnvironmentRecordData(item, options));
+                        array.Add(TopicRecordData.DeserializeTopicRecordData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GetEnvironmentsResponse(value, nextLink, additionalBinaryDataProperties);
+            return new ListTopicsSuccessResult(value ?? new ChangeTrackingList<TopicRecordData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

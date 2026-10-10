@@ -11,32 +11,32 @@ using System.Linq;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> A paged list of compute resources associated with a scheduled action. </summary>
-    internal partial class ResourceListResponse
+    /// <summary> Paged list of resources included in a scheduled action occurrence. </summary>
+    internal partial class OccurrenceResourceListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceListResponse"/>. </summary>
-        /// <param name="value"> The compute resources associated with the scheduled action. </param>
-        internal ResourceListResponse(IEnumerable<ScheduledActionResourceMetadata> value)
+        /// <summary> Initializes a new instance of <see cref="OccurrenceResourceListResult"/>. </summary>
+        /// <param name="value"> The OccurrenceResource items on this page. </param>
+        internal OccurrenceResourceListResult(IEnumerable<OccurrenceResourceMetadata> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceListResponse"/>. </summary>
-        /// <param name="value"> The compute resources associated with the scheduled action. </param>
+        /// <summary> Initializes a new instance of <see cref="OccurrenceResourceListResult"/>. </summary>
+        /// <param name="value"> The OccurrenceResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceListResponse(IList<ScheduledActionResourceMetadata> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OccurrenceResourceListResult(IList<OccurrenceResourceMetadata> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The compute resources associated with the scheduled action. </summary>
-        public IList<ScheduledActionResourceMetadata> Value { get; }
+        /// <summary> The OccurrenceResource items on this page. </summary>
+        public IList<OccurrenceResourceMetadata> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

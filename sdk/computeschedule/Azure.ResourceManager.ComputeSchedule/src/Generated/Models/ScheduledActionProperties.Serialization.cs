@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 startsOn,
                 endsOn,
                 schedule,
-                notificationSettings,
+                notificationSettings ?? new ChangeTrackingList<NotificationSettings>(),
                 disabled,
                 provisioningState,
                 additionalBinaryDataProperties);

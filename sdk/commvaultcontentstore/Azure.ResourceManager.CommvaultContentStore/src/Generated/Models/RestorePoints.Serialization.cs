@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RestorePoints(restoreTimes, additionalBinaryDataProperties);
+            return new RestorePoints(restoreTimes ?? new ChangeTrackingList<long>(), additionalBinaryDataProperties);
         }
     }
 }
