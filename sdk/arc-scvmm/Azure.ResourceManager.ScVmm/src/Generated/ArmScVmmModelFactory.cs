@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         public static ScVmmInventoryItemProperties ScVmmInventoryItemProperties(string inventoryType = default, string managedResourceId = default, string uuid = default, string inventoryItemName = default, ScVmmProvisioningState? provisioningState = default)
         {
             return new UnknownInventoryItemProperties(
-                default,
+                inventoryType is null ? default : new ScVmmInventoryType(inventoryType),
                 managedResourceId,
                 uuid,
                 inventoryItemName,
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         public static CloudInventoryItem CloudInventoryItem(string managedResourceId = default, string uuid = default, string inventoryItemName = default, ScVmmProvisioningState? provisioningState = default)
         {
             return new CloudInventoryItem(
-                default,
+                ScVmmInventoryType.Cloud,
                 managedResourceId,
                 uuid,
                 inventoryItemName,
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         public static VirtualNetworkInventoryItem VirtualNetworkInventoryItem(string managedResourceId = default, string uuid = default, string inventoryItemName = default, ScVmmProvisioningState? provisioningState = default)
         {
             return new VirtualNetworkInventoryItem(
-                default,
+                ScVmmInventoryType.VirtualNetwork,
                 managedResourceId,
                 uuid,
                 inventoryItemName,
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         public static VirtualMachineTemplateInventoryItem VirtualMachineTemplateInventoryItem(string managedResourceId = default, string uuid = default, string inventoryItemName = default, ScVmmProvisioningState? provisioningState = default, int? cpuCount = default, int? memoryMB = default, ScVmmOSType? osType = default, string osName = default)
         {
             return new VirtualMachineTemplateInventoryItem(
-                default,
+                ScVmmInventoryType.VirtualMachineTemplate,
                 managedResourceId,
                 uuid,
                 inventoryItemName,
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.ScVmm.Models
             ipAddresses ??= new ChangeTrackingList<string>();
 
             return new VirtualMachineInventoryItem(
-                default,
+                ScVmmInventoryType.VirtualMachine,
                 managedResourceId,
                 uuid,
                 inventoryItemName,
@@ -1147,7 +1147,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         public static VirtualMachineInventoryItem VirtualMachineInventoryItem(string managedResourceId = default, string uuid = default, string inventoryItemName = default, ScVmmProvisioningState? provisioningState = default, ScVmmOSType? osType = default, string osName = default, string osVersion = default, string powerState = default, IEnumerable<string> ipAddresses = default, ScVmmInventoryItemDetails cloud = default, string biosGuid = default, ResourceIdentifier managedMachineResourceId = default)
         {
             return new VirtualMachineInventoryItem(
-                default,
+                ScVmmInventoryType.VirtualMachine,
                 managedResourceId,
                 uuid,
                 inventoryItemName,

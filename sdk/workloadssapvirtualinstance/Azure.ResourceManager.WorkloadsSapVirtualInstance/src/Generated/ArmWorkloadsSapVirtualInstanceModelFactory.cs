@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <returns> A new <see cref="Models.SapConfiguration"/> instance for mocking. </returns>
         public static SapConfiguration SapConfiguration(string configurationType = default)
         {
-            return new UnknownSapConfiguration(default, default);
+            return new UnknownSapConfiguration(configurationType is null ? default : new SapConfigurationType(configurationType), default);
         }
 
         /// <summary> Discovery Details. </summary>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <returns> A new <see cref="Models.DiscoveryConfiguration"/> instance for mocking. </returns>
         public static DiscoveryConfiguration DiscoveryConfiguration(ResourceIdentifier centralServerVmId = default, string managedRgStorageAccountName = default, AzureLocation? appLocation = default)
         {
-            return new DiscoveryConfiguration(default, default, centralServerVmId, managedRgStorageAccountName, appLocation);
+            return new DiscoveryConfiguration(SapConfigurationType.Discovery, default, centralServerVmId, managedRgStorageAccountName, appLocation);
         }
 
         /// <summary> Deployment Configuration. </summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <returns> A new <see cref="Models.DeploymentConfiguration"/> instance for mocking. </returns>
         public static DeploymentConfiguration DeploymentConfiguration(AzureLocation? appLocation = default, InfrastructureConfiguration infrastructureConfiguration = default, SapSoftwareConfiguration softwareConfiguration = default)
         {
-            return new DeploymentConfiguration(default, default, appLocation, infrastructureConfiguration, softwareConfiguration);
+            return new DeploymentConfiguration(SapConfigurationType.Deployment, default, appLocation, infrastructureConfiguration, softwareConfiguration);
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <returns> A new <see cref="Models.InfrastructureConfiguration"/> instance for mocking. </returns>
         public static InfrastructureConfiguration InfrastructureConfiguration(string appResourceGroup = default, string deploymentType = default)
         {
-            return new UnknownInfrastructureConfiguration(appResourceGroup, default, default);
+            return new UnknownInfrastructureConfiguration(appResourceGroup, deploymentType is null ? default : new SapDeploymentType(deploymentType), default);
         }
 
         /// <param name="appResourceGroup"> The application resource group where SAP system resources will be deployed. </param>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         {
             return new SingleServerConfiguration(
                 appResourceGroup,
-                default,
+                SapDeploymentType.SingleServer,
                 default,
                 isSecondaryIPEnabled is null ? default : new NetworkConfiguration(isSecondaryIPEnabled, default),
                 databaseType,
@@ -176,14 +176,14 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <returns> A new <see cref="Models.SapOSConfiguration"/> instance for mocking. </returns>
         public static SapOSConfiguration SapOSConfiguration(string osType = default)
         {
-            return new UnknownSapOSConfiguration(default, default);
+            return new UnknownSapOSConfiguration(osType is null ? default : new SapOSType(osType), default);
         }
 
         /// <summary> Specifies Windows operating system settings on the virtual machine. </summary>
         /// <returns> A new <see cref="Models.SapWindowsConfiguration"/> instance for mocking. </returns>
         public static SapWindowsConfiguration SapWindowsConfiguration()
         {
-            return new SapWindowsConfiguration(default, default);
+            return new SapWindowsConfiguration(SapOSType.Windows, default);
         }
 
         /// <param name="disablePasswordAuthentication"> Specifies whether password authentication should be disabled. </param>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <returns> A new <see cref="Models.SapLinuxConfiguration"/> instance for mocking. </returns>
         public static SapLinuxConfiguration SapLinuxConfiguration(bool? disablePasswordAuthentication = default, IEnumerable<SapSshPublicKey> sshPublicKeys = default, SapSshKeyPair sshKeyPair = default)
         {
-            return new SapLinuxConfiguration(default, default, disablePasswordAuthentication, sshPublicKeys is null ? default : new SapSshConfiguration((sshPublicKeys ?? new ChangeTrackingList<SapSshPublicKey>()).ToList(), default), sshKeyPair);
+            return new SapLinuxConfiguration(SapOSType.Linux, default, disablePasswordAuthentication, sshPublicKeys is null ? default : new SapSshConfiguration((sshPublicKeys ?? new ChangeTrackingList<SapSshPublicKey>()).ToList(), default), sshKeyPair);
         }
 
         /// <summary> Contains information about SSH certificate public key and the path on the Linux VM where the public key is placed. </summary>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <returns> A new <see cref="Models.SingleServerCustomResourceNames"/> instance for mocking. </returns>
         public static SingleServerCustomResourceNames SingleServerCustomResourceNames(string namingPatternType = default)
         {
-            return new UnknownSingleServerCustomResourceNames(default, default);
+            return new UnknownSingleServerCustomResourceNames(namingPatternType is null ? default : new SapNamingPatternType(namingPatternType), default);
         }
 
         /// <summary> The resource name object where the specified values will be full resource names of the corresponding resources in a single server SAP system. </summary>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <returns> A new <see cref="Models.SingleServerFullResourceNames"/> instance for mocking. </returns>
         public static SingleServerFullResourceNames SingleServerFullResourceNames(VirtualMachineResourceNames virtualMachine = default)
         {
-            return new SingleServerFullResourceNames(default, default, virtualMachine);
+            return new SingleServerFullResourceNames(SapNamingPatternType.FullResourceName, default, virtualMachine);
         }
 
         /// <summary> The resource names object for virtual machine and related resources. </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         {
             return new ThreeTierConfiguration(
                 appResourceGroup,
-                default,
+                SapDeploymentType.ThreeTier,
                 default,
                 isSecondaryIPEnabled is null ? default : new NetworkConfiguration(isSecondaryIPEnabled, default),
                 centralServer,
@@ -338,14 +338,14 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <returns> A new <see cref="Models.FileShareConfiguration"/> instance for mocking. </returns>
         public static FileShareConfiguration FileShareConfiguration(string configurationType = default)
         {
-            return new UnknownFileShareConfiguration(default, default);
+            return new UnknownFileShareConfiguration(configurationType is null ? default : new FileShareConfigurationType(configurationType), default);
         }
 
         /// <summary> Gets or sets the file share configuration for scenarios where transport directory fileshare is not created or required. </summary>
         /// <returns> A new <see cref="Models.SkipFileShareConfiguration"/> instance for mocking. </returns>
         public static SkipFileShareConfiguration SkipFileShareConfiguration()
         {
-            return new SkipFileShareConfiguration(default, default);
+            return new SkipFileShareConfiguration(FileShareConfigurationType.Skip, default);
         }
 
         /// <summary> Gets or sets the file share configuration where the transport directory fileshare is created and mounted as a part of the create infra flow. Please pre-create the resource group you intend to place the transport directory in. The storage account and fileshare will be auto-created by the ACSS and doesn't need to be pre-created. </summary>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <returns> A new <see cref="Models.CreateAndMountFileShareConfiguration"/> instance for mocking. </returns>
         public static CreateAndMountFileShareConfiguration CreateAndMountFileShareConfiguration(string resourceGroup = default, string storageAccountName = default)
         {
-            return new CreateAndMountFileShareConfiguration(default, default, resourceGroup, storageAccountName);
+            return new CreateAndMountFileShareConfiguration(FileShareConfigurationType.CreateAndMount, default, resourceGroup, storageAccountName);
         }
 
         /// <summary> Gets or sets the file share configuration where the transport directory fileshare already exists, and user wishes to mount the fileshare as a part of the create infra flow. </summary>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <returns> A new <see cref="Models.MountFileShareConfiguration"/> instance for mocking. </returns>
         public static MountFileShareConfiguration MountFileShareConfiguration(ResourceIdentifier fileShareId = default, ResourceIdentifier privateEndpointId = default)
         {
-            return new MountFileShareConfiguration(default, default, fileShareId, privateEndpointId);
+            return new MountFileShareConfiguration(FileShareConfigurationType.Mount, default, fileShareId, privateEndpointId);
         }
 
         /// <summary>
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <returns> A new <see cref="Models.ThreeTierCustomResourceNames"/> instance for mocking. </returns>
         public static ThreeTierCustomResourceNames ThreeTierCustomResourceNames(string namingPatternType = default)
         {
-            return new UnknownThreeTierCustomResourceNames(default, default);
+            return new UnknownThreeTierCustomResourceNames(namingPatternType is null ? default : new SapNamingPatternType(namingPatternType), default);
         }
 
         /// <summary> The resource name object where the specified values will be full resource names of the corresponding resources in a three tier SAP system. </summary>
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         public static ThreeTierFullResourceNames ThreeTierFullResourceNames(CentralServerFullResourceNames centralServer = default, ApplicationServerFullResourceNames applicationServer = default, DatabaseServerFullResourceNames databaseServer = default, SharedStorageResourceNames sharedStorage = default)
         {
             return new ThreeTierFullResourceNames(
-                default,
+                SapNamingPatternType.FullResourceName,
                 default,
                 centralServer,
                 applicationServer,
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <returns> A new <see cref="Models.SapSoftwareConfiguration"/> instance for mocking. </returns>
         public static SapSoftwareConfiguration SapSoftwareConfiguration(string softwareInstallationType = default)
         {
-            return new UnknownSapSoftwareConfiguration(default, default);
+            return new UnknownSapSoftwareConfiguration(softwareInstallationType is null ? default : new SapSoftwareInstallationType(softwareInstallationType), default);
         }
 
         /// <summary> The SAP Software configuration Input when the software is to be installed by service. </summary>
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         public static ServiceInitiatedSoftwareConfiguration ServiceInitiatedSoftwareConfiguration(Uri bomUri = default, string softwareVersion = default, string sapBitsStorageAccountId = default, string sapFqdn = default, string sshPrivateKey = default, HighAvailabilitySoftwareConfiguration highAvailabilitySoftwareConfiguration = default)
         {
             return new ServiceInitiatedSoftwareConfiguration(
-                default,
+                SapSoftwareInstallationType.ServiceInitiated,
                 default,
                 bomUri,
                 softwareVersion,
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         public static SapInstallWithoutOSConfigSoftwareConfiguration SapInstallWithoutOSConfigSoftwareConfiguration(Uri bomUri = default, string sapBitsStorageAccountId = default, string softwareVersion = default, HighAvailabilitySoftwareConfiguration highAvailabilitySoftwareConfiguration = default)
         {
             return new SapInstallWithoutOSConfigSoftwareConfiguration(
-                default,
+                SapSoftwareInstallationType.SapInstallWithoutOSConfig,
                 default,
                 bomUri,
                 sapBitsStorageAccountId,
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <returns> A new <see cref="Models.ExternalInstallationSoftwareConfiguration"/> instance for mocking. </returns>
         public static ExternalInstallationSoftwareConfiguration ExternalInstallationSoftwareConfiguration(ResourceIdentifier centralServerVmId = default)
         {
-            return new ExternalInstallationSoftwareConfiguration(default, default, centralServerVmId);
+            return new ExternalInstallationSoftwareConfiguration(SapSoftwareInstallationType.External, default, centralServerVmId);
         }
 
         /// <summary> Deployment along with OS Configuration. </summary>
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         public static DeploymentWithOSConfiguration DeploymentWithOSConfiguration(AzureLocation? appLocation = default, InfrastructureConfiguration infrastructureConfiguration = default, SapSoftwareConfiguration softwareConfiguration = default, OSSapConfiguration osSapConfiguration = default)
         {
             return new DeploymentWithOSConfiguration(
-                default,
+                SapConfigurationType.DeploymentWithOSConfig,
                 default,
                 appLocation,
                 infrastructureConfiguration,
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <returns> A new <see cref="Models.SapSizingRecommendationResult"/> instance for mocking. </returns>
         public static SapSizingRecommendationResult SapSizingRecommendationResult(string deploymentType = default)
         {
-            return new UnknownSapSizingRecommendationResult(default, default);
+            return new UnknownSapSizingRecommendationResult(deploymentType is null ? default : new SapDeploymentType(deploymentType), default);
         }
 
         /// <summary> The recommended configuration for a single server SAP system. </summary>
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <returns> A new <see cref="Models.SingleServerRecommendationResult"/> instance for mocking. </returns>
         public static SingleServerRecommendationResult SingleServerRecommendationResult(string vmSku = default)
         {
-            return new SingleServerRecommendationResult(default, default, vmSku);
+            return new SingleServerRecommendationResult(SapDeploymentType.SingleServer, default, vmSku);
         }
 
         /// <summary> The recommended configuration for a three tier SAP system. </summary>
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         public static ThreeTierRecommendationResult ThreeTierRecommendationResult(string dbVmSku = default, long? databaseInstanceCount = default, string centralServerVmSku = default, long? centralServerInstanceCount = default, string applicationServerVmSku = default, long? applicationServerInstanceCount = default)
         {
             return new ThreeTierRecommendationResult(
-                default,
+                SapDeploymentType.ThreeTier,
                 default,
                 dbVmSku,
                 databaseInstanceCount,

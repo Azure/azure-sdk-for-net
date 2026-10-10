@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 resourceType,
                 systemData,
                 location,
-                default,
+                kind is null ? default : new DataConnectionKind(kind),
                 default);
         }
 
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 resourceType,
                 systemData,
                 location,
-                default,
+                DataConnectionKind.EventHub,
                 default,
                 eventHubResourceId is null && consumerGroup is null && tableName is null && mappingRuleName is null && dataFormat is null && eventSystemProperties is null && compression is null && provisioningState is null && managedIdentityResourceId is null && managedIdentityObjectId is null && databaseRouting is null && retrievalStartOn is null ? default : new EventHubConnectionProperties(
                     eventHubResourceId,
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 resourceType,
                 systemData,
                 location,
-                default,
+                DataConnectionKind.IotHub,
                 default,
                 iotHubResourceId is null && consumerGroup is null && tableName is null && mappingRuleName is null && dataFormat is null && eventSystemProperties is null && sharedAccessPolicyName is null && databaseRouting is null && retrievalStartOn is null && provisioningState is null ? default : new IotHubConnectionProperties(
                     iotHubResourceId,
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 resourceType,
                 systemData,
                 location,
-                default,
+                DataConnectionKind.EventGrid,
                 default,
                 storageAccountResourceId is null && eventGridResourceId is null && eventHubResourceId is null && consumerGroup is null && tableName is null && mappingRuleName is null && dataFormat is null && isFirstRecordIgnored is null && blobStorageEventType is null && managedIdentityResourceId is null && managedIdentityObjectId is null && databaseRouting is null && provisioningState is null ? default : new EventGridConnectionProperties(
                     storageAccountResourceId,
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 resourceType,
                 systemData,
                 location,
-                default,
+                DataConnectionKind.CosmosDb,
                 default,
                 tableName is null && mappingRuleName is null && managedIdentityResourceId is null && managedIdentityObjectId is null && cosmosDBAccountResourceId is null && cosmosDBDatabase is null && cosmosDBContainer is null && retrievalStartOn is null && provisioningState is null ? default : new CosmosDBDataConnectionProperties(
                     tableName,
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 resourceType,
                 systemData,
                 location,
-                default,
+                DataConnectionKind.EventGridWithManagedIdentity,
                 default,
                 storageAccountResourceIdForManagedIdentity is null && eventHubResourceIdForManagedIdentity is null && eventGridResourceId is null && consumerGroup is null && tableName is null && mappingRuleName is null && dataFormat is null && shouldIgnoreFirstRecord is null && blobStorageEventType is null && managedIdentityResourceId is null && managedIdentityObjectId is null && databaseRouting is null && provisioningState is null ? default : new EventGridConnectionWithManagedIdentityProperties(
                     storageAccountResourceIdForManagedIdentity,
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 resourceType,
                 systemData,
                 location,
-                default,
+                DataConnectionKind.EventHubWithManagedIdentity,
                 default,
                 eventHubResourceIdForManagedIdentity is null && consumerGroup is null && tableName is null && mappingRuleName is null && dataFormat is null && eventSystemProperties is null && compression is null && provisioningState is null && managedIdentityResourceId is null && managedIdentityObjectId is null && databaseRouting is null && retrievalStartsOn is null ? default : new EventHubConnectionWithManagedIdentityProperties(
                     eventHubResourceIdForManagedIdentity,
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 resourceType,
                 systemData,
                 location,
-                default,
+                kind is null ? default : new KustoKind(kind),
                 default);
         }
 
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 resourceType,
                 systemData,
                 location,
-                default,
+                KustoKind.ReadWrite,
                 default,
                 provisioningState is null && softDeletePeriod is null && hotCachePeriod is null && statisticsSize is null && isFollowed is null && keyVaultProperties is null && suspensionStartOn is null ? default : new ReadWriteDatabaseProperties(
                     provisioningState,
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 resourceType,
                 systemData,
                 location,
-                default,
+                KustoKind.ReadOnlyFollowing,
                 default,
                 provisioningState is null && softDeletePeriod is null && hotCachePeriod is null && statisticsSize is null && leaderClusterResourceId is null && attachedDatabaseConfigurationName is null && principalsModificationKind is null && tableLevelSharingProperties is null && originalDatabaseName is null && databaseShareOrigin is null && suspensionStartOn is null ? default : new ReadOnlyFollowingDatabaseProperties(
                     provisioningState,
@@ -1622,7 +1622,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 resourceType,
                 systemData,
                 location,
-                default,
+                KustoKind.ReadWrite,
                 default,
                 provisioningState is null && softDeletePeriod is null && hotCachePeriod is null && statisticsSize is null && isFollowed is null && keyVaultProperties is null ? default : new ReadWriteDatabaseProperties(
                     provisioningState,
@@ -1662,7 +1662,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 resourceType,
                 systemData,
                 location,
-                default,
+                KustoKind.ReadOnlyFollowing,
                 default,
                 provisioningState is null && softDeletePeriod is null && hotCachePeriod is null && statisticsSize is null && leaderClusterResourceId is null && attachedDatabaseConfigurationName is null && principalsModificationKind is null && tableLevelSharingProperties is null && originalDatabaseName is null && databaseShareOrigin is null ? default : new ReadOnlyFollowingDatabaseProperties(
                     provisioningState,

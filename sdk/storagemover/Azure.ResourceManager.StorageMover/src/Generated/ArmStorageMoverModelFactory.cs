@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="Models.EndpointBaseProperties"/> instance for mocking. </returns>
         public static EndpointBaseProperties EndpointBaseProperties(string endpointType = default, string description = default, StorageMoverEndpointKind? endpointKind = default, StorageMoverProvisioningState? provisioningState = default)
         {
-            return new UnknownEndpointBaseProperties(default, description, endpointKind, provisioningState, default);
+            return new UnknownEndpointBaseProperties(endpointType is null ? default : new EndpointType(endpointType), description, endpointKind, provisioningState, default);
         }
 
         /// <summary> The properties of Azure Storage blob container endpoint. </summary>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             allowedStorageAccounts ??= new ChangeTrackingList<string>();
 
             return new AzureStorageBlobContainerEndpointProperties(
-                default,
+                EndpointType.AzureStorageBlobContainer,
                 description,
                 endpointKind,
                 provisioningState,
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static NfsMountEndpointProperties NfsMountEndpointProperties(string description, StorageMoverEndpointKind? endpointKind, StorageMoverProvisioningState? provisioningState, string host, NfsVersion? nfsVersion, string export, NfsMountSourceType? sourceType)
         {
             return new NfsMountEndpointProperties(
-                default,
+                EndpointType.NfsMount,
                 description,
                 endpointKind,
                 provisioningState,
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static S3WithHmacEndpointProperties S3WithHmacEndpointProperties(string description = default, StorageMoverEndpointKind? endpointKind = default, StorageMoverProvisioningState? provisioningState = default, AzureKeyVaultS3WithHmacCredentials credentials = default, string sourceUri = default, S3WithHmacSourceType? sourceType = default, string otherSourceTypeDescription = default)
         {
             return new S3WithHmacEndpointProperties(
-                default,
+                EndpointType.S3WithHmac,
                 description,
                 endpointKind,
                 provisioningState,
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="Models.AzureKeyVaultS3WithHmacCredentials"/> instance for mocking. </returns>
         public static AzureKeyVaultS3WithHmacCredentials AzureKeyVaultS3WithHmacCredentials(string accessKeyUri = default, string secretKeyUri = default)
         {
-            return new AzureKeyVaultS3WithHmacCredentials(default, default, accessKeyUri, secretKeyUri);
+            return new AzureKeyVaultS3WithHmacCredentials(CredentialType.AzureKeyVaultS3WithHMAC, default, accessKeyUri, secretKeyUri);
         }
 
         /// <summary>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="Models.StorageMoverCredentials"/> instance for mocking. </returns>
         public static StorageMoverCredentials StorageMoverCredentials(string @type = default)
         {
-            return new UnknownCredentials(default, default);
+            return new UnknownCredentials(@type is null ? default : new CredentialType(@type), default);
         }
 
         /// <summary> The Azure Key Vault secret URIs which store the credentials. </summary>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="Models.AzureKeyVaultSmbCredentials"/> instance for mocking. </returns>
         public static AzureKeyVaultSmbCredentials AzureKeyVaultSmbCredentials(string usernameUriString = default, string passwordUriString = default)
         {
-            return new AzureKeyVaultSmbCredentials(default, default, usernameUriString, passwordUriString);
+            return new AzureKeyVaultSmbCredentials(CredentialType.AzureKeyVaultSmb, default, usernameUriString, passwordUriString);
         }
 
         /// <summary> The properties of Azure Storage SMB file share endpoint. </summary>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             allowedStorageAccounts ??= new ChangeTrackingList<string>();
 
             return new AzureStorageSmbFileShareEndpointProperties(
-                default,
+                EndpointType.AzureStorageSmbFileShare,
                 description,
                 endpointKind,
                 provisioningState,
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static SmbMountEndpointProperties SmbMountEndpointProperties(string description, StorageMoverEndpointKind? endpointKind, StorageMoverProvisioningState? provisioningState, string host, string shareName, AzureKeyVaultSmbCredentials credentials, SmbMountSourceType? sourceType)
         {
             return new SmbMountEndpointProperties(
-                default,
+                EndpointType.SmbMount,
                 description,
                 endpointKind,
                 provisioningState,
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static AzureStorageNfsFileShareEndpointProperties AzureStorageNfsFileShareEndpointProperties(string description = default, StorageMoverEndpointKind? endpointKind = default, StorageMoverProvisioningState? provisioningState = default, ResourceIdentifier storageAccountResourceId = default, string fileShareName = default)
         {
             return new AzureStorageNfsFileShareEndpointProperties(
-                default,
+                EndpointType.AzureStorageNfsFileShare,
                 description,
                 endpointKind,
                 provisioningState,
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static AzureMultiCloudConnectorEndpointProperties AzureMultiCloudConnectorEndpointProperties(string description = default, StorageMoverEndpointKind? endpointKind = default, StorageMoverProvisioningState? provisioningState = default, ResourceIdentifier multiCloudConnectorId = default, ResourceIdentifier awsS3BucketId = default)
         {
             return new AzureMultiCloudConnectorEndpointProperties(
-                default,
+                EndpointType.AzureMultiCloudConnector,
                 description,
                 endpointKind,
                 provisioningState,
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="Models.EndpointBaseUpdateProperties"/> instance for mocking. </returns>
         public static EndpointBaseUpdateProperties EndpointBaseUpdateProperties(string endpointType = default, string description = default)
         {
-            return new UnknownEndpointBaseUpdateProperties(default, description, default);
+            return new UnknownEndpointBaseUpdateProperties(endpointType is null ? default : new EndpointType(endpointType), description, default);
         }
 
         /// <summary> The AzureStorageBlobContainerEndpointUpdateProperties. </summary>
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         {
             allowedStorageAccounts ??= new ChangeTrackingList<string>();
 
-            return new AzureStorageBlobContainerEndpointUpdateProperties(default, description, default, enableCrossTenantTransfer, (allowedStorageAccounts ?? new ChangeTrackingList<string>()).ToList());
+            return new AzureStorageBlobContainerEndpointUpdateProperties(EndpointType.AzureStorageBlobContainer, description, default, enableCrossTenantTransfer, (allowedStorageAccounts ?? new ChangeTrackingList<string>()).ToList());
         }
 
         /// <summary> The S3WithHmacEndpointUpdateProperties. </summary>
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="Models.S3WithHmacEndpointUpdateProperties"/> instance for mocking. </returns>
         public static S3WithHmacEndpointUpdateProperties S3WithHmacEndpointUpdateProperties(string description = default, AzureKeyVaultS3WithHmacCredentials credentials = default)
         {
-            return new S3WithHmacEndpointUpdateProperties(default, description, default, credentials);
+            return new S3WithHmacEndpointUpdateProperties(EndpointType.S3WithHmac, description, default, credentials);
         }
 
         /// <summary> The NfsMountEndpointUpdateProperties. </summary>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="Models.NfsMountEndpointUpdateProperties"/> instance for mocking. </returns>
         public static NfsMountEndpointUpdateProperties NfsMountEndpointUpdateProperties(string description = default)
         {
-            return new NfsMountEndpointUpdateProperties(default, description, default);
+            return new NfsMountEndpointUpdateProperties(EndpointType.NfsMount, description, default);
         }
 
         /// <summary> The properties of Azure Storage SMB file share endpoint to update. </summary>
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         {
             allowedStorageAccounts ??= new ChangeTrackingList<string>();
 
-            return new AzureStorageSmbFileShareEndpointUpdateProperties(default, description, default, enableCrossTenantTransfer, (allowedStorageAccounts ?? new ChangeTrackingList<string>()).ToList());
+            return new AzureStorageSmbFileShareEndpointUpdateProperties(EndpointType.AzureStorageSmbFileShare, description, default, enableCrossTenantTransfer, (allowedStorageAccounts ?? new ChangeTrackingList<string>()).ToList());
         }
 
         /// <summary> The properties of Azure Storage NFS file share endpoint to update. </summary>
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="Models.AzureStorageNfsFileShareEndpointUpdateProperties"/> instance for mocking. </returns>
         public static AzureStorageNfsFileShareEndpointUpdateProperties AzureStorageNfsFileShareEndpointUpdateProperties(string description = default)
         {
-            return new AzureStorageNfsFileShareEndpointUpdateProperties(default, description, default);
+            return new AzureStorageNfsFileShareEndpointUpdateProperties(EndpointType.AzureStorageNfsFileShare, description, default);
         }
 
         /// <summary> The properties of Azure Storage NFS file share endpoint to update. </summary>
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="Models.AzureMultiCloudConnectorEndpointUpdateProperties"/> instance for mocking. </returns>
         public static AzureMultiCloudConnectorEndpointUpdateProperties AzureMultiCloudConnectorEndpointUpdateProperties(string description = default)
         {
-            return new AzureMultiCloudConnectorEndpointUpdateProperties(default, description, default);
+            return new AzureMultiCloudConnectorEndpointUpdateProperties(EndpointType.AzureMultiCloudConnector, description, default);
         }
 
         /// <summary> The properties of SMB share endpoint to update. </summary>
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="Models.SmbMountEndpointUpdateProperties"/> instance for mocking. </returns>
         public static SmbMountEndpointUpdateProperties SmbMountEndpointUpdateProperties(string description = default, AzureKeyVaultSmbCredentials credentials = default)
         {
-            return new SmbMountEndpointUpdateProperties(default, description, default, credentials);
+            return new SmbMountEndpointUpdateProperties(EndpointType.SmbMount, description, default, credentials);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -788,7 +788,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static AzureStorageBlobContainerEndpointProperties AzureStorageBlobContainerEndpointProperties(string description = default, StorageMoverEndpointKind? endpointKind = default, StorageMoverProvisioningState? provisioningState = default, string storageAccountResourceId = default, string blobContainerName = default)
         {
             return new AzureStorageBlobContainerEndpointProperties(
-                default,
+                EndpointType.AzureStorageBlobContainer,
                 description,
                 endpointKind,
                 provisioningState,
@@ -811,7 +811,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static NfsMountEndpointProperties NfsMountEndpointProperties(string description = default, StorageMoverEndpointKind? endpointKind = default, StorageMoverProvisioningState? provisioningState = default, string host = default, NfsVersion? nfsVersion = default, string export = default)
         {
             return new NfsMountEndpointProperties(
-                default,
+                EndpointType.NfsMount,
                 description,
                 endpointKind,
                 provisioningState,
@@ -833,7 +833,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static AzureStorageSmbFileShareEndpointProperties AzureStorageSmbFileShareEndpointProperties(string description = default, StorageMoverEndpointKind? endpointKind = default, StorageMoverProvisioningState? provisioningState = default, ResourceIdentifier storageAccountResourceId = default, string fileShareName = default)
         {
             return new AzureStorageSmbFileShareEndpointProperties(
-                default,
+                EndpointType.AzureStorageSmbFileShare,
                 description,
                 endpointKind,
                 provisioningState,
@@ -856,7 +856,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static SmbMountEndpointProperties SmbMountEndpointProperties(string description = default, StorageMoverEndpointKind? endpointKind = default, StorageMoverProvisioningState? provisioningState = default, string host = default, string shareName = default, AzureKeyVaultSmbCredentials credentials = default)
         {
             return new SmbMountEndpointProperties(
-                default,
+                EndpointType.SmbMount,
                 description,
                 endpointKind,
                 provisioningState,
@@ -873,7 +873,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AzureStorageBlobContainerEndpointUpdateProperties AzureStorageBlobContainerEndpointUpdateProperties(string description = default)
         {
-            return new AzureStorageBlobContainerEndpointUpdateProperties(default, description, default, default, default);
+            return new AzureStorageBlobContainerEndpointUpdateProperties(EndpointType.AzureStorageBlobContainer, description, default, default, default);
         }
 
         /// <summary> The properties of Azure Storage SMB file share endpoint to update. </summary>
@@ -882,7 +882,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AzureStorageSmbFileShareEndpointUpdateProperties AzureStorageSmbFileShareEndpointUpdateProperties(string description = default)
         {
-            return new AzureStorageSmbFileShareEndpointUpdateProperties(default, description, default, default, default);
+            return new AzureStorageSmbFileShareEndpointUpdateProperties(EndpointType.AzureStorageSmbFileShare, description, default, default, default);
         }
 
         /// <summary> Schedule information for the Job Definition. </summary>
@@ -1025,7 +1025,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static AzureStorageBlobContainerEndpointProperties AzureStorageBlobContainerEndpointProperties(string description, StorageMoverProvisioningState? provisioningState, string storageAccountResourceId, string blobContainerName)
         {
             return new AzureStorageBlobContainerEndpointProperties(
-                default,
+                EndpointType.AzureStorageBlobContainer,
                 description,
                 default,
                 provisioningState,
@@ -1047,7 +1047,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static NfsMountEndpointProperties NfsMountEndpointProperties(string description, StorageMoverProvisioningState? provisioningState, string host, NfsVersion? nfsVersion, string export)
         {
             return new NfsMountEndpointProperties(
-                default,
+                EndpointType.NfsMount,
                 description,
                 default,
                 provisioningState,
@@ -1068,7 +1068,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static AzureStorageSmbFileShareEndpointProperties AzureStorageSmbFileShareEndpointProperties(string description, StorageMoverProvisioningState? provisioningState, ResourceIdentifier storageAccountResourceId, string fileShareName)
         {
             return new AzureStorageSmbFileShareEndpointProperties(
-                default,
+                EndpointType.AzureStorageSmbFileShare,
                 description,
                 default,
                 provisioningState,
@@ -1090,7 +1090,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static SmbMountEndpointProperties SmbMountEndpointProperties(string description, StorageMoverProvisioningState? provisioningState, string host, string shareName, AzureKeyVaultSmbCredentials credentials)
         {
             return new SmbMountEndpointProperties(
-                default,
+                EndpointType.SmbMount,
                 description,
                 default,
                 provisioningState,
@@ -1111,7 +1111,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static AzureStorageNfsFileShareEndpointProperties AzureStorageNfsFileShareEndpointProperties(string description, StorageMoverProvisioningState? provisioningState, ResourceIdentifier storageAccountResourceId, string fileShareName)
         {
             return new AzureStorageNfsFileShareEndpointProperties(
-                default,
+                EndpointType.AzureStorageNfsFileShare,
                 description,
                 default,
                 provisioningState,
@@ -1130,7 +1130,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static AzureMultiCloudConnectorEndpointProperties AzureMultiCloudConnectorEndpointProperties(string description, StorageMoverProvisioningState? provisioningState, ResourceIdentifier multiCloudConnectorId, ResourceIdentifier awsS3BucketId)
         {
             return new AzureMultiCloudConnectorEndpointProperties(
-                default,
+                EndpointType.AzureMultiCloudConnector,
                 description,
                 default,
                 provisioningState,
