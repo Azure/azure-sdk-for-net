@@ -17,7 +17,7 @@ using Azure.ResourceManager.ResilienceManagement.Models;
 
 namespace Azure.ResourceManager.ResilienceManagement
 {
-    /// <summary> Goal assignment a AzureResilienceProviderHub resource. </summary>
+    /// <summary> A goal assignment resource in the Azure Resilience Management provider. </summary>
     public partial class GoalAssignmentData : ResourceData, IJsonModel<GoalAssignmentData>
     {
         /// <param name="data"> The data to parse. </param>

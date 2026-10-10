@@ -1,14 +1,16 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0 (2026-10-12)
 
 ### Features Added
 
+- Upgraded API version to `2026-10-01`.
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Renamed public models and enums to include their drill, goal, recovery, or job context, and standardized boolean property and enum names.
+- Changed `DrillResourceProperties.ResourceType` and `ResourceFeasibilityReview.ResourceType` from `string` to `ResourceType`.
+- Renamed `ResilienceManagementGoalsInfo.Required` to `IsZonalResiliencyRequired` to preserve the flattened goal requirement's context.
 
 ## 1.0.0-beta.1 (2026-06-11)
 

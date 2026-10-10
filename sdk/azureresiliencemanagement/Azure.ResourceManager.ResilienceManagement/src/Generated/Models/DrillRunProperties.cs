@@ -13,13 +13,13 @@ using Azure.ResourceManager.ResilienceManagement;
 namespace Azure.ResourceManager.ResilienceManagement.Models
 {
     /// <summary> Properties of the Resiliency DrillRun. </summary>
-    public partial class DrillRunProperties : JobProperties
+    public partial class DrillRunProperties : ResilienceManagementJobProperties
     {
         /// <summary> Initializes a new instance of <see cref="DrillRunProperties"/>. </summary>
         internal DrillRunProperties()
         {
             Notes = new ChangeTrackingList<string>();
-            SupportedVerbsForStage = new ChangeTrackingList<SupportedVerbsForStage>();
+            SupportedVerbsForStage = new ChangeTrackingList<DrillRunStageSupportedVerbs>();
             JobType = Models.JobType.DrillRun;
         }
 
@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="notes"> Notes for this Drill. </param>
         /// <param name="supportedVerbsForStage"> Matrix of Actions supported on Operations. </param>
         /// <param name="currentActiveOperationId"> The currently active operationID on this Drill Run. There can be only one active. </param>
-        internal DrillRunProperties(ResilienceManagementJobStatus? status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, TimeSpan? duration, JobErrorInfo errorDetails, ResourceIdentifier resourceId, string operation, IList<JobRetryDetails> retryDetails, JobExtendedInfo jobExtendedInfo, IReadOnlyList<JobUserComment> userComments, JobType? jobType, ExecutionConfigurations executionConfigurations, JobTriggeredBy? triggeredBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier drillId, DrillMode? drillMode, DrillAttestation? attestation, IReadOnlyList<string> notes, IReadOnlyList<SupportedVerbsForStage> supportedVerbsForStage, string currentActiveOperationId) : base(status, startsOn, endsOn, duration, errorDetails, resourceId, operation, retryDetails, jobExtendedInfo, userComments, jobType, executionConfigurations, triggeredBy, additionalBinaryDataProperties)
+        /// <param name="report"> Summary of report generation for this Drill Run. </param>
+        internal DrillRunProperties(ResilienceManagementJobStatus? status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, TimeSpan? duration, ResilienceManagementJobErrorInfo errorDetails, ResourceIdentifier resourceId, string operation, IList<ResilienceManagementJobRetryDetails> retryDetails, ResilienceManagementJobExtendedInfo jobExtendedInfo, IReadOnlyList<ResilienceManagementJobUserComment> userComments, JobType? jobType, ExecutionConfigurations executionConfigurations, ResilienceManagementJobTriggeredBy? triggeredBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier drillId, DrillMode? drillMode, DrillAttestation? attestation, IReadOnlyList<string> notes, IReadOnlyList<DrillRunStageSupportedVerbs> supportedVerbsForStage, string currentActiveOperationId, DrillReportSummary report) : base(status, startsOn, endsOn, duration, errorDetails, resourceId, operation, retryDetails, jobExtendedInfo, userComments, jobType, executionConfigurations, triggeredBy, additionalBinaryDataProperties)
         {
             DrillId = drillId;
             DrillMode = drillMode;
@@ -52,6 +53,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             Notes = notes;
             SupportedVerbsForStage = supportedVerbsForStage;
             CurrentActiveOperationId = currentActiveOperationId;
+            Report = report;
         }
 
         /// <summary> Parent Drill resource. </summary>
@@ -67,9 +69,12 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public IReadOnlyList<string> Notes { get; }
 
         /// <summary> Matrix of Actions supported on Operations. </summary>
-        public IReadOnlyList<SupportedVerbsForStage> SupportedVerbsForStage { get; }
+        public IReadOnlyList<DrillRunStageSupportedVerbs> SupportedVerbsForStage { get; }
 
         /// <summary> The currently active operationID on this Drill Run. There can be only one active. </summary>
         public string CurrentActiveOperationId { get; }
+
+        /// <summary> Summary of report generation for this Drill Run. </summary>
+        public DrillReportSummary Report { get; }
     }
 }

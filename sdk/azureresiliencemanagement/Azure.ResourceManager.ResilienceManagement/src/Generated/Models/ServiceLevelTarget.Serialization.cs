@@ -14,7 +14,7 @@ using Azure.ResourceManager.ResilienceManagement;
 
 namespace Azure.ResourceManager.ResilienceManagement.Models
 {
-    /// <summary> The Service level resource model. </summary>
+    /// <summary> A service-level resource associated with a goal assignment. </summary>
     public partial class ServiceLevelTarget : IJsonModel<ServiceLevelTarget>
     {
         /// <summary> Initializes a new instance of <see cref="ServiceLevelTarget"/> for deserialization. </summary>
@@ -82,8 +82,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             }
             writer.WritePropertyName("serviceLevelIndicatorResourceId"u8);
             writer.WriteStringValue(ServiceLevelIndicatorResourceId);
-            writer.WritePropertyName("serviceLevelObjectiveResourceId"u8);
-            writer.WriteStringValue(ServiceLevelObjectiveResourceId);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -127,7 +125,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 return null;
             }
             ResourceIdentifier serviceLevelIndicatorResourceId = default;
-            ResourceIdentifier serviceLevelObjectiveResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,17 +133,12 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     serviceLevelIndicatorResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("serviceLevelObjectiveResourceId"u8))
-                {
-                    serviceLevelObjectiveResourceId = new ResourceIdentifier(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ServiceLevelTarget(serviceLevelIndicatorResourceId, serviceLevelObjectiveResourceId, additionalBinaryDataProperties);
+            return new ServiceLevelTarget(serviceLevelIndicatorResourceId, additionalBinaryDataProperties);
         }
     }
 }

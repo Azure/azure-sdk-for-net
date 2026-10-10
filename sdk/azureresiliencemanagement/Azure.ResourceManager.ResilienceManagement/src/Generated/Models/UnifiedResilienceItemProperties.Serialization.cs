@@ -86,8 +86,13 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             }
             writer.WritePropertyName("goals"u8);
             writer.WriteObjectValue(Goals, options);
-            writer.WritePropertyName("recommendations"u8);
-            writer.WriteObjectValue(Recommendations, options);
+            writer.WritePropertyName("resiliencyPosture"u8);
+            writer.WriteObjectValue(ResiliencyPosture, options);
+            if (Optional.IsDefined(BillingInfo))
+            {
+                writer.WritePropertyName("billingInfo"u8);
+                writer.WriteObjectValue(BillingInfo, options);
+            }
             writer.WritePropertyName("lastModifiedTime"u8);
             writer.WriteStringValue(LastModifiedOn, "O");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -134,7 +139,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             }
             ResilienceManagementProvisioningState? provisioningState = default;
             ResilienceManagementGoalsInfo goals = default;
-            RecommendationsData recommendations = default;
+            UnifiedResilienceItemResiliencyPosture resiliencyPosture = default;
+            UnifiedResilienceItemBillingInfo billingInfo = default;
             DateTimeOffset lastModifiedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -153,9 +159,18 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     goals = ResilienceManagementGoalsInfo.DeserializeResilienceManagementGoalsInfo(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("recommendations"u8))
+                if (prop.NameEquals("resiliencyPosture"u8))
                 {
-                    recommendations = RecommendationsData.DeserializeRecommendationsData(prop.Value, options);
+                    resiliencyPosture = UnifiedResilienceItemResiliencyPosture.DeserializeUnifiedResilienceItemResiliencyPosture(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("billingInfo"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billingInfo = UnifiedResilienceItemBillingInfo.DeserializeUnifiedResilienceItemBillingInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedTime"u8))
@@ -168,7 +183,13 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UnifiedResilienceItemProperties(provisioningState, goals, recommendations, lastModifiedOn, additionalBinaryDataProperties);
+            return new UnifiedResilienceItemProperties(
+                provisioningState,
+                goals,
+                resiliencyPosture,
+                billingInfo,
+                lastModifiedOn,
+                additionalBinaryDataProperties);
         }
     }
 }

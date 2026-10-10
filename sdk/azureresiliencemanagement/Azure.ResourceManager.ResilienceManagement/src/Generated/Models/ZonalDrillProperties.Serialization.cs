@@ -113,22 +113,24 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             ResilienceManagementProvisioningState? provisioningState = default;
             ResourceIdentifier serviceGroupId = default;
             RecoveryPlanPropertiesOfDrill recoveryPlanProperties = default;
+            GoalAssignmentPropertiesOfDrill goalAssignmentProperties = default;
             AssetPropertiesOfDrill drillAssetProperties = default;
             ChaosResourcePropertiesOfDrill chaosResourceProperties = default;
-            ExecutionState? executionState = default;
-            ExecutionReadinessState? executionReadinessState = default;
+            DrillExecutionState? executionState = default;
+            DrillExecutionReadinessState? executionReadinessState = default;
             ResilienceManagementRbacSetupMode? rbacSetupMode = default;
-            AttentionReason attentionReason = default;
+            DrillAttentionReason attentionReason = default;
             DrillSystemMetadata systemMetadata = default;
-            LastRunProperties lastRunProperties = default;
+            DrillLastRunProperties lastRunProperties = default;
             DateTimeOffset? lastSyncOn = default;
             DateTimeOffset? lastResyncReadinessCheckOn = default;
-            ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration = default;
             DrillType drillType = default;
             MonitoringPropertiesOfDrill monitoringProperties = default;
+            HealthModelMonitoringProperties healthModelMonitoringProperties = default;
+            SliMonitoringProperties sliMonitoringProperties = default;
             ResponseError errorDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            VmPresent? vmsPresent = default;
+            ZonalDrillVmPresence? vmsPresent = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("provisioningState"u8))
@@ -158,6 +160,15 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     recoveryPlanProperties = RecoveryPlanPropertiesOfDrill.DeserializeRecoveryPlanPropertiesOfDrill(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("goalAssignmentProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    goalAssignmentProperties = GoalAssignmentPropertiesOfDrill.DeserializeGoalAssignmentPropertiesOfDrill(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("drillAssetProperties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -182,7 +193,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    executionState = new ExecutionState(prop.Value.GetString());
+                    executionState = new DrillExecutionState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("executionReadinessState"u8))
@@ -191,7 +202,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    executionReadinessState = new ExecutionReadinessState(prop.Value.GetString());
+                    executionReadinessState = new DrillExecutionReadinessState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("rbacSetupMode"u8))
@@ -209,7 +220,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    attentionReason = AttentionReason.DeserializeAttentionReason(prop.Value, options);
+                    attentionReason = DrillAttentionReason.DeserializeDrillAttentionReason(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("systemMetadata"u8))
@@ -227,7 +238,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    lastRunProperties = LastRunProperties.DeserializeLastRunProperties(prop.Value, options);
+                    lastRunProperties = DrillLastRunProperties.DeserializeDrillLastRunProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("lastSyncTime"u8))
@@ -248,15 +259,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     lastResyncReadinessCheckOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("managedOnBehalfOfConfiguration"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    managedOnBehalfOfConfiguration = ManagedOnBehalfOfConfiguration.DeserializeManagedOnBehalfOfConfiguration(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("drillType"u8))
                 {
                     drillType = new DrillType(prop.Value.GetString());
@@ -269,6 +271,24 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                         continue;
                     }
                     monitoringProperties = MonitoringPropertiesOfDrill.DeserializeMonitoringPropertiesOfDrill(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("healthModelMonitoringProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    healthModelMonitoringProperties = HealthModelMonitoringProperties.DeserializeHealthModelMonitoringProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("sliMonitoringProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sliMonitoringProperties = SliMonitoringProperties.DeserializeSliMonitoringProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("errorDetails"u8))
@@ -286,7 +306,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    vmsPresent = new VmPresent(prop.Value.GetString());
+                    vmsPresent = new ZonalDrillVmPresence(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -298,6 +318,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 provisioningState,
                 serviceGroupId,
                 recoveryPlanProperties,
+                goalAssignmentProperties,
                 drillAssetProperties,
                 chaosResourceProperties,
                 executionState,
@@ -308,9 +329,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 lastRunProperties,
                 lastSyncOn,
                 lastResyncReadinessCheckOn,
-                managedOnBehalfOfConfiguration,
                 drillType,
                 monitoringProperties,
+                healthModelMonitoringProperties,
+                sliMonitoringProperties,
                 errorDetails,
                 additionalBinaryDataProperties,
                 vmsPresent);
