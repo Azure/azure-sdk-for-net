@@ -23,13 +23,6 @@ namespace Azure.ResourceManager.Relationships.Tests
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
-        // Pre-existing Service Group that has Relationships RBAC already assigned.
-        // Child SGs created per-test are parented under this SG and inherit its RBAC immediately,
-        // avoiding the async role-propagation delay (LinkedAuthorizationFailed) that occurs when
-        // creating root-level SGs.
-        private const string SharedParentServiceGroupId =
-            "/providers/Microsoft.Management/serviceGroups/SDKTestsSG";
-
         protected RelationshipsManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
@@ -43,7 +36,9 @@ namespace Azure.ResourceManager.Relationships.Tests
         [SetUp]
         public async Task CreateCommonClient()
         {
-            Client = GetArmClient();
+            ArmClientOptions options = new();
+            options.SetApiVersion(ServiceGroupResource.ResourceType, "2024-02-01-preview");
+            Client = GetArmClient(options);
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 
@@ -59,12 +54,11 @@ namespace Azure.ResourceManager.Relationships.Tests
         {
             string tenantId = TestEnvironment.TenantId;
             string serviceGroupName = Recording.GenerateAssetName(namePrefix);
-            // Prefer an explicit parent, then the class-level shared parent SG, then tenant root.
+            // Prefer an explicit parent, then the configured shared parent Service Group.
             // Using a shared parent means the child SG inherits Relationships RBAC immediately,
             // avoiding LinkedAuthorizationFailed when creating relationships right after SG creation.
             string parentId = parentServiceGroupId
-                ?? SharedParentServiceGroupId
-                ?? $"/providers/Microsoft.Management/serviceGroups/{tenantId}";
+                ?? TestEnvironment.ServiceGroupId;
 
             var tenantCollection = await Client.GetTenants().GetAllAsync().ToEnumerableAsync();
             var tenant = tenantCollection.FirstOrDefault();
