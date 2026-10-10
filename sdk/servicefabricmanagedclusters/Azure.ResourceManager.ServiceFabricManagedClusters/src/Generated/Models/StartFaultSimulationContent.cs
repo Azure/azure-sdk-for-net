@@ -12,25 +12,25 @@ using Azure.ResourceManager.ServiceFabricManagedClusters;
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Fault Simulation Request for Start action. </summary>
-    public partial class FaultSimulationContentWrapper
+    public partial class StartFaultSimulationContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FaultSimulationContentWrapper"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StartFaultSimulationContent"/>. </summary>
         /// <param name="parameters"> Parameters for Fault Simulation start action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public FaultSimulationContentWrapper(FaultSimulationContent parameters)
+        public StartFaultSimulationContent(FaultSimulationContent parameters)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
             Parameters = parameters;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FaultSimulationContentWrapper"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StartFaultSimulationContent"/>. </summary>
         /// <param name="parameters"> Parameters for Fault Simulation start action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FaultSimulationContentWrapper(FaultSimulationContent parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StartFaultSimulationContent(FaultSimulationContent parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Parameters = parameters;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
