@@ -8,12 +8,6 @@
 - Added `ManifestInfo` and `OperationsPutContent` resources, along with the models supporting them.
 - Added `ApplicationDataAuthorization.IsApplicationIdExcludedFromManifest`, `ResourceTypeRegistrationProperties.IsSuperScaleEnabled` and the `LinkedAccessCheckOption` enum, all new in API version `2025-10-01`. Their .NET names come from `@@clientName` customizations in the specification so that they follow the [.NET naming guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html).
 
-### Bugs Fixed
-
-- Preserved the 1.2.1 public API through SDK customizations, including legacy models, enum values, model factory overloads, and resource operations no longer generated from the updated specification.
-- Preserved serialization of legacy configuration and mutable collection properties. Legacy resource operations continue to use their supported API version.
-- Kept the existing resource-deletion-policy types and read-only collection signatures for backward compatibility.
-
 ## 1.2.1 (2026-06-28)
 
 ### Other Changes

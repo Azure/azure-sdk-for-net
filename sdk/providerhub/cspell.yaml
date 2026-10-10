@@ -4,5 +4,6 @@ overrides:
   - filename: '**/sdk/providerhub/**/*'
     words:
       - checkin
+      - dsts
       - ploc
       - regionality
