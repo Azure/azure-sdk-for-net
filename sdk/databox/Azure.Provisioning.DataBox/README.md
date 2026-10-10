@@ -33,8 +33,20 @@ DataBoxJob dataBoxJob = new(nameof(dataBoxJob), DataBoxJob.ResourceVersions.V202
 {
     Name = "databox-job",
     Location = new AzureLocation("eastus"),
-    Details = new DataBoxBasicJobDetails(),
-    Sku = new DataBoxSku()
+    Details = new DataBoxJobDetails
+    {
+        ContactDetails = new DataBoxContactDetails
+        {
+            ContactName = "Data Box User",
+            Phone = "1234567890",
+            EmailList = ["user@example.com"]
+        }
+    },
+    TransferType = DataBoxJobTransferType.ImportToAzure,
+    Sku = new DataBoxSku
+    {
+        Name = DataBoxSkuName.DataBox
+    }
 };
 infra.Add(dataBoxJob);
 ```

@@ -22,8 +22,20 @@ public class BasicDataBoxTests
                 {
                     Name = "databox-job",
                     Location = new AzureLocation("eastus"),
-                    Details = new DataBoxBasicJobDetails(),
-                    Sku = new DataBoxSku()
+                    Details = new DataBoxJobDetails
+                    {
+                        ContactDetails = new DataBoxContactDetails
+                        {
+                            ContactName = "Data Box User",
+                            Phone = "1234567890",
+                            EmailList = ["user@example.com"]
+                        }
+                    },
+                    TransferType = DataBoxJobTransferType.ImportToAzure,
+                    Sku = new DataBoxSku
+                    {
+                        Name = DataBoxSkuName.DataBox
+                    }
                 };
                 infra.Add(dataBoxJob);
                 #endregion
@@ -42,6 +54,22 @@ public class BasicDataBoxTests
             resource dataBoxJob 'Microsoft.DataBox/jobs@2025-07-01' = {
               name: 'databox-job'
               location: 'eastus'
+              properties: {
+                details: {
+                  contactDetails: {
+                    contactName: 'Data Box User'
+                    emailList: [
+                      'user@example.com'
+                    ]
+                    phone: '1234567890'
+                  }
+                  jobDetailsType: 'DataBox'
+                }
+                transferType: 'ImportToAzure'
+              }
+              sku: {
+                name: 'DataBox'
+              }
             }
             """);
     }
