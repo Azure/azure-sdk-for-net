@@ -12,32 +12,32 @@ using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    /// <summary> Paged collection of ManagedGrafana items. </summary>
-    internal partial class ManagedGrafanaListResponse
+    /// <summary> Paged collection of IntegrationFabric items. </summary>
+    internal partial class IntegrationFabricListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaListResponse"/>. </summary>
-        /// <param name="value"> The ManagedGrafana items on this page. </param>
-        internal ManagedGrafanaListResponse(IEnumerable<ManagedGrafanaData> value)
+        /// <summary> Initializes a new instance of <see cref="IntegrationFabricListResult"/>. </summary>
+        /// <param name="value"> The IntegrationFabric items on this page. </param>
+        internal IntegrationFabricListResult(IEnumerable<GrafanaIntegrationFabricData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaListResponse"/>. </summary>
-        /// <param name="value"> The ManagedGrafana items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="IntegrationFabricListResult"/>. </summary>
+        /// <param name="value"> The IntegrationFabric items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedGrafanaListResponse(IList<ManagedGrafanaData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IntegrationFabricListResult(IList<GrafanaIntegrationFabricData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The ManagedGrafana items on this page. </summary>
-        public IList<ManagedGrafanaData> Value { get; }
+        /// <summary> The IntegrationFabric items on this page. </summary>
+        public IList<GrafanaIntegrationFabricData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

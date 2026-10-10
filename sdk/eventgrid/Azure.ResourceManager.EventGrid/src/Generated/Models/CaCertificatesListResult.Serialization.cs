@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CaCertificatesListResult(value, nextLink, additionalBinaryDataProperties);
+            return new CaCertificatesListResult(value ?? new ChangeTrackingList<CaCertificateData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

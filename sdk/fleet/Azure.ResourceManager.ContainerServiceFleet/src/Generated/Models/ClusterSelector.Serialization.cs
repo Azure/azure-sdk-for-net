@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ClusterSelector(clusterSelectorTerms, additionalBinaryDataProperties);
+            return new ClusterSelector(clusterSelectorTerms ?? new ChangeTrackingList<ContainerServiceFleetClusterSelectorTerm>(), additionalBinaryDataProperties);
         }
     }
 }

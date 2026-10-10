@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _assignmentSource;
+        internal bool _assignmentSourceIsDefined;
+        private string _contentType;
+        internal bool _contentTypeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationNavigation"/>. </summary>
         public GuestConfigurationNavigation()
@@ -47,8 +51,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             ContentHash = contentHash;
             ContentManagedIdentity = contentManagedIdentity;
             AssignmentType = assignmentType;
-            AssignmentSource = assignmentSource;
-            ContentType = contentType;
+            _assignmentSource = assignmentSource;
+            _contentType = contentType;
             ConfigurationParameters = configurationParameters;
             ConfigurationProtectedParameters = configurationProtectedParameters;
             ConfigurationSetting = configurationSetting;
@@ -85,11 +89,23 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         /// <summary> Specifies the origin of the configuration. </summary>
         [WirePath("assignmentSource")]
-        public string AssignmentSource { get; }
+        public string AssignmentSource
+        {
+            get
+            {
+                return _assignmentSource;
+            }
+        }
 
         /// <summary> Specifies the content type of the configuration. Possible values could be Builtin or Custom. </summary>
         [WirePath("contentType")]
-        public string ContentType { get; }
+        public string ContentType
+        {
+            get
+            {
+                return _contentType;
+            }
+        }
 
         /// <summary> The configuration parameters for the guest configuration. </summary>
         [WirePath("configurationParameter")]

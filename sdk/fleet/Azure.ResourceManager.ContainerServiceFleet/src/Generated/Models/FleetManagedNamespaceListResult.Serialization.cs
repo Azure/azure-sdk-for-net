@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FleetManagedNamespaceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new FleetManagedNamespaceListResult(value ?? new ChangeTrackingList<ContainerServiceFleetManagedNamespaceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

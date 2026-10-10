@@ -14,64 +14,64 @@ using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    /// <summary> The list of managed private endpoints of a grafana resource. </summary>
-    internal partial class ManagedPrivateEndpointModelListResponse : IJsonModel<ManagedPrivateEndpointModelListResponse>
+    /// <summary> Paged collection of IntegrationFabric items. </summary>
+    internal partial class IntegrationFabricListResult : IJsonModel<IntegrationFabricListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointModelListResponse"/> for deserialization. </summary>
-        internal ManagedPrivateEndpointModelListResponse()
+        /// <summary> Initializes a new instance of <see cref="IntegrationFabricListResult"/> for deserialization. </summary>
+        internal IntegrationFabricListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedPrivateEndpointModelListResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual IntegrationFabricListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedPrivateEndpointModelListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IntegrationFabricListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeManagedPrivateEndpointModelListResponse(document.RootElement, options);
+                        return DeserializeIntegrationFabricListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedPrivateEndpointModelListResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationFabricListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedPrivateEndpointModelListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IntegrationFabricListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerGrafanaContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedPrivateEndpointModelListResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationFabricListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedPrivateEndpointModelListResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<IntegrationFabricListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedPrivateEndpointModelListResponse IPersistableModel<ManagedPrivateEndpointModelListResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        IntegrationFabricListResult IPersistableModel<IntegrationFabricListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedPrivateEndpointModelListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IntegrationFabricListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ManagedPrivateEndpointModelListResponse"/> from. </param>
-        internal static ManagedPrivateEndpointModelListResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IntegrationFabricListResult"/> from. </param>
+        internal static IntegrationFabricListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeManagedPrivateEndpointModelListResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeIntegrationFabricListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ManagedPrivateEndpointModelListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IntegrationFabricListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedPrivateEndpointModelListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IntegrationFabricListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedPrivateEndpointModelListResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationFabricListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ManagedPrivateEndpointModelData item in Value)
+            foreach (GrafanaIntegrationFabricData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -118,40 +118,40 @@ namespace Azure.ResourceManager.Grafana.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedPrivateEndpointModelListResponse IJsonModel<ManagedPrivateEndpointModelListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        IntegrationFabricListResult IJsonModel<IntegrationFabricListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedPrivateEndpointModelListResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual IntegrationFabricListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedPrivateEndpointModelListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IntegrationFabricListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedPrivateEndpointModelListResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationFabricListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagedPrivateEndpointModelListResponse(document.RootElement, options);
+            return DeserializeIntegrationFabricListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ManagedPrivateEndpointModelListResponse DeserializeManagedPrivateEndpointModelListResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static IntegrationFabricListResult DeserializeIntegrationFabricListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<ManagedPrivateEndpointModelData> value = default;
+            IList<GrafanaIntegrationFabricData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ManagedPrivateEndpointModelData> array = new List<ManagedPrivateEndpointModelData>();
+                    List<GrafanaIntegrationFabricData> array = new List<GrafanaIntegrationFabricData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ManagedPrivateEndpointModelData.DeserializeManagedPrivateEndpointModelData(item, options));
+                        array.Add(GrafanaIntegrationFabricData.DeserializeGrafanaIntegrationFabricData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ManagedPrivateEndpointModelListResponse(value, nextLink, additionalBinaryDataProperties);
+            return new IntegrationFabricListResult(value ?? new ChangeTrackingList<GrafanaIntegrationFabricData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

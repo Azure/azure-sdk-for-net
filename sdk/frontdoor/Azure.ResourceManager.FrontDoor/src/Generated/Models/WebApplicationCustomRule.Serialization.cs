@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 rateLimitDurationInMinutes,
                 rateLimitThreshold,
                 groupBy ?? new ChangeTrackingList<FrontDoorWebApplicationFirewallPolicyGroupByVariable>(),
-                matchConditions,
+                matchConditions ?? new ChangeTrackingList<WebApplicationRuleMatchCondition>(),
                 action,
                 additionalBinaryDataProperties);
         }

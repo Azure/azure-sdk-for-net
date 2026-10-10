@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NetworkSecurityPerimeterConfigurationList(value, nextLink, additionalBinaryDataProperties);
+            return new NetworkSecurityPerimeterConfigurationList(value ?? new ChangeTrackingList<NetworkSecurityPerimeterConfigurationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

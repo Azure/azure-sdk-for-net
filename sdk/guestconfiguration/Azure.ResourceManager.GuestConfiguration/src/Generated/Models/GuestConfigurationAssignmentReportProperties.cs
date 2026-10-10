@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private GuestConfigurationAssignmentReportDetails _details;
+        internal bool _detailsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentReportProperties"/>. </summary>
         internal GuestConfigurationAssignmentReportProperties()
@@ -40,7 +42,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             Vm = vm;
             StartOn = startOn;
             EndOn = endOn;
-            Details = details;
+            _details = details;
             VmssResourceId = vmssResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -71,7 +73,13 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         /// <summary> Details of the assignment report. </summary>
         [WirePath("details")]
-        public GuestConfigurationAssignmentReportDetails Details { get; }
+        public GuestConfigurationAssignmentReportDetails Details
+        {
+            get
+            {
+                return _details;
+            }
+        }
 
         /// <summary> Azure resource Id of the VMSS. </summary>
         [WirePath("vmssResourceId")]

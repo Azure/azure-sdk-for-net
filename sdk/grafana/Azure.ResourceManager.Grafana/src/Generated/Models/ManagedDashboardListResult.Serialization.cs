@@ -14,64 +14,64 @@ using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    /// <summary> Paged collection of ManagedGrafana items. </summary>
-    internal partial class ManagedGrafanaListResponse : IJsonModel<ManagedGrafanaListResponse>
+    /// <summary> Paged collection of ManagedDashboard items. </summary>
+    internal partial class ManagedDashboardListResult : IJsonModel<ManagedDashboardListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaListResponse"/> for deserialization. </summary>
-        internal ManagedGrafanaListResponse()
+        /// <summary> Initializes a new instance of <see cref="ManagedDashboardListResult"/> for deserialization. </summary>
+        internal ManagedDashboardListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedGrafanaListResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ManagedDashboardListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedGrafanaListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedDashboardListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeManagedGrafanaListResponse(document.RootElement, options);
+                        return DeserializeManagedDashboardListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedGrafanaListResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedDashboardListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedGrafanaListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedDashboardListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerGrafanaContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedGrafanaListResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedDashboardListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedGrafanaListResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ManagedDashboardListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedGrafanaListResponse IPersistableModel<ManagedGrafanaListResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ManagedDashboardListResult IPersistableModel<ManagedDashboardListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedGrafanaListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedDashboardListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ManagedGrafanaListResponse"/> from. </param>
-        internal static ManagedGrafanaListResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ManagedDashboardListResult"/> from. </param>
+        internal static ManagedDashboardListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeManagedGrafanaListResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeManagedDashboardListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ManagedGrafanaListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedDashboardListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedGrafanaListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedDashboardListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedGrafanaListResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedDashboardListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ManagedGrafanaData item in Value)
+            foreach (ManagedDashboardData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -118,40 +118,40 @@ namespace Azure.ResourceManager.Grafana.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedGrafanaListResponse IJsonModel<ManagedGrafanaListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ManagedDashboardListResult IJsonModel<ManagedDashboardListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedGrafanaListResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ManagedDashboardListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedGrafanaListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedDashboardListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedGrafanaListResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedDashboardListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagedGrafanaListResponse(document.RootElement, options);
+            return DeserializeManagedDashboardListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ManagedGrafanaListResponse DeserializeManagedGrafanaListResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static ManagedDashboardListResult DeserializeManagedDashboardListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<ManagedGrafanaData> value = default;
+            IList<ManagedDashboardData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ManagedGrafanaData> array = new List<ManagedGrafanaData>();
+                    List<ManagedDashboardData> array = new List<ManagedDashboardData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ManagedGrafanaData.DeserializeManagedGrafanaData(item, options));
+                        array.Add(ManagedDashboardData.DeserializeManagedDashboardData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ManagedGrafanaListResponse(value, nextLink, additionalBinaryDataProperties);
+            return new ManagedDashboardListResult(value ?? new ChangeTrackingList<ManagedDashboardData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
