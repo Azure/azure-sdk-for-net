@@ -1,0 +1,1654 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.AttributeNamespaces.AccessReviewHistoryDefinition",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.Authorization/accessReviewHistoryDefinitions/{historyDefinitionId}",
+      "resourceType": "Microsoft.Authorization/accessReviewHistoryDefinitions",
+      "methods": [
+        {
+          "methodId": "Microsoft.AttributeNamespaces.ScopeAccessReviewHistoryDefinitions.create",
+          "kind": "Create",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/accessReviewHistoryDefinitions/{historyDefinitionId}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/accessReviewHistoryDefinitions/{historyDefinitionId}"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.ScopeAccessReviewHistoryDefinitions.getById",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/accessReviewHistoryDefinitions/{historyDefinitionId}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/accessReviewHistoryDefinitions/{historyDefinitionId}"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.ScopeAccessReviewHistoryDefinitions.deleteById",
+          "kind": "Delete",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/accessReviewHistoryDefinitions/{historyDefinitionId}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/accessReviewHistoryDefinitions/{historyDefinitionId}"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.ScopeAccessReviewHistoryDefinitions.list",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/accessReviewHistoryDefinitions",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.ScopeAccessReviewHistoryDefinitions.generateDownloadUri",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/accessReviewHistoryDefinitions/{historyDefinitionId}/instances/{instanceId}/generateDownloadUri",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/accessReviewHistoryDefinitions/{historyDefinitionId}"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.ScopeAccessReviewHistoryDefinitions.scopeAccessReviewHistoryDefinitionInstancesList",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/accessReviewHistoryDefinitions/{historyDefinitionId}/instances",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/accessReviewHistoryDefinitions/{historyDefinitionId}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "ScopeAccessReviewHistoryDefinition",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2021-12-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.AttributeNamespaces.AccessReviewScheduleDefinition",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}",
+      "resourceType": "Microsoft.Authorization/accessReviewScheduleDefinitions",
+      "methods": [
+        {
+          "methodId": "Microsoft.AttributeNamespaces.ScopeAccessReviewScheduleDefinitions.createOrUpdateById",
+          "kind": "Create",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.ScopeAccessReviewScheduleDefinitions.getById",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.ScopeAccessReviewScheduleDefinitions.deleteById",
+          "kind": "Delete",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.ScopeAccessReviewScheduleDefinitions.list",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.ScopeAccessReviewScheduleDefinitions.stop",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/stop",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "ScopeAccessReviewScheduleDefinition",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2021-12-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.AttributeNamespaces.AccessReviewInstance",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}",
+      "resourceType": "Microsoft.Authorization/accessReviewScheduleDefinitions/instances",
+      "methods": [
+        {
+          "methodId": "Microsoft.AttributeNamespaces.ScopeAccessReviewInstances.create",
+          "kind": "Create",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.ScopeAccessReviewInstances.getById",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.ScopeAccessReviewInstances.list",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.ScopeAccessReviewInstances.applyDecisions",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}/applyDecisions",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.ScopeAccessReviewInstances.recordAllDecisions",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}/recordAllDecisions",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.ScopeAccessReviewInstances.resetDecisions",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}/resetDecisions",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.ScopeAccessReviewInstances.scopeAccessReviewInstanceContactedReviewersList",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}/contactedReviewers",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.ScopeAccessReviewInstances.scopeAccessReviewInstanceDecisionsList",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}/decisions",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.ScopeAccessReviewInstances.sendReminders",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}/sendReminders",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.ScopeAccessReviewInstances.stop",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}/stop",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "parentResourceId": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}",
+      "resourceName": "ScopeAccessReviewInstance",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2021-12-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.AttributeNamespaces.AccessReviewDefaultSettings",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleSettings/default",
+      "resourceType": "Microsoft.Authorization/accessReviewScheduleSettings",
+      "methods": [
+        {
+          "methodId": "Microsoft.AttributeNamespaces.ScopeAccessReviewDefaultSettings.put",
+          "kind": "Create",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleSettings/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleSettings/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.ScopeAccessReviewDefaultSettings.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleSettings/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/accessReviewScheduleSettings/default"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "singletonResourceName": "default",
+      "resourceName": "ScopeAccessReviewDefaultSetting",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2021-12-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.DenyAssignment.DenyAssignment",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}",
+      "resourceType": "Microsoft.Authorization/denyAssignments",
+      "methods": [
+        {
+          "methodId": "Microsoft.DenyAssignment.DenyAssignments.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}"
+          }
+        },
+        {
+          "methodId": "Microsoft.DenyAssignment.DenyAssignments.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}"
+          }
+        },
+        {
+          "methodId": "Microsoft.DenyAssignment.DenyAssignments.delete",
+          "kind": "Delete",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}"
+          }
+        },
+        {
+          "methodId": "Microsoft.DenyAssignment.DenyAssignments.list",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/denyAssignments",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.DenyAssignment.DenyAssignments.listForResourceGroup",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Authorization/denyAssignments",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DenyAssignment.DenyAssignments.listForScope",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/denyAssignments",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "DenyAssignment",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-07-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.RoleAssignment.RoleAssignment",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}",
+      "resourceType": "Microsoft.Authorization/roleAssignments",
+      "methods": [
+        {
+          "methodId": "Microsoft.RoleAssignment.RoleAssignments.create",
+          "kind": "Create",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.RoleAssignment.RoleAssignments.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.RoleAssignment.RoleAssignments.delete",
+          "kind": "Delete",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.RoleAssignment.RoleAssignments.listForResourceGroup",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Authorization/roleAssignments",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.RoleAssignment.RoleAssignments.listForScope",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleAssignments",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}"
+          }
+        },
+        {
+          "methodId": "Microsoft.RoleAssignment.RoleAssignments.listForSubscription",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/roleAssignments",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "RoleAssignment",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2022-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Authorization.RoleAssignmentScheduleInstance",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/{roleAssignmentScheduleInstanceName}",
+      "resourceType": "Microsoft.Authorization/roleAssignmentScheduleInstances",
+      "methods": [
+        {
+          "methodId": "Microsoft.Authorization.RoleAssignmentScheduleInstances.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/{roleAssignmentScheduleInstanceName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/{roleAssignmentScheduleInstanceName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Authorization.RoleAssignmentScheduleInstances.listForScope",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleInstances",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "RoleAssignmentScheduleInstance",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-09-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Authorization.RoleAssignmentScheduleRequest",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/{roleAssignmentScheduleRequestName}",
+      "resourceType": "Microsoft.Authorization/roleAssignmentScheduleRequests",
+      "methods": [
+        {
+          "methodId": "Microsoft.Authorization.RoleAssignmentScheduleRequests.create",
+          "kind": "Create",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/{roleAssignmentScheduleRequestName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/{roleAssignmentScheduleRequestName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Authorization.RoleAssignmentScheduleRequests.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/{roleAssignmentScheduleRequestName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/{roleAssignmentScheduleRequestName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Authorization.RoleAssignmentScheduleRequests.listForScope",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleRequests",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Authorization.RoleAssignmentScheduleRequests.cancel",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/{roleAssignmentScheduleRequestName}/cancel",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/{roleAssignmentScheduleRequestName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Authorization.RoleAssignmentScheduleRequests.validate",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/{roleAssignmentScheduleRequestName}/validate",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/{roleAssignmentScheduleRequestName}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "RoleAssignmentScheduleRequest",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-09-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Authorization.RoleAssignmentSchedule",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}",
+      "resourceType": "Microsoft.Authorization/roleAssignmentSchedules",
+      "methods": [
+        {
+          "methodId": "Microsoft.Authorization.RoleAssignmentSchedules.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Authorization.RoleAssignmentSchedules.listForScope",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "RoleAssignmentSchedule",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-09-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.RoleDefinitions.RoleDefinition",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}",
+      "resourceType": "Microsoft.Authorization/roleDefinitions",
+      "methods": [
+        {
+          "methodId": "Microsoft.RoleDefinitions.RoleDefinitions.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}"
+          }
+        },
+        {
+          "methodId": "Microsoft.RoleDefinitions.RoleDefinitions.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}"
+          }
+        },
+        {
+          "methodId": "Microsoft.RoleDefinitions.RoleDefinitions.delete",
+          "kind": "Delete",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}"
+          }
+        },
+        {
+          "methodId": "Microsoft.RoleDefinitions.RoleDefinitions.list",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleDefinitions",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "AuthorizationRoleDefinition",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2022-05-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Authorization.RoleEligibilityScheduleInstance",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}",
+      "resourceType": "Microsoft.Authorization/roleEligibilityScheduleInstances",
+      "methods": [
+        {
+          "methodId": "Microsoft.Authorization.RoleEligibilityScheduleInstances.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Authorization.RoleEligibilityScheduleInstances.listForScope",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "RoleEligibilityScheduleInstance",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-09-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Authorization.RoleEligibilityScheduleRequest",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}",
+      "resourceType": "Microsoft.Authorization/roleEligibilityScheduleRequests",
+      "methods": [
+        {
+          "methodId": "Microsoft.Authorization.RoleEligibilityScheduleRequests.create",
+          "kind": "Create",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Authorization.RoleEligibilityScheduleRequests.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Authorization.RoleEligibilityScheduleRequests.listForScope",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Authorization.RoleEligibilityScheduleRequests.cancel",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}/cancel",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Authorization.RoleEligibilityScheduleRequests.validate",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}/validate",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "RoleEligibilityScheduleRequest",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-09-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Authorization.RoleEligibilitySchedule",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.Authorization/roleEligibilitySchedules/{roleEligibilityScheduleName}",
+      "resourceType": "Microsoft.Authorization/roleEligibilitySchedules",
+      "methods": [
+        {
+          "methodId": "Microsoft.Authorization.RoleEligibilitySchedules.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleEligibilitySchedules/{roleEligibilityScheduleName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleEligibilitySchedules/{roleEligibilityScheduleName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Authorization.RoleEligibilitySchedules.listForScope",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleEligibilitySchedules",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "RoleEligibilitySchedule",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-09-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.RoleManagementAlerts.AlertConfiguration",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.Authorization/roleManagementAlertConfigurations/{alertId}",
+      "resourceType": "Microsoft.Authorization/roleManagementAlertConfigurations",
+      "methods": [
+        {
+          "methodId": "Microsoft.RoleManagementAlerts.AlertConfigurations.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleManagementAlertConfigurations/{alertId}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleManagementAlertConfigurations/{alertId}"
+          }
+        },
+        {
+          "methodId": "Microsoft.RoleManagementAlerts.AlertConfigurations.update",
+          "kind": "Update",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleManagementAlertConfigurations/{alertId}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleManagementAlertConfigurations/{alertId}"
+          }
+        },
+        {
+          "methodId": "Microsoft.RoleManagementAlerts.AlertConfigurations.listForScope",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleManagementAlertConfigurations",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "RoleManagementAlertConfiguration",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2022-08-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.RoleManagementAlerts.AlertDefinition",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.Authorization/roleManagementAlertDefinitions/{alertDefinitionId}",
+      "resourceType": "Microsoft.Authorization/roleManagementAlertDefinitions",
+      "methods": [
+        {
+          "methodId": "Microsoft.RoleManagementAlerts.AlertDefinitions.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleManagementAlertDefinitions/{alertDefinitionId}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleManagementAlertDefinitions/{alertDefinitionId}"
+          }
+        },
+        {
+          "methodId": "Microsoft.RoleManagementAlerts.AlertDefinitions.listForScope",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleManagementAlertDefinitions",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "RoleManagementAlertDefinition",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2022-08-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.RoleManagementAlerts.Alert",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.Authorization/roleManagementAlerts/{alertId}",
+      "resourceType": "Microsoft.Authorization/roleManagementAlerts",
+      "methods": [
+        {
+          "methodId": "Microsoft.RoleManagementAlerts.Alerts.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleManagementAlerts/{alertId}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleManagementAlerts/{alertId}"
+          }
+        },
+        {
+          "methodId": "Microsoft.RoleManagementAlerts.Alerts.update",
+          "kind": "Update",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleManagementAlerts/{alertId}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleManagementAlerts/{alertId}"
+          }
+        },
+        {
+          "methodId": "Microsoft.RoleManagementAlerts.Alerts.listForScope",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleManagementAlerts",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}"
+          }
+        },
+        {
+          "methodId": "Microsoft.RoleManagementAlerts.Alerts.refresh",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleManagementAlerts/{alertId}/refresh",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleManagementAlerts/{alertId}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "RoleManagementAlert",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2022-08-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.RoleManagementAlerts.AlertIncident",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.Authorization/roleManagementAlerts/{alertId}/alertIncidents/{alertIncidentId}",
+      "resourceType": "Microsoft.Authorization/roleManagementAlerts/alertIncidents",
+      "methods": [
+        {
+          "methodId": "Microsoft.RoleManagementAlerts.AlertIncidents.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleManagementAlerts/{alertId}/alertIncidents/{alertIncidentId}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleManagementAlerts/{alertId}/alertIncidents/{alertIncidentId}"
+          }
+        },
+        {
+          "methodId": "Microsoft.RoleManagementAlerts.AlertIncidents.listForScope",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleManagementAlerts/{alertId}/alertIncidents",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleManagementAlerts/{alertId}"
+          }
+        },
+        {
+          "methodId": "Microsoft.RoleManagementAlerts.AlertIncidents.remediate",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleManagementAlerts/{alertId}/alertIncidents/{alertIncidentId}/remediate",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleManagementAlerts/{alertId}/alertIncidents/{alertIncidentId}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "parentResourceId": "/{scope}/providers/Microsoft.Authorization/roleManagementAlerts/{alertId}",
+      "resourceName": "RoleManagementAlertIncident",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2022-08-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Authorization.RoleManagementPolicy",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}",
+      "resourceType": "Microsoft.Authorization/roleManagementPolicies",
+      "methods": [
+        {
+          "methodId": "Microsoft.Authorization.RoleManagementPolicies.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Authorization.RoleManagementPolicies.update",
+          "kind": "Update",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Authorization.RoleManagementPolicies.delete",
+          "kind": "Delete",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Authorization.RoleManagementPolicies.listForScope",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleManagementPolicies",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "RoleManagementPolicy",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-09-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Authorization.RoleManagementPolicyAssignment",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}",
+      "resourceType": "Microsoft.Authorization/roleManagementPolicyAssignments",
+      "methods": [
+        {
+          "methodId": "Microsoft.Authorization.RoleManagementPolicyAssignments.create",
+          "kind": "Create",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Authorization.RoleManagementPolicyAssignments.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Authorization.RoleManagementPolicyAssignments.delete",
+          "kind": "Delete",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Authorization.RoleManagementPolicyAssignments.listForScope",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "RoleManagementPolicyAssignment",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-09-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.AttributeNamespaces.AccessReviewInstance",
+      "resourceIdPattern": "/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}",
+      "resourceType": "Microsoft.Authorization/accessReviewScheduleDefinitions/instances",
+      "methods": [
+        {
+          "methodId": "Microsoft.AttributeNamespaces.AccessReviewInstancesAssignedForMyApproval.getById",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.AccessReviewInstancesAssignedForMyApproval.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.AccessReviewInstancesAssignedForMyApproval.acceptRecommendations",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}/acceptRecommendations",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.AccessReviewInstancesAssignedForMyApproval.reviewersList",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}/contactedReviewers",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "resourceName": "AccessReviewInstancesAssignedForMyApproval",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2021-12-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.AttributeNamespaces.AccessReviewDecision",
+      "resourceIdPattern": "/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}/decisions/{decisionId}",
+      "resourceType": "Microsoft.Authorization/accessReviewScheduleDefinitions/instances/decisions",
+      "methods": [
+        {
+          "methodId": "Microsoft.AttributeNamespaces.AccessReviewDecisions.getById",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}/decisions/{decisionId}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}/decisions/{decisionId}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.AccessReviewDecisions.patch",
+          "kind": "Update",
+          "operationPath": "/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}/decisions/{decisionId}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}/decisions/{decisionId}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.AccessReviewDecisions.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}/decisions",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}",
+      "resourceName": "AccessReviewDecision",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2021-12-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.AccessReview.AttributeNamespace",
+      "resourceIdPattern": "/providers/Microsoft.Authorization/attributeNamespaces/{attributeNamespace}",
+      "resourceType": "Microsoft.Authorization/attributeNamespaces",
+      "methods": [
+        {
+          "methodId": "Microsoft.AccessReview.AttributeNamespaces.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Authorization/attributeNamespaces/{attributeNamespace}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Authorization/attributeNamespaces/{attributeNamespace}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AccessReview.AttributeNamespaces.delete",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.Authorization/attributeNamespaces/{attributeNamespace}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Authorization/attributeNamespaces/{attributeNamespace}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AccessReview.AttributeNamespaces.create",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Authorization/attributeNamespaces/{attributeNamespace}/action",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Authorization/attributeNamespaces/{attributeNamespace}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "resourceName": "RoleManagementAttributeNamespace",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-12-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.ProviderOperations.ProviderOperationsMetadata",
+      "resourceIdPattern": "/providers/Microsoft.Authorization/providerOperations/{resourceProviderNamespace}",
+      "resourceType": "Microsoft.Authorization/providerOperations",
+      "methods": [
+        {
+          "methodId": "Microsoft.ProviderOperations.ProviderOperationsMetadataOperationGroup.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Authorization/providerOperations/{resourceProviderNamespace}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Authorization/providerOperations/{resourceProviderNamespace}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.ProviderOperations.ProviderOperationsMetadataOperationGroup.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Authorization/providerOperations",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "resourceName": "AuthorizationProviderOperationsMetadata",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2022-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.AttributeNamespaces.AccessReviewHistoryDefinition",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewHistoryDefinitions/{historyDefinitionId}",
+      "resourceType": "Microsoft.Authorization/accessReviewHistoryDefinitions",
+      "methods": [
+        {
+          "methodId": "Microsoft.AttributeNamespaces.AccessReviewHistoryDefinitions.create",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewHistoryDefinitions/{historyDefinitionId}",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewHistoryDefinitions/{historyDefinitionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.AccessReviewHistoryDefinitions.getById",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewHistoryDefinitions/{historyDefinitionId}",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewHistoryDefinitions/{historyDefinitionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.AccessReviewHistoryDefinitions.deleteById",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewHistoryDefinitions/{historyDefinitionId}",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewHistoryDefinitions/{historyDefinitionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.AccessReviewHistoryDefinitions.list",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewHistoryDefinitions",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.AccessReviewHistoryDefinitions.accessReviewHistoryDefinitionInstancesList",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewHistoryDefinitions/{historyDefinitionId}/instances",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewHistoryDefinitions/{historyDefinitionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.AccessReviewHistoryDefinitions.generateDownloadUri",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewHistoryDefinitions/{historyDefinitionId}/instances/{instanceId}/generateDownloadUri",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewHistoryDefinitions/{historyDefinitionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      },
+      "resourceName": "AccessReviewHistoryDefinition",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2021-12-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.AttributeNamespaces.AccessReviewScheduleDefinition",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}",
+      "resourceType": "Microsoft.Authorization/accessReviewScheduleDefinitions",
+      "methods": [
+        {
+          "methodId": "Microsoft.AttributeNamespaces.AccessReviewScheduleDefinitions.createOrUpdateById",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.AccessReviewScheduleDefinitions.getById",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.AccessReviewScheduleDefinitions.deleteById",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.AccessReviewScheduleDefinitions.list",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.AccessReviewScheduleDefinitions.stop",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/stop",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      },
+      "resourceName": "AccessReviewScheduleDefinition",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2021-12-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.AttributeNamespaces.AccessReviewInstance",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}",
+      "resourceType": "Microsoft.Authorization/accessReviewScheduleDefinitions/instances",
+      "methods": [
+        {
+          "methodId": "Microsoft.AttributeNamespaces.AccessReviewInstances.create",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.AccessReviewInstances.getById",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.AccessReviewInstances.list",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.AccessReviewInstances.accessReviewInstanceContactedReviewersList",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}/contactedReviewers",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.AccessReviewInstances.accessReviewInstanceDecisionsList",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}/decisions",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.AccessReviewInstances.applyDecisions",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}/applyDecisions",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.AccessReviewInstances.resetDecisions",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}/resetDecisions",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.AccessReviewInstances.sendReminders",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}/sendReminders",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.AccessReviewInstances.stop",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}/stop",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}",
+      "resourceName": "AccessReviewInstance",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2021-12-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.AttributeNamespaces.AccessReviewDefaultSettings",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleSettings/default",
+      "resourceType": "Microsoft.Authorization/accessReviewScheduleSettings",
+      "methods": [
+        {
+          "methodId": "Microsoft.AttributeNamespaces.AccessReviewDefaultSettingsOperationGroup.put",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleSettings/default",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleSettings/default",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.AttributeNamespaces.AccessReviewDefaultSettingsOperationGroup.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleSettings/default",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleSettings/default",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      },
+      "singletonResourceName": "default",
+      "resourceName": "AccessReviewDefaultSetting",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2021-12-01-preview"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": [
+    {
+      "methodId": "Azure.ResourceManager.Legacy.Operations.list",
+      "operationPath": "/providers/Microsoft.Authorization/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.DenyAssignment.DenyAssignments.listForResource",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/denyAssignments",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}"
+      }
+    },
+    {
+      "methodId": "Microsoft.DenyAssignment.DenyAssignments.getById",
+      "operationPath": "/{denyAssignmentId}",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.RoleAssignment.RoleAssignments.listForResource",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/roleAssignments",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+      }
+    },
+    {
+      "methodId": "Microsoft.RoleAssignment.RoleAssignmentsByIdOperations.getById",
+      "operationPath": "/{roleAssignmentId}",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.RoleAssignment.RoleAssignmentsByIdOperations.createById",
+      "operationPath": "/{roleAssignmentId}",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.RoleAssignment.RoleAssignmentsByIdOperations.deleteById",
+      "operationPath": "/{roleAssignmentId}",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.RoleDefinitions.RoleDefinitionsByIdOperationGroup.getById",
+      "operationPath": "/{roleId}?disambiguation_dummy",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.RoleManagementAlerts.AlertsOperationGroup.refreshAll",
+      "operationPath": "/{scope}/providers/Microsoft.Authorization/roleManagementAlerts/refresh",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      }
+    },
+    {
+      "methodId": "Microsoft.AttributeNamespaces.ScopeAccessReviewScheduleDefinitions.listForMyApproval",
+      "operationPath": "/providers/Microsoft.Authorization/accessReviewScheduleDefinitions",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.Authorization.EligibleChildResourcesOperationGroup.get",
+      "operationPath": "/{scope}/providers/Microsoft.Authorization/eligibleChildResources",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      }
+    },
+    {
+      "methodId": "Microsoft.ClassicAdmin.ClassicAdministratorsOperationGroup.list",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/classicAdministrators",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    },
+    {
+      "methodId": "Microsoft.ClassicAdmin.GlobalAdministratorOperationGroup.elevateAccess",
+      "operationPath": "/providers/Microsoft.Authorization/elevateAccess",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.RoleDefinitions.PermissionsOperationGroup.listForResourceGroup",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Authorization/permissions",
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "methodId": "Microsoft.RoleDefinitions.PermissionsOperationGroup.listForResource",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/permissions",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}"
+      }
+    },
+    {
+      "methodId": "Microsoft.RoleManagementAlerts.AlertOperationOperationGroup.get",
+      "operationPath": "/{scope}/providers/Microsoft.Authorization/roleManagementAlertOperations/{operationId}",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      }
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.Relationships.DependencyOfRelationship",
+      "resourceIdPattern": "/{resourceUri}/providers/Microsoft.Relationships/dependencyOf/{name}",
+      "resourceType": "Microsoft.Relationships/dependencyOf",
+      "methods": [
+        {
+          "methodId": "Microsoft.Relationships.DependencyOfRelationships.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/{resourceUri}/providers/Microsoft.Relationships/dependencyOf/{name}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.Relationships/dependencyOf/{name}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Relationships.DependencyOfRelationships.get",
+          "kind": "Read",
+          "operationPath": "/{resourceUri}/providers/Microsoft.Relationships/dependencyOf/{name}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.Relationships/dependencyOf/{name}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Relationships.DependencyOfRelationships.delete",
+          "kind": "Delete",
+          "operationPath": "/{resourceUri}/providers/Microsoft.Relationships/dependencyOf/{name}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.Relationships/dependencyOf/{name}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceUri}"
+      },
+      "resourceName": "DependencyOfRelationship",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9]{3,64}$"
+      },
+      "apiVersions": [
+        "2023-09-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Relationships.ServiceGroupMemberRelationship",
+      "resourceIdPattern": "/{resourceUri}/providers/Microsoft.Relationships/serviceGroupMember/{name}",
+      "resourceType": "Microsoft.Relationships/serviceGroupMember",
+      "methods": [
+        {
+          "methodId": "Microsoft.Relationships.ServiceGroupMemberRelationships.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/{resourceUri}/providers/Microsoft.Relationships/serviceGroupMember/{name}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.Relationships/serviceGroupMember/{name}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Relationships.ServiceGroupMemberRelationships.get",
+          "kind": "Read",
+          "operationPath": "/{resourceUri}/providers/Microsoft.Relationships/serviceGroupMember/{name}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.Relationships/serviceGroupMember/{name}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Relationships.ServiceGroupMemberRelationships.delete",
+          "kind": "Delete",
+          "operationPath": "/{resourceUri}/providers/Microsoft.Relationships/serviceGroupMember/{name}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.Relationships/serviceGroupMember/{name}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceUri}"
+      },
+      "resourceName": "ServiceGroupMemberRelationship",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9]{3,64}$"
+      },
+      "apiVersions": [
+        "2023-09-01-preview"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": [
+    {
+      "methodId": "Azure.ResourceManager.Operations.list",
+      "operationPath": "/providers/Microsoft.Relationships/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    }
+  ]
+}
