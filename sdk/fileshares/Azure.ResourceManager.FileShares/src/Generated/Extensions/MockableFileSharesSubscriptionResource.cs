@@ -40,7 +40,13 @@ namespace Azure.ResourceManager.FileShares.Mocking
 
         private ClientDiagnostics FileSharesInterfaceClientDiagnostics => _fileSharesInterfaceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FileShares.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FileSharesInterface FileSharesInterfaceRestClient => _fileSharesInterfaceRestClient ??= new FileSharesInterface(FileSharesInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
+        private FileSharesInterface FileSharesInterfaceRestClient => _fileSharesInterfaceRestClient ??= new FileSharesInterface(
+            FileSharesInterfaceClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-06-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics InformationalOperationsClientDiagnostics => _informationalOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FileShares.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

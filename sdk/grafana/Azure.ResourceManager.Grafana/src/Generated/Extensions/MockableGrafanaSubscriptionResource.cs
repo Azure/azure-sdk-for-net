@@ -37,11 +37,23 @@ namespace Azure.ResourceManager.Grafana.Mocking
 
         private ClientDiagnostics ManagedGrafanasClientDiagnostics => _managedGrafanasClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Grafana.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ManagedGrafanas ManagedGrafanasRestClient => _managedGrafanasRestClient ??= new ManagedGrafanas(ManagedGrafanasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private ManagedGrafanas ManagedGrafanasRestClient => _managedGrafanasRestClient ??= new ManagedGrafanas(
+            ManagedGrafanasClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-09-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ManagedDashboardsClientDiagnostics => _managedDashboardsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Grafana.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ManagedDashboards ManagedDashboardsRestClient => _managedDashboardsRestClient ??= new ManagedDashboards(ManagedDashboardsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private ManagedDashboards ManagedDashboardsRestClient => _managedDashboardsRestClient ??= new ManagedDashboards(
+            ManagedDashboardsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-09-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// List all resources of workspaces for Grafana under the specified subscription.

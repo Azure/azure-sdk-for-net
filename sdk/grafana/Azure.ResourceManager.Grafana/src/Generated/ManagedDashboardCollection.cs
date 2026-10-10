@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.Grafana
         {
             TryGetApiVersion(ManagedDashboardResource.ResourceType, out string managedDashboardApiVersion);
             _managedDashboardsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Grafana", ManagedDashboardResource.ResourceType.Namespace, Diagnostics);
-            _managedDashboardsRestClient = new ManagedDashboards(_managedDashboardsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedDashboardApiVersion ?? "2025-09-01-preview");
+            _managedDashboardsRestClient = new ManagedDashboards(
+                _managedDashboardsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                managedDashboardApiVersion ?? "2025-09-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

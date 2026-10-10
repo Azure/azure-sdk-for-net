@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             TryGetApiVersion(PaymentHsmClusterResource.ResourceType, out string paymentHsmClusterApiVersion);
             _paymentHsmClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", PaymentHsmClusterResource.ResourceType.Namespace, Diagnostics);
-            _paymentHsmClustersRestClient = new PaymentHsmClusters(_paymentHsmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, paymentHsmClusterApiVersion ?? "2025-12-01-preview");
+            _paymentHsmClustersRestClient = new PaymentHsmClusters(
+                _paymentHsmClustersClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                paymentHsmClusterApiVersion ?? "2025-12-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

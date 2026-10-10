@@ -46,15 +46,33 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
 
         private ClientDiagnostics FrontDoorsClientDiagnostics => _frontDoorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FrontDoors FrontDoorsRestClient => _frontDoorsRestClient ??= new FrontDoors(FrontDoorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-11-01");
+        private FrontDoors FrontDoorsRestClient => _frontDoorsRestClient ??= new FrontDoors(
+            FrontDoorsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-11-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics PoliciesClientDiagnostics => _policiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Policies PoliciesRestClient => _policiesRestClient ??= new Policies(PoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-11-01");
+        private Policies PoliciesRestClient => _policiesRestClient ??= new Policies(
+            PoliciesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-11-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics NetworkExperimentProfilesClientDiagnostics => _networkExperimentProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkExperimentProfiles NetworkExperimentProfilesRestClient => _networkExperimentProfilesRestClient ??= new NetworkExperimentProfiles(NetworkExperimentProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-11-01");
+        private NetworkExperimentProfiles NetworkExperimentProfilesRestClient => _networkExperimentProfilesRestClient ??= new NetworkExperimentProfiles(
+            NetworkExperimentProfilesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-11-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ManagedRuleSetsClientDiagnostics => _managedRuleSetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

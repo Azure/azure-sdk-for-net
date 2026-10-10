@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.Enclave
         {
             TryGetApiVersion(ResourceType, out string virtualEnclaveWorkloadApiVersion);
             _workloadClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Enclave", ResourceType.Namespace, Diagnostics);
-            _workloadRestClient = new Workload(_workloadClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualEnclaveWorkloadApiVersion ?? "2026-04-01");
+            _workloadRestClient = new Workload(
+                _workloadClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                virtualEnclaveWorkloadApiVersion ?? "2026-04-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

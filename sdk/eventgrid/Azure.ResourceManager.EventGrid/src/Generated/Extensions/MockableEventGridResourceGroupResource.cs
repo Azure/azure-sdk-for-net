@@ -43,7 +43,13 @@ namespace Azure.ResourceManager.EventGrid.Mocking
 
         private ClientDiagnostics EventSubscriptionsClientDiagnostics => _eventSubscriptionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private EventSubscriptions EventSubscriptionsRestClient => _eventSubscriptionsRestClient ??= new EventSubscriptions(EventSubscriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private EventSubscriptions EventSubscriptionsRestClient => _eventSubscriptionsRestClient ??= new EventSubscriptions(
+            EventSubscriptionsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-07-15-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics NetworkSecurityPerimeterConfigurationsClientDiagnostics => _networkSecurityPerimeterConfigurationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
