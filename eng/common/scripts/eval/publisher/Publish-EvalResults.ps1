@@ -20,9 +20,12 @@ function Invoke-AzJson([string[]] $Arguments) {
     try { return $document.RootElement.Clone() } finally { $document.Dispose() }
 }
 
-function Save-Receipt($Receipt) {
+function Save-Receipt([hashtable] $Receipt) {
     $temporary = "$ResultPath.tmp"
-    [System.IO.File]::WriteAllText($temporary, ($Receipt | ConvertTo-Json -Depth 5) + "`n")
+    # Create-new also refuses existing links/files instead of truncating their targets.
+    $bytes = [System.Text.Encoding]::UTF8.GetBytes(($Receipt | ConvertTo-Json -Depth 5) + "`n")
+    $stream = [System.IO.File]::Open($temporary, [System.IO.FileMode]::CreateNew, [System.IO.FileAccess]::Write, [System.IO.FileShare]::None)
+    try { $stream.Write($bytes, 0, $bytes.Length) } finally { $stream.Dispose() }
     [System.IO.File]::Move($temporary, $ResultPath, $true)
 }
 
@@ -32,7 +35,8 @@ $stored = $false
 try {
     $BundlePath = [System.IO.Path]::GetFullPath($BundlePath)
     $ResultPath = [System.IO.Path]::GetFullPath($ResultPath)
-    if ($ResultPath -eq $BundlePath -or $ResultPath -eq "$BundlePath.json") { throw 'Receipt and archive paths must differ.' }
+    $archivePaths = @($BundlePath, "$BundlePath.json")
+    if ($ResultPath -in $archivePaths -or "$ResultPath.tmp" -in $archivePaths) { throw 'Receipt and temporary paths must not replace the archive or descriptor.' }
     $archive = Get-Item -LiteralPath $BundlePath
     $descriptor = Get-Item -LiteralPath "$BundlePath.json"
     if ($archive.PSIsContainer -or $archive.LinkType -or $archive.Length -le 0 -or $archive.Length -gt 32MB -or
@@ -74,8 +78,11 @@ try {
         $metadata = $saved.GetProperty('metadata')
         $savedTime = $metadata.GetProperty('storedat').GetString()
         $parsedTime = [DateTimeOffset]::MinValue
-        $validTime = $savedTime -match '^\d{4}-\d{2}-\d{2}T.*Z$' -and
-            [DateTimeOffset]::TryParse($savedTime, [Globalization.CultureInfo]::InvariantCulture, [Globalization.DateTimeStyles]::None, [ref]$parsedTime)
+        # Accept canonical UTC time only; .NET's loose parser otherwise admits spaces
+        # that the dashboard rejects. Truncate fractions to the reader's millisecond precision.
+        $validTime = $savedTime -cmatch '^\d{4}-\d{2}-\d{2}T(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?Z\z' -and
+            [DateTimeOffset]::TryParse(($savedTime -replace '(\.\d{3})\d+(?=Z\z)', '$1'), [Globalization.CultureInfo]::InvariantCulture, [Globalization.DateTimeStyles]::None, [ref]$parsedTime) -and
+            $parsedTime.UtcDateTime.ToString('yyyy-MM-dd') -ceq $savedTime.Substring(0, 10)
         if ($saved.GetProperty('properties').GetProperty('contentLength').GetInt64() -ne $archive.Length -or $metadata.GetProperty('schema').GetString() -cne '1' -or
             $metadata.GetProperty('sha256').GetString() -cne $hash -or $metadata.GetProperty('publisher').GetString() -cne $owner -or !$validTime) { throw 'Conflicting archive.' }
         $duplicate = $true
@@ -106,7 +113,8 @@ try {
             }
         } catch {
             # Redirect errors can throw even with SkipHttpErrorCheck. Never retry/follow them.
-            if ($_.Exception.PSObject.Properties['Response'] -and $_.Exception.Response) { $status = [int]$_.Exception.Response.StatusCode }
+            if ($_.FullyQualifiedErrorId.Split(',')[0] -eq 'MaximumRedirectExceeded') { $status = 302 }
+            elseif ($_.Exception.PSObject.Properties['Response'] -and $_.Exception.Response) { $status = [int]$_.Exception.Response.StatusCode }
         }
         if (($status -ne 0 -and $status -ne 200 -and $status -notin @(408, 429, 500, 502, 503, 504)) -or $attempt -eq 3) { break }
         $seconds = [Math]::Pow(2, $attempt)
