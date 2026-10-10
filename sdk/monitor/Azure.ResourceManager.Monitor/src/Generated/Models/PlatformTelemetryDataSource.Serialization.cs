@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PlatformTelemetryDataSource(streams, name, additionalBinaryDataProperties);
+            return new PlatformTelemetryDataSource(streams ?? new ChangeTrackingList<string>(), name, additionalBinaryDataProperties);
         }
     }
 }

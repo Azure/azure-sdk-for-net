@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new RoutePolicyProperties(
                 annotation,
                 defaultAction,
-                statements,
+                statements ?? new ChangeTrackingList<RoutePolicyStatementProperties>(),
                 networkFabricId,
                 addressFamilyType,
                 lastOperation,

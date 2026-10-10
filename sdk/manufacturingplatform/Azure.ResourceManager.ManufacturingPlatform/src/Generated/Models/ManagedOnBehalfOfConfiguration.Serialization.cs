@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ManagedOnBehalfOfConfiguration(brokerResources, additionalBinaryDataProperties);
+            return new ManagedOnBehalfOfConfiguration(brokerResources ?? new ChangeTrackingList<ManagedOnBehalfOfBrokerResourceInfo>(), additionalBinaryDataProperties);
         }
     }
 }

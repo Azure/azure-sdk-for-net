@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MongoClusterListResult(value, nextLink, additionalBinaryDataProperties);
+            return new MongoClusterListResult(value ?? new ChangeTrackingList<MongoClusterData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

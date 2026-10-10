@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FederatedIdentityCredentialProperties(issuerUri, subject, audiences, claimsMatchingExpression, additionalBinaryDataProperties);
+            return new FederatedIdentityCredentialProperties(issuerUri, subject, audiences ?? new ChangeTrackingList<string>(), claimsMatchingExpression, additionalBinaryDataProperties);
         }
     }
 }

@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SubscriptionScopeMetricDefinitionCollection(value, nextLink, additionalBinaryDataProperties);
+            return new SubscriptionScopeMetricDefinitionCollection(value ?? new ChangeTrackingList<MonitorSubscriptionScopeMetric>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.Marketplace
     [ModelReaderWriterBuildable(typeof(NewPlanNotificationListResult))]
     [ModelReaderWriterBuildable(typeof(NotificationRecipient))]
     [ModelReaderWriterBuildable(typeof(NotificationsSettingsProperties))]
-    [ModelReaderWriterBuildable(typeof(OfferListResponse))]
     [ModelReaderWriterBuildable(typeof(PlanNotificationDetails))]
     [ModelReaderWriterBuildable(typeof(PlanRequesterDetails))]
     [ModelReaderWriterBuildable(typeof(PlanRequesterInfo))]

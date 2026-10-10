@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MonitorSingleBaseline(sensitivity, lowThresholds, highThresholds, additionalBinaryDataProperties);
+            return new MonitorSingleBaseline(sensitivity, lowThresholds ?? new ChangeTrackingList<double>(), highThresholds ?? new ChangeTrackingList<double>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StaticRouteProperties(prefix, nextHop, additionalBinaryDataProperties);
+            return new StaticRouteProperties(prefix, nextHop ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

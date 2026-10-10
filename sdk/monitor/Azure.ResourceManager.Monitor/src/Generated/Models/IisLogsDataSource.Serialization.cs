@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IisLogsDataSource(streams, logDirectories ?? new ChangeTrackingList<string>(), transformKql, name, additionalBinaryDataProperties);
+            return new IisLogsDataSource(streams ?? new ChangeTrackingList<string>(), logDirectories ?? new ChangeTrackingList<string>(), transformKql, name, additionalBinaryDataProperties);
         }
     }
 }
