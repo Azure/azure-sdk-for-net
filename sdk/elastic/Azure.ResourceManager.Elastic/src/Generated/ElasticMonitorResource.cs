@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Elastic
         {
             TryGetApiVersion(ResourceType, out string elasticMonitorApiVersion);
             _elasticMonitorResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Elastic", ResourceType.Namespace, Diagnostics);
-            _elasticMonitorResourcesRestClient = new ElasticMonitorResources(_elasticMonitorResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, elasticMonitorApiVersion ?? "2025-06-01");
+            _elasticMonitorResourcesRestClient = new ElasticMonitorResources(_elasticMonitorResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, elasticMonitorApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -203,7 +204,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -259,7 +260,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -315,7 +316,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -324,8 +325,9 @@ namespace Azure.ResourceManager.Elastic
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="softDelete"> Indicates whether to perform a soft delete. When set to true, the Azure resource (Liftr integration) only is deleted and not the Partner Cloud resource. When set to false (default), the resource is permanently deleted from both Azure and the Partner Cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? softDelete = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.Delete");
             scope.Start();
@@ -335,7 +337,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _elasticMonitorResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softDelete, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ElasticArmOperation operation = new ElasticArmOperation(_elasticMonitorResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -364,7 +366,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -373,8 +375,9 @@ namespace Azure.ResourceManager.Elastic
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="softDelete"> Indicates whether to perform a soft delete. When set to true, the Azure resource (Liftr integration) only is deleted and not the Partner Cloud resource. When set to false (default), the resource is permanently deleted from both Azure and the Partner Cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? softDelete = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _elasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.Delete");
             scope.Start();
@@ -384,7 +387,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _elasticMonitorResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _elasticMonitorResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softDelete, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ElasticArmOperation operation = new ElasticArmOperation(_elasticMonitorResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -413,7 +416,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -461,7 +464,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -509,7 +512,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -559,7 +562,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -609,7 +612,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -657,7 +660,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -705,7 +708,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -743,7 +746,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -781,7 +784,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -832,7 +835,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -883,7 +886,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -935,7 +938,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -987,7 +990,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1036,7 +1039,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1085,7 +1088,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1133,7 +1136,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1181,7 +1184,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1225,7 +1228,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1269,7 +1272,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1319,7 +1322,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1369,7 +1372,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1417,7 +1420,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1465,7 +1468,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1513,7 +1516,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1561,7 +1564,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1599,7 +1602,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1637,7 +1640,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1693,7 +1696,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1749,7 +1752,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1793,7 +1796,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1837,7 +1840,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1885,7 +1888,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1933,7 +1936,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1983,7 +1986,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2033,7 +2036,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2077,7 +2080,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2121,7 +2124,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2159,7 +2162,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2554,5 +2557,35 @@ namespace Azure.ResourceManager.Elastic
 
             return GetElasticTagRules().Get(ruleSetName, cancellationToken);
         }
+
+        /// <summary>
+        /// Delete an existing Elastic monitor resource from your Azure subscription, removing its observability and monitoring capabilities.
+        ///             Request Path./subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}.Operation Id.ElasticMonitorResources_Delete.Default Api Version.2025-06-01.Resource.<see cref="ElasticMonitorResource"/>.
+        /// </summary>
+        /// <param name="waitUntil"> if the method should wait to return until the long-running operation has completed on the service;  if it should return after starting the operation. For more information on long-running operations, please see  Azure.Core Long-Running Operation samples. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken)
+        {
+            return DeleteAsync(waitUntil: waitUntil, softDelete: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Delete an existing Elastic monitor resource from your Azure subscription, removing its observability and monitoring capabilities.
+        ///             Request Path./subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}.Operation Id.ElasticMonitorResources_Delete.Default Api Version.2025-06-01.Resource.<see cref="ElasticMonitorResource"/>.
+        /// </summary>
+        /// <param name="waitUntil"> if the method should wait to return until the long-running operation has completed on the service;  if it should return after starting the operation. For more information on long-running operations, please see  Azure.Core Long-Running Operation samples. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken)
+        {
+            return Delete(waitUntil: waitUntil, softDelete: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }
