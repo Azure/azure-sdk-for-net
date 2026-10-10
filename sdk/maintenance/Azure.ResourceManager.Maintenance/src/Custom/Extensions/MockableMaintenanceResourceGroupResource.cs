@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
 
         private ClientDiagnostics MaintenanceApplyUpdateClientDiagnostics => _maintenanceApplyUpdateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private MaintenanceApplyUpdate MaintenanceApplyUpdateRestClient => _maintenanceApplyUpdateRestClient ??= new MaintenanceApplyUpdate(MaintenanceApplyUpdateClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-10-01-preview");
+        private MaintenanceApplyUpdate MaintenanceApplyUpdateRestClient => _maintenanceApplyUpdateRestClient ??= new MaintenanceApplyUpdate(MaintenanceApplyUpdateClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-10-01-preview", resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics UpdatesClientDiagnostics => _updatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

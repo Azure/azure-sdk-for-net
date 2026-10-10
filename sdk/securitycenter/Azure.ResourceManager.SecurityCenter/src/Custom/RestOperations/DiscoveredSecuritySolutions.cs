@@ -25,9 +25,10 @@ namespace Azure.ResourceManager.SecurityCenter
             uri.AppendPath(ascLocation.ToString(), true);
             uri.AppendPath("/discoveredSecuritySolutions/", false);
             uri.AppendPath(discoveredSecuritySolutionName, true);
-            if (_apiVersion != null)
+            string apiVersion = _getApiVersion.Invoke(DiscoveredSecuritySolutionResource.ResourceType) ?? _apiVersion;
+            if (apiVersion != null)
             {
-                uri.AppendQuery("api-version", _apiVersion, true);
+                uri.AppendQuery("api-version", apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -46,9 +47,10 @@ namespace Azure.ResourceManager.SecurityCenter
             uri.AppendPath("/providers/Microsoft.Security/locations/", false);
             uri.AppendPath(ascLocation.ToString(), true);
             uri.AppendPath("/discoveredSecuritySolutions", false);
-            if (_apiVersion != null)
+            string apiVersion = _getApiVersion.Invoke(DiscoveredSecuritySolutionResource.ResourceType) ?? _apiVersion;
+            if (apiVersion != null)
             {
-                uri.AppendQuery("api-version", _apiVersion, true);
+                uri.AppendQuery("api-version", apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -69,9 +71,10 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
+            string apiVersion = _getApiVersion.Invoke(DiscoveredSecuritySolutionResource.ResourceType) ?? _apiVersion;
+            if (apiVersion != null)
             {
-                uri.UpdateQuery("api-version", _apiVersion);
+                uri.UpdateQuery("api-version", apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;

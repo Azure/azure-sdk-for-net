@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Mocking
             scope.Start();
             try
             {
-                var restClient = new ApplicationGateways(clientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+                var restClient = new ApplicationGateways(clientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01", resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Mocking
             scope.Start();
             try
             {
-                var restClient = new ApplicationGateways(clientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+                var restClient = new ApplicationGateways(clientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01", resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
