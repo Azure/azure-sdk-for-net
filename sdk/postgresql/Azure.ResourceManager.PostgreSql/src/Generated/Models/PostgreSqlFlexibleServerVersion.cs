@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerVersion : IEquatable<PostgreSqlFlexibleServerVersion>
     {
         private readonly string _value;
+        /// <summary> PostgreSQL 19. </summary>
+        private const string _19Value = "19";
         /// <summary> PostgreSQL 18. </summary>
         private const string EighteenValue = "18";
         /// <summary> PostgreSQL 17. </summary>
@@ -41,6 +43,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
             _value = value;
         }
+
+        /// <summary> PostgreSQL 19. </summary>
+        public static PostgreSqlFlexibleServerVersion _19 { get; } = new PostgreSqlFlexibleServerVersion(_19Value);
 
         /// <summary> PostgreSQL 18. </summary>
         public static PostgreSqlFlexibleServerVersion Eighteen { get; } = new PostgreSqlFlexibleServerVersion(EighteenValue);

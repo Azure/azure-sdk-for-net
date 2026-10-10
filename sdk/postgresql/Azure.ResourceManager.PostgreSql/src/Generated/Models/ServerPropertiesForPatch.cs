@@ -40,8 +40,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="replica"> Read replica properties of a server. Required only in case that you want to promote a server. </param>
         /// <param name="network"> Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer. </param>
         /// <param name="cluster"> Cluster properties of a server. </param>
+        /// <param name="fipsMode"> Indicates if FIPS (Federal Information Processing Standards) mode is enabled on the server. If not specified, the current value is preserved. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServerPropertiesForPatch(string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, string availabilityZone, PostgreSqlFlexibleServerCreateModeForUpdate? createMode, ResourceIdentifier sourceServerResourceId, PostgreSqlFlexibleServerReplicationRole? replicationRole, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerNetwork network, PostgreSqlFlexibleServerClusterProperties cluster, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServerPropertiesForPatch(string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, string availabilityZone, PostgreSqlFlexibleServerCreateModeForUpdate? createMode, ResourceIdentifier sourceServerResourceId, PostgreSqlFlexibleServerReplicationRole? replicationRole, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerNetwork network, PostgreSqlFlexibleServerClusterProperties cluster, FipsMode? fipsMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
@@ -59,6 +60,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Replica = replica;
             Network = network;
             Cluster = cluster;
+            FipsMode = fipsMode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -125,5 +127,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Cluster properties of a server. </summary>
         [WirePath("cluster")]
         public PostgreSqlFlexibleServerClusterProperties Cluster { get; set; }
+
+        /// <summary> Indicates if FIPS (Federal Information Processing Standards) mode is enabled on the server. If not specified, the current value is preserved. </summary>
+        [WirePath("fipsMode")]
+        public FipsMode? FipsMode { get; set; }
     }
 }
