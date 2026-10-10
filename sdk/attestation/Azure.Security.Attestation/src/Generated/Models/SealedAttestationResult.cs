@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Security.Attestation
 {
     /// <summary> The sealed result of an attestation operation. </summary>
-    internal partial class SealedAttestationResult
+    public partial class SealedAttestationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

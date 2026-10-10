@@ -365,6 +365,51 @@ namespace Azure.Security.Attestation
             }
         }
 
+        /// <summary>
+        /// Attest an Azure confidential or Trusted Launch virtual machine.
+        /// </summary>
+        /// <param name="attestationInfo">The attestation information collected inside the virtual machine, such as by the guest attestation library.</param>
+        /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
+        /// <returns>A <see cref="SealedAttestationResult"/> whose token is encrypted to the virtual machine's TPM.</returns>
+        /// <remarks>
+        /// The client cannot decrypt the token, so it does not validate it; see <see cref="SealedAttestationResult"/> for how to use it.
+        /// </remarks>
+        public virtual Response<SealedAttestationResult> AttestAzureGuest(BinaryData attestationInfo, CancellationToken cancellationToken = default)
+            => AttestAzureGuestInternalAsync(attestationInfo, false, cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// Attest an Azure confidential or Trusted Launch virtual machine.
+        /// </summary>
+        /// <param name="attestationInfo">The attestation information collected inside the virtual machine, such as by the guest attestation library.</param>
+        /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
+        /// <returns>A <see cref="SealedAttestationResult"/> whose token is encrypted to the virtual machine's TPM.</returns>
+        /// <remarks>
+        /// The client cannot decrypt the token, so it does not validate it; see <see cref="SealedAttestationResult"/> for how to use it.
+        /// </remarks>
+        public virtual async Task<Response<SealedAttestationResult>> AttestAzureGuestAsync(BinaryData attestationInfo, CancellationToken cancellationToken = default)
+            => await AttestAzureGuestInternalAsync(attestationInfo, true, cancellationToken).ConfigureAwait(false);
+
+        private async Task<Response<SealedAttestationResult>> AttestAzureGuestInternalAsync(BinaryData attestationInfo, bool async, CancellationToken cancellationToken)
+        {
+            Argument.AssertNotNull(attestationInfo, nameof(attestationInfo));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestAzureGuest)}");
+            scope.Start();
+            try
+            {
+                // The spec types attestationInfo as a string; the service expects the document Base64Url-encoded.
+                string encoded = Base64Url.Encode(attestationInfo.ToArray());
+                return async
+                    ? await _restClient.AttestAzureGuestAsync(encoded, cancellationToken).ConfigureAwait(false)
+                    : _restClient.AttestAzureGuest(encoded, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
         private static RuntimeData ToRuntimeData(AttestationData data)
             => data == null ? null : new RuntimeData { Data = data.BinaryData, DataType = data.DataIsJson ? DataType.JSON : DataType.Binary };
 

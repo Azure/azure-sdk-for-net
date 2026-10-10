@@ -13,6 +13,17 @@ namespace Azure.Security.Attestation
     public static partial class AttestationModelFactory
     {
 
+        /// <summary> The sealed result of an attestation operation. </summary>
+        /// <param name="token">
+        /// A sealed RFC 7519 JSON Web Token, the body of which is an AttestationResult
+        /// object.
+        /// </param>
+        /// <returns> A new <see cref="Attestation.SealedAttestationResult"/> instance for mocking. </returns>
+        public static SealedAttestationResult SealedAttestationResult(string token = default)
+        {
+            return new SealedAttestationResult(token, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Attestation response for Trusted Platform Module (TPM) attestation. </summary>
         /// <param name="data"> Protocol data containing attestation service response. </param>
         /// <returns> A new <see cref="Attestation.TpmAttestationResponse"/> instance for mocking. </returns>

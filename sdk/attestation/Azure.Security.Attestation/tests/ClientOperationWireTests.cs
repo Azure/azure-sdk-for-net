@@ -256,6 +256,44 @@ namespace Azure.Security.Attestation.Tests
 
         [TestCase(false)]
         [TestCase(true)]
+        public async System.Threading.Tasks.Task AttestAzureGuest(bool async)
+        {
+            var captured = new List<CapturedRequest>();
+            const string Sealed = "eyJlbmNyeXB0ZWRJbm5lcktleSI6IkFBQUEifQ";
+            var client = new AttestationClient(new Uri(Endpoint), new MockCredential(), Options(captured, $"{{\"token\":\"{Sealed}\"}}"));
+            const string AttestationInfo = "{\"AttestationProtocolVersion\":\"2.0\",\"TpmInfo\":{}}";
+
+            SealedAttestationResult result = async
+                ? (await client.AttestAzureGuestAsync(BinaryData.FromString(AttestationInfo))).Value
+                : client.AttestAzureGuest(BinaryData.FromString(AttestationInfo)).Value;
+
+            CapturedRequest request = captured.Single();
+            Assert.AreEqual(RequestMethod.Post, request.Method);
+            Assert.AreEqual($"{Endpoint}/attest/AzureGuest?{ApiVersion}", request.Uri);
+            Assert.AreEqual("application/json", request.ContentType);
+            AssertJsonEqual($@"{{""attestationInfo"":""{Base64Url.EncodeString(AttestationInfo)}""}}", request.Body);
+            Assert.AreEqual(Sealed, result.Token);
+        }
+
+        [Test]
+        public void AttestAzureGuestRejectsNullArgument()
+        {
+            var captured = new List<CapturedRequest>();
+            var client = new AttestationClient(new Uri(Endpoint), new MockCredential(), Options(captured, "{}"));
+
+            Assert.AreEqual("attestationInfo", Assert.Throws<ArgumentNullException>(() => client.AttestAzureGuest(null)).ParamName);
+            Assert.AreEqual("attestationInfo", Assert.ThrowsAsync<ArgumentNullException>(() => client.AttestAzureGuestAsync(null)).ParamName);
+            Assert.IsEmpty(captured);
+        }
+
+        [Test]
+        public void SealedAttestationResultFactory()
+        {
+            Assert.AreEqual("sealed", AttestationModelFactory.SealedAttestationResult("sealed").Token);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
         public async System.Threading.Tasks.Task GetOpenIdMetadata(bool async)
         {
             var captured = new List<CapturedRequest>();

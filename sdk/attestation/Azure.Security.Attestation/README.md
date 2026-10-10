@@ -145,7 +145,7 @@ Currently, MAA supports the following Trusted Execution environments:
 * Tpm - A Virtualization Based Security environment where the Trusted Platform Module of the processor is used to provide the attestation evidence.
 * SevSnpVm - A confidential virtual machine protected by AMD SEV-SNP. Attested with `AttestSevSnpVm`.
 * TdxVm - A confidential virtual machine protected by Intel(tm) TDX. Attested with `AttestTdxVm`, which requires service version `V2025_06_01` (the default) or later.
-* AzureGuest - An Azure confidential or Trusted Launch virtual machine. This library manages its attestation policy; to attest the virtual machine itself, use the [guest attestation library](https://github.com/Azure/confidential-computing-cvm-guest-attestation) or the Guest Attestation VM extension, which run inside the virtual machine.
+* AzureGuest - An Azure confidential or Trusted Launch virtual machine. Attested with `AttestAzureGuest`, which sends the attestation information collected inside the virtual machine, for example by the [guest attestation library](https://github.com/Azure/confidential-computing-cvm-guest-attestation), and returns the token sealed to the virtual machine's TPM. Only that virtual machine can decrypt the token; the decrypted token can then be validated and read with `AttestationToken`.
 
 ### Runtime Data and Inittime Data
 

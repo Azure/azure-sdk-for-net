@@ -17,6 +17,7 @@ namespace Azure.Security.Attestation
     [ModelReaderWriterBuildable(typeof(AttestationResult))]
     [ModelReaderWriterBuildable(typeof(PolicyCertificatesModificationResult))]
     [ModelReaderWriterBuildable(typeof(PolicyModificationResult))]
+    [ModelReaderWriterBuildable(typeof(SealedAttestationResult))]
     [ModelReaderWriterBuildable(typeof(StoredAttestationPolicy))]
     [ModelReaderWriterBuildable(typeof(TpmAttestationRequest))]
     [ModelReaderWriterBuildable(typeof(TpmAttestationResponse))]
