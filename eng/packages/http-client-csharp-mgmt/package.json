@@ -81,6 +81,17 @@
     "vitest": "^4.1.9"
   },
   "overrides": {
+    "marked": "18.0.14",
+    "@inquirer/ansi": "2.0.8",
+    "@inquirer/checkbox": "5.2.5",
+    "@inquirer/confirm": "6.3.2",
+    "@inquirer/core": "12.0.3",
+    "@inquirer/input": "5.1.6",
+    "@inquirer/select": "5.2.5",
+    "@inquirer/type": "4.1.1",
+    "@typespec/spec-coverage-sdk": {
+      "@types/node@^26.3.0": "26.6.4"
+    },
     "body-parser": {
       "content-type": "2.0.0"
     },
