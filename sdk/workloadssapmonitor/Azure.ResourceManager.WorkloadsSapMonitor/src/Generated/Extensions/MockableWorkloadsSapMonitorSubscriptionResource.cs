@@ -36,7 +36,13 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Mocking
 
         private ClientDiagnostics MonitorsClientDiagnostics => _monitorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadsSapMonitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Monitors MonitorsRestClient => _monitorsRestClient ??= new Monitors(MonitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-02-01-preview");
+        private Monitors MonitorsRestClient => _monitorsRestClient ??= new Monitors(
+            MonitorsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2024-02-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// Gets a list of SAP monitors in the specified subscription. The operations returns various properties of each SAP monitor.

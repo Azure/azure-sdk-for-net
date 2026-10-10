@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
         {
             TryGetApiVersion(ResourceType, out string sapMonitorApiVersion);
             _monitorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadsSapMonitor", ResourceType.Namespace, Diagnostics);
-            _monitorsRestClient = new Monitors(_monitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sapMonitorApiVersion ?? "2024-02-01-preview");
+            _monitorsRestClient = new Monitors(
+                _monitorsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                sapMonitorApiVersion ?? "2024-02-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

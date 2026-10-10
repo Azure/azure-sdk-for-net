@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.VerifiedId
         {
             TryGetApiVersion(VerifiedIdAuthorityResource.ResourceType, out string verifiedIdAuthorityApiVersion);
             _authoritiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.VerifiedId", VerifiedIdAuthorityResource.ResourceType.Namespace, Diagnostics);
-            _authoritiesRestClient = new Authorities(_authoritiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, verifiedIdAuthorityApiVersion ?? "2024-01-26-preview");
+            _authoritiesRestClient = new Authorities(
+                _authoritiesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                verifiedIdAuthorityApiVersion ?? "2024-01-26-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

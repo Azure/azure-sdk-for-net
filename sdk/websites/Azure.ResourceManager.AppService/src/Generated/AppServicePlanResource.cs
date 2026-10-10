@@ -52,7 +52,13 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string appServicePlanApiVersion);
             _appServicePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _appServicePlansRestClient = new AppServicePlans(_appServicePlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appServicePlanApiVersion ?? "2026-03-15");
+            _appServicePlansRestClient = new AppServicePlans(
+                _appServicePlansClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                appServicePlanApiVersion ?? "2026-03-15",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

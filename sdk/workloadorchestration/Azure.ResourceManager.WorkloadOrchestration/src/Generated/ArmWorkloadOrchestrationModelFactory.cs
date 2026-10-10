@@ -293,14 +293,14 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <returns> A new <see cref="Models.EdgeJobContent"/> instance for mocking. </returns>
         public static EdgeJobContent EdgeJobContent(string jobType = default)
         {
-            return new UnknownEdgeJobContent(default, default);
+            return new UnknownEdgeJobContent(jobType is null ? default : new EdgeJobType(jobType), default);
         }
 
         /// <param name="parameterSolutionVersionId"> Solution Version ARM Id. </param>
         /// <returns> A new <see cref="Models.DeployJobContent"/> instance for mocking. </returns>
         public static DeployJobContent DeployJobContent(ResourceIdentifier parameterSolutionVersionId = default)
         {
-            return new DeployJobContent(default, default, parameterSolutionVersionId is null ? default : new InstallSolutionContent(parameterSolutionVersionId, default));
+            return new DeployJobContent(EdgeJobType.Deploy, default, parameterSolutionVersionId is null ? default : new InstallSolutionContent(parameterSolutionVersionId, default));
         }
 
         /// <summary> Install Solution Parameter. </summary>
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <returns> A new <see cref="Models.EdgeJobStepStatistics"/> instance for mocking. </returns>
         public static EdgeJobStepStatistics EdgeJobStepStatistics(string statisticsType = default)
         {
-            return new UnknownEdgeJobStepStatistics(default, default);
+            return new UnknownEdgeJobStepStatistics(statisticsType is null ? default : new EdgeJobType(statisticsType), default);
         }
 
         /// <summary> Deploy statistics for a job step, including total, success, and failed counts. </summary>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <returns> A new <see cref="Models.DeployJobStepStatistics"/> instance for mocking. </returns>
         public static DeployJobStepStatistics DeployJobStepStatistics(int? totalCount = default, int? successCount = default, int? failedCount = default)
         {
-            return new DeployJobStepStatistics(default, default, totalCount, successCount, failedCount);
+            return new DeployJobStepStatistics(EdgeJobType.Deploy, default, totalCount, successCount, failedCount);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

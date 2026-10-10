@@ -66,31 +66,73 @@ namespace Azure.ResourceManager.AppService.Mocking
 
         private ClientDiagnostics AppServiceEnvironmentResourcesClientDiagnostics => _appServiceEnvironmentResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AppServiceEnvironmentResources AppServiceEnvironmentResourcesRestClient => _appServiceEnvironmentResourcesRestClient ??= new AppServiceEnvironmentResources(AppServiceEnvironmentResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
+        private AppServiceEnvironmentResources AppServiceEnvironmentResourcesRestClient => _appServiceEnvironmentResourcesRestClient ??= new AppServiceEnvironmentResources(
+            AppServiceEnvironmentResourcesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-03-15",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics AppServicePlansClientDiagnostics => _appServicePlansClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AppServicePlans AppServicePlansRestClient => _appServicePlansRestClient ??= new AppServicePlans(AppServicePlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
+        private AppServicePlans AppServicePlansRestClient => _appServicePlansRestClient ??= new AppServicePlans(
+            AppServicePlansClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-03-15",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics CertificatesClientDiagnostics => _certificatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Certificates CertificatesRestClient => _certificatesRestClient ??= new Certificates(CertificatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
+        private Certificates CertificatesRestClient => _certificatesRestClient ??= new Certificates(
+            CertificatesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-03-15",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics KubeEnvironmentsClientDiagnostics => _kubeEnvironmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private KubeEnvironments KubeEnvironmentsRestClient => _kubeEnvironmentsRestClient ??= new KubeEnvironments(KubeEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
+        private KubeEnvironments KubeEnvironmentsRestClient => _kubeEnvironmentsRestClient ??= new KubeEnvironments(
+            KubeEnvironmentsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-03-15",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics SitesClientDiagnostics => _sitesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Sites SitesRestClient => _sitesRestClient ??= new Sites(SitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
+        private Sites SitesRestClient => _sitesRestClient ??= new Sites(
+            SitesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-03-15",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics StaticSiteARMResourcesClientDiagnostics => _staticSiteARMResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StaticSiteARMResources StaticSiteARMResourcesRestClient => _staticSiteARMResourcesRestClient ??= new StaticSiteARMResources(StaticSiteARMResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
+        private StaticSiteARMResources StaticSiteARMResourcesRestClient => _staticSiteARMResourcesRestClient ??= new StaticSiteARMResources(
+            StaticSiteARMResourcesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-03-15",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics AiGatewaysClientDiagnostics => _aiGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AiGateways AiGatewaysRestClient => _aiGatewaysRestClient ??= new AiGateways(AiGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
+        private AiGateways AiGatewaysRestClient => _aiGatewaysRestClient ??= new AiGateways(
+            AiGatewaysClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-03-15",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics WebClientClientDiagnostics => _webClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

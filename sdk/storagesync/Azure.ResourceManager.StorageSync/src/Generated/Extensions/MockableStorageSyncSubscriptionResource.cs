@@ -40,7 +40,13 @@ namespace Azure.ResourceManager.StorageSync.Mocking
 
         private ClientDiagnostics StorageSyncServicesClientDiagnostics => _storageSyncServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageSync.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StorageSyncServices StorageSyncServicesRestClient => _storageSyncServicesRestClient ??= new StorageSyncServices(StorageSyncServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01");
+        private StorageSyncServices StorageSyncServicesRestClient => _storageSyncServicesRestClient ??= new StorageSyncServices(
+            StorageSyncServicesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-12-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics StorageSyncServicesOperationGroupClientDiagnostics => _storageSyncServicesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageSync.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
