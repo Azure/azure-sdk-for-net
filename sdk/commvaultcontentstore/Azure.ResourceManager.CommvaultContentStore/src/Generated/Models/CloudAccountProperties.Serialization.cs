@@ -93,15 +93,20 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 writer.WritePropertyName("ssoUrl"u8);
                 writer.WriteStringValue(SsoUri);
             }
-            if (Optional.IsDefined(BackupAdminOnCcaCreate))
+            if (Optional.IsDefined(Company))
             {
-                writer.WritePropertyName("backupAdminOnCcaCreate"u8);
-                writer.WriteObjectValue(BackupAdminOnCcaCreate, options);
+                writer.WritePropertyName("company"u8);
+                writer.WriteObjectValue(Company, options);
             }
-            if (Optional.IsDefined(MultiPersonAuthorizationOnCcaCreate))
+            if (Optional.IsCollectionDefined(RoleAssignmentsOnCcaCreate))
             {
-                writer.WritePropertyName("multiPersonAuthorizationOnCcaCreate"u8);
-                writer.WriteObjectValue(MultiPersonAuthorizationOnCcaCreate, options);
+                writer.WritePropertyName("roleAssignmentsOnCcaCreate"u8);
+                writer.WriteStartArray();
+                foreach (CommvaultRoleAssignment item in RoleAssignmentsOnCcaCreate)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -149,8 +154,8 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             CommvaultUserDetails user = default;
             ResourceProvisioningState? provisioningState = default;
             string ssoUri = default;
-            CommvaultEntityInfo backupAdminOnCcaCreate = default;
-            CommvaultEntityInfo multiPersonAuthorizationOnCcaCreate = default;
+            CompanyProfile company = default;
+            IList<CommvaultRoleAssignment> roleAssignmentsOnCcaCreate = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -178,22 +183,27 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     ssoUri = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("backupAdminOnCcaCreate"u8))
+                if (prop.NameEquals("company"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    backupAdminOnCcaCreate = CommvaultEntityInfo.DeserializeCommvaultEntityInfo(prop.Value, options);
+                    company = CompanyProfile.DeserializeCompanyProfile(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("multiPersonAuthorizationOnCcaCreate"u8))
+                if (prop.NameEquals("roleAssignmentsOnCcaCreate"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    multiPersonAuthorizationOnCcaCreate = CommvaultEntityInfo.DeserializeCommvaultEntityInfo(prop.Value, options);
+                    List<CommvaultRoleAssignment> array = new List<CommvaultRoleAssignment>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(CommvaultRoleAssignment.DeserializeCommvaultRoleAssignment(item, options));
+                    }
+                    roleAssignmentsOnCcaCreate = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -206,8 +216,8 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 user,
                 provisioningState,
                 ssoUri,
-                backupAdminOnCcaCreate,
-                multiPersonAuthorizationOnCcaCreate,
+                company,
+                roleAssignmentsOnCcaCreate ?? new ChangeTrackingList<CommvaultRoleAssignment>(),
                 additionalBinaryDataProperties);
         }
     }

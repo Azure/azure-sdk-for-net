@@ -85,20 +85,20 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             writer.WriteStringValue(Plan);
             writer.WritePropertyName("resources"u8);
             writer.WriteObjectValue(Resources, options);
-            if (options.Format != "W" && Optional.IsDefined(ProtectionStatus))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("protectionStatus"u8);
-                writer.WriteStringValue(ProtectionStatus.Value.ToString());
+                writer.WriteStringValue(ProtectionStatus.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfProtectedItems))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("numberOfProtectedItems"u8);
-                writer.WriteNumberValue(NumberOfProtectedItems.Value);
+                writer.WriteNumberValue(NumberOfProtectedItems);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastBackUpTime))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("lastBackUpTime"u8);
-                writer.WriteNumberValue(LastBackUpTime.Value);
+                writer.WriteNumberValue(LastBackUpTime);
             }
             if (options.Format != "W" && Optional.IsDefined(BackupActivityStatus))
             {
@@ -155,9 +155,9 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             string dataSourceType = default;
             string plan = default;
             ProtectionGroupResources resources = default;
-            CommvaultProtectionStatus? protectionStatus = default;
-            int? numberOfProtectedItems = default;
-            long? lastBackUpTime = default;
+            CommvaultProtectionStatus protectionStatus = default;
+            int numberOfProtectedItems = default;
+            long lastBackUpTime = default;
             string backupActivityStatus = default;
             ResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -180,28 +180,16 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 }
                 if (prop.NameEquals("protectionStatus"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     protectionStatus = new CommvaultProtectionStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("numberOfProtectedItems"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     numberOfProtectedItems = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("lastBackUpTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     lastBackUpTime = prop.Value.GetInt64();
                     continue;
                 }

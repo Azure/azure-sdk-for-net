@@ -90,8 +90,18 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 throw new FormatException($"The model {nameof(ActivateSaaSParameterContent)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("saaSGuid"u8);
-            writer.WriteStringValue(SaaSGuid);
+            writer.WritePropertyName("saasGuid"u8);
+            writer.WriteStringValue(SaasGuid);
+            if (Optional.IsDefined(PublisherId))
+            {
+                writer.WritePropertyName("publisherId"u8);
+                writer.WriteStringValue(PublisherId);
+            }
+            if (Optional.IsDefined(ActivateSaaSRequestParam))
+            {
+                writer.WritePropertyName("activateSaaSRequestParam"u8);
+                writer.WriteObjectValue(ActivateSaaSRequestParam, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,13 +144,29 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 return null;
             }
-            string saaSGuid = default;
+            string saasGuid = default;
+            string publisherId = default;
+            ActivateSaaSRequestParam activateSaaSRequestParam = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("saaSGuid"u8))
+                if (prop.NameEquals("saasGuid"u8))
                 {
-                    saaSGuid = prop.Value.GetString();
+                    saasGuid = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("publisherId"u8))
+                {
+                    publisherId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("activateSaaSRequestParam"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    activateSaaSRequestParam = ActivateSaaSRequestParam.DeserializeActivateSaaSRequestParam(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +174,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ActivateSaaSParameterContent(saaSGuid, additionalBinaryDataProperties);
+            return new ActivateSaaSParameterContent(saasGuid, publisherId, activateSaaSRequestParam, additionalBinaryDataProperties);
         }
     }
 }
