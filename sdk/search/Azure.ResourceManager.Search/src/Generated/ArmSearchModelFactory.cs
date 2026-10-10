@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <returns> A new <see cref="Models.SearchDataNoneIdentity"/> instance for mocking. </returns>
         public static SearchDataNoneIdentity SearchDataNoneIdentity()
         {
-            return new SearchDataNoneIdentity(default, default);
+            return new SearchDataNoneIdentity("#Microsoft.Azure.Search.DataNoneIdentity", default);
         }
 
         /// <summary> Specifies the user assigned identity to use. </summary>
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <returns> A new <see cref="Models.SearchDataUserAssignedIdentity"/> instance for mocking. </returns>
         public static SearchDataUserAssignedIdentity SearchDataUserAssignedIdentity(ResourceIdentifier userAssignedIdentity = default, string federatedIdentityClientId = default)
         {
-            return new SearchDataUserAssignedIdentity(default, default, userAssignedIdentity, federatedIdentityClientId);
+            return new SearchDataUserAssignedIdentity("#Microsoft.Azure.Search.DataUserAssignedIdentity", default, userAssignedIdentity, federatedIdentityClientId);
         }
 
         /// <summary> Describes the Azure Active Directory application credentials required to access an Azure Key Vault. </summary>

@@ -45,6 +45,10 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
 
             var services = new ServiceCollection();
 
+            // Durable tasks and recovery are opt-in. Registering a task alone does not start the
+            // task engine, resolve task storage, or run recovery scans.
+            services.SetResilientTasksEnabled();
+
             // Inject a REAL OpenAI Responses client as the upstream model. In production this
             // points at your Foundry/OpenAI endpoint; tests inject a mock transport so the
             // same producer code runs deterministically offline. See CreateModelClient below.

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.DryrunContent"/> instance for mocking. </returns>
         public static DryrunContent DryrunContent(string actionName = default)
         {
-            return new UnknownDryrunContent(default, default);
+            return new UnknownDryrunContent(actionName is null ? default : new DryrunActionName(actionName), default);
         }
 
         /// <param name="targetService"> The target service properties. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public static CreateOrUpdateDryrunContent CreateOrUpdateDryrunContent(TargetServiceBaseInfo targetService = default, AuthBaseInfo authInfo = default, LinkerClientType? clientType = default, string provisioningState = default, VnetSolutionType? solutionType = default, LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior = default, ResourceIdentifier secretStoreKeyVaultId = default, string keyVaultSecretName = default, string scope = default, LinkerPublicNetworkSolution publicNetworkSolution = default, LinkerConfigurationInfo configurationInfo = default)
         {
             return new CreateOrUpdateDryrunContent(
-                default,
+                DryrunActionName.CreateOrUpdate,
                 default,
                 targetService,
                 authInfo,
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.TargetServiceBaseInfo"/> instance for mocking. </returns>
         public static TargetServiceBaseInfo TargetServiceBaseInfo(string @type = default)
         {
-            return new UnknownTargetServiceBase(default, default);
+            return new UnknownTargetServiceBase(@type is null ? default : new TargetServiceType(@type), default);
         }
 
         /// <summary> The azure resource info when target service type is AzureResource. </summary>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.AzureResourceInfo"/> instance for mocking. </returns>
         public static AzureResourceInfo AzureResourceInfo(ResourceIdentifier id = default, AzureResourceBaseProperties resourceProperties = default)
         {
-            return new AzureResourceInfo(default, default, id, resourceProperties);
+            return new AzureResourceInfo(TargetServiceType.AzureResource, default, id, resourceProperties);
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.AzureResourceBaseProperties"/> instance for mocking. </returns>
         public static AzureResourceBaseProperties AzureResourceBaseProperties(string @type = default)
         {
-            return new UnknownAzureResourcePropertiesBase(default, default);
+            return new UnknownAzureResourcePropertiesBase(@type is null ? default : new AzureResourceType(@type), default);
         }
 
         /// <summary> The resource properties when type is Azure Key Vault. </summary>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.AzureKeyVaultProperties"/> instance for mocking. </returns>
         public static AzureKeyVaultProperties AzureKeyVaultProperties(bool? doesConnectAsKubernetesCsiDriver = default)
         {
-            return new AzureKeyVaultProperties(default, default, doesConnectAsKubernetesCsiDriver);
+            return new AzureKeyVaultProperties(AzureResourceType.KeyVault, default, doesConnectAsKubernetesCsiDriver);
         }
 
         /// <summary> The resource properties when type is Azure App Configuration. </summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.AzureAppConfigProperties"/> instance for mocking. </returns>
         public static AzureAppConfigProperties AzureAppConfigProperties(bool? isConnectedWithKubernetesExtension = default)
         {
-            return new AzureAppConfigProperties(default, default, isConnectedWithKubernetesExtension);
+            return new AzureAppConfigProperties(AzureResourceType.AppConfig, default, isConnectedWithKubernetesExtension);
         }
 
         /// <summary> The service properties when target service type is ConfluentBootstrapServer. </summary>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.ConfluentBootstrapServerInfo"/> instance for mocking. </returns>
         public static ConfluentBootstrapServerInfo ConfluentBootstrapServerInfo(string endpoint = default)
         {
-            return new ConfluentBootstrapServerInfo(default, default, endpoint);
+            return new ConfluentBootstrapServerInfo(TargetServiceType.ConfluentBootstrapServer, default, endpoint);
         }
 
         /// <summary> The service properties when target service type is FabricPlatform. </summary>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.FabricPlatformTargetService"/> instance for mocking. </returns>
         public static FabricPlatformTargetService FabricPlatformTargetService(string endpoint = default)
         {
-            return new FabricPlatformTargetService(default, default, endpoint);
+            return new FabricPlatformTargetService(TargetServiceType.FabricPlatform, default, endpoint);
         }
 
         /// <summary> The service properties when target service type is SelfHostedServer. </summary>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.SelfHostedServerTargetService"/> instance for mocking. </returns>
         public static SelfHostedServerTargetService SelfHostedServerTargetService(string endpoint = default)
         {
-            return new SelfHostedServerTargetService(default, default, endpoint);
+            return new SelfHostedServerTargetService(TargetServiceType.SelfHostedServer, default, endpoint);
         }
 
         /// <summary> The service properties when target service type is ConfluentSchemaRegistry. </summary>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.ConfluentSchemaRegistryInfo"/> instance for mocking. </returns>
         public static ConfluentSchemaRegistryInfo ConfluentSchemaRegistryInfo(string endpoint = default)
         {
-            return new ConfluentSchemaRegistryInfo(default, default, endpoint);
+            return new ConfluentSchemaRegistryInfo(TargetServiceType.ConfluentSchemaRegistry, default, endpoint);
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.AuthBaseInfo"/> instance for mocking. </returns>
         public static AuthBaseInfo AuthBaseInfo(string authType = default, LinkerAuthMode? authMode = default)
         {
-            return new UnknownAuthInfoBase(default, authMode, default);
+            return new UnknownAuthInfoBase(authType is null ? default : new LinkerAuthType(authType), authMode, default);
         }
 
         /// <summary> The access key directly from target resource properties, which target service is Azure Resource, such as Microsoft.Storage. </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         {
             permissions ??= new ChangeTrackingList<AccessKeyPermissions>();
 
-            return new AccessKeyInfoBase(default, authMode, default, (permissions ?? new ChangeTrackingList<AccessKeyPermissions>()).ToList());
+            return new AccessKeyInfoBase(LinkerAuthType.AccessKey, authMode, default, (permissions ?? new ChangeTrackingList<AccessKeyPermissions>()).ToList());
         }
 
         /// <summary> The authentication info when authType is secret. </summary>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.SecretAuthInfo"/> instance for mocking. </returns>
         public static SecretAuthInfo SecretAuthInfo(LinkerAuthMode? authMode = default, string name = default, SecretBaseInfo secretInfo = default)
         {
-            return new SecretAuthInfo(default, authMode, default, name, secretInfo);
+            return new SecretAuthInfo(LinkerAuthType.Secret, authMode, default, name, secretInfo);
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.SecretBaseInfo"/> instance for mocking. </returns>
         public static SecretBaseInfo SecretBaseInfo(string secretType = default)
         {
-            return new UnknownSecretInfoBase(default, default);
+            return new UnknownSecretInfoBase(secretType is null ? default : new LinkerSecretType(secretType), default);
         }
 
         /// <summary> The secret info when type is rawValue. It's for scenarios that user input the secret. </summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.RawValueSecretInfo"/> instance for mocking. </returns>
         public static RawValueSecretInfo RawValueSecretInfo(string value = default)
         {
-            return new RawValueSecretInfo(default, default, value);
+            return new RawValueSecretInfo(LinkerSecretType.RawValue, default, value);
         }
 
         /// <summary> The secret info when type is keyVaultSecretReference. It's for scenario that user provides a secret stored in user's keyvault and source is Azure Kubernetes. The key Vault's resource id is linked to secretStore.keyVaultId. </summary>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.KeyVaultSecretReferenceSecretInfo"/> instance for mocking. </returns>
         public static KeyVaultSecretReferenceSecretInfo KeyVaultSecretReferenceSecretInfo(string name = default, string version = default)
         {
-            return new KeyVaultSecretReferenceSecretInfo(default, default, name, version);
+            return new KeyVaultSecretReferenceSecretInfo(LinkerSecretType.KeyVaultSecretReference, default, name, version);
         }
 
         /// <summary> The secret info when type is keyVaultSecretUri. It's for scenario that user provides a secret stored in user's keyvault and source is Web App, Spring Cloud or Container App. </summary>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.KeyVaultSecretUriSecretInfo"/> instance for mocking. </returns>
         public static KeyVaultSecretUriSecretInfo KeyVaultSecretUriSecretInfo(string value = default)
         {
-            return new KeyVaultSecretUriSecretInfo(default, default, value);
+            return new KeyVaultSecretUriSecretInfo(LinkerSecretType.KeyVaultSecretUri, default, value);
         }
 
         /// <summary> The authentication info when authType is userAssignedIdentity. </summary>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             roles ??= new ChangeTrackingList<string>();
 
             return new UserAssignedIdentityAuthInfo(
-                default,
+                LinkerAuthType.UserAssignedIdentity,
                 authMode,
                 default,
                 userName,
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             roles ??= new ChangeTrackingList<string>();
 
             return new SystemAssignedIdentityAuthInfo(
-                default,
+                LinkerAuthType.SystemAssignedIdentity,
                 authMode,
                 default,
                 userName,
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             roles ??= new ChangeTrackingList<string>();
 
             return new ServicePrincipalSecretAuthInfo(
-                default,
+                LinkerAuthType.ServicePrincipalSecret,
                 authMode,
                 default,
                 userName,
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             roles ??= new ChangeTrackingList<string>();
 
             return new ServicePrincipalCertificateAuthInfo(
-                default,
+                LinkerAuthType.ServicePrincipalCertificate,
                 authMode,
                 default,
                 clientId,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             roles ??= new ChangeTrackingList<string>();
 
             return new UserAccountAuthInfo(
-                default,
+                LinkerAuthType.UserAccount,
                 authMode,
                 default,
                 userName,
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public static EasyAuthMicrosoftEntraIdAuthInfo EasyAuthMicrosoftEntraIdAuthInfo(LinkerAuthMode? authMode = default, string clientId = default, string secret = default, LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior = default)
         {
             return new EasyAuthMicrosoftEntraIdAuthInfo(
-                default,
+                LinkerAuthType.EasyAuthMicrosoftEntraID,
                 authMode,
                 default,
                 clientId,
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.DryrunPrerequisiteResult"/> instance for mocking. </returns>
         public static DryrunPrerequisiteResult DryrunPrerequisiteResult(string @type = default)
         {
-            return new UnknownDryrunPrerequisiteResult(default, default);
+            return new UnknownDryrunPrerequisiteResult(@type is null ? default : new DryrunPrerequisiteResultType(@type), default);
         }
 
         /// <summary> The represent of basic error. </summary>
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.BasicErrorDryrunPrerequisiteResult"/> instance for mocking. </returns>
         public static BasicErrorDryrunPrerequisiteResult BasicErrorDryrunPrerequisiteResult(string code = default, string message = default)
         {
-            return new BasicErrorDryrunPrerequisiteResult(default, default, code, message);
+            return new BasicErrorDryrunPrerequisiteResult(DryrunPrerequisiteResultType.BasicError, default, code, message);
         }
 
         /// <summary> The represent of missing permissions. </summary>
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         {
             permissions ??= new ChangeTrackingList<string>();
 
-            return new PermissionsMissingDryrunPrerequisiteResult(default, default, scope, (permissions ?? new ChangeTrackingList<string>()).ToList(), recommendedRole);
+            return new PermissionsMissingDryrunPrerequisiteResult(DryrunPrerequisiteResultType.PermissionsMissing, default, scope, (permissions ?? new ChangeTrackingList<string>()).ToList(), recommendedRole);
         }
 
         /// <summary> The preview of the operations for creation. </summary>

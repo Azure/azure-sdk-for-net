@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Commerce.Models
         {
             excludedMeterIds ??= new ChangeTrackingList<Guid>();
 
-            return new CommerceMonetaryCredit(default, effectiveOn, default, credit, (excludedMeterIds ?? new ChangeTrackingList<Guid>()).ToList());
+            return new CommerceMonetaryCredit(OfferTermInfoName.MonetaryCredit, effectiveOn, default, credit, (excludedMeterIds ?? new ChangeTrackingList<Guid>()).ToList());
         }
 
         /// <summary> Indicates that a monetary commitment is required for this offer. </summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Commerce.Models
             tieredDiscount ??= new ChangeTrackingDictionary<string, decimal>();
             excludedMeterIds ??= new ChangeTrackingList<Guid>();
 
-            return new CommerceMonetaryCommitment(default, effectiveOn, default, tieredDiscount ?? new ChangeTrackingDictionary<string, decimal>(), (excludedMeterIds ?? new ChangeTrackingList<Guid>()).ToList());
+            return new CommerceMonetaryCommitment(OfferTermInfoName.MonetaryCommitment, effectiveOn, default, tieredDiscount ?? new ChangeTrackingDictionary<string, decimal>(), (excludedMeterIds ?? new ChangeTrackingList<Guid>()).ToList());
         }
 
         /// <summary> Indicates a recurring charge is present for this offer. </summary>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Commerce.Models
         /// <returns> A new <see cref="Models.CommerceRecurringCharge"/> instance for mocking. </returns>
         public static CommerceRecurringCharge CommerceRecurringCharge(DateTimeOffset? effectiveOn = default, int? amount = default)
         {
-            return new CommerceRecurringCharge(default, effectiveOn, default, amount);
+            return new CommerceRecurringCharge(OfferTermInfoName.RecurringCharge, effectiveOn, default, amount);
         }
 
         /// <summary> Detailed information about the meter. </summary>

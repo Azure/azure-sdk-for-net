@@ -33,6 +33,7 @@ public sealed class CancelBeforeContextProtocolTests
             handler,
             configureTestServices: services =>
             {
+                services.SetResilientTasksEnabled();
                 services.AddSingleton(state);
                 services.AddSingleton<ResponsesCancellationSignalProvider>(
                     state.CancellationProvider);

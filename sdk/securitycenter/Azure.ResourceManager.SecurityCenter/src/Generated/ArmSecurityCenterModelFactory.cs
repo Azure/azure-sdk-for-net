@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.SecurityAlertResourceIdentifier"/> instance for mocking. </returns>
         public static SecurityAlertResourceIdentifier SecurityAlertResourceIdentifier(string @type = default)
         {
-            return new UnknownSecurityAlertResourceIdentifier(default, default);
+            return new UnknownSecurityAlertResourceIdentifier(@type is null ? default : new ResourceIdentifierType(@type), default);
         }
 
         /// <summary> Azure resource identifier. </summary>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.AzureResourceIdentifier"/> instance for mocking. </returns>
         public static AzureResourceIdentifier AzureResourceIdentifier(ResourceIdentifier azureResourceId = default)
         {
-            return new AzureResourceIdentifier(default, default, azureResourceId);
+            return new AzureResourceIdentifier(ResourceIdentifierType.AzureResource, default, azureResourceId);
         }
 
         /// <summary> Represents a Log Analytics workspace scope identifier. </summary>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static LogAnalyticsIdentifier LogAnalyticsIdentifier(Guid? workspaceId = default, string workspaceSubscriptionId = default, string workspaceResourceGroup = default, Guid? agentId = default)
         {
             return new LogAnalyticsIdentifier(
-                default,
+                ResourceIdentifierType.LogAnalytics,
                 default,
                 workspaceId,
                 workspaceSubscriptionId,
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new SecurityAlertSimulatorRequestProperties(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
+            return new SecurityAlertSimulatorRequestProperties(kind is null ? default : new SecurityCenterKind(kind), additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         /// <summary> Simulate alerts according to this bundles. </summary>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
             bundles ??= new ChangeTrackingList<SecurityAlertSimulatorBundleType>();
 
-            return new SecurityAlertSimulatorBundlesRequestProperties(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), (bundles ?? new ChangeTrackingList<SecurityAlertSimulatorBundleType>()).ToList());
+            return new SecurityAlertSimulatorBundlesRequestProperties(SecurityCenterKind.Bundles, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), (bundles ?? new ChangeTrackingList<SecurityAlertSimulatorBundleType>()).ToList());
         }
 
         /// <summary> A more specific scope used to identify the alerts to suppress. </summary>
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.SecurityAutomationAction"/> instance for mocking. </returns>
         public static SecurityAutomationAction SecurityAutomationAction(string actionType = default)
         {
-            return new UnknownSecurityAutomationAction(default, default);
+            return new UnknownSecurityAutomationAction(actionType is null ? default : new ActionType(actionType), default);
         }
 
         /// <summary> The logic app action that should be triggered. To learn more about Microsoft Defender for Cloud's Workflow Automation capabilities, visit https://aka.ms/ASCWorkflowAutomationLearnMore. </summary>
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.SecurityAutomationActionLogicApp"/> instance for mocking. </returns>
         public static SecurityAutomationActionLogicApp SecurityAutomationActionLogicApp(ResourceIdentifier logicAppResourceId = default, Uri uri = default)
         {
-            return new SecurityAutomationActionLogicApp(default, default, logicAppResourceId, uri);
+            return new SecurityAutomationActionLogicApp(ActionType.LogicApp, default, logicAppResourceId, uri);
         }
 
         /// <summary> The target Event Hub to which event data will be exported. To learn more about Microsoft Defender for Cloud continuous export capabilities, visit https://aka.ms/ASCExportLearnMore. </summary>
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityAutomationActionEventHub SecurityAutomationActionEventHub(ResourceIdentifier eventHubResourceId = default, string sasPolicyName = default, string connectionString = default, bool? isTrustedServiceEnabled = default)
         {
             return new SecurityAutomationActionEventHub(
-                default,
+                ActionType.EventHub,
                 default,
                 eventHubResourceId,
                 sasPolicyName,
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.SecurityAutomationActionWorkspace"/> instance for mocking. </returns>
         public static SecurityAutomationActionWorkspace SecurityAutomationActionWorkspace(ResourceIdentifier workspaceResourceId = default)
         {
-            return new SecurityAutomationActionWorkspace(default, default, workspaceResourceId);
+            return new SecurityAutomationActionWorkspace(ActionType.Workspace, default, workspaceResourceId);
         }
 
         /// <param name="tags"> A list of key value pairs that describe the resource. </param>
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.NotificationsSource"/> instance for mocking. </returns>
         public static NotificationsSource NotificationsSource(string sourceType = default)
         {
-            return new UnknownNotificationsSource(default, default);
+            return new UnknownNotificationsSource(sourceType is null ? default : new SourceType(sourceType), default);
         }
 
         /// <summary> Alert notification source. </summary>
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.NotificationsSourceAlert"/> instance for mocking. </returns>
         public static NotificationsSourceAlert NotificationsSourceAlert(SecurityAlertMinimalSeverity? minimalSeverity = default)
         {
-            return new NotificationsSourceAlert(default, default, minimalSeverity);
+            return new NotificationsSourceAlert(SourceType.Alert, default, minimalSeverity);
         }
 
         /// <summary> Attack path notification source. </summary>
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.NotificationsSourceAttackPath"/> instance for mocking. </returns>
         public static NotificationsSourceAttackPath NotificationsSourceAttackPath(MinimalRiskLevel? minimalRiskLevel = default)
         {
-            return new NotificationsSourceAttackPath(default, default, minimalRiskLevel);
+            return new NotificationsSourceAttackPath(SourceType.AttackPath, default, minimalRiskLevel);
         }
 
         /// <summary> Defines whether to send email notifications from Microsoft Defender for Cloud to persons with specific RBAC roles on the subscription. </summary>
@@ -901,7 +901,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 displayName,
                 description,
                 isEnabled,
-                default,
+                "ThresholdCustomAlertRule",
                 default,
                 minThreshold,
                 maxThreshold);
@@ -935,7 +935,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 displayName,
                 description,
                 isEnabled,
-                default,
+                "ThresholdCustomAlertRule",
                 default,
                 minThreshold,
                 maxThreshold,
@@ -956,7 +956,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 displayName,
                 description,
                 isEnabled,
-                default,
+                "ThresholdCustomAlertRule",
                 default,
                 minThreshold,
                 maxThreshold,
@@ -977,7 +977,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 displayName,
                 description,
                 isEnabled,
-                default,
+                "ThresholdCustomAlertRule",
                 default,
                 minThreshold,
                 maxThreshold,
@@ -998,7 +998,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 displayName,
                 description,
                 isEnabled,
-                default,
+                "ThresholdCustomAlertRule",
                 default,
                 minThreshold,
                 maxThreshold,
@@ -1019,7 +1019,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 displayName,
                 description,
                 isEnabled,
-                default,
+                "ThresholdCustomAlertRule",
                 default,
                 minThreshold,
                 maxThreshold,
@@ -1040,7 +1040,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 displayName,
                 description,
                 isEnabled,
-                default,
+                "ThresholdCustomAlertRule",
                 default,
                 minThreshold,
                 maxThreshold,
@@ -1061,7 +1061,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 displayName,
                 description,
                 isEnabled,
-                default,
+                "ThresholdCustomAlertRule",
                 default,
                 minThreshold,
                 maxThreshold,
@@ -1082,7 +1082,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 displayName,
                 description,
                 isEnabled,
-                default,
+                "ThresholdCustomAlertRule",
                 default,
                 minThreshold,
                 maxThreshold,
@@ -1103,7 +1103,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 displayName,
                 description,
                 isEnabled,
-                default,
+                "ThresholdCustomAlertRule",
                 default,
                 minThreshold,
                 maxThreshold,
@@ -1124,7 +1124,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 displayName,
                 description,
                 isEnabled,
-                default,
+                "ThresholdCustomAlertRule",
                 default,
                 minThreshold,
                 maxThreshold,
@@ -1145,7 +1145,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 displayName,
                 description,
                 isEnabled,
-                default,
+                "ThresholdCustomAlertRule",
                 default,
                 minThreshold,
                 maxThreshold,
@@ -1166,7 +1166,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 displayName,
                 description,
                 isEnabled,
-                default,
+                "ThresholdCustomAlertRule",
                 default,
                 minThreshold,
                 maxThreshold,
@@ -1187,7 +1187,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 displayName,
                 description,
                 isEnabled,
-                default,
+                "ThresholdCustomAlertRule",
                 default,
                 minThreshold,
                 maxThreshold,
@@ -1208,7 +1208,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 displayName,
                 description,
                 isEnabled,
-                default,
+                "ThresholdCustomAlertRule",
                 default,
                 minThreshold,
                 maxThreshold,
@@ -1229,7 +1229,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 displayName,
                 description,
                 isEnabled,
-                default,
+                "ThresholdCustomAlertRule",
                 default,
                 minThreshold,
                 maxThreshold,
@@ -1250,7 +1250,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 displayName,
                 description,
                 isEnabled,
-                default,
+                "ThresholdCustomAlertRule",
                 default,
                 minThreshold,
                 maxThreshold,
@@ -1271,7 +1271,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 displayName,
                 description,
                 isEnabled,
-                default,
+                "ThresholdCustomAlertRule",
                 default,
                 minThreshold,
                 maxThreshold,
@@ -1293,7 +1293,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 displayName,
                 description,
                 isEnabled,
-                default,
+                "ListCustomAlertRule",
                 default,
                 valueType,
                 (allowlistValues ?? new ChangeTrackingList<string>()).ToList());
@@ -1311,7 +1311,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 displayName,
                 description,
                 isEnabled,
-                default,
+                "ListCustomAlertRule",
                 default,
                 valueType);
         }
@@ -1331,7 +1331,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 displayName,
                 description,
                 isEnabled,
-                default,
+                "ListCustomAlertRule",
                 default,
                 valueType,
                 (denylistValues ?? new ChangeTrackingList<string>()).ToList());
@@ -1352,7 +1352,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 displayName,
                 description,
                 isEnabled,
-                default,
+                "ListCustomAlertRule",
                 default,
                 valueType,
                 (allowlistValues ?? new ChangeTrackingList<string>()).ToList());
@@ -1373,7 +1373,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 displayName,
                 description,
                 isEnabled,
-                default,
+                "ListCustomAlertRule",
                 default,
                 valueType,
                 (allowlistValues ?? new ChangeTrackingList<string>()).ToList());
@@ -1394,7 +1394,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 displayName,
                 description,
                 isEnabled,
-                default,
+                "ListCustomAlertRule",
                 default,
                 valueType,
                 (allowlistValues ?? new ChangeTrackingList<string>()).ToList());
@@ -1415,7 +1415,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 displayName,
                 description,
                 isEnabled,
-                default,
+                "ListCustomAlertRule",
                 default,
                 valueType,
                 (allowlistValues ?? new ChangeTrackingList<string>()).ToList());
@@ -1828,7 +1828,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.SecurityCenterCloudOffering"/> instance for mocking. </returns>
         public static SecurityCenterCloudOffering SecurityCenterCloudOffering(string offeringType = default, string description = default)
         {
-            return new UnknownSecurityCenterCloudOffering(default, description, default);
+            return new UnknownSecurityCenterCloudOffering(offeringType is null ? default : new OfferingType(offeringType), description, default);
         }
 
         /// <param name="description"> The offering description. </param>
@@ -1836,7 +1836,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.CspmMonitorAwsOffering"/> instance for mocking. </returns>
         public static CspmMonitorAwsOffering CspmMonitorAwsOffering(string description = default, string cloudRoleArn = default)
         {
-            return new CspmMonitorAwsOffering(default, description, default, cloudRoleArn is null ? default : new CspmMonitorAwsOfferingNativeCloudConnection(cloudRoleArn, default));
+            return new CspmMonitorAwsOffering(OfferingType.CspmMonitorAws, description, default, cloudRoleArn is null ? default : new CspmMonitorAwsOfferingNativeCloudConnection(cloudRoleArn, default));
         }
 
         /// <param name="description"> The offering description. </param>
@@ -1856,7 +1856,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static DefenderForContainersAwsOffering DefenderForContainersAwsOffering(string description = default, string kubernetesServiceCloudRoleArn = default, string kubernetesDataCollectionCloudRoleArn = default, string cloudRoleArn = default, string kinesisToS3CloudRoleArn = default, bool? enableAuditLogsAutoProvisioning = default, bool? enableDefenderAgentAutoProvisioning = default, bool? enablePolicyAgentAutoProvisioning = default, long? kubeAuditRetentionTime = default, string dataCollectionExternalId = default, DefenderForContainersAwsOfferingMdcContainersImageAssessment mdcContainersImageAssessment = default, DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S = default, DefenderForContainersAwsOfferingVmScanners vmScanners = default)
         {
             return new DefenderForContainersAwsOffering(
-                default,
+                OfferingType.DefenderForContainersAws,
                 description,
                 default,
                 kubernetesServiceCloudRoleArn is null ? default : new DefenderForContainersAwsOfferingKubernetesService(kubernetesServiceCloudRoleArn, default),
@@ -1942,7 +1942,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static DefenderForServersAwsOffering DefenderForServersAwsOffering(string description = default, string defenderForServersCloudRoleArn = default, DefenderForServersAwsOfferingArcAutoProvisioning arcAutoProvisioning = default, DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning vaAutoProvisioning = default, DefenderForServersAwsOfferingMdeAutoProvisioning mdeAutoProvisioning = default, AvailableSubPlanType? subPlanType = default, DefenderForServersAwsOfferingVmScanners vmScanners = default)
         {
             return new DefenderForServersAwsOffering(
-                default,
+                OfferingType.DefenderForServersAws,
                 description,
                 default,
                 defenderForServersCloudRoleArn is null ? default : new DefenderForServersAwsOfferingDefenderForServers(defenderForServersCloudRoleArn, default),
@@ -2027,7 +2027,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static DefenderForDatabasesAwsOffering DefenderForDatabasesAwsOffering(string description = default, DefenderForDatabasesAwsOfferingArcAutoProvisioning arcAutoProvisioning = default, DefenderForDatabasesAwsOfferingRds rds = default, DefenderForDatabasesAwsOfferingDatabasesDspm databasesDspm = default)
         {
             return new DefenderForDatabasesAwsOffering(
-                default,
+                OfferingType.DefenderForDatabasesAws,
                 description,
                 default,
                 arcAutoProvisioning,
@@ -2069,7 +2069,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.CspmMonitorGcpOffering"/> instance for mocking. </returns>
         public static CspmMonitorGcpOffering CspmMonitorGcpOffering(string description = default, CspmMonitorGcpOfferingNativeCloudConnection nativeCloudConnection = default)
         {
-            return new CspmMonitorGcpOffering(default, description, default, nativeCloudConnection);
+            return new CspmMonitorGcpOffering(OfferingType.CspmMonitorGcp, description, default, nativeCloudConnection);
         }
 
         /// <summary> The native cloud connection configuration. </summary>
@@ -2092,7 +2092,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static DefenderForServersGcpOffering DefenderForServersGcpOffering(string description = default, GcpDefenderForServersInfo defenderForServers = default, DefenderForServersGcpOfferingArcAutoProvisioning arcAutoProvisioning = default, DefenderForServersGcpOfferingVaAutoProvisioning vaAutoProvisioning = default, DefenderForServersGcpOfferingMdeAutoProvisioning mdeAutoProvisioning = default, AvailableSubPlanType? subPlanType = default, DefenderForServersGcpOfferingVmScanners vmScanners = default)
         {
             return new DefenderForServersGcpOffering(
-                default,
+                OfferingType.DefenderForServersGcp,
                 description,
                 default,
                 defenderForServers,
@@ -2172,7 +2172,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.DefenderForDatabasesGcpOffering"/> instance for mocking. </returns>
         public static DefenderForDatabasesGcpOffering DefenderForDatabasesGcpOffering(string description = default, DefenderForDatabasesGcpOfferingArcAutoProvisioning arcAutoProvisioning = default, GcpDefenderForDatabasesArcAutoProvisioning defenderForDatabasesArcAutoProvisioning = default)
         {
-            return new DefenderForDatabasesGcpOffering(default, description, default, arcAutoProvisioning, defenderForDatabasesArcAutoProvisioning);
+            return new DefenderForDatabasesGcpOffering(OfferingType.DefenderForDatabasesGcp, description, default, arcAutoProvisioning, defenderForDatabasesArcAutoProvisioning);
         }
 
         /// <summary> The ARC autoprovisioning configuration. </summary>
@@ -2207,7 +2207,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static DefenderForContainersGcpOffering DefenderForContainersGcpOffering(string description = default, DefenderForContainersGcpOfferingNativeCloudConnection nativeCloudConnection = default, DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection dataPipelineNativeCloudConnection = default, bool? enableAuditLogsAutoProvisioning = default, bool? enableDefenderAgentAutoProvisioning = default, bool? enablePolicyAgentAutoProvisioning = default, DefenderForContainersGcpOfferingMdcContainersImageAssessment mdcContainersImageAssessment = default, DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S = default, DefenderForContainersGcpOfferingVmScanners vmScanners = default)
         {
             return new DefenderForContainersGcpOffering(
-                default,
+                OfferingType.DefenderForContainersGcp,
                 description,
                 default,
                 nativeCloudConnection,
@@ -2272,7 +2272,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.CspmMonitorGithubOffering"/> instance for mocking. </returns>
         public static CspmMonitorGithubOffering CspmMonitorGithubOffering(string description = default)
         {
-            return new CspmMonitorGithubOffering(default, description, default);
+            return new CspmMonitorGithubOffering(OfferingType.CspmMonitorGithub, description, default);
         }
 
         /// <summary> The CSPM monitoring for AzureDevOps offering. </summary>
@@ -2280,7 +2280,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.CspmMonitorAzureDevOpsOffering"/> instance for mocking. </returns>
         public static CspmMonitorAzureDevOpsOffering CspmMonitorAzureDevOpsOffering(string description = default)
         {
-            return new CspmMonitorAzureDevOpsOffering(default, description, default);
+            return new CspmMonitorAzureDevOpsOffering(OfferingType.CspmMonitorAzureDevOps, description, default);
         }
 
         /// <summary> The CSPM P1 for AWS offering. </summary>
@@ -2295,7 +2295,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static DefenderCspmAwsOffering DefenderCspmAwsOffering(string description = default, DefenderCspmAwsOfferingVmScanners vmScanners = default, DefenderCspmAwsOfferingDataSensitivityDiscovery dataSensitivityDiscovery = default, DefenderCspmAwsOfferingDatabasesDspm databasesDspm = default, DefenderCspmAwsOfferingCiem ciem = default, DefenderCspmAwsOfferingMdcContainersImageAssessment mdcContainersImageAssessment = default, DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S = default)
         {
             return new DefenderCspmAwsOffering(
-                default,
+                OfferingType.DefenderCspmAws,
                 description,
                 default,
                 vmScanners,
@@ -2380,7 +2380,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static DefenderCspmGcpOffering DefenderCspmGcpOffering(string description = default, DefenderCspmGcpOfferingCiemDiscovery ciemDiscovery = default, DefenderCspmGcpOfferingVmScanners vmScanners = default, DefenderCspmGcpOfferingDataSensitivityDiscovery dataSensitivityDiscovery = default, DefenderCspmGcpOfferingMdcContainersImageAssessment mdcContainersImageAssessment = default, DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S = default)
         {
             return new DefenderCspmGcpOffering(
-                default,
+                OfferingType.DefenderCspmGcp,
                 description,
                 default,
                 ciemDiscovery,
@@ -2444,7 +2444,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.CspmMonitorGitLabOffering"/> instance for mocking. </returns>
         public static CspmMonitorGitLabOffering CspmMonitorGitLabOffering(string description = default)
         {
-            return new CspmMonitorGitLabOffering(default, description, default);
+            return new CspmMonitorGitLabOffering(OfferingType.CspmMonitorGitLab, description, default);
         }
 
         /// <summary> The CSPM (Cloud security posture management) monitoring for Docker Hub offering. </summary>
@@ -2452,7 +2452,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.CspmMonitorDockerHubOffering"/> instance for mocking. </returns>
         public static CspmMonitorDockerHubOffering CspmMonitorDockerHubOffering(string description = default)
         {
-            return new CspmMonitorDockerHubOffering(default, description, default);
+            return new CspmMonitorDockerHubOffering(OfferingType.CspmMonitorDockerHub, description, default);
         }
 
         /// <summary> The Defender for containers Docker Hub offering configurations. </summary>
@@ -2460,7 +2460,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.DefenderForContainersDockerHubOffering"/> instance for mocking. </returns>
         public static DefenderForContainersDockerHubOffering DefenderForContainersDockerHubOffering(string description = default)
         {
-            return new DefenderForContainersDockerHubOffering(default, description, default);
+            return new DefenderForContainersDockerHubOffering(OfferingType.DefenderForContainersDockerHub, description, default);
         }
 
         /// <summary> The Defender for CSPM Docker Hub offering configurations. </summary>
@@ -2468,7 +2468,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.DefenderCspmDockerHubOffering"/> instance for mocking. </returns>
         public static DefenderCspmDockerHubOffering DefenderCspmDockerHubOffering(string description = default)
         {
-            return new DefenderCspmDockerHubOffering(default, description, default);
+            return new DefenderCspmDockerHubOffering(OfferingType.DefenderCspmDockerHub, description, default);
         }
 
         /// <summary> The CSPM (Cloud security posture management) monitoring for JFrog Artifactory offering. </summary>
@@ -2476,7 +2476,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.CspmMonitorJFrogOffering"/> instance for mocking. </returns>
         public static CspmMonitorJFrogOffering CspmMonitorJFrogOffering(string description = default)
         {
-            return new CspmMonitorJFrogOffering(default, description, default);
+            return new CspmMonitorJFrogOffering(OfferingType.CspmMonitorJFrog, description, default);
         }
 
         /// <summary> The Defender for Containers for JFrog Artifactory offering. </summary>
@@ -2484,7 +2484,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.DefenderForContainersJFrogOffering"/> instance for mocking. </returns>
         public static DefenderForContainersJFrogOffering DefenderForContainersJFrogOffering(string description = default)
         {
-            return new DefenderForContainersJFrogOffering(default, description, default);
+            return new DefenderForContainersJFrogOffering(OfferingType.DefenderForContainersJFrog, description, default);
         }
 
         /// <param name="description"> The offering description. </param>
@@ -2492,7 +2492,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.DefenderCspmJFrogOffering"/> instance for mocking. </returns>
         public static DefenderCspmJFrogOffering DefenderCspmJFrogOffering(string description = default, bool? isMdcContainersImageAssessmentEnabled = default)
         {
-            return new DefenderCspmJFrogOffering(default, description, default, isMdcContainersImageAssessmentEnabled is null ? default : new DefenderCspmJFrogOfferingMdcContainersImageAssessment(isMdcContainersImageAssessmentEnabled, default));
+            return new DefenderCspmJFrogOffering(OfferingType.DefenderCspmJFrog, description, default, isMdcContainersImageAssessmentEnabled is null ? default : new DefenderCspmJFrogOfferingMdcContainersImageAssessment(isMdcContainersImageAssessmentEnabled, default));
         }
 
         /// <summary>
@@ -2503,7 +2503,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.SecurityConnectorEnvironment"/> instance for mocking. </returns>
         public static SecurityConnectorEnvironment SecurityConnectorEnvironment(string environmentType = default)
         {
-            return new UnknownSecurityConnectorEnvironment(default, default);
+            return new UnknownSecurityConnectorEnvironment(environmentType is null ? default : new EnvironmentType(environmentType), default);
         }
 
         /// <summary> The AWS connector environment data. </summary>
@@ -2517,7 +2517,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             regions ??= new ChangeTrackingList<string>();
 
             return new AwsEnvironment(
-                default,
+                EnvironmentType.AwsAccount,
                 default,
                 organizationalData,
                 (regions ?? new ChangeTrackingList<string>()).ToList(),
@@ -2533,7 +2533,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.AwsOrganizationalInfo"/> instance for mocking. </returns>
         public static AwsOrganizationalInfo AwsOrganizationalInfo(string organizationMembershipType = default)
         {
-            return new UnknownAwsOrganizationalInfo(default, default);
+            return new UnknownAwsOrganizationalInfo(organizationMembershipType is null ? default : new OrganizationMembershipType(organizationMembershipType), default);
         }
 
         /// <summary> The AWS organization data for the master account. </summary>
@@ -2544,7 +2544,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             excludedAccountIds ??= new ChangeTrackingList<string>();
 
-            return new AwsOrganizationalDataMaster(default, default, stacksetName, (excludedAccountIds ?? new ChangeTrackingList<string>()).ToList());
+            return new AwsOrganizationalDataMaster(OrganizationMembershipType.Organization, default, stacksetName, (excludedAccountIds ?? new ChangeTrackingList<string>()).ToList());
         }
 
         /// <summary> The AWS organization data for the member account. </summary>
@@ -2552,7 +2552,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.AwsOrganizationalDataMember"/> instance for mocking. </returns>
         public static AwsOrganizationalDataMember AwsOrganizationalDataMember(string parentHierarchyId = default)
         {
-            return new AwsOrganizationalDataMember(default, default, parentHierarchyId);
+            return new AwsOrganizationalDataMember(OrganizationMembershipType.Member, default, parentHierarchyId);
         }
 
         /// <summary> The GCP project connector environment data. </summary>
@@ -2562,7 +2562,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.GcpProjectEnvironment"/> instance for mocking. </returns>
         public static GcpProjectEnvironment GcpProjectEnvironment(GcpOrganizationalInfo organizationalData = default, GcpProjectDetails projectDetails = default, long? scanInterval = default)
         {
-            return new GcpProjectEnvironment(default, default, organizationalData, projectDetails, scanInterval);
+            return new GcpProjectEnvironment(EnvironmentType.GcpProject, default, organizationalData, projectDetails, scanInterval);
         }
 
         /// <summary>
@@ -2573,7 +2573,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.GcpOrganizationalInfo"/> instance for mocking. </returns>
         public static GcpOrganizationalInfo GcpOrganizationalInfo(string organizationMembershipType = default)
         {
-            return new UnknownGcpOrganizationalInfo(default, default);
+            return new UnknownGcpOrganizationalInfo(organizationMembershipType is null ? default : new OrganizationMembershipType(organizationMembershipType), default);
         }
 
         /// <summary> The gcpOrganization data for the parent account. </summary>
@@ -2587,7 +2587,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             excludedProjectNumbers ??= new ChangeTrackingList<string>();
 
             return new GcpParentOrganizationalInfo(
-                default,
+                OrganizationMembershipType.Organization,
                 default,
                 (excludedProjectNumbers ?? new ChangeTrackingList<string>()).ToList(),
                 serviceAccountEmailAddress,
@@ -2601,7 +2601,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.GcpMemberOrganizationalInfo"/> instance for mocking. </returns>
         public static GcpMemberOrganizationalInfo GcpMemberOrganizationalInfo(string parentHierarchyId = default, string managementProjectNumber = default)
         {
-            return new GcpMemberOrganizationalInfo(default, default, parentHierarchyId, managementProjectNumber);
+            return new GcpMemberOrganizationalInfo(OrganizationMembershipType.Member, default, parentHierarchyId, managementProjectNumber);
         }
 
         /// <summary> The details about the project represented by the security connector. </summary>
@@ -2619,21 +2619,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.GithubScopeEnvironment"/> instance for mocking. </returns>
         public static GithubScopeEnvironment GithubScopeEnvironment()
         {
-            return new GithubScopeEnvironment(default, default);
+            return new GithubScopeEnvironment(EnvironmentType.GithubScope, default);
         }
 
         /// <summary> The AzureDevOps scope connector's environment data. </summary>
         /// <returns> A new <see cref="Models.AzureDevOpsScopeEnvironment"/> instance for mocking. </returns>
         public static AzureDevOpsScopeEnvironment AzureDevOpsScopeEnvironment()
         {
-            return new AzureDevOpsScopeEnvironment(default, default);
+            return new AzureDevOpsScopeEnvironment(EnvironmentType.AzureDevOpsScope, default);
         }
 
         /// <summary> The GitLab scope connector's environment data. </summary>
         /// <returns> A new <see cref="Models.GitLabScopeEnvironmentInfo"/> instance for mocking. </returns>
         public static GitLabScopeEnvironmentInfo GitLabScopeEnvironmentInfo()
         {
-            return new GitLabScopeEnvironmentInfo(default, default);
+            return new GitLabScopeEnvironmentInfo(EnvironmentType.GitlabScope, default);
         }
 
         /// <summary> The Docker Hub connector environment data. </summary>
@@ -2642,7 +2642,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.DockerHubEnvironmentInfo"/> instance for mocking. </returns>
         public static DockerHubEnvironmentInfo DockerHubEnvironmentInfo(SecurityConnectorAuthentication authentication = default, long? scanInterval = default)
         {
-            return new DockerHubEnvironmentInfo(default, default, authentication, scanInterval);
+            return new DockerHubEnvironmentInfo(EnvironmentType.DockerHubOrganization, default, authentication, scanInterval);
         }
 
         /// <summary>
@@ -2653,7 +2653,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.SecurityConnectorAuthentication"/> instance for mocking. </returns>
         public static SecurityConnectorAuthentication SecurityConnectorAuthentication(string authenticationType = default)
         {
-            return new UnknownSecurityConnectorAuthentication(default, default);
+            return new UnknownSecurityConnectorAuthentication(authenticationType is null ? default : new AuthenticationType(authenticationType), default);
         }
 
         /// <summary> The environment authentication details. </summary>
@@ -2662,7 +2662,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.AccessTokenAuthentication"/> instance for mocking. </returns>
         public static AccessTokenAuthentication AccessTokenAuthentication(string username = default, string accessToken = default)
         {
-            return new AccessTokenAuthentication(default, default, username, accessToken);
+            return new AccessTokenAuthentication(AuthenticationType.AccessToken, default, username, accessToken);
         }
 
         /// <summary> The JFrog Artifactory connector environment data. </summary>
@@ -2670,7 +2670,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.JFrogEnvironmentInfo"/> instance for mocking. </returns>
         public static JFrogEnvironmentInfo JFrogEnvironmentInfo(int? scanInterval = default)
         {
-            return new JFrogEnvironmentInfo(default, default, scanInterval);
+            return new JFrogEnvironmentInfo(EnvironmentType.JFrogArtifactory, default, scanInterval);
         }
 
         /// <summary> Azure DevOps Organization resource. </summary>
@@ -3664,7 +3664,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                kind is null ? default : new ServerVulnerabilityAssessmentsSettingKind(kind),
                 default);
         }
 
@@ -3681,7 +3681,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                ServerVulnerabilityAssessmentsSettingKind.AzureServersSetting,
                 default,
                 selectedProvider is null ? default : new ServerVulnerabilityAssessmentsAzureSettingProperties(selectedProvider.GetValueOrDefault(), default));
         }
@@ -3703,7 +3703,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                kind is null ? default : new SettingKind(kind),
                 default);
         }
 
@@ -3720,7 +3720,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SettingKind.DataExportSettings,
                 default,
                 enabled is null ? default : new DataExportSettingProperties(enabled.GetValueOrDefault(), default));
         }
@@ -3738,7 +3738,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SettingKind.AlertSyncSettings,
                 default,
                 enabled is null ? default : new AlertSyncSettingProperties(enabled.GetValueOrDefault(), default));
         }
@@ -4170,7 +4170,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.SecurityCenterResourceDetails"/> instance for mocking. </returns>
         public static SecurityCenterResourceDetails SecurityCenterResourceDetails(string source = default)
         {
-            return new UnknownSecurityCenterResourceDetails(default, default);
+            return new UnknownSecurityCenterResourceDetails(source is null ? default : new SecurityCenterResourceSource(source), default);
         }
 
         /// <summary> Details of the Azure resource that was assessed. </summary>
@@ -4178,7 +4178,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.AzureResourceDetails"/> instance for mocking. </returns>
         public static AzureResourceDetails AzureResourceDetails(string id = default)
         {
-            return new AzureResourceDetails(default, default, id);
+            return new AzureResourceDetails(SecurityCenterResourceSource.Azure, default, id);
         }
 
         /// <summary> Details of the On Premise resource that was assessed. </summary>
@@ -4190,7 +4190,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static OnPremiseResourceDetails OnPremiseResourceDetails(ResourceIdentifier workspaceId = default, Guid vmUuid = default, string sourceComputerId = default, string machineName = default)
         {
             return new OnPremiseResourceDetails(
-                default,
+                SecurityCenterResourceSource.OnPremiseResourceDetails,
                 default,
                 workspaceId,
                 vmUuid,
@@ -4209,7 +4209,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static OnPremiseSqlResourceDetails OnPremiseSqlResourceDetails(ResourceIdentifier workspaceId = default, Guid vmUuid = default, string sourceComputerId = default, string machineName = default, string serverName = default, string databaseName = default)
         {
             return new OnPremiseSqlResourceDetails(
-                default,
+                SecurityCenterResourceSource.OnPremiseResourceDetails,
                 default,
                 workspaceId,
                 vmUuid,
@@ -5329,7 +5329,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.SecuritySubAssessmentAdditionalInfo"/> instance for mocking. </returns>
         public static SecuritySubAssessmentAdditionalInfo SecuritySubAssessmentAdditionalInfo(string assessedResourceType = default)
         {
-            return new UnknownSecuritySubAssessmentAdditionalInfo(default, default);
+            return new UnknownSecuritySubAssessmentAdditionalInfo(assessedResourceType is null ? default : new AssessedResourceType(assessedResourceType), default);
         }
 
         /// <summary> Details of the resource that was assessed. </summary>
@@ -5338,7 +5338,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.SqlServerVulnerabilityProperties"/> instance for mocking. </returns>
         public static SqlServerVulnerabilityProperties SqlServerVulnerabilityProperties(string @type = default, string query = default)
         {
-            return new SqlServerVulnerabilityProperties(default, default, @type, query);
+            return new SqlServerVulnerabilityProperties(AssessedResourceType.SqlServerVulnerability, default, @type, query);
         }
 
         /// <summary> Additional context fields for container registry Vulnerability assessment. </summary>
@@ -5358,7 +5358,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             vendorReferences ??= new ChangeTrackingList<VendorReference>();
 
             return new ContainerRegistryVulnerabilityProperties(
-                default,
+                AssessedResourceType.ContainerRegistryVulnerability,
                 default,
                 @type,
                 cvss ?? new ChangeTrackingDictionary<string, SecurityCvss>(),
@@ -5412,7 +5412,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             vendorReferences ??= new ChangeTrackingList<VendorReference>();
 
             return new ServerVulnerabilityProperties(
-                default,
+                AssessedResourceType.ServerVulnerabilityAssessment,
                 default,
                 @type,
                 cvss ?? new ChangeTrackingDictionary<string, SecurityCvss>(),

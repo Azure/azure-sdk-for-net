@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public static BillingBenefitsDiscountProperties BillingBenefitsDiscountProperties(string entityType = default, string productCode = default, DateTimeOffset startsOn = default, string systemId = default, DiscountProvisioningState? provisioningState = default, ResourceIdentifier billingAccountResourceId = default, ResourceIdentifier billingProfileResourceId = default, ResourceIdentifier customerResourceId = default, string displayName = default, DiscountStatus? status = default, ResourceIdentifier benefitResourceId = default, DiscountAppliedScopeType? appliedScopeType = default)
         {
             return new UnknownBillingBenefitsDiscountProperties(
-                default,
+                entityType is null ? default : new DiscountEntityType(entityType),
                 productCode,
                 startsOn,
                 systemId,
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public static EntityTypeAffiliateDiscount EntityTypeAffiliateDiscount(string productCode = default, DateTimeOffset startsOn = default, string systemId = default, DiscountProvisioningState? provisioningState = default, ResourceIdentifier billingAccountResourceId = default, ResourceIdentifier billingProfileResourceId = default, ResourceIdentifier customerResourceId = default, string displayName = default, DiscountStatus? status = default, ResourceIdentifier benefitResourceId = default, DiscountAppliedScopeType? appliedScopeType = default, ResourceIdentifier primaryResourceId = default, DateTimeOffset? endsOn = default)
         {
             return new EntityTypeAffiliateDiscount(
-                default,
+                DiscountEntityType.Affiliate,
                 productCode,
                 startsOn,
                 systemId,
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public static EntityTypePrimaryDiscount EntityTypePrimaryDiscount(string productCode = default, DateTimeOffset startsOn = default, string systemId = default, DiscountProvisioningState? provisioningState = default, ResourceIdentifier billingAccountResourceId = default, ResourceIdentifier billingProfileResourceId = default, ResourceIdentifier customerResourceId = default, string displayName = default, DiscountStatus? status = default, ResourceIdentifier benefitResourceId = default, DiscountAppliedScopeType? appliedScopeType = default, DiscountTypeProperties discountTypeProperties = default, DateTimeOffset endsOn = default)
         {
             return new EntityTypePrimaryDiscount(
-                default,
+                DiscountEntityType.Primary,
                 productCode,
                 startsOn,
                 systemId,
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             conditions ??= new ChangeTrackingList<ConditionsItem>();
 
             return new UnknownDiscountTypeProperties(
-                default,
+                discountType is null ? default : new DiscountType(discountType),
                 applyDiscountOn,
                 discountPercentage,
                 discountCombinationRule,
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             conditions ??= new ChangeTrackingList<ConditionsItem>();
 
             return new DiscountTypeProductFamily(
-                default,
+                DiscountType.ProductFamily,
                 applyDiscountOn,
                 discountPercentage,
                 discountCombinationRule,
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             conditions ??= new ChangeTrackingList<ConditionsItem>();
 
             return new DiscountTypeProduct(
-                default,
+                DiscountType.Product,
                 applyDiscountOn,
                 discountPercentage,
                 discountCombinationRule,
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             conditions ??= new ChangeTrackingList<ConditionsItem>();
 
             return new DiscountTypeProductSku(
-                default,
+                DiscountType.Sku,
                 applyDiscountOn,
                 discountPercentage,
                 discountCombinationRule,
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             conditions ??= new ChangeTrackingList<ConditionsItem>();
 
             return new DiscountTypeCustomPrice(
-                default,
+                DiscountType.CustomPrice,
                 applyDiscountOn,
                 discountPercentage,
                 discountCombinationRule,
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             conditions ??= new ChangeTrackingList<ConditionsItem>();
 
             return new DiscountTypeCustomPriceMultiCurrency(
-                default,
+                DiscountType.CustomPrice,
                 applyDiscountOn,
                 discountPercentage,
                 discountCombinationRule,
@@ -814,7 +814,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public static BillingBenefitsConditionalCreditProperties BillingBenefitsConditionalCreditProperties(string entityType = default, string displayName = default, ResourceIdentifier billingAccountResourceId = default, ConditionalCreditsProvisioningState? provisioningState = default, ConditionalCreditStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, string productCode = default, ResourceIdentifier benefitResourceId = default, ResourceIdentifier resourceId = default)
         {
             return new UnknownBillingBenefitsConditionalCreditProperties(
-                default,
+                entityType is null ? default : new ConditionalCreditEntityType(entityType),
                 displayName,
                 billingAccountResourceId,
                 provisioningState,
@@ -847,7 +847,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             milestones ??= new ChangeTrackingList<ContributorConditionalCreditMilestone>();
 
             return new ContributorConditionalCreditProperties(
-                default,
+                ConditionalCreditEntityType.Contributor,
                 displayName,
                 billingAccountResourceId,
                 provisioningState,
@@ -945,7 +945,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             milestones ??= new ChangeTrackingList<ConditionalCreditMilestone>();
 
             return new PrimaryConditionalCreditProperties(
-                default,
+                ConditionalCreditEntityType.Primary,
                 displayName,
                 billingAccountResourceId,
                 provisioningState,
@@ -1354,7 +1354,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <returns> A new <see cref="Models.BenefitValidateModel"/> instance for mocking. </returns>
         public static BenefitValidateModel BenefitValidateModel(string benefitType = default)
         {
-            return new UnknownBenefitValidateModel(default, default);
+            return new UnknownBenefitValidateModel(benefitType is null ? default : new BenefitType(benefitType), default);
         }
 
         /// <summary> Conditional Credits validate model. </summary>
@@ -1362,7 +1362,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <returns> A new <see cref="Models.ConditionalCreditsValidateModel"/> instance for mocking. </returns>
         public static ConditionalCreditsValidateModel ConditionalCreditsValidateModel(BillingBenefitsConditionalCreditProperties properties = default)
         {
-            return new ConditionalCreditsValidateModel(default, default, properties);
+            return new ConditionalCreditsValidateModel(BenefitType.ConditionalCredits, default, properties);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1394,7 +1394,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <returns> A new <see cref="Models.CreditsValidateModel"/> instance for mocking. </returns>
         public static CreditsValidateModel CreditsValidateModel(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation? location = default, string managedBy = default, string kind = default, string eTag = default, ManagedServiceIdentity identity = default, BillingBenefitsSku sku = default, BillingBenefitsPlan plan = default, CreditStatus? status = default, string productCode = default, CreditReason reason = default, BillingBenefitsCommitment credit = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, CreditPolicies policies = default, ResourceIdentifier billingAccountResourceId = default, ResourceIdentifier billingProfileResourceId = default, IEnumerable<CreditBreakdownItem> breakdown = default, BillingBenefitsProvisioningState? provisioningState = default, string systemId = default, string customerId = default, ResourceIdentifier resourceId = default)
         {
-            return new CreditsValidateModel(default, default, id is null && name is null && resourceType is null && systemData is null && tags is null && location is null && status is null && productCode is null && reason is null && credit is null && startsOn is null && endsOn is null && policies is null && billingAccountResourceId is null && billingProfileResourceId is null && breakdown is null && provisioningState is null && systemId is null && customerId is null && resourceId is null && managedBy is null && kind is null && eTag is null && identity is null && sku is null && plan is null ? default : new CreditData(
+            return new CreditsValidateModel(BenefitType.Credits, default, id is null && name is null && resourceType is null && systemData is null && tags is null && location is null && status is null && productCode is null && reason is null && credit is null && startsOn is null && endsOn is null && policies is null && billingAccountResourceId is null && billingProfileResourceId is null && breakdown is null && provisioningState is null && systemId is null && customerId is null && resourceId is null && managedBy is null && kind is null && eTag is null && identity is null && sku is null && plan is null ? default : new CreditData(
                 id,
                 name,
                 resourceType.GetValueOrDefault(),
@@ -1447,7 +1447,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <returns> A new <see cref="Models.MaccValidateModel"/> instance for mocking. </returns>
         public static MaccValidateModel MaccValidateModel(string provisioningState = default, MaccStatus? status = default, MaccEntityType? maccEntityType = default, string displayName = default, string productCode = default, ResourceIdentifier billingAccountResourceId = default, BillingBenefitsCommitment commitment = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, string systemId = default, EnablementMode? automaticShortfall = default, AutomaticShortfallSuppressReason automaticShortfallSuppressReason = default, Shortfall shortfall = default, IEnumerable<MaccMilestone> milestones = default, ResourceIdentifier resourceId = default, bool? isAllowContributors = default, ResourceIdentifier primaryResourceId = default, ResourceIdentifier primaryBillingAccountResourceId = default)
         {
-            return new MaccValidateModel(default, default, provisioningState is null && status is null && maccEntityType is null && displayName is null && productCode is null && billingAccountResourceId is null && commitment is null && startsOn is null && endsOn is null && systemId is null && automaticShortfall is null && automaticShortfallSuppressReason is null && shortfall is null && milestones is null && resourceId is null && isAllowContributors is null && primaryResourceId is null && primaryBillingAccountResourceId is null ? default : new MaccModelProperties(
+            return new MaccValidateModel(BenefitType.MACC, default, provisioningState is null && status is null && maccEntityType is null && displayName is null && productCode is null && billingAccountResourceId is null && commitment is null && startsOn is null && endsOn is null && systemId is null && automaticShortfall is null && automaticShortfallSuppressReason is null && shortfall is null && milestones is null && resourceId is null && isAllowContributors is null && primaryResourceId is null && primaryBillingAccountResourceId is null ? default : new MaccModelProperties(
                 provisioningState,
                 status,
                 maccEntityType.GetValueOrDefault(),

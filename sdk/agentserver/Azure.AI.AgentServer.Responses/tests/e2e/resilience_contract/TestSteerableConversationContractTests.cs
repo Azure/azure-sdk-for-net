@@ -93,6 +93,7 @@ public class TestSteerableConversationContractTests
                 },
                 configureTestServices: services =>
                 {
+                    services.SetResilientTasksEnabled();
                     services.AddSingleton<ITaskStore>(spy);
                     services.AddSingleton(_ => new FileResponsesProvider(responsesDir));
                 });
@@ -172,6 +173,7 @@ public class TestSteerableConversationContractTests
                 },
                 configureTestServices: services =>
                 {
+                    services.SetResilientTasksEnabled();
                     services.AddSingleton<ITaskStore>(spy);
                     services.AddSingleton(_ => new FileResponsesProvider(responsesDir));
                 });
@@ -365,6 +367,7 @@ public class TestSteerableConversationContractTests
                 },
                 configureTestServices: services =>
                 {
+                    services.SetResilientTasksEnabled();
                     services.AddSingleton<ITaskStore>(spy);
                     services.AddSingleton(_ => new FileResponsesProvider(responsesDir));
                 });
@@ -602,6 +605,7 @@ public class TestSteerableConversationContractTests
                 },
                 configureTestServices: services =>
                 {
+                    services.SetResilientTasksEnabled();
                     services.AddSingleton<ITaskStore>(_ => new LocalTaskStore(tasksDir));
                     services.AddSingleton(_ => new FileResponsesProvider(responsesDir));
                 });
@@ -657,6 +661,7 @@ public class TestSteerableConversationContractTests
                 },
                 configureTestServices: services =>
                 {
+                    services.SetResilientTasksEnabled();
                     services.AddSingleton<ITaskStore>(_ => new LocalTaskStore(tasksDir));
                     services.AddSingleton(_ => new FileResponsesProvider(responsesDir));
                 });
@@ -934,6 +939,7 @@ public class TestSteerableConversationContractTests
                 },
                 configureTestServices: services =>
                 {
+                    services.SetResilientTasksEnabled();
                     services.AddSingleton<ITaskStore>(_ => new LocalTaskStore(tasksDir));
                     services.AddSingleton(_ => new FileResponsesProvider(responsesDir));
                 });
@@ -1077,6 +1083,7 @@ public class TestSteerableConversationContractTests
             configureOptions: configureOptions,
             configureTestServices: services =>
             {
+                services.SetResilientTasksEnabled();
                 services.AddSingleton<ITaskStore>(spy);
                 services.AddSingleton(_ => new FileResponsesProvider(responsesDir));
             });

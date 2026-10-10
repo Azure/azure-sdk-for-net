@@ -70,6 +70,7 @@ namespace Azure.AI.AgentServer.Core
         public static string? ProjectArmId { get { throw null; } }
         public static string? ProjectEndpoint { get { throw null; } }
         public static string? SessionId { get { throw null; } }
+        public static System.Guid? SessionInstanceId { get { throw null; } }
         public static System.TimeSpan SseKeepAliveInterval { get { throw null; } }
         public static System.TimeSpan WebSocketKeepAliveInterval { get { throw null; } }
     }
@@ -382,6 +383,12 @@ namespace Azure.AI.AgentServer.Core.Tasks
     {
         System.Threading.Tasks.Task<TOutput> RunAsync(Azure.AI.AgentServer.Core.Tasks.TaskContext<TInput> context, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
+    public static partial class ResilientTaskEnablementExtensions
+    {
+        public static Azure.AI.AgentServer.Core.AgentHostBuilder SetResilientTasksEnabled(this Azure.AI.AgentServer.Core.AgentHostBuilder builder, bool enabled = true) { throw null; }
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection SetResilientTasksEnabled(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, bool enabled = true) { throw null; }
+        public static Microsoft.Extensions.Hosting.IHostApplicationBuilder SetResilientTasksEnabled(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, bool enabled = true) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResilientTaskErrorCode : System.IEquatable<Azure.AI.AgentServer.Core.Tasks.ResilientTaskErrorCode>
     {
@@ -391,6 +398,7 @@ namespace Azure.AI.AgentServer.Core.Tasks
         public static Azure.AI.AgentServer.Core.Tasks.ResilientTaskErrorCode Conflict { get { throw null; } }
         public static Azure.AI.AgentServer.Core.Tasks.ResilientTaskErrorCode ExhaustedRetries { get { throw null; } }
         public static Azure.AI.AgentServer.Core.Tasks.ResilientTaskErrorCode HandlerError { get { throw null; } }
+        public static Azure.AI.AgentServer.Core.Tasks.ResilientTaskErrorCode NotEnabled { get { throw null; } }
         public static Azure.AI.AgentServer.Core.Tasks.ResilientTaskErrorCode PreconditionFailed { get { throw null; } }
         public static Azure.AI.AgentServer.Core.Tasks.ResilientTaskErrorCode QueueFull { get { throw null; } }
         public bool Equals(Azure.AI.AgentServer.Core.Tasks.ResilientTaskErrorCode other) { throw null; }
@@ -414,6 +422,11 @@ namespace Azure.AI.AgentServer.Core.Tasks
     {
         public static Microsoft.Extensions.Hosting.IHostApplicationBuilder AddResilientTasks(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
         public static Microsoft.Extensions.Hosting.IHostApplicationBuilder AddResilientTasks(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.AgentServer.Core.Tasks.ResilientTaskSettings> configureSettings) { throw null; }
+    }
+    public partial class ResilientTaskOptions
+    {
+        public ResilientTaskOptions() { }
+        public bool Enabled { get { throw null; } set { } }
     }
     public static partial class ResilientTaskServiceCollectionExtensions
     {
@@ -480,8 +493,10 @@ namespace Azure.AI.AgentServer.Core.Tasks
         public virtual System.Threading.Tasks.Task DeleteAsync(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRun<TOutput>?> GetActiveRunAsync(string taskId, string inputId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRun<TOutput>?> GetActiveRunAsync(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRunStatus?> GetStatusAsync(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<TOutput> RunAsync(TInput input, Azure.AI.AgentServer.Core.Tasks.RunOptions? options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRun<TOutput>> StartAsync(TInput input, Azure.AI.AgentServer.Core.Tasks.RunOptions? options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRun<TOutput>?> TryStartExistingAsync(TInput input, Azure.AI.AgentServer.Core.Tasks.RunOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public sealed partial class TaskFailureDetail
     {
