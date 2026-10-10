@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
-        /// <summary> Minimum TLS version of the publisher allowed to publish to this namespace. Only TLS version 1.2 is supported. </summary>
+        /// <summary> Minimum TLS version of the publisher allowed to publish to this namespace. The TlsVersion values are shared with topics and domains; for namespaces, only TLS version 1.2 is currently supported. </summary>
         [WirePath("properties.minimumTlsVersionAllowed")]
         public TlsVersion? MinimumTlsVersionAllowed
         {
@@ -190,6 +190,42 @@ namespace Azure.ResourceManager.EventGrid
                     Properties = new NamespaceProperties();
                 }
                 Properties.MinimumTlsVersionAllowed = value;
+            }
+        }
+
+        /// <summary> IP address type for the namespace resource. </summary>
+        [WirePath("properties.ipAddressType")]
+        public IPAddressType? IPAddressType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IPAddressType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NamespaceProperties();
+                }
+                Properties.IPAddressType = value;
+            }
+        }
+
+        /// <summary> Auto-scale configuration for the namespace resource. </summary>
+        [WirePath("properties.autoScaleConfiguration")]
+        public AutoScaleConfiguration AutoScaleConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AutoScaleConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NamespaceProperties();
+                }
+                Properties.AutoScaleConfiguration = value;
             }
         }
     }
