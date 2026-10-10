@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.Monitor.Agents
         {
             TryGetApiVersion(ObservabilityAgentResource.ResourceType, out string observabilityAgentApiVersion);
             _observabilityAgentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor.Agents", ObservabilityAgentResource.ResourceType.Namespace, Diagnostics);
-            _observabilityAgentsRestClient = new ObservabilityAgents(_observabilityAgentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, observabilityAgentApiVersion ?? "2026-05-01-preview");
+            _observabilityAgentsRestClient = new ObservabilityAgents(
+                _observabilityAgentsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                observabilityAgentApiVersion ?? "2026-05-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

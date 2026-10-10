@@ -36,7 +36,13 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
 
         private ClientDiagnostics UserAssignedIdentitiesClientDiagnostics => _userAssignedIdentitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedServiceIdentities.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private UserAssignedIdentities UserAssignedIdentitiesRestClient => _userAssignedIdentitiesRestClient ??= new UserAssignedIdentities(UserAssignedIdentitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-31-preview");
+        private UserAssignedIdentities UserAssignedIdentitiesRestClient => _userAssignedIdentitiesRestClient ??= new UserAssignedIdentities(
+            UserAssignedIdentitiesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-05-31-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// Lists all the userAssignedIdentities available under the specified subscription.

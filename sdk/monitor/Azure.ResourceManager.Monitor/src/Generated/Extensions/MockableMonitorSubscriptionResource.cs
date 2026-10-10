@@ -58,35 +58,83 @@ namespace Azure.ResourceManager.Monitor.Mocking
 
         private ClientDiagnostics DataCollectionEndpointsClientDiagnostics => _dataCollectionEndpointsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DataCollectionEndpoints DataCollectionEndpointsRestClient => _dataCollectionEndpointsRestClient ??= new DataCollectionEndpoints(DataCollectionEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-03-11");
+        private DataCollectionEndpoints DataCollectionEndpointsRestClient => _dataCollectionEndpointsRestClient ??= new DataCollectionEndpoints(
+            DataCollectionEndpointsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2024-03-11",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics DataCollectionRulesClientDiagnostics => _dataCollectionRulesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DataCollectionRules DataCollectionRulesRestClient => _dataCollectionRulesRestClient ??= new DataCollectionRules(DataCollectionRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-03-11");
+        private DataCollectionRules DataCollectionRulesRestClient => _dataCollectionRulesRestClient ??= new DataCollectionRules(
+            DataCollectionRulesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2024-03-11",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics PrivateLinkScopesClientDiagnostics => _privateLinkScopesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PrivateLinkScopes PrivateLinkScopesRestClient => _privateLinkScopesRestClient ??= new PrivateLinkScopes(PrivateLinkScopesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-06-01-preview");
+        private PrivateLinkScopes PrivateLinkScopesRestClient => _privateLinkScopesRestClient ??= new PrivateLinkScopes(
+            PrivateLinkScopesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2023-06-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics AutoscaleSettingsClientDiagnostics => _autoscaleSettingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AutoscaleSettings AutoscaleSettingsRestClient => _autoscaleSettingsRestClient ??= new AutoscaleSettings(AutoscaleSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-10-01");
+        private AutoscaleSettings AutoscaleSettingsRestClient => _autoscaleSettingsRestClient ??= new AutoscaleSettings(
+            AutoscaleSettingsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2022-10-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ActivityLogAlertsClientDiagnostics => _activityLogAlertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ActivityLogAlerts ActivityLogAlertsRestClient => _activityLogAlertsRestClient ??= new ActivityLogAlerts(ActivityLogAlertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-01-01-preview");
+        private ActivityLogAlerts ActivityLogAlertsRestClient => _activityLogAlertsRestClient ??= new ActivityLogAlerts(
+            ActivityLogAlertsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2023-01-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics MetricAlertsClientDiagnostics => _metricAlertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private MetricAlerts MetricAlertsRestClient => _metricAlertsRestClient ??= new MetricAlerts(MetricAlertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
+        private MetricAlerts MetricAlertsRestClient => _metricAlertsRestClient ??= new MetricAlerts(
+            MetricAlertsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-01-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ScheduledQueryRulesClientDiagnostics => _scheduledQueryRulesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ScheduledQueryRules ScheduledQueryRulesRestClient => _scheduledQueryRulesRestClient ??= new ScheduledQueryRules(ScheduledQueryRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-01-01-preview");
+        private ScheduledQueryRules ScheduledQueryRulesRestClient => _scheduledQueryRulesRestClient ??= new ScheduledQueryRules(
+            ScheduledQueryRulesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-01-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ActionGroupsClientDiagnostics => _actionGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ActionGroups ActionGroupsRestClient => _actionGroupsRestClient ??= new ActionGroups(ActionGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-10-01-preview");
+        private ActionGroups ActionGroupsRestClient => _actionGroupsRestClient ??= new ActionGroups(
+            ActionGroupsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2024-10-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ActivityLogsClientDiagnostics => _activityLogsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

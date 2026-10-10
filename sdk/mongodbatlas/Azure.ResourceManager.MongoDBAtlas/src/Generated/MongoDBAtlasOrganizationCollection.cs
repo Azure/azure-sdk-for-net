@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.MongoDBAtlas
         {
             TryGetApiVersion(MongoDBAtlasOrganizationResource.ResourceType, out string mongoDBAtlasOrganizationApiVersion);
             _organizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MongoDBAtlas", MongoDBAtlasOrganizationResource.ResourceType.Namespace, Diagnostics);
-            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mongoDBAtlasOrganizationApiVersion ?? "2026-03-01-preview");
+            _organizationsRestClient = new Organizations(
+                _organizationsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                mongoDBAtlasOrganizationApiVersion ?? "2026-03-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

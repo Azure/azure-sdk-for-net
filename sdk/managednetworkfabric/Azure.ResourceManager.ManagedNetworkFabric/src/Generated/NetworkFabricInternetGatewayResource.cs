@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             TryGetApiVersion(ResourceType, out string networkFabricInternetGatewayApiVersion);
             _internetGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", ResourceType.Namespace, Diagnostics);
-            _internetGatewaysRestClient = new InternetGateways(_internetGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFabricInternetGatewayApiVersion ?? "2025-07-15");
+            _internetGatewaysRestClient = new InternetGateways(
+                _internetGatewaysClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                networkFabricInternetGatewayApiVersion ?? "2025-07-15",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

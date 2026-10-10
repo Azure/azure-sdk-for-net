@@ -55,7 +55,13 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         {
             TryGetApiVersion(ResourceType, out string sapDiscoverySiteApiVersion);
             _sapDiscoverySitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MigrationDiscoverySap", ResourceType.Namespace, Diagnostics);
-            _sapDiscoverySitesRestClient = new SAPDiscoverySites(_sapDiscoverySitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sapDiscoverySiteApiVersion ?? "2023-10-01-preview");
+            _sapDiscoverySitesRestClient = new SAPDiscoverySites(
+                _sapDiscoverySitesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                sapDiscoverySiteApiVersion ?? "2023-10-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

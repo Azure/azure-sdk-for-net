@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             TryGetApiVersion(NetworkTapRuleResource.ResourceType, out string networkTapRuleApiVersion);
             _networkTapRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkTapRuleResource.ResourceType.Namespace, Diagnostics);
-            _networkTapRulesRestClient = new NetworkTapRules(_networkTapRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkTapRuleApiVersion ?? "2025-07-15");
+            _networkTapRulesRestClient = new NetworkTapRules(
+                _networkTapRulesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                networkTapRuleApiVersion ?? "2025-07-15",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

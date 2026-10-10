@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.Monitor
         {
             TryGetApiVersion(ActionGroupResource.ResourceType, out string actionGroupApiVersion);
             _actionGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ActionGroupResource.ResourceType.Namespace, Diagnostics);
-            _actionGroupsRestClient = new ActionGroups(_actionGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, actionGroupApiVersion ?? "2024-10-01-preview");
+            _actionGroupsRestClient = new ActionGroups(
+                _actionGroupsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                actionGroupApiVersion ?? "2024-10-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
