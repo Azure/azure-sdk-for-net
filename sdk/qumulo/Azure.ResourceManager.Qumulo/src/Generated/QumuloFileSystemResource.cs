@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.Qumulo
         {
             TryGetApiVersion(ResourceType, out string qumuloFileSystemResourceApiVersion);
             _fileSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Qumulo", ResourceType.Namespace, Diagnostics);
-            _fileSystemsRestClient = new FileSystems(_fileSystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, qumuloFileSystemResourceApiVersion ?? "2026-04-16");
+            _fileSystemsRestClient = new FileSystems(
+                _fileSystemsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                qumuloFileSystemResourceApiVersion ?? "2026-04-16",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

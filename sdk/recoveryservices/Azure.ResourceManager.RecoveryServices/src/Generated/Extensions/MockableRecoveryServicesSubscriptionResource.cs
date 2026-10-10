@@ -40,7 +40,13 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
 
         private ClientDiagnostics VaultsClientDiagnostics => _vaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Vaults VaultsRestClient => _vaultsRestClient ??= new Vaults(VaultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private Vaults VaultsRestClient => _vaultsRestClient ??= new Vaults(
+            VaultsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-07-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics RecoveryServicesOperationGroupClientDiagnostics => _recoveryServicesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

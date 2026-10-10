@@ -55,7 +55,13 @@ namespace Azure.ResourceManager.Redis
         {
             TryGetApiVersion(ResourceType, out string redisApiVersion);
             _redisResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Redis", ResourceType.Namespace, Diagnostics);
-            _redisResourcesRestClient = new RedisResources(_redisResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, redisApiVersion ?? "2025-08-01-preview");
+            _redisResourcesRestClient = new RedisResources(
+                _redisResourcesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                redisApiVersion ?? "2025-08-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

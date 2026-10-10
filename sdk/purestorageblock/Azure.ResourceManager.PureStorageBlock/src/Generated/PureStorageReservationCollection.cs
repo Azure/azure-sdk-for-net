@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             TryGetApiVersion(PureStorageReservationResource.ResourceType, out string pureStorageReservationApiVersion);
             _reservationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock", PureStorageReservationResource.ResourceType.Namespace, Diagnostics);
-            _reservationsRestClient = new Reservations(_reservationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, pureStorageReservationApiVersion ?? "2024-11-01");
+            _reservationsRestClient = new Reservations(
+                _reservationsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                pureStorageReservationApiVersion ?? "2024-11-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

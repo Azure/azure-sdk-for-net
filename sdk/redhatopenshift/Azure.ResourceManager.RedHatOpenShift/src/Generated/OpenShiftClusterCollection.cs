@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.RedHatOpenShift
         {
             TryGetApiVersion(OpenShiftClusterResource.ResourceType, out string openShiftClusterApiVersion);
             _openShiftClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShift", OpenShiftClusterResource.ResourceType.Namespace, Diagnostics);
-            _openShiftClustersRestClient = new OpenShiftClusters(_openShiftClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, openShiftClusterApiVersion ?? "2025-07-25");
+            _openShiftClustersRestClient = new OpenShiftClusters(
+                _openShiftClustersClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                openShiftClusterApiVersion ?? "2025-07-25",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

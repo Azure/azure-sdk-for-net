@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         {
             TryGetApiVersion(HcpOpenShiftClusterResource.ResourceType, out string hcpOpenShiftClusterApiVersion);
             _hcpOpenShiftClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShiftHcp", HcpOpenShiftClusterResource.ResourceType.Namespace, Diagnostics);
-            _hcpOpenShiftClustersRestClient = new HcpOpenShiftClusters(_hcpOpenShiftClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hcpOpenShiftClusterApiVersion ?? "2026-09-01-preview");
+            _hcpOpenShiftClustersRestClient = new HcpOpenShiftClusters(
+                _hcpOpenShiftClustersClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                hcpOpenShiftClusterApiVersion ?? "2026-09-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

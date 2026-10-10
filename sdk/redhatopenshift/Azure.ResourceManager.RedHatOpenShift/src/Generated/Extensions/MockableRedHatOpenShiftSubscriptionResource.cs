@@ -37,7 +37,13 @@ namespace Azure.ResourceManager.RedHatOpenShift.Mocking
 
         private ClientDiagnostics OpenShiftClustersClientDiagnostics => _openShiftClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShift.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private OpenShiftClusters OpenShiftClustersRestClient => _openShiftClustersRestClient ??= new OpenShiftClusters(OpenShiftClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-25");
+        private OpenShiftClusters OpenShiftClustersRestClient => _openShiftClustersRestClient ??= new OpenShiftClusters(
+            OpenShiftClustersClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-07-25",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary> Gets a collection of OpenShiftVersions in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
