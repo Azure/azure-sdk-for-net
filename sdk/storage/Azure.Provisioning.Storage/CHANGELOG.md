@@ -1,16 +1,14 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.2.0 (2026-10-15)
 
 ### Features Added
 
-### Breaking Changes
+- Stable release of the Azure Storage provisioning updates introduced in `1.2.0-beta.1`, including `StorageAccount.PrivateEndpointConnectionResources`, `StorageActiveDirectoryProperties.ActiveDirectoryDomainGuid`, and `ExecutionTrigger.TaskExecutionTriggerType`. The previous property names remain available for compatibility.
 
 ### Bugs Fixed
 
 - Fixed `StorageActiveDirectoryProperties.DomainGuid` to share its value with `ActiveDirectoryDomainGuid`, preventing conflicting assignments from emitting an outdated domain GUID.
-
-### Other Changes
 
 ## 1.2.0-beta.1 (2026-03-02)
 
