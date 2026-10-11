@@ -13,7 +13,7 @@ namespace Azure.AI.Projects.Agents
     public partial class VoiceAgentAzureSemanticVadTurnDetection : VoiceAgentTurnDetectionConfig
     {
         private VoiceAgentEndOfUtteranceDetection _endOfUtteranceDetection;
-        internal bool _endOfUtteranceDetectionIsDefined;
+        private bool _endOfUtteranceDetectionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentAzureSemanticVadTurnDetection"/>. </summary>
         public VoiceAgentAzureSemanticVadTurnDetection() : base(VoiceAgentTurnDetectionType.AzureSemanticVad)

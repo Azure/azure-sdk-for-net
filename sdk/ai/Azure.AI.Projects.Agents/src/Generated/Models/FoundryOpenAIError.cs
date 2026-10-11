@@ -13,7 +13,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _param;
-        internal bool _paramIsDefined;
+        private bool _paramIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FoundryOpenAIError"/>. </summary>
         /// <param name="code"></param>

@@ -87,7 +87,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndArray();
             }
-            if (_memoryLimitIsDefined || Optional.IsDefined(MemoryLimit))
+            if (Optional.IsDefined(MemoryLimit, _memoryLimitIsDefined))
             {
                 if (MemoryLimit != null)
                 {

@@ -16,9 +16,9 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _username;
-        internal bool _usernameIsDefined;
+        private bool _usernameIsDefined;
         private string _credential;
-        internal bool _credentialIsDefined;
+        private bool _credentialIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentAvatarIceServer"/>. </summary>
         /// <param name="urls"></param>

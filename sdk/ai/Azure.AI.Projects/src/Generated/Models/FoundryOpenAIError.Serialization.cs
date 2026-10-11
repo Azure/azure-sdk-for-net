@@ -85,7 +85,7 @@ namespace Azure.AI.Projects
             }
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (_paramIsDefined || Optional.IsDefined(Param))
+            if (Optional.IsDefined(Param, _paramIsDefined))
             {
                 if (Param != null)
                 {
