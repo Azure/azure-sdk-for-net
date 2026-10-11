@@ -56,7 +56,7 @@ var app = builder.Build();
 app.Run();
 ```
 
-The builder provides all the same defaults as Tier 1 (OpenTelemetry, health endpoint, request correlation, version header, logging). Access the underlying `WebApplicationBuilder` via `builder.WebApplicationBuilder` for full ASP.NET Core customization (CORS, authentication, custom middleware, etc.).
+The builder provides all the same defaults as Tier 1 (OpenTelemetry, health endpoint, request correlation, version header, logging, and snapshot lifecycle endpoints). Access the underlying `WebApplicationBuilder` via `builder.WebApplicationBuilder` for full ASP.NET Core customization (CORS, authentication, custom middleware, etc.).
 
 ### Tier 3 — Standalone (existing apps)
 
@@ -72,7 +72,7 @@ app.MapGet("/hello", () => "Hello!");
 app.Run();
 ```
 
-This enables request correlation (`x-request-id`), server version header (`x-platform-server`), and inbound request logging. See the protocol-specific Tier 3 samples ([Responses][responses_tier3], [Invocations][invocations_tier3]) for complete examples including handler registration, health probes, and OpenTelemetry setup.
+This enables request correlation (`x-request-id`), server version header (`x-platform-server`), inbound request logging, and the platform snapshot lifecycle endpoints. See the protocol-specific Tier 3 samples ([Responses][responses_tier3], [Invocations][invocations_tier3]) for complete examples including handler registration, health probes, and OpenTelemetry setup.
 
 ## Key concepts
 
@@ -151,6 +151,39 @@ Azure SDK and outbound `HttpClient` dependency spans are disabled by default to 
 ### Health endpoint
 
 A `/readiness` endpoint is registered by default, responding to liveness and readiness probes. It reports healthy as soon as the host finishes starting.
+
+### Snapshot lifecycle
+
+Core always registers the private platform endpoints `POST /_agent/before-snapshot` and `POST /_agent/after-restore`. They are no-ops by default. Implement `IAgentSnapshotLifecycle` when your process owns connections, streams, or other in-memory state that must be released before capture and rebuilt after restoration:
+
+```C# Snippet:Core_ReadMe_SnapshotLifecycle
+public sealed class DatabaseSnapshotLifecycle : IAgentSnapshotLifecycle
+{
+    public Task BeforeSnapshotAsync(CancellationToken cancellationToken = default)
+    {
+        // Close connections and release state that must not be captured.
+        return Task.CompletedTask;
+    }
+
+    public Task AfterRestoreAsync(
+        AgentRestoreContext context,
+        CancellationToken cancellationToken = default)
+    {
+        // Environment overrides are already applied. Recreate clients
+        // or other state that was initialized before the snapshot.
+        return Task.CompletedTask;
+    }
+}
+```
+
+Register the implementation as a singleton:
+
+```C# Snippet:Core_ReadMe_ConfigureSnapshotLifecycle
+var builder = AgentHost.CreateBuilder();
+builder.Services.AddSingleton<IAgentSnapshotLifecycle, DatabaseSnapshotLifecycle>();
+```
+
+Core serializes lifecycle calls and handles platform retries. A completed `before-snapshot` callback runs once, a repeated `restore_id` returns success without repeating work, and a new `restore_id` for the same session runs `after-restore` again. Session environment overrides are applied before `AfterRestoreAsync` is invoked. Callback implementations should still make their external side effects idempotent.
 
 ### Resilient tasks and streaming
 

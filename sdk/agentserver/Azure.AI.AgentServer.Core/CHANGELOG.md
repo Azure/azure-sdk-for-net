@@ -4,6 +4,11 @@
 
 ### Features Added
 
+- Added the private `POST /_agent/before-snapshot` and `POST /_agent/after-restore`
+  lifecycle endpoints for memory snapshot capture and restoration. Applications can
+  register an `IAgentSnapshotLifecycle` singleton to release and rebuild process state;
+  Core applies session environment overrides first and provides serialized, idempotent
+  retry handling.
 - Added `FoundryEnvironment.SessionInstanceId`, sourced from `FOUNDRY_AGENT_SESSION_GUID`, and
   validation of the hosted platform's 32-character lowercase hexadecimal session-incarnation ID.
 - Added `TaskDefinition<TInput, TOutput>.GetStatusAsync()` for task-ID migration and compatibility
