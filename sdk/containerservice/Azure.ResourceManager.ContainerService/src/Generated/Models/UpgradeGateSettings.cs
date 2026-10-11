@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UpgradeGateSettings"/>. </summary>
-        /// <param name="enabled"> Whether upgrade gating is enabled. Defaults to `false` when unset, except on a newly created agent pool in a cluster where upgrade gating is enabled, which defaults to `true`. When `true`, upgrade-gated health checks are enabled for upgrades in the corresponding scope. Setting this to `true` at the cluster scope enables gating for the entire cluster, including all agent pool upgrades. When the cluster scope is unset or `false`, an agent pool can opt in independently by setting this to `true`. When the cluster scope is `true`, an agent pool cannot set this to `false`. Force upgrade (`overrideSettings.forceUpgrade`) overrides the gate: while the override window is active, the upgrade skips health signal validation and proceeds. </param>
+        /// <param name="isEnabled"> Whether upgrade gating is enabled. Defaults to `false` when unset, except on a newly created agent pool in a cluster where upgrade gating is enabled, which defaults to `true`. When `true`, upgrade-gated health checks are enabled for upgrades in the corresponding scope. Setting this to `true` at the cluster scope enables gating for the entire cluster, including all agent pool upgrades. When the cluster scope is unset or `false`, an agent pool can opt in independently by setting this to `true`. When the cluster scope is `true`, an agent pool cannot set this to `false`. Force upgrade (`overrideSettings.forceUpgrade`) overrides the gate: while the override window is active, the upgrade skips health signal validation and proceeds. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpgradeGateSettings(bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpgradeGateSettings(bool? isEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether upgrade gating is enabled. Defaults to `false` when unset, except on a newly created agent pool in a cluster where upgrade gating is enabled, which defaults to `true`. When `true`, upgrade-gated health checks are enabled for upgrades in the corresponding scope. Setting this to `true` at the cluster scope enables gating for the entire cluster, including all agent pool upgrades. When the cluster scope is unset or `false`, an agent pool can opt in independently by setting this to `true`. When the cluster scope is `true`, an agent pool cannot set this to `false`. Force upgrade (`overrideSettings.forceUpgrade`) overrides the gate: while the override window is active, the upgrade skips health signal validation and proceeds. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
     }
 }

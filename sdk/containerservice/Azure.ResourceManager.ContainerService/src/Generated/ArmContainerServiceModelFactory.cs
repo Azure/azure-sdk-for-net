@@ -304,9 +304,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="drainTimeoutInMinutes"> The drain timeout for a node. The amount of time (in minutes) to wait on eviction of pods and graceful termination per node. This eviction wait time honors waiting on pod disruption budgets. If this time is exceeded, the upgrade fails. If not specified, the default is 30 minutes. </param>
         /// <param name="nodeSoakDurationInMinutes"> The soak duration for a node. The amount of time (in minutes) to wait after draining a node and before reimaging it and moving on to next node. If not specified, the default is 0 minutes. </param>
         /// <param name="undrainableNodeBehavior"> Defines the behavior for undrainable nodes during upgrade. The most common cause of undrainable nodes is Pod Disruption Budgets (PDBs), but other issues, such as pod termination grace period is exceeding the remaining per-node drain timeout or pod is still being in a running state, can also cause undrainable nodes. </param>
-        /// <param name="upgradeGateSettingsEnabled"> Whether upgrade gating is enabled. Defaults to `false` when unset, except on a newly created agent pool in a cluster where upgrade gating is enabled, which defaults to `true`. When `true`, upgrade-gated health checks are enabled for upgrades in the corresponding scope. Setting this to `true` at the cluster scope enables gating for the entire cluster, including all agent pool upgrades. When the cluster scope is unset or `false`, an agent pool can opt in independently by setting this to `true`. When the cluster scope is `true`, an agent pool cannot set this to `false`. Force upgrade (`overrideSettings.forceUpgrade`) overrides the gate: while the override window is active, the upgrade skips health signal validation and proceeds. </param>
+        /// <param name="isEnabled"> Whether upgrade gating is enabled. Defaults to `false` when unset, except on a newly created agent pool in a cluster where upgrade gating is enabled, which defaults to `true`. When `true`, upgrade-gated health checks are enabled for upgrades in the corresponding scope. Setting this to `true` at the cluster scope enables gating for the entire cluster, including all agent pool upgrades. When the cluster scope is unset or `false`, an agent pool can opt in independently by setting this to `true`. When the cluster scope is `true`, an agent pool cannot set this to `false`. Force upgrade (`overrideSettings.forceUpgrade`) overrides the gate: while the override window is active, the upgrade skips health signal validation and proceeds. </param>
         /// <returns> A new <see cref="Models.AgentPoolUpgradeSettings"/> instance for mocking. </returns>
-        public static AgentPoolUpgradeSettings AgentPoolUpgradeSettings(string maxSurge, string maxUnavailable, string maxBlockedNodes, int? drainTimeoutInMinutes, int? nodeSoakDurationInMinutes, UndrainableNodeBehavior? undrainableNodeBehavior, bool? upgradeGateSettingsEnabled = default)
+        public static AgentPoolUpgradeSettings AgentPoolUpgradeSettings(string maxSurge, string maxUnavailable, string maxBlockedNodes, int? drainTimeoutInMinutes, int? nodeSoakDurationInMinutes, UndrainableNodeBehavior? undrainableNodeBehavior, bool? isEnabled = default)
         {
             return new AgentPoolUpgradeSettings(
                 maxSurge,
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 drainTimeoutInMinutes,
                 nodeSoakDurationInMinutes,
                 undrainableNodeBehavior,
-                upgradeGateSettingsEnabled is null ? default : new UpgradeGateSettings(upgradeGateSettingsEnabled, default),
+                isEnabled is null ? default : new UpgradeGateSettings(isEnabled, default),
                 default);
         }
 
@@ -1450,11 +1450,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <param name="overrideSettings"> Settings for overrides. </param>
-        /// <param name="upgradeGateSettingsEnabled"> Whether upgrade gating is enabled. Defaults to `false` when unset, except on a newly created agent pool in a cluster where upgrade gating is enabled, which defaults to `true`. When `true`, upgrade-gated health checks are enabled for upgrades in the corresponding scope. Setting this to `true` at the cluster scope enables gating for the entire cluster, including all agent pool upgrades. When the cluster scope is unset or `false`, an agent pool can opt in independently by setting this to `true`. When the cluster scope is `true`, an agent pool cannot set this to `false`. Force upgrade (`overrideSettings.forceUpgrade`) overrides the gate: while the override window is active, the upgrade skips health signal validation and proceeds. </param>
+        /// <param name="isEnabled"> Whether upgrade gating is enabled. Defaults to `false` when unset, except on a newly created agent pool in a cluster where upgrade gating is enabled, which defaults to `true`. When `true`, upgrade-gated health checks are enabled for upgrades in the corresponding scope. Setting this to `true` at the cluster scope enables gating for the entire cluster, including all agent pool upgrades. When the cluster scope is unset or `false`, an agent pool can opt in independently by setting this to `true`. When the cluster scope is `true`, an agent pool cannot set this to `false`. Force upgrade (`overrideSettings.forceUpgrade`) overrides the gate: while the override window is active, the upgrade skips health signal validation and proceeds. </param>
         /// <returns> A new <see cref="Models.ClusterUpgradeSettings"/> instance for mocking. </returns>
-        public static ClusterUpgradeSettings ClusterUpgradeSettings(UpgradeOverrideSettings overrideSettings = default, bool? upgradeGateSettingsEnabled = default)
+        public static ClusterUpgradeSettings ClusterUpgradeSettings(UpgradeOverrideSettings overrideSettings = default, bool? isEnabled = default)
         {
-            return new ClusterUpgradeSettings(overrideSettings, upgradeGateSettingsEnabled is null ? default : new UpgradeGateSettings(upgradeGateSettingsEnabled, default), default);
+            return new ClusterUpgradeSettings(overrideSettings, isEnabled is null ? default : new UpgradeGateSettings(isEnabled, default), default);
         }
 
         /// <summary> Settings for overrides when upgrading a cluster. </summary>
@@ -3447,151 +3447,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ContainerServiceAlertConfigurationProperties(mode, notificationActionGroupId is null ? default : new ContainerServiceAlertNotification(notificationActionGroupId, default), provisioningState, default);
         }
 
-        /// <summary> Agent Pool. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="eTag"> Unique read-only string used to implement optimistic concurrency. The eTag value will change when the resource is updated. Specify an if-match or if-none-match header with the eTag value for a subsequent request to enable optimistic concurrency per the normal eTag convention. </param>
-        /// <param name="count"> Number of agents (VMs) to host docker containers. Allowed values must be in the range of 0 to 1000 (inclusive) for user pools and in the range of 1 to 1000 (inclusive) for system pools. The default value is 1. </param>
-        /// <param name="vmSize"> The size of the agent pool VMs. VM size availability varies by region. If a node contains insufficient compute resources (memory, cpu, etc) pods might fail to run correctly. For more details on restricted VM sizes, see: https://docs.microsoft.com/azure/aks/quotas-skus-regions. </param>
-        /// <param name="osDiskSizeInGB"> OS Disk Size in GB to be used to specify the disk size for every machine in the master/agent pool. If you specify 0, it will apply the default osDisk size according to the vmSize specified. </param>
-        /// <param name="osDiskType"> The OS disk type to be used for machines in the agent pool. The default is 'Ephemeral' if the VM supports it and has a cache disk larger than the requested OSDiskSizeGB. Otherwise, defaults to 'Managed'. May not be changed after creation. For more information see [Ephemeral OS](https://docs.microsoft.com/azure/aks/cluster-configuration#ephemeral-os). </param>
-        /// <param name="kubeletDiskType"> Determines the placement of emptyDir volumes, container runtime data root, and Kubelet ephemeral storage. </param>
-        /// <param name="workloadRuntime"> Determines the type of workload a node can run. </param>
-        /// <param name="messageOfTheDay"> Message of the day for Linux nodes, base64-encoded. A base64-encoded string which will be written to /etc/motd after decoding. This allows customization of the message of the day for Linux nodes. It must not be specified for Windows nodes. It must be a static string (i.e., will be printed raw and not be executed as a script). </param>
-        /// <param name="vnetSubnetId"> The ID of the subnet which agent pool nodes and optionally pods will join on startup. If this is not specified, a VNET and subnet will be generated and used. If no podSubnetID is specified, this applies to nodes and pods, otherwise it applies to just nodes. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </param>
-        /// <param name="podSubnetId"> The ID of the subnet which pods will join when launched. If omitted, pod IPs are statically assigned on the node subnet (see vnetSubnetID for more details). This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </param>
-        /// <param name="podIPAllocationMode"> Pod IP Allocation Mode. The IP allocation mode for pods in the agent pool. Must be used with podSubnetId. The default is 'DynamicIndividual'. </param>
-        /// <param name="maxPods"> The maximum number of pods that can run on a node. </param>
-        /// <param name="osType"> The operating system type. The default is Linux. </param>
-        /// <param name="osSku"> Specifies the OS SKU used by the agent pool. The default is Ubuntu if OSType is Linux. The default is Windows2019 when Kubernetes &lt;= 1.24 or Windows2022 when Kubernetes &gt;= 1.25 if OSType is Windows. </param>
-        /// <param name="maxCount"> The maximum number of nodes for auto-scaling. </param>
-        /// <param name="minCount"> The minimum number of nodes for auto-scaling. </param>
-        /// <param name="isAutoScalingEnabled"> Whether to enable auto-scaler. </param>
-        /// <param name="scaleDownMode"> The scale down mode to use when scaling the Agent Pool. This also effects the cluster autoscaler behavior. If not specified, it defaults to Delete. </param>
-        /// <param name="agentPoolType"> The type of Agent Pool. </param>
-        /// <param name="mode"> The mode of an agent pool. A cluster must have at least one 'System' Agent Pool at all times. For additional information on agent pool restrictions and best practices, see: https://docs.microsoft.com/azure/aks/use-system-pools. </param>
-        /// <param name="orchestratorVersion"> The version of Kubernetes specified by the user. Both patch version &lt;major.minor.patch&gt; (e.g. 1.20.13) and &lt;major.minor&gt; (e.g. 1.20) are supported. When &lt;major.minor&gt; is specified, the latest supported GA patch version is chosen automatically. Updating the cluster with the same &lt;major.minor&gt; once it has been created (e.g. 1.14.x -&gt; 1.14) will not trigger an upgrade, even if a newer patch version is available. As a best practice, you should upgrade all node pools in an AKS cluster to the same Kubernetes version. The node pool version must have the same major version as the control plane. The node pool minor version must be within two minor versions of the control plane version. The node pool version cannot be greater than the control plane version. For more information see [upgrading a node pool](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#upgrade-a-node-pool). </param>
-        /// <param name="currentOrchestratorVersion"> The version of Kubernetes the Agent Pool is running. If orchestratorVersion is a fully specified version &lt;major.minor.patch&gt;, this field will be exactly equal to it. If orchestratorVersion is &lt;major.minor&gt;, this field will contain the full &lt;major.minor.patch&gt; version being used. </param>
-        /// <param name="nodeImageVersion">
-        /// The version of the node image. Setting this value triggers an agentPool rollback.
-        /// Only values from `recentlyUsedVersions` are allowed.
-        /// </param>
-        /// <param name="upgradeSettings"> Settings for upgrading the agentpool. </param>
-        /// <param name="provisioningState"> The current deployment or provisioning state. </param>
-        /// <param name="availabilityZones"> The list of Availability zones to use for nodes. This can only be specified if the AgentPoolType property is 'VirtualMachineScaleSets'. </param>
-        /// <param name="isNodePublicIpEnabled"> Whether each node is allocated its own public IP. Some scenarios may require nodes in a node pool to receive their own dedicated public IP addresses. A common scenario is for gaming workloads, where a console needs to make a direct connection to a cloud virtual machine to minimize hops. For more information see [assigning a public IP per node](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#assign-a-public-ip-per-node-for-your-node-pools). The default is false. </param>
-        /// <param name="nodePublicIPPrefixId"> The public IP prefix ID which VM nodes should use IPs from. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}. </param>
-        /// <param name="scaleSetPriority"> The Virtual Machine Scale Set priority. </param>
-        /// <param name="scaleSetEvictionPolicy"> The Virtual Machine Scale Set eviction policy. The eviction policy specifies what to do with the VM when it is evicted. The default is Delete. For more information about eviction see [spot VMs](https://docs.microsoft.com/azure/virtual-machines/spot-vms). </param>
-        /// <param name="spotMaxPrice"> The max price (in US Dollars) you are willing to pay for spot instances. Possible values are any decimal value greater than zero or -1 which indicates default price to be up-to on-demand. Possible values are any decimal value greater than zero or -1 which indicates the willingness to pay any on-demand price. For more details on spot pricing, see [spot VMs pricing](https://docs.microsoft.com/azure/virtual-machines/spot-vms#pricing). </param>
-        /// <param name="tags"> The tags to be persisted on the agent pool virtual machine scale set. </param>
-        /// <param name="nodeLabels"> The node labels to be persisted across all nodes in agent pool. </param>
-        /// <param name="nodeTaints"> The taints added to new nodes during node pool create and scale. For example, key=value:NoSchedule. </param>
-        /// <param name="proximityPlacementGroupId"> The ID for Proximity Placement Group. </param>
-        /// <param name="kubeletConfig"> The Kubelet configuration on the agent pool nodes. </param>
-        /// <param name="linuxOSConfig"> The OS configuration of Linux agent nodes. </param>
-        /// <param name="isEncryptionAtHostEnabled"> Whether to enable host based OS and data drive encryption. This is only supported on certain VM sizes and in certain Azure regions. For more information, see: https://docs.microsoft.com/azure/aks/enable-host-encryption. </param>
-        /// <param name="isUltraSsdEnabled"> Whether to enable UltraSSD. </param>
-        /// <param name="isFipsEnabled"> Whether to use a FIPS-enabled OS. See [Add a FIPS-enabled node pool](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#add-a-fips-enabled-node-pool-preview) for more details. </param>
-        /// <param name="gpuInstanceProfile"> GPUInstanceProfile to be used to specify GPU MIG instance profile for supported GPU VM SKU. </param>
-        /// <param name="capacityReservationGroupId"> The fully qualified resource ID of the Capacity Reservation Group to provide virtual machines from a reserved group of Virtual Machines. This is of the form: '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Compute/capacityreservationgroups/{capacityReservationGroupName}' Customers use it to create an agentpool with a specified CRG. For more information see [Capacity Reservation](https://learn.microsoft.com/en-us/azure/virtual-machines/capacity-reservation-overview). </param>
-        /// <param name="hostGroupId"> The fully qualified resource ID of the Dedicated Host Group to provision virtual machines from, used only in creation scenario and not allowed to changed once set. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}. For more information see [Azure dedicated hosts](https://docs.microsoft.com/azure/virtual-machines/dedicated-hosts). </param>
-        /// <param name="networkProfile"> Network-related settings of an agent pool. </param>
-        /// <param name="securityProfile"> The security settings of an agent pool. </param>
-        /// <param name="virtualMachineNodesStatus"> The status of nodes in a VirtualMachines agent pool. </param>
-        /// <param name="localDnsProfile"> Configures the per-node local DNS, with VnetDNS and KubeDNS overrides. LocalDNS helps improve performance and reliability of DNS resolution in an AKS cluster. For more details see aka.ms/aks/localdns. </param>
-        /// <param name="powerStateCode"> Tells whether the cluster is Running or Stopped. </param>
-        /// <param name="creationDataSourceResourceId"> This is the ARM ID of the source object to be used to create the target object. </param>
-        /// <param name="isOutboundNatDisabled"> Whether to disable OutboundNAT in windows nodes. The default value is false. Outbound NAT can only be disabled if the cluster outboundType is NAT Gateway and the Windows agent pool does not have node public IP enabled. </param>
-        /// <param name="gatewayPublicIPPrefixSize"> The Gateway agent pool associates one public IPPrefix for each static egress gateway to provide public egress. The size of Public IPPrefix should be selected by the user. Each node in the agent pool is assigned with one IP from the IPPrefix. The IPPrefix size thus serves as a cap on the size of the Gateway agent pool. Due to Azure public IPPrefix size limitation, the valid value range is [28, 31] (/31 = 2 nodes/IPs, /30 = 4 nodes/IPs, /29 = 8 nodes/IPs, /28 = 16 nodes/IPs). The default value is 31. </param>
-        /// <param name="isArtifactStreamingEnabled"> Artifact streaming speeds up the cold-start of containers on a node through on-demand image loading. To use this feature, container images must also enable artifact streaming on ACR. If not specified, the default is false. </param>
-        /// <param name="virtualMachinesScale"> Specifications on how to scale a VirtualMachines agent pool. </param>
-        /// <param name="statusProvisioningError"> The error detail information of the agent pool. Preserves the detailed info of failure. If there was no error, this field is omitted. </param>
-        /// <param name="upgradeMaxSurge"></param>
-        /// <param name="scaleManual"></param>
-        /// <param name="virtualMachinesScaleManual"></param>
-        /// <param name="gpuDriver"> Whether to install GPU drivers. When it's not specified, default is Install. </param>
-        /// <param name="enableAutoScaling"></param>
-        /// <param name="enableNodePublicIP"></param>
-        /// <param name="enableEncryptionAtHost"></param>
-        /// <param name="enableFips"></param>
-        /// <param name="enableUltraSsd"></param>
-        /// <returns> A new <see cref="ContainerService.ContainerServiceAgentPoolData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerServiceAgentPoolData ContainerServiceAgentPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? eTag = default, int? count = default, string vmSize = default, int? osDiskSizeInGB = default, ContainerServiceOSDiskType? osDiskType = default, KubeletDiskType? kubeletDiskType = default, WorkloadRuntime? workloadRuntime = default, string messageOfTheDay = default, ResourceIdentifier vnetSubnetId = default, ResourceIdentifier podSubnetId = default, PodIPAllocationMode? podIPAllocationMode = default, int? maxPods = default, ContainerServiceOSType? osType = default, ContainerServiceOSSku? osSku = default, int? maxCount = default, int? minCount = default, bool? isAutoScalingEnabled = default, ScaleDownMode? scaleDownMode = default, AgentPoolType? agentPoolType = default, AgentPoolMode? mode = default, string orchestratorVersion = default, string currentOrchestratorVersion = default, string nodeImageVersion = default, AgentPoolUpgradeSettings upgradeSettings = default, string provisioningState = default, IEnumerable<string> availabilityZones = default, bool? isNodePublicIpEnabled = default, ResourceIdentifier nodePublicIPPrefixId = default, ScaleSetPriority? scaleSetPriority = default, ScaleSetEvictionPolicy? scaleSetEvictionPolicy = default, float? spotMaxPrice = default, IDictionary<string, string> tags = default, IDictionary<string, string> nodeLabels = default, IEnumerable<string> nodeTaints = default, ResourceIdentifier proximityPlacementGroupId = default, KubeletConfig kubeletConfig = default, LinuxOSConfig linuxOSConfig = default, bool? isEncryptionAtHostEnabled = default, bool? isUltraSsdEnabled = default, bool? isFipsEnabled = default, GpuInstanceProfile? gpuInstanceProfile = default, ResourceIdentifier capacityReservationGroupId = default, ResourceIdentifier hostGroupId = default, AgentPoolNetworkProfile networkProfile = default, AgentPoolSecurityProfile securityProfile = default, IEnumerable<AgentPoolVirtualMachineNodes> virtualMachineNodesStatus = default, LocalDnsProfile localDnsProfile = default, ContainerServiceStateCode? powerStateCode = default, ResourceIdentifier creationDataSourceResourceId = default, bool? isOutboundNatDisabled = default, int? gatewayPublicIPPrefixSize = default, bool? isArtifactStreamingEnabled = default, AgentPoolScaleProfile virtualMachinesScale = default, ResponseError statusProvisioningError = default, string upgradeMaxSurge = default, IEnumerable<ManualScaleProfile> scaleManual = default, IEnumerable<ManualScaleProfile> virtualMachinesScaleManual = default, AgentPoolGpuDriver? gpuDriver = default, bool? enableAutoScaling = default, bool? enableNodePublicIP = default, bool? enableEncryptionAtHost = default, bool? enableFips = default, bool? enableUltraSsd = default)
-        {
-            return new ContainerServiceAgentPoolData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                eTag is null && count is null && vmSize is null && osDiskSizeInGB is null && osDiskType is null && kubeletDiskType is null && workloadRuntime is null && messageOfTheDay is null && vnetSubnetId is null && podSubnetId is null && podIPAllocationMode is null && maxPods is null && osType is null && osSku is null && maxCount is null && minCount is null && isAutoScalingEnabled is null && scaleDownMode is null && agentPoolType is null && mode is null && orchestratorVersion is null && currentOrchestratorVersion is null && nodeImageVersion is null && upgradeSettings is null && provisioningState is null && powerStateCode is null && availabilityZones is null && isNodePublicIpEnabled is null && nodePublicIPPrefixId is null && scaleSetPriority is null && scaleSetEvictionPolicy is null && spotMaxPrice is null && tags is null && nodeLabels is null && nodeTaints is null && proximityPlacementGroupId is null && kubeletConfig is null && linuxOSConfig is null && isEncryptionAtHostEnabled is null && isUltraSsdEnabled is null && isFipsEnabled is null && gpuInstanceProfile is null && creationDataSourceResourceId is null && capacityReservationGroupId is null && hostGroupId is null && networkProfile is null && isOutboundNatDisabled is null && securityProfile is null && gpuDriver is null && gatewayPublicIPPrefixSize is null && isArtifactStreamingEnabled is null && virtualMachinesScale is null && virtualMachineNodesStatus is null && statusProvisioningError is null && localDnsProfile is null ? default : new ManagedClusterAgentPoolProfileProperties(
-                    eTag,
-                    count,
-                    vmSize,
-                    osDiskSizeInGB,
-                    osDiskType,
-                    kubeletDiskType,
-                    workloadRuntime,
-                    messageOfTheDay,
-                    vnetSubnetId,
-                    podSubnetId,
-                    podIPAllocationMode,
-                    maxPods,
-                    osType,
-                    osSku,
-                    maxCount,
-                    minCount,
-                    isAutoScalingEnabled,
-                    scaleDownMode,
-                    agentPoolType,
-                    mode,
-                    orchestratorVersion,
-                    currentOrchestratorVersion,
-                    nodeImageVersion,
-                    default,
-                    default,
-                    upgradeSettings,
-                    default,
-                    provisioningState,
-                    powerStateCode is null ? default : new ContainerServicePowerState(powerStateCode, default),
-                    (availabilityZones ?? new ChangeTrackingList<string>()).ToList(),
-                    isNodePublicIpEnabled,
-                    nodePublicIPPrefixId,
-                    scaleSetPriority,
-                    scaleSetEvictionPolicy,
-                    spotMaxPrice,
-                    tags ?? new ChangeTrackingDictionary<string, string>(),
-                    nodeLabels ?? new ChangeTrackingDictionary<string, string>(),
-                    (nodeTaints ?? new ChangeTrackingList<string>()).ToList(),
-                    default,
-                    proximityPlacementGroupId,
-                    kubeletConfig,
-                    linuxOSConfig,
-                    isEncryptionAtHostEnabled,
-                    isUltraSsdEnabled,
-                    isFipsEnabled,
-                    gpuInstanceProfile,
-                    creationDataSourceResourceId is null ? default : new ContainerServiceCreationData(creationDataSourceResourceId, default),
-                    capacityReservationGroupId,
-                    hostGroupId,
-                    networkProfile,
-                    isOutboundNatDisabled is null ? default : new AgentPoolWindowsProfile(isOutboundNatDisabled, default),
-                    securityProfile,
-                    gpuDriver is null ? default : new AgentPoolGpuProfile(gpuDriver, default, default, default),
-                    gatewayPublicIPPrefixSize is null ? default : new AgentPoolGatewayProfile(gatewayPublicIPPrefixSize, default),
-                    isArtifactStreamingEnabled is null ? default : new AgentPoolArtifactStreamingProfile(isArtifactStreamingEnabled, default),
-                    virtualMachinesScale is null ? default : new VirtualMachinesProfile(virtualMachinesScale, default),
-                    (virtualMachineNodesStatus ?? new ChangeTrackingList<AgentPoolVirtualMachineNodes>()).ToList(),
-                    statusProvisioningError is null ? default : new AgentPoolStatus(statusProvisioningError, default),
-                    localDnsProfile,
-                    default,
-                    default),
-                default);
-        }
-
         /// <summary> Properties for the container service agent pool profile. </summary>
         /// <param name="eTag"> Unique read-only string used to implement optimistic concurrency. The eTag value will change when the resource is updated. Specify an if-match or if-none-match header with the eTag value for a subsequent request to enable optimistic concurrency per the normal eTag convention. </param>
         /// <param name="count"> Number of agents (VMs) to host docker containers. Allowed values must be in the range of 0 to 1000 (inclusive) for user pools and in the range of 1 to 1000 (inclusive) for system pools. The default value is 1. </param>
@@ -3772,140 +3627,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 (applicationSecurityGroups ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                 default,
                 dranetMode is null ? default : new DRANETProfile(dranetMode, default),
-                default);
-        }
-
-        /// <summary> Managed cluster. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> The current provisioning state. </param>
-        /// <param name="maxAgentPools"> The max number of agent pools for the managed cluster. </param>
-        /// <param name="kubernetesVersion"> The version of Kubernetes specified by the user. Both patch version &lt;major.minor.patch&gt; (e.g. 1.20.13) and &lt;major.minor&gt; (e.g. 1.20) are supported. When &lt;major.minor&gt; is specified, the latest supported GA patch version is chosen automatically. Updating the cluster with the same &lt;major.minor&gt; once it has been created (e.g. 1.14.x -&gt; 1.14) will not trigger an upgrade, even if a newer patch version is available. When you upgrade a supported AKS cluster, Kubernetes minor versions cannot be skipped. All upgrades must be performed sequentially by major version number. For example, upgrades between 1.14.x -&gt; 1.15.x or 1.15.x -&gt; 1.16.x are allowed, however 1.14.x -&gt; 1.16.x is not allowed. See [upgrading an AKS cluster](https://docs.microsoft.com/azure/aks/upgrade-cluster) for more details. </param>
-        /// <param name="currentKubernetesVersion"> The version of Kubernetes the Managed Cluster is running. If kubernetesVersion was a fully specified version &lt;major.minor.patch&gt;, this field will be exactly equal to it. If kubernetesVersion was &lt;major.minor&gt;, this field will contain the full &lt;major.minor.patch&gt; version being used. </param>
-        /// <param name="dnsPrefix"> The DNS prefix of the Managed Cluster. This cannot be updated once the Managed Cluster has been created. </param>
-        /// <param name="fqdnSubdomain"> The FQDN subdomain of the private cluster with custom private dns zone. This cannot be updated once the Managed Cluster has been created. </param>
-        /// <param name="fqdn"> The FQDN of the master pool. </param>
-        /// <param name="privateFqdn"> The FQDN of private cluster. </param>
-        /// <param name="azurePortalFqdn"> The special FQDN used by the Azure Portal to access the Managed Cluster. This FQDN is for use only by the Azure Portal and should not be used by other clients. The Azure Portal requires certain Cross-Origin Resource Sharing (CORS) headers to be sent in some responses, which Kubernetes APIServer doesn't handle by default. This special FQDN supports CORS, allowing the Azure Portal to function properly. </param>
-        /// <param name="agentPoolProfiles"> The agent pool properties. </param>
-        /// <param name="linuxProfile"> The profile for Linux VMs in the Managed Cluster. </param>
-        /// <param name="windowsProfile"> The profile for Windows VMs in the Managed Cluster. </param>
-        /// <param name="servicePrincipalProfile"> Information about a service principal identity for the cluster to use for manipulating Azure APIs. </param>
-        /// <param name="addonProfiles"> The profile of managed cluster add-on. </param>
-        /// <param name="podIdentityProfile"> The pod identity profile of the Managed Cluster. See [use AAD pod identity](https://docs.microsoft.com/azure/aks/use-azure-ad-pod-identity) for more details on AAD pod identity integration. </param>
-        /// <param name="oidcIssuerProfile"> The OIDC issuer profile of the Managed Cluster. </param>
-        /// <param name="nodeResourceGroup"> The name of the resource group containing agent pool nodes. </param>
-        /// <param name="isRbacEnabled"> Whether to enable Kubernetes Role-Based Access Control. </param>
-        /// <param name="supportPlan"> The support plan for the Managed Cluster. If unspecified, the default is 'KubernetesOfficial'. </param>
-        /// <param name="networkProfile"> The network configuration profile. </param>
-        /// <param name="aadProfile"> The Azure Active Directory configuration. </param>
-        /// <param name="autoUpgradeProfile"> The auto upgrade configuration. </param>
-        /// <param name="autoScalerProfile"> Parameters to be applied to the cluster-autoscaler when enabled. </param>
-        /// <param name="apiServerAccessProfile"> The access profile for managed cluster API server. </param>
-        /// <param name="diskEncryptionSetId"> The Resource ID of the disk encryption set to use for enabling encryption at rest. This is of the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{encryptionSetName}'. </param>
-        /// <param name="identityProfile"> The user identity associated with the managed cluster. This identity will be used by the kubelet. Only one user assigned identity is allowed. The only accepted key is "kubeletidentity", with value of "resourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}". </param>
-        /// <param name="privateLinkResources"> Private link resources associated with the cluster. </param>
-        /// <param name="isLocalAccountsDisabled"> If local accounts should be disabled on the Managed Cluster. If set to true, getting static credentials will be disabled for this cluster. This must only be used on Managed Clusters that are AAD enabled. For more details see [disable local accounts](https://docs.microsoft.com/azure/aks/managed-aad#disable-local-accounts-preview). </param>
-        /// <param name="httpProxyConfig"> Configurations for provisioning the cluster with HTTP proxy servers. </param>
-        /// <param name="securityProfile"> Security profile for the managed cluster. </param>
-        /// <param name="storageProfile"> Storage profile for the managed cluster. </param>
-        /// <param name="ingressProfile"> Ingress profile for the managed cluster. </param>
-        /// <param name="publicNetworkAccess"> PublicNetworkAccess of the managedCluster. Allow or deny public network access for AKS. </param>
-        /// <param name="workloadAutoScalerProfile"> Workload Auto-scaler profile for the managed cluster. </param>
-        /// <param name="azureMonitorProfile"> Azure Monitor addon profiles for monitoring the managed cluster. </param>
-        /// <param name="serviceMeshProfile"> Service mesh profile for a managed cluster. </param>
-        /// <param name="resourceId"> The resourceUID uniquely identifies ManagedClusters that reuse ARM ResourceIds (i.e: create, delete, create sequence). </param>
-        /// <param name="nodeProvisioningProfile"> Node provisioning settings that apply to the whole cluster. </param>
-        /// <param name="bootstrapProfile"> Profile of the cluster bootstrap configuration. </param>
-        /// <param name="hostedSystemProfile"> Settings for hosted system addons. For more information, see https://aka.ms/aks/automatic/systemcomponents. </param>
-        /// <param name="powerStateCode"> Tells whether the cluster is Running or Stopped. </param>
-        /// <param name="nodeResourceGroupRestrictionLevel"> The restriction level applied to the cluster's node resource group. If not specified, the default is 'Unrestricted'. </param>
-        /// <param name="upgradeOverrideSettings"> Settings for overrides. </param>
-        /// <param name="isCostAnalysisEnabled"> Whether to enable cost analysis. The Managed Cluster sku.tier must be set to 'Standard' or 'Premium' to enable this feature. Enabling this will add Kubernetes Namespace and Deployment details to the Cost Analysis views in the Azure portal. If not specified, the default is false. For more information see aka.ms/aks/docs/cost-analysis. </param>
-        /// <param name="isAIToolchainOperatorEnabled"> Whether to enable AI toolchain operator to the cluster. Indicates if AI toolchain operator  enabled or not. </param>
-        /// <param name="upstreamSchedulerConfigMode"> The configuration mode to be used by the AKS-managed scheduler. </param>
-        /// <param name="statusProvisioningError"> The error details information of the managed cluster. Preserves the detailed info of failure. If there was no error, this field is omitted. </param>
-        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <param name="sku"> The managed cluster SKU. </param>
-        /// <param name="extendedLocation"> The extended location of the Virtual Machine. </param>
-        /// <param name="clusterIdentity"> The identity of the managed cluster, if configured. </param>
-        /// <param name="kind"> This is primarily used to expose different UI experiences in the portal for different kinds. </param>
-        /// <returns> A new <see cref="ContainerService.ContainerServiceManagedClusterData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerServiceManagedClusterData ContainerServiceManagedClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, int? maxAgentPools = default, string kubernetesVersion = default, string currentKubernetesVersion = default, string dnsPrefix = default, string fqdnSubdomain = default, string fqdn = default, string privateFqdn = default, string azurePortalFqdn = default, IEnumerable<ManagedClusterAgentPoolProfile> agentPoolProfiles = default, ContainerServiceLinuxProfile linuxProfile = default, ManagedClusterWindowsProfile windowsProfile = default, ManagedClusterServicePrincipalProfile servicePrincipalProfile = default, IDictionary<string, ManagedClusterAddonProfile> addonProfiles = default, ManagedClusterPodIdentityProfile podIdentityProfile = default, ManagedClusterOidcIssuerProfile oidcIssuerProfile = default, string nodeResourceGroup = default, bool? isRbacEnabled = default, KubernetesSupportPlan? supportPlan = default, ContainerServiceNetworkProfile networkProfile = default, ManagedClusterAadProfile aadProfile = default, ManagedClusterAutoUpgradeProfile autoUpgradeProfile = default, ManagedClusterAutoScalerProfile autoScalerProfile = default, ManagedClusterApiServerAccessProfile apiServerAccessProfile = default, ResourceIdentifier diskEncryptionSetId = default, IDictionary<string, ContainerServiceUserAssignedIdentity> identityProfile = default, IEnumerable<ContainerServicePrivateLinkResourceData> privateLinkResources = default, bool? isLocalAccountsDisabled = default, ManagedClusterHttpProxyConfig httpProxyConfig = default, ManagedClusterSecurityProfile securityProfile = default, ManagedClusterStorageProfile storageProfile = default, ManagedClusterIngressProfile ingressProfile = default, ContainerServicePublicNetworkAccess? publicNetworkAccess = default, ManagedClusterWorkloadAutoScalerProfile workloadAutoScalerProfile = default, ManagedClusterAzureMonitorProfile azureMonitorProfile = default, ServiceMeshProfile serviceMeshProfile = default, ResourceIdentifier resourceId = default, ManagedClusterNodeProvisioningProfile nodeProvisioningProfile = default, ManagedClusterBootstrapProfile bootstrapProfile = default, ManagedClusterHostedSystemProfile hostedSystemProfile = default, ContainerServiceStateCode? powerStateCode = default, ManagedClusterNodeResourceGroupRestrictionLevel? nodeResourceGroupRestrictionLevel = default, UpgradeOverrideSettings upgradeOverrideSettings = default, bool? isCostAnalysisEnabled = default, bool? isAIToolchainOperatorEnabled = default, SchedulerConfigMode? upstreamSchedulerConfigMode = default, ResponseError statusProvisioningError = default, ETag? eTag = default, ManagedClusterSku sku = default, ExtendedLocation extendedLocation = default, ManagedClusterIdentity clusterIdentity = default, string kind = default)
-        {
-            return new ContainerServiceManagedClusterData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && powerStateCode is null && maxAgentPools is null && kubernetesVersion is null && currentKubernetesVersion is null && dnsPrefix is null && fqdnSubdomain is null && fqdn is null && privateFqdn is null && azurePortalFqdn is null && agentPoolProfiles is null && linuxProfile is null && windowsProfile is null && servicePrincipalProfile is null && addonProfiles is null && podIdentityProfile is null && oidcIssuerProfile is null && nodeResourceGroup is null && nodeResourceGroupRestrictionLevel is null && isRbacEnabled is null && supportPlan is null && networkProfile is null && aadProfile is null && autoUpgradeProfile is null && upgradeOverrideSettings is null && autoScalerProfile is null && apiServerAccessProfile is null && diskEncryptionSetId is null && identityProfile is null && privateLinkResources is null && isLocalAccountsDisabled is null && httpProxyConfig is null && securityProfile is null && storageProfile is null && ingressProfile is null && publicNetworkAccess is null && workloadAutoScalerProfile is null && azureMonitorProfile is null && serviceMeshProfile is null && resourceId is null && isCostAnalysisEnabled is null && nodeProvisioningProfile is null && bootstrapProfile is null && isAIToolchainOperatorEnabled is null && upstreamSchedulerConfigMode is null && hostedSystemProfile is null && statusProvisioningError is null ? default : new ManagedClusterProperties(
-                    provisioningState,
-                    powerStateCode is null ? default : new ContainerServicePowerState(powerStateCode, default),
-                    default,
-                    maxAgentPools,
-                    kubernetesVersion,
-                    currentKubernetesVersion,
-                    dnsPrefix,
-                    fqdnSubdomain,
-                    fqdn,
-                    privateFqdn,
-                    azurePortalFqdn,
-                    (agentPoolProfiles ?? new ChangeTrackingList<ManagedClusterAgentPoolProfile>()).ToList(),
-                    linuxProfile,
-                    windowsProfile,
-                    servicePrincipalProfile,
-                    addonProfiles ?? new ChangeTrackingDictionary<string, ManagedClusterAddonProfile>(),
-                    podIdentityProfile,
-                    oidcIssuerProfile,
-                    nodeResourceGroup,
-                    nodeResourceGroupRestrictionLevel is null ? default : new ManagedClusterNodeResourceGroupProfile(nodeResourceGroupRestrictionLevel, default),
-                    isRbacEnabled,
-                    supportPlan,
-                    default,
-                    default,
-                    default,
-                    networkProfile,
-                    aadProfile,
-                    autoUpgradeProfile,
-                    upgradeOverrideSettings is null ? default : new ClusterUpgradeSettings(upgradeOverrideSettings, default, default),
-                    autoScalerProfile,
-                    apiServerAccessProfile,
-                    diskEncryptionSetId,
-                    identityProfile ?? new ChangeTrackingDictionary<string, ContainerServiceUserAssignedIdentity>(),
-                    (privateLinkResources ?? new ChangeTrackingList<ContainerServicePrivateLinkResourceData>()).ToList(),
-                    isLocalAccountsDisabled,
-                    httpProxyConfig,
-                    securityProfile,
-                    storageProfile,
-                    ingressProfile,
-                    publicNetworkAccess,
-                    workloadAutoScalerProfile,
-                    azureMonitorProfile,
-                    serviceMeshProfile,
-                    resourceId,
-                    isCostAnalysisEnabled is null ? default : new ManagedClusterMetricsProfile(isCostAnalysisEnabled is null ? default : new ManagedClusterCostAnalysis(isCostAnalysisEnabled, default), default),
-                    nodeProvisioningProfile,
-                    bootstrapProfile,
-                    isAIToolchainOperatorEnabled is null ? default : new ManagedClusterAIToolchainOperatorProfile(isAIToolchainOperatorEnabled, default),
-                    upstreamSchedulerConfigMode is null ? default : new SchedulerProfile(upstreamSchedulerConfigMode is null ? default : new SchedulerInstanceProfile(upstreamSchedulerConfigMode, default), default),
-                    hostedSystemProfile,
-                    default,
-                    default,
-                    default,
-                    statusProvisioningError is null ? default : new ManagedClusterStatus(statusProvisioningError, default),
-                    default),
-                eTag,
-                sku,
-                extendedLocation,
-                clusterIdentity,
-                kind,
                 default);
         }
 
@@ -4105,29 +3826,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 default);
         }
 
-        /// <summary> Security profile for the container service cluster. </summary>
-        /// <param name="defender"> Microsoft Defender settings for the security profile. </param>
-        /// <param name="azureKeyVaultKms"> Azure Key Vault [key management service](https://kubernetes.io/docs/tasks/administer-cluster/kms-provider/) settings for the security profile. </param>
-        /// <param name="isWorkloadIdentityEnabled"> Whether to enable workload identity. </param>
-        /// <param name="imageCleaner"> Image Cleaner settings for the security profile. </param>
-        /// <param name="customCATrustCertificates"> A list of up to 10 base64 encoded CAs that will be added to the trust store on all nodes in the cluster. For more information see [Custom CA Trust Certificates](https://learn.microsoft.com/en-us/azure/aks/custom-certificate-authority). </param>
-        /// <returns> A new <see cref="Models.ManagedClusterSecurityProfile"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedClusterSecurityProfile ManagedClusterSecurityProfile(ManagedClusterSecurityProfileDefender defender = default, ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms = default, bool? isWorkloadIdentityEnabled = default, ManagedClusterSecurityProfileImageCleaner imageCleaner = default, IEnumerable<byte[]> customCATrustCertificates = default)
-        {
-            return new ManagedClusterSecurityProfile(
-                defender,
-                azureKeyVaultKms,
-                default,
-                isWorkloadIdentityEnabled is null ? default : new ManagedClusterSecurityProfileWorkloadIdentity(isWorkloadIdentityEnabled, default),
-                imageCleaner,
-                default,
-                default,
-                (customCATrustCertificates ?? new ChangeTrackingList<byte[]>()).ToList(),
-                default,
-                default);
-        }
-
         /// <summary> The list of available upgrade versions. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
         /// <param name="name"> The Agent Pool name. </param>
@@ -4253,6 +3951,308 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ManagedClusterIdentityBindingProperties ManagedClusterIdentityBindingProperties(IdentityBindingManagedIdentityProfile managedIdentity = default, Uri oidcIssuerUri = default, ManagedClusterIdentityBindingProvisioningState? provisioningState = default)
         {
             return new ManagedClusterIdentityBindingProperties(managedIdentity, oidcIssuerUri is null ? default : new IdentityBindingOidcIssuerProfile(oidcIssuerUri, default), provisioningState, default, default);
+        }
+
+        /// <summary> Agent Pool. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="eTag"> Unique read-only string used to implement optimistic concurrency. The eTag value will change when the resource is updated. Specify an if-match or if-none-match header with the eTag value for a subsequent request to enable optimistic concurrency per the normal eTag convention. </param>
+        /// <param name="count"> Number of agents (VMs) to host docker containers. Allowed values must be in the range of 0 to 1000 (inclusive) for user pools and in the range of 1 to 1000 (inclusive) for system pools. The default value is 1. </param>
+        /// <param name="vmSize"> The size of the agent pool VMs. VM size availability varies by region. If a node contains insufficient compute resources (memory, cpu, etc) pods might fail to run correctly. For more details on restricted VM sizes, see: https://docs.microsoft.com/azure/aks/quotas-skus-regions. </param>
+        /// <param name="osDiskSizeInGB"> OS Disk Size in GB to be used to specify the disk size for every machine in the master/agent pool. If you specify 0, it will apply the default osDisk size according to the vmSize specified. </param>
+        /// <param name="osDiskType"> The OS disk type to be used for machines in the agent pool. The default is 'Ephemeral' if the VM supports it and has a cache disk larger than the requested OSDiskSizeGB. Otherwise, defaults to 'Managed'. May not be changed after creation. For more information see [Ephemeral OS](https://docs.microsoft.com/azure/aks/cluster-configuration#ephemeral-os). </param>
+        /// <param name="kubeletDiskType"> Determines the placement of emptyDir volumes, container runtime data root, and Kubelet ephemeral storage. </param>
+        /// <param name="workloadRuntime"> Determines the type of workload a node can run. </param>
+        /// <param name="messageOfTheDay"> Message of the day for Linux nodes, base64-encoded. A base64-encoded string which will be written to /etc/motd after decoding. This allows customization of the message of the day for Linux nodes. It must not be specified for Windows nodes. It must be a static string (i.e., will be printed raw and not be executed as a script). </param>
+        /// <param name="vnetSubnetId"> The ID of the subnet which agent pool nodes and optionally pods will join on startup. If this is not specified, a VNET and subnet will be generated and used. If no podSubnetID is specified, this applies to nodes and pods, otherwise it applies to just nodes. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </param>
+        /// <param name="podSubnetId"> The ID of the subnet which pods will join when launched. If omitted, pod IPs are statically assigned on the node subnet (see vnetSubnetID for more details). This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </param>
+        /// <param name="podIPAllocationMode"> Pod IP Allocation Mode. The IP allocation mode for pods in the agent pool. Must be used with podSubnetId. The default is 'DynamicIndividual'. </param>
+        /// <param name="maxPods"> The maximum number of pods that can run on a node. </param>
+        /// <param name="osType"> The operating system type. The default is Linux. </param>
+        /// <param name="osSku"> Specifies the OS SKU used by the agent pool. The default is Ubuntu if OSType is Linux. The default is Windows2019 when Kubernetes &lt;= 1.24 or Windows2022 when Kubernetes &gt;= 1.25 if OSType is Windows. </param>
+        /// <param name="maxCount"> The maximum number of nodes for auto-scaling. </param>
+        /// <param name="minCount"> The minimum number of nodes for auto-scaling. </param>
+        /// <param name="isAutoScalingEnabled"> Whether to enable auto-scaler. </param>
+        /// <param name="scaleDownMode"> The scale down mode to use when scaling the Agent Pool. This also effects the cluster autoscaler behavior. If not specified, it defaults to Delete. </param>
+        /// <param name="agentPoolType"> The type of Agent Pool. </param>
+        /// <param name="mode"> The mode of an agent pool. A cluster must have at least one 'System' Agent Pool at all times. For additional information on agent pool restrictions and best practices, see: https://docs.microsoft.com/azure/aks/use-system-pools. </param>
+        /// <param name="orchestratorVersion"> The version of Kubernetes specified by the user. Both patch version &lt;major.minor.patch&gt; (e.g. 1.20.13) and &lt;major.minor&gt; (e.g. 1.20) are supported. When &lt;major.minor&gt; is specified, the latest supported GA patch version is chosen automatically. Updating the cluster with the same &lt;major.minor&gt; once it has been created (e.g. 1.14.x -&gt; 1.14) will not trigger an upgrade, even if a newer patch version is available. As a best practice, you should upgrade all node pools in an AKS cluster to the same Kubernetes version. The node pool version must have the same major version as the control plane. The node pool minor version must be within two minor versions of the control plane version. The node pool version cannot be greater than the control plane version. For more information see [upgrading a node pool](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#upgrade-a-node-pool). </param>
+        /// <param name="currentOrchestratorVersion"> The version of Kubernetes the Agent Pool is running. If orchestratorVersion is a fully specified version &lt;major.minor.patch&gt;, this field will be exactly equal to it. If orchestratorVersion is &lt;major.minor&gt;, this field will contain the full &lt;major.minor.patch&gt; version being used. </param>
+        /// <param name="nodeImageVersion">
+        /// The version of the node image. Setting this value triggers an agentPool rollback.
+        /// Only values from `recentlyUsedVersions` are allowed.
+        /// </param>
+        /// <param name="upgradeSettings"> Settings for upgrading the agentpool. </param>
+        /// <param name="provisioningState"> The current deployment or provisioning state. </param>
+        /// <param name="availabilityZones"> The list of Availability zones to use for nodes. This can only be specified if the AgentPoolType property is 'VirtualMachineScaleSets'. </param>
+        /// <param name="isNodePublicIpEnabled"> Whether each node is allocated its own public IP. Some scenarios may require nodes in a node pool to receive their own dedicated public IP addresses. A common scenario is for gaming workloads, where a console needs to make a direct connection to a cloud virtual machine to minimize hops. For more information see [assigning a public IP per node](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#assign-a-public-ip-per-node-for-your-node-pools). The default is false. </param>
+        /// <param name="nodePublicIPPrefixId"> The public IP prefix ID which VM nodes should use IPs from. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}. </param>
+        /// <param name="scaleSetPriority"> The Virtual Machine Scale Set priority. </param>
+        /// <param name="scaleSetEvictionPolicy"> The Virtual Machine Scale Set eviction policy. The eviction policy specifies what to do with the VM when it is evicted. The default is Delete. For more information about eviction see [spot VMs](https://docs.microsoft.com/azure/virtual-machines/spot-vms). </param>
+        /// <param name="spotMaxPrice"> The max price (in US Dollars) you are willing to pay for spot instances. Possible values are any decimal value greater than zero or -1 which indicates default price to be up-to on-demand. Possible values are any decimal value greater than zero or -1 which indicates the willingness to pay any on-demand price. For more details on spot pricing, see [spot VMs pricing](https://docs.microsoft.com/azure/virtual-machines/spot-vms#pricing). </param>
+        /// <param name="tags"> The tags to be persisted on the agent pool virtual machine scale set. </param>
+        /// <param name="nodeLabels"> The node labels to be persisted across all nodes in agent pool. </param>
+        /// <param name="nodeTaints"> The taints added to new nodes during node pool create and scale. For example, key=value:NoSchedule. </param>
+        /// <param name="proximityPlacementGroupId"> The ID for Proximity Placement Group. </param>
+        /// <param name="kubeletConfig"> The Kubelet configuration on the agent pool nodes. </param>
+        /// <param name="linuxOSConfig"> The OS configuration of Linux agent nodes. </param>
+        /// <param name="isEncryptionAtHostEnabled"> Whether to enable host based OS and data drive encryption. This is only supported on certain VM sizes and in certain Azure regions. For more information, see: https://docs.microsoft.com/azure/aks/enable-host-encryption. </param>
+        /// <param name="isUltraSsdEnabled"> Whether to enable UltraSSD. </param>
+        /// <param name="isFipsEnabled"> Whether to use a FIPS-enabled OS. See [Add a FIPS-enabled node pool](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#add-a-fips-enabled-node-pool-preview) for more details. </param>
+        /// <param name="gpuInstanceProfile"> GPUInstanceProfile to be used to specify GPU MIG instance profile for supported GPU VM SKU. </param>
+        /// <param name="capacityReservationGroupId"> The fully qualified resource ID of the Capacity Reservation Group to provide virtual machines from a reserved group of Virtual Machines. This is of the form: '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Compute/capacityreservationgroups/{capacityReservationGroupName}' Customers use it to create an agentpool with a specified CRG. For more information see [Capacity Reservation](https://learn.microsoft.com/en-us/azure/virtual-machines/capacity-reservation-overview). </param>
+        /// <param name="hostGroupId"> The fully qualified resource ID of the Dedicated Host Group to provision virtual machines from, used only in creation scenario and not allowed to changed once set. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}. For more information see [Azure dedicated hosts](https://docs.microsoft.com/azure/virtual-machines/dedicated-hosts). </param>
+        /// <param name="networkProfile"> Network-related settings of an agent pool. </param>
+        /// <param name="securityProfile"> The security settings of an agent pool. </param>
+        /// <param name="virtualMachineNodesStatus"> The status of nodes in a VirtualMachines agent pool. </param>
+        /// <param name="localDnsProfile"> Configures the per-node local DNS, with VnetDNS and KubeDNS overrides. LocalDNS helps improve performance and reliability of DNS resolution in an AKS cluster. For more details see aka.ms/aks/localdns. </param>
+        /// <param name="powerStateCode"> Tells whether the cluster is Running or Stopped. </param>
+        /// <param name="creationDataSourceResourceId"> This is the ARM ID of the source object to be used to create the target object. </param>
+        /// <param name="isOutboundNatDisabled"> Whether to disable OutboundNAT in windows nodes. The default value is false. Outbound NAT can only be disabled if the cluster outboundType is NAT Gateway and the Windows agent pool does not have node public IP enabled. </param>
+        /// <param name="gatewayPublicIPPrefixSize"> The Gateway agent pool associates one public IPPrefix for each static egress gateway to provide public egress. The size of Public IPPrefix should be selected by the user. Each node in the agent pool is assigned with one IP from the IPPrefix. The IPPrefix size thus serves as a cap on the size of the Gateway agent pool. Due to Azure public IPPrefix size limitation, the valid value range is [28, 31] (/31 = 2 nodes/IPs, /30 = 4 nodes/IPs, /29 = 8 nodes/IPs, /28 = 16 nodes/IPs). The default value is 31. </param>
+        /// <param name="isArtifactStreamingEnabled"> Artifact streaming speeds up the cold-start of containers on a node through on-demand image loading. To use this feature, container images must also enable artifact streaming on ACR. If not specified, the default is false. </param>
+        /// <param name="virtualMachinesScale"> Specifications on how to scale a VirtualMachines agent pool. </param>
+        /// <param name="statusProvisioningError"> The error detail information of the agent pool. Preserves the detailed info of failure. If there was no error, this field is omitted. </param>
+        /// <param name="upgradeMaxSurge"></param>
+        /// <param name="scaleManual"></param>
+        /// <param name="virtualMachinesScaleManual"></param>
+        /// <param name="gpuDriver"> Whether to install GPU drivers. When it's not specified, default is Install. </param>
+        /// <param name="enableAutoScaling"></param>
+        /// <param name="enableNodePublicIP"></param>
+        /// <param name="enableEncryptionAtHost"></param>
+        /// <param name="enableFips"></param>
+        /// <param name="enableUltraSsd"></param>
+        /// <returns> A new <see cref="ContainerService.ContainerServiceAgentPoolData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ContainerServiceAgentPoolData ContainerServiceAgentPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? eTag = default, int? count = default, string vmSize = default, int? osDiskSizeInGB = default, ContainerServiceOSDiskType? osDiskType = default, KubeletDiskType? kubeletDiskType = default, WorkloadRuntime? workloadRuntime = default, string messageOfTheDay = default, ResourceIdentifier vnetSubnetId = default, ResourceIdentifier podSubnetId = default, PodIPAllocationMode? podIPAllocationMode = default, int? maxPods = default, ContainerServiceOSType? osType = default, ContainerServiceOSSku? osSku = default, int? maxCount = default, int? minCount = default, bool? isAutoScalingEnabled = default, ScaleDownMode? scaleDownMode = default, AgentPoolType? agentPoolType = default, AgentPoolMode? mode = default, string orchestratorVersion = default, string currentOrchestratorVersion = default, string nodeImageVersion = default, AgentPoolUpgradeSettings upgradeSettings = default, string provisioningState = default, IEnumerable<string> availabilityZones = default, bool? isNodePublicIpEnabled = default, ResourceIdentifier nodePublicIPPrefixId = default, ScaleSetPriority? scaleSetPriority = default, ScaleSetEvictionPolicy? scaleSetEvictionPolicy = default, float? spotMaxPrice = default, IDictionary<string, string> tags = default, IDictionary<string, string> nodeLabels = default, IEnumerable<string> nodeTaints = default, ResourceIdentifier proximityPlacementGroupId = default, KubeletConfig kubeletConfig = default, LinuxOSConfig linuxOSConfig = default, bool? isEncryptionAtHostEnabled = default, bool? isUltraSsdEnabled = default, bool? isFipsEnabled = default, GpuInstanceProfile? gpuInstanceProfile = default, ResourceIdentifier capacityReservationGroupId = default, ResourceIdentifier hostGroupId = default, AgentPoolNetworkProfile networkProfile = default, AgentPoolSecurityProfile securityProfile = default, IEnumerable<AgentPoolVirtualMachineNodes> virtualMachineNodesStatus = default, LocalDnsProfile localDnsProfile = default, ContainerServiceStateCode? powerStateCode = default, ResourceIdentifier creationDataSourceResourceId = default, bool? isOutboundNatDisabled = default, int? gatewayPublicIPPrefixSize = default, bool? isArtifactStreamingEnabled = default, AgentPoolScaleProfile virtualMachinesScale = default, ResponseError statusProvisioningError = default, string upgradeMaxSurge = default, IEnumerable<ManualScaleProfile> scaleManual = default, IEnumerable<ManualScaleProfile> virtualMachinesScaleManual = default, AgentPoolGpuDriver? gpuDriver = default, bool? enableAutoScaling = default, bool? enableNodePublicIP = default, bool? enableEncryptionAtHost = default, bool? enableFips = default, bool? enableUltraSsd = default)
+        {
+            return new ContainerServiceAgentPoolData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                eTag is null && count is null && vmSize is null && osDiskSizeInGB is null && osDiskType is null && kubeletDiskType is null && workloadRuntime is null && messageOfTheDay is null && vnetSubnetId is null && podSubnetId is null && podIPAllocationMode is null && maxPods is null && osType is null && osSku is null && maxCount is null && minCount is null && isAutoScalingEnabled is null && scaleDownMode is null && agentPoolType is null && mode is null && orchestratorVersion is null && currentOrchestratorVersion is null && nodeImageVersion is null && upgradeSettings is null && provisioningState is null && powerStateCode is null && availabilityZones is null && isNodePublicIpEnabled is null && nodePublicIPPrefixId is null && scaleSetPriority is null && scaleSetEvictionPolicy is null && spotMaxPrice is null && tags is null && nodeLabels is null && nodeTaints is null && proximityPlacementGroupId is null && kubeletConfig is null && linuxOSConfig is null && isEncryptionAtHostEnabled is null && isUltraSsdEnabled is null && isFipsEnabled is null && gpuInstanceProfile is null && creationDataSourceResourceId is null && capacityReservationGroupId is null && hostGroupId is null && networkProfile is null && isOutboundNatDisabled is null && securityProfile is null && gpuDriver is null && gatewayPublicIPPrefixSize is null && isArtifactStreamingEnabled is null && virtualMachinesScale is null && virtualMachineNodesStatus is null && statusProvisioningError is null && localDnsProfile is null ? default : new ManagedClusterAgentPoolProfileProperties(
+                    eTag,
+                    count,
+                    vmSize,
+                    osDiskSizeInGB,
+                    osDiskType,
+                    kubeletDiskType,
+                    workloadRuntime,
+                    messageOfTheDay,
+                    vnetSubnetId,
+                    podSubnetId,
+                    podIPAllocationMode,
+                    maxPods,
+                    osType,
+                    osSku,
+                    maxCount,
+                    minCount,
+                    isAutoScalingEnabled,
+                    scaleDownMode,
+                    agentPoolType,
+                    mode,
+                    orchestratorVersion,
+                    currentOrchestratorVersion,
+                    nodeImageVersion,
+                    default,
+                    default,
+                    upgradeSettings,
+                    default,
+                    provisioningState,
+                    powerStateCode is null ? default : new ContainerServicePowerState(powerStateCode, default),
+                    (availabilityZones ?? new ChangeTrackingList<string>()).ToList(),
+                    isNodePublicIpEnabled,
+                    nodePublicIPPrefixId,
+                    scaleSetPriority,
+                    scaleSetEvictionPolicy,
+                    spotMaxPrice,
+                    tags ?? new ChangeTrackingDictionary<string, string>(),
+                    nodeLabels ?? new ChangeTrackingDictionary<string, string>(),
+                    (nodeTaints ?? new ChangeTrackingList<string>()).ToList(),
+                    default,
+                    proximityPlacementGroupId,
+                    kubeletConfig,
+                    linuxOSConfig,
+                    isEncryptionAtHostEnabled,
+                    isUltraSsdEnabled,
+                    isFipsEnabled,
+                    gpuInstanceProfile,
+                    creationDataSourceResourceId is null ? default : new ContainerServiceCreationData(creationDataSourceResourceId, default),
+                    capacityReservationGroupId,
+                    hostGroupId,
+                    networkProfile,
+                    isOutboundNatDisabled is null ? default : new AgentPoolWindowsProfile(isOutboundNatDisabled, default),
+                    securityProfile,
+                    gpuDriver is null ? default : new AgentPoolGpuProfile(gpuDriver, default, default, default),
+                    gatewayPublicIPPrefixSize is null ? default : new AgentPoolGatewayProfile(gatewayPublicIPPrefixSize, default),
+                    isArtifactStreamingEnabled is null ? default : new AgentPoolArtifactStreamingProfile(isArtifactStreamingEnabled, default),
+                    virtualMachinesScale is null ? default : new VirtualMachinesProfile(virtualMachinesScale, default),
+                    (virtualMachineNodesStatus ?? new ChangeTrackingList<AgentPoolVirtualMachineNodes>()).ToList(),
+                    statusProvisioningError is null ? default : new AgentPoolStatus(statusProvisioningError, default),
+                    localDnsProfile,
+                    default,
+                    default),
+                default);
+        }
+
+        /// <summary> Managed cluster. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> The current provisioning state. </param>
+        /// <param name="maxAgentPools"> The max number of agent pools for the managed cluster. </param>
+        /// <param name="kubernetesVersion"> The version of Kubernetes specified by the user. Both patch version &lt;major.minor.patch&gt; (e.g. 1.20.13) and &lt;major.minor&gt; (e.g. 1.20) are supported. When &lt;major.minor&gt; is specified, the latest supported GA patch version is chosen automatically. Updating the cluster with the same &lt;major.minor&gt; once it has been created (e.g. 1.14.x -&gt; 1.14) will not trigger an upgrade, even if a newer patch version is available. When you upgrade a supported AKS cluster, Kubernetes minor versions cannot be skipped. All upgrades must be performed sequentially by major version number. For example, upgrades between 1.14.x -&gt; 1.15.x or 1.15.x -&gt; 1.16.x are allowed, however 1.14.x -&gt; 1.16.x is not allowed. See [upgrading an AKS cluster](https://docs.microsoft.com/azure/aks/upgrade-cluster) for more details. </param>
+        /// <param name="currentKubernetesVersion"> The version of Kubernetes the Managed Cluster is running. If kubernetesVersion was a fully specified version &lt;major.minor.patch&gt;, this field will be exactly equal to it. If kubernetesVersion was &lt;major.minor&gt;, this field will contain the full &lt;major.minor.patch&gt; version being used. </param>
+        /// <param name="dnsPrefix"> The DNS prefix of the Managed Cluster. This cannot be updated once the Managed Cluster has been created. </param>
+        /// <param name="fqdnSubdomain"> The FQDN subdomain of the private cluster with custom private dns zone. This cannot be updated once the Managed Cluster has been created. </param>
+        /// <param name="fqdn"> The FQDN of the master pool. </param>
+        /// <param name="privateFqdn"> The FQDN of private cluster. </param>
+        /// <param name="azurePortalFqdn"> The special FQDN used by the Azure Portal to access the Managed Cluster. This FQDN is for use only by the Azure Portal and should not be used by other clients. The Azure Portal requires certain Cross-Origin Resource Sharing (CORS) headers to be sent in some responses, which Kubernetes APIServer doesn't handle by default. This special FQDN supports CORS, allowing the Azure Portal to function properly. </param>
+        /// <param name="agentPoolProfiles"> The agent pool properties. </param>
+        /// <param name="linuxProfile"> The profile for Linux VMs in the Managed Cluster. </param>
+        /// <param name="windowsProfile"> The profile for Windows VMs in the Managed Cluster. </param>
+        /// <param name="servicePrincipalProfile"> Information about a service principal identity for the cluster to use for manipulating Azure APIs. </param>
+        /// <param name="addonProfiles"> The profile of managed cluster add-on. </param>
+        /// <param name="podIdentityProfile"> The pod identity profile of the Managed Cluster. See [use AAD pod identity](https://docs.microsoft.com/azure/aks/use-azure-ad-pod-identity) for more details on AAD pod identity integration. </param>
+        /// <param name="oidcIssuerProfile"> The OIDC issuer profile of the Managed Cluster. </param>
+        /// <param name="nodeResourceGroup"> The name of the resource group containing agent pool nodes. </param>
+        /// <param name="isRbacEnabled"> Whether to enable Kubernetes Role-Based Access Control. </param>
+        /// <param name="supportPlan"> The support plan for the Managed Cluster. If unspecified, the default is 'KubernetesOfficial'. </param>
+        /// <param name="networkProfile"> The network configuration profile. </param>
+        /// <param name="aadProfile"> The Azure Active Directory configuration. </param>
+        /// <param name="autoUpgradeProfile"> The auto upgrade configuration. </param>
+        /// <param name="autoScalerProfile"> Parameters to be applied to the cluster-autoscaler when enabled. </param>
+        /// <param name="apiServerAccessProfile"> The access profile for managed cluster API server. </param>
+        /// <param name="diskEncryptionSetId"> The Resource ID of the disk encryption set to use for enabling encryption at rest. This is of the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{encryptionSetName}'. </param>
+        /// <param name="identityProfile"> The user identity associated with the managed cluster. This identity will be used by the kubelet. Only one user assigned identity is allowed. The only accepted key is "kubeletidentity", with value of "resourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}". </param>
+        /// <param name="privateLinkResources"> Private link resources associated with the cluster. </param>
+        /// <param name="isLocalAccountsDisabled"> If local accounts should be disabled on the Managed Cluster. If set to true, getting static credentials will be disabled for this cluster. This must only be used on Managed Clusters that are AAD enabled. For more details see [disable local accounts](https://docs.microsoft.com/azure/aks/managed-aad#disable-local-accounts-preview). </param>
+        /// <param name="httpProxyConfig"> Configurations for provisioning the cluster with HTTP proxy servers. </param>
+        /// <param name="securityProfile"> Security profile for the managed cluster. </param>
+        /// <param name="storageProfile"> Storage profile for the managed cluster. </param>
+        /// <param name="ingressProfile"> Ingress profile for the managed cluster. </param>
+        /// <param name="publicNetworkAccess"> PublicNetworkAccess of the managedCluster. Allow or deny public network access for AKS. </param>
+        /// <param name="workloadAutoScalerProfile"> Workload Auto-scaler profile for the managed cluster. </param>
+        /// <param name="azureMonitorProfile"> Azure Monitor addon profiles for monitoring the managed cluster. </param>
+        /// <param name="serviceMeshProfile"> Service mesh profile for a managed cluster. </param>
+        /// <param name="resourceId"> The resourceUID uniquely identifies ManagedClusters that reuse ARM ResourceIds (i.e: create, delete, create sequence). </param>
+        /// <param name="nodeProvisioningProfile"> Node provisioning settings that apply to the whole cluster. </param>
+        /// <param name="bootstrapProfile"> Profile of the cluster bootstrap configuration. </param>
+        /// <param name="hostedSystemProfile"> Settings for hosted system addons. For more information, see https://aka.ms/aks/automatic/systemcomponents. </param>
+        /// <param name="powerStateCode"> Tells whether the cluster is Running or Stopped. </param>
+        /// <param name="nodeResourceGroupRestrictionLevel"> The restriction level applied to the cluster's node resource group. If not specified, the default is 'Unrestricted'. </param>
+        /// <param name="upgradeOverrideSettings"> Settings for overrides. </param>
+        /// <param name="isCostAnalysisEnabled"> Whether to enable cost analysis. The Managed Cluster sku.tier must be set to 'Standard' or 'Premium' to enable this feature. Enabling this will add Kubernetes Namespace and Deployment details to the Cost Analysis views in the Azure portal. If not specified, the default is false. For more information see aka.ms/aks/docs/cost-analysis. </param>
+        /// <param name="isAIToolchainOperatorEnabled"> Whether to enable AI toolchain operator to the cluster. Indicates if AI toolchain operator  enabled or not. </param>
+        /// <param name="upstreamSchedulerConfigMode"> The configuration mode to be used by the AKS-managed scheduler. </param>
+        /// <param name="statusProvisioningError"> The error details information of the managed cluster. Preserves the detailed info of failure. If there was no error, this field is omitted. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="sku"> The managed cluster SKU. </param>
+        /// <param name="extendedLocation"> The extended location of the Virtual Machine. </param>
+        /// <param name="clusterIdentity"> The identity of the managed cluster, if configured. </param>
+        /// <param name="kind"> This is primarily used to expose different UI experiences in the portal for different kinds. </param>
+        /// <returns> A new <see cref="ContainerService.ContainerServiceManagedClusterData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ContainerServiceManagedClusterData ContainerServiceManagedClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, int? maxAgentPools = default, string kubernetesVersion = default, string currentKubernetesVersion = default, string dnsPrefix = default, string fqdnSubdomain = default, string fqdn = default, string privateFqdn = default, string azurePortalFqdn = default, IEnumerable<ManagedClusterAgentPoolProfile> agentPoolProfiles = default, ContainerServiceLinuxProfile linuxProfile = default, ManagedClusterWindowsProfile windowsProfile = default, ManagedClusterServicePrincipalProfile servicePrincipalProfile = default, IDictionary<string, ManagedClusterAddonProfile> addonProfiles = default, ManagedClusterPodIdentityProfile podIdentityProfile = default, ManagedClusterOidcIssuerProfile oidcIssuerProfile = default, string nodeResourceGroup = default, bool? isRbacEnabled = default, KubernetesSupportPlan? supportPlan = default, ContainerServiceNetworkProfile networkProfile = default, ManagedClusterAadProfile aadProfile = default, ManagedClusterAutoUpgradeProfile autoUpgradeProfile = default, ManagedClusterAutoScalerProfile autoScalerProfile = default, ManagedClusterApiServerAccessProfile apiServerAccessProfile = default, ResourceIdentifier diskEncryptionSetId = default, IDictionary<string, ContainerServiceUserAssignedIdentity> identityProfile = default, IEnumerable<ContainerServicePrivateLinkResourceData> privateLinkResources = default, bool? isLocalAccountsDisabled = default, ManagedClusterHttpProxyConfig httpProxyConfig = default, ManagedClusterSecurityProfile securityProfile = default, ManagedClusterStorageProfile storageProfile = default, ManagedClusterIngressProfile ingressProfile = default, ContainerServicePublicNetworkAccess? publicNetworkAccess = default, ManagedClusterWorkloadAutoScalerProfile workloadAutoScalerProfile = default, ManagedClusterAzureMonitorProfile azureMonitorProfile = default, ServiceMeshProfile serviceMeshProfile = default, ResourceIdentifier resourceId = default, ManagedClusterNodeProvisioningProfile nodeProvisioningProfile = default, ManagedClusterBootstrapProfile bootstrapProfile = default, ManagedClusterHostedSystemProfile hostedSystemProfile = default, ContainerServiceStateCode? powerStateCode = default, ManagedClusterNodeResourceGroupRestrictionLevel? nodeResourceGroupRestrictionLevel = default, UpgradeOverrideSettings upgradeOverrideSettings = default, bool? isCostAnalysisEnabled = default, bool? isAIToolchainOperatorEnabled = default, SchedulerConfigMode? upstreamSchedulerConfigMode = default, ResponseError statusProvisioningError = default, ETag? eTag = default, ManagedClusterSku sku = default, ExtendedLocation extendedLocation = default, ManagedClusterIdentity clusterIdentity = default, string kind = default)
+        {
+            return new ContainerServiceManagedClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState is null && powerStateCode is null && maxAgentPools is null && kubernetesVersion is null && currentKubernetesVersion is null && dnsPrefix is null && fqdnSubdomain is null && fqdn is null && privateFqdn is null && azurePortalFqdn is null && agentPoolProfiles is null && linuxProfile is null && windowsProfile is null && servicePrincipalProfile is null && addonProfiles is null && podIdentityProfile is null && oidcIssuerProfile is null && nodeResourceGroup is null && nodeResourceGroupRestrictionLevel is null && isRbacEnabled is null && supportPlan is null && networkProfile is null && aadProfile is null && autoUpgradeProfile is null && upgradeOverrideSettings is null && autoScalerProfile is null && apiServerAccessProfile is null && diskEncryptionSetId is null && identityProfile is null && privateLinkResources is null && isLocalAccountsDisabled is null && httpProxyConfig is null && securityProfile is null && storageProfile is null && ingressProfile is null && publicNetworkAccess is null && workloadAutoScalerProfile is null && azureMonitorProfile is null && serviceMeshProfile is null && resourceId is null && isCostAnalysisEnabled is null && nodeProvisioningProfile is null && bootstrapProfile is null && isAIToolchainOperatorEnabled is null && upstreamSchedulerConfigMode is null && hostedSystemProfile is null && statusProvisioningError is null ? default : new ManagedClusterProperties(
+                    provisioningState,
+                    powerStateCode is null ? default : new ContainerServicePowerState(powerStateCode, default),
+                    default,
+                    maxAgentPools,
+                    kubernetesVersion,
+                    currentKubernetesVersion,
+                    dnsPrefix,
+                    fqdnSubdomain,
+                    fqdn,
+                    privateFqdn,
+                    azurePortalFqdn,
+                    (agentPoolProfiles ?? new ChangeTrackingList<ManagedClusterAgentPoolProfile>()).ToList(),
+                    linuxProfile,
+                    windowsProfile,
+                    servicePrincipalProfile,
+                    addonProfiles ?? new ChangeTrackingDictionary<string, ManagedClusterAddonProfile>(),
+                    podIdentityProfile,
+                    oidcIssuerProfile,
+                    nodeResourceGroup,
+                    nodeResourceGroupRestrictionLevel is null ? default : new ManagedClusterNodeResourceGroupProfile(nodeResourceGroupRestrictionLevel, default),
+                    isRbacEnabled,
+                    supportPlan,
+                    default,
+                    default,
+                    default,
+                    networkProfile,
+                    aadProfile,
+                    autoUpgradeProfile,
+                    upgradeOverrideSettings is null ? default : new ClusterUpgradeSettings(upgradeOverrideSettings, default, default),
+                    autoScalerProfile,
+                    apiServerAccessProfile,
+                    diskEncryptionSetId,
+                    identityProfile ?? new ChangeTrackingDictionary<string, ContainerServiceUserAssignedIdentity>(),
+                    (privateLinkResources ?? new ChangeTrackingList<ContainerServicePrivateLinkResourceData>()).ToList(),
+                    isLocalAccountsDisabled,
+                    httpProxyConfig,
+                    securityProfile,
+                    storageProfile,
+                    ingressProfile,
+                    publicNetworkAccess,
+                    workloadAutoScalerProfile,
+                    azureMonitorProfile,
+                    serviceMeshProfile,
+                    resourceId,
+                    isCostAnalysisEnabled is null ? default : new ManagedClusterMetricsProfile(isCostAnalysisEnabled is null ? default : new ManagedClusterCostAnalysis(isCostAnalysisEnabled, default), default),
+                    nodeProvisioningProfile,
+                    bootstrapProfile,
+                    isAIToolchainOperatorEnabled is null ? default : new ManagedClusterAIToolchainOperatorProfile(isAIToolchainOperatorEnabled, default),
+                    upstreamSchedulerConfigMode is null ? default : new SchedulerProfile(upstreamSchedulerConfigMode is null ? default : new SchedulerInstanceProfile(upstreamSchedulerConfigMode, default), default),
+                    hostedSystemProfile,
+                    default,
+                    default,
+                    default,
+                    statusProvisioningError is null ? default : new ManagedClusterStatus(statusProvisioningError, default),
+                    default),
+                eTag,
+                sku,
+                extendedLocation,
+                clusterIdentity,
+                kind,
+                default);
+        }
+
+        /// <summary> Security profile for the container service cluster. </summary>
+        /// <param name="defender"> Microsoft Defender settings for the security profile. </param>
+        /// <param name="azureKeyVaultKms"> Azure Key Vault [key management service](https://kubernetes.io/docs/tasks/administer-cluster/kms-provider/) settings for the security profile. </param>
+        /// <param name="isWorkloadIdentityEnabled"> Whether to enable workload identity. </param>
+        /// <param name="imageCleaner"> Image Cleaner settings for the security profile. </param>
+        /// <param name="customCATrustCertificates"> A list of up to 10 base64 encoded CAs that will be added to the trust store on all nodes in the cluster. For more information see [Custom CA Trust Certificates](https://learn.microsoft.com/en-us/azure/aks/custom-certificate-authority). </param>
+        /// <returns> A new <see cref="Models.ManagedClusterSecurityProfile"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ManagedClusterSecurityProfile ManagedClusterSecurityProfile(ManagedClusterSecurityProfileDefender defender = default, ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms = default, bool? isWorkloadIdentityEnabled = default, ManagedClusterSecurityProfileImageCleaner imageCleaner = default, IEnumerable<byte[]> customCATrustCertificates = default)
+        {
+            return new ManagedClusterSecurityProfile(
+                defender,
+                azureKeyVaultKms,
+                default,
+                isWorkloadIdentityEnabled is null ? default : new ManagedClusterSecurityProfileWorkloadIdentity(isWorkloadIdentityEnabled, default),
+                imageCleaner,
+                default,
+                default,
+                (customCATrustCertificates ?? new ChangeTrackingList<byte[]>()).ToList(),
+                default,
+                default);
         }
 
         /// <summary> Network settings of an agent pool. </summary>

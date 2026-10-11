@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 throw new FormatException($"The model {nameof(UpgradeGateSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            bool? enabled = default;
+            bool? isEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UpgradeGateSettings(enabled, additionalBinaryDataProperties);
+            return new UpgradeGateSettings(isEnabled, additionalBinaryDataProperties);
         }
     }
 }
