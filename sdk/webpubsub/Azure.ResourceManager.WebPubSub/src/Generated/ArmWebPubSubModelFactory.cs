@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <returns> A new <see cref="Models.WebPubSubClientConnectionCountRule"/> instance for mocking. </returns>
         public static WebPubSubClientConnectionCountRule WebPubSubClientConnectionCountRule(string @type = default)
         {
-            return new UnknownWebPubSubClientConnectionCountRule(default, default);
+            return new UnknownWebPubSubClientConnectionCountRule(@type is null ? default : new ClientConnectionCountRuleDiscriminator(@type), default);
         }
 
         /// <summary> Throttle the client connection by a custom JWT claim. </summary>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <returns> A new <see cref="Models.WebPubSubThrottleByJwtCustomClaimRule"/> instance for mocking. </returns>
         public static WebPubSubThrottleByJwtCustomClaimRule WebPubSubThrottleByJwtCustomClaimRule(string claimName = default, int? maxCount = default)
         {
-            return new WebPubSubThrottleByJwtCustomClaimRule(default, default, claimName, maxCount);
+            return new WebPubSubThrottleByJwtCustomClaimRule(ClientConnectionCountRuleDiscriminator.ThrottleByJwtCustomClaimRule, default, claimName, maxCount);
         }
 
         /// <summary> Throttle the client connection by the JWT signature. </summary>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <returns> A new <see cref="Models.WebPubSubThrottleByJwtSignatureRule"/> instance for mocking. </returns>
         public static WebPubSubThrottleByJwtSignatureRule WebPubSubThrottleByJwtSignatureRule(int? maxCount = default)
         {
-            return new WebPubSubThrottleByJwtSignatureRule(default, default, maxCount);
+            return new WebPubSubThrottleByJwtSignatureRule(ClientConnectionCountRuleDiscriminator.ThrottleByJwtSignatureRule, default, maxCount);
         }
 
         /// <summary> Throttle the client connection by the user ID. </summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <returns> A new <see cref="Models.WebPubSubThrottleByUserIdRule"/> instance for mocking. </returns>
         public static WebPubSubThrottleByUserIdRule WebPubSubThrottleByUserIdRule(int? maxCount = default)
         {
-            return new WebPubSubThrottleByUserIdRule(default, default, maxCount);
+            return new WebPubSubThrottleByUserIdRule(ClientConnectionCountRuleDiscriminator.ThrottleByUserIdRule, default, maxCount);
         }
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <returns> A new <see cref="Models.WebPubSubClientTrafficControlRule"/> instance for mocking. </returns>
         public static WebPubSubClientTrafficControlRule WebPubSubClientTrafficControlRule(string @type = default)
         {
-            return new UnknownWebPubSubClientTrafficControlRule(default, default);
+            return new UnknownWebPubSubClientTrafficControlRule(@type is null ? default : new ClientTrafficControlRuleDiscriminator(@type), default);
         }
 
         /// <summary> Throttle the client traffic by a custom JWT claim. </summary>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <returns> A new <see cref="Models.WebPubSubTrafficThrottleByJwtCustomClaimRule"/> instance for mocking. </returns>
         public static WebPubSubTrafficThrottleByJwtCustomClaimRule WebPubSubTrafficThrottleByJwtCustomClaimRule(string claimName = default, long? maxInboundMessageBytes = default, int? aggregationWindowInSeconds = default)
         {
-            return new WebPubSubTrafficThrottleByJwtCustomClaimRule(default, default, claimName, maxInboundMessageBytes, aggregationWindowInSeconds);
+            return new WebPubSubTrafficThrottleByJwtCustomClaimRule(ClientTrafficControlRuleDiscriminator.TrafficThrottleByJwtCustomClaimRule, default, claimName, maxInboundMessageBytes, aggregationWindowInSeconds);
         }
 
         /// <summary> Throttle the client traffic by the JWT signature. </summary>
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <returns> A new <see cref="Models.WebPubSubTrafficThrottleByJwtSignatureRule"/> instance for mocking. </returns>
         public static WebPubSubTrafficThrottleByJwtSignatureRule WebPubSubTrafficThrottleByJwtSignatureRule(long? maxInboundMessageBytes = default, int? aggregationWindowInSeconds = default)
         {
-            return new WebPubSubTrafficThrottleByJwtSignatureRule(default, default, maxInboundMessageBytes, aggregationWindowInSeconds);
+            return new WebPubSubTrafficThrottleByJwtSignatureRule(ClientTrafficControlRuleDiscriminator.TrafficThrottleByJwtSignatureRule, default, maxInboundMessageBytes, aggregationWindowInSeconds);
         }
 
         /// <summary> Throttle the client traffic by the user ID. </summary>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <returns> A new <see cref="Models.WebPubSubTrafficThrottleByUserIdRule"/> instance for mocking. </returns>
         public static WebPubSubTrafficThrottleByUserIdRule WebPubSubTrafficThrottleByUserIdRule(long? maxInboundMessageBytes = default, int? aggregationWindowInSeconds = default)
         {
-            return new WebPubSubTrafficThrottleByUserIdRule(default, default, maxInboundMessageBytes, aggregationWindowInSeconds);
+            return new WebPubSubTrafficThrottleByUserIdRule(ClientTrafficControlRuleDiscriminator.TrafficThrottleByUserIdRule, default, maxInboundMessageBytes, aggregationWindowInSeconds);
         }
 
         /// <summary> The billing information of the resource. </summary>
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <returns> A new <see cref="Models.WebPubSubEventListenerFilter"/> instance for mocking. </returns>
         public static WebPubSubEventListenerFilter WebPubSubEventListenerFilter(string @type = default)
         {
-            return new UnknownWebPubSubEventListenerFilter(default, default);
+            return new UnknownWebPubSubEventListenerFilter(@type is null ? default : new EventListenerFilterDiscriminator(@type), default);
         }
 
         /// <summary> Filter events by their name. </summary>
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         {
             systemEvents ??= new ChangeTrackingList<string>();
 
-            return new WebPubSubEventNameFilter(default, default, (systemEvents ?? new ChangeTrackingList<string>()).ToList(), userEventPattern);
+            return new WebPubSubEventNameFilter(EventListenerFilterDiscriminator.EventName, default, (systemEvents ?? new ChangeTrackingList<string>()).ToList(), userEventPattern);
         }
 
         /// <summary>
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <returns> A new <see cref="Models.WebPubSubEventListenerEndpoint"/> instance for mocking. </returns>
         public static WebPubSubEventListenerEndpoint WebPubSubEventListenerEndpoint(string @type = default)
         {
-            return new UnknownWebPubSubEventListenerEndpoint(default, default);
+            return new UnknownWebPubSubEventListenerEndpoint(@type is null ? default : new EventListenerEndpointDiscriminator(@type), default);
         }
 
         /// <summary>
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <returns> A new <see cref="Models.WebPubSubEventHubEndpoint"/> instance for mocking. </returns>
         public static WebPubSubEventHubEndpoint WebPubSubEventHubEndpoint(string fullyQualifiedNamespace = default, string eventHubName = default)
         {
-            return new WebPubSubEventHubEndpoint(default, default, fullyQualifiedNamespace, eventHubName);
+            return new WebPubSubEventHubEndpoint(EventListenerEndpointDiscriminator.EventHub, default, fullyQualifiedNamespace, eventHubName);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

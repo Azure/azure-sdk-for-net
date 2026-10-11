@@ -85,15 +85,29 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("defaultLanguageCode"u8);
                 writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
             }
-            if (Optional.IsDefined(MaxKeyPhraseCount))
+            if (_maxKeyPhraseCountIsDefined || Optional.IsDefined(MaxKeyPhraseCount))
             {
-                writer.WritePropertyName("maxKeyPhraseCount"u8);
-                writer.WriteNumberValue(MaxKeyPhraseCount.Value);
+                if (MaxKeyPhraseCount != null)
+                {
+                    writer.WritePropertyName("maxKeyPhraseCount"u8);
+                    writer.WriteNumberValue(MaxKeyPhraseCount.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maxKeyPhraseCount"u8);
+                }
             }
-            if (Optional.IsDefined(ModelVersion))
+            if (_modelVersionIsDefined || Optional.IsDefined(ModelVersion))
             {
-                writer.WritePropertyName("modelVersion"u8);
-                writer.WriteStringValue(ModelVersion);
+                if (ModelVersion != null)
+                {
+                    writer.WritePropertyName("modelVersion"u8);
+                    writer.WriteStringValue(ModelVersion);
+                }
+                else
+                {
+                    writer.WriteNull("modelVersion"u8);
+                }
             }
         }
 
@@ -130,7 +144,9 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<OutputFieldMappingEntry> outputs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             KeyPhraseExtractionSkillLanguage? defaultLanguageCode = default;
+            bool maxKeyPhraseCountIsDefined = false;
             int? maxKeyPhraseCount = default;
+            bool modelVersionIsDefined = false;
             string modelVersion = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -185,6 +201,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("maxKeyPhraseCount"u8))
                 {
+                    maxKeyPhraseCountIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         maxKeyPhraseCount = null;
@@ -195,6 +212,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("modelVersion"u8))
                 {
+                    modelVersionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         modelVersion = null;
@@ -218,7 +236,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 additionalBinaryDataProperties,
                 defaultLanguageCode,
                 maxKeyPhraseCount,
-                modelVersion);
+                modelVersion)
+            {
+                _maxKeyPhraseCountIsDefined = maxKeyPhraseCountIsDefined,
+                _modelVersionIsDefined = modelVersionIsDefined
+            };
         }
     }
 }

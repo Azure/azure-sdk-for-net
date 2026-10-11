@@ -118,6 +118,7 @@ namespace Azure.Search.Documents.Indexes.Models
             KnowledgeSourceKind kind = default;
             KnowledgeSourceResultsProcessing? resultsProcessing = default;
             ETag? eTag = default;
+            bool encryptionKeyIsDefined = false;
             SearchResourceEncryptionKey encryptionKey = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             RemoteSharePointKnowledgeSourceParameters remoteSharePointParameters = default;
@@ -158,6 +159,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("encryptionKey"u8))
                 {
+                    encryptionKeyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         encryptionKey = null;
@@ -188,7 +190,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 eTag,
                 encryptionKey,
                 additionalBinaryDataProperties,
-                remoteSharePointParameters);
+                remoteSharePointParameters)
+            {
+                _encryptionKeyIsDefined = encryptionKeyIsDefined
+            };
         }
     }
 }

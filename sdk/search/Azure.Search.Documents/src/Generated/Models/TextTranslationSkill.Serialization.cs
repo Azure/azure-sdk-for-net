@@ -87,10 +87,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("defaultFromLanguageCode"u8);
                 writer.WriteStringValue(DefaultFromLanguageCode.Value.ToString());
             }
-            if (Optional.IsDefined(SuggestedFrom))
+            if (_suggestedFromIsDefined || Optional.IsDefined(SuggestedFrom))
             {
-                writer.WritePropertyName("suggestedFrom"u8);
-                writer.WriteStringValue(SuggestedFrom.Value.ToString());
+                if (SuggestedFrom != null)
+                {
+                    writer.WritePropertyName("suggestedFrom"u8);
+                    writer.WriteStringValue(SuggestedFrom.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("suggestedFrom"u8);
+                }
             }
         }
 
@@ -128,6 +135,7 @@ namespace Azure.Search.Documents.Indexes.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             TextTranslationSkillLanguage defaultToLanguageCode = default;
             TextTranslationSkillLanguage? defaultFromLanguageCode = default;
+            bool suggestedFromIsDefined = false;
             TextTranslationSkillLanguage? suggestedFrom = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -187,6 +195,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("suggestedFrom"u8))
                 {
+                    suggestedFromIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         suggestedFrom = null;
@@ -210,7 +219,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 additionalBinaryDataProperties,
                 defaultToLanguageCode,
                 defaultFromLanguageCode,
-                suggestedFrom);
+                suggestedFrom)
+            {
+                _suggestedFromIsDefined = suggestedFromIsDefined
+            };
         }
     }
 }

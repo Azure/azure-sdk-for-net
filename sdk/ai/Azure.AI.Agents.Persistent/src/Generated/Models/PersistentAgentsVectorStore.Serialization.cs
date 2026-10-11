@@ -105,10 +105,17 @@ namespace Azure.AI.Agents.Persistent
                 writer.WritePropertyName("expires_after"u8);
                 writer.WriteObjectValue(ExpiresAfter, options);
             }
-            if (Optional.IsDefined(ExpiresAt))
+            if (_expiresAtIsDefined || Optional.IsDefined(ExpiresAt))
             {
-                writer.WritePropertyName("expires_at"u8);
-                writer.WriteNumberValue(ExpiresAt.Value, "U");
+                if (ExpiresAt != null)
+                {
+                    writer.WritePropertyName("expires_at"u8);
+                    writer.WriteNumberValue(ExpiresAt.Value, "U");
+                }
+                else
+                {
+                    writer.WriteNull("expires_at"u8);
+                }
             }
             if (Optional.IsDefined(LastActiveAt))
             {
@@ -189,6 +196,7 @@ namespace Azure.AI.Agents.Persistent
             VectorStoreFileCount fileCounts = default;
             VectorStoreStatus status = default;
             VectorStoreExpirationPolicy expiresAfter = default;
+            bool expiresAtIsDefined = false;
             DateTimeOffset? expiresAt = default;
             DateTimeOffset? lastActiveAt = default;
             IReadOnlyDictionary<string, string> metadata = default;
@@ -241,6 +249,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("expires_at"u8))
                 {
+                    expiresAtIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         expiresAt = null;
@@ -298,7 +307,10 @@ namespace Azure.AI.Agents.Persistent
                 expiresAt,
                 lastActiveAt,
                 metadata,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _expiresAtIsDefined = expiresAtIsDefined
+            };
         }
     }
 }

@@ -16,6 +16,26 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _description;
+        internal bool _descriptionIsDefined;
+        private string _type;
+        internal bool _typeIsDefined;
+        private string _subtype;
+        internal bool _subtypeIsDefined;
+        private string _id;
+        internal bool _idIsDefined;
+        private bool? _caseSensitive;
+        internal bool _caseSensitiveIsDefined;
+        private bool? _accentSensitive;
+        internal bool _accentSensitiveIsDefined;
+        private int? _fuzzyEditDistance;
+        internal bool _fuzzyEditDistanceIsDefined;
+        private bool? _defaultCaseSensitive;
+        internal bool _defaultCaseSensitiveIsDefined;
+        private bool? _defaultAccentSensitive;
+        internal bool _defaultAccentSensitiveIsDefined;
+        private int? _defaultFuzzyEditDistance;
+        internal bool _defaultFuzzyEditDistanceIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CustomEntity"/>. </summary>
         /// <param name="name"> The top-level entity descriptor. Matches in the skill output will be grouped by this name, and it should represent the "normalized" form of the text being found. </param>
@@ -45,16 +65,16 @@ namespace Azure.Search.Documents.Indexes.Models
         internal CustomEntity(string name, string description, string @type, string subtype, string id, bool? caseSensitive, bool? accentSensitive, int? fuzzyEditDistance, bool? defaultCaseSensitive, bool? defaultAccentSensitive, int? defaultFuzzyEditDistance, IList<CustomEntityAlias> aliases, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Description = description;
-            Type = @type;
-            Subtype = subtype;
-            Id = id;
-            CaseSensitive = caseSensitive;
-            AccentSensitive = accentSensitive;
-            FuzzyEditDistance = fuzzyEditDistance;
-            DefaultCaseSensitive = defaultCaseSensitive;
-            DefaultAccentSensitive = defaultAccentSensitive;
-            DefaultFuzzyEditDistance = defaultFuzzyEditDistance;
+            _description = description;
+            _type = @type;
+            _subtype = subtype;
+            _id = id;
+            _caseSensitive = caseSensitive;
+            _accentSensitive = accentSensitive;
+            _fuzzyEditDistance = fuzzyEditDistance;
+            _defaultCaseSensitive = defaultCaseSensitive;
+            _defaultAccentSensitive = defaultAccentSensitive;
+            _defaultFuzzyEditDistance = defaultFuzzyEditDistance;
             Aliases = aliases;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -63,33 +83,143 @@ namespace Azure.Search.Documents.Indexes.Models
         public string Name { get; set; }
 
         /// <summary> This field can be used as a passthrough for custom metadata about the matched text(s). The value of this field will appear with every match of its entity in the skill output. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return _description;
+            }
+            set
+            {
+                _description = value;
+                _descriptionIsDefined = true;
+            }
+        }
 
         /// <summary> This field can be used as a passthrough for custom metadata about the matched text(s). The value of this field will appear with every match of its entity in the skill output. </summary>
-        public string Type { get; set; }
+        public string Type
+        {
+            get
+            {
+                return _type;
+            }
+            set
+            {
+                _type = value;
+                _typeIsDefined = true;
+            }
+        }
 
         /// <summary> This field can be used as a passthrough for custom metadata about the matched text(s). The value of this field will appear with every match of its entity in the skill output. </summary>
-        public string Subtype { get; set; }
+        public string Subtype
+        {
+            get
+            {
+                return _subtype;
+            }
+            set
+            {
+                _subtype = value;
+                _subtypeIsDefined = true;
+            }
+        }
 
         /// <summary> This field can be used as a passthrough for custom metadata about the matched text(s). The value of this field will appear with every match of its entity in the skill output. </summary>
-        public string Id { get; set; }
+        public string Id
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                _id = value;
+                _idIsDefined = true;
+            }
+        }
 
         /// <summary> Defaults to false. Boolean value denoting whether comparisons with the entity name should be sensitive to character casing. Sample case insensitive matches of "Microsoft" could be: microsoft, microSoft, MICROSOFT. </summary>
-        public bool? CaseSensitive { get; set; }
+        public bool? CaseSensitive
+        {
+            get
+            {
+                return _caseSensitive;
+            }
+            set
+            {
+                _caseSensitive = value;
+                _caseSensitiveIsDefined = true;
+            }
+        }
 
         /// <summary> Defaults to false. Boolean value denoting whether comparisons with the entity name should be sensitive to accent. </summary>
-        public bool? AccentSensitive { get; set; }
+        public bool? AccentSensitive
+        {
+            get
+            {
+                return _accentSensitive;
+            }
+            set
+            {
+                _accentSensitive = value;
+                _accentSensitiveIsDefined = true;
+            }
+        }
 
         /// <summary> Defaults to 0. Maximum value of 5. Denotes the acceptable number of divergent characters that would still constitute a match with the entity name. The smallest possible fuzziness for any given match is returned. For instance, if the edit distance is set to 3, "Windows10" would still match "Windows", "Windows10" and "Windows 7". When case sensitivity is set to false, case differences do NOT count towards fuzziness tolerance, but otherwise do. </summary>
-        public int? FuzzyEditDistance { get; set; }
+        public int? FuzzyEditDistance
+        {
+            get
+            {
+                return _fuzzyEditDistance;
+            }
+            set
+            {
+                _fuzzyEditDistance = value;
+                _fuzzyEditDistanceIsDefined = true;
+            }
+        }
 
         /// <summary> Changes the default case sensitivity value for this entity. It be used to change the default value of all aliases caseSensitive values. </summary>
-        public bool? DefaultCaseSensitive { get; set; }
+        public bool? DefaultCaseSensitive
+        {
+            get
+            {
+                return _defaultCaseSensitive;
+            }
+            set
+            {
+                _defaultCaseSensitive = value;
+                _defaultCaseSensitiveIsDefined = true;
+            }
+        }
 
         /// <summary> Changes the default accent sensitivity value for this entity. It be used to change the default value of all aliases accentSensitive values. </summary>
-        public bool? DefaultAccentSensitive { get; set; }
+        public bool? DefaultAccentSensitive
+        {
+            get
+            {
+                return _defaultAccentSensitive;
+            }
+            set
+            {
+                _defaultAccentSensitive = value;
+                _defaultAccentSensitiveIsDefined = true;
+            }
+        }
 
         /// <summary> Changes the default fuzzy edit distance value for this entity. It can be used to change the default value of all aliases fuzzyEditDistance values. </summary>
-        public int? DefaultFuzzyEditDistance { get; set; }
+        public int? DefaultFuzzyEditDistance
+        {
+            get
+            {
+                return _defaultFuzzyEditDistance;
+            }
+            set
+            {
+                _defaultFuzzyEditDistance = value;
+                _defaultFuzzyEditDistanceIsDefined = true;
+            }
+        }
     }
 }

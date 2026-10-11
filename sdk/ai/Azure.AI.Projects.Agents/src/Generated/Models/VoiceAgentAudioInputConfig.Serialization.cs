@@ -76,25 +76,53 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("format"u8);
                 writer.WriteObjectValue(Format, options);
             }
-            if (Optional.IsDefined(NoiseReduction))
+            if (_noiseReductionIsDefined || Optional.IsDefined(NoiseReduction))
             {
-                writer.WritePropertyName("noise_reduction"u8);
-                writer.WriteObjectValue(NoiseReduction, options);
+                if (NoiseReduction != null)
+                {
+                    writer.WritePropertyName("noise_reduction"u8);
+                    writer.WriteObjectValue(NoiseReduction, options);
+                }
+                else
+                {
+                    writer.WriteNull("noise_reduction"u8);
+                }
             }
-            if (Optional.IsDefined(TurnDetection))
+            if (_turnDetectionIsDefined || Optional.IsDefined(TurnDetection))
             {
-                writer.WritePropertyName("turn_detection"u8);
-                writer.WriteObjectValue(TurnDetection, options);
+                if (TurnDetection != null)
+                {
+                    writer.WritePropertyName("turn_detection"u8);
+                    writer.WriteObjectValue(TurnDetection, options);
+                }
+                else
+                {
+                    writer.WriteNull("turn_detection"u8);
+                }
             }
-            if (Optional.IsDefined(EchoCancellation))
+            if (_echoCancellationIsDefined || Optional.IsDefined(EchoCancellation))
             {
-                writer.WritePropertyName("echo_cancellation"u8);
-                writer.WriteObjectValue(EchoCancellation, options);
+                if (EchoCancellation != null)
+                {
+                    writer.WritePropertyName("echo_cancellation"u8);
+                    writer.WriteObjectValue(EchoCancellation, options);
+                }
+                else
+                {
+                    writer.WriteNull("echo_cancellation"u8);
+                }
             }
-            if (Optional.IsDefined(Transcription))
+            if (_transcriptionIsDefined || Optional.IsDefined(Transcription))
             {
-                writer.WritePropertyName("transcription"u8);
-                writer.WriteObjectValue(Transcription, options);
+                if (Transcription != null)
+                {
+                    writer.WritePropertyName("transcription"u8);
+                    writer.WriteObjectValue(Transcription, options);
+                }
+                else
+                {
+                    writer.WriteNull("transcription"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,9 +167,13 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             RealtimeAudioFormat format = default;
+            bool noiseReductionIsDefined = false;
             VoiceAgentNoiseReduction noiseReduction = default;
+            bool turnDetectionIsDefined = false;
             VoiceAgentTurnDetectionConfig turnDetection = default;
+            bool echoCancellationIsDefined = false;
             VoiceAgentEchoCancellation echoCancellation = default;
+            bool transcriptionIsDefined = false;
             VoiceAgentInputTranscription transcription = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -157,6 +189,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("noise_reduction"u8))
                 {
+                    noiseReductionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         noiseReduction = null;
@@ -167,6 +200,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("turn_detection"u8))
                 {
+                    turnDetectionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         turnDetection = null;
@@ -177,6 +211,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("echo_cancellation"u8))
                 {
+                    echoCancellationIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         echoCancellation = null;
@@ -187,6 +222,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("transcription"u8))
                 {
+                    transcriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         transcription = null;
@@ -206,7 +242,13 @@ namespace Azure.AI.Projects.Agents
                 turnDetection,
                 echoCancellation,
                 transcription,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _noiseReductionIsDefined = noiseReductionIsDefined,
+                _turnDetectionIsDefined = turnDetectionIsDefined,
+                _echoCancellationIsDefined = echoCancellationIsDefined,
+                _transcriptionIsDefined = transcriptionIsDefined
+            };
         }
     }
 }

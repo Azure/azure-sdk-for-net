@@ -87,15 +87,29 @@ namespace Azure.AI.Projects.Agents
                 writer.WriteStringValue(item.AbsoluteUri);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Username))
+            if (_usernameIsDefined || Optional.IsDefined(Username))
             {
-                writer.WritePropertyName("username"u8);
-                writer.WriteStringValue(Username);
+                if (Username != null)
+                {
+                    writer.WritePropertyName("username"u8);
+                    writer.WriteStringValue(Username);
+                }
+                else
+                {
+                    writer.WriteNull("username"u8);
+                }
             }
-            if (Optional.IsDefined(Credential))
+            if (_credentialIsDefined || Optional.IsDefined(Credential))
             {
-                writer.WritePropertyName("credential"u8);
-                writer.WriteStringValue(Credential);
+                if (Credential != null)
+                {
+                    writer.WritePropertyName("credential"u8);
+                    writer.WriteStringValue(Credential);
+                }
+                else
+                {
+                    writer.WriteNull("credential"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -140,7 +154,9 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             IList<Uri> urls = default;
+            bool usernameIsDefined = false;
             string username = default;
+            bool credentialIsDefined = false;
             string credential = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -164,6 +180,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("username"u8))
                 {
+                    usernameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         username = null;
@@ -174,6 +191,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("credential"u8))
                 {
+                    credentialIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         credential = null;
@@ -187,7 +205,11 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VoiceAgentAvatarIceServer(urls ?? new ChangeTrackingList<Uri>(), username, credential, additionalBinaryDataProperties);
+            return new VoiceAgentAvatarIceServer(urls ?? new ChangeTrackingList<Uri>(), username, credential, additionalBinaryDataProperties)
+            {
+                _usernameIsDefined = usernameIsDefined,
+                _credentialIsDefined = credentialIsDefined
+            };
         }
     }
 }

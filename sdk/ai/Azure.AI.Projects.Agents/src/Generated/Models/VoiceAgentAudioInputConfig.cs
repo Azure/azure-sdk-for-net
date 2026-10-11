@@ -15,6 +15,14 @@ namespace Azure.AI.Projects.Agents
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private VoiceAgentNoiseReduction _noiseReduction;
+        internal bool _noiseReductionIsDefined;
+        private VoiceAgentTurnDetectionConfig _turnDetection;
+        internal bool _turnDetectionIsDefined;
+        private VoiceAgentEchoCancellation _echoCancellation;
+        internal bool _echoCancellationIsDefined;
+        private VoiceAgentInputTranscription _transcription;
+        internal bool _transcriptionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentAudioInputConfig"/>. </summary>
         public VoiceAgentAudioInputConfig()
@@ -31,10 +39,10 @@ namespace Azure.AI.Projects.Agents
         internal VoiceAgentAudioInputConfig(RealtimeAudioFormat format, VoiceAgentNoiseReduction noiseReduction, VoiceAgentTurnDetectionConfig turnDetection, VoiceAgentEchoCancellation echoCancellation, VoiceAgentInputTranscription transcription, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Format = format;
-            NoiseReduction = noiseReduction;
-            TurnDetection = turnDetection;
-            EchoCancellation = echoCancellation;
-            Transcription = transcription;
+            _noiseReduction = noiseReduction;
+            _turnDetection = turnDetection;
+            _echoCancellation = echoCancellation;
+            _transcription = transcription;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,15 +50,59 @@ namespace Azure.AI.Projects.Agents
         public RealtimeAudioFormat Format { get; set; }
 
         /// <summary> Input noise reduction. Set to null to disable. </summary>
-        public VoiceAgentNoiseReduction NoiseReduction { get; set; }
+        public VoiceAgentNoiseReduction NoiseReduction
+        {
+            get
+            {
+                return _noiseReduction;
+            }
+            set
+            {
+                _noiseReduction = value;
+                _noiseReductionIsDefined = true;
+            }
+        }
 
         /// <summary> Turn (end-of-speech) detection. Server-side turn detection is enabled by default; set to null to disable it, in which case the client must trigger responses manually. </summary>
-        public VoiceAgentTurnDetectionConfig TurnDetection { get; set; }
+        public VoiceAgentTurnDetectionConfig TurnDetection
+        {
+            get
+            {
+                return _turnDetection;
+            }
+            set
+            {
+                _turnDetection = value;
+                _turnDetectionIsDefined = true;
+            }
+        }
 
         /// <summary> Optional server-side echo cancellation settings. </summary>
-        public VoiceAgentEchoCancellation EchoCancellation { get; set; }
+        public VoiceAgentEchoCancellation EchoCancellation
+        {
+            get
+            {
+                return _echoCancellation;
+            }
+            set
+            {
+                _echoCancellation = value;
+                _echoCancellationIsDefined = true;
+            }
+        }
 
         /// <summary> Asynchronous input-audio transcription. Set to null to disable transcription. </summary>
-        public VoiceAgentInputTranscription Transcription { get; set; }
+        public VoiceAgentInputTranscription Transcription
+        {
+            get
+            {
+                return _transcription;
+            }
+            set
+            {
+                _transcription = value;
+                _transcriptionIsDefined = true;
+            }
+        }
     }
 }

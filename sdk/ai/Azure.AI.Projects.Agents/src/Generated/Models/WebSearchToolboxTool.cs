@@ -14,6 +14,13 @@ namespace Azure.AI.Projects.Agents
     /// <summary> A web search tool stored in a toolbox. </summary>
     public partial class WebSearchToolboxTool : ToolboxTool
     {
+        [Experimental("AAIP002")]
+        private WebSearchToolFilters _filters;
+        internal bool _filtersIsDefined;
+        [Experimental("AAIP002")]
+        private WebSearchToolApproximateLocation _userLocation;
+        internal bool _userLocationIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="WebSearchToolboxTool"/>. </summary>
         public WebSearchToolboxTool() : base(ToolboxToolType.WebSearch)
         {
@@ -39,19 +46,41 @@ namespace Azure.AI.Projects.Agents
         [Experimental("AAIP002")]
         internal WebSearchToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebSearchToolFilters filters, WebSearchToolApproximateLocation userLocation, WebSearchToolSearchContextSize? searchContextSize, WebSearchConfiguration customSearchConfiguration) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
         {
-            Filters = filters;
-            UserLocation = userLocation;
+            _filters = filters;
+            _userLocation = userLocation;
             SearchContextSize = searchContextSize;
             CustomSearchConfiguration = customSearchConfiguration;
         }
 
         /// <summary> Gets or sets the Filters. </summary>
         [Experimental("AAIP002")]
-        public WebSearchToolFilters Filters { get; set; }
+        public WebSearchToolFilters Filters
+        {
+            get
+            {
+                return _filters;
+            }
+            set
+            {
+                _filters = value;
+                _filtersIsDefined = true;
+            }
+        }
 
         /// <summary> Gets or sets the UserLocation. </summary>
         [Experimental("AAIP002")]
-        public WebSearchToolApproximateLocation UserLocation { get; set; }
+        public WebSearchToolApproximateLocation UserLocation
+        {
+            get
+            {
+                return _userLocation;
+            }
+            set
+            {
+                _userLocation = value;
+                _userLocationIsDefined = true;
+            }
+        }
 
         /// <summary> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </summary>
         public WebSearchToolSearchContextSize? SearchContextSize { get; set; }

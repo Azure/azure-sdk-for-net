@@ -104,10 +104,17 @@ namespace Azure.AI.Agents.Persistent
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Stream))
+            if (_streamIsDefined || Optional.IsDefined(Stream))
             {
-                writer.WritePropertyName("stream"u8);
-                writer.WriteBooleanValue(Stream.Value);
+                if (Stream != null)
+                {
+                    writer.WritePropertyName("stream"u8);
+                    writer.WriteBooleanValue(Stream.Value);
+                }
+                else
+                {
+                    writer.WriteNull("stream"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -153,6 +160,7 @@ namespace Azure.AI.Agents.Persistent
             }
             IList<StructuredToolOutput> toolOutputs = default;
             IList<ToolApproval> toolApprovals = default;
+            bool streamIsDefined = false;
             bool? stream = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -187,6 +195,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("stream"u8))
                 {
+                    streamIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         stream = null;
@@ -200,7 +209,10 @@ namespace Azure.AI.Agents.Persistent
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SubmitToolOutputsToRunRequest(toolOutputs ?? new ChangeTrackingList<StructuredToolOutput>(), toolApprovals ?? new ChangeTrackingList<ToolApproval>(), stream, additionalBinaryDataProperties);
+            return new SubmitToolOutputsToRunRequest(toolOutputs ?? new ChangeTrackingList<StructuredToolOutput>(), toolApprovals ?? new ChangeTrackingList<ToolApproval>(), stream, additionalBinaryDataProperties)
+            {
+                _streamIsDefined = streamIsDefined
+            };
         }
     }
 }

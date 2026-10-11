@@ -82,17 +82,24 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("ranking_options"u8);
                 writer.WriteObjectValue<object>(RankingOptions, options);
             }
-            if (Optional.IsDefined(Filters))
+            if (_filtersIsDefined || Optional.IsDefined(Filters))
             {
-                writer.WritePropertyName("filters"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(Filters);
-#else
-                using (JsonDocument document = JsonDocument.Parse(Filters))
+                if (Filters != null)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    writer.WritePropertyName("filters"u8);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(Filters);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(Filters))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                else
+                {
+                    writer.WriteNull("filters"u8);
+                }
             }
             if (Optional.IsCollectionDefined(VectorStoreIds))
             {
@@ -143,6 +150,7 @@ namespace Azure.AI.Projects.Agents
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             long? maxNumResults = default;
             object rankingOptions = default;
+            bool filtersIsDefined = false;
             BinaryData filters = default;
             IList<string> vectorStoreIds = default;
             foreach (var prop in element.EnumerateObject())
@@ -203,6 +211,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("filters"u8))
                 {
+                    filtersIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         filters = null;
@@ -246,7 +255,10 @@ namespace Azure.AI.Projects.Agents
                 maxNumResults,
                 rankingOptions,
                 filters,
-                vectorStoreIds ?? new ChangeTrackingList<string>());
+                vectorStoreIds ?? new ChangeTrackingList<string>())
+            {
+                _filtersIsDefined = filtersIsDefined
+            };
         }
     }
 }

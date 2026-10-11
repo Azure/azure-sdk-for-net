@@ -883,7 +883,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.DeliveryRuleCondition"/> instance for mocking. </returns>
         public static DeliveryRuleCondition DeliveryRuleCondition(string name = default)
         {
-            return new UnknownDeliveryRuleCondition(default, default);
+            return new UnknownDeliveryRuleCondition(name is null ? default : new DeliveryRuleMatchVariable(name), default);
         }
 
         /// <summary> Defines the RemoteAddress condition for the delivery rule. </summary>
@@ -891,7 +891,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.DeliveryRuleRemoteAddressCondition"/> instance for mocking. </returns>
         public static DeliveryRuleRemoteAddressCondition DeliveryRuleRemoteAddressCondition(RemoteAddressMatchCondition properties = default)
         {
-            return new DeliveryRuleRemoteAddressCondition(default, default, properties);
+            return new DeliveryRuleRemoteAddressCondition(DeliveryRuleMatchVariable.RemoteAddress, default, properties);
         }
 
         /// <summary> Defines the parameters for RemoteAddress match conditions. </summary>
@@ -906,7 +906,7 @@ namespace Azure.ResourceManager.Cdn.Models
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
             return new RemoteAddressMatchCondition(
-                default,
+                DeliveryRuleConditionParametersType.DeliveryRuleRemoteAddressConditionParameters,
                 default,
                 remoteAddressOperator,
                 negateCondition,
@@ -922,7 +922,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.DeliveryRuleConditionProperties"/> instance for mocking. </returns>
         public static DeliveryRuleConditionProperties DeliveryRuleConditionProperties(string typeName = default)
         {
-            return new UnknownDeliveryRuleConditionParameters(default, default);
+            return new UnknownDeliveryRuleConditionParameters(typeName is null ? default : new DeliveryRuleConditionParametersType(typeName), default);
         }
 
         /// <summary> Defines the parameters for RequestMethod match conditions. </summary>
@@ -937,7 +937,7 @@ namespace Azure.ResourceManager.Cdn.Models
             matchValues ??= new ChangeTrackingList<RequestMethodMatchConditionMatchValue>();
 
             return new RequestMethodMatchCondition(
-                default,
+                DeliveryRuleConditionParametersType.DeliveryRuleRequestMethodConditionParameters,
                 default,
                 requestMethodOperator,
                 negateCondition,
@@ -957,7 +957,7 @@ namespace Azure.ResourceManager.Cdn.Models
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
             return new QueryStringMatchCondition(
-                default,
+                DeliveryRuleConditionParametersType.DeliveryRuleQueryStringConditionParameters,
                 default,
                 queryStringOperator,
                 negateCondition,
@@ -978,7 +978,7 @@ namespace Azure.ResourceManager.Cdn.Models
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
             return new PostArgsMatchCondition(
-                default,
+                DeliveryRuleConditionParametersType.DeliveryRulePostArgsConditionParameters,
                 default,
                 selector,
                 postArgsOperator,
@@ -999,7 +999,7 @@ namespace Azure.ResourceManager.Cdn.Models
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
             return new RequestUriMatchCondition(
-                default,
+                DeliveryRuleConditionParametersType.DeliveryRuleRequestUriConditionParameters,
                 default,
                 requestUriOperator,
                 negateCondition,
@@ -1020,7 +1020,7 @@ namespace Azure.ResourceManager.Cdn.Models
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
             return new RequestHeaderMatchCondition(
-                default,
+                DeliveryRuleConditionParametersType.DeliveryRuleRequestHeaderConditionParameters,
                 default,
                 selector,
                 requestHeaderOperator,
@@ -1041,7 +1041,7 @@ namespace Azure.ResourceManager.Cdn.Models
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
             return new RequestBodyMatchCondition(
-                default,
+                DeliveryRuleConditionParametersType.DeliveryRuleRequestBodyConditionParameters,
                 default,
                 requestBodyOperator,
                 negateCondition,
@@ -1061,7 +1061,7 @@ namespace Azure.ResourceManager.Cdn.Models
             matchValues ??= new ChangeTrackingList<RequestSchemeMatchConditionMatchValue>();
 
             return new RequestSchemeMatchCondition(
-                default,
+                DeliveryRuleConditionParametersType.DeliveryRuleRequestSchemeConditionParameters,
                 default,
                 requestSchemeOperator,
                 negateCondition,
@@ -1081,7 +1081,7 @@ namespace Azure.ResourceManager.Cdn.Models
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
             return new UriPathMatchCondition(
-                default,
+                DeliveryRuleConditionParametersType.DeliveryRuleUrlPathMatchConditionParameters,
                 default,
                 uriPathOperator,
                 negateCondition,
@@ -1101,7 +1101,7 @@ namespace Azure.ResourceManager.Cdn.Models
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
             return new UriFileExtensionMatchCondition(
-                default,
+                DeliveryRuleConditionParametersType.DeliveryRuleUrlFileExtensionMatchConditionParameters,
                 default,
                 uriFileExtensionOperator,
                 negateCondition,
@@ -1121,7 +1121,7 @@ namespace Azure.ResourceManager.Cdn.Models
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
             return new UriFileNameMatchCondition(
-                default,
+                DeliveryRuleConditionParametersType.DeliveryRuleUrlFilenameConditionParameters,
                 default,
                 uriFileNameOperator,
                 negateCondition,
@@ -1141,7 +1141,7 @@ namespace Azure.ResourceManager.Cdn.Models
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
             return new HttpVersionMatchCondition(
-                default,
+                DeliveryRuleConditionParametersType.DeliveryRuleHttpVersionConditionParameters,
                 default,
                 httpVersionOperator,
                 negateCondition,
@@ -1162,7 +1162,7 @@ namespace Azure.ResourceManager.Cdn.Models
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
             return new CookiesMatchCondition(
-                default,
+                DeliveryRuleConditionParametersType.DeliveryRuleCookiesConditionParameters,
                 default,
                 selector,
                 cookiesOperator,
@@ -1183,7 +1183,7 @@ namespace Azure.ResourceManager.Cdn.Models
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
             return new IsDeviceMatchCondition(
-                default,
+                DeliveryRuleConditionParametersType.DeliveryRuleIsDeviceConditionParameters,
                 default,
                 isDeviceOperator,
                 negateCondition,
@@ -1203,7 +1203,7 @@ namespace Azure.ResourceManager.Cdn.Models
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
             return new SocketAddressMatchCondition(
-                default,
+                DeliveryRuleConditionParametersType.DeliveryRuleSocketAddrConditionParameters,
                 default,
                 socketAddressOperator,
                 negateCondition,
@@ -1223,7 +1223,7 @@ namespace Azure.ResourceManager.Cdn.Models
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
             return new ClientPortMatchCondition(
-                default,
+                DeliveryRuleConditionParametersType.DeliveryRuleClientPortConditionParameters,
                 default,
                 clientPortOperator,
                 negateCondition,
@@ -1243,7 +1243,7 @@ namespace Azure.ResourceManager.Cdn.Models
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
             return new ServerPortMatchCondition(
-                default,
+                DeliveryRuleConditionParametersType.DeliveryRuleServerPortConditionParameters,
                 default,
                 serverPortOperator,
                 negateCondition,
@@ -1263,7 +1263,7 @@ namespace Azure.ResourceManager.Cdn.Models
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
             return new HostNameMatchCondition(
-                default,
+                DeliveryRuleConditionParametersType.DeliveryRuleHostNameConditionParameters,
                 default,
                 hostNameOperator,
                 negateCondition,
@@ -1283,7 +1283,7 @@ namespace Azure.ResourceManager.Cdn.Models
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
             return new DeliveryRuleSslProtocolMatchCondition(
-                default,
+                DeliveryRuleConditionParametersType.DeliveryRuleSslProtocolConditionParameters,
                 default,
                 sslProtocolOperator,
                 negateCondition,
@@ -1296,7 +1296,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.DeliveryRuleRequestMethodCondition"/> instance for mocking. </returns>
         public static DeliveryRuleRequestMethodCondition DeliveryRuleRequestMethodCondition(RequestMethodMatchCondition properties = default)
         {
-            return new DeliveryRuleRequestMethodCondition(default, default, properties);
+            return new DeliveryRuleRequestMethodCondition(DeliveryRuleMatchVariable.RequestMethod, default, properties);
         }
 
         /// <summary> Defines the QueryString condition for the delivery rule. </summary>
@@ -1304,7 +1304,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.DeliveryRuleQueryStringCondition"/> instance for mocking. </returns>
         public static DeliveryRuleQueryStringCondition DeliveryRuleQueryStringCondition(QueryStringMatchCondition properties = default)
         {
-            return new DeliveryRuleQueryStringCondition(default, default, properties);
+            return new DeliveryRuleQueryStringCondition(DeliveryRuleMatchVariable.QueryString, default, properties);
         }
 
         /// <summary> Defines the PostArgs condition for the delivery rule. </summary>
@@ -1312,7 +1312,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.DeliveryRulePostArgsCondition"/> instance for mocking. </returns>
         public static DeliveryRulePostArgsCondition DeliveryRulePostArgsCondition(PostArgsMatchCondition properties = default)
         {
-            return new DeliveryRulePostArgsCondition(default, default, properties);
+            return new DeliveryRulePostArgsCondition(DeliveryRuleMatchVariable.PostArgs, default, properties);
         }
 
         /// <summary> Defines the RequestUri condition for the delivery rule. </summary>
@@ -1320,7 +1320,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.DeliveryRuleRequestUriCondition"/> instance for mocking. </returns>
         public static DeliveryRuleRequestUriCondition DeliveryRuleRequestUriCondition(RequestUriMatchCondition properties = default)
         {
-            return new DeliveryRuleRequestUriCondition(default, default, properties);
+            return new DeliveryRuleRequestUriCondition(DeliveryRuleMatchVariable.RequestUri, default, properties);
         }
 
         /// <summary> Defines the RequestHeader condition for the delivery rule. </summary>
@@ -1328,7 +1328,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.DeliveryRuleRequestHeaderCondition"/> instance for mocking. </returns>
         public static DeliveryRuleRequestHeaderCondition DeliveryRuleRequestHeaderCondition(RequestHeaderMatchCondition properties = default)
         {
-            return new DeliveryRuleRequestHeaderCondition(default, default, properties);
+            return new DeliveryRuleRequestHeaderCondition(DeliveryRuleMatchVariable.RequestHeader, default, properties);
         }
 
         /// <summary> Defines the RequestBody condition for the delivery rule. </summary>
@@ -1336,7 +1336,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.DeliveryRuleRequestBodyCondition"/> instance for mocking. </returns>
         public static DeliveryRuleRequestBodyCondition DeliveryRuleRequestBodyCondition(RequestBodyMatchCondition properties = default)
         {
-            return new DeliveryRuleRequestBodyCondition(default, default, properties);
+            return new DeliveryRuleRequestBodyCondition(DeliveryRuleMatchVariable.RequestBody, default, properties);
         }
 
         /// <summary> Defines the RequestScheme condition for the delivery rule. </summary>
@@ -1344,7 +1344,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.DeliveryRuleRequestSchemeCondition"/> instance for mocking. </returns>
         public static DeliveryRuleRequestSchemeCondition DeliveryRuleRequestSchemeCondition(RequestSchemeMatchCondition properties = default)
         {
-            return new DeliveryRuleRequestSchemeCondition(default, default, properties);
+            return new DeliveryRuleRequestSchemeCondition(DeliveryRuleMatchVariable.RequestScheme, default, properties);
         }
 
         /// <summary> Defines the UrlPath condition for the delivery rule. </summary>
@@ -1352,7 +1352,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.DeliveryRuleUriPathCondition"/> instance for mocking. </returns>
         public static DeliveryRuleUriPathCondition DeliveryRuleUriPathCondition(UriPathMatchCondition properties = default)
         {
-            return new DeliveryRuleUriPathCondition(default, default, properties);
+            return new DeliveryRuleUriPathCondition(DeliveryRuleMatchVariable.UrlPath, default, properties);
         }
 
         /// <summary> Defines the UrlFileExtension condition for the delivery rule. </summary>
@@ -1360,7 +1360,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.DeliveryRuleUriFileExtensionCondition"/> instance for mocking. </returns>
         public static DeliveryRuleUriFileExtensionCondition DeliveryRuleUriFileExtensionCondition(UriFileExtensionMatchCondition properties = default)
         {
-            return new DeliveryRuleUriFileExtensionCondition(default, default, properties);
+            return new DeliveryRuleUriFileExtensionCondition(DeliveryRuleMatchVariable.UrlFileExtension, default, properties);
         }
 
         /// <summary> Defines the UrlFileName condition for the delivery rule. </summary>
@@ -1368,7 +1368,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.DeliveryRuleUriFileNameCondition"/> instance for mocking. </returns>
         public static DeliveryRuleUriFileNameCondition DeliveryRuleUriFileNameCondition(UriFileNameMatchCondition properties = default)
         {
-            return new DeliveryRuleUriFileNameCondition(default, default, properties);
+            return new DeliveryRuleUriFileNameCondition(DeliveryRuleMatchVariable.UrlFileName, default, properties);
         }
 
         /// <summary> Defines the HttpVersion condition for the delivery rule. </summary>
@@ -1376,7 +1376,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.DeliveryRuleHttpVersionCondition"/> instance for mocking. </returns>
         public static DeliveryRuleHttpVersionCondition DeliveryRuleHttpVersionCondition(HttpVersionMatchCondition properties = default)
         {
-            return new DeliveryRuleHttpVersionCondition(default, default, properties);
+            return new DeliveryRuleHttpVersionCondition(DeliveryRuleMatchVariable.HttpVersion, default, properties);
         }
 
         /// <summary> Defines the Cookies condition for the delivery rule. </summary>
@@ -1384,7 +1384,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.DeliveryRuleCookiesCondition"/> instance for mocking. </returns>
         public static DeliveryRuleCookiesCondition DeliveryRuleCookiesCondition(CookiesMatchCondition properties = default)
         {
-            return new DeliveryRuleCookiesCondition(default, default, properties);
+            return new DeliveryRuleCookiesCondition(DeliveryRuleMatchVariable.Cookies, default, properties);
         }
 
         /// <summary> Defines the IsDevice condition for the delivery rule. </summary>
@@ -1392,7 +1392,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.DeliveryRuleIsDeviceCondition"/> instance for mocking. </returns>
         public static DeliveryRuleIsDeviceCondition DeliveryRuleIsDeviceCondition(IsDeviceMatchCondition properties = default)
         {
-            return new DeliveryRuleIsDeviceCondition(default, default, properties);
+            return new DeliveryRuleIsDeviceCondition(DeliveryRuleMatchVariable.IsDevice, default, properties);
         }
 
         /// <summary> Defines the SocketAddress condition for the delivery rule. </summary>
@@ -1400,7 +1400,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.DeliveryRuleSocketAddressCondition"/> instance for mocking. </returns>
         public static DeliveryRuleSocketAddressCondition DeliveryRuleSocketAddressCondition(SocketAddressMatchCondition properties = default)
         {
-            return new DeliveryRuleSocketAddressCondition(default, default, properties);
+            return new DeliveryRuleSocketAddressCondition(DeliveryRuleMatchVariable.SocketAddr, default, properties);
         }
 
         /// <summary> Defines the ClientPort condition for the delivery rule. </summary>
@@ -1408,7 +1408,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.DeliveryRuleClientPortCondition"/> instance for mocking. </returns>
         public static DeliveryRuleClientPortCondition DeliveryRuleClientPortCondition(ClientPortMatchCondition properties = default)
         {
-            return new DeliveryRuleClientPortCondition(default, default, properties);
+            return new DeliveryRuleClientPortCondition(DeliveryRuleMatchVariable.ClientPort, default, properties);
         }
 
         /// <summary> Defines the ServerPort condition for the delivery rule. </summary>
@@ -1416,7 +1416,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.DeliveryRuleServerPortCondition"/> instance for mocking. </returns>
         public static DeliveryRuleServerPortCondition DeliveryRuleServerPortCondition(ServerPortMatchCondition properties = default)
         {
-            return new DeliveryRuleServerPortCondition(default, default, properties);
+            return new DeliveryRuleServerPortCondition(DeliveryRuleMatchVariable.ServerPort, default, properties);
         }
 
         /// <summary> Defines the HostName condition for the delivery rule. </summary>
@@ -1424,7 +1424,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.DeliveryRuleHostNameCondition"/> instance for mocking. </returns>
         public static DeliveryRuleHostNameCondition DeliveryRuleHostNameCondition(HostNameMatchCondition properties = default)
         {
-            return new DeliveryRuleHostNameCondition(default, default, properties);
+            return new DeliveryRuleHostNameCondition(DeliveryRuleMatchVariable.HostName, default, properties);
         }
 
         /// <summary> Defines the SslProtocol condition for the delivery rule. </summary>
@@ -1432,7 +1432,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.DeliveryRuleSslProtocolCondition"/> instance for mocking. </returns>
         public static DeliveryRuleSslProtocolCondition DeliveryRuleSslProtocolCondition(DeliveryRuleSslProtocolMatchCondition properties = default)
         {
-            return new DeliveryRuleSslProtocolCondition(default, default, properties);
+            return new DeliveryRuleSslProtocolCondition(DeliveryRuleMatchVariable.SslProtocol, default, properties);
         }
 
         /// <summary>
@@ -1443,7 +1443,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.DeliveryRuleAction"/> instance for mocking. </returns>
         public static DeliveryRuleAction DeliveryRuleAction(string name = default)
         {
-            return new UnknownDeliveryRuleAction(default, default);
+            return new UnknownDeliveryRuleAction(name is null ? default : new DeliveryRuleActionName(name), default);
         }
 
         /// <summary> Defines the url signing action for the delivery rule. </summary>
@@ -1451,7 +1451,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.FrontDoorUrlSigningAction"/> instance for mocking. </returns>
         public static FrontDoorUrlSigningAction FrontDoorUrlSigningAction(FrontDoorUrlSigningActionContent parameters = default)
         {
-            return new FrontDoorUrlSigningAction(default, default, parameters);
+            return new FrontDoorUrlSigningAction(DeliveryRuleActionName.AfdUrlSigning, default, parameters);
         }
 
         /// <param name="typeName"></param>
@@ -1480,7 +1480,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.UriRedirectAction"/> instance for mocking. </returns>
         public static UriRedirectAction UriRedirectAction(UriRedirectActionProperties properties = default)
         {
-            return new UriRedirectAction(default, default, properties);
+            return new UriRedirectAction(DeliveryRuleActionName.UrlRedirect, default, properties);
         }
 
         /// <summary> Defines the parameters for the url redirect action. </summary>
@@ -1494,7 +1494,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static UriRedirectActionProperties UriRedirectActionProperties(RedirectType redirectType = default, DestinationProtocol? destinationProtocol = default, string customPath = default, string customHostname = default, string customQueryString = default, string customFragment = default)
         {
             return new UriRedirectActionProperties(
-                default,
+                DeliveryRuleActionParametersType.DeliveryRuleUrlRedirectActionParameters,
                 default,
                 redirectType,
                 destinationProtocol,
@@ -1512,7 +1512,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.DeliveryRuleActionProperties"/> instance for mocking. </returns>
         public static DeliveryRuleActionProperties DeliveryRuleActionProperties(string typeName = default)
         {
-            return new UnknownDeliveryRuleActionParameters(default, default);
+            return new UnknownDeliveryRuleActionParameters(typeName is null ? default : new DeliveryRuleActionParametersType(typeName), default);
         }
 
         /// <summary> Defines the parameters for the Url Signing action. </summary>
@@ -1523,14 +1523,14 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             parameterNameOverride ??= new ChangeTrackingList<UriSigningParamIdentifier>();
 
-            return new UriSigningActionProperties(default, default, algorithm, (parameterNameOverride ?? new ChangeTrackingList<UriSigningParamIdentifier>()).ToList());
+            return new UriSigningActionProperties(DeliveryRuleActionParametersType.DeliveryRuleUrlSigningActionParameters, default, algorithm, (parameterNameOverride ?? new ChangeTrackingList<UriSigningParamIdentifier>()).ToList());
         }
 
         /// <param name="originGroupId"> Resource ID. </param>
         /// <returns> A new <see cref="Models.OriginGroupOverrideActionProperties"/> instance for mocking. </returns>
         public static OriginGroupOverrideActionProperties OriginGroupOverrideActionProperties(ResourceIdentifier originGroupId = default)
         {
-            return new OriginGroupOverrideActionProperties(default, default, originGroupId is null ? default : new CdnResourceReference(originGroupId, default));
+            return new OriginGroupOverrideActionProperties(DeliveryRuleActionParametersType.DeliveryRuleOriginGroupOverrideActionParameters, default, originGroupId is null ? default : new CdnResourceReference(originGroupId, default));
         }
 
         /// <param name="edgeActionReferenceId"> Resource ID. </param>
@@ -1538,7 +1538,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.DeliveryRuleEdgeActionProperties"/> instance for mocking. </returns>
         public static DeliveryRuleEdgeActionProperties DeliveryRuleEdgeActionProperties(ResourceIdentifier edgeActionReferenceId = default, EdgeActionInvocationPoint invocationPoint = default)
         {
-            return new DeliveryRuleEdgeActionProperties(default, default, edgeActionReferenceId is null ? default : new CdnResourceReference(edgeActionReferenceId, default), invocationPoint);
+            return new DeliveryRuleEdgeActionProperties(DeliveryRuleActionParametersType.DeliveryRuleEdgeActionParameters, default, edgeActionReferenceId is null ? default : new CdnResourceReference(edgeActionReferenceId, default), invocationPoint);
         }
 
         /// <summary> Defines the parameters for the url rewrite action. </summary>
@@ -1548,7 +1548,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.UriRewriteActionProperties"/> instance for mocking. </returns>
         public static UriRewriteActionProperties UriRewriteActionProperties(string sourcePattern = default, string destination = default, bool? preserveUnmatchedPath = default)
         {
-            return new UriRewriteActionProperties(default, default, sourcePattern, destination, preserveUnmatchedPath);
+            return new UriRewriteActionProperties(DeliveryRuleActionParametersType.DeliveryRuleUrlRewriteActionParameters, default, sourcePattern, destination, preserveUnmatchedPath);
         }
 
         /// <summary> Defines the parameters for the request header action. </summary>
@@ -1558,7 +1558,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.HeaderActionProperties"/> instance for mocking. </returns>
         public static HeaderActionProperties HeaderActionProperties(HeaderAction headerAction = default, string headerName = default, string value = default)
         {
-            return new HeaderActionProperties(default, default, headerAction, headerName, value);
+            return new HeaderActionProperties(DeliveryRuleActionParametersType.DeliveryRuleHeaderActionParameters, default, headerAction, headerName, value);
         }
 
         /// <summary> Defines the parameters for the cache expiration action. </summary>
@@ -1568,7 +1568,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.CacheExpirationActionProperties"/> instance for mocking. </returns>
         public static CacheExpirationActionProperties CacheExpirationActionProperties(CacheBehaviorSetting cacheBehavior = default, CdnCacheLevel cacheType = default, TimeSpan? cacheDuration = default)
         {
-            return new CacheExpirationActionProperties(default, default, cacheBehavior, cacheType, cacheDuration);
+            return new CacheExpirationActionProperties(DeliveryRuleActionParametersType.DeliveryRuleCacheExpirationActionParameters, default, cacheBehavior, cacheType, cacheDuration);
         }
 
         /// <summary> Defines the parameters for the cache-key query string action. </summary>
@@ -1577,7 +1577,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.CacheKeyQueryStringActionProperties"/> instance for mocking. </returns>
         public static CacheKeyQueryStringActionProperties CacheKeyQueryStringActionProperties(QueryStringBehavior queryStringBehavior = default, string queryParameters = default)
         {
-            return new CacheKeyQueryStringActionProperties(default, default, queryStringBehavior, queryParameters);
+            return new CacheKeyQueryStringActionProperties(DeliveryRuleActionParametersType.DeliveryRuleCacheKeyQueryStringBehaviorActionParameters, default, queryStringBehavior, queryParameters);
         }
 
         /// <summary> Defines the parameters for the route configuration override action. </summary>
@@ -1586,7 +1586,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.RouteConfigurationOverrideActionProperties"/> instance for mocking. </returns>
         public static RouteConfigurationOverrideActionProperties RouteConfigurationOverrideActionProperties(OriginGroupOverride originGroupOverride = default, CacheConfiguration cacheConfiguration = default)
         {
-            return new RouteConfigurationOverrideActionProperties(default, default, originGroupOverride, cacheConfiguration);
+            return new RouteConfigurationOverrideActionProperties(DeliveryRuleActionParametersType.DeliveryRuleRouteConfigurationOverrideActionParameters, default, originGroupOverride, cacheConfiguration);
         }
 
         /// <param name="originGroupId"> Resource ID. </param>
@@ -1620,7 +1620,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.UriSigningAction"/> instance for mocking. </returns>
         public static UriSigningAction UriSigningAction(UriSigningActionProperties properties = default)
         {
-            return new UriSigningAction(default, default, properties);
+            return new UriSigningAction(DeliveryRuleActionName.UrlSigning, default, properties);
         }
 
         /// <summary> Defines the origin group override action for the delivery rule. </summary>
@@ -1628,7 +1628,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.OriginGroupOverrideAction"/> instance for mocking. </returns>
         public static OriginGroupOverrideAction OriginGroupOverrideAction(OriginGroupOverrideActionProperties properties = default)
         {
-            return new OriginGroupOverrideAction(default, default, properties);
+            return new OriginGroupOverrideAction(DeliveryRuleActionName.OriginGroupOverride, default, properties);
         }
 
         /// <summary> Defines the edge action for the delivery rule. </summary>
@@ -1636,7 +1636,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.CdnEdgeAction"/> instance for mocking. </returns>
         public static CdnEdgeAction CdnEdgeAction(DeliveryRuleEdgeActionProperties parameters = default)
         {
-            return new CdnEdgeAction(default, default, parameters);
+            return new CdnEdgeAction(DeliveryRuleActionName.EdgeAction, default, parameters);
         }
 
         /// <summary> Defines the url rewrite action for the delivery rule. </summary>
@@ -1644,7 +1644,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.UriRewriteAction"/> instance for mocking. </returns>
         public static UriRewriteAction UriRewriteAction(UriRewriteActionProperties properties = default)
         {
-            return new UriRewriteAction(default, default, properties);
+            return new UriRewriteAction(DeliveryRuleActionName.UrlRewrite, default, properties);
         }
 
         /// <summary> Defines the request header action for the delivery rule. </summary>
@@ -1652,7 +1652,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.DeliveryRuleRequestHeaderAction"/> instance for mocking. </returns>
         public static DeliveryRuleRequestHeaderAction DeliveryRuleRequestHeaderAction(HeaderActionProperties properties = default)
         {
-            return new DeliveryRuleRequestHeaderAction(default, default, properties);
+            return new DeliveryRuleRequestHeaderAction(DeliveryRuleActionName.ModifyRequestHeader, default, properties);
         }
 
         /// <summary> Defines the response header action for the delivery rule. </summary>
@@ -1660,7 +1660,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.DeliveryRuleResponseHeaderAction"/> instance for mocking. </returns>
         public static DeliveryRuleResponseHeaderAction DeliveryRuleResponseHeaderAction(HeaderActionProperties properties = default)
         {
-            return new DeliveryRuleResponseHeaderAction(default, default, properties);
+            return new DeliveryRuleResponseHeaderAction(DeliveryRuleActionName.ModifyResponseHeader, default, properties);
         }
 
         /// <summary> Defines the cache expiration action for the delivery rule. </summary>
@@ -1668,7 +1668,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.DeliveryRuleCacheExpirationAction"/> instance for mocking. </returns>
         public static DeliveryRuleCacheExpirationAction DeliveryRuleCacheExpirationAction(CacheExpirationActionProperties properties = default)
         {
-            return new DeliveryRuleCacheExpirationAction(default, default, properties);
+            return new DeliveryRuleCacheExpirationAction(DeliveryRuleActionName.CacheExpiration, default, properties);
         }
 
         /// <summary> Defines the cache-key query string action for the delivery rule. </summary>
@@ -1676,7 +1676,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.DeliveryRuleCacheKeyQueryStringAction"/> instance for mocking. </returns>
         public static DeliveryRuleCacheKeyQueryStringAction DeliveryRuleCacheKeyQueryStringAction(CacheKeyQueryStringActionProperties properties = default)
         {
-            return new DeliveryRuleCacheKeyQueryStringAction(default, default, properties);
+            return new DeliveryRuleCacheKeyQueryStringAction(DeliveryRuleActionName.CacheKeyQueryString, default, properties);
         }
 
         /// <summary> Defines the route configuration override action for the delivery rule. Only applicable to Frontdoor Standard/Premium Profiles. </summary>
@@ -1684,7 +1684,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.DeliveryRuleRouteConfigurationOverrideAction"/> instance for mocking. </returns>
         public static DeliveryRuleRouteConfigurationOverrideAction DeliveryRuleRouteConfigurationOverrideAction(RouteConfigurationOverrideActionProperties properties = default)
         {
-            return new DeliveryRuleRouteConfigurationOverrideAction(default, default, properties);
+            return new DeliveryRuleRouteConfigurationOverrideAction(DeliveryRuleActionName.RouteConfigurationOverride, default, properties);
         }
 
         /// <param name="ruleSetName"> The name of the rule set containing the rule. </param>
@@ -1732,7 +1732,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.SecurityPolicyProperties"/> instance for mocking. </returns>
         public static SecurityPolicyProperties SecurityPolicyProperties(string policyType = default)
         {
-            return new UnknownSecurityPolicyProperties(default, default);
+            return new UnknownSecurityPolicyProperties(policyType is null ? default : new SecurityPolicyType(policyType), default);
         }
 
         /// <summary> Contains security policy waf parameters. </summary>
@@ -1743,7 +1743,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             associations ??= new ChangeTrackingList<SecurityPolicyWebApplicationFirewallAssociation>();
 
-            return new SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy(default, default, wafPolicy, (associations ?? new ChangeTrackingList<SecurityPolicyWebApplicationFirewallAssociation>()).ToList());
+            return new SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy(SecurityPolicyType.WebApplicationFirewallEmbedded, default, wafPolicy, (associations ?? new ChangeTrackingList<SecurityPolicyWebApplicationFirewallAssociation>()).ToList());
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1980,7 +1980,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             associations ??= new ChangeTrackingList<SecurityPolicyWebApplicationFirewallAssociation>();
 
-            return new SecurityPolicyWebApplicationFirewall(default, default, wafPolicyId is null ? default : new CdnResourceReference(wafPolicyId, default), (associations ?? new ChangeTrackingList<SecurityPolicyWebApplicationFirewallAssociation>()).ToList());
+            return new SecurityPolicyWebApplicationFirewall(SecurityPolicyType.WebApplicationFirewall, default, wafPolicyId is null ? default : new CdnResourceReference(wafPolicyId, default), (associations ?? new ChangeTrackingList<SecurityPolicyWebApplicationFirewallAssociation>()).ToList());
         }
 
         /// <param name="properties"> object which contains security policy parameters. </param>
@@ -2018,7 +2018,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.FrontDoorSecretProperties"/> instance for mocking. </returns>
         public static FrontDoorSecretProperties FrontDoorSecretProperties(string secretType = default)
         {
-            return new UnknownSecretProperties(default, default);
+            return new UnknownSecretProperties(secretType is null ? default : new SecretType(secretType), default);
         }
 
         /// <param name="keyId"> Defines the customer defined key Id. This id will exist in the incoming request to indicate the key used to form the hash. </param>
@@ -2027,7 +2027,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.UriSigningKeyProperties"/> instance for mocking. </returns>
         public static UriSigningKeyProperties UriSigningKeyProperties(string keyId = default, ResourceIdentifier secretSourceId = default, string secretVersion = default)
         {
-            return new UriSigningKeyProperties(default, default, keyId, secretSourceId is null ? default : new CdnResourceReference(secretSourceId, default), secretVersion);
+            return new UriSigningKeyProperties(SecretType.UriSigningKey, default, keyId, secretSourceId is null ? default : new CdnResourceReference(secretSourceId, default), secretVersion);
         }
 
         /// <summary> Managed Certificate used for https. </summary>
@@ -2036,7 +2036,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.ManagedCertificateProperties"/> instance for mocking. </returns>
         public static ManagedCertificateProperties ManagedCertificateProperties(string subject = default, DateTimeOffset? expiresOn = default)
         {
-            return new ManagedCertificateProperties(default, default, subject, expiresOn);
+            return new ManagedCertificateProperties(SecretType.ManagedCertificate, default, subject, expiresOn);
         }
 
         /// <param name="secretSourceId"> Resource ID. </param>
@@ -2053,7 +2053,7 @@ namespace Azure.ResourceManager.Cdn.Models
             subjectAlternativeNames ??= new ChangeTrackingList<string>();
 
             return new CustomerCertificateProperties(
-                default,
+                SecretType.CustomerCertificate,
                 default,
                 secretSourceId is null ? default : new CdnResourceReference(secretSourceId, default),
                 secretVersion,
@@ -2077,7 +2077,7 @@ namespace Azure.ResourceManager.Cdn.Models
             subjectAlternativeNames ??= new ChangeTrackingList<string>();
 
             return new AzureFirstPartyManagedCertificateProperties(
-                default,
+                SecretType.AzureFirstPartyManagedCertificate,
                 default,
                 secretSourceId is null ? default : new CdnResourceReference(secretSourceId, default),
                 subject,
@@ -2093,7 +2093,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.FrontDoorSecretMtlsCertificateChain"/> instance for mocking. </returns>
         public static FrontDoorSecretMtlsCertificateChain FrontDoorSecretMtlsCertificateChain(ResourceIdentifier secretSourceId = default, string secretVersion = default, DateTimeOffset? expiresOn = default)
         {
-            return new FrontDoorSecretMtlsCertificateChain(default, default, secretSourceId is null ? default : new CdnResourceReference(secretSourceId, default), secretVersion, expiresOn);
+            return new FrontDoorSecretMtlsCertificateChain(SecretType.MtlsCertificateChain, default, secretSourceId is null ? default : new CdnResourceReference(secretSourceId, default), secretVersion, expiresOn);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2200,7 +2200,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.CdnDeploymentVersionChange"/> instance for mocking. </returns>
         public static CdnDeploymentVersionChange CdnDeploymentVersionChange(string resourceType = default, ResourceIdentifier resourceId = default, string resourceName = default)
         {
-            return new UnknownCdnDeploymentVersionChange(default, resourceId, resourceName, default);
+            return new UnknownCdnDeploymentVersionChange(resourceType is null ? default : new PreviewSupportedResourceType(resourceType), resourceId, resourceName, default);
         }
 
         /// <summary> Deployment change of the route under the profile. </summary>
@@ -2212,7 +2212,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static CdnDeploymentVersionRouteChange CdnDeploymentVersionRouteChange(ResourceIdentifier resourceId = default, string resourceName = default, CdnRouteProperties previousProperties = default, CdnRouteProperties currentProperties = default)
         {
             return new CdnDeploymentVersionRouteChange(
-                default,
+                PreviewSupportedResourceType.MicrosoftCdnProfilesAfdEndpointsRoute,
                 resourceId,
                 resourceName,
                 default,
@@ -2229,7 +2229,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static CdnDeploymentVersionFrontDoorOriginGroupChange CdnDeploymentVersionFrontDoorOriginGroupChange(ResourceIdentifier resourceId = default, string resourceName = default, FrontDoorOriginGroupProperties previousProperties = default, FrontDoorOriginGroupProperties currentProperties = default)
         {
             return new CdnDeploymentVersionFrontDoorOriginGroupChange(
-                default,
+                PreviewSupportedResourceType.MicrosoftCdnProfilesOriginGroups,
                 resourceId,
                 resourceName,
                 default,
@@ -2246,7 +2246,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static CdnDeploymentVersionFrontDoorOriginChange CdnDeploymentVersionFrontDoorOriginChange(ResourceIdentifier resourceId = default, string resourceName = default, FrontDoorOriginProperties previousProperties = default, FrontDoorOriginProperties currentProperties = default)
         {
             return new CdnDeploymentVersionFrontDoorOriginChange(
-                default,
+                PreviewSupportedResourceType.MicrosoftCdnProfilesOriginGroupsOrigins,
                 resourceId,
                 resourceName,
                 default,
@@ -2263,7 +2263,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static CdnDeploymentVersionRuleSetChange CdnDeploymentVersionRuleSetChange(ResourceIdentifier resourceId = default, string resourceName = default, CdnRuleSetProperties previousProperties = default, CdnRuleSetProperties currentProperties = default)
         {
             return new CdnDeploymentVersionRuleSetChange(
-                default,
+                PreviewSupportedResourceType.MicrosoftCdnProfilesRuleSets,
                 resourceId,
                 resourceName,
                 default,
@@ -2280,7 +2280,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static CdnDeploymentVersionRuleChange CdnDeploymentVersionRuleChange(ResourceIdentifier resourceId = default, string resourceName = default, CdnRuleProperties previousProperties = default, CdnRuleProperties currentProperties = default)
         {
             return new CdnDeploymentVersionRuleChange(
-                default,
+                PreviewSupportedResourceType.MicrosoftCdnProfilesRuleSetsRules,
                 resourceId,
                 resourceName,
                 default,
@@ -2297,7 +2297,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static CdnDeploymentVersionSecurityPolicyChange CdnDeploymentVersionSecurityPolicyChange(ResourceIdentifier resourceId = default, string resourceName = default, SecurityPolicyPropertiesWithEmbeddedWafPolicy previousProperties = default, SecurityPolicyPropertiesWithEmbeddedWafPolicy currentProperties = default)
         {
             return new CdnDeploymentVersionSecurityPolicyChange(
-                default,
+                PreviewSupportedResourceType.MicrosoftCdnProfilesSecurityPolicies,
                 resourceId,
                 resourceName,
                 default,
@@ -2730,7 +2730,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.CustomDomainHttpsContent"/> instance for mocking. </returns>
         public static CustomDomainHttpsContent CustomDomainHttpsContent(string certificateSource = default, SecureDeliveryProtocolType protocolType = default, CdnMinimumTlsVersion? minimumTlsVersion = default)
         {
-            return new UnknownCustomDomainHttpsParameters(default, protocolType, minimumTlsVersion, default);
+            return new UnknownCustomDomainHttpsParameters(certificateSource is null ? default : new CertificateSource(certificateSource), protocolType, minimumTlsVersion, default);
         }
 
         /// <summary> Defines the certificate source parameters using CDN managed certificate for enabling SSL. </summary>
@@ -2740,7 +2740,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.CdnManagedHttpsContent"/> instance for mocking. </returns>
         public static CdnManagedHttpsContent CdnManagedHttpsContent(SecureDeliveryProtocolType protocolType = default, CdnMinimumTlsVersion? minimumTlsVersion = default, CdnCertificateSource certificateSourceParameters = default)
         {
-            return new CdnManagedHttpsContent(default, protocolType, minimumTlsVersion, default, certificateSourceParameters);
+            return new CdnManagedHttpsContent(CertificateSource.Cdn, protocolType, minimumTlsVersion, default, certificateSourceParameters);
         }
 
         /// <summary> Defines the parameters for using CDN managed certificate for securing custom domain. </summary>
@@ -2748,7 +2748,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.CdnCertificateSource"/> instance for mocking. </returns>
         public static CdnCertificateSource CdnCertificateSource(CdnManagedCertificateType certificateType = default)
         {
-            return new CdnCertificateSource(default, default, certificateType);
+            return new CdnCertificateSource(CertificateSourceParametersType.CdnCertificateSourceParameters, default, certificateType);
         }
 
         /// <summary>
@@ -2759,7 +2759,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.CertificateSourceProperties"/> instance for mocking. </returns>
         public static CertificateSourceProperties CertificateSourceProperties(string typeName = default)
         {
-            return new UnknownCertificateSourceParameters(default, default);
+            return new UnknownCertificateSourceParameters(typeName is null ? default : new CertificateSourceParametersType(typeName), default);
         }
 
         /// <summary> Describes the parameters for using a user's KeyVault certificate for securing custom domain. </summary>
@@ -2774,7 +2774,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static KeyVaultCertificateSource KeyVaultCertificateSource(string subscriptionId = default, string resourceGroupName = default, string vaultName = default, string secretName = default, string secretVersion = default, CertificateUpdateAction updateRule = default, CertificateDeleteAction deleteRule = default)
         {
             return new KeyVaultCertificateSource(
-                default,
+                CertificateSourceParametersType.KeyVaultCertificateSourceParameters,
                 default,
                 subscriptionId,
                 resourceGroupName,
@@ -2792,7 +2792,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.UserManagedHttpsContent"/> instance for mocking. </returns>
         public static UserManagedHttpsContent UserManagedHttpsContent(SecureDeliveryProtocolType protocolType = default, CdnMinimumTlsVersion? minimumTlsVersion = default, KeyVaultCertificateSource certificateSourceParameters = default)
         {
-            return new UserManagedHttpsContent(default, protocolType, minimumTlsVersion, default, certificateSourceParameters);
+            return new UserManagedHttpsContent(CertificateSource.AzureKeyVault, protocolType, minimumTlsVersion, default, certificateSourceParameters);
         }
 
         /// <param name="hostName"> The host name of the custom domain. Must be a domain name. </param>
@@ -2996,7 +2996,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.FrontDoorCustomDomainMtlsSettings"/> instance for mocking. </returns>
         public static FrontDoorCustomDomainMtlsSettings FrontDoorCustomDomainMtlsSettings(string scenario = default)
         {
-            return new UnknownFrontDoorCustomDomainMtlsSettings(default, default);
+            return new UnknownFrontDoorCustomDomainMtlsSettings(scenario is null ? default : new MtlsScenarioType(scenario), default);
         }
 
         /// <summary> Advanced settings for MtlsScenarioType enum value: ClientCertificateRequiredAndValidated. </summary>
@@ -3009,14 +3009,14 @@ namespace Azure.ResourceManager.Cdn.Models
             secrets ??= new ChangeTrackingList<CdnResourceReference>();
             allowedFqdns ??= new ChangeTrackingList<string>();
 
-            return new ClientCertificateRequiredAndValidatedAdvancedSettings(default, default, (secrets ?? new ChangeTrackingList<CdnResourceReference>()).ToList(), (allowedFqdns ?? new ChangeTrackingList<string>()).ToList(), certificateRevocationCheck);
+            return new ClientCertificateRequiredAndValidatedAdvancedSettings(MtlsScenarioType.ClientCertificateRequiredAndValidated, default, (secrets ?? new ChangeTrackingList<CdnResourceReference>()).ToList(), (allowedFqdns ?? new ChangeTrackingList<string>()).ToList(), certificateRevocationCheck);
         }
 
         /// <summary> Advanced settings for MtlsScenarioType enum value: ClientCertificateRequiredAndOriginValidates. </summary>
         /// <returns> A new <see cref="Models.ClientCertificateRequiredAndOriginValidatesAdvancedSettings"/> instance for mocking. </returns>
         public static ClientCertificateRequiredAndOriginValidatesAdvancedSettings ClientCertificateRequiredAndOriginValidatesAdvancedSettings()
         {
-            return new ClientCertificateRequiredAndOriginValidatesAdvancedSettings(default, default);
+            return new ClientCertificateRequiredAndOriginValidatesAdvancedSettings(MtlsScenarioType.ClientCertificateRequiredAndOriginValidates, default);
         }
 
         /// <summary> Advanced settings for MtlsScenarioType enum value: ClientCertificateValidatedIfPresented. </summary>
@@ -3029,14 +3029,14 @@ namespace Azure.ResourceManager.Cdn.Models
             secrets ??= new ChangeTrackingList<CdnResourceReference>();
             allowedFqdns ??= new ChangeTrackingList<string>();
 
-            return new ClientCertificateValidatedIfPresentedAdvancedSettings(default, default, (secrets ?? new ChangeTrackingList<CdnResourceReference>()).ToList(), (allowedFqdns ?? new ChangeTrackingList<string>()).ToList(), certificateRevocationCheck);
+            return new ClientCertificateValidatedIfPresentedAdvancedSettings(MtlsScenarioType.ClientCertificateValidatedIfPresented, default, (secrets ?? new ChangeTrackingList<CdnResourceReference>()).ToList(), (allowedFqdns ?? new ChangeTrackingList<string>()).ToList(), certificateRevocationCheck);
         }
 
         /// <summary> Advanced settings for MtlsScenarioType enum value: CompleteMtlsPassthroughToOrigin. </summary>
         /// <returns> A new <see cref="Models.CompleteMtlsPassthroughToOriginAdvancedSettings"/> instance for mocking. </returns>
         public static CompleteMtlsPassthroughToOriginAdvancedSettings CompleteMtlsPassthroughToOriginAdvancedSettings()
         {
-            return new CompleteMtlsPassthroughToOriginAdvancedSettings(default, default);
+            return new CompleteMtlsPassthroughToOriginAdvancedSettings(MtlsScenarioType.CompleteMtlsPassthroughToOrigin, default);
         }
 
         /// <summary> The JSON object that contains the properties to validate a domain. </summary>
