@@ -12,22 +12,22 @@ using Azure.ResourceManager.CommonTypes.Models;
 namespace Azure.ResourceManager.OperationTemplates.Models
 {
     /// <summary> The check availability result. </summary>
-    public partial class CheckNameAvailabilityResponse
+    public partial class CheckNameAvailabilityResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityResponse"/>. </summary>
-        internal CheckNameAvailabilityResponse()
+        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityResult"/>. </summary>
+        internal CheckNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityResult"/>. </summary>
         /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is not available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CheckNameAvailabilityResponse(bool? nameAvailable, CheckNameAvailabilityReason? reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CheckNameAvailabilityResult(bool? nameAvailable, CheckNameAvailabilityReason? reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NameAvailable = nameAvailable;
             Reason = reason;
