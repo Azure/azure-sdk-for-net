@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceNetworkingPrivateLinkResourceData, ServiceNetworkingPrivateLinkResource>(new PrivateLinkResourcesInterfaceGetByTrafficControllerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ServiceNetworkingPrivateLinkResourceData, ServiceNetworkingPrivateLinkResource>(new ServiceNetworkingPrivateLinkResourceDataAsyncCollectionResultOfT(
                 _privateLinkResourcesInterfaceRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceNetworkingPrivateLinkResourceData, ServiceNetworkingPrivateLinkResource>(new PrivateLinkResourcesInterfaceGetByTrafficControllerCollectionResultOfT(
+            return new PageableWrapper<ServiceNetworkingPrivateLinkResourceData, ServiceNetworkingPrivateLinkResource>(new ServiceNetworkingPrivateLinkResourceDataCollectionResultOfT(
                 _privateLinkResourcesInterfaceRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -15,6 +15,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -654,7 +655,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlServerTrustGroupData, SqlServerTrustGroupResource>(new ServerTrustGroupsGetSqlServerTrustGroupsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SqlServerTrustGroupData, SqlServerTrustGroupResource>(new SqlServerTrustGroupDataAsync0CollectionResultOfT(
                 _serverTrustGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -692,7 +693,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlServerTrustGroupData, SqlServerTrustGroupResource>(new ServerTrustGroupsGetSqlServerTrustGroupsCollectionResultOfT(
+            return new PageableWrapper<SqlServerTrustGroupData, SqlServerTrustGroupResource>(new SqlServerTrustGroupData0CollectionResultOfT(
                 _serverTrustGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -737,7 +738,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedInstancesGetTopQueriesAsyncCollectionResultOfT(
+            return new TopQueriesAsyncCollectionResultOfT(
                 _managedInstancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -789,7 +790,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedInstancesGetTopQueriesCollectionResultOfT(
+            return new TopQueriesCollectionResultOfT(
                 _managedInstancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -834,7 +835,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedDatabaseData, ManagedDatabaseResource>(new ManagedDatabasesGetInaccessibleManagedDatabasesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ManagedDatabaseData, ManagedDatabaseResource>(new ManagedDatabaseDataAsync0CollectionResultOfT(
                 _managedDatabasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -872,7 +873,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedDatabaseData, ManagedDatabaseResource>(new ManagedDatabasesGetInaccessibleManagedDatabasesCollectionResultOfT(
+            return new PageableWrapper<ManagedDatabaseData, ManagedDatabaseResource>(new ManagedDatabaseData0CollectionResultOfT(
                 _managedDatabasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -910,7 +911,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedInstancesGetOutboundNetworkDependenciesAsyncCollectionResultOfT(
+            return new SqlOutboundEnvironmentEndpointAsyncCollectionResultOfT(
                 _managedInstancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -948,7 +949,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedInstancesGetOutboundNetworkDependenciesCollectionResultOfT(
+            return new SqlOutboundEnvironmentEndpointCollectionResultOfT(
                 _managedInstancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1601,10 +1602,9 @@ namespace Azure.ResourceManager.Sql
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -1644,10 +1644,9 @@ namespace Azure.ResourceManager.Sql
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

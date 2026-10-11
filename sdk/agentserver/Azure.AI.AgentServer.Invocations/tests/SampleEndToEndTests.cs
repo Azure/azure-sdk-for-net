@@ -1904,6 +1904,7 @@ public partial class SampleEndToEndTests
         var env = await CreateTestServerAsync<Snippets.SampleResilientResearchSnippets.ResilientResearchHandler>(
             services =>
             {
+                services.SetResilientTasksEnabled();
                 services.AddSingleton(model);
 
                 // In-memory replay with a TTL so retained streams are reclaimed.
@@ -1936,6 +1937,7 @@ public partial class SampleEndToEndTests
             Snippets.SampleResilientResearchSnippets.ResilientResearchHandler>(
             services =>
             {
+                services.SetResilientTasksEnabled();
                 services.AddAgentEventStreams(o => o.UseInMemoryReplay(
                     ttl: TimeSpan.FromMinutes(5)));
                 services.AddResilientMultiTurnTask<
@@ -2111,6 +2113,7 @@ public partial class SampleEndToEndTests
         return await CreateTestServerAsync<Snippets.SampleResilientMultiturnSnippets.ResilientMultiturnHandler>(
             services =>
             {
+                services.SetResilientTasksEnabled();
                 services.AddResilientMultiTurnTask<Snippets.SampleResilientMultiturnSnippets.ConversationInput,
                                       Snippets.SampleResilientMultiturnSnippets.ConversationOutput>(
                         "conversation",

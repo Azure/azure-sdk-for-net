@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppService.SreAgent.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SreAgentData, SreAgentResource>(new AgentsGetBySubscriptionAsyncCollectionResultOfT(AgentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSreAgentSubscriptionResource.GetSreAgents"), data => new SreAgentResource(Client, data));
+            return new AsyncPageableWrapper<SreAgentData, SreAgentResource>(new SreAgentDataAsync0CollectionResultOfT(AgentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSreAgentSubscriptionResource.GetSreAgents"), data => new SreAgentResource(Client, data));
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService.SreAgent.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SreAgentData, SreAgentResource>(new AgentsGetBySubscriptionCollectionResultOfT(AgentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSreAgentSubscriptionResource.GetSreAgents"), data => new SreAgentResource(Client, data));
+            return new PageableWrapper<SreAgentData, SreAgentResource>(new SreAgentData0CollectionResultOfT(AgentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSreAgentSubscriptionResource.GetSreAgents"), data => new SreAgentResource(Client, data));
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService.SreAgent.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AgentSpaceData, AgentSpaceResource>(new AgentSpacesGetBySubscriptionAsyncCollectionResultOfT(AgentSpacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSreAgentSubscriptionResource.GetAgentSpaces"), data => new AgentSpaceResource(Client, data));
+            return new AsyncPageableWrapper<AgentSpaceData, AgentSpaceResource>(new AgentSpaceDataAsync0CollectionResultOfT(AgentSpacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSreAgentSubscriptionResource.GetAgentSpaces"), data => new AgentSpaceResource(Client, data));
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService.SreAgent.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AgentSpaceData, AgentSpaceResource>(new AgentSpacesGetBySubscriptionCollectionResultOfT(AgentSpacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSreAgentSubscriptionResource.GetAgentSpaces"), data => new AgentSpaceResource(Client, data));
+            return new PageableWrapper<AgentSpaceData, AgentSpaceResource>(new AgentSpaceData0CollectionResultOfT(AgentSpacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSreAgentSubscriptionResource.GetAgentSpaces"), data => new AgentSpaceResource(Client, data));
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.AppService.SreAgent.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SupportedAgentModelsGetByLocationAsyncCollectionResultOfT(SupportedAgentModelsRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableAppServiceSreAgentSubscriptionResource.GetByLocation");
+            return new SupportedAgentModelAsyncCollectionResultOfT(SupportedAgentModelsRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableAppServiceSreAgentSubscriptionResource.GetByLocation");
         }
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.AppService.SreAgent.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SupportedAgentModelsGetByLocationCollectionResultOfT(SupportedAgentModelsRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableAppServiceSreAgentSubscriptionResource.GetByLocation");
+            return new SupportedAgentModelCollectionResultOfT(SupportedAgentModelsRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableAppServiceSreAgentSubscriptionResource.GetByLocation");
         }
     }
 }

@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeletedServerData, DeletedServerResource>(new DeletedServersGetByLocationAsyncCollectionResultOfT(_deletedServersRestClient, Guid.Parse(Id.SubscriptionId), _locationName, context, "DeletedServerCollection.GetAll"), data => new DeletedServerResource(Client, data));
+            return new AsyncPageableWrapper<DeletedServerData, DeletedServerResource>(new DeletedServerDataAsyncCollectionResultOfT(_deletedServersRestClient, Guid.Parse(Id.SubscriptionId), _locationName, context, "DeletedServerCollection.GetAll"), data => new DeletedServerResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeletedServerData, DeletedServerResource>(new DeletedServersGetByLocationCollectionResultOfT(_deletedServersRestClient, Guid.Parse(Id.SubscriptionId), _locationName, context, "DeletedServerCollection.GetAll"), data => new DeletedServerResource(Client, data));
+            return new PageableWrapper<DeletedServerData, DeletedServerResource>(new DeletedServerDataCollectionResultOfT(_deletedServersRestClient, Guid.Parse(Id.SubscriptionId), _locationName, context, "DeletedServerCollection.GetAll"), data => new DeletedServerResource(Client, data));
         }
 
         /// <summary>

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.TrafficManager
         {
             TryGetApiVersion(ResourceType, out string externalEndpointTrafficManagerEndpointApiVersion);
             _endpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TrafficManager", ResourceType.Namespace, Diagnostics);
-            _endpointsRestClient = new Endpoints(_endpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, externalEndpointTrafficManagerEndpointApiVersion ?? "2024-04-01-preview");
+            _endpointsRestClient = new Endpoints(_endpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, externalEndpointTrafficManagerEndpointApiVersion ?? "2026-09-01");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

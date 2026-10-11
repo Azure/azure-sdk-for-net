@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             return new UnknownHealthModelSignalDefinitionProperties(
                 provisioningState,
                 displayName,
-                default,
+                signalKind is null ? default : new EntitySignalKind(signalKind),
                 refreshInterval,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 dataUnit,
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             return new ResourceMetricSignalDefinitionProperties(
                 provisioningState,
                 displayName,
-                default,
+                EntitySignalKind.AzureResourceMetric,
                 refreshInterval,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 dataUnit,
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             return new LogAnalyticsQuerySignalDefinitionProperties(
                 provisioningState,
                 displayName,
-                default,
+                EntitySignalKind.LogAnalyticsQuery,
                 refreshInterval,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 dataUnit,
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             return new PrometheusMetricsSignalDefinitionProperties(
                 provisioningState,
                 displayName,
-                default,
+                EntitySignalKind.PrometheusMetricsQuery,
                 refreshInterval,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 dataUnit,
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <returns> A new <see cref="Models.HealthModelAuthenticationSettingProperties"/> instance for mocking. </returns>
         public static HealthModelAuthenticationSettingProperties HealthModelAuthenticationSettingProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, string authenticationKind = default)
         {
-            return new UnknownHealthModelAuthenticationSettingProperties(provisioningState, displayName, default, default);
+            return new UnknownHealthModelAuthenticationSettingProperties(provisioningState, displayName, authenticationKind is null ? default : new HealthModelAuthenticationKind(authenticationKind), default);
         }
 
         /// <summary> Authentication setting properties for Azure Managed Identity. </summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <returns> A new <see cref="Models.ManagedIdentityAuthenticationSettingProperties"/> instance for mocking. </returns>
         public static ManagedIdentityAuthenticationSettingProperties ManagedIdentityAuthenticationSettingProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, string managedIdentityName = default)
         {
-            return new ManagedIdentityAuthenticationSettingProperties(provisioningState, displayName, default, default, managedIdentityName);
+            return new ManagedIdentityAuthenticationSettingProperties(provisioningState, displayName, HealthModelAuthenticationKind.ManagedIdentity, default, managedIdentityName);
         }
 
         /// <summary> An entity (aka node) of a health model. </summary>
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public static ResourceSignal ResourceSignal(string name = default, string signalDefinitionName = default, SignalStatus status = default, string metricNamespace = default, string metricName = default, string timeGrain = default, MetricAggregationType? aggregationType = default, string dimensionFilter = default, string displayName = default, EntitySignalRefreshInterval? refreshInterval = default, string dataUnit = default, EntitySignalEvaluationRule evaluationRules = default)
         {
             return new ResourceSignal(
-                default,
+                EntitySignalKind.AzureResourceMetric,
                 name,
                 signalDefinitionName,
                 status,
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <returns> A new <see cref="Models.SignalInstanceProperties"/> instance for mocking. </returns>
         public static SignalInstanceProperties SignalInstanceProperties(string signalKind = default, string name = default, string signalDefinitionName = default, SignalStatus status = default)
         {
-            return new UnknownSignalInstanceProperties(default, name, signalDefinitionName, status, default);
+            return new UnknownSignalInstanceProperties(signalKind is null ? default : new EntitySignalKind(signalKind), name, signalDefinitionName, status, default);
         }
 
         /// <summary> Status of a signal. </summary>
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public static LogAnalyticsSignal LogAnalyticsSignal(string name = default, string signalDefinitionName = default, SignalStatus status = default, string queryText = default, string timeGrain = default, string valueColumnName = default, string displayName = default, EntitySignalRefreshInterval? refreshInterval = default, string dataUnit = default, EntitySignalEvaluationRule evaluationRules = default)
         {
             return new LogAnalyticsSignal(
-                default,
+                EntitySignalKind.LogAnalyticsQuery,
                 name,
                 signalDefinitionName,
                 status,
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public static PrometheusMetricsSignal PrometheusMetricsSignal(string name = default, string signalDefinitionName = default, SignalStatus status = default, string queryText = default, string timeGrain = default, string displayName = default, EntitySignalRefreshInterval? refreshInterval = default, string dataUnit = default, EntitySignalEvaluationRule evaluationRules = default)
         {
             return new PrometheusMetricsSignal(
-                default,
+                EntitySignalKind.PrometheusMetricsQuery,
                 name,
                 signalDefinitionName,
                 status,
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public static ExternalSignal ExternalSignal(string name = default, string signalDefinitionName = default, SignalStatus status = default, EntitySignalEvaluationRule evaluationRules = default)
         {
             return new ExternalSignal(
-                default,
+                EntitySignalKind.ExternalSignal,
                 name,
                 signalDefinitionName,
                 status,
@@ -910,7 +910,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <returns> A new <see cref="Models.DiscoveryRuleSpecification"/> instance for mocking. </returns>
         public static DiscoveryRuleSpecification DiscoveryRuleSpecification(string kind = default)
         {
-            return new UnknownDiscoveryRuleSpecification(default, default);
+            return new UnknownDiscoveryRuleSpecification(kind is null ? default : new DiscoveryRuleKind(kind), default);
         }
 
         /// <summary> Discovery rule specification for an Azure Resource Graph query. </summary>
@@ -918,7 +918,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <returns> A new <see cref="Models.ResourceGraphQuerySpecification"/> instance for mocking. </returns>
         public static ResourceGraphQuerySpecification ResourceGraphQuerySpecification(string resourceGraphQuery = default)
         {
-            return new ResourceGraphQuerySpecification(default, default, resourceGraphQuery);
+            return new ResourceGraphQuerySpecification(DiscoveryRuleKind.ResourceGraphQuery, default, resourceGraphQuery);
         }
 
         /// <summary> Discovery rule specification for an Application Insights topology query. </summary>
@@ -926,7 +926,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <returns> A new <see cref="Models.ApplicationInsightsTopologySpecification"/> instance for mocking. </returns>
         public static ApplicationInsightsTopologySpecification ApplicationInsightsTopologySpecification(ResourceIdentifier applicationInsightsResourceId = default)
         {
-            return new ApplicationInsightsTopologySpecification(default, default, applicationInsightsResourceId);
+            return new ApplicationInsightsTopologySpecification(DiscoveryRuleKind.ApplicationInsightsTopology, default, applicationInsightsResourceId);
         }
 
         /// <summary> Error details for a failed discovery operation. </summary>

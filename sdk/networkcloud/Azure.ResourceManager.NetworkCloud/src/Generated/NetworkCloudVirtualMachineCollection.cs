@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudVirtualMachineData, NetworkCloudVirtualMachineResource>(new VirtualMachinesGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkCloudVirtualMachineData, NetworkCloudVirtualMachineResource>(new NetworkCloudVirtualMachineDataAsyncCollectionResultOfT(
                 _virtualMachinesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudVirtualMachineData, NetworkCloudVirtualMachineResource>(new VirtualMachinesGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<NetworkCloudVirtualMachineData, NetworkCloudVirtualMachineResource>(new NetworkCloudVirtualMachineDataCollectionResultOfT(
                 _virtualMachinesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

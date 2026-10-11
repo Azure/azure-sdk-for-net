@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppComplianceReportData, AppComplianceReportResource>(new ReportGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AppComplianceReportData, AppComplianceReportResource>(new AppComplianceReportDataAsyncCollectionResultOfT(
                 _reportRestClient,
                 skipToken,
                 maxCount,
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppComplianceReportData, AppComplianceReportResource>(new ReportGetAllCollectionResultOfT(
+            return new PageableWrapper<AppComplianceReportData, AppComplianceReportResource>(new AppComplianceReportDataCollectionResultOfT(
                 _reportRestClient,
                 skipToken,
                 maxCount,

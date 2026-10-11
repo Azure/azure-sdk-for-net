@@ -10,9 +10,10 @@ namespace Azure.AI.AgentServer.Responses.Internal.Resilience;
 /// Derives the stable conversation chain identifier
 /// (<c>derive_conversation_chain_id</c>, Spec 038).
 /// <para>
-/// The chain id (which equals the resilient <c>task_id</c>) is shared across every turn of one
-/// conversation chain and distinct across unrelated requests. It is a pure function of the
-/// persisted inputs so it reconstructs identically on cross-process recovery. Three cases:
+/// The public chain id is shared across every turn of one conversation chain and distinct across
+/// unrelated requests. It is a pure function of the persisted inputs so it reconstructs identically
+/// on cross-process recovery. Hosted physical task IDs may use a private session-incarnation scope
+/// while preserving this public identity. Three cases:
 /// </para>
 /// <list type="number">
 /// <item><description><c>conversation_id</c> present → <c>cchain_{partition}{scope}</c>.</description></item>

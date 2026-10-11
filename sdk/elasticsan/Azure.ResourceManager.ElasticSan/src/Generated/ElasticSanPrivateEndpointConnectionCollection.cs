@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ElasticSanPrivateEndpointConnectionData, ElasticSanPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ElasticSanPrivateEndpointConnectionData, ElasticSanPrivateEndpointConnectionResource>(new ElasticSanPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ElasticSanPrivateEndpointConnectionData, ElasticSanPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllCollectionResultOfT(
+            return new PageableWrapper<ElasticSanPrivateEndpointConnectionData, ElasticSanPrivateEndpointConnectionResource>(new ElasticSanPrivateEndpointConnectionDataCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

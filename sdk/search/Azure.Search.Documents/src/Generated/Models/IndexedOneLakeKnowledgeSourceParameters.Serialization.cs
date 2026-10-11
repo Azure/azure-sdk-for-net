@@ -84,10 +84,17 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(FabricWorkspaceId);
             writer.WritePropertyName("lakehouseId"u8);
             writer.WriteStringValue(LakehouseId);
-            if (Optional.IsDefined(TargetPath))
+            if (_targetPathIsDefined || Optional.IsDefined(TargetPath))
             {
-                writer.WritePropertyName("targetPath"u8);
-                writer.WriteStringValue(TargetPath);
+                if (TargetPath != null)
+                {
+                    writer.WritePropertyName("targetPath"u8);
+                    writer.WriteStringValue(TargetPath);
+                }
+                else
+                {
+                    writer.WriteNull("targetPath"u8);
+                }
             }
             if (Optional.IsDefined(IngestionParameters))
             {
@@ -148,6 +155,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string fabricWorkspaceId = default;
             string lakehouseId = default;
+            bool targetPathIsDefined = false;
             string targetPath = default;
             KnowledgeSourceIngestionParameters ingestionParameters = default;
             SearchIndexKnowledgeSourceQueryHints queryHints = default;
@@ -167,6 +175,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("targetPath"u8))
                 {
+                    targetPathIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         targetPath = null;
@@ -214,7 +223,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 ingestionParameters,
                 queryHints,
                 createdResources,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _targetPathIsDefined = targetPathIsDefined
+            };
         }
     }
 }

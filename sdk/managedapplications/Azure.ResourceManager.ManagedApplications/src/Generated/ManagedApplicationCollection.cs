@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ManagedApplications
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedApplicationData, ManagedApplicationResource>(new ApplicationsGetByResourceGroupAsyncCollectionResultOfT(_applicationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ManagedApplicationCollection.GetAll"), data => new ManagedApplicationResource(Client, data));
+            return new AsyncPageableWrapper<ManagedApplicationData, ManagedApplicationResource>(new ManagedApplicationDataAsyncCollectionResultOfT(_applicationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ManagedApplicationCollection.GetAll"), data => new ManagedApplicationResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ManagedApplications
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedApplicationData, ManagedApplicationResource>(new ApplicationsGetByResourceGroupCollectionResultOfT(_applicationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ManagedApplicationCollection.GetAll"), data => new ManagedApplicationResource(Client, data));
+            return new PageableWrapper<ManagedApplicationData, ManagedApplicationResource>(new ManagedApplicationDataCollectionResultOfT(_applicationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ManagedApplicationCollection.GetAll"), data => new ManagedApplicationResource(Client, data));
         }
 
         /// <summary>

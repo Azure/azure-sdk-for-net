@@ -15,6 +15,9 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> A skill that calls a language model via Azure AI Foundry's Chat Completions endpoint. </summary>
     public partial class ChatCompletionSkill : SearchIndexerSkill
     {
+        private SearchIndexerDataIdentity _authIdentity;
+        internal bool _authIdentityIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="ChatCompletionSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
@@ -48,7 +51,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal ChatCompletionSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri uri, SearchIndexerDataIdentity authIdentity, string apiKey, ChatCompletionCommonModelParameters commonModelParameters, IDictionary<string, BinaryData> extraParameters, ChatCompletionExtraParametersBehavior? extraParametersBehavior, ChatCompletionResponseFormat responseFormat) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
             Uri = uri;
-            AuthIdentity = authIdentity;
+            _authIdentity = authIdentity;
             ApiKey = apiKey;
             CommonModelParameters = commonModelParameters;
             ExtraParameters = extraParameters;
@@ -60,7 +63,18 @@ namespace Azure.Search.Documents.Indexes.Models
         public Uri Uri { get; set; }
 
         /// <summary> The user-assigned managed identity used for outbound connections. If an authResourceId is provided and it's not specified, the system-assigned managed identity is used. On updates to the indexer, if the identity is unspecified, the value remains unchanged. If set to "none", the value of this property is cleared. </summary>
-        public SearchIndexerDataIdentity AuthIdentity { get; set; }
+        public SearchIndexerDataIdentity AuthIdentity
+        {
+            get
+            {
+                return _authIdentity;
+            }
+            set
+            {
+                _authIdentity = value;
+                _authIdentityIsDefined = true;
+            }
+        }
 
         /// <summary> API key for authenticating to the model. Both apiKey and authIdentity cannot be specified at the same time. </summary>
         public string ApiKey { get; set; }

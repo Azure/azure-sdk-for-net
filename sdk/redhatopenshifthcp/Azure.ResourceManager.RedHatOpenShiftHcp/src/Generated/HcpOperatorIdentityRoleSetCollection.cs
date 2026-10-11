@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HcpOperatorIdentityRoleSetData, HcpOperatorIdentityRoleSetResource>(new HcpOperatorIdentityRoleSetsGetAllAsyncCollectionResultOfT(_hcpOperatorIdentityRoleSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "HcpOperatorIdentityRoleSetCollection.GetAll"), data => new HcpOperatorIdentityRoleSetResource(Client, data));
+            return new AsyncPageableWrapper<HcpOperatorIdentityRoleSetData, HcpOperatorIdentityRoleSetResource>(new HcpOperatorIdentityRoleSetDataAsyncCollectionResultOfT(_hcpOperatorIdentityRoleSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "HcpOperatorIdentityRoleSetCollection.GetAll"), data => new HcpOperatorIdentityRoleSetResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HcpOperatorIdentityRoleSetData, HcpOperatorIdentityRoleSetResource>(new HcpOperatorIdentityRoleSetsGetAllCollectionResultOfT(_hcpOperatorIdentityRoleSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "HcpOperatorIdentityRoleSetCollection.GetAll"), data => new HcpOperatorIdentityRoleSetResource(Client, data));
+            return new PageableWrapper<HcpOperatorIdentityRoleSetData, HcpOperatorIdentityRoleSetResource>(new HcpOperatorIdentityRoleSetDataCollectionResultOfT(_hcpOperatorIdentityRoleSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "HcpOperatorIdentityRoleSetCollection.GetAll"), data => new HcpOperatorIdentityRoleSetResource(Client, data));
         }
 
         /// <summary>

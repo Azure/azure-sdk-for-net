@@ -128,7 +128,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
                 switch (prop.Value.ValueKind)
                 {
                     case JsonValueKind.String:
-                        additionalProperties.Add(prop.Name, prop.Value.GetString());
+                        additionalProperties[prop.Name] = prop.Value.GetString();
                         continue;
                 }
                 if (options.Format != "W")

@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<InterconnectGroupSubgroupData, InterconnectGroupSubgroupResource>(new SubgroupsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<InterconnectGroupSubgroupData, InterconnectGroupSubgroupResource>(new InterconnectGroupSubgroupDataAsyncCollectionResultOfT(
                 _subgroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<InterconnectGroupSubgroupData, InterconnectGroupSubgroupResource>(new SubgroupsGetAllCollectionResultOfT(
+            return new PageableWrapper<InterconnectGroupSubgroupData, InterconnectGroupSubgroupResource>(new InterconnectGroupSubgroupDataCollectionResultOfT(
                 _subgroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Responses.Internal;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -98,6 +99,16 @@ public static class ResponsesServerEndpointRouteBuilderExtensions
         if (options is null || (!options.ResilientBackground && !options.SteerableConversations))
         {
             return;
+        }
+
+        bool resilientTasksEnabled = services
+            .GetRequiredService<Microsoft.Extensions.Options.IOptions<ResilientTaskOptions>>()
+            .Value.Enabled;
+        if (!resilientTasksEnabled)
+        {
+            throw new InvalidOperationException(
+                "ResilientBackground/SteerableConversations requires the Core resilient-task runtime. " +
+                "Enable ResilientBackground or call SetResilientTasksEnabled() before host startup.");
         }
 
         if (options.ResilientBackground)

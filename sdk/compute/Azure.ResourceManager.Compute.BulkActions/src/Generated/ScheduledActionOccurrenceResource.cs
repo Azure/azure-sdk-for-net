@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             {
                 CancellationToken = cancellationToken
             };
-            return new OccurrencesGetResourcesAsyncCollectionResultOfT(
+            return new OccurrenceResourceMetadataAsyncCollectionResultOfT(
                 _occurrencesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             {
                 CancellationToken = cancellationToken
             };
-            return new OccurrencesGetResourcesCollectionResultOfT(
+            return new OccurrenceResourceMetadataCollectionResultOfT(
                 _occurrencesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

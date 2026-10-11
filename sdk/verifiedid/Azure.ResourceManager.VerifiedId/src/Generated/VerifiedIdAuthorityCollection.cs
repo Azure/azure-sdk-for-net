@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.VerifiedId
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VerifiedIdAuthorityData, VerifiedIdAuthorityResource>(new AuthoritiesGetByResourceGroupAsyncCollectionResultOfT(_authoritiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VerifiedIdAuthorityCollection.GetAll"), data => new VerifiedIdAuthorityResource(Client, data));
+            return new AsyncPageableWrapper<VerifiedIdAuthorityData, VerifiedIdAuthorityResource>(new VerifiedIdAuthorityDataAsyncCollectionResultOfT(_authoritiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VerifiedIdAuthorityCollection.GetAll"), data => new VerifiedIdAuthorityResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.VerifiedId
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VerifiedIdAuthorityData, VerifiedIdAuthorityResource>(new AuthoritiesGetByResourceGroupCollectionResultOfT(_authoritiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VerifiedIdAuthorityCollection.GetAll"), data => new VerifiedIdAuthorityResource(Client, data));
+            return new PageableWrapper<VerifiedIdAuthorityData, VerifiedIdAuthorityResource>(new VerifiedIdAuthorityDataCollectionResultOfT(_authoritiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VerifiedIdAuthorityCollection.GetAll"), data => new VerifiedIdAuthorityResource(Client, data));
         }
 
         /// <summary>

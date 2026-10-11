@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Automation.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutomationAccountData, AutomationAccountResource>(new AutomationAccountGetAllAsyncCollectionResultOfT(AutomationAccountRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAutomationSubscriptionResource.GetAutomationAccounts"), data => new AutomationAccountResource(Client, data));
+            return new AsyncPageableWrapper<AutomationAccountData, AutomationAccountResource>(new AutomationAccountDataAsync0CollectionResultOfT(AutomationAccountRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAutomationSubscriptionResource.GetAutomationAccounts"), data => new AutomationAccountResource(Client, data));
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Automation.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutomationAccountData, AutomationAccountResource>(new AutomationAccountGetAllCollectionResultOfT(AutomationAccountRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAutomationSubscriptionResource.GetAutomationAccounts"), data => new AutomationAccountResource(Client, data));
+            return new PageableWrapper<AutomationAccountData, AutomationAccountResource>(new AutomationAccountData0CollectionResultOfT(AutomationAccountRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAutomationSubscriptionResource.GetAutomationAccounts"), data => new AutomationAccountResource(Client, data));
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Automation.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DeletedAutomationAccountsGetDeletedAutomationAccountsBySubscriptionAsyncCollectionResultOfT(DeletedAutomationAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAutomationSubscriptionResource.GetDeletedAutomationAccountsBySubscription");
+            return new DeletedAutomationAccountAsyncCollectionResultOfT(DeletedAutomationAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAutomationSubscriptionResource.GetDeletedAutomationAccountsBySubscription");
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Automation.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DeletedAutomationAccountsGetDeletedAutomationAccountsBySubscriptionCollectionResultOfT(DeletedAutomationAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAutomationSubscriptionResource.GetDeletedAutomationAccountsBySubscription");
+            return new DeletedAutomationAccountCollectionResultOfT(DeletedAutomationAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAutomationSubscriptionResource.GetDeletedAutomationAccountsBySubscription");
         }
     }
 }

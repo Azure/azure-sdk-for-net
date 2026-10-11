@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 configurationGroupSchemaName,
                 configurationGroupSchemaOfferingLocation,
                 configurationGroupSchemaResourceReference,
-                default,
+                configurationType is null ? default : new ConfigurationGroupValueConfigurationType(configurationType),
                 default);
         }
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.DeploymentResourceIdReference"/> instance for mocking. </returns>
         public static DeploymentResourceIdReference DeploymentResourceIdReference(string idType = default)
         {
-            return new UnknownDeploymentResourceIdReference(default, default);
+            return new UnknownDeploymentResourceIdReference(idType is null ? default : new IdType(idType), default);
         }
 
         /// <summary> Secret deployment resource id reference. </summary>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.SecretDeploymentResourceReference"/> instance for mocking. </returns>
         public static SecretDeploymentResourceReference SecretDeploymentResourceReference(ResourceIdentifier id = default)
         {
-            return new SecretDeploymentResourceReference(default, default, id);
+            return new SecretDeploymentResourceReference(IdType.Secret, default, id);
         }
 
         /// <summary> Non secret deployment resource id reference. </summary>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.OpenDeploymentResourceReference"/> instance for mocking. </returns>
         public static OpenDeploymentResourceReference OpenDeploymentResourceReference(ResourceIdentifier id = default)
         {
-            return new OpenDeploymentResourceReference(default, default, id);
+            return new OpenDeploymentResourceReference(IdType.Open, default, id);
         }
 
         /// <summary> The ConfigurationValue with secrets. </summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 configurationGroupSchemaName,
                 configurationGroupSchemaOfferingLocation,
                 configurationGroupSchemaResourceReference,
-                default,
+                ConfigurationGroupValueConfigurationType.Secret,
                 default,
                 secretConfigurationValue);
         }
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 configurationGroupSchemaName,
                 configurationGroupSchemaOfferingLocation,
                 configurationGroupSchemaResourceReference,
-                default,
+                ConfigurationGroupValueConfigurationType.Open,
                 default,
                 configurationValue);
         }
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 nfviType,
                 nfviId,
                 allowSoftwareUpdate,
-                default,
+                configurationType is null ? default : new NetworkFunctionConfigurationType(configurationType),
                 (roleOverrideValues ?? new ChangeTrackingList<string>()).ToList(),
                 default);
         }
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 nfviType,
                 nfviId,
                 allowSoftwareUpdate,
-                default,
+                NetworkFunctionConfigurationType.Secret,
                 (roleOverrideValues ?? new ChangeTrackingList<string>()).ToList(),
                 default,
                 secretDeploymentValues);
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 nfviType,
                 nfviId,
                 allowSoftwareUpdate,
-                default,
+                NetworkFunctionConfigurationType.Open,
                 (roleOverrideValues ?? new ChangeTrackingList<string>()).ToList(),
                 default,
                 deploymentValues);
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 versionState,
                 description,
                 deployParameters,
-                default,
+                networkFunctionType is null ? default : new NetworkFunctionType(networkFunctionType),
                 default);
         }
 
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 versionState,
                 description,
                 deployParameters,
-                default,
+                NetworkFunctionType.ContainerizedNetworkFunction,
                 default,
                 networkFunctionTemplate);
         }
@@ -670,7 +670,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.ContainerizedNetworkFunctionTemplate"/> instance for mocking. </returns>
         public static ContainerizedNetworkFunctionTemplate ContainerizedNetworkFunctionTemplate(string nfviType = default)
         {
-            return new UnknownContainerizedNetworkFunctionTemplate(default, default);
+            return new UnknownContainerizedNetworkFunctionTemplate(nfviType is null ? default : new ContainerizedNetworkFunctionNfviType(nfviType), default);
         }
 
         /// <summary> Azure Arc kubernetes network function template. </summary>
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
             networkFunctionApplications ??= new ChangeTrackingList<AzureArcKubernetesNetworkFunctionApplication>();
 
-            return new AzureArcKubernetesNetworkFunctionTemplate(default, default, (networkFunctionApplications ?? new ChangeTrackingList<AzureArcKubernetesNetworkFunctionApplication>()).ToList());
+            return new AzureArcKubernetesNetworkFunctionTemplate(ContainerizedNetworkFunctionNfviType.AzureArcKubernetes, default, (networkFunctionApplications ?? new ChangeTrackingList<AzureArcKubernetesNetworkFunctionApplication>()).ToList());
         }
 
         /// <summary>
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.AzureArcKubernetesNetworkFunctionApplication"/> instance for mocking. </returns>
         public static AzureArcKubernetesNetworkFunctionApplication AzureArcKubernetesNetworkFunctionApplication(string name = default, DependsOnProfile dependsOnProfile = default, string artifactType = default)
         {
-            return new UnknownAzureArcKubernetesNetworkFunctionApplication(name, dependsOnProfile, default, default);
+            return new UnknownAzureArcKubernetesNetworkFunctionApplication(name, dependsOnProfile, default, artifactType is null ? default : new AzureArcKubernetesArtifactType(artifactType));
         }
 
         /// <summary> Network function application definition. </summary>
@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 name,
                 dependsOnProfile,
                 default,
-                default,
+                AzureArcKubernetesArtifactType.HelmPackage,
                 artifactProfile,
                 deployParametersMappingRuleProfile);
         }
@@ -851,7 +851,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 versionState,
                 description,
                 deployParameters,
-                default,
+                NetworkFunctionType.VirtualNetworkFunction,
                 default,
                 networkFunctionTemplate);
         }
@@ -864,7 +864,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.VirtualNetworkFunctionTemplate"/> instance for mocking. </returns>
         public static VirtualNetworkFunctionTemplate VirtualNetworkFunctionTemplate(string nfviType = default)
         {
-            return new UnknownVirtualNetworkFunctionTemplate(default, default);
+            return new UnknownVirtualNetworkFunctionTemplate(nfviType is null ? default : new VirtualNetworkFunctionNfviType(nfviType), default);
         }
 
         /// <summary> Azure virtual network function template. </summary>
@@ -874,7 +874,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
             networkFunctionApplications ??= new ChangeTrackingList<AzureCoreNetworkFunctionApplication>();
 
-            return new AzureCoreNetworkFunctionTemplate(default, default, (networkFunctionApplications ?? new ChangeTrackingList<AzureCoreNetworkFunctionApplication>()).ToList());
+            return new AzureCoreNetworkFunctionTemplate(VirtualNetworkFunctionNfviType.AzureCore, default, (networkFunctionApplications ?? new ChangeTrackingList<AzureCoreNetworkFunctionApplication>()).ToList());
         }
 
         /// <summary>
@@ -887,7 +887,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.AzureCoreNetworkFunctionApplication"/> instance for mocking. </returns>
         public static AzureCoreNetworkFunctionApplication AzureCoreNetworkFunctionApplication(string name = default, DependsOnProfile dependsOnProfile = default, string artifactType = default)
         {
-            return new UnknownAzureCoreNetworkFunctionApplication(name, dependsOnProfile, default, default);
+            return new UnknownAzureCoreNetworkFunctionApplication(name, dependsOnProfile, default, artifactType is null ? default : new AzureCoreArtifactType(artifactType));
         }
 
         /// <summary> Azure core network function vhd application definition. </summary>
@@ -902,7 +902,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 name,
                 dependsOnProfile,
                 default,
-                default,
+                AzureCoreArtifactType.VhdImageFile,
                 artifactProfile,
                 deployParametersMappingRuleProfile);
         }
@@ -944,7 +944,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 name,
                 dependsOnProfile,
                 default,
-                default,
+                AzureCoreArtifactType.ArmTemplate,
                 artifactProfile,
                 deployParametersMappingRuleProfile);
         }
@@ -981,7 +981,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
             networkFunctionApplications ??= new ChangeTrackingList<AzureOperatorNexusNetworkFunctionApplication>();
 
-            return new AzureOperatorNexusNetworkFunctionTemplate(default, default, (networkFunctionApplications ?? new ChangeTrackingList<AzureOperatorNexusNetworkFunctionApplication>()).ToList());
+            return new AzureOperatorNexusNetworkFunctionTemplate(VirtualNetworkFunctionNfviType.AzureOperatorNexus, default, (networkFunctionApplications ?? new ChangeTrackingList<AzureOperatorNexusNetworkFunctionApplication>()).ToList());
         }
 
         /// <summary>
@@ -994,7 +994,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.AzureOperatorNexusNetworkFunctionApplication"/> instance for mocking. </returns>
         public static AzureOperatorNexusNetworkFunctionApplication AzureOperatorNexusNetworkFunctionApplication(string name = default, DependsOnProfile dependsOnProfile = default, string artifactType = default)
         {
-            return new UnknownAzureOperatorNexusNetworkFunctionApplication(name, dependsOnProfile, default, default);
+            return new UnknownAzureOperatorNexusNetworkFunctionApplication(name, dependsOnProfile, default, artifactType is null ? default : new AzureOperatorNexusArtifactType(artifactType));
         }
 
         /// <summary> Azure Operator Distributed Services network function image application definition. </summary>
@@ -1009,7 +1009,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 name,
                 dependsOnProfile,
                 default,
-                default,
+                AzureOperatorNexusArtifactType.ImageFile,
                 artifactProfile,
                 deployParametersMappingRuleProfile);
         }
@@ -1051,7 +1051,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 name,
                 dependsOnProfile,
                 default,
-                default,
+                AzureOperatorNexusArtifactType.ArmTemplate,
                 artifactProfile,
                 deployParametersMappingRuleProfile);
         }
@@ -1180,7 +1180,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.ResourceElementTemplate"/> instance for mocking. </returns>
         public static ResourceElementTemplate ResourceElementTemplate(string name = default, string resourceElementType = default, DependsOnProfile dependsOnProfile = default)
         {
-            return new UnknownResourceElementTemplate(name, default, dependsOnProfile, default);
+            return new UnknownResourceElementTemplate(name, resourceElementType is null ? default : new Type(resourceElementType), dependsOnProfile, default);
         }
 
         /// <summary> The arm resource definition resource element template details. </summary>
@@ -1190,7 +1190,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.ArmResourceDefinitionResourceElementTemplateDetails"/> instance for mocking. </returns>
         public static ArmResourceDefinitionResourceElementTemplateDetails ArmResourceDefinitionResourceElementTemplateDetails(string name = default, DependsOnProfile dependsOnProfile = default, ArmResourceDefinitionResourceElementTemplate configuration = default)
         {
-            return new ArmResourceDefinitionResourceElementTemplateDetails(name, default, dependsOnProfile, default, configuration);
+            return new ArmResourceDefinitionResourceElementTemplateDetails(name, Type.ArmResourceDefinition, dependsOnProfile, default, configuration);
         }
 
         /// <summary> The arm template RE. </summary>
@@ -1219,7 +1219,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.NetworkFunctionDefinitionResourceElementTemplateDetails"/> instance for mocking. </returns>
         public static NetworkFunctionDefinitionResourceElementTemplateDetails NetworkFunctionDefinitionResourceElementTemplateDetails(string name = default, DependsOnProfile dependsOnProfile = default, ArmResourceDefinitionResourceElementTemplate configuration = default)
         {
-            return new NetworkFunctionDefinitionResourceElementTemplateDetails(name, default, dependsOnProfile, default, configuration);
+            return new NetworkFunctionDefinitionResourceElementTemplateDetails(name, Type.NetworkFunctionDefinition, dependsOnProfile, default, configuration);
         }
 
         /// <summary> Publisher network service design version update request definition. </summary>
@@ -1403,7 +1403,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.ArtifactAccessCredential"/> instance for mocking. </returns>
         public static ArtifactAccessCredential ArtifactAccessCredential(string credentialType = default)
         {
-            return new UnknownArtifactAccessCredential(default, default);
+            return new UnknownArtifactAccessCredential(credentialType is null ? default : new CredentialType(credentialType), default);
         }
 
         /// <summary> The azure container registry scoped token credential definition. </summary>
@@ -1418,7 +1418,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             repositories ??= new ChangeTrackingList<string>();
 
             return new AzureContainerRegistryScopedTokenCredential(
-                default,
+                CredentialType.AzureContainerRegistryScopedToken,
                 default,
                 username,
                 acrToken,
@@ -1436,7 +1436,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
             containerCredentials ??= new ChangeTrackingList<AzureStorageAccountContainerCredential>();
 
-            return new AzureStorageAccountCredential(default, default, storageAccountId, (containerCredentials ?? new ChangeTrackingList<AzureStorageAccountContainerCredential>()).ToList(), expiryOn);
+            return new AzureStorageAccountCredential(CredentialType.AzureStorageAccountToken, default, storageAccountId, (containerCredentials ?? new ChangeTrackingList<AzureStorageAccountContainerCredential>()).ToList(), expiryOn);
         }
 
         /// <summary> The azure storage account container credential definition. </summary>
@@ -1502,7 +1502,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.NfviDetails"/> instance for mocking. </returns>
         public static NfviDetails NfviDetails(string name = default, string nfviType = default)
         {
-            return new UnknownNfviDetails(name, default, default);
+            return new UnknownNfviDetails(name, nfviType is null ? default : new NfviType(nfviType), default);
         }
 
         /// <summary> The Azure Core NFVI detail. </summary>
@@ -1511,7 +1511,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.AzureCoreNfviDetails"/> instance for mocking. </returns>
         public static AzureCoreNfviDetails AzureCoreNfviDetails(string name = default, AzureLocation? location = default)
         {
-            return new AzureCoreNfviDetails(name, default, default, location);
+            return new AzureCoreNfviDetails(name, NfviType.AzureCore, default, location);
         }
 
         /// <param name="name"> Name of the nfvi. </param>
@@ -1519,7 +1519,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.AzureArcK8SClusterNfviDetails"/> instance for mocking. </returns>
         public static AzureArcK8SClusterNfviDetails AzureArcK8SClusterNfviDetails(string name = default, ResourceIdentifier customLocationReferenceId = default)
         {
-            return new AzureArcK8SClusterNfviDetails(name, default, default, customLocationReferenceId is null ? default : new ReferencedResourceById(customLocationReferenceId, default));
+            return new AzureArcK8SClusterNfviDetails(name, NfviType.AzureArcKubernetes, default, customLocationReferenceId is null ? default : new ReferencedResourceById(customLocationReferenceId, default));
         }
 
         /// <param name="name"> Name of the nfvi. </param>
@@ -1527,7 +1527,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.AzureOperatorNexusClusterNfviDetails"/> instance for mocking. </returns>
         public static AzureOperatorNexusClusterNfviDetails AzureOperatorNexusClusterNfviDetails(string name = default, ResourceIdentifier customLocationReferenceId = default)
         {
-            return new AzureOperatorNexusClusterNfviDetails(name, default, default, customLocationReferenceId is null ? default : new ReferencedResourceById(customLocationReferenceId, default));
+            return new AzureOperatorNexusClusterNfviDetails(name, NfviType.AzureOperatorNexus, default, customLocationReferenceId is null ? default : new ReferencedResourceById(customLocationReferenceId, default));
         }
 
         /// <summary> Site network service resource. </summary>

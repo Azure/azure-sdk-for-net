@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BlobContainerData, BlobContainerResource>(new BlobServicesListAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BlobContainerData, BlobContainerResource>(new BlobContainerDataAsyncCollectionResultOfT(
                 _blobServicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BlobContainerData, BlobContainerResource>(new BlobServicesListCollectionResultOfT(
+            return new PageableWrapper<BlobContainerData, BlobContainerResource>(new BlobContainerDataCollectionResultOfT(
                 _blobServicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProgrammableConnectivityGatewayData, ProgrammableConnectivityGatewayResource>(new GatewaysGetByResourceGroupAsyncCollectionResultOfT(_gatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ProgrammableConnectivityGatewayCollection.GetAll"), data => new ProgrammableConnectivityGatewayResource(Client, data));
+            return new AsyncPageableWrapper<ProgrammableConnectivityGatewayData, ProgrammableConnectivityGatewayResource>(new ProgrammableConnectivityGatewayDataAsyncCollectionResultOfT(_gatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ProgrammableConnectivityGatewayCollection.GetAll"), data => new ProgrammableConnectivityGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProgrammableConnectivityGatewayData, ProgrammableConnectivityGatewayResource>(new GatewaysGetByResourceGroupCollectionResultOfT(_gatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ProgrammableConnectivityGatewayCollection.GetAll"), data => new ProgrammableConnectivityGatewayResource(Client, data));
+            return new PageableWrapper<ProgrammableConnectivityGatewayData, ProgrammableConnectivityGatewayResource>(new ProgrammableConnectivityGatewayDataCollectionResultOfT(_gatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ProgrammableConnectivityGatewayCollection.GetAll"), data => new ProgrammableConnectivityGatewayResource(Client, data));
         }
 
         /// <summary>

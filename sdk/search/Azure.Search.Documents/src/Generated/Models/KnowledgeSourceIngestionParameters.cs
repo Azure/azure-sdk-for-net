@@ -17,6 +17,18 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private SearchIndexerDataIdentity _identity;
+        internal bool _identityIsDefined;
+        private KnowledgeSourceVectorizer _embeddingModel;
+        internal bool _embeddingModelIsDefined;
+        private KnowledgeBaseModel _chatCompletionModel;
+        internal bool _chatCompletionModelIsDefined;
+        private IndexingSchedule _ingestionSchedule;
+        internal bool _ingestionScheduleIsDefined;
+        private KnowledgeSourceContentExtractionMode? _contentExtractionMode;
+        internal bool _contentExtractionModeIsDefined;
+        private AIServices _aiServices;
+        internal bool _aiServicesIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceIngestionParameters"/>. </summary>
         public KnowledgeSourceIngestionParameters()
@@ -39,14 +51,14 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal KnowledgeSourceIngestionParameters(SearchIndexerDataIdentity identity, KnowledgeSourceVectorizer embeddingModel, KnowledgeBaseModel chatCompletionModel, bool? disableImageVerbalization, IndexingSchedule ingestionSchedule, IList<KnowledgeSourceIngestionPermissionOption> ingestionPermissionOptions, KnowledgeSourceContentExtractionMode? contentExtractionMode, AIServices aiServices, AssetStore assetStore, FreshnessPolicy freshnessPolicy, KnowledgeSourceNetworkAccessMode? networkAccessMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Identity = identity;
-            EmbeddingModel = embeddingModel;
-            ChatCompletionModel = chatCompletionModel;
+            _identity = identity;
+            _embeddingModel = embeddingModel;
+            _chatCompletionModel = chatCompletionModel;
             DisableImageVerbalization = disableImageVerbalization;
-            IngestionSchedule = ingestionSchedule;
+            _ingestionSchedule = ingestionSchedule;
             IngestionPermissionOptions = ingestionPermissionOptions;
-            ContentExtractionMode = contentExtractionMode;
-            AiServices = aiServices;
+            _contentExtractionMode = contentExtractionMode;
+            _aiServices = aiServices;
             AssetStore = assetStore;
             FreshnessPolicy = freshnessPolicy;
             NetworkAccessMode = networkAccessMode;
@@ -54,28 +66,94 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         }
 
         /// <summary> An explicit identity to use for this knowledge source. </summary>
-        public SearchIndexerDataIdentity Identity { get; set; }
+        public SearchIndexerDataIdentity Identity
+        {
+            get
+            {
+                return _identity;
+            }
+            set
+            {
+                _identity = value;
+                _identityIsDefined = true;
+            }
+        }
 
         /// <summary> Optional vectorizer configuration for vectorizing content. </summary>
-        public KnowledgeSourceVectorizer EmbeddingModel { get; set; }
+        public KnowledgeSourceVectorizer EmbeddingModel
+        {
+            get
+            {
+                return _embeddingModel;
+            }
+            set
+            {
+                _embeddingModel = value;
+                _embeddingModelIsDefined = true;
+            }
+        }
 
         /// <summary> Optional chat completion model for image verbalization or context extraction. </summary>
-        public KnowledgeBaseModel ChatCompletionModel { get; set; }
+        public KnowledgeBaseModel ChatCompletionModel
+        {
+            get
+            {
+                return _chatCompletionModel;
+            }
+            set
+            {
+                _chatCompletionModel = value;
+                _chatCompletionModelIsDefined = true;
+            }
+        }
 
         /// <summary> Indicates whether image verbalization should be disabled. Default is false. </summary>
         public bool? DisableImageVerbalization { get; set; }
 
         /// <summary> Optional schedule for data ingestion. </summary>
-        public IndexingSchedule IngestionSchedule { get; set; }
+        public IndexingSchedule IngestionSchedule
+        {
+            get
+            {
+                return _ingestionSchedule;
+            }
+            set
+            {
+                _ingestionSchedule = value;
+                _ingestionScheduleIsDefined = true;
+            }
+        }
 
         /// <summary> Optional list of permission types to ingest together with document content. If specified, it will set the indexer permission options for the data source. </summary>
         public IList<KnowledgeSourceIngestionPermissionOption> IngestionPermissionOptions { get; set; }
 
         /// <summary> Optional content extraction mode. Default is 'minimal'. </summary>
-        public KnowledgeSourceContentExtractionMode? ContentExtractionMode { get; set; }
+        public KnowledgeSourceContentExtractionMode? ContentExtractionMode
+        {
+            get
+            {
+                return _contentExtractionMode;
+            }
+            set
+            {
+                _contentExtractionMode = value;
+                _contentExtractionModeIsDefined = true;
+            }
+        }
 
         /// <summary> Optional AI Services configuration for content processing. </summary>
-        public AIServices AiServices { get; set; }
+        public AIServices AiServices
+        {
+            get
+            {
+                return _aiServices;
+            }
+            set
+            {
+                _aiServices = value;
+                _aiServicesIsDefined = true;
+            }
+        }
 
         /// <summary> Optional asset store configuration for storing extracted assets such as images. </summary>
         public AssetStore AssetStore { get; set; }

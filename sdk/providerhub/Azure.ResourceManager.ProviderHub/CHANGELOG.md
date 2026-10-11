@@ -1,14 +1,12 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0 (2026-10-06)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Regenerated from the relocated ProviderHub TypeSpec (`specification/providerhub/resource-manager/Microsoft.ProviderHub/ProviderHub`), targeting API version `2025-10-01`.
+- Added `ManifestInfo` and `OperationsPutContent` resources, along with the models supporting them.
+- Added `ApplicationDataAuthorization.IsApplicationIdExcludedFromManifest`, `ResourceTypeRegistrationProperties.IsSuperScaleEnabled` and the `LinkedAccessCheckOption` enum, all new in API version `2025-10-01`. Their .NET names come from `@@clientName` customizations in the specification so that they follow the [.NET naming guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html).
 
 ## 1.2.1 (2026-06-28)
 
@@ -68,7 +66,7 @@ Polishing since last public beta release:
 - Prepended `ProviderHub` / `Provider` prefix to all single / simple model names.
 - Corrected the format of all `Guid` type properties / parameters.
 - Corrected the format of all `ResourceIdentifier` type properties / parameters.
-- Corrected the format of all `ResouceType` type properties / parameters.
+- Corrected the format of all `ResourceType` type properties / parameters.
 - Corrected the format of all `ETag` type properties / parameters.
 - Corrected the format of all `AzureLocation` type properties / parameters.
 - Corrected the format of all binary type properties / parameters.

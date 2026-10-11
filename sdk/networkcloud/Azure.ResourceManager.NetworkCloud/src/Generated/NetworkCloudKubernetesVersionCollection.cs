@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudKubernetesVersionData, NetworkCloudKubernetesVersionResource>(new KubernetesVersionsGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkCloudKubernetesVersionData, NetworkCloudKubernetesVersionResource>(new NetworkCloudKubernetesVersionDataAsyncCollectionResultOfT(
                 _kubernetesVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudKubernetesVersionData, NetworkCloudKubernetesVersionResource>(new KubernetesVersionsGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<NetworkCloudKubernetesVersionData, NetworkCloudKubernetesVersionResource>(new NetworkCloudKubernetesVersionDataCollectionResultOfT(
                 _kubernetesVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

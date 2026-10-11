@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("Re-record tags after the SetTags request change; see #63311.")]
         public async Task CreateGetListUpdateDeleteContextCacheAndContainer()
         {
             _resourceGroup = await CreateResourceGroupAsync();

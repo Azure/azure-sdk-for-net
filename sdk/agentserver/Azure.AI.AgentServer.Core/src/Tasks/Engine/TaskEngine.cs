@@ -44,6 +44,13 @@ internal sealed partial class TaskEngine : IDisposable
     private readonly ConcurrentDictionary<string, IActiveRun> _activeRuns = new(StringComparer.Ordinal);
     private readonly ConcurrentDictionary<string, long> _terminatedOneShot = new(StringComparer.Ordinal);
     private readonly CancellationTokenSource _shutdownCts = new();
+    private readonly CancellationTokenSource _startShutdownCts = new();
+    private readonly object _startLifecycleGate = new();
+    private bool _acceptingStarts = true;
+    private int _startsInFlight;
+    private TaskCompletionSource _startsDrained = CompletedSignal();
+    private int _startAdmissionClosing;
+    private int _disposeStarted;
     private int _orphanSweepDone;
 
     // Spec §21 source.server_version: "<sdk_name>/<sdk_version> (<runtime>/<version>)".
@@ -96,6 +103,58 @@ internal sealed partial class TaskEngine : IDisposable
     public async Task<TaskRun<TOutput>> StartAsync<TInput, TOutput>(
         string name, TInput input, RunOptions? options = null, CancellationToken cancellationToken = default)
     {
+        EnterStartOperation();
+        using CancellationTokenSource linkedCts =
+            CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _startShutdownCts.Token);
+        try
+        {
+            return await StartCoreAsync<TInput, TOutput>(
+                    name,
+                    input,
+                    options,
+                    requireExisting: false,
+                    linkedCts.Token).ConfigureAwait(false)
+                ?? throw new InvalidOperationException(
+                    "A normal resilient-task start unexpectedly returned no task run.");
+        }
+        finally
+        {
+            ExitStartOperation();
+        }
+    }
+
+    public async Task<TaskRun<TOutput>?> TryStartExistingAsync<TInput, TOutput>(
+        string name,
+        TInput input,
+        RunOptions options,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(options);
+        EnterStartOperation();
+        using CancellationTokenSource linkedCts =
+            CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _startShutdownCts.Token);
+        try
+        {
+            return await StartCoreAsync<TInput, TOutput>(
+                name,
+                input,
+                options,
+                requireExisting: true,
+                linkedCts.Token).ConfigureAwait(false);
+        }
+        finally
+        {
+            ExitStartOperation();
+        }
+    }
+
+    private async Task<TaskRun<TOutput>?> StartCoreAsync<TInput, TOutput>(
+        string name,
+        TInput input,
+        RunOptions? options,
+        bool requireExisting,
+        CancellationToken cancellationToken)
+    {
         TaskRegistration registration = _registry.Get(name);
         bool multiTurn = registration.MultiTurn;
 
@@ -145,9 +204,25 @@ internal sealed partial class TaskEngine : IDisposable
                     // Cancellation callbacks may submit another input. Release startup admission
                     // before signalling, and preserve this input's identity if suspension wins.
                     ReleaseStart(taskId, admission);
-                    TaskRun<TOutput>? accepted = await TryStartActiveRunAsync<TInput, TOutput>(
-                        existing, registration, taskId, inputId, persistInputId, input, options, cancellationToken)
-                        .ConfigureAwait(false);
+                    TaskRun<TOutput>? accepted;
+                    try
+                    {
+                        accepted = await TryStartActiveRunAsync<TInput, TOutput>(
+                            existing,
+                            registration,
+                            taskId,
+                            inputId,
+                            persistInputId,
+                            input,
+                            options,
+                            cancellationToken).ConfigureAwait(false);
+                    }
+                    catch (TaskStoreException ex) when (
+                        requireExisting && ex.StatusCode == 404)
+                    {
+                        return null;
+                    }
+
                     if (accepted is not null)
                     {
                         return accepted;
@@ -163,9 +238,29 @@ internal sealed partial class TaskEngine : IDisposable
                 }
 
                 return multiTurn
-                    ? await StartMultiTurnAsync<TInput, TOutput>(registration, name, taskId, inputId, persistInputId, input, options, cancellationToken)
+                    ? await StartMultiTurnAsync<TInput, TOutput>(
+                        registration,
+                        name,
+                        taskId,
+                        inputId,
+                        persistInputId,
+                        input,
+                        options,
+                        requireExisting,
+                        cancellationToken)
                         .ConfigureAwait(false)
-                    : await StartOneShotAsync<TInput, TOutput>(registration, name, taskId, inputId, persistInputId, input, cancellationToken)
+                    : requireExisting
+                        ? throw new ArgumentException(
+                            "Existing-only start is supported only for multi-turn tasks.",
+                            nameof(name))
+                        : await StartOneShotAsync<TInput, TOutput>(
+                            registration,
+                            name,
+                            taskId,
+                            inputId,
+                            persistInputId,
+                            input,
+                            cancellationToken)
                         .ConfigureAwait(false);
             }
             catch (Exception exception)
@@ -229,6 +324,151 @@ internal sealed partial class TaskEngine : IDisposable
             }
 
             await current.Task.WaitAsync(cancellationToken).ConfigureAwait(false);
+        }
+    }
+
+    private static TaskCompletionSource CompletedSignal()
+    {
+        var signal = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        signal.SetResult();
+        return signal;
+    }
+
+    private void EnterStartOperation()
+    {
+        lock (_startLifecycleGate)
+        {
+            if (!_acceptingStarts)
+            {
+                throw new InvalidOperationException(
+                    "The resilient-task runtime is stopping and no longer accepts new task starts.");
+            }
+
+            if (_startsInFlight++ == 0)
+            {
+                _startsDrained =
+                    new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+            }
+        }
+    }
+
+    private void ExitStartOperation()
+    {
+        TaskCompletionSource? drained = null;
+        lock (_startLifecycleGate)
+        {
+            if (--_startsInFlight == 0)
+            {
+                drained = _startsDrained;
+            }
+        }
+
+        drained?.TrySetResult();
+    }
+
+    private Task CloseStartAdmission()
+    {
+        if (Interlocked.Exchange(ref _startAdmissionClosing, 1) == 0)
+        {
+            // Cancel first. A start that enters before the admission lock closes is still counted
+            // in _startsInFlight, but it observes cancellation and cannot publish an active run.
+            _startShutdownCts.Cancel();
+        }
+
+        lock (_startLifecycleGate)
+        {
+            _acceptingStarts = false;
+            return _startsDrained.Task;
+        }
+    }
+
+    private ActiveRunPublication TryPublishActiveRun(
+        string taskId,
+        IActiveRun activeRun,
+        out IActiveRun? concurrent)
+    {
+        lock (_startLifecycleGate)
+        {
+            if (!_acceptingStarts)
+            {
+                concurrent = null;
+                return ActiveRunPublication.Stopping;
+            }
+
+            if (_activeRuns.TryAdd(taskId, activeRun))
+            {
+                concurrent = null;
+                return ActiveRunPublication.Published;
+            }
+
+            concurrent = _activeRuns[taskId];
+            return ActiveRunPublication.Concurrent;
+        }
+    }
+
+    private async ValueTask AbortPersistedStartIfCancelledAsync(
+        string taskId,
+        CancellationToken cancellationToken)
+    {
+        if (!cancellationToken.IsCancellationRequested)
+        {
+            return;
+        }
+
+        try
+        {
+            // A create may have committed immediately before shutdown cancellation. Expire its
+            // lease so the next lifetime can reclaim it without waiting the normal lease period.
+            await ReleaseStartLeaseAsync(taskId).ConfigureAwait(false);
+        }
+        catch (Exception ex)
+        {
+            _logger.LeaseForceExpireFailed(taskId, ex.GetType().Name);
+        }
+        finally
+        {
+            _serializer.Remove(taskId);
+        }
+
+        cancellationToken.ThrowIfCancellationRequested();
+    }
+
+    private async ValueTask AbortPublishedStartIfStoppingAsync<TOutput>(
+        string taskId,
+        IActiveRun activeRun,
+        TaskRunState<TOutput> runState)
+    {
+        if (!_startShutdownCts.IsCancellationRequested)
+        {
+            return;
+        }
+
+        _activeRuns.TryRemove(
+            new System.Collections.Generic.KeyValuePair<string, IActiveRun>(taskId, activeRun));
+        await ReleaseStartLeaseAsync(taskId).ConfigureAwait(false);
+        _serializer.Remove(taskId);
+
+        var exception = new OperationCanceledException(
+            "The resilient-task runtime stopped before the task could be dispatched.",
+            _startShutdownCts.Token);
+        runState.SetException(exception);
+        throw exception;
+    }
+
+    private async ValueTask ReleaseStartLeaseAsync(string taskId)
+    {
+        try
+        {
+            await _lease.ReleaseIfOwnedAsync(taskId, _owner, CancellationToken.None)
+                .ConfigureAwait(false);
+        }
+        catch (TaskStoreException ex) when (ex.StatusCode == 404)
+        {
+            // Expected when the failed create never committed.
+        }
+        catch (Exception ex)
+        {
+            _logger.LeaseForceExpireFailed(taskId, ex.GetType().Name);
         }
     }
 
@@ -349,6 +589,11 @@ internal sealed partial class TaskEngine : IDisposable
             inputId = TaskInputIdentity.Active(current, inputId);
             input = ResolveInput<TInput>(current, registration);
         }
+        catch (Exception)
+        {
+            await ReleaseStartLeaseAsync(taskId).ConfigureAwait(false);
+            throw;
+        }
 
         TaskRunState<TOutput> runState =
             CreateRunState<TOutput>(taskId, inputId, isQueued: false);
@@ -365,10 +610,24 @@ internal sealed partial class TaskEngine : IDisposable
             _serializer.Track(record);
         }
 
-        if (!_activeRuns.TryAdd(taskId, activeRun))
+        if (cancellationToken.IsCancellationRequested)
         {
-            IActiveRun concurrent = _activeRuns[taskId];
-            EnsureTaskName(concurrent.Name, name, taskId);
+            runState.Cancellation.Retire();
+            await AbortPersistedStartIfCancelledAsync(taskId, cancellationToken).ConfigureAwait(false);
+        }
+
+        ActiveRunPublication publication =
+            TryPublishActiveRun(taskId, activeRun, out IActiveRun? concurrent);
+        if (publication == ActiveRunPublication.Stopping)
+        {
+            runState.Cancellation.Retire();
+            await AbortPersistedStartIfCancelledAsync(taskId, _startShutdownCts.Token)
+                .ConfigureAwait(false);
+        }
+        if (publication == ActiveRunPublication.Concurrent)
+        {
+            runState.Cancellation.Retire();
+            EnsureTaskName(concurrent!.Name, name, taskId);
             return concurrent.GetHandle<TOutput>();
         }
 
@@ -386,12 +645,17 @@ internal sealed partial class TaskEngine : IDisposable
             }
             catch (Exception ex)
             {
-                _activeRuns.TryRemove(taskId, out _);
+                await ReleaseStartLeaseAsync(taskId).ConfigureAwait(false);
+                _activeRuns.TryRemove(
+                    new System.Collections.Generic.KeyValuePair<string, IActiveRun>(taskId, activeRun));
                 _serializer.Remove(taskId);
                 runState.SetException(ex);
                 throw;
             }
         }
+
+        await AbortPublishedStartIfStoppingAsync(taskId, activeRun, runState)
+            .ConfigureAwait(false);
 
         _ = Task.Run(
             () => ExecuteAsync(registration, runState, activeRun, input, taskId, inputId, entryMode, multiTurn: false, handlerCts),
@@ -400,9 +664,9 @@ internal sealed partial class TaskEngine : IDisposable
         return runState.ToHandle();
     }
 
-    private async Task<TaskRun<TOutput>> StartMultiTurnAsync<TInput, TOutput>(
+    private async Task<TaskRun<TOutput>?> StartMultiTurnAsync<TInput, TOutput>(
         TaskRegistration registration, string name, string taskId, string inputId, bool persistInputId, TInput input,
-        RunOptions? options, CancellationToken cancellationToken)
+        RunOptions? options, bool requireExisting, CancellationToken cancellationToken)
     {
         // Serialize + size-check input BEFORE network (FR-011).
         JsonNode? inputNode = SerializeInput(input, registration);
@@ -420,6 +684,11 @@ internal sealed partial class TaskEngine : IDisposable
         bool recoveredSteeredTurn = false;
         if (current is null)
         {
+            if (requireExisting)
+            {
+                return null;
+            }
+
             // First turn of the chain: create the record. A multi-turn turn always carries a
             // per-turn input_id (caller-supplied or auto-generated), so the chain head is always
             // stamped at create (persistInputId is always true for multi-turn).
@@ -476,6 +745,11 @@ internal sealed partial class TaskEngine : IDisposable
                         _ => null,
                     },
                 };
+            }
+            catch (Exception)
+            {
+                await ReleaseStartLeaseAsync(taskId).ConfigureAwait(false);
+                throw;
             }
             entryMode = EntryMode.Fresh;
         }
@@ -566,10 +840,25 @@ internal sealed partial class TaskEngine : IDisposable
         {
             _serializer.Track(record);
         }
-        if (!_activeRuns.TryAdd(taskId, activeRun))
+
+        if (cancellationToken.IsCancellationRequested)
         {
-            IActiveRun concurrent = _activeRuns[taskId];
-            EnsureTaskName(concurrent.Name, name, taskId);
+            runState.Cancellation.Retire();
+            await AbortPersistedStartIfCancelledAsync(taskId, cancellationToken).ConfigureAwait(false);
+        }
+
+        ActiveRunPublication publication =
+            TryPublishActiveRun(taskId, activeRun, out IActiveRun? concurrent);
+        if (publication == ActiveRunPublication.Stopping)
+        {
+            runState.Cancellation.Retire();
+            await AbortPersistedStartIfCancelledAsync(taskId, _startShutdownCts.Token)
+                .ConfigureAwait(false);
+        }
+        if (publication == ActiveRunPublication.Concurrent)
+        {
+            runState.Cancellation.Retire();
+            EnsureTaskName(concurrent!.Name, name, taskId);
             return concurrent.GetHandle<TOutput>();
         }
 
@@ -598,11 +887,22 @@ internal sealed partial class TaskEngine : IDisposable
         }
         catch (Exception ex)
         {
-            _activeRuns.TryRemove(taskId, out _);
+            await ReleaseStartLeaseAsync(taskId).ConfigureAwait(false);
+            _activeRuns.TryRemove(
+                new System.Collections.Generic.KeyValuePair<string, IActiveRun>(taskId, activeRun));
             _serializer.Remove(taskId);
             runState.SetException(ex);
+            if (requireExisting
+                && ex is TaskStoreException { StatusCode: 404 })
+            {
+                return null;
+            }
+
             throw;
         }
+
+        await AbortPublishedStartIfStoppingAsync(taskId, activeRun, runState)
+            .ConfigureAwait(false);
 
         _ = Task.Run(
             () => ExecuteAsync(registration, runState, activeRun, input, taskId, inputId, entryMode, multiTurn: true, handlerCts, recoveredSteeredTurn),
@@ -989,6 +1289,9 @@ internal sealed partial class TaskEngine : IDisposable
         EntryMode currentMode = entryMode;
         bool steered = isSteeredTurn;
         CancellationTokenSource currentCts = handlerCts;
+        using IDisposable? recoveryHandlerScope = entryMode == EntryMode.Recovered
+            ? TaskEngineAccessor.EnterRecoveryHandlerScope(this)
+            : null;
 
         try
         {
@@ -2168,6 +2471,31 @@ internal sealed partial class TaskEngine : IDisposable
         return null;
     }
 
+    /// <summary>Returns the persisted status for a task owned by the named definition.</summary>
+    public async Task<TaskRunStatus?> GetStatusAsync(
+        string name,
+        string taskId,
+        CancellationToken cancellationToken = default)
+    {
+        _registry.Get(name);
+        TaskRecord? record = await _store.GetAsync(taskId, cancellationToken).ConfigureAwait(false);
+        if (record is null
+            || record.Source?.Type != TaskWireKeys.SourceTypeValue
+            || !TaskNameMatches(record, name))
+        {
+            return null;
+        }
+
+        return record.Status switch
+        {
+            TaskWireKeys.StatusPending => TaskRunStatus.Pending,
+            TaskWireKeys.StatusInProgress => TaskRunStatus.InProgress,
+            TaskWireKeys.StatusSuspended => TaskRunStatus.Suspended,
+            TaskWireKeys.StatusCompleted => TaskRunStatus.Completed,
+            _ => null,
+        };
+    }
+
     /// <summary>
     /// Consults the store for a persisted <c>in_progress</c> record and, when its lease is dead
     /// and reclaimable by this owner, inline-reclaims and re-invokes it as recovered. Returns the
@@ -2241,25 +2569,33 @@ internal sealed partial class TaskEngine : IDisposable
     /// <returns>A task that completes when recovery dispatch has started.</returns>
     internal async Task RecoverAsync<TInput, TOutput>(TaskRegistration registration, TaskRecord record)
     {
+        EnterStartOperation();
         var admission = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
-        if (!_pendingStarts.TryAdd(record.Id, admission))
-        {
-            // A start that has persisted its record but not yet published its run is not abandoned.
-            return;
-        }
-
         try
         {
-            await RecoverCoreAsync<TInput, TOutput>(registration, record).ConfigureAwait(false);
-        }
-        catch (Exception exception)
-        {
-            FailStart(admission, exception);
-            throw;
+            if (!_pendingStarts.TryAdd(record.Id, admission))
+            {
+                // A start that has persisted its record but not yet published its run is not abandoned.
+                return;
+            }
+
+            try
+            {
+                await RecoverCoreAsync<TInput, TOutput>(registration, record).ConfigureAwait(false);
+            }
+            catch (Exception exception)
+            {
+                FailStart(admission, exception);
+                throw;
+            }
+            finally
+            {
+                ReleaseStart(record.Id, admission);
+            }
         }
         finally
         {
-            ReleaseStart(record.Id, admission);
+            ExitStartOperation();
         }
     }
 
@@ -2313,9 +2649,17 @@ internal sealed partial class TaskEngine : IDisposable
             SeedSteeringSeq(activeRun.Steering, record);
             RehydratePendingInputs(activeRun.Steering, record, taskId);
         }
-        if (!_activeRuns.TryAdd(taskId, activeRun))
+        ActiveRunPublication publication =
+            TryPublishActiveRun(taskId, activeRun, out IActiveRun? concurrent);
+        if (publication == ActiveRunPublication.Stopping)
         {
-            EnsureTaskName(_activeRuns[taskId].Name, registration.Name, taskId);
+            runState.Cancellation.Retire();
+            return;
+        }
+        if (publication == ActiveRunPublication.Concurrent)
+        {
+            runState.Cancellation.Retire();
+            EnsureTaskName(concurrent!.Name, registration.Name, taskId);
             return;
         }
 
@@ -2341,11 +2685,16 @@ internal sealed partial class TaskEngine : IDisposable
         }
         catch (Exception)
         {
-            _activeRuns.TryRemove(taskId, out _);
+            await ReleaseStartLeaseAsync(taskId).ConfigureAwait(false);
+            _activeRuns.TryRemove(
+                new System.Collections.Generic.KeyValuePair<string, IActiveRun>(taskId, activeRun));
             _serializer.Remove(taskId);
             runState.Cancellation.Retire();
             throw;
         }
+
+        await AbortPublishedStartIfStoppingAsync(taskId, activeRun, runState)
+            .ConfigureAwait(false);
 
         _logger.TaskRecovered(taskId, (int)(record.Lease?.Generation ?? 0));
 
@@ -2620,6 +2969,7 @@ internal sealed partial class TaskEngine : IDisposable
     /// Graceful async shutdown (FR-017), mirroring Python's <c>TaskManager.shutdown()</c> so a
     /// restarted process reclaims in-flight work immediately instead of waiting the lease TTL:
     /// <list type="number">
+    /// <item>close task-start admission and drain/cancel starts already entering persistence;</item>
     /// <item>signal the shutdown cause so cooperative handlers can <c>ExitForRecovery</c>;</item>
     /// <item>wait up to <paramref name="grace"/> for active turns to checkpoint (poll, not sleep);</item>
     /// <item>force-expire the leases of any turns still active after the grace window so their
@@ -2635,9 +2985,19 @@ internal sealed partial class TaskEngine : IDisposable
     /// shutdown-timeout token); force-expiry still runs on cancellation.</param>
     internal async Task ShutdownAsync(TimeSpan grace, CancellationToken cancellationToken = default)
     {
-        // (1) Fire the shutdown cause only — leave handlers running so they can cooperatively
-        //     checkpoint / exit-for-recovery within the grace window.
-        SignalShutdownToken();
+        // (1) Atomically close start admission before signalling shutdown. Starts that entered
+        // admission first receive the shutdown token and must leave admission before active-run
+        // snapshots are taken; no later start can race in behind the snapshot.
+        Task startsDrained = BeginShutdown();
+        try
+        {
+            await startsDrained.WaitAsync(cancellationToken).ConfigureAwait(false);
+        }
+        catch (OperationCanceledException)
+        {
+            // The linked shutdown token still prevents an admitted start from becoming active after
+            // persistence; continue bounded shutdown even when the host deadline has elapsed.
+        }
 
         // (2) Wait up to `grace` for active turns to drain. Cooperative exits remove themselves
         //     from _activeRuns; poll so shutdown returns promptly once everything has checkpointed.
@@ -2687,12 +3047,49 @@ internal sealed partial class TaskEngine : IDisposable
         CancelActiveHandlers();
     }
 
+    internal Task BeginShutdown()
+    {
+        Task startsDrained = CloseStartAdmission();
+        SignalShutdownToken();
+        return startsDrained;
+    }
+
     /// <inheritdoc/>
     public void Dispose()
     {
+        if (Interlocked.Exchange(ref _disposeStarted, 1) != 0)
+        {
+            return;
+        }
+
+        Task startsDrained = CloseStartAdmission();
         SignalShutdown();
+        if (startsDrained.IsCompleted)
+        {
+            DisposeResources();
+            return;
+        }
+
+        _ = startsDrained.ContinueWith(
+            static (_, state) => ((TaskEngine)state!).DisposeResources(),
+            this,
+            CancellationToken.None,
+            TaskContinuationOptions.ExecuteSynchronously,
+            TaskScheduler.Default);
+    }
+
+    private void DisposeResources()
+    {
         _serializer.Dispose();
+        _startShutdownCts.Dispose();
         _shutdownCts.Dispose();
+    }
+
+    private enum ActiveRunPublication
+    {
+        Published,
+        Concurrent,
+        Stopping,
     }
 
     private enum RunAdmission

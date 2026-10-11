@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceConnectorApplianceData, ResourceConnectorApplianceResource>(new AppliancesGetBySubscriptionAsyncCollectionResultOfT(AppliancesRestClient, Id.SubscriptionId, context, "MockableResourceConnectorSubscriptionResource.GetResourceConnectorAppliances"), data => new ResourceConnectorApplianceResource(Client, data));
+            return new AsyncPageableWrapper<ResourceConnectorApplianceData, ResourceConnectorApplianceResource>(new ResourceConnectorApplianceDataAsync0CollectionResultOfT(AppliancesRestClient, Id.SubscriptionId, context, "MockableResourceConnectorSubscriptionResource.GetResourceConnectorAppliances"), data => new ResourceConnectorApplianceResource(Client, data));
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceConnectorApplianceData, ResourceConnectorApplianceResource>(new AppliancesGetBySubscriptionCollectionResultOfT(AppliancesRestClient, Id.SubscriptionId, context, "MockableResourceConnectorSubscriptionResource.GetResourceConnectorAppliances"), data => new ResourceConnectorApplianceResource(Client, data));
+            return new PageableWrapper<ResourceConnectorApplianceData, ResourceConnectorApplianceResource>(new ResourceConnectorApplianceData0CollectionResultOfT(AppliancesRestClient, Id.SubscriptionId, context, "MockableResourceConnectorSubscriptionResource.GetResourceConnectorAppliances"), data => new ResourceConnectorApplianceResource(Client, data));
         }
 
         /// <summary>

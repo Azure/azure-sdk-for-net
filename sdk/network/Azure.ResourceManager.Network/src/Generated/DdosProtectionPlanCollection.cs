@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DdosProtectionPlanData, DdosProtectionPlanResource>(new DdosProtectionPlansGetByResourceGroupAsyncCollectionResultOfT(_ddosProtectionPlansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DdosProtectionPlanCollection.GetAll"), data => new DdosProtectionPlanResource(Client, data));
+            return new AsyncPageableWrapper<DdosProtectionPlanData, DdosProtectionPlanResource>(new DdosProtectionPlanDataAsyncCollectionResultOfT(_ddosProtectionPlansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DdosProtectionPlanCollection.GetAll"), data => new DdosProtectionPlanResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DdosProtectionPlanData, DdosProtectionPlanResource>(new DdosProtectionPlansGetByResourceGroupCollectionResultOfT(_ddosProtectionPlansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DdosProtectionPlanCollection.GetAll"), data => new DdosProtectionPlanResource(Client, data));
+            return new PageableWrapper<DdosProtectionPlanData, DdosProtectionPlanResource>(new DdosProtectionPlanDataCollectionResultOfT(_ddosProtectionPlansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DdosProtectionPlanCollection.GetAll"), data => new DdosProtectionPlanResource(Client, data));
         }
 
         /// <summary>

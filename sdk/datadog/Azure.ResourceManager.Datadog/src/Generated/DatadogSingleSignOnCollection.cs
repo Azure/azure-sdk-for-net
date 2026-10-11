@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatadogSingleSignOnData, DatadogSingleSignOnResource>(new SingleSignOnConfigurationsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DatadogSingleSignOnData, DatadogSingleSignOnResource>(new DatadogSingleSignOnDataAsyncCollectionResultOfT(
                 _singleSignOnConfigurationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatadogSingleSignOnData, DatadogSingleSignOnResource>(new SingleSignOnConfigurationsGetAllCollectionResultOfT(
+            return new PageableWrapper<DatadogSingleSignOnData, DatadogSingleSignOnResource>(new DatadogSingleSignOnDataCollectionResultOfT(
                 _singleSignOnConfigurationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

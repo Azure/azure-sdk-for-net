@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.PowerPlatform.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PowerPlatformAccountData, PowerPlatformAccountResource>(new AccountsGetBySubscriptionAsyncCollectionResultOfT(AccountsRestClient, Id.SubscriptionId, context, "MockablePowerPlatformSubscriptionResource.GetPowerPlatformAccounts"), data => new PowerPlatformAccountResource(Client, data));
+            return new AsyncPageableWrapper<PowerPlatformAccountData, PowerPlatformAccountResource>(new PowerPlatformAccountDataAsync0CollectionResultOfT(AccountsRestClient, Id.SubscriptionId, context, "MockablePowerPlatformSubscriptionResource.GetPowerPlatformAccounts"), data => new PowerPlatformAccountResource(Client, data));
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.PowerPlatform.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PowerPlatformAccountData, PowerPlatformAccountResource>(new AccountsGetBySubscriptionCollectionResultOfT(AccountsRestClient, Id.SubscriptionId, context, "MockablePowerPlatformSubscriptionResource.GetPowerPlatformAccounts"), data => new PowerPlatformAccountResource(Client, data));
+            return new PageableWrapper<PowerPlatformAccountData, PowerPlatformAccountResource>(new PowerPlatformAccountData0CollectionResultOfT(AccountsRestClient, Id.SubscriptionId, context, "MockablePowerPlatformSubscriptionResource.GetPowerPlatformAccounts"), data => new PowerPlatformAccountResource(Client, data));
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.PowerPlatform.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EnterprisePolicyData, EnterprisePolicyResource>(new EnterprisePoliciesGetBySubscriptionAsyncCollectionResultOfT(EnterprisePoliciesRestClient, Id.SubscriptionId, context, "MockablePowerPlatformSubscriptionResource.GetEnterprisePolicies"), data => new EnterprisePolicyResource(Client, data));
+            return new AsyncPageableWrapper<EnterprisePolicyData, EnterprisePolicyResource>(new EnterprisePolicyDataAsync0CollectionResultOfT(EnterprisePoliciesRestClient, Id.SubscriptionId, context, "MockablePowerPlatformSubscriptionResource.GetEnterprisePolicies"), data => new EnterprisePolicyResource(Client, data));
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.PowerPlatform.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EnterprisePolicyData, EnterprisePolicyResource>(new EnterprisePoliciesGetBySubscriptionCollectionResultOfT(EnterprisePoliciesRestClient, Id.SubscriptionId, context, "MockablePowerPlatformSubscriptionResource.GetEnterprisePolicies"), data => new EnterprisePolicyResource(Client, data));
+            return new PageableWrapper<EnterprisePolicyData, EnterprisePolicyResource>(new EnterprisePolicyData0CollectionResultOfT(EnterprisePoliciesRestClient, Id.SubscriptionId, context, "MockablePowerPlatformSubscriptionResource.GetEnterprisePolicies"), data => new EnterprisePolicyResource(Client, data));
         }
     }
 }

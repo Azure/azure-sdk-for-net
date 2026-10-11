@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                UsageDetailsKind.Legacy,
                 etag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                UsageDetailsKind.Modern,
                 etag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                ChargeSummaryKind.Legacy,
                 etag,
                 default,
                 billingPeriodId is null && usageStart is null && usageEnd is null && azureCharges is null && chargesBilledSeparately is null && marketplaceCharges is null && currency is null ? default : new LegacyChargeSummaryProperties(
@@ -778,7 +778,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                ChargeSummaryKind.Modern,
                 eTag,
                 default,
                 billingPeriodId is null && usageStart is null && usageEnd is null && azureCharges is null && chargesBilledSeparately is null && marketplaceCharges is null && billingAccountId is null && billingProfileId is null && invoiceSectionId is null && customerId is null && isInvoiced is null && subscriptionId is null ? default : new ModernChargeSummaryProperties(
@@ -995,7 +995,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 sku,
                 eTag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
+                kind is null ? default : new ReservationRecommendationKind(kind),
                 default);
         }
 
@@ -1023,7 +1023,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 sku,
                 eTag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
+                ReservationRecommendationKind.Legacy,
                 default,
                 properties);
         }
@@ -1121,7 +1121,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 totalCostWithReservedInstances,
                 netSavings,
                 firstUsageOn,
-                default,
+                "Single",
                 (skuProperties ?? new ChangeTrackingList<ConsumptionSkuProperty>()).ToList(),
                 lastUsageOn,
                 totalHours,
@@ -1165,7 +1165,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 totalCostWithReservedInstances,
                 netSavings,
                 firstUsageOn,
-                default,
+                "Shared",
                 (skuProperties ?? new ChangeTrackingList<ConsumptionSkuProperty>()).ToList(),
                 lastUsageOn,
                 totalHours,
@@ -1196,7 +1196,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 sku,
                 eTag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
+                ReservationRecommendationKind.Modern,
                 default,
                 properties);
         }
@@ -1292,7 +1292,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 totalCostWithReservedInstances,
                 netSavings,
                 firstUsageOn,
-                default,
+                "Single",
                 (skuProperties ?? new ChangeTrackingList<ConsumptionSkuProperty>()).ToList(),
                 skuName,
                 lastUsageOn,
@@ -1340,7 +1340,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 totalCostWithReservedInstances,
                 netSavings,
                 firstUsageOn,
-                default,
+                "Shared",
                 (skuProperties ?? new ChangeTrackingList<ConsumptionSkuProperty>()).ToList(),
                 skuName,
                 lastUsageOn,
@@ -1996,7 +1996,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                ChargeSummaryKind.Modern,
                 etag,
                 default,
                 billingPeriodId is null && usageStart is null && usageEnd is null && azureCharges is null && chargesBilledSeparately is null && marketplaceCharges is null && billingAccountId is null && billingProfileId is null && invoiceSectionId is null && customerId is null && isInvoiced is null ? default : new ModernChargeSummaryProperties(

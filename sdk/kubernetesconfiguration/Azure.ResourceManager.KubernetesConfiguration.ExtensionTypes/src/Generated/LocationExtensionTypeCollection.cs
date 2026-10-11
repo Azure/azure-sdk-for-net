@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KubernetesConfigurationExtensionTypeData, LocationExtensionTypeResource>(new ExtensionTypeInterfaceLocationListAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<KubernetesConfigurationExtensionTypeData, LocationExtensionTypeResource>(new KubernetesConfigurationExtensionTypeDataAsyncCollectionResultOfT(
                 _extensionTypeInterfaceRestClient,
                 Id.SubscriptionId,
                 _location,
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KubernetesConfigurationExtensionTypeData, LocationExtensionTypeResource>(new ExtensionTypeInterfaceLocationListCollectionResultOfT(
+            return new PageableWrapper<KubernetesConfigurationExtensionTypeData, LocationExtensionTypeResource>(new KubernetesConfigurationExtensionTypeDataCollectionResultOfT(
                 _extensionTypeInterfaceRestClient,
                 Id.SubscriptionId,
                 _location,
