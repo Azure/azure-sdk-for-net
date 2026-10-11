@@ -82,7 +82,7 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("ranking_options"u8);
                 writer.WriteObjectValue<object>(RankingOptions, options);
             }
-            if (_filtersIsDefined || Optional.IsDefined(Filters))
+            if (Optional.IsDefined(Filters, _filtersIsDefined))
             {
                 if (Filters != null)
                 {

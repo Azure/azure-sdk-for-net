@@ -16,9 +16,9 @@ namespace Azure.AI.Projects
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private BinaryData _oldValue;
-        internal bool _oldValueIsDefined;
+        private bool _oldValueIsDefined;
         private BinaryData _newValue;
-        internal bool _newValueIsDefined;
+        private bool _newValueIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AgentInsightProposedFixChange"/>. </summary>
         internal AgentInsightProposedFixChange()
