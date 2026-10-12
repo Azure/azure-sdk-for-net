@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> Live trace configuration of a Microsoft.SignalRService resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class LiveTraceConfiguration : ProvisionableConstruct
     {
         private BicepValue<string> _isEnabled;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> IsEnabled
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the Categories. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<LiveTraceCategory> Categories
         {
             get

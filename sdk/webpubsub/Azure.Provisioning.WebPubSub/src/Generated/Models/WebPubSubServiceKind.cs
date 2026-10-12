@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> The kind of the service. </summary>
+    [Experimental("AZPROVISION001")]
     public enum WebPubSubServiceKind
     {
         /// <summary> WebPubSub. </summary>

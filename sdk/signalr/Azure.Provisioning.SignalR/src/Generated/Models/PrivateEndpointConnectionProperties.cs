@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> Private endpoint connection properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class PrivateEndpointConnectionProperties : ProvisionableConstruct
     {
         private BicepValue<SignalRProvisioningState> _provisioningState;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SignalRProvisioningState> ProvisioningState
         {
             get
@@ -35,6 +38,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the PrivateEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         internal PrivateEndpoint PrivateEndpoint
         {
             get
@@ -50,6 +54,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets the GroupIds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> GroupIds
         {
             get
@@ -60,6 +65,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the ConnectionState. </summary>
+        [Experimental("AZPROVISION001")]
         public SignalRPrivateLinkServiceConnectionState ConnectionState
         {
             get
@@ -75,6 +81,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> PrivateEndpointId
         {
             get

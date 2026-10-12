@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> The settings to enable AAD authentication on the cluster. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ClusterAadSetting : ProvisionableConstruct
     {
         private BicepValue<Guid> _tenantId;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the TenantId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> TenantId
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ClusterApplication. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClusterApplication
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ClientApplication. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClientApplication
         {
             get

@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.VerifiedId
 {
     /// <summary> A VerifiedId authority resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VerifiedIdAuthority : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -112,6 +113,7 @@ namespace Azure.Provisioning.VerifiedId
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VerifiedIdAuthorityProvisioningState> AuthorityProvisioningState
         {
             get

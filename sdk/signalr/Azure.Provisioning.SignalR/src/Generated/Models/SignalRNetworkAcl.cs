@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> Network ACL. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SignalRNetworkAcl : ProvisionableConstruct
     {
         private BicepList<SignalRRequestType> _allow;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the Allow. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SignalRRequestType> Allow
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the Deny. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SignalRRequestType> Deny
         {
             get

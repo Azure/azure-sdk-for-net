@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> A class that describes the properties of the resource. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class SignalRProperties : ProvisionableConstruct
     {
         private BicepValue<SignalRProvisioningState> _provisioningState;
@@ -44,6 +46,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SignalRProvisioningState> ProvisioningState
         {
             get
@@ -54,6 +57,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets the ExternalIP. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ExternalIP
         {
             get
@@ -64,6 +68,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets the HostName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> HostName
         {
             get
@@ -74,6 +79,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets the PublicPort. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> PublicPort
         {
             get
@@ -84,6 +90,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets the ServerPort. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ServerPort
         {
             get
@@ -94,6 +101,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets the Version. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Version
         {
             get
@@ -104,6 +112,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SignalRPrivateEndpointConnection> PrivateEndpointConnections
         {
             get
@@ -114,6 +123,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets the SharedPrivateLinkResources. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SignalRSharedPrivateLink> SharedPrivateLinkResources
         {
             get
@@ -124,6 +134,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the Tls. </summary>
+        [Experimental("AZPROVISION001")]
         internal SignalRTlsSettings Tls
         {
             get
@@ -139,6 +150,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets the HostNamePrefix. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> HostNamePrefix
         {
             get
@@ -149,6 +161,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the Features. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SignalRFeature> Features
         {
             get
@@ -164,6 +177,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the LiveTraceConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public SignalRLiveTraceConfiguration LiveTraceConfiguration
         {
             get
@@ -179,6 +193,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the ResourceLogConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         internal SignalRResourceLogConfiguration ResourceLogConfiguration
         {
             get
@@ -194,6 +209,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the Cors. </summary>
+        [Experimental("AZPROVISION001")]
         internal SignalRCorsSettings Cors
         {
             get
@@ -209,6 +225,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the Serverless. </summary>
+        [Experimental("AZPROVISION001")]
         public SignalRServerlessSettings Serverless
         {
             get
@@ -224,6 +241,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the Upstream. </summary>
+        [Experimental("AZPROVISION001")]
         internal ServerlessUpstreamSettings Upstream
         {
             get
@@ -239,6 +257,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the NetworkACLs. </summary>
+        [Experimental("AZPROVISION001")]
         public SignalRNetworkAcls NetworkACLs
         {
             get
@@ -254,6 +273,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the ApplicationFirewall. </summary>
+        [Experimental("AZPROVISION001")]
         public SignalRApplicationFirewallSettings ApplicationFirewall
         {
             get
@@ -269,6 +289,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PublicNetworkAccess
         {
             get
@@ -284,6 +305,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the DisableLocalAuth. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> DisableLocalAuth
         {
             get
@@ -299,6 +321,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the DisableAadAuth. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> DisableAadAuth
         {
             get
@@ -314,6 +337,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the RegionEndpointEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RegionEndpointEnabled
         {
             get
@@ -329,6 +353,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the ResourceStopped. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ResourceStopped
         {
             get
@@ -344,6 +369,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the RouteSettings. </summary>
+        [Experimental("AZPROVISION001")]
         public SignalRRouteSettings RouteSettings
         {
             get
@@ -359,6 +385,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the IsClientCertEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> TlsIsClientCertEnabled
         {
             get
@@ -376,6 +403,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the Categories. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SignalRResourceLogCategory> ResourceLogCategories
         {
             get
@@ -393,6 +421,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the AllowedOrigins. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> CorsAllowedOrigins
         {
             get
@@ -410,6 +439,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the Templates. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SignalRUpstreamTemplate> UpstreamTemplates
         {
             get

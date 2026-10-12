@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> Provisioning state of the resource. </summary>
+    [Experimental("AZPROVISION001")]
     public enum SignalRProvisioningState
     {
         /// <summary> Unknown. </summary>

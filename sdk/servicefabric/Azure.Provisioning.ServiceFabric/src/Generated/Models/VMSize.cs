@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> VM Sizes properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class VMSize : ProvisionableConstruct
     {
         private BicepValue<string> _vmSize;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets the VmSize. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> VmSize
         {
             get

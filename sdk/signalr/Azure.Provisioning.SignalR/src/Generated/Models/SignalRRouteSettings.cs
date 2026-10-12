@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> Route settings for the resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SignalRRouteSettings : ProvisionableConstruct
     {
         private BicepValue<int> _serverBalanceWeight;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the ServerBalanceWeight. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ServerBalanceWeight
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the ConnectionBalanceWeight. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ConnectionBalanceWeight
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the LatencyWeight. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> LatencyWeight
         {
             get

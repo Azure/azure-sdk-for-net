@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> The settings for the Upstream when the service is in server-less mode. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ServerlessUpstreamSettings : ProvisionableConstruct
     {
         private BicepList<SignalRUpstreamTemplate> _templates;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the Templates. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SignalRUpstreamTemplate> Templates
         {
             get

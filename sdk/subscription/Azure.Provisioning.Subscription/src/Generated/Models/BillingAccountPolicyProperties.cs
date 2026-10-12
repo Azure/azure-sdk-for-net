@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Subscription
 {
     /// <summary> Put billing account policies response properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class BillingAccountPolicyProperties : ProvisionableConstruct
     {
         private BicepList<ServiceTenant> _serviceTenants;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.Subscription
         }
 
         /// <summary> Gets the ServiceTenants. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ServiceTenant> ServiceTenants
         {
             get
@@ -32,6 +35,7 @@ namespace Azure.Provisioning.Subscription
         }
 
         /// <summary> Gets the AllowTransfers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> AllowTransfers
         {
             get

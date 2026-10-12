@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.VerifiedId
 {
     /// <summary> The status of the current operation. </summary>
+    [Experimental("AZPROVISION001")]
     public enum VerifiedIdAuthorityProvisioningState
     {
         /// <summary> Resource has been created. </summary>

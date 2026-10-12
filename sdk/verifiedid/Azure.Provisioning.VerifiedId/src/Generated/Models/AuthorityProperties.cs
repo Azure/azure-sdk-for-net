@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.VerifiedId
 {
     /// <summary> Details of the VerifiedId Authority. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class AuthorityProperties : ProvisionableConstruct
     {
         private BicepValue<VerifiedIdAuthorityProvisioningState> _provisioningState;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.VerifiedId
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VerifiedIdAuthorityProvisioningState> ProvisioningState
         {
             get

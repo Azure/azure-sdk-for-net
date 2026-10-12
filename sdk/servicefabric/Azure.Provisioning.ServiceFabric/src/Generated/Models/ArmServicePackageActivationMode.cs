@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> The activation Mode of the service package. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ArmServicePackageActivationMode
     {
         /// <summary> Indicates the application package activation mode will use shared process. </summary>

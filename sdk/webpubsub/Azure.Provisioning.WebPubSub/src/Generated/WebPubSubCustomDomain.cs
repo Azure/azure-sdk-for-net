@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> A custom domain. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebPubSubCustomDomain : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -95,6 +96,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<WebPubSubProvisioningState> ProvisioningState
         {
             get
@@ -108,6 +110,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the DomainName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DomainName
         {
             get
@@ -125,6 +128,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> CustomCertificateId
         {
             get

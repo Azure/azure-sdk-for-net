@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> Azure Networking ACL Action. </summary>
+    [Experimental("AZPROVISION001")]
     public enum AclAction
     {
         /// <summary> Allow. </summary>

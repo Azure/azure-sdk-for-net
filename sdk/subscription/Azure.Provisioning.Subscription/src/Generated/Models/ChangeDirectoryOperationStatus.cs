@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Subscription
 {
     /// <summary> Status of the subscription transfer operation. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ChangeDirectoryOperationStatus
     {
         /// <summary> The subscription transfer request has been created and is waiting for acceptance by the destination tenant. </summary>

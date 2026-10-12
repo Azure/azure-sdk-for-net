@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> The incoming request type to the service. </summary>
+    [Experimental("AZPROVISION001")]
     public enum WebPubSubRequestType
     {
         /// <summary> ClientConnection. </summary>

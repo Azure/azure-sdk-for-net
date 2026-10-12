@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -81,6 +82,7 @@ namespace Azure.Provisioning.Sql
         }
 
         /// <summary> Gets or sets the IsFqdnEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsFqdnEnabled
         {
             get

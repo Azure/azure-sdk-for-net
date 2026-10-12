@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> Serverless settings. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SignalRServerlessSettings : ProvisionableConstruct
     {
         private BicepValue<int> _connectionTimeoutInSeconds;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the ConnectionTimeoutInSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ConnectionTimeoutInSeconds
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the KeepAliveIntervalInSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> KeepAliveIntervalInSeconds
         {
             get

@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> The properties of a stateless service resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class StatelessServiceProperties : ServiceResourceProperties
     {
         private BicepValue<int> _instanceCount;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the InstanceCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> InstanceCount
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the InstanceCloseDelayDuration. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> InstanceCloseDelayDuration
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the MinInstanceCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MinInstanceCount
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the MinInstancePercentage. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> MinInstancePercentage
         {
             get

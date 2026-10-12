@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> Managed identity settings for upstream. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ManagedIdentitySettings : ProvisionableConstruct
     {
         private BicepValue<string> _resource;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the Resource. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Resource
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Describes the notification channel for cluster events. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ClusterNotification : ProvisionableConstruct
     {
         private BicepValue<bool> _isEnabled;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the NotificationCategory. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ClusterNotificationCategory> NotificationCategory
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the NotificationLevel. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ClusterNotificationLevel> NotificationLevel
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the NotificationTargets. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ClusterNotificationTarget> NotificationTargets
         {
             get

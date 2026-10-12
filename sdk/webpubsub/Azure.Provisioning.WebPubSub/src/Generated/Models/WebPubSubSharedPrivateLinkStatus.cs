@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> Status of the shared private link resource. </summary>
+    [Experimental("AZPROVISION001")]
     public enum WebPubSubSharedPrivateLinkStatus
     {
         /// <summary> Pending. </summary>

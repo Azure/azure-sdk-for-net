@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Describes a VM Sizes. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ServiceFabricVmSizeResource : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -74,6 +75,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets the VmSize. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> VmSize
         {
             get

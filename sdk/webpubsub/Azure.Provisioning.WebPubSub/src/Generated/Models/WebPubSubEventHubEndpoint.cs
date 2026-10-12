@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.WebPubSub
@@ -13,6 +14,7 @@ namespace Azure.Provisioning.WebPubSub
     /// An Event Hub endpoint.
     /// The managed identity of Web PubSub service must be enabled, and the identity should have the "Azure Event Hubs Data sender" role to access Event Hub.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebPubSubEventHubEndpoint : WebPubSubEventListenerEndpoint
     {
         private BicepValue<string> _fullyQualifiedNamespace;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the FullyQualifiedNamespace. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> FullyQualifiedNamespace
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the EventHubName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EventHubName
         {
             get
