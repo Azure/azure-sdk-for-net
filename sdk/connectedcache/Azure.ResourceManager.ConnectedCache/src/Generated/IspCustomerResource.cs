@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal IspCustomerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string ispCustomerApiVersion);
             _ispCustomersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", ResourceType.Namespace, Diagnostics);
-            _ispCustomersRestClient = new IspCustomers(_ispCustomersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, ispCustomerApiVersion ?? "2026-06-01");
+            _ispCustomersRestClient = new IspCustomers(_ispCustomersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ConnectedCache/ispCustomers", out string ispCustomersApiVersionOverride) ? ispCustomersApiVersionOverride : "2026-06-01");
             ValidateResourceId(id);
         }
 
