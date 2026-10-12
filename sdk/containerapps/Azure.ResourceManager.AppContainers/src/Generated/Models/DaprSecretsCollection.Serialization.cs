@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DaprSecretsCollection(value, additionalBinaryDataProperties);
+            return new DaprSecretsCollection(value ?? new ChangeTrackingList<ContainerAppDaprSecret>(), additionalBinaryDataProperties);
         }
     }
 }

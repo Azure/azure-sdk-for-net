@@ -10,68 +10,68 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.ResourceManager.Confluent;
+using Azure.ResourceManager.Compute.BulkActions;
 
-namespace Azure.ResourceManager.Confluent.Models
+namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Result of GET request to list connectors in the cluster of a confluent organization. </summary>
-    internal partial class ListConnectorsSuccessResponse : IJsonModel<ListConnectorsSuccessResponse>
+    /// <summary> A paged list of compute resources associated with a scheduled action. </summary>
+    internal partial class ResourceListResult : IJsonModel<ResourceListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="ListConnectorsSuccessResponse"/> for deserialization. </summary>
-        internal ListConnectorsSuccessResponse()
+        /// <summary> Initializes a new instance of <see cref="ResourceListResult"/> for deserialization. </summary>
+        internal ResourceListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ListConnectorsSuccessResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListConnectorsSuccessResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeListConnectorsSuccessResponse(document.RootElement, options);
+                        return DeserializeResourceListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ListConnectorsSuccessResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListConnectorsSuccessResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConfluentContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeBulkActionsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ListConnectorsSuccessResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ListConnectorsSuccessResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ResourceListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ListConnectorsSuccessResponse IPersistableModel<ListConnectorsSuccessResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ResourceListResult IPersistableModel<ResourceListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ListConnectorsSuccessResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ResourceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ListConnectorsSuccessResponse"/> from. </param>
-        internal static ListConnectorsSuccessResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ResourceListResult"/> from. </param>
+        internal static ResourceListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeListConnectorsSuccessResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeResourceListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ListConnectorsSuccessResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ResourceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListConnectorsSuccessResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListConnectorsSuccessResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ConfluentConnectorData item in Value)
+            foreach (ScheduledActionResourceMetadata item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -118,40 +118,40 @@ namespace Azure.ResourceManager.Confluent.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ListConnectorsSuccessResponse IJsonModel<ListConnectorsSuccessResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ResourceListResult IJsonModel<ResourceListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ListConnectorsSuccessResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListConnectorsSuccessResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListConnectorsSuccessResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeListConnectorsSuccessResponse(document.RootElement, options);
+            return DeserializeResourceListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ListConnectorsSuccessResponse DeserializeListConnectorsSuccessResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static ResourceListResult DeserializeResourceListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<ConfluentConnectorData> value = default;
+            IList<ScheduledActionResourceMetadata> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ConfluentConnectorData> array = new List<ConfluentConnectorData>();
+                    List<ScheduledActionResourceMetadata> array = new List<ScheduledActionResourceMetadata>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ConfluentConnectorData.DeserializeConfluentConnectorData(item, options));
+                        array.Add(ScheduledActionResourceMetadata.DeserializeScheduledActionResourceMetadata(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ListConnectorsSuccessResponse(value, nextLink, additionalBinaryDataProperties);
+            return new ResourceListResult(value ?? new ChangeTrackingList<ScheduledActionResourceMetadata>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
