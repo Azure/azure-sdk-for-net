@@ -10,68 +10,68 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.ResourceManager.Compute.BulkActions;
+using Azure.ResourceManager.Confluent;
 
-namespace Azure.ResourceManager.Compute.BulkActions.Models
+namespace Azure.ResourceManager.Confluent.Models
 {
-    /// <summary> A paged list of recent bulk action errors. </summary>
-    internal partial class ListBulkOperationErrorsResponse : IJsonModel<ListBulkOperationErrorsResponse>
+    /// <summary> Result of GET request to list Confluent operations. </summary>
+    internal partial class GetEnvironmentsResult : IJsonModel<GetEnvironmentsResult>
     {
-        /// <summary> Initializes a new instance of <see cref="ListBulkOperationErrorsResponse"/> for deserialization. </summary>
-        internal ListBulkOperationErrorsResponse()
+        /// <summary> Initializes a new instance of <see cref="GetEnvironmentsResult"/> for deserialization. </summary>
+        internal GetEnvironmentsResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ListBulkOperationErrorsResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual GetEnvironmentsResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListBulkOperationErrorsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetEnvironmentsResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeListBulkOperationErrorsResponse(document.RootElement, options);
+                        return DeserializeGetEnvironmentsResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ListBulkOperationErrorsResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetEnvironmentsResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListBulkOperationErrorsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetEnvironmentsResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeBulkActionsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConfluentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ListBulkOperationErrorsResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetEnvironmentsResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ListBulkOperationErrorsResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<GetEnvironmentsResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ListBulkOperationErrorsResponse IPersistableModel<ListBulkOperationErrorsResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        GetEnvironmentsResult IPersistableModel<GetEnvironmentsResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ListBulkOperationErrorsResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GetEnvironmentsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ListBulkOperationErrorsResponse"/> from. </param>
-        internal static ListBulkOperationErrorsResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GetEnvironmentsResult"/> from. </param>
+        internal static GetEnvironmentsResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeListBulkOperationErrorsResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeGetEnvironmentsResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ListBulkOperationErrorsResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GetEnvironmentsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListBulkOperationErrorsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetEnvironmentsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListBulkOperationErrorsResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GetEnvironmentsResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ComputeBulkOperationResult item in Value)
+            foreach (SCEnvironmentRecordData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -118,40 +118,40 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ListBulkOperationErrorsResponse IJsonModel<ListBulkOperationErrorsResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        GetEnvironmentsResult IJsonModel<GetEnvironmentsResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ListBulkOperationErrorsResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual GetEnvironmentsResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListBulkOperationErrorsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetEnvironmentsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListBulkOperationErrorsResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GetEnvironmentsResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeListBulkOperationErrorsResponse(document.RootElement, options);
+            return DeserializeGetEnvironmentsResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ListBulkOperationErrorsResponse DeserializeListBulkOperationErrorsResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static GetEnvironmentsResult DeserializeGetEnvironmentsResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<ComputeBulkOperationResult> value = default;
+            IList<SCEnvironmentRecordData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ComputeBulkOperationResult> array = new List<ComputeBulkOperationResult>();
+                    List<SCEnvironmentRecordData> array = new List<SCEnvironmentRecordData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ComputeBulkOperationResult.DeserializeComputeBulkOperationResult(item, options));
+                        array.Add(SCEnvironmentRecordData.DeserializeSCEnvironmentRecordData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ListBulkOperationErrorsResponse(value, nextLink, additionalBinaryDataProperties);
+            return new GetEnvironmentsResult(value ?? new ChangeTrackingList<SCEnvironmentRecordData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

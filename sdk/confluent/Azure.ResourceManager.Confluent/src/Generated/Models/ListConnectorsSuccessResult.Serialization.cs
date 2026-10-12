@@ -14,64 +14,64 @@ using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    /// <summary> Result of GET request to list schema registry clusters in the environment of a confluent organization. </summary>
-    internal partial class ListSchemaRegistryClustersResponse : IJsonModel<ListSchemaRegistryClustersResponse>
+    /// <summary> Result of GET request to list connectors in the cluster of a confluent organization. </summary>
+    internal partial class ListConnectorsSuccessResult : IJsonModel<ListConnectorsSuccessResult>
     {
-        /// <summary> Initializes a new instance of <see cref="ListSchemaRegistryClustersResponse"/> for deserialization. </summary>
-        internal ListSchemaRegistryClustersResponse()
+        /// <summary> Initializes a new instance of <see cref="ListConnectorsSuccessResult"/> for deserialization. </summary>
+        internal ListConnectorsSuccessResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ListSchemaRegistryClustersResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ListConnectorsSuccessResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListSchemaRegistryClustersResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ListConnectorsSuccessResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeListSchemaRegistryClustersResponse(document.RootElement, options);
+                        return DeserializeListConnectorsSuccessResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ListSchemaRegistryClustersResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListConnectorsSuccessResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListSchemaRegistryClustersResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ListConnectorsSuccessResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerConfluentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ListSchemaRegistryClustersResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListConnectorsSuccessResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ListSchemaRegistryClustersResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ListConnectorsSuccessResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ListSchemaRegistryClustersResponse IPersistableModel<ListSchemaRegistryClustersResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ListConnectorsSuccessResult IPersistableModel<ListConnectorsSuccessResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ListSchemaRegistryClustersResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ListConnectorsSuccessResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ListSchemaRegistryClustersResponse"/> from. </param>
-        internal static ListSchemaRegistryClustersResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ListConnectorsSuccessResult"/> from. </param>
+        internal static ListConnectorsSuccessResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeListSchemaRegistryClustersResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeListConnectorsSuccessResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ListSchemaRegistryClustersResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ListConnectorsSuccessResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListSchemaRegistryClustersResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ListConnectorsSuccessResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListSchemaRegistryClustersResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ListConnectorsSuccessResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (SchemaRegistryClusterRecord item in Value)
+            foreach (ConfluentConnectorData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -118,40 +118,40 @@ namespace Azure.ResourceManager.Confluent.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ListSchemaRegistryClustersResponse IJsonModel<ListSchemaRegistryClustersResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ListConnectorsSuccessResult IJsonModel<ListConnectorsSuccessResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ListSchemaRegistryClustersResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ListConnectorsSuccessResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListSchemaRegistryClustersResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ListConnectorsSuccessResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListSchemaRegistryClustersResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ListConnectorsSuccessResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeListSchemaRegistryClustersResponse(document.RootElement, options);
+            return DeserializeListConnectorsSuccessResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ListSchemaRegistryClustersResponse DeserializeListSchemaRegistryClustersResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static ListConnectorsSuccessResult DeserializeListConnectorsSuccessResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<SchemaRegistryClusterRecord> value = default;
+            IList<ConfluentConnectorData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<SchemaRegistryClusterRecord> array = new List<SchemaRegistryClusterRecord>();
+                    List<ConfluentConnectorData> array = new List<ConfluentConnectorData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SchemaRegistryClusterRecord.DeserializeSchemaRegistryClusterRecord(item, options));
+                        array.Add(ConfluentConnectorData.DeserializeConfluentConnectorData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ListSchemaRegistryClustersResponse(value, nextLink, additionalBinaryDataProperties);
+            return new ListConnectorsSuccessResult(value ?? new ChangeTrackingList<ConfluentConnectorData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

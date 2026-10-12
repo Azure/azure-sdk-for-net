@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DiskList(value, nextLink, additionalBinaryDataProperties);
+            return new DiskList(value ?? new ChangeTrackingList<ManagedDiskData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

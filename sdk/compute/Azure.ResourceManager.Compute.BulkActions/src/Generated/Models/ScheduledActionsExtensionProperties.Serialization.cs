@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 startsOn,
                 endsOn,
                 schedule,
-                notificationSettings,
+                notificationSettings ?? new ChangeTrackingList<NotificationProperties>(),
                 disabled,
                 provisioningState,
                 resourceNotificationSettings ?? new ChangeTrackingList<NotificationProperties>(),
