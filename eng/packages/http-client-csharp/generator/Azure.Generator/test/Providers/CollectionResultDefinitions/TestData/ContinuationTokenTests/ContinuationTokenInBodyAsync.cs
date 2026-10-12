@@ -86,7 +86,7 @@ namespace Samples
             scope.Start();
             try
             {
-                global::Azure.ErrorOptions errorOptions = _context.Parse().Item2;
+                (global::System.Threading.CancellationToken userCancellationToken, global::Azure.ErrorOptions errorOptions) = _context.Parse();
                 await _client.Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
 
                 if ((message.Response.IsError && ((errorOptions & global::Azure.ErrorOptions.NoThrow) != global::Azure.ErrorOptions.NoThrow)))

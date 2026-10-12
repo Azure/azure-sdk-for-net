@@ -110,22 +110,10 @@ namespace Azure.Generator.Providers.Abstraction
         private MethodBodyStatement[] BuildProcessMessage(HttpMessageApi message, HttpRequestOptionsApi options, bool isAsync, ValueExpression? cancellationToken = null)
         {
             var userCancellationToken = new ParameterProvider("userCancellationToken", $"", new CSharpType(typeof(CancellationToken)));
-            ValueExpression errorOptions;
-            MethodBodyStatement parseOptions;
-            if (cancellationToken is null)
-            {
-                var errorOptionsParameter = new ParameterProvider("errorOptions", $"", new CSharpType(typeof(ErrorOptions)));
-                errorOptions = errorOptionsParameter;
-                parseOptions = new VariableTupleExpression(false, userCancellationToken, errorOptionsParameter).Assign(options.Invoke("Parse")).Terminate();
-            }
-            else
-            {
-                parseOptions = Declare("errorOptions", typeof(ErrorOptions), options.Invoke("Parse").Property("Item2"), out var errorOptionsVariable);
-                errorOptions = errorOptionsVariable;
-            }
+            var errorOptions = new ParameterProvider("errorOptions", $"", new CSharpType(typeof(ErrorOptions)));
             return
             [
-                parseOptions,
+                new VariableTupleExpression(false, userCancellationToken, errorOptions).Assign(options.Invoke("Parse")).Terminate(),
                 Original.Invoke(isAsync ? nameof(HttpPipeline.SendAsync) : nameof(HttpPipeline.Send), [message, cancellationToken ?? userCancellationToken], isAsync).Terminate(),
                 MethodBodyStatement.EmptyLine,
                 new IfStatement(message.Response().IsError().And(new BinaryOperatorExpression("&", errorOptions, options.NoThrow()).NotEqual(options.NoThrow())))
