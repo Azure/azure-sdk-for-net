@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFabricAccessControlListData, NetworkFabricAccessControlListResource>(new AccessControlListsGetByResourceGroupAsyncCollectionResultOfT(_accessControlListsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricAccessControlListCollection.GetAll"), data => new NetworkFabricAccessControlListResource(Client, data));
+            return new AsyncPageableWrapper<NetworkFabricAccessControlListData, NetworkFabricAccessControlListResource>(new NetworkFabricAccessControlListDataAsyncCollectionResultOfT(_accessControlListsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricAccessControlListCollection.GetAll"), data => new NetworkFabricAccessControlListResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFabricAccessControlListData, NetworkFabricAccessControlListResource>(new AccessControlListsGetByResourceGroupCollectionResultOfT(_accessControlListsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricAccessControlListCollection.GetAll"), data => new NetworkFabricAccessControlListResource(Client, data));
+            return new PageableWrapper<NetworkFabricAccessControlListData, NetworkFabricAccessControlListResource>(new NetworkFabricAccessControlListDataCollectionResultOfT(_accessControlListsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricAccessControlListCollection.GetAll"), data => new NetworkFabricAccessControlListResource(Client, data));
         }
 
         /// <summary>

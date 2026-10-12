@@ -74,15 +74,29 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(WebSearchToolboxTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Filters))
+            if (_filtersIsDefined || Optional.IsDefined(Filters))
             {
-                writer.WritePropertyName("filters"u8);
-                writer.WriteObjectValue(Filters, options);
+                if (Filters != null)
+                {
+                    writer.WritePropertyName("filters"u8);
+                    writer.WriteObjectValue(Filters, options);
+                }
+                else
+                {
+                    writer.WriteNull("filters"u8);
+                }
             }
-            if (Optional.IsDefined(UserLocation))
+            if (_userLocationIsDefined || Optional.IsDefined(UserLocation))
             {
-                writer.WritePropertyName("user_location"u8);
-                writer.WriteObjectValue(UserLocation, options);
+                if (UserLocation != null)
+                {
+                    writer.WritePropertyName("user_location"u8);
+                    writer.WriteObjectValue(UserLocation, options);
+                }
+                else
+                {
+                    writer.WriteNull("user_location"u8);
+                }
             }
             if (Optional.IsDefined(SearchContextSize))
             {
@@ -126,7 +140,9 @@ namespace Azure.AI.Projects.Agents
             string description = default;
             IDictionary<string, ToolConfig> toolConfigs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool filtersIsDefined = false;
             WebSearchToolFilters filters = default;
+            bool userLocationIsDefined = false;
             WebSearchToolApproximateLocation userLocation = default;
             WebSearchToolSearchContextSize? searchContextSize = default;
             WebSearchConfiguration customSearchConfiguration = default;
@@ -162,7 +178,7 @@ namespace Azure.AI.Projects.Agents
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, ModelReaderWriter.Read<ToolConfig>(prop0.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default));
+                            dictionary.Add(prop0.Name, ModelReaderWriter.Read<ToolConfig>(prop0.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default));
                         }
                     }
                     toolConfigs = dictionary;
@@ -170,22 +186,24 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("filters"u8))
                 {
+                    filtersIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         filters = null;
                         continue;
                     }
-                    filters = ModelReaderWriter.Read<WebSearchToolFilters>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
+                    filters = ModelReaderWriter.Read<WebSearchToolFilters>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("user_location"u8))
                 {
+                    userLocationIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         userLocation = null;
                         continue;
                     }
-                    userLocation = ModelReaderWriter.Read<WebSearchToolApproximateLocation>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
+                    userLocation = ModelReaderWriter.Read<WebSearchToolApproximateLocation>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("search_context_size"u8))
@@ -203,7 +221,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    customSearchConfiguration = ModelReaderWriter.Read<WebSearchConfiguration>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
+                    customSearchConfiguration = ModelReaderWriter.Read<WebSearchConfiguration>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -220,7 +238,11 @@ namespace Azure.AI.Projects.Agents
                 filters,
                 userLocation,
                 searchContextSize,
-                customSearchConfiguration);
+                customSearchConfiguration)
+            {
+                _filtersIsDefined = filtersIsDefined,
+                _userLocationIsDefined = userLocationIsDefined
+            };
         }
     }
 }

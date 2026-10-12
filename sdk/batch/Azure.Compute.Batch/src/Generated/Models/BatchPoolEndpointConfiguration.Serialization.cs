@@ -146,7 +146,7 @@ namespace Azure.Compute.Batch
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BatchPoolEndpointConfiguration(inboundNatPools, additionalBinaryDataProperties);
+            return new BatchPoolEndpointConfiguration(inboundNatPools ?? new ChangeTrackingList<BatchInboundNatPool>(), additionalBinaryDataProperties);
         }
     }
 }

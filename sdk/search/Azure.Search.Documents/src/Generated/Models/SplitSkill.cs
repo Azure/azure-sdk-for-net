@@ -14,6 +14,17 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> A skill to split a string into chunks of text. </summary>
     public partial class SplitSkill : SearchIndexerSkill
     {
+        private int? _maximumPageLength;
+        internal bool _maximumPageLengthIsDefined;
+        private int? _pageOverlapLength;
+        internal bool _pageOverlapLengthIsDefined;
+        private int? _maximumPagesToTake;
+        internal bool _maximumPagesToTakeIsDefined;
+        private SplitSkillUnit? _unit;
+        internal bool _unitIsDefined;
+        private AzureOpenAITokenizerParameters _azureOpenAITokenizerParameters;
+        internal bool _azureOpenAITokenizerParametersIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="SplitSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
@@ -44,11 +55,11 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             DefaultLanguageCode = defaultLanguageCode;
             TextSplitMode = textSplitMode;
-            MaximumPageLength = maximumPageLength;
-            PageOverlapLength = pageOverlapLength;
-            MaximumPagesToTake = maximumPagesToTake;
-            Unit = unit;
-            AzureOpenAITokenizerParameters = azureOpenAITokenizerParameters;
+            _maximumPageLength = maximumPageLength;
+            _pageOverlapLength = pageOverlapLength;
+            _maximumPagesToTake = maximumPagesToTake;
+            _unit = unit;
+            _azureOpenAITokenizerParameters = azureOpenAITokenizerParameters;
         }
 
         /// <summary> A value indicating which language code to use. Default is `en`. </summary>
@@ -58,18 +69,73 @@ namespace Azure.Search.Documents.Indexes.Models
         public TextSplitMode? TextSplitMode { get; set; }
 
         /// <summary> The desired maximum page length. Default is 10000. </summary>
-        public int? MaximumPageLength { get; set; }
+        public int? MaximumPageLength
+        {
+            get
+            {
+                return _maximumPageLength;
+            }
+            set
+            {
+                _maximumPageLength = value;
+                _maximumPageLengthIsDefined = true;
+            }
+        }
 
         /// <summary> Only applicable when textSplitMode is set to 'pages'. If specified, n+1th chunk will start with this number of characters/tokens from the end of the nth chunk. </summary>
-        public int? PageOverlapLength { get; set; }
+        public int? PageOverlapLength
+        {
+            get
+            {
+                return _pageOverlapLength;
+            }
+            set
+            {
+                _pageOverlapLength = value;
+                _pageOverlapLengthIsDefined = true;
+            }
+        }
 
         /// <summary> Only applicable when textSplitMode is set to 'pages'. If specified, the SplitSkill will discontinue splitting after processing the first 'maximumPagesToTake' pages, in order to improve performance when only a few initial pages are needed from each document. </summary>
-        public int? MaximumPagesToTake { get; set; }
+        public int? MaximumPagesToTake
+        {
+            get
+            {
+                return _maximumPagesToTake;
+            }
+            set
+            {
+                _maximumPagesToTake = value;
+                _maximumPagesToTakeIsDefined = true;
+            }
+        }
 
         /// <summary> Only applies if textSplitMode is set to pages. There are two possible values. The choice of the values will decide the length (maximumPageLength and pageOverlapLength) measurement. The default is 'characters', which means the length will be measured by character. </summary>
-        public SplitSkillUnit? Unit { get; set; }
+        public SplitSkillUnit? Unit
+        {
+            get
+            {
+                return _unit;
+            }
+            set
+            {
+                _unit = value;
+                _unitIsDefined = true;
+            }
+        }
 
         /// <summary> Only applies if the unit is set to azureOpenAITokens. If specified, the splitSkill will use these parameters when performing the tokenization. The parameters are a valid 'encoderModelName' and an optional 'allowedSpecialTokens' property. </summary>
-        public AzureOpenAITokenizerParameters AzureOpenAITokenizerParameters { get; set; }
+        public AzureOpenAITokenizerParameters AzureOpenAITokenizerParameters
+        {
+            get
+            {
+                return _azureOpenAITokenizerParameters;
+            }
+            set
+            {
+                _azureOpenAITokenizerParameters = value;
+                _azureOpenAITokenizerParametersIsDefined = true;
+            }
+        }
     }
 }

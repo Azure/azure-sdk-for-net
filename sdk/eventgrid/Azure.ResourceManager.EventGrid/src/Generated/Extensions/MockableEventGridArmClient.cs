@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new TopicsGetEventTypesAsyncCollectionResultOfT(
+            return new EventTypeUnderTopicAsyncCollectionResultOfT(
                 TopicsRestClient,
                 Guid.Parse(scope.SubscriptionId),
                 scope.ResourceGroupName,
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new TopicsGetEventTypesCollectionResultOfT(
+            return new EventTypeUnderTopicCollectionResultOfT(
                 TopicsRestClient,
                 Guid.Parse(scope.SubscriptionId),
                 scope.ResourceGroupName,

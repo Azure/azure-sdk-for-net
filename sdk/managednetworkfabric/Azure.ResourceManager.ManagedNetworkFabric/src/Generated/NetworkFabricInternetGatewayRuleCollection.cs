@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFabricInternetGatewayRuleData, NetworkFabricInternetGatewayRuleResource>(new InternetGatewayRulesGetByResourceGroupAsyncCollectionResultOfT(_internetGatewayRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricInternetGatewayRuleCollection.GetAll"), data => new NetworkFabricInternetGatewayRuleResource(Client, data));
+            return new AsyncPageableWrapper<NetworkFabricInternetGatewayRuleData, NetworkFabricInternetGatewayRuleResource>(new NetworkFabricInternetGatewayRuleDataAsyncCollectionResultOfT(_internetGatewayRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricInternetGatewayRuleCollection.GetAll"), data => new NetworkFabricInternetGatewayRuleResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFabricInternetGatewayRuleData, NetworkFabricInternetGatewayRuleResource>(new InternetGatewayRulesGetByResourceGroupCollectionResultOfT(_internetGatewayRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricInternetGatewayRuleCollection.GetAll"), data => new NetworkFabricInternetGatewayRuleResource(Client, data));
+            return new PageableWrapper<NetworkFabricInternetGatewayRuleData, NetworkFabricInternetGatewayRuleResource>(new NetworkFabricInternetGatewayRuleDataCollectionResultOfT(_internetGatewayRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricInternetGatewayRuleCollection.GetAll"), data => new NetworkFabricInternetGatewayRuleResource(Client, data));
         }
 
         /// <summary>

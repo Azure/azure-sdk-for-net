@@ -26,13 +26,15 @@ namespace Azure.Identity
         internal const string EnableClientCertificateMtlsProofOfPossessionEnvVar = "AZURE_IDENTITY_ENABLE_CLIENT_CERTIFICATE_MTLS_POP";
 
         /// <summary>
-        /// When <c>true</c>, <see cref="ClientCertificateCredential"/> can request an mTLS proof-of-possession
-        /// token when proof-of-possession was requested by the caller. Intended for first-party callers only. The
-        /// <see cref="System.AppContext"/> switch takes priority over the environment variable.
+        /// When <c>true</c> (the default), <see cref="ClientCertificateCredential"/> can request an mTLS
+        /// proof-of-possession token when proof-of-possession was requested by the caller. Set the switch or
+        /// environment variable to <c>false</c> to force bearer tokens. Intended for first-party callers only.
+        /// The <see cref="System.AppContext"/> switch takes priority over the environment variable.
         /// </summary>
         public static bool EnableClientCertificateMtlsProofOfPossession
             => AppContextSwitchHelper.GetConfigValue(
                 EnableClientCertificateMtlsProofOfPossessionSwitchName,
-                EnableClientCertificateMtlsProofOfPossessionEnvVar);
+                EnableClientCertificateMtlsProofOfPossessionEnvVar,
+                defaultValue: true);
     }
 }

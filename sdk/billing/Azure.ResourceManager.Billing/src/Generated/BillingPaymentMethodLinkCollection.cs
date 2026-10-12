@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingPaymentMethodLinkData, BillingPaymentMethodLinkResource>(new PaymentMethodsGetByBillingProfileAsyncCollectionResultOfT(_paymentMethodsRestClient, Id.Parent.Name, Id.Name, context, "BillingPaymentMethodLinkCollection.GetAll"), data => new BillingPaymentMethodLinkResource(Client, data));
+            return new AsyncPageableWrapper<BillingPaymentMethodLinkData, BillingPaymentMethodLinkResource>(new BillingPaymentMethodLinkDataAsyncCollectionResultOfT(_paymentMethodsRestClient, Id.Parent.Name, Id.Name, context, "BillingPaymentMethodLinkCollection.GetAll"), data => new BillingPaymentMethodLinkResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingPaymentMethodLinkData, BillingPaymentMethodLinkResource>(new PaymentMethodsGetByBillingProfileCollectionResultOfT(_paymentMethodsRestClient, Id.Parent.Name, Id.Name, context, "BillingPaymentMethodLinkCollection.GetAll"), data => new BillingPaymentMethodLinkResource(Client, data));
+            return new PageableWrapper<BillingPaymentMethodLinkData, BillingPaymentMethodLinkResource>(new BillingPaymentMethodLinkDataCollectionResultOfT(_paymentMethodsRestClient, Id.Parent.Name, Id.Name, context, "BillingPaymentMethodLinkCollection.GetAll"), data => new BillingPaymentMethodLinkResource(Client, data));
         }
 
         /// <summary>

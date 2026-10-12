@@ -96,20 +96,34 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("interrupt_response"u8);
                 writer.WriteBooleanValue(InterruptResponse.Value);
             }
-            if (Optional.IsDefined(IdleTimeoutMs))
+            if (_idleTimeoutMsIsDefined || Optional.IsDefined(IdleTimeoutMs))
             {
-                writer.WritePropertyName("idle_timeout_ms"u8);
-                writer.WriteNumberValue(IdleTimeoutMs.Value);
+                if (IdleTimeoutMs != null)
+                {
+                    writer.WritePropertyName("idle_timeout_ms"u8);
+                    writer.WriteNumberValue(IdleTimeoutMs.Value);
+                }
+                else
+                {
+                    writer.WriteNull("idle_timeout_ms"u8);
+                }
             }
             if (Optional.IsDefined(SpeechDurationMs))
             {
                 writer.WritePropertyName("speech_duration_ms"u8);
                 writer.WriteNumberValue(Convert.ToInt32(Math.Round(SpeechDurationMs.Value.TotalMilliseconds)));
             }
-            if (Optional.IsDefined(EndOfUtteranceDetection))
+            if (_endOfUtteranceDetectionIsDefined || Optional.IsDefined(EndOfUtteranceDetection))
             {
-                writer.WritePropertyName("end_of_utterance_detection"u8);
-                writer.WriteObjectValue(EndOfUtteranceDetection, options);
+                if (EndOfUtteranceDetection != null)
+                {
+                    writer.WritePropertyName("end_of_utterance_detection"u8);
+                    writer.WriteObjectValue(EndOfUtteranceDetection, options);
+                }
+                else
+                {
+                    writer.WriteNull("end_of_utterance_detection"u8);
+                }
             }
         }
 
@@ -146,8 +160,10 @@ namespace Azure.AI.Projects.Agents
             long? silenceDurationMs = default;
             bool? createResponse = default;
             bool? interruptResponse = default;
+            bool idleTimeoutMsIsDefined = false;
             long? idleTimeoutMs = default;
             TimeSpan? speechDurationMs = default;
+            bool endOfUtteranceDetectionIsDefined = false;
             VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -212,6 +228,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("idle_timeout_ms"u8))
                 {
+                    idleTimeoutMsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         idleTimeoutMs = null;
@@ -231,6 +248,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("end_of_utterance_detection"u8))
                 {
+                    endOfUtteranceDetectionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         endOfUtteranceDetection = null;
@@ -255,7 +273,11 @@ namespace Azure.AI.Projects.Agents
                 interruptResponse,
                 idleTimeoutMs,
                 speechDurationMs,
-                endOfUtteranceDetection);
+                endOfUtteranceDetection)
+            {
+                _idleTimeoutMsIsDefined = idleTimeoutMsIsDefined,
+                _endOfUtteranceDetectionIsDefined = endOfUtteranceDetectionIsDefined
+            };
         }
     }
 }

@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HybridComputeLicenseData, HybridComputeLicenseResource>(new LicensesGetBySubscriptionAsyncCollectionResultOfT(LicensesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridComputeSubscriptionResource.GetHybridComputeLicenses"), data => new HybridComputeLicenseResource(Client, data));
+            return new AsyncPageableWrapper<HybridComputeLicenseData, HybridComputeLicenseResource>(new HybridComputeLicenseDataAsync0CollectionResultOfT(LicensesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridComputeSubscriptionResource.GetHybridComputeLicenses"), data => new HybridComputeLicenseResource(Client, data));
         }
 
         /// <summary>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HybridComputeLicenseData, HybridComputeLicenseResource>(new LicensesGetBySubscriptionCollectionResultOfT(LicensesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridComputeSubscriptionResource.GetHybridComputeLicenses"), data => new HybridComputeLicenseResource(Client, data));
+            return new PageableWrapper<HybridComputeLicenseData, HybridComputeLicenseResource>(new HybridComputeLicenseData0CollectionResultOfT(LicensesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridComputeSubscriptionResource.GetHybridComputeLicenses"), data => new HybridComputeLicenseResource(Client, data));
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HybridComputeMachineData, HybridComputeMachineResource>(new MachinesGetBySubscriptionAsyncCollectionResultOfT(MachinesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridComputeSubscriptionResource.GetHybridComputeMachines"), data => new HybridComputeMachineResource(Client, data));
+            return new AsyncPageableWrapper<HybridComputeMachineData, HybridComputeMachineResource>(new HybridComputeMachineDataAsync0CollectionResultOfT(MachinesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridComputeSubscriptionResource.GetHybridComputeMachines"), data => new HybridComputeMachineResource(Client, data));
         }
 
         /// <summary>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HybridComputeMachineData, HybridComputeMachineResource>(new MachinesGetBySubscriptionCollectionResultOfT(MachinesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridComputeSubscriptionResource.GetHybridComputeMachines"), data => new HybridComputeMachineResource(Client, data));
+            return new PageableWrapper<HybridComputeMachineData, HybridComputeMachineResource>(new HybridComputeMachineData0CollectionResultOfT(MachinesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridComputeSubscriptionResource.GetHybridComputeMachines"), data => new HybridComputeMachineResource(Client, data));
         }
 
         /// <summary>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ArcGatewayData, ArcGatewayResource>(new GatewaysGetBySubscriptionAsyncCollectionResultOfT(GatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridComputeSubscriptionResource.GetArcGateways"), data => new ArcGatewayResource(Client, data));
+            return new AsyncPageableWrapper<ArcGatewayData, ArcGatewayResource>(new ArcGatewayDataAsync0CollectionResultOfT(GatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridComputeSubscriptionResource.GetArcGateways"), data => new ArcGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ArcGatewayData, ArcGatewayResource>(new GatewaysGetBySubscriptionCollectionResultOfT(GatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridComputeSubscriptionResource.GetArcGateways"), data => new ArcGatewayResource(Client, data));
+            return new PageableWrapper<ArcGatewayData, ArcGatewayResource>(new ArcGatewayData0CollectionResultOfT(GatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridComputeSubscriptionResource.GetArcGateways"), data => new ArcGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HybridComputePrivateLinkScopeData, HybridComputePrivateLinkScopeResource>(new PrivateLinkScopesGetAllAsyncCollectionResultOfT(PrivateLinkScopesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridComputeSubscriptionResource.GetHybridComputePrivateLinkScopes"), data => new HybridComputePrivateLinkScopeResource(Client, data));
+            return new AsyncPageableWrapper<HybridComputePrivateLinkScopeData, HybridComputePrivateLinkScopeResource>(new HybridComputePrivateLinkScopeDataAsync0CollectionResultOfT(PrivateLinkScopesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridComputeSubscriptionResource.GetHybridComputePrivateLinkScopes"), data => new HybridComputePrivateLinkScopeResource(Client, data));
         }
 
         /// <summary>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HybridComputePrivateLinkScopeData, HybridComputePrivateLinkScopeResource>(new PrivateLinkScopesGetAllCollectionResultOfT(PrivateLinkScopesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridComputeSubscriptionResource.GetHybridComputePrivateLinkScopes"), data => new HybridComputePrivateLinkScopeResource(Client, data));
+            return new PageableWrapper<HybridComputePrivateLinkScopeData, HybridComputePrivateLinkScopeResource>(new HybridComputePrivateLinkScopeData0CollectionResultOfT(PrivateLinkScopesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridComputeSubscriptionResource.GetHybridComputePrivateLinkScopes"), data => new HybridComputePrivateLinkScopeResource(Client, data));
         }
 
         /// <summary>

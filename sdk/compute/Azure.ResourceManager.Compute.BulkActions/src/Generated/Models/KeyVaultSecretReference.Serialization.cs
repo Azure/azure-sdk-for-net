@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Describes a reference to Key Vault Secret. </summary>
+    /// <summary> A reference to a secret stored in Azure Key Vault. </summary>
     public partial class KeyVaultSecretReference : IJsonModel<KeyVaultSecretReference>
     {
         /// <summary> Initializes a new instance of <see cref="KeyVaultSecretReference"/> for deserialization. </summary>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new KeyVaultSecretReference(secretUri, sourceVault, additionalBinaryDataProperties);

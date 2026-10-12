@@ -116,35 +116,70 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteObjectValue(CredentialsInternal, options);
             writer.WritePropertyName("container"u8);
             writer.WriteObjectValue(Container, options);
-            if (Optional.IsDefined(Identity))
+            if (_identityIsDefined || Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                if (Identity != null)
+                {
+                    writer.WritePropertyName("identity"u8);
+                    writer.WriteObjectValue(Identity, options);
+                }
+                else
+                {
+                    writer.WriteNull("identity"u8);
+                }
             }
             if (Optional.IsCollectionDefined(IndexerPermissionOptions))
             {
-                writer.WritePropertyName("indexerPermissionOptions"u8);
-                writer.WriteStartArray();
-                foreach (IndexerPermissionOption item in IndexerPermissionOptions)
+                if (IndexerPermissionOptions != null)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WritePropertyName("indexerPermissionOptions"u8);
+                    writer.WriteStartArray();
+                    foreach (IndexerPermissionOption item in IndexerPermissionOptions)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("indexerPermissionOptions"u8);
+                }
             }
-            if (Optional.IsDefined(DataChangeDetectionPolicy))
+            if (_dataChangeDetectionPolicyIsDefined || Optional.IsDefined(DataChangeDetectionPolicy))
             {
-                writer.WritePropertyName("dataChangeDetectionPolicy"u8);
-                writer.WriteObjectValue(DataChangeDetectionPolicy, options);
+                if (DataChangeDetectionPolicy != null)
+                {
+                    writer.WritePropertyName("dataChangeDetectionPolicy"u8);
+                    writer.WriteObjectValue(DataChangeDetectionPolicy, options);
+                }
+                else
+                {
+                    writer.WriteNull("dataChangeDetectionPolicy"u8);
+                }
             }
-            if (Optional.IsDefined(DataDeletionDetectionPolicy))
+            if (_dataDeletionDetectionPolicyIsDefined || Optional.IsDefined(DataDeletionDetectionPolicy))
             {
-                writer.WritePropertyName("dataDeletionDetectionPolicy"u8);
-                writer.WriteObjectValue(DataDeletionDetectionPolicy, options);
+                if (DataDeletionDetectionPolicy != null)
+                {
+                    writer.WritePropertyName("dataDeletionDetectionPolicy"u8);
+                    writer.WriteObjectValue(DataDeletionDetectionPolicy, options);
+                }
+                else
+                {
+                    writer.WriteNull("dataDeletionDetectionPolicy"u8);
+                }
             }
-            if (Optional.IsDefined(EncryptionKey))
+            if (_encryptionKeyIsDefined || Optional.IsDefined(EncryptionKey))
             {
-                writer.WritePropertyName("encryptionKey"u8);
-                writer.WriteObjectValue(EncryptionKey, options);
+                if (EncryptionKey != null)
+                {
+                    writer.WritePropertyName("encryptionKey"u8);
+                    writer.WriteObjectValue(EncryptionKey, options);
+                }
+                else
+                {
+                    writer.WriteNull("encryptionKey"u8);
+                }
             }
             if (Optional.IsDefined(_etag))
             {
@@ -199,10 +234,14 @@ namespace Azure.Search.Documents.Indexes.Models
             string subType = default;
             DataSourceCredentials credentialsInternal = default;
             SearchIndexerDataContainer container = default;
+            bool identityIsDefined = false;
             SearchIndexerDataIdentity identity = default;
-            IList<IndexerPermissionOption> indexerPermissionOptions = default;
+            IList<IndexerPermissionOption> indexerPermissionOptions = new ChangeTrackingList<IndexerPermissionOption>();
+            bool dataChangeDetectionPolicyIsDefined = false;
             DataChangeDetectionPolicy dataChangeDetectionPolicy = default;
+            bool dataDeletionDetectionPolicyIsDefined = false;
             DataDeletionDetectionPolicy dataDeletionDetectionPolicy = default;
+            bool encryptionKeyIsDefined = false;
             SearchResourceEncryptionKey encryptionKey = default;
             string etag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -240,6 +279,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("identity"u8))
                 {
+                    identityIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         identity = null;
@@ -252,6 +292,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        indexerPermissionOptions = null;
                         continue;
                     }
                     List<IndexerPermissionOption> array = new List<IndexerPermissionOption>();
@@ -264,6 +305,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("dataChangeDetectionPolicy"u8))
                 {
+                    dataChangeDetectionPolicyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         dataChangeDetectionPolicy = null;
@@ -274,6 +316,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("dataDeletionDetectionPolicy"u8))
                 {
+                    dataDeletionDetectionPolicyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         dataDeletionDetectionPolicy = null;
@@ -284,6 +327,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("encryptionKey"u8))
                 {
+                    encryptionKeyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         encryptionKey = null;
@@ -310,12 +354,18 @@ namespace Azure.Search.Documents.Indexes.Models
                 credentialsInternal,
                 container,
                 identity,
-                indexerPermissionOptions ?? new ChangeTrackingList<IndexerPermissionOption>(),
+                indexerPermissionOptions,
                 dataChangeDetectionPolicy,
                 dataDeletionDetectionPolicy,
                 encryptionKey,
                 etag,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _identityIsDefined = identityIsDefined,
+                _dataChangeDetectionPolicyIsDefined = dataChangeDetectionPolicyIsDefined,
+                _dataDeletionDetectionPolicyIsDefined = dataDeletionDetectionPolicyIsDefined,
+                _encryptionKeyIsDefined = encryptionKeyIsDefined
+            };
         }
     }
 }

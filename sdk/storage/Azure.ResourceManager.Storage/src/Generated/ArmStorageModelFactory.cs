@@ -1905,7 +1905,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.StorageConnectorSource"/> instance for mocking. </returns>
         public static StorageConnectorSource StorageConnectorSource(string @type = default)
         {
-            return new UnknownStorageConnectorSource(default, default);
+            return new UnknownStorageConnectorSource(@type is null ? default : new StorageConnectorSourceType(@type), default);
         }
 
         /// <summary> The properties of data share source. </summary>
@@ -1914,7 +1914,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.DataShareSource"/> instance for mocking. </returns>
         public static DataShareSource DataShareSource(StorageConnectorConnection connection = default, StorageConnectorAuthProperties authProperties = default)
         {
-            return new DataShareSource(default, default, connection, authProperties);
+            return new DataShareSource(StorageConnectorSourceType.DataShare, default, connection, authProperties);
         }
 
         /// <summary>
@@ -1925,7 +1925,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.StorageConnectorConnection"/> instance for mocking. </returns>
         public static StorageConnectorConnection StorageConnectorConnection(string @type = default)
         {
-            return new UnknownStorageConnectorConnection(default, default);
+            return new UnknownStorageConnectorConnection(@type is null ? default : new StorageConnectorConnectionType(@type), default);
         }
 
         /// <summary> The connection details for Data Share source. </summary>
@@ -1933,7 +1933,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.DataShareConnection"/> instance for mocking. </returns>
         public static DataShareConnection DataShareConnection(string dataShareUri = default)
         {
-            return new DataShareConnection(default, default, dataShareUri);
+            return new DataShareConnection(StorageConnectorConnectionType.DataShare, default, dataShareUri);
         }
 
         /// <summary>
@@ -1944,7 +1944,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.StorageConnectorAuthProperties"/> instance for mocking. </returns>
         public static StorageConnectorAuthProperties StorageConnectorAuthProperties(string @type = default)
         {
-            return new UnknownStorageConnectorAuthProperties(default, default);
+            return new UnknownStorageConnectorAuthProperties(@type is null ? default : new StorageConnectorAuthType(@type), default);
         }
 
         /// <summary> The managed identity auth properties for dataShare connection. </summary>
@@ -1952,7 +1952,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.StorageConnectorManagedIdentityAuth"/> instance for mocking. </returns>
         public static StorageConnectorManagedIdentityAuth StorageConnectorManagedIdentityAuth(string identityResourceId = default)
         {
-            return new StorageConnectorManagedIdentityAuth(default, default, identityResourceId);
+            return new StorageConnectorManagedIdentityAuth(StorageConnectorAuthType.ManagedIdentity, default, identityResourceId);
         }
 
         /// <summary> A Connector is a tracked ARM resource modeled as a sub-resource of a Storage Account. </summary>
@@ -1999,7 +1999,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.StorageConnectorSourcePatch"/> instance for mocking. </returns>
         public static StorageConnectorSourcePatch StorageConnectorSourcePatch(string @type = default)
         {
-            return new UnknownStorageConnectorSourcePatch(default, default);
+            return new UnknownStorageConnectorSourcePatch(@type is null ? default : new StorageConnectorSourceType(@type), default);
         }
 
         /// <summary> The properties of data share source. </summary>
@@ -2007,7 +2007,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.DataShareSourcePatch"/> instance for mocking. </returns>
         public static DataShareSourcePatch DataShareSourcePatch(StorageConnectorAuthPropertiesPatch authProperties = default)
         {
-            return new DataShareSourcePatch(default, default, authProperties);
+            return new DataShareSourcePatch(StorageConnectorSourceType.DataShare, default, authProperties);
         }
 
         /// <summary>
@@ -2018,7 +2018,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.StorageConnectorAuthPropertiesPatch"/> instance for mocking. </returns>
         public static StorageConnectorAuthPropertiesPatch StorageConnectorAuthPropertiesPatch(string @type = default)
         {
-            return new UnknownStorageConnectorAuthPropertiesPatch(default, default);
+            return new UnknownStorageConnectorAuthPropertiesPatch(@type is null ? default : new StorageConnectorAuthType(@type), default);
         }
 
         /// <summary> The managed identity auth properties for dataShare connection. </summary>
@@ -2026,7 +2026,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.StorageConnectorManagedIdentityAuthPatch"/> instance for mocking. </returns>
         public static StorageConnectorManagedIdentityAuthPatch StorageConnectorManagedIdentityAuthPatch(string identityResourceId = default)
         {
-            return new StorageConnectorManagedIdentityAuthPatch(default, default, identityResourceId);
+            return new StorageConnectorManagedIdentityAuthPatch(StorageConnectorAuthType.ManagedIdentity, default, identityResourceId);
         }
 
         /// <summary> The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'. </summary>
@@ -2251,7 +2251,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="keyEncryptionKeyIdentity"> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </param>
         /// <param name="keyEncryptionKeyUri"> key encryption key Url, versioned or non-versioned. Ex: https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78 or https://contosovault.vault.azure.net/keys/contosokek. </param>
         /// <returns> A new <see cref="Models.CustomerManagedKeyEncryption"/> instance for mocking. </returns>
-        public static CustomerManagedKeyEncryption CustomerManagedKeyEncryption(KeyEncryptionKeyIdentity keyEncryptionKeyIdentity = default, string keyEncryptionKeyUri = default)
+        public static CustomerManagedKeyEncryption CustomerManagedKeyEncryption(KeyEncryptionKeyIdentity keyEncryptionKeyIdentity = default, Uri keyEncryptionKeyUri = default)
         {
             return new CustomerManagedKeyEncryption(keyEncryptionKeyIdentity, keyEncryptionKeyUri, default);
         }
@@ -2310,16 +2310,16 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="description"> Container description. </param>
         /// <param name="modelName"> The model name associated with this container (e.g., gpt-4, claude-3). </param>
         /// <param name="provider"> The AI provider associated with this container. </param>
-        /// <param name="timeToLive"> The Time to Live (TTL) in days (1–30) for this container. Blobs in the container that have not been accessed within this number of days will be automatically deleted. If not specified at creation time, it defaults to 1 day. </param>
+        /// <param name="timeToLiveInDays"> The Time to Live (TTL) in days (1–30) for this container. Blobs in the container that have not been accessed within this number of days will be automatically deleted. If not specified at creation time, it defaults to 1 day. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.ContextCacheContainerProperties"/> instance for mocking. </returns>
-        public static ContextCacheContainerProperties ContextCacheContainerProperties(string description = default, string modelName = default, AiProvider provider = default, int? timeToLive = default, ContextCacheProvisioningState? provisioningState = default)
+        public static ContextCacheContainerProperties ContextCacheContainerProperties(string description = default, string modelName = default, AIProvider provider = default, int? timeToLiveInDays = default, ContextCacheProvisioningState? provisioningState = default)
         {
             return new ContextCacheContainerProperties(
                 description,
                 modelName,
                 provider,
-                timeToLive,
+                timeToLiveInDays,
                 provisioningState,
                 default);
         }
@@ -2334,11 +2334,11 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Updatable properties of a container within a Context Cache. </summary>
         /// <param name="description"> Container description. </param>
-        /// <param name="timeToLive"> The Time to Live (TTL) in days (1–30) for this container. Blobs in the container that have not been accessed within this number of days will be automatically deleted. </param>
+        /// <param name="timeToLiveInDays"> The Time to Live (TTL) in days (1–30) for this container. Blobs in the container that have not been accessed within this number of days will be automatically deleted. </param>
         /// <returns> A new <see cref="Models.ContextCacheContainerPropertiesPatch"/> instance for mocking. </returns>
-        public static ContextCacheContainerPropertiesPatch ContextCacheContainerPropertiesPatch(string description = default, int? timeToLive = default)
+        public static ContextCacheContainerPropertiesPatch ContextCacheContainerPropertiesPatch(string description = default, int? timeToLiveInDays = default)
         {
-            return new ContextCacheContainerPropertiesPatch(description, timeToLive, default);
+            return new ContextCacheContainerPropertiesPatch(description, timeToLiveInDays, default);
         }
 
         /// <summary> The advanced platform metrics rule for the storage account. </summary>
@@ -2361,18 +2361,18 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> An object that defines the advanced platform metrics rule. </summary>
         /// <param name="ruleType"> Indicates the type of the advanced platform metrics rule. Possible values include: ContainerLevelCapacityMetrics. </param>
-        /// <param name="enabled"> A boolean flag which enables the advanced platform metrics rule. </param>
+        /// <param name="isEnabled"> A boolean flag which enables the advanced platform metrics rule. </param>
         /// <param name="lastModifiedOn"> Gets the last modification date and time of the advanced platform metrics rule in UTC. </param>
         /// <param name="metricsEmitted"> The metrics emitted by the rule. Metrics are mapped according to the rule type from RuleTypeProperty. Rule type to metrics mapping: ContainerLevelCapacityMetrics =&gt; {ContainerUsedSize, ContainerBlobCount}. </param>
         /// <param name="ruleConfig"> Configuration for the advanced platform metrics rule. </param>
         /// <returns> A new <see cref="Models.AdvancedPlatformMetricsRuleProperties"/> instance for mocking. </returns>
-        public static AdvancedPlatformMetricsRuleProperties AdvancedPlatformMetricsRuleProperties(AdvancedPlatformMetricsRuleType? ruleType = default, bool enabled = default, DateTimeOffset? lastModifiedOn = default, IEnumerable<MetricsEmitted> metricsEmitted = default, AdvancedPlatformMetricsRuleConfig ruleConfig = default)
+        public static AdvancedPlatformMetricsRuleProperties AdvancedPlatformMetricsRuleProperties(AdvancedPlatformMetricsRuleType? ruleType = default, bool isEnabled = default, DateTimeOffset? lastModifiedOn = default, IEnumerable<MetricsEmitted> metricsEmitted = default, AdvancedPlatformMetricsRuleConfig ruleConfig = default)
         {
             metricsEmitted ??= new ChangeTrackingList<MetricsEmitted>();
 
             return new AdvancedPlatformMetricsRuleProperties(
                 ruleType,
-                enabled,
+                isEnabled,
                 lastModifiedOn,
                 (metricsEmitted ?? new ChangeTrackingList<MetricsEmitted>()).ToList(),
                 ruleConfig,

@@ -212,6 +212,7 @@ namespace Azure.Identity
                 ManagedIdentityId = managedIdentityId,
                 InitialImdsConnectionTimeout = TimeSpan.FromSeconds(1),
                 IsForceRefreshEnabled = source.IsForceRefreshEnabled,
+                EnableMtlsProofOfPossession = source.EnableMtlsProofOfPossession,
             };
 
             return new ManagedIdentityCredential(new ManagedIdentityClient(miOptions));

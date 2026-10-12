@@ -18,8 +18,8 @@ namespace Azure.Analytics.Defender.Easm
         private const string ContactValue = "contact";
         private const string DomainValue = "domain";
         private const string HostValue = "host";
-        private const string IpAddressValue = "ipAddress";
-        private const string IpBlockValue = "ipBlock";
+        private const string IPAddressValue = "ipAddress";
+        private const string IPBlockValue = "ipBlock";
         private const string PageValue = "page";
         private const string SslCertValue = "sslCert";
 
@@ -45,11 +45,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the Host. </summary>
         public static AssetKind Host { get; } = new AssetKind(HostValue);
 
-        /// <summary> Gets the IpAddress. </summary>
-        public static AssetKind IpAddress { get; } = new AssetKind(IpAddressValue);
+        /// <summary> Gets the IPAddress. </summary>
+        public static AssetKind IPAddress { get; } = new AssetKind(IPAddressValue);
 
-        /// <summary> Gets the IpBlock. </summary>
-        public static AssetKind IpBlock { get; } = new AssetKind(IpBlockValue);
+        /// <summary> Gets the IPBlock. </summary>
+        public static AssetKind IPBlock { get; } = new AssetKind(IPBlockValue);
 
         /// <summary> Gets the Page. </summary>
         public static AssetKind Page { get; } = new AssetKind(PageValue);

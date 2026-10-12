@@ -122,7 +122,7 @@ namespace Azure.Generator.Providers
                 : NextTokenField!.Type;
 
             statements.Add(Declare("nextPage", nextPageType, _paging.NextLink != null ?
-                new TernaryConditionalExpression(ContinuationTokenParameter.NotEqual(Null), New.Instance<Uri>(ContinuationTokenParameter), Null) :
+                new TernaryConditionalExpression(ContinuationTokenParameter.NotEqual(Null), New.Instance<Uri>(ContinuationTokenParameter, FrameworkEnumValue(UriKind.RelativeOrAbsolute)), Null) :
                 ContinuationTokenParameter.NullCoalesce(NextTokenField!), out var nextPageVariable));
 
             var whileStatement = new WhileStatement(True)

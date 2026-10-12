@@ -84,10 +84,17 @@ namespace Azure.AI.Projects.Agents
             }
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model);
-            if (Optional.IsDefined(Instructions))
+            if (_instructionsIsDefined || Optional.IsDefined(Instructions))
             {
-                writer.WritePropertyName("instructions"u8);
-                writer.WriteStringValue(Instructions);
+                if (Instructions != null)
+                {
+                    writer.WritePropertyName("instructions"u8);
+                    writer.WriteStringValue(Instructions);
+                }
+                else
+                {
+                    writer.WriteNull("instructions"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Skills))
             {
@@ -99,15 +106,29 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Temperature))
+            if (_temperatureIsDefined || Optional.IsDefined(Temperature))
             {
-                writer.WritePropertyName("temperature"u8);
-                writer.WriteNumberValue(Temperature.Value);
+                if (Temperature != null)
+                {
+                    writer.WritePropertyName("temperature"u8);
+                    writer.WriteNumberValue(Temperature.Value);
+                }
+                else
+                {
+                    writer.WriteNull("temperature"u8);
+                }
             }
-            if (Optional.IsDefined(TopP))
+            if (_topPIsDefined || Optional.IsDefined(TopP))
             {
-                writer.WritePropertyName("top_p"u8);
-                writer.WriteNumberValue(TopP.Value);
+                if (TopP != null)
+                {
+                    writer.WritePropertyName("top_p"u8);
+                    writer.WriteNumberValue(TopP.Value);
+                }
+                else
+                {
+                    writer.WriteNull("top_p"u8);
+                }
             }
             if (Optional.IsDefined(ReasoningOptions))
             {
@@ -184,9 +205,12 @@ namespace Azure.AI.Projects.Agents
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             AgentHarness harness = default;
             string model = default;
+            bool instructionsIsDefined = false;
             string instructions = default;
             IList<SkillReference> skills = default;
+            bool temperatureIsDefined = false;
             float? temperature = default;
+            bool topPIsDefined = false;
             float? topP = default;
             ResponseReasoningOptions reasoningOptions = default;
             IList<ResponseTool> tools = default;
@@ -225,6 +249,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("instructions"u8))
                 {
+                    instructionsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         instructions = null;
@@ -249,6 +274,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("temperature"u8))
                 {
+                    temperatureIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         temperature = null;
@@ -259,6 +285,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("top_p"u8))
                 {
+                    topPIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         topP = null;
@@ -324,7 +351,12 @@ namespace Azure.AI.Projects.Agents
                 tools ?? new ChangeTrackingList<ResponseTool>(),
                 toolChoice,
                 textOptions,
-                structuredInputs ?? new ChangeTrackingDictionary<string, StructuredInputDefinition>());
+                structuredInputs ?? new ChangeTrackingDictionary<string, StructuredInputDefinition>())
+            {
+                _instructionsIsDefined = instructionsIsDefined,
+                _temperatureIsDefined = temperatureIsDefined,
+                _topPIsDefined = topPIsDefined
+            };
         }
     }
 }

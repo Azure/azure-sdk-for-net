@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanActionDetails"/>. </summary>
+        protected RecoveryPlanActionDetails() : this(default)
+        {
+        }
+
         /// <summary> Gets the type of action details (see RecoveryPlanActionDetailsTypes enum for possible values). </summary>
         internal string InstanceType { get; set; }
     }

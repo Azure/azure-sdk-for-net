@@ -296,7 +296,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ZooData, ZooResource>(new ZoosGetAllAsyncCollectionResultOfT(_zoosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ZooCollection.GetAll"), data => new ZooResource(Client, data));
+            return new AsyncPageableWrapper<ZooData, ZooResource>(new ZooDataAsyncCollectionResultOfT(_zoosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ZooCollection.GetAll"), data => new ZooResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ZooData, ZooResource>(new ZoosGetAllCollectionResultOfT(_zoosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ZooCollection.GetAll"), data => new ZooResource(Client, data));
+            return new PageableWrapper<ZooData, ZooResource>(new ZooDataCollectionResultOfT(_zoosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ZooCollection.GetAll"), data => new ZooResource(Client, data));
         }
 
         /// <summary>

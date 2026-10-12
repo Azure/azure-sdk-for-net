@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             TryGetApiVersion(MeshUpgradeProfileResource.ResourceType, out string meshUpgradeProfileApiVersion);
             _meshUpgradeProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", MeshUpgradeProfileResource.ResourceType.Namespace, Diagnostics);
-            _meshUpgradeProfilesRestClient = new MeshUpgradeProfiles(_meshUpgradeProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, meshUpgradeProfileApiVersion ?? "2026-06-02-preview");
+            _meshUpgradeProfilesRestClient = new MeshUpgradeProfiles(_meshUpgradeProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, meshUpgradeProfileApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MeshUpgradeProfileData, MeshUpgradeProfileResource>(new MeshUpgradeProfilesGetMeshUpgradeProfilesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MeshUpgradeProfileData, MeshUpgradeProfileResource>(new MeshUpgradeProfileDataAsyncCollectionResultOfT(
                 _meshUpgradeProfilesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MeshUpgradeProfileData, MeshUpgradeProfileResource>(new MeshUpgradeProfilesGetMeshUpgradeProfilesCollectionResultOfT(
+            return new PageableWrapper<MeshUpgradeProfileData, MeshUpgradeProfileResource>(new MeshUpgradeProfileDataCollectionResultOfT(
                 _meshUpgradeProfilesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>

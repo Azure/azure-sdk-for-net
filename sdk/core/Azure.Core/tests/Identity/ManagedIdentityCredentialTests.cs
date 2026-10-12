@@ -54,16 +54,16 @@ namespace Azure.Core.Tests.Identity
         }
 
         [Test]
-        public void MtlsProofOfPossessionIsOptIn()
+        public void MtlsProofOfPossessionIsOnByDefault()
         {
 #pragma warning disable AZID0004 // Testing experimental mTLS proof-of-possession API
             var options = new ManagedIdentityCredentialOptions();
 
-            Assert.IsFalse(options.EnableMtlsProofOfPossession);
-
-            options.EnableMtlsProofOfPossession = true;
-
             Assert.IsTrue(options.EnableMtlsProofOfPossession);
+
+            options.EnableMtlsProofOfPossession = false;
+
+            Assert.IsFalse(options.EnableMtlsProofOfPossession);
 #pragma warning restore AZID0004
         }
 

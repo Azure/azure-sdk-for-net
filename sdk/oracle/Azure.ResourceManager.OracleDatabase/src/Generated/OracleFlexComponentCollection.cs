@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OracleFlexComponentData, OracleFlexComponentResource>(new FlexComponentsGetByParentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<OracleFlexComponentData, OracleFlexComponentResource>(new OracleFlexComponentDataAsyncCollectionResultOfT(
                 _flexComponentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _location,
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OracleFlexComponentData, OracleFlexComponentResource>(new FlexComponentsGetByParentCollectionResultOfT(
+            return new PageableWrapper<OracleFlexComponentData, OracleFlexComponentResource>(new OracleFlexComponentDataCollectionResultOfT(
                 _flexComponentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _location,

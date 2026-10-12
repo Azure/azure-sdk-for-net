@@ -13,7 +13,6 @@ using System.Xml;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
-using Azure.Security.Attestation.Models;
 using NUnit.Framework;
 
 namespace Azure.Security.Attestation.Tests.Samples

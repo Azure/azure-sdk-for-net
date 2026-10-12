@@ -260,11 +260,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 channelId,
                 additionalBinaryDataProperties,
                 queueId,
-                labels,
-                tags,
+                labels ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 priority,
-                expiredAttachedWorkerSelectors,
-                expiredRequestedWorkerSelectors,
+                expiredAttachedWorkerSelectors ?? new ChangeTrackingList<AcsRouterWorkerSelector>(),
+                expiredRequestedWorkerSelectors ?? new ChangeTrackingList<AcsRouterWorkerSelector>(),
                 scheduledOn,
                 failureReason);
         }

@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SourceAddressInfo(cidrs ?? new ChangeTrackingList<string>(), countries ?? new ChangeTrackingList<string>(), feeds ?? new ChangeTrackingList<string>(), prefixLists ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);

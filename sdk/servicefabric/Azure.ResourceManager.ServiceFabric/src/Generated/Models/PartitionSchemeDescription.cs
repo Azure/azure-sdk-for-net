@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="PartitionSchemeDescription"/>. </summary>
+        protected PartitionSchemeDescription() : this(default)
+        {
+        }
+
         /// <summary> Specifies how the service is partitioned. </summary>
         internal ApplicationPartitionScheme PartitionScheme { get; set; }
     }

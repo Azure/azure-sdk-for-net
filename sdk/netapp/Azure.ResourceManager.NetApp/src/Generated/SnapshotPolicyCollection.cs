@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SnapshotPolicyData, SnapshotPolicyResource>(new SnapshotPoliciesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SnapshotPolicyData, SnapshotPolicyResource>(new SnapshotPolicyDataAsyncCollectionResultOfT(
                 _snapshotPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SnapshotPolicyData, SnapshotPolicyResource>(new SnapshotPoliciesGetAllCollectionResultOfT(
+            return new PageableWrapper<SnapshotPolicyData, SnapshotPolicyResource>(new SnapshotPolicyDataCollectionResultOfT(
                 _snapshotPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

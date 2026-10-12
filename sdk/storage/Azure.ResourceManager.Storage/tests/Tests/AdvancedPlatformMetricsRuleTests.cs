@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Storage.Tests
             //validate created rule
             Assert.IsNotNull(rule.Data.Properties);
             Assert.AreEqual(ruleType, rule.Data.Properties.RuleType);
-            Assert.IsTrue(rule.Data.Properties.Enabled);
+            Assert.IsTrue(rule.Data.Properties.IsEnabled);
             Assert.AreEqual(AdvancedPlatformMetricsFilterType.AllContainersFilter, rule.Data.Properties.RuleConfig.FilterType);
             Assert.IsNotNull(rule.Data.Properties.LastModifiedOn);
             Assert.IsNotNull(rule.Data.Properties.MetricsEmitted);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Storage.Tests
             //get rule
             AdvancedPlatformMetricsRuleResource retrieved = (await ruleCollection.GetAsync(ruleType)).Value;
             Assert.AreEqual(rule.Data.Properties.RuleType, retrieved.Data.Properties.RuleType);
-            Assert.AreEqual(rule.Data.Properties.Enabled, retrieved.Data.Properties.Enabled);
+            Assert.AreEqual(rule.Data.Properties.IsEnabled, retrieved.Data.Properties.IsEnabled);
             Assert.AreEqual(rule.Data.Properties.RuleConfig.FilterType, retrieved.Data.Properties.RuleConfig.FilterType);
 
             //list rules
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Storage.Tests
             };
             updatedData.Properties.RuleConfig.FilterValues.Add(containerName);
             AdvancedPlatformMetricsRuleResource updated = (await rule.UpdateAsync(WaitUntil.Completed, updatedData)).Value;
-            Assert.IsFalse(updated.Data.Properties.Enabled);
+            Assert.IsFalse(updated.Data.Properties.IsEnabled);
             Assert.AreEqual(AdvancedPlatformMetricsFilterType.ContainerListFilter, updated.Data.Properties.RuleConfig.FilterType);
             Assert.AreEqual(1, updated.Data.Properties.RuleConfig.FilterValues.Count);
             Assert.AreEqual(containerName, updated.Data.Properties.RuleConfig.FilterValues[0]);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Storage.Tests
             };
             prefixData.Properties.RuleConfig.FilterValues.Add(namePrefix);
             AdvancedPlatformMetricsRuleResource prefixUpdated = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleType, prefixData)).Value;
-            Assert.IsTrue(prefixUpdated.Data.Properties.Enabled);
+            Assert.IsTrue(prefixUpdated.Data.Properties.IsEnabled);
             Assert.AreEqual(AdvancedPlatformMetricsFilterType.ContainerPrefixFilter, prefixUpdated.Data.Properties.RuleConfig.FilterType);
             Assert.AreEqual(1, prefixUpdated.Data.Properties.RuleConfig.FilterValues.Count);
             Assert.AreEqual(namePrefix, prefixUpdated.Data.Properties.RuleConfig.FilterValues[0]);

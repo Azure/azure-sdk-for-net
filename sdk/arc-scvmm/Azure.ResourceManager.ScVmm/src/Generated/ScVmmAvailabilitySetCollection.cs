@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ScVmm
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScVmmAvailabilitySetData, ScVmmAvailabilitySetResource>(new AvailabilitySetsGetByResourceGroupAsyncCollectionResultOfT(_availabilitySetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScVmmAvailabilitySetCollection.GetAll"), data => new ScVmmAvailabilitySetResource(Client, data));
+            return new AsyncPageableWrapper<ScVmmAvailabilitySetData, ScVmmAvailabilitySetResource>(new ScVmmAvailabilitySetDataAsyncCollectionResultOfT(_availabilitySetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScVmmAvailabilitySetCollection.GetAll"), data => new ScVmmAvailabilitySetResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ScVmm
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScVmmAvailabilitySetData, ScVmmAvailabilitySetResource>(new AvailabilitySetsGetByResourceGroupCollectionResultOfT(_availabilitySetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScVmmAvailabilitySetCollection.GetAll"), data => new ScVmmAvailabilitySetResource(Client, data));
+            return new PageableWrapper<ScVmmAvailabilitySetData, ScVmmAvailabilitySetResource>(new ScVmmAvailabilitySetDataCollectionResultOfT(_availabilitySetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScVmmAvailabilitySetCollection.GetAll"), data => new ScVmmAvailabilitySetResource(Client, data));
         }
 
         /// <summary>

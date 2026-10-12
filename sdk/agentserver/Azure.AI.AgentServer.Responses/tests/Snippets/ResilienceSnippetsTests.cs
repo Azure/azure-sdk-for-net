@@ -161,7 +161,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
                     // Persist a durable snapshot at the phase boundary
                     // (no-op unless resilient background).
-                    yield return stream.Checkpoint();
+                    yield return stream.CreateCheckpointEvent();
                 }
 
                 yield return stream.EmitCompleted();
@@ -250,7 +250,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 {
                     if (cancellationToken.IsCancellationRequested)
                     {
-                        if (context.ClientCancelled)
+                        if (context.IsClientCancelled)
                         {
                             yield break; // client cancelled — no terminal
                         }

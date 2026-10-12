@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkloadNetworkPortMirroringProfileData, WorkloadNetworkPortMirroringProfileResource>(new WorkloadNetworksGetPortMirroringAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WorkloadNetworkPortMirroringProfileData, WorkloadNetworkPortMirroringProfileResource>(new WorkloadNetworkPortMirroringProfileDataAsyncCollectionResultOfT(
                 _workloadNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkloadNetworkPortMirroringProfileData, WorkloadNetworkPortMirroringProfileResource>(new WorkloadNetworksGetPortMirroringCollectionResultOfT(
+            return new PageableWrapper<WorkloadNetworkPortMirroringProfileData, WorkloadNetworkPortMirroringProfileResource>(new WorkloadNetworkPortMirroringProfileDataCollectionResultOfT(
                 _workloadNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

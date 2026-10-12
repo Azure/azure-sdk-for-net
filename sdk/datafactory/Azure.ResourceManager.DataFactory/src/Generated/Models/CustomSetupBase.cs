@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// The base definition of the custom setup.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CmdkeySetup"/>, <see cref="EnvironmentVariableSetup"/>, <see cref="ComponentSetup"/>, and <see cref="AzPowerShellSetup"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzPowerShellSetup"/>, <see cref="CmdkeySetup"/>, <see cref="ComponentSetup"/>, and <see cref="EnvironmentVariableSetup"/>.
     /// </summary>
     public abstract partial class CustomSetupBase
     {
@@ -33,6 +33,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             CustomSetupBaseType = customSetupBaseType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomSetupBase"/>. </summary>
+        protected CustomSetupBase() : this(default)
+        {
         }
 
         /// <summary> The type of custom setup. </summary>

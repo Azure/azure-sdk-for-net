@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of <see cref="ContextCacheContainerPropertiesPatch"/>. </summary>
         /// <param name="description"> Container description. </param>
-        /// <param name="timeToLive"> The Time to Live (TTL) in days (1–30) for this container. Blobs in the container that have not been accessed within this number of days will be automatically deleted. </param>
+        /// <param name="timeToLiveInDays"> The Time to Live (TTL) in days (1–30) for this container. Blobs in the container that have not been accessed within this number of days will be automatically deleted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContextCacheContainerPropertiesPatch(string description, int? timeToLive, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContextCacheContainerPropertiesPatch(string description, int? timeToLiveInDays, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
-            TimeToLive = timeToLive;
+            TimeToLiveInDays = timeToLiveInDays;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The Time to Live (TTL) in days (1–30) for this container. Blobs in the container that have not been accessed within this number of days will be automatically deleted. </summary>
         [WirePath("timeToLive")]
-        public int? TimeToLive { get; set; }
+        public int? TimeToLiveInDays { get; set; }
     }
 }

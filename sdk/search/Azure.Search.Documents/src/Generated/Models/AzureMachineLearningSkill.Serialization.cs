@@ -81,35 +81,63 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new FormatException($"The model {nameof(AzureMachineLearningSkill)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(ScoringUri))
+            if (_scoringUriIsDefined || Optional.IsDefined(ScoringUri))
             {
-                writer.WritePropertyName("uri"u8);
-                writer.WriteStringValue(ScoringUri.AbsoluteUri);
+                if (ScoringUri != null)
+                {
+                    writer.WritePropertyName("uri"u8);
+                    writer.WriteStringValue(ScoringUri.AbsoluteUri);
+                }
+                else
+                {
+                    writer.WriteNull("uri"u8);
+                }
             }
-            if (Optional.IsDefined(AuthenticationKey))
+            if (_authenticationKeyIsDefined || Optional.IsDefined(AuthenticationKey))
             {
-                writer.WritePropertyName("key"u8);
-                writer.WriteStringValue(AuthenticationKey);
+                if (AuthenticationKey != null)
+                {
+                    writer.WritePropertyName("key"u8);
+                    writer.WriteStringValue(AuthenticationKey);
+                }
+                else
+                {
+                    writer.WriteNull("key"u8);
+                }
             }
             if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(Timeout))
+            if (_timeoutIsDefined || Optional.IsDefined(Timeout))
             {
-                writer.WritePropertyName("timeout"u8);
-                writer.WriteStringValue(Timeout.Value, "P");
+                if (Timeout != null)
+                {
+                    writer.WritePropertyName("timeout"u8);
+                    writer.WriteStringValue(Timeout.Value, "P");
+                }
+                else
+                {
+                    writer.WriteNull("timeout"u8);
+                }
             }
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsDefined(DegreeOfParallelism))
+            if (_degreeOfParallelismIsDefined || Optional.IsDefined(DegreeOfParallelism))
             {
-                writer.WritePropertyName("degreeOfParallelism"u8);
-                writer.WriteNumberValue(DegreeOfParallelism.Value);
+                if (DegreeOfParallelism != null)
+                {
+                    writer.WritePropertyName("degreeOfParallelism"u8);
+                    writer.WriteNumberValue(DegreeOfParallelism.Value);
+                }
+                else
+                {
+                    writer.WriteNull("degreeOfParallelism"u8);
+                }
             }
         }
 
@@ -145,11 +173,15 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool scoringUriIsDefined = false;
             Uri scoringUri = default;
+            bool authenticationKeyIsDefined = false;
             string authenticationKey = default;
             ResourceIdentifier resourceId = default;
+            bool timeoutIsDefined = false;
             TimeSpan? timeout = default;
             AzureLocation? location = default;
+            bool degreeOfParallelismIsDefined = false;
             int? degreeOfParallelism = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -195,6 +227,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("uri"u8))
                 {
+                    scoringUriIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         scoringUri = null;
@@ -205,6 +238,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("key"u8))
                 {
+                    authenticationKeyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         authenticationKey = null;
@@ -224,6 +258,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("timeout"u8))
                 {
+                    timeoutIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         timeout = null;
@@ -243,6 +278,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("degreeOfParallelism"u8))
                 {
+                    degreeOfParallelismIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         degreeOfParallelism = null;
@@ -261,15 +297,21 @@ namespace Azure.Search.Documents.Indexes.Models
                 name,
                 description,
                 context,
-                inputs,
-                outputs,
+                inputs ?? new ChangeTrackingList<InputFieldMappingEntry>(),
+                outputs ?? new ChangeTrackingList<OutputFieldMappingEntry>(),
                 additionalBinaryDataProperties,
                 scoringUri,
                 authenticationKey,
                 resourceId,
                 timeout,
                 location,
-                degreeOfParallelism);
+                degreeOfParallelism)
+            {
+                _scoringUriIsDefined = scoringUriIsDefined,
+                _authenticationKeyIsDefined = authenticationKeyIsDefined,
+                _timeoutIsDefined = timeoutIsDefined,
+                _degreeOfParallelismIsDefined = degreeOfParallelismIsDefined
+            };
         }
     }
 }

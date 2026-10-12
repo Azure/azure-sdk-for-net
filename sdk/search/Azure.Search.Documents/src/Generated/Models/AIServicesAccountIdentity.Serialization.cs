@@ -80,10 +80,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new FormatException($"The model {nameof(AIServicesAccountIdentity)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Identity))
+            if (_identityIsDefined || Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                if (Identity != null)
+                {
+                    writer.WritePropertyName("identity"u8);
+                    writer.WriteObjectValue(Identity, options);
+                }
+                else
+                {
+                    writer.WriteNull("identity"u8);
+                }
             }
             writer.WritePropertyName("subdomainUrl"u8);
             writer.WriteStringValue(SubdomainUri.AbsoluteUri);
@@ -117,6 +124,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string odataType = "#Microsoft.Azure.Search.AIServicesByIdentity";
             string description = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool identityIsDefined = false;
             SearchIndexerDataIdentity identity = default;
             Uri subdomainUri = default;
             foreach (var prop in element.EnumerateObject())
@@ -133,6 +141,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("identity"u8))
                 {
+                    identityIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         identity = null;
@@ -151,7 +160,10 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AIServicesAccountIdentity(odataType, description, additionalBinaryDataProperties, identity, subdomainUri);
+            return new AIServicesAccountIdentity(odataType, description, additionalBinaryDataProperties, identity, subdomainUri)
+            {
+                _identityIsDefined = identityIsDefined
+            };
         }
     }
 }

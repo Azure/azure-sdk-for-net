@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HybridContainerServiceVirtualNetworkData, HybridContainerServiceVirtualNetworkResource>(new VirtualNetworksGetBySubscriptionAsyncCollectionResultOfT(VirtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridContainerServiceSubscriptionResource.GetHybridContainerServiceVirtualNetworks"), data => new HybridContainerServiceVirtualNetworkResource(Client, data));
+            return new AsyncPageableWrapper<HybridContainerServiceVirtualNetworkData, HybridContainerServiceVirtualNetworkResource>(new HybridContainerServiceVirtualNetworkDataAsync0CollectionResultOfT(VirtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridContainerServiceSubscriptionResource.GetHybridContainerServiceVirtualNetworks"), data => new HybridContainerServiceVirtualNetworkResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HybridContainerServiceVirtualNetworkData, HybridContainerServiceVirtualNetworkResource>(new VirtualNetworksGetBySubscriptionCollectionResultOfT(VirtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridContainerServiceSubscriptionResource.GetHybridContainerServiceVirtualNetworks"), data => new HybridContainerServiceVirtualNetworkResource(Client, data));
+            return new PageableWrapper<HybridContainerServiceVirtualNetworkData, HybridContainerServiceVirtualNetworkResource>(new HybridContainerServiceVirtualNetworkData0CollectionResultOfT(VirtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridContainerServiceSubscriptionResource.GetHybridContainerServiceVirtualNetworks"), data => new HybridContainerServiceVirtualNetworkResource(Client, data));
         }
     }
 }

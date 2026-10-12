@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
@@ -80,8 +81,34 @@ namespace Azure.Generator.Management.Visitors
                     continue;
                 }
 
-                updatedMethods.Add(restoredMethod);
+                // If the only change to the factory signature is a lifted value-type leaf,
+                // retain the historical signature as the primary method. Adding both
+                // optional overloads would make calls that omit the leaf ambiguous.
+                var replacementIndex = updatedMethods.FindIndex(current =>
+                    HasOnlyLiftedValueTypeDifferences(current.Signature, previousMethod.Signature));
+                if (replacementIndex >= 0 && !previousMethods.Any(previous =>
+                    HasSameCSharpSignature(previous.Signature, updatedMethods[replacementIndex].Signature)))
+                {
+                    // This is the primary factory, not a hidden compatibility overload.
+                    // Preserve the historical method's visibility attributes.
+                    restoredMethod.Signature.Update(attributes: previousMethod.Signature.Attributes);
+                    updatedMethods[replacementIndex] = restoredMethod;
+                }
+                else
+                {
+                    updatedMethods.Add(restoredMethod);
+                }
             }
+        }
+
+        private static bool HasOnlyLiftedValueTypeDifferences(MethodSignature current, MethodSignature previous)
+        {
+            return current.Name == previous.Name
+                && current.Parameters.Count == previous.Parameters.Count
+                && current.Parameters.Zip(previous.Parameters).All(pair =>
+                    pair.First.Type.HasSamePublicType(pair.Second.Type, ignoreNullable: true))
+                && current.Parameters.Zip(previous.Parameters).Any(pair =>
+                    pair.First.Type.IsValueType && pair.First.Type.IsNullable && !pair.Second.Type.IsNullable);
         }
 
         /// <summary>
@@ -212,7 +239,21 @@ namespace Azure.Generator.Management.Visitors
         {
             return first.Name == second.Name
                 && first.Parameters.Count == second.Parameters.Count
-                && first.Parameters.Zip(second.Parameters).All(pair => pair.First.Type.AreNamesEqual(pair.Second.Type));
+                && first.Parameters.Zip(second.Parameters).All(pair => HasSameEmittedParameterType(
+                    pair.First.Type, pair.Second.Type));
+        }
+
+        private static bool HasSameEmittedParameterType(CSharpType first, CSharpType second)
+        {
+            // Last-contract types can differ from generated types in metadata such as
+            // IsFrameworkType or IsStruct while emitting the same C# type name. Neither
+            // distinction permits a second method with the same parameter signature.
+            // Nullable<T> does create a distinct overload; reference annotations do not.
+            return first.FullyQualifiedName == second.FullyQualifiedName
+                && (first.IsNullable == second.IsNullable || (!first.IsValueType && !second.IsValueType))
+                && first.Arguments.Count == second.Arguments.Count
+                && first.Arguments.Zip(second.Arguments).All(pair => HasSameEmittedParameterType(
+                    pair.First, pair.Second));
         }
 
         private void FixArgumentNullExceptionXmlDoc(MethodProvider method)

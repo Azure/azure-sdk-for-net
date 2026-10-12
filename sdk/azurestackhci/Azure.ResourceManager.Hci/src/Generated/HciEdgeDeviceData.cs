@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.Hci
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="HciEdgeDeviceData"/>. </summary>
+        protected HciEdgeDeviceData() : this(default)
+        {
+        }
+
         /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </summary>
         [WirePath("kind")]
         internal DeviceKind Kind { get; set; }

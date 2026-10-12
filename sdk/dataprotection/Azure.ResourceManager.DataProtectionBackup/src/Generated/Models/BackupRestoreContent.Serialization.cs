@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary>
     /// Azure backup restore request
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BackupRecoveryPointBasedRestoreContent"/>, <see cref="BackupRestoreWithRehydrationContent"/>, and <see cref="BackupRecoveryTimeBasedRestoreContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BackupRecoveryPointBasedRestoreContent"/>, <see cref="BackupRecoveryTimeBasedRestoreContent"/>, and <see cref="BackupRestoreWithRehydrationContent"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAzureBackupRestoreRequest))]
     public abstract partial class BackupRestoreContent : IJsonModel<BackupRestoreContent>
@@ -172,10 +172,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     case "AzureBackupRecoveryPointBasedRestoreRequest":
                         return BackupRecoveryPointBasedRestoreContent.DeserializeBackupRecoveryPointBasedRestoreContent(element, options);
-                    case "AzureBackupRestoreWithRehydrationRequest":
-                        return BackupRestoreWithRehydrationContent.DeserializeBackupRestoreWithRehydrationContent(element, options);
                     case "AzureBackupRecoveryTimeBasedRestoreRequest":
                         return BackupRecoveryTimeBasedRestoreContent.DeserializeBackupRecoveryTimeBasedRestoreContent(element, options);
+                    case "AzureBackupRestoreWithRehydrationRequest":
+                        return BackupRestoreWithRehydrationContent.DeserializeBackupRestoreWithRehydrationContent(element, options);
                 }
             }
             return UnknownAzureBackupRestoreRequest.DeserializeUnknownAzureBackupRestoreRequest(element, options);

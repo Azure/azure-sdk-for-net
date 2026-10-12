@@ -138,7 +138,7 @@ namespace Azure.Communication.Messages
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ButtonSetContent(kind, additionalBinaryDataProperties, buttons);
+            return new ButtonSetContent(kind, additionalBinaryDataProperties, buttons ?? new ChangeTrackingList<ButtonContent>());
         }
     }
 }

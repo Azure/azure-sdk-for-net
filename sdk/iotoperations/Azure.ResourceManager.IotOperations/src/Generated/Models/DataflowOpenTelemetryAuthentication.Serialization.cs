@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary>
     /// Dataflow OpenTelemetry authentication properties.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataflowOpenTelemetryServiceAccountAuthentication"/>, <see cref="DataflowOpenTelemetryX509CertificateAuthentication"/>, and <see cref="DataflowOpenTelemetryAnonymousAuthentication"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataflowOpenTelemetryAnonymousAuthentication"/>, <see cref="DataflowOpenTelemetryServiceAccountAuthentication"/>, and <see cref="DataflowOpenTelemetryX509CertificateAuthentication"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDataflowOpenTelemetryAuthentication))]
     public abstract partial class DataflowOpenTelemetryAuthentication : IJsonModel<DataflowOpenTelemetryAuthentication>
@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "Anonymous":
+                        return DataflowOpenTelemetryAnonymousAuthentication.DeserializeDataflowOpenTelemetryAnonymousAuthentication(element, options);
                     case "ServiceAccountToken":
                         return DataflowOpenTelemetryServiceAccountAuthentication.DeserializeDataflowOpenTelemetryServiceAccountAuthentication(element, options);
                     case "X509Certificate":
                         return DataflowOpenTelemetryX509CertificateAuthentication.DeserializeDataflowOpenTelemetryX509CertificateAuthentication(element, options);
-                    case "Anonymous":
-                        return DataflowOpenTelemetryAnonymousAuthentication.DeserializeDataflowOpenTelemetryAnonymousAuthentication(element, options);
                 }
             }
             return UnknownDataflowOpenTelemetryAuthentication.DeserializeUnknownDataflowOpenTelemetryAuthentication(element, options);

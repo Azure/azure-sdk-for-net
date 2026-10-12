@@ -212,7 +212,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 lastDeployedOn,
                 deploymentExpiredOn,
                 modelTrainingConfigVersion,
-                assignedResources,
+                assignedResources ?? new ChangeTrackingList<ConversationAuthoringAssignedDeploymentResource>(),
                 additionalBinaryDataProperties);
         }
     }

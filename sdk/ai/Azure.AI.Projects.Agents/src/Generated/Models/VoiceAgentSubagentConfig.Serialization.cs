@@ -143,7 +143,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VoiceAgentSubagentConfig(subagents, additionalBinaryDataProperties);
+            return new VoiceAgentSubagentConfig(subagents ?? new ChangeTrackingList<VoiceAgentSubagent>(), additionalBinaryDataProperties);
         }
     }
 }

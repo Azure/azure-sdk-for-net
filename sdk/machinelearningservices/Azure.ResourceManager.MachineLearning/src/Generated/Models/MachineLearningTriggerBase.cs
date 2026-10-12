@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// The MachineLearningTriggerBase.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningRecurrenceTrigger"/> and <see cref="CronTrigger"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CronTrigger"/> and <see cref="MachineLearningRecurrenceTrigger"/>.
     /// </summary>
     public abstract partial class MachineLearningTriggerBase
     {
