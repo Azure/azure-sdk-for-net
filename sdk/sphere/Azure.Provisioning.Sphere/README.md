@@ -16,6 +16,8 @@ dotnet add package Azure.Provisioning.Sphere --prerelease
 
 You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/).
 
+### Authenticate the Client
+
 ## Key concepts
 
 This library lets you define Azure Sphere infrastructure declaratively in .NET. It generates Bicep that can be deployed to Azure without writing or maintaining Bicep or ARM templates manually.

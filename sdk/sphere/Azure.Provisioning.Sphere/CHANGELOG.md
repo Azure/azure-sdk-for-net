@@ -4,4 +4,4 @@
 
 ### Features Added
 
-- Initial release of Azure.Provisioning.Sphere, with support for declarative provisioning of Azure Sphere resources.
+- Initial release of Azure.Provisioning.Sphere.
