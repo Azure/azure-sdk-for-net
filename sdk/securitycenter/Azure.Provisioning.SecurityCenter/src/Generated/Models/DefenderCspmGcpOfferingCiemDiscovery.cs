@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> GCP Defenders CSPM Permissions Management OIDC (Open ID connect) connection configurations. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DefenderCspmGcpOfferingCiemDiscovery : ProvisionableConstruct
     {
         private BicepValue<string> _workloadIdentityProviderId;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the WorkloadIdentityProviderId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> WorkloadIdentityProviderId
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ServiceAccountEmailAddress. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ServiceAccountEmailAddress
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the AzureActiveDirectoryAppName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AzureActiveDirectoryAppName
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the EnableAuditLogIngestion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> EnableAuditLogIngestion
         {
             get

@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The gcpOrganization data for the parent account. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class GcpParentOrganizationalInfo : GcpOrganizationalInfo
     {
         private BicepList<string> _excludedProjectNumbers;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ExcludedProjectNumbers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> ExcludedProjectNumbers
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ServiceAccountEmailAddress. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ServiceAccountEmailAddress
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the WorkloadIdentityProviderId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> WorkloadIdentityProviderId
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the OrganizationName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> OrganizationName
         {
             get

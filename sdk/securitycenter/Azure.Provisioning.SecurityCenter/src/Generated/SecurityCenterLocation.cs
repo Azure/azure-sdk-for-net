@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The ASC location of the subscription is in the "name" field. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SecurityCenterLocation : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -65,6 +66,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Properties. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> Properties
         {
             get

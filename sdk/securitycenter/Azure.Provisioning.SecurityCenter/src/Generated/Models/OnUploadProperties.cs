@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Properties of On Upload malware scanning. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class OnUploadProperties : ProvisionableConstruct
     {
         private BicepValue<bool> _isEnabled;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the CapGBPerMonth. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> CapGBPerMonth
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Filters. </summary>
+        [Experimental("AZPROVISION001")]
         public OnUploadFilters Filters
         {
             get

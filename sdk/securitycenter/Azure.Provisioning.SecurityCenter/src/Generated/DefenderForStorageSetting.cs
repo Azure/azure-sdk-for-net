@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The Defender for Storage resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DefenderForStorageSetting : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

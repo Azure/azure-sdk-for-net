@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Configuration payload for PR Annotations. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ActionableRemediation : ProvisionableConstruct
     {
         private BicepValue<ActionableRemediationState> _state;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the State. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ActionableRemediationState> State
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the CategoryConfigurations. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<CategoryConfiguration> CategoryConfigurations
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the BranchConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public TargetBranchConfiguration BranchConfiguration
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the InheritFromParentState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<InheritFromParentState> InheritFromParentState
         {
             get

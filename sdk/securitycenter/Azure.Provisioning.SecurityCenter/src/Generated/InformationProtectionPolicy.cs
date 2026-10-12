@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Information protection policy. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class InformationProtectionPolicy : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -96,6 +97,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the LastModifiedUtc. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> LastModifiedUtc
         {
             get
@@ -109,6 +111,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Version. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Version
         {
             get
@@ -122,6 +125,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Labels. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<SensitivityLabel> Labels
         {
             get
@@ -139,6 +143,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the InformationTypes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<SecurityInformationTypeInfo> InformationTypes
         {
             get

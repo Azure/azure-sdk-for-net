@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> All Customer-managed key encryption properties for the resource. Set this to an empty object to use Microsoft-managed key encryption. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class RedisEnterpriseCustomerManagedKeyEncryption : ProvisionableConstruct
     {
         private RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity _keyEncryptionKeyIdentity;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the KeyEncryptionKeyIdentity. </summary>
+        [Experimental("AZPROVISION001")]
         public RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity KeyEncryptionKeyIdentity
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the KeyEncryptionKeyUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> KeyEncryptionKeyUri
         {
             get

@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Governance assignment over a given scope. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class GovernanceAssignment : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -96,6 +97,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Owner. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Owner
         {
             get
@@ -113,6 +115,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the RemediationDueOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> RemediationDueOn
         {
             get
@@ -130,6 +133,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the RemediationEta. </summary>
+        [Experimental("AZPROVISION001")]
         public RemediationEta RemediationEta
         {
             get
@@ -147,6 +151,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the IsGracePeriod. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsGracePeriod
         {
             get
@@ -164,6 +169,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the GovernanceEmailNotification. </summary>
+        [Experimental("AZPROVISION001")]
         public GovernanceEmailNotification GovernanceEmailNotification
         {
             get
@@ -181,6 +187,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the AdditionalData. </summary>
+        [Experimental("AZPROVISION001")]
         public GovernanceAssignmentAdditionalInfo AdditionalData
         {
             get

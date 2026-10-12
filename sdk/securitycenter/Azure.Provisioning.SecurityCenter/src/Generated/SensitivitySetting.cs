@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Data sensitivity settings for sensitive data discovery. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SensitivitySetting : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The target Event Hub to which event data will be exported. To learn more about Microsoft Defender for Cloud continuous export capabilities, visit https://aka.ms/ASCExportLearnMore. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SecurityAutomationActionEventHub : SecurityAutomationAction
     {
         private BicepValue<string> _eventHubResourceId;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the EventHubResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EventHubResourceId
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the SasPolicyName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SasPolicyName
         {
             get
@@ -49,6 +53,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ConnectionString. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ConnectionString
         {
             get
@@ -64,6 +69,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the IsTrustedServiceEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsTrustedServiceEnabled
         {
             get

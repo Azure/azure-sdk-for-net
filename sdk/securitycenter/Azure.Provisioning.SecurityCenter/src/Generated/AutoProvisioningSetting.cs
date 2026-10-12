@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Auto provisioning setting. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AutoProvisioningSetting : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -79,6 +80,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the AutoProvision. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AutoProvisionState> AutoProvision
         {
             get

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The ARC autoprovisioning configuration for an GCP environment. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ArcAutoProvisioningGcp : ArcAutoProvisioning
     {
         /// <summary> Creates a new ArcAutoProvisioningGcp. </summary>

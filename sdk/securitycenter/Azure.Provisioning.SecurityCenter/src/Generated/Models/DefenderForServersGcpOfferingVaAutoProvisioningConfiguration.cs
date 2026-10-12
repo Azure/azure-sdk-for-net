@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> configuration for Vulnerability Assessment autoprovisioning. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class DefenderForServersGcpOfferingVaAutoProvisioningConfiguration : ProvisionableConstruct
     {
         private BicepValue<VulnerabilityAssessmentAutoProvisioningType> _type;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Type. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VulnerabilityAssessmentAutoProvisioningType> Type
         {
             get

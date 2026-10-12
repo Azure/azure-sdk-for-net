@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The classification of the health report. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class HealthDataClassification : ProvisionableConstruct
     {
         private BicepValue<string> _component;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Component. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Component
         {
             get
@@ -33,6 +36,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Scenario. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Scenario
         {
             get
@@ -43,6 +47,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Scope. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Scope
         {
             get

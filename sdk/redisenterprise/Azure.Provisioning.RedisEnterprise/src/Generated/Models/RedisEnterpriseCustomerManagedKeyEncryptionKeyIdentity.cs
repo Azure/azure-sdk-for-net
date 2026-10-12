@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _userAssignedIdentityResourceId;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the UserAssignedIdentityResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> UserAssignedIdentityResourceId
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the IdentityType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<RedisEnterpriseCustomerManagedKeyIdentityType> IdentityType
         {
             get

@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The Compliance score (percentage) of a Subscription is a sum of all Resources' Compliances under the given Subscription. A Resource Compliance is defined as the compliant ('healthy') Policy Definitions out of all Policy Definitions applicable to a given resource. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ComplianceProperties : ProvisionableConstruct
     {
         private BicepValue<DateTimeOffset> _assessmentTimestampUtcOn;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the AssessmentTimestampUtcOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> AssessmentTimestampUtcOn
         {
             get
@@ -34,6 +37,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the ResourceCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ResourceCount
         {
             get
@@ -44,6 +48,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the AssessmentResult. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ComplianceSegment> AssessmentResult
         {
             get

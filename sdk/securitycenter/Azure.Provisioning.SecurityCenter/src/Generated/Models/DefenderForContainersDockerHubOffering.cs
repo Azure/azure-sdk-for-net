@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The Defender for containers Docker Hub offering configurations. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DefenderForContainersDockerHubOffering : SecurityCenterCloudOffering
     {
         /// <summary> Creates a new DefenderForContainersDockerHubOffering. </summary>

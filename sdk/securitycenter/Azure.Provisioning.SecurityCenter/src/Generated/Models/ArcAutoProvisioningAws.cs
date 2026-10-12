@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The ARC autoprovisioning configuration for an AWS environment. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ArcAutoProvisioningAws : ArcAutoProvisioning
     {
         private BicepValue<string> _cloudRoleArn;
@@ -20,6 +22,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the CloudRoleArn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CloudRoleArn
         {
             get

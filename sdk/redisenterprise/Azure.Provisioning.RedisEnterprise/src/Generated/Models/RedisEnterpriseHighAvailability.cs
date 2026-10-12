@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> Enabled by default. If highAvailability is disabled, the data set is not replicated. This affects the availability SLA, and increases the risk of data loss. </summary>
+    [Experimental("AZPROVISION001")]
     public enum RedisEnterpriseHighAvailability
     {
         /// <summary> Enabled. </summary>

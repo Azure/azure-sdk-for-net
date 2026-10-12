@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> Current resource status. </summary>
+    [Experimental("AZPROVISION001")]
     public enum RedisEnterpriseClusterResourceState
     {
         /// <summary> Running. </summary>

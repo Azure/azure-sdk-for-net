@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Defines whether to send email notifications from Microsoft Defender for Cloud to persons with specific RBAC roles on the subscription. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SecurityContactPropertiesNotificationsByRole : ProvisionableConstruct
     {
         private BicepValue<SecurityAlertNotificationByRoleState> _state;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the State. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SecurityAlertNotificationByRoleState> State
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Roles. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SecurityAlertReceivingRole> Roles
         {
             get

@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Describes the properties of a standardAssignment. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class AssignmentProperties : ProvisionableConstruct
     {
         private BicepValue<string> _displayName;
@@ -30,6 +32,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get
@@ -45,6 +48,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -60,6 +64,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the AssignedStandard. </summary>
+        [Experimental("AZPROVISION001")]
         internal AssignedStandardItem AssignedStandard
         {
             get
@@ -75,6 +80,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the AssignedComponent. </summary>
+        [Experimental("AZPROVISION001")]
         internal AssignedComponentItem AssignedComponent
         {
             get
@@ -90,6 +96,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Scope. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Scope
         {
             get
@@ -105,6 +112,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Effect. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Effect
         {
             get
@@ -120,6 +128,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ExpiresOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> ExpiresOn
         {
             get
@@ -135,6 +144,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the AdditionalData. </summary>
+        [Experimental("AZPROVISION001")]
         internal AssignmentPropertiesAdditionalData AdditionalData
         {
             get
@@ -150,6 +160,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Metadata. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> Metadata
         {
             get
@@ -182,6 +193,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Key. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AssignedComponentKey
         {
             get
@@ -199,6 +211,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ExemptionCategory. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AdditionalDataExemptionCategory
         {
             get

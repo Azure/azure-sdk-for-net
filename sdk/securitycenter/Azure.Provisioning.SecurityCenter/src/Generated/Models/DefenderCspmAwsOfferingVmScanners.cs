@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The Microsoft Defender for CSPM offering VM scanning configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DefenderCspmAwsOfferingVmScanners : VmScannersAws
     {
         /// <summary> Creates a new DefenderCspmAwsOfferingVmScanners. </summary>

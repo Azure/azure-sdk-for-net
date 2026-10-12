@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The governance rule metadata. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class GovernanceRuleMetadata : ProvisionableConstruct
     {
         private BicepValue<string> _createdBy;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the CreatedBy. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CreatedBy
         {
             get
@@ -35,6 +38,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the CreatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> CreatedOn
         {
             get
@@ -45,6 +49,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the UpdatedBy. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> UpdatedBy
         {
             get
@@ -55,6 +60,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the UpdatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> UpdatedOn
         {
             get

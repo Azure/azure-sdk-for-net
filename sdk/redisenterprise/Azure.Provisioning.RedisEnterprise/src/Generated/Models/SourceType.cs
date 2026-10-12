@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> Describes the source of the migration operation. </summary>
+    [Experimental("AZPROVISION001")]
     internal enum SourceType
     {
         /// <summary> Migration from Azure Cache for Redis to Redis Enterprise. </summary>

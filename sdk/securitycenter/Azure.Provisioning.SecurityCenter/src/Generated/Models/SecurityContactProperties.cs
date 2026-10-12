@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Describes security contact properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class SecurityContactProperties : ProvisionableConstruct
     {
         private BicepValue<string> _emails;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Emails. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Emails
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Phone. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Phone
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the NotificationsSources. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<NotificationsSource> NotificationsSources
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the NotificationsByRole. </summary>
+        [Experimental("AZPROVISION001")]
         public SecurityContactPropertiesNotificationsByRole NotificationsByRole
         {
             get

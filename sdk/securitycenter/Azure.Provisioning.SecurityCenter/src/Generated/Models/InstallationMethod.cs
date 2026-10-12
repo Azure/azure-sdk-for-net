@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The installation method for the Defender for Containers agent. </summary>
+    [Experimental("AZPROVISION001")]
     public enum InstallationMethod
     {
         /// <summary> Arc-based installation. </summary>

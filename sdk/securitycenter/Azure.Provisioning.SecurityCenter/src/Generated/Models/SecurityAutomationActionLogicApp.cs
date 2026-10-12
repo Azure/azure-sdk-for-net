@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The logic app action that should be triggered. To learn more about Microsoft Defender for Cloud's Workflow Automation capabilities, visit https://aka.ms/ASCWorkflowAutomationLearnMore. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SecurityAutomationActionLogicApp : SecurityAutomationAction
     {
         private BicepValue<string> _logicAppResourceId;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the LogicAppResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> LogicAppResourceId
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Uri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> Uri
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Defender for Storage resource properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DefenderForStorageSettingProperties : ProvisionableConstruct
     {
         private BicepValue<bool> _isEnabled;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the MalwareScanning. </summary>
+        [Experimental("AZPROVISION001")]
         public MalwareScanningProperties MalwareScanning
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the SensitiveDataDiscovery. </summary>
+        [Experimental("AZPROVISION001")]
         public SensitiveDataDiscoveryProperties SensitiveDataDiscovery
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the IsOverrideSubscriptionLevelSettings. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsOverrideSubscriptionLevelSettings
         {
             get

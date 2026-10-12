@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Security operator under a given subscription and pricing. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SecurityOperator : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -65,6 +66,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public SecurityConnectorIdentity Identity
         {
             get
