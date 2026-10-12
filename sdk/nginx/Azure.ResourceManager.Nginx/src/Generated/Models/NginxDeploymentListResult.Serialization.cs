@@ -10,68 +10,68 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.ResourceManager.NewRelicObservability;
+using Azure.ResourceManager.Nginx;
 
-namespace Azure.ResourceManager.NewRelicObservability.Models
+namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> Response of a list VM Host Operation. </summary>
-    internal partial class VMHostsListResponse : IJsonModel<VMHostsListResponse>
+    /// <summary> Nginx Deployment List Response. </summary>
+    internal partial class NginxDeploymentListResult : IJsonModel<NginxDeploymentListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="VMHostsListResponse"/> for deserialization. </summary>
-        internal VMHostsListResponse()
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentListResult"/> for deserialization. </summary>
+        internal NginxDeploymentListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VMHostsListResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual NginxDeploymentListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VMHostsListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVMHostsListResponse(document.RootElement, options);
+                        return DeserializeNginxDeploymentListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMHostsListResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxDeploymentListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VMHostsListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNewRelicObservabilityContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNginxContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VMHostsListResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxDeploymentListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VMHostsListResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<NginxDeploymentListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VMHostsListResponse IPersistableModel<VMHostsListResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        NginxDeploymentListResult IPersistableModel<NginxDeploymentListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VMHostsListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NginxDeploymentListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="VMHostsListResponse"/> from. </param>
-        internal static VMHostsListResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NginxDeploymentListResult"/> from. </param>
+        internal static NginxDeploymentListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeVMHostsListResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeNginxDeploymentListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VMHostsListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NginxDeploymentListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VMHostsListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMHostsListResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxDeploymentListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (NewRelicObservabilityVmInfo item in Value)
+            foreach (NginxDeploymentData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -118,40 +118,40 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VMHostsListResponse IJsonModel<VMHostsListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        NginxDeploymentListResult IJsonModel<NginxDeploymentListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VMHostsListResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual NginxDeploymentListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VMHostsListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMHostsListResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxDeploymentListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVMHostsListResponse(document.RootElement, options);
+            return DeserializeNginxDeploymentListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VMHostsListResponse DeserializeVMHostsListResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static NginxDeploymentListResult DeserializeNginxDeploymentListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<NewRelicObservabilityVmInfo> value = default;
+            IList<NginxDeploymentData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<NewRelicObservabilityVmInfo> array = new List<NewRelicObservabilityVmInfo>();
+                    List<NginxDeploymentData> array = new List<NginxDeploymentData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NewRelicObservabilityVmInfo.DeserializeNewRelicObservabilityVmInfo(item, options));
+                        array.Add(NginxDeploymentData.DeserializeNginxDeploymentData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VMHostsListResponse(value, nextLink, additionalBinaryDataProperties);
+            return new NginxDeploymentListResult(value ?? new ChangeTrackingList<NginxDeploymentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -12,33 +12,33 @@ using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> Response of a list app services Operation. </summary>
-    internal partial class AppServicesListResponse
+    /// <summary> Response of a list VM Host Operation. </summary>
+    internal partial class VMHostsListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AppServicesListResponse"/>. </summary>
-        /// <param name="value"> The AppServiceInfo items on this page. </param>
-        internal AppServicesListResponse(IEnumerable<NewRelicObservabilityAppServiceInfo> value)
+        /// <summary> Initializes a new instance of <see cref="VMHostsListResult"/>. </summary>
+        /// <param name="value"> The VMInfo items on this page. </param>
+        internal VMHostsListResult(IEnumerable<NewRelicObservabilityVmInfo> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppServicesListResponse"/>. </summary>
-        /// <param name="value"> The AppServiceInfo items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="VMHostsListResult"/>. </summary>
+        /// <param name="value"> The VMInfo items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppServicesListResponse(IList<NewRelicObservabilityAppServiceInfo> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VMHostsListResult(IList<NewRelicObservabilityVmInfo> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The AppServiceInfo items on this page. </summary>
+        /// <summary> The VMInfo items on this page. </summary>
         [WirePath("value")]
-        public IList<NewRelicObservabilityAppServiceInfo> Value { get; }
+        public IList<NewRelicObservabilityVmInfo> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

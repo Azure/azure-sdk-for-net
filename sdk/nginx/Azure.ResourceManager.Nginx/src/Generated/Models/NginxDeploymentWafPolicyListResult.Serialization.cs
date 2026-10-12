@@ -10,68 +10,68 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.ResourceManager.NewRelicObservability;
+using Azure.ResourceManager.Nginx;
 
-namespace Azure.ResourceManager.NewRelicObservability.Models
+namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> Response of a list app services Operation. </summary>
-    internal partial class AppServicesListResponse : IJsonModel<AppServicesListResponse>
+    /// <summary> Nginx Deployment Waf Policy List Response. </summary>
+    internal partial class NginxDeploymentWafPolicyListResult : IJsonModel<NginxDeploymentWafPolicyListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="AppServicesListResponse"/> for deserialization. </summary>
-        internal AppServicesListResponse()
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentWafPolicyListResult"/> for deserialization. </summary>
+        internal NginxDeploymentWafPolicyListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AppServicesListResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual NginxDeploymentWafPolicyListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppServicesListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentWafPolicyListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAppServicesListResponse(document.RootElement, options);
+                        return DeserializeNginxDeploymentWafPolicyListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServicesListResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxDeploymentWafPolicyListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppServicesListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentWafPolicyListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNewRelicObservabilityContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNginxContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AppServicesListResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxDeploymentWafPolicyListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AppServicesListResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<NginxDeploymentWafPolicyListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AppServicesListResponse IPersistableModel<AppServicesListResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        NginxDeploymentWafPolicyListResult IPersistableModel<NginxDeploymentWafPolicyListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AppServicesListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NginxDeploymentWafPolicyListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AppServicesListResponse"/> from. </param>
-        internal static AppServicesListResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NginxDeploymentWafPolicyListResult"/> from. </param>
+        internal static NginxDeploymentWafPolicyListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAppServicesListResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeNginxDeploymentWafPolicyListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AppServicesListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NginxDeploymentWafPolicyListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppServicesListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentWafPolicyListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServicesListResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxDeploymentWafPolicyListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (NewRelicObservabilityAppServiceInfo item in Value)
+            foreach (NginxDeploymentWafPolicyMetadata item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -118,40 +118,40 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AppServicesListResponse IJsonModel<AppServicesListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        NginxDeploymentWafPolicyListResult IJsonModel<NginxDeploymentWafPolicyListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AppServicesListResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual NginxDeploymentWafPolicyListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppServicesListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentWafPolicyListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServicesListResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxDeploymentWafPolicyListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAppServicesListResponse(document.RootElement, options);
+            return DeserializeNginxDeploymentWafPolicyListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AppServicesListResponse DeserializeAppServicesListResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static NginxDeploymentWafPolicyListResult DeserializeNginxDeploymentWafPolicyListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<NewRelicObservabilityAppServiceInfo> value = default;
+            IList<NginxDeploymentWafPolicyMetadata> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<NewRelicObservabilityAppServiceInfo> array = new List<NewRelicObservabilityAppServiceInfo>();
+                    List<NginxDeploymentWafPolicyMetadata> array = new List<NginxDeploymentWafPolicyMetadata>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NewRelicObservabilityAppServiceInfo.DeserializeNewRelicObservabilityAppServiceInfo(item, options));
+                        array.Add(NginxDeploymentWafPolicyMetadata.DeserializeNginxDeploymentWafPolicyMetadata(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AppServicesListResponse(value, nextLink, additionalBinaryDataProperties);
+            return new NginxDeploymentWafPolicyListResult(value ?? new ChangeTrackingList<NginxDeploymentWafPolicyMetadata>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

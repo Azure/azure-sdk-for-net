@@ -12,33 +12,33 @@ using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> List of all the resources being monitored by NewRelic monitor resource. </summary>
-    internal partial class MonitoredResourceListResponse
+    /// <summary> Response of get all organizations Operation. </summary>
+    internal partial class OrganizationsListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MonitoredResourceListResponse"/>. </summary>
-        /// <param name="value"> The MonitoredResource items on this page. </param>
-        internal MonitoredResourceListResponse(IEnumerable<NewRelicResourceMonitorResult> value)
+        /// <summary> Initializes a new instance of <see cref="OrganizationsListResult"/>. </summary>
+        /// <param name="value"> The OrganizationResource items on this page. </param>
+        internal OrganizationsListResult(IEnumerable<NewRelicOrganizationResourceData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonitoredResourceListResponse"/>. </summary>
-        /// <param name="value"> The MonitoredResource items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="OrganizationsListResult"/>. </summary>
+        /// <param name="value"> The OrganizationResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoredResourceListResponse(IList<NewRelicResourceMonitorResult> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OrganizationsListResult(IList<NewRelicOrganizationResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The MonitoredResource items on this page. </summary>
+        /// <summary> The OrganizationResource items on this page. </summary>
         [WirePath("value")]
-        public IList<NewRelicResourceMonitorResult> Value { get; }
+        public IList<NewRelicOrganizationResourceData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

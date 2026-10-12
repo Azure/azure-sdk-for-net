@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _nfsV4IdDomain;
+        internal bool _nfsV4IdDomainIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AccountPropertiesPatch"/>. </summary>
         public AccountPropertiesPatch()
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             ActiveDirectories = activeDirectories;
             Encryption = encryption;
-            NfsV4IdDomain = nfsV4IdDomain;
+            _nfsV4IdDomain = nfsV4IdDomain;
             EntraIdConfig = entraIdConfig;
             LdapConfiguration = ldapConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -47,7 +49,18 @@ namespace Azure.ResourceManager.NetApp.Models
         public NetAppAccountEncryption Encryption { get; set; }
 
         /// <summary> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </summary>
-        public string NfsV4IdDomain { get; set; }
+        public string NfsV4IdDomain
+        {
+            get
+            {
+                return _nfsV4IdDomain;
+            }
+            set
+            {
+                _nfsV4IdDomain = value;
+                _nfsV4IdDomainIsDefined = true;
+            }
+        }
 
         /// <summary> Entra ID configuration for the account. </summary>
         public EntraIdConfigPatch EntraIdConfig { get; set; }
