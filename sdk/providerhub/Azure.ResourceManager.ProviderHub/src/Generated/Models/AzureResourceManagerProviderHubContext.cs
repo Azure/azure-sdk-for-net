@@ -188,7 +188,6 @@ namespace Azure.ResourceManager.ProviderHub
     [ModelReaderWriterBuildable(typeof(TrafficRegionRolloutConfiguration))]
     [ModelReaderWriterBuildable(typeof(TrafficRegions))]
     [ModelReaderWriterBuildable(typeof(TypedErrorInfo))]
-    [ModelReaderWriterBuildable(typeof(WriteLockConfiguration))]
     public partial class AzureResourceManagerProviderHubContext : ModelReaderWriterContext
     {
     }
