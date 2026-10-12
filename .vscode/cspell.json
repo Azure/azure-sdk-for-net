@@ -1045,39 +1045,6 @@
       ]
     },
     {
-      "filename": "**/sdk/oracle/**/*.cs",
-      "words": [
-        "adbbackupid",
-        "adbscharsetname",
-        "adbsncharsetname",
-        "autonomousdbversionsname",
-        "cloudexadatainfrastructurename",
-        "cloudvmclustername",
-        "dbnodeocid",
-        "dbserverocid",
-        "dbsystemshapename",
-        "dbversionsname",
-        "dnsprivateviewocid",
-        "ecpu",
-        "exadata",
-        "exadb",
-        "exascale",
-        "ezconnect",
-        "ezconnectplus",
-        "iorm",
-        "ncharacter",
-        "ocid",
-        "ocids",
-        "ocpu",
-        "oltp",
-        "ords",
-        "tcps",
-        "tpurgent",
-        "vmdb",
-        "vnic"
-      ]
-    },
-    {
       "filename": "**/sdk/orbital/**/*.cs",
       "words": [
         "eirpd",
