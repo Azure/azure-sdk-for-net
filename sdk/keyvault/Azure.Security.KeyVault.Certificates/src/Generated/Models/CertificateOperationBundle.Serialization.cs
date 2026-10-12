@@ -111,7 +111,7 @@ namespace Azure.Security.KeyVault.Certificates.Models
                 writer.WritePropertyName("status_details"u8);
                 writer.WriteStringValue(StatusDetails);
             }
-            if (_errorIsDefined || Optional.IsDefined(Error))
+            if (Optional.IsDefined(Error, _errorIsDefined))
             {
                 if (Error != null)
                 {
