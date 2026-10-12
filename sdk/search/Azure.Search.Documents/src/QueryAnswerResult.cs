@@ -26,6 +26,7 @@ namespace Azure.Search.Documents.Models
             string key = default;
             string text = default;
             string highlights = default;
+            bool highlightsIsDefined = default;
             IDictionary<string, object> additionalProperties = new ChangeTrackingDictionary<string, object>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -50,6 +51,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (prop.NameEquals("highlights"u8))
                 {
+                    highlightsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         highlights = null;
@@ -63,7 +65,10 @@ namespace Azure.Search.Documents.Models
                     additionalProperties.Add(prop.Name, prop.Value.GetObject());
                 }
             }
-            return new QueryAnswerResult(score, key, text, highlights, additionalProperties);
+            return new QueryAnswerResult(score, key, text, highlights, additionalProperties)
+            {
+                _highlightsIsDefined = highlightsIsDefined
+            };
         }
     }
 }

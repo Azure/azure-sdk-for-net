@@ -164,6 +164,47 @@ namespace Azure.Search.Documents.Tests.Models
         }
 
         [Test]
+        public void RoundtripPreservesEncryptionKeyPresence(
+            [Values(null, "null", "{\"keyVaultKeyName\":\"my-key\",\"keyVaultKeyVersion\":\"v1\",\"keyVaultUri\":\"https://my-vault.vault.azure.net\"}")] string encryptionKeyJson,
+            [Values("J", "W")] string format,
+            [Values("\"line1\\nline2\"", "[\"line1\",\"line2\"]")] string synonymsJson)
+        {
+            JsonValueKind expectedKind = encryptionKeyJson == null ? JsonValueKind.Undefined
+                : encryptionKeyJson == "null" ? JsonValueKind.Null : JsonValueKind.Object;
+            string json = "{\"name\":\"test-map\",\"format\":\"solr\",\"synonyms\":" + synonymsJson
+                + (encryptionKeyJson == null ? "" : ",\"encryptionKey\":" + encryptionKeyJson) + "}";
+            ModelReaderWriterOptions options = new ModelReaderWriterOptions(format);
+            SynonymMap map = ModelReaderWriter.Read<SynonymMap>(BinaryData.FromString(json), options);
+
+            using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(map, options).ToMemory());
+            bool isDefined = document.RootElement.TryGetProperty("encryptionKey", out JsonElement encryptionKey);
+            Assert.AreEqual(expectedKind != JsonValueKind.Undefined, isDefined);
+            Assert.AreEqual(expectedKind, encryptionKey.ValueKind);
+            Assert.AreEqual("line1\nline2", map.Synonyms);
+            Assert.AreEqual(JsonValueKind.String, document.RootElement.GetProperty("synonyms").ValueKind);
+            Assert.AreEqual(map.Synonyms, document.RootElement.GetProperty("synonyms").GetString());
+            if (expectedKind == JsonValueKind.Object)
+            {
+                Assert.AreEqual("my-key", map.EncryptionKey.KeyName);
+                Assert.AreEqual(map.EncryptionKey.KeyName, encryptionKey.GetProperty("keyVaultKeyName").GetString());
+            }
+        }
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void SerializesExplicitlySetNullEncryptionKey(string format)
+        {
+            SynonymMap map = new SynonymMap("test-map", "word1,word2=>synonym")
+            {
+                EncryptionKey = null
+            };
+
+            using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(map, new ModelReaderWriterOptions(format)).ToMemory());
+            Assert.IsTrue(document.RootElement.TryGetProperty("encryptionKey", out JsonElement encryptionKey));
+            Assert.AreEqual(JsonValueKind.Null, encryptionKey.ValueKind);
+        }
+
+        [Test]
         public void SynonymsPropertySplitsAndJoinsCorrectly()
         {
             SynonymMap map = new SynonymMap("test", "line1\nline2\nline3");
