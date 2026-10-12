@@ -686,14 +686,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             return new CheckNameAvailabilityRequest(name, @type, default);
         }
 
-        /// <summary> The CheckNameAvailabilityResponse. </summary>
+        /// <summary> The CheckNameAvailabilityResult. </summary>
         /// <param name="nameAvailable"></param>
         /// <param name="reason"></param>
         /// <param name="message"></param>
-        /// <returns> A new <see cref="Models.CheckNameAvailabilityResponse"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityResponse CheckNameAvailabilityResponse(bool nameAvailable = default, string reason = default, string message = default)
+        /// <returns> A new <see cref="Models.CheckNameAvailabilityResult"/> instance for mocking. </returns>
+        public static CheckNameAvailabilityResult CheckNameAvailabilityResult(bool nameAvailable = default, string reason = default, string message = default)
         {
-            return new CheckNameAvailabilityResponse(nameAvailable, reason, message, default);
+            return new CheckNameAvailabilityResult(nameAvailable, reason, message, default);
         }
 
         /// <summary> Subscription-level location-based Playwright quota resource. </summary>
