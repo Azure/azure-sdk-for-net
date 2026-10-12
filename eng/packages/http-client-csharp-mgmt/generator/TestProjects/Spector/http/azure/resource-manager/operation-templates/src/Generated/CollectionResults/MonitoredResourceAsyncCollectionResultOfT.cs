@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.OperationTemplates
             scope.Start();
             try
             {
-                (CancellationToken userCancellationToken, ErrorOptions errorOptions) = _context.Parse();
+                ErrorOptions errorOptions = _context?.ErrorOptions ?? ErrorOptions.Default;
                 await _client.Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
 
                 if (message.Response.IsError && (errorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)

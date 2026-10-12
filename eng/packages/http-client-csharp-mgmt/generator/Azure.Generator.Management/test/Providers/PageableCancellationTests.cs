@@ -244,7 +244,7 @@ namespace Azure.Generator.Management.Tests.Providers
         [Test]
         public async Task ArrayPreservesContextAndPipelineBehavior(
             [Values] bool pages,
-            [Values("null", "noThrow", "throw", "classifier")] string behavior)
+            [Values("null", "nullError", "noThrow", "throw", "classifier")] string behavior)
         {
             using var method = new CancellationTokenSource();
             using var enumeration = new CancellationTokenSource();
@@ -255,7 +255,7 @@ namespace Azure.Generator.Management.Tests.Providers
             var client = CreateClient(httpClient, perCall, perRetry);
             var resource = client.GetFooResource(new ResourceIdentifier(FooId));
             var restClient = typeof(FooResource).GetField("_foosRestClient", BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(resource);
-            var context = behavior == "null" ? null : new RequestContext
+            var context = behavior is "null" or "nullError" ? null : new RequestContext
             {
                 CancellationToken = method.Token,
                 ErrorOptions = behavior == "noThrow" ? ErrorOptions.NoThrow : ErrorOptions.Default
@@ -264,7 +264,7 @@ namespace Azure.Generator.Management.Tests.Providers
             var pageable = (AsyncPageable<FooDependency>)Activator.CreateInstance(
                 type, restClient, Guid.Parse(SubscriptionId), "group", "foo", context, "Test.GetDependencies")!;
             await using var iterator = Enumerate(pageable, pages).GetAsyncEnumerator(enumeration.Token);
-            if (behavior == "throw")
+            if (behavior is "throw" or "nullError")
             {
                 Assert.ThrowsAsync<RequestFailedException>(async () => await iterator.MoveNextAsync());
             }

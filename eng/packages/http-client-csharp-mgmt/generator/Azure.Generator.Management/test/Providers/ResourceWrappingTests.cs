@@ -148,7 +148,8 @@ namespace Azure.Generator.Management.Tests.Providers
                 var next = provider.Methods.Single(m => m.Signature.Name == "GetNextResponseAsync");
                 var body = next.BodyStatements!.ToDisplayString();
                 Assert.That(body, Does.Contain("SendAsync(message, cancellationToken)"));
-                Assert.That(body, Does.Contain("(global::System.Threading.CancellationToken userCancellationToken, global::Azure.ErrorOptions errorOptions) = _context.Parse()"));
+                Assert.That(body, Does.Contain("global::Azure.ErrorOptions errorOptions = (_context?.ErrorOptions ?? global::Azure.ErrorOptions.Default)"));
+                Assert.That(body, Does.Not.Contain("_context.Parse()"));
                 Assert.That(body, Does.Not.Contain(".Item2"));
                 Assert.That(body, Does.Not.Contain("SendAsync(message, userCancellationToken)"));
                 Assert.That(body, Does.Contain("ErrorOptions.NoThrow"));

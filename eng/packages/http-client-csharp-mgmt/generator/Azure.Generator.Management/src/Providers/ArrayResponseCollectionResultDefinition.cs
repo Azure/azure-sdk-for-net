@@ -273,12 +273,11 @@ namespace Azure.Generator.Management.Providers
             ValueExpression context = _contextField;
             var message = messageVariable.ToApi<HttpMessageApi>();
             var options = context.ToApi<HttpRequestOptionsApi>();
-            var userCancellationToken = new ParameterProvider("userCancellationToken", $"", typeof(CancellationToken));
-            var errorOptions = new ParameterProvider("errorOptions", $"", typeof(ErrorOptions));
+            var declareErrorOptions = new DeclarationExpression(typeof(ErrorOptions), "errorOptions", out var errorOptions);
             MethodBodyStatement[] tryStatements = _isAsync
                 ?
                 [
-                    new VariableTupleExpression(false, userCancellationToken, errorOptions).Assign(options.Invoke("Parse")).Terminate(),
+                    declareErrorOptions.Assign(options.ErrorOptions().NullCoalesce(FrameworkEnumValue(ErrorOptions.Default))).Terminate(),
                     _clientField.Property("Pipeline").Invoke(nameof(HttpPipeline.SendAsync), [messageVariable, CancellationTokenParameter], true).Terminate(),
                     new IfStatement(message.Response().IsError().And(new BinaryOperatorExpression("&", errorOptions, options.NoThrow()).NotEqual(options.NoThrow())))
                     {
