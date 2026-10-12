@@ -83,7 +83,7 @@ namespace Azure.AI.Agents.Persistent
                 writer.WritePropertyName("arguments"u8);
                 writer.WriteStringValue(Arguments);
             }
-            if (_outputIsDefined || Optional.IsDefined(Output))
+            if (Optional.IsDefined(Output, _outputIsDefined))
             {
                 if (Output != null)
                 {

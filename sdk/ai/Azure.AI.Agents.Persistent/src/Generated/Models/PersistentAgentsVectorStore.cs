@@ -16,7 +16,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private DateTimeOffset? _expiresAt;
-        internal bool _expiresAtIsDefined;
+        private bool _expiresAtIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="PersistentAgentsVectorStore"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
