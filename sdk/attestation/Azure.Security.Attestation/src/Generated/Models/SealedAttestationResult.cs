@@ -32,11 +32,5 @@ namespace Azure.Security.Attestation
             Token = token;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary>
-        /// A sealed RFC 7519 JSON Web Token, the body of which is an AttestationResult
-        /// object.
-        /// </summary>
-        public string Token { get; }
     }
 }

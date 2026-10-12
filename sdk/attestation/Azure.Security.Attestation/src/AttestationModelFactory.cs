@@ -22,6 +22,8 @@ namespace Azure.Security.Attestation
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("StoredAttestationPolicy", typeof(string))]
     // Replaced below by an overload without the internal revocation endpoint.
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("AttestationOpenIdMetadata", typeof(IEnumerable<string>), typeof(IEnumerable<string>), typeof(string), typeof(Uri), typeof(Uri), typeof(IEnumerable<string>))]
+    // Replaced below by the same overload with an accurate description of the token.
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SealedAttestationResult", typeof(string))]
     public static partial class AttestationModelFactory
     {
         /// <summary>
@@ -231,5 +233,13 @@ namespace Azure.Security.Attestation
                 jsonWebKeySetUri,
                 new List<string>(supportedClaims ?? Array.Empty<string>()),
                 additionalBinaryDataProperties: null);
+
+        /// <summary>
+        /// Creates an instance of <see cref="Attestation.SealedAttestationResult"/> for mocking.
+        /// </summary>
+        /// <param name="token">The sealed token: the Base64Url-encoded JSON envelope that holds the encrypted attestation token. It is not itself a JSON Web Token.</param>
+        /// <returns>A new <see cref="Attestation.SealedAttestationResult"/> instance for mocking.</returns>
+        public static SealedAttestationResult SealedAttestationResult(string token = default)
+            => new SealedAttestationResult(token, additionalBinaryDataProperties: null);
     }
 }

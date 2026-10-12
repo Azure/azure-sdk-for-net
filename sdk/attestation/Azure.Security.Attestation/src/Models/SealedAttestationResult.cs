@@ -19,5 +19,12 @@ namespace Azure.Security.Attestation
     [CodeGenType("SealedAttestationResult")]
     public partial class SealedAttestationResult
     {
+        /// <summary>
+        /// Gets the sealed token: the Base64Url-encoded JSON envelope that holds the attestation token, encrypted to the
+        /// virtual machine's TPM key, together with its encryption parameters. It is not itself a JSON Web Token; decrypt it
+        /// inside the virtual machine, then read the result with <see cref="AttestationToken.Deserialize(string)"/>.
+        /// </summary>
+        // Replaces the generated doc, which describes the value as a JSON Web Token.
+        public string Token { get; }
     }
 }
