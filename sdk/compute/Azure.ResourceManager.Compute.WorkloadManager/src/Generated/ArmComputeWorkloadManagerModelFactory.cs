@@ -75,6 +75,53 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
                 default);
         }
 
+        /// <param name="provisioningState"> The provisioning state of the runtime binding. </param>
+        /// <param name="providerResourceId"> The provider resource created or referenced by the binding. </param>
+        /// <param name="provisioningMode"> Indicates whether Workload Manager owns or references the runtime. </param>
+        /// <param name="executionIdentity"> The identity made available to the execution runtime. </param>
+        /// <param name="networkProfile"> The runtime network configuration for a managed runtime. </param>
+        /// <returns> A new <see cref="Models.RuntimeBindingProperties"/> instance for mocking. </returns>
+        public static RuntimeBindingProperties RuntimeBindingProperties(WorkloadManagerProvisioningState? provisioningState = default, ResourceIdentifier providerResourceId = default, string provisioningMode = default, ExecutionIdentity executionIdentity = default, RuntimeNetworkProfile networkProfile = default)
+        {
+            return new UnknownRuntimeBindingProperties(
+                provisioningState,
+                providerResourceId,
+                provisioningMode is null ? default : new RuntimeBindingProvisioningMode(provisioningMode),
+                executionIdentity is null ? default : new RuntimeIdentityProfile(executionIdentity, default),
+                networkProfile,
+                default);
+        }
+
+        /// <summary>
+        /// Configuration for an identity used by an execution runtime.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ReferencedExecutionIdentity"/> and <see cref="Models.ServiceManagedExecutionIdentity"/>.
+        /// </summary>
+        /// <param name="provisioningMode"> Indicates whether the identity is managed by the service or supplied by the customer. </param>
+        /// <param name="scope"> The execution boundary across which the identity is shared. </param>
+        /// <returns> A new <see cref="Models.ExecutionIdentity"/> instance for mocking. </returns>
+        public static ExecutionIdentity ExecutionIdentity(string provisioningMode = default, ExecutionIdentityScope scope = default)
+        {
+            return new UnknownExecutionIdentity(provisioningMode is null ? default : new ExecutionIdentityProvisioningMode(provisioningMode), scope, default);
+        }
+
+        /// <summary> A customer-provided identity used by an execution runtime. </summary>
+        /// <param name="scope"> The execution boundary across which the identity is shared. </param>
+        /// <param name="userAssignedIdentityResourceId"> The customer-provided user-assigned identity. </param>
+        /// <returns> A new <see cref="Models.ReferencedExecutionIdentity"/> instance for mocking. </returns>
+        public static ReferencedExecutionIdentity ReferencedExecutionIdentity(ExecutionIdentityScope scope = default, ResourceIdentifier userAssignedIdentityResourceId = default)
+        {
+            return new ReferencedExecutionIdentity(ExecutionIdentityProvisioningMode.Referenced, scope, default, userAssignedIdentityResourceId);
+        }
+
+        /// <summary> An identity created and owned by Workload Manager. </summary>
+        /// <param name="scope"> The execution boundary across which the identity is shared. </param>
+        /// <param name="userAssignedIdentityResourceId"> The service-created user-assigned identity. </param>
+        /// <returns> A new <see cref="Models.ServiceManagedExecutionIdentity"/> instance for mocking. </returns>
+        public static ServiceManagedExecutionIdentity ServiceManagedExecutionIdentity(ExecutionIdentityScope scope = default, ResourceIdentifier userAssignedIdentityResourceId = default)
+        {
+            return new ServiceManagedExecutionIdentity(ExecutionIdentityProvisioningMode.ServiceManaged, scope, default, userAssignedIdentityResourceId);
+        }
+
         /// <summary> Network configuration for a managed runtime. </summary>
         /// <param name="subnetResourceId"> The customer-provided subnet used by the runtime. </param>
         /// <param name="egressMode"> Indicates who manages runtime egress. </param>
@@ -84,6 +131,24 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
             return new RuntimeNetworkProfile(subnetResourceId, egressMode, default);
         }
 
+        /// <param name="provisioningState"> The provisioning state of the runtime binding. </param>
+        /// <param name="providerResourceId"> The provider resource created or referenced by the binding. </param>
+        /// <param name="executionIdentity"> The identity made available to the execution runtime. </param>
+        /// <param name="networkProfile"> The runtime network configuration for a managed runtime. </param>
+        /// <param name="managedProfile"> The limited service-managed runtime configuration. </param>
+        /// <returns> A new <see cref="Models.ManagedRuntimeBindingProperties"/> instance for mocking. </returns>
+        public static ManagedRuntimeBindingProperties ManagedRuntimeBindingProperties(WorkloadManagerProvisioningState? provisioningState = default, ResourceIdentifier providerResourceId = default, ExecutionIdentity executionIdentity = default, RuntimeNetworkProfile networkProfile = default, ManagedRuntimeProfile managedProfile = default)
+        {
+            return new ManagedRuntimeBindingProperties(
+                provisioningState,
+                providerResourceId,
+                RuntimeBindingProvisioningMode.Managed,
+                executionIdentity is null ? default : new RuntimeIdentityProfile(executionIdentity, default),
+                networkProfile,
+                default,
+                managedProfile);
+        }
+
         /// <summary> Customer-selected configuration for a service-managed runtime. </summary>
         /// <param name="offering"> The required product offering when the runtime binding kind is Kubernetes. </param>
         /// <param name="provider"> The required provider when the runtime binding kind is ServerlessContainers. </param>
@@ -91,6 +156,24 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
         public static ManagedRuntimeProfile ManagedRuntimeProfile(string offering = default, string provider = default)
         {
             return new ManagedRuntimeProfile(offering, provider, default);
+        }
+
+        /// <param name="provisioningState"> The provisioning state of the runtime binding. </param>
+        /// <param name="providerResourceId"> The provider resource created or referenced by the binding. </param>
+        /// <param name="executionIdentity"> The identity made available to the execution runtime. </param>
+        /// <param name="networkProfile"> The runtime network configuration for a managed runtime. </param>
+        /// <param name="resourceId"> The existing customer-owned runtime resource. </param>
+        /// <returns> A new <see cref="Models.ReferencedRuntimeBindingProperties"/> instance for mocking. </returns>
+        public static ReferencedRuntimeBindingProperties ReferencedRuntimeBindingProperties(WorkloadManagerProvisioningState? provisioningState = default, ResourceIdentifier providerResourceId = default, ExecutionIdentity executionIdentity = default, RuntimeNetworkProfile networkProfile = default, ResourceIdentifier resourceId = default)
+        {
+            return new ReferencedRuntimeBindingProperties(
+                provisioningState,
+                providerResourceId,
+                RuntimeBindingProvisioningMode.Referenced,
+                executionIdentity is null ? default : new RuntimeIdentityProfile(executionIdentity, default),
+                networkProfile,
+                default,
+                resourceId);
         }
 
         /// <summary> Mutable properties of a runtime binding. </summary>
