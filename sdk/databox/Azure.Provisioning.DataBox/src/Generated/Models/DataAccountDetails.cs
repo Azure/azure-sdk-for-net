@@ -12,7 +12,7 @@ namespace Azure.Provisioning.DataBox
 {
     /// <summary>
     /// Account details of the data to be transferred
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="ManagedDiskDetails"/> and <see cref="DataBoxStorageAccountDetails"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="DataBoxStorageAccountDetails"/> and <see cref="ManagedDiskDetails"/>.
     /// </summary>
     public partial class DataAccountDetails : ProvisionableConstruct
     {
