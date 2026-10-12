@@ -1,0 +1,4 @@
+directory: specification/sphere/resource-manager/Microsoft.AzureSphere/AzureSphere
+commit: 503667c877bf1b95df55cfb093230b09c32ffa22
+repo: cxznmhdcxz/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json"
