@@ -1594,6 +1594,7 @@ namespace Azure.Provisioning.Storage
         public static Azure.Provisioning.Storage.StorageBuiltInRole StorageBlobDelegator { get { throw null; } }
         public static Azure.Provisioning.Storage.StorageBuiltInRole StorageFileDataPrivilegedContributor { get { throw null; } }
         public static Azure.Provisioning.Storage.StorageBuiltInRole StorageFileDataPrivilegedReader { get { throw null; } }
+        public static Azure.Provisioning.Storage.StorageBuiltInRole StorageFileDataSmbMIAdmin { get { throw null; } }
         public static Azure.Provisioning.Storage.StorageBuiltInRole StorageFileDataSmbShareContributor { get { throw null; } }
         public static Azure.Provisioning.Storage.StorageBuiltInRole StorageFileDataSmbShareElevatedContributor { get { throw null; } }
         public static Azure.Provisioning.Storage.StorageBuiltInRole StorageFileDataSmbShareReader { get { throw null; } }
