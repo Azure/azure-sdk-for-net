@@ -446,8 +446,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// region's backlog and back-off never affect another's, and AAD and instrumentation-key
         /// telemetry for the same region are never replayed together.
         /// <para/>
-        /// Every group, AAD or not, is sent through the exporter's shared pipeline. Routing is
-        /// refused when a credential is configured, so no group carries a token yet.
+        /// Every group, AAD or not, is sent through this transmitter's shared pipeline, with the
+        /// authentication it was built with. Constructing a routing transmitter with a credential is
+        /// refused, but <see cref="TransmitterFactory"/> caches by connection string alone, so a later
+        /// exporter's credential is not applied to a transmitter that already exists. Per-route
+        /// authentication is added separately.
         /// </remarks>
         private async ValueTask<ExportResult> SendGroupAsync(EndpointRouteBatch.Group group, long exportSequence, TelemetryItemOrigin origin, bool async, CancellationToken cancellationToken)
         {

@@ -533,9 +533,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
                     var trackUri = ApplicationInsightsRestClient.CreateTrackUri(ingestionEndpoint);
                     var transmissionStateManager = new TransmissionStateManager(route);
 
-                    // The drain still shares the exporter's pipeline and authentication. AAD routes
-                    // only reach here while no credential is configured, so they drain without a token
-                    // exactly as they are sent.
+                    // The drain shares the transmitter's pipeline, so a partition drains with the same
+                    // authentication its telemetry was sent with.
                     var created = new EndpointStorage(
                         directory,
                         innerProvider,
