@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ServiceAssociationLink : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ServiceAssociationLink"/>. </summary>
+        public ServiceAssociationLink()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceAssociationLink"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
@@ -29,14 +34,9 @@ namespace Azure.ResourceManager.Network.Models
             ETag = eTag;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceAssociationLink"/>. </summary>
-        public ServiceAssociationLink() : this(default)
-        {
-        }
-
         /// <summary> Resource navigation link properties format. </summary>
         [WirePath("properties")]
-        internal ServiceAssociationLinkPropertiesFormat Properties { get; }
+        internal ServiceAssociationLinkPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]

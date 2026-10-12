@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                 throw new FormatException($"The model {nameof(VirtualNetworkEncryption)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("enabled"u8);
-            writer.WriteBooleanValue(Enabled);
+            writer.WriteBooleanValue(IsEnabled);
             if (Optional.IsDefined(Enforcement))
             {
                 writer.WritePropertyName("enforcement"u8);
@@ -128,7 +128,6 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            bool enabled = default;
             VirtualNetworkEncryptionEnforcement? enforcement = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -152,7 +151,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VirtualNetworkEncryption(enabled, enforcement, additionalBinaryDataProperties);
+            return new VirtualNetworkEncryption(default, enforcement, additionalBinaryDataProperties);
         }
     }
 }

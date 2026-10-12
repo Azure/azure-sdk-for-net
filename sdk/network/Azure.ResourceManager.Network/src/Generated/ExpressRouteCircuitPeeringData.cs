@@ -314,24 +314,6 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> The ExpressRoute connection. </summary>
-        [WirePath("properties.expressRouteConnection")]
-        public ResourceIdentifier ExpressRouteConnection
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ExpressRouteConnection;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExpressRouteCircuitPeeringPropertiesFormat();
-                }
-                Properties.ExpressRouteConnection = value;
-            }
-        }
-
         /// <summary> The list of circuit connections associated with Azure Private Peering for this circuit. </summary>
         [WirePath("properties.connections")]
         public IList<ExpressRouteCircuitConnectionData> Connections

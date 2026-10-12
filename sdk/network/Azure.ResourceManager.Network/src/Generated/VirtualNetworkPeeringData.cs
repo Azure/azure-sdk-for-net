@@ -278,24 +278,6 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Whether complete virtual network address space is peered. </summary>
-        [WirePath("properties.peerCompleteVnets")]
-        public bool? PeerCompleteVnets
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PeerCompleteVnets;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualNetworkPeeringPropertiesFormat();
-                }
-                Properties.PeerCompleteVnets = value;
-            }
-        }
-
         /// <summary> Whether only Ipv6 address space is peered for subnet peering. </summary>
         [WirePath("properties.enableOnlyIPv6Peering")]
         public bool? EnableOnlyIPv6Peering

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -24,16 +25,18 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkAppliancePropertiesFormat"/>. </summary>
-        /// <param name="bandwidthInGbps"> Bandwidth of the VirtualNetworkAppliance resource in Gbps. </param>
+        /// <param name="bandwidthGbps"> Bandwidth of the VirtualNetworkAppliance resource in Gbps. </param>
+        /// <param name="capacityProvider"> The reference to the capacity provider resource. </param>
         /// <param name="ipConfigurations"> A list of IPConfigurations of the virtual network appliance. </param>
         /// <param name="privateIPAddressVersion"> Whether the specific virtual network appliance is IPv4 or Dual Stack. Default is IPv4. </param>
         /// <param name="provisioningState"> The provisioning state of the virtual network appliance resource. </param>
         /// <param name="resourceGuid"> The resource GUID property of the virtual network appliance resource. </param>
         /// <param name="subnet"> The reference to the subnet resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkAppliancePropertiesFormat(double? bandwidthInGbps, IReadOnlyList<VirtualNetworkApplianceIPConfiguration> ipConfigurations, VirtualNetworkApplianceIpVersionType? privateIPAddressVersion, NetworkProvisioningState? provisioningState, Guid? resourceGuid, SubnetData subnet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkAppliancePropertiesFormat(double? bandwidthGbps, NetworkSubResource capacityProvider, IReadOnlyList<VirtualNetworkApplianceIPConfiguration> ipConfigurations, VirtualNetworkApplianceIpVersionType? privateIPAddressVersion, NetworkProvisioningState? provisioningState, Guid? resourceGuid, SubnetData subnet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            BandwidthInGbps = bandwidthInGbps;
+            BandwidthGbps = bandwidthGbps;
+            CapacityProvider = capacityProvider;
             IPConfigurations = ipConfigurations;
             PrivateIPAddressVersion = privateIPAddressVersion;
             ProvisioningState = provisioningState;
@@ -44,7 +47,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Bandwidth of the VirtualNetworkAppliance resource in Gbps. </summary>
         [WirePath("bandwidthInGbps")]
-        public double? BandwidthInGbps { get; set; }
+        public double? BandwidthGbps { get; set; }
+
+        /// <summary> The reference to the capacity provider resource. </summary>
+        [WirePath("capacityProvider")]
+        internal NetworkSubResource CapacityProvider { get; set; }
 
         /// <summary> A list of IPConfigurations of the virtual network appliance. </summary>
         [WirePath("ipConfigurations")]
@@ -65,5 +72,23 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The reference to the subnet resource. </summary>
         [WirePath("subnet")]
         public SubnetData Subnet { get; set; }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("capacityProvider.id")]
+        public ResourceIdentifier CapacityProviderId
+        {
+            get
+            {
+                return CapacityProvider is null ? default : CapacityProvider.Id;
+            }
+            set
+            {
+                if (CapacityProvider is null)
+                {
+                    CapacityProvider = new NetworkSubResource();
+                }
+                CapacityProvider.Id = value;
+            }
+        }
     }
 }

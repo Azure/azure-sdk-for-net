@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enableInternetSecurity"> Enable internet security. </param>
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkVirtualApplianceConnectionProperties(string namePropertiesName, NetworkProvisioningState? provisioningState, long? asn, long? tunnelIdentifier, IList<string> bgpPeerAddress, bool? enableInternetSecurity, RoutingConfigurationNfv routingConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkVirtualApplianceConnectionProperties(string namePropertiesName, NetworkProvisioningState? provisioningState, long? asn, long? tunnelIdentifier, IList<string> bgpPeerAddress, bool? enableInternetSecurity, RoutingConfiguration routingConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NamePropertiesName = namePropertiesName;
             ProvisioningState = provisioningState;
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
         [WirePath("routingConfiguration")]
-        public RoutingConfigurationNfv RoutingConfiguration { get; set; }
+        public RoutingConfiguration RoutingConfiguration { get; set; }
     }
 }

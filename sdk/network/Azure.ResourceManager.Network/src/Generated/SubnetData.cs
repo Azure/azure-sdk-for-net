@@ -214,42 +214,6 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Enable or Disable apply network policies on private end point in the subnet. </summary>
-        [WirePath("properties.privateEndpointNetworkPolicies")]
-        public VirtualNetworkPrivateEndpointNetworkPolicy? PrivateEndpointNetworkPolicies
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivateEndpointNetworkPolicies;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new SubnetPropertiesFormat();
-                }
-                Properties.PrivateEndpointNetworkPolicies = value;
-            }
-        }
-
-        /// <summary> Enable or Disable apply network policies on private link service in the subnet. </summary>
-        [WirePath("properties.privateLinkServiceNetworkPolicies")]
-        public VirtualNetworkPrivateLinkServiceNetworkPolicy? PrivateLinkServiceNetworkPolicies
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivateLinkServiceNetworkPolicies;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new SubnetPropertiesFormat();
-                }
-                Properties.PrivateLinkServiceNetworkPolicies = value;
-            }
-        }
-
         /// <summary> Application gateway IP configurations of virtual network resource. </summary>
         [WirePath("properties.applicationGatewayIPConfigurations")]
         public IList<ApplicationGatewayIPConfiguration> ApplicationGatewayIPConfigurations

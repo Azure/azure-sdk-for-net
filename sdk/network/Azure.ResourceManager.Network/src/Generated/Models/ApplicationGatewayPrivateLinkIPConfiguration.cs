@@ -78,24 +78,6 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        /// <summary> Whether the ip configuration is primary or not. </summary>
-        [WirePath("properties.primary")]
-        public bool? Primary
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Primary;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ApplicationGatewayPrivateLinkIPConfigurationProperties();
-                }
-                Properties.Primary = value;
-            }
-        }
-
         /// <summary> The provisioning state of the application gateway private link IP configuration. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState

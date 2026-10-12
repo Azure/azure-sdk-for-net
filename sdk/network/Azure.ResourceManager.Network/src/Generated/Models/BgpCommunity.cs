@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.Network.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BgpCommunity"/>. </summary>
+        public BgpCommunity()
+        {
+            CommunityPrefixes = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BgpCommunity"/>. </summary>
         /// <param name="serviceSupportedRegion"> The region which the service support. e.g. For O365, region is Global. </param>
         /// <param name="communityName"> The name of the bgp community. e.g. Skype. </param>
         /// <param name="communityValue"> The value of the bgp community. For more information: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-routing. </param>
@@ -34,11 +40,6 @@ namespace Azure.ResourceManager.Network.Models
             IsAuthorizedToUse = isAuthorizedToUse;
             ServiceGroup = serviceGroup;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BgpCommunity"/>. </summary>
-        public BgpCommunity() : this(default)
-        {
         }
 
         /// <summary> The prefixes that the bgp community contains. </summary>

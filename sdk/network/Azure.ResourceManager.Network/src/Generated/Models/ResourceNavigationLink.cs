@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ResourceNavigationLink : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ResourceNavigationLink"/>. </summary>
+        public ResourceNavigationLink()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceNavigationLink"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
@@ -29,14 +34,9 @@ namespace Azure.ResourceManager.Network.Models
             ETag = eTag;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceNavigationLink"/>. </summary>
-        public ResourceNavigationLink() : this(default)
-        {
-        }
-
         /// <summary> Resource navigation link properties format. </summary>
         [WirePath("properties")]
-        internal ResourceNavigationLinkFormat Properties { get; }
+        internal ResourceNavigationLinkFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]

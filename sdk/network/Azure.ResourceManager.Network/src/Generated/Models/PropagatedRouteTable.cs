@@ -7,28 +7,23 @@
 
 using System;
 using System.Collections.Generic;
+using ;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The list of RouteTables to advertise the routes to. </summary>
-    public partial class PropagatedRouteTableNfv
+    public partial class PropagatedRouteTable : global::.PropagatedRouteTableNfv
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PropagatedRouteTableNfv"/>. </summary>
-        public PropagatedRouteTableNfv()
-        {
-            Labels = new ChangeTrackingList<string>();
-            Ids = new ChangeTrackingList<RoutingConfigurationNfvSubResource>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PropagatedRouteTableNfv"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PropagatedRouteTable"/>. </summary>
         /// <param name="labels"> The list of labels. </param>
         /// <param name="ids"> The list of resource ids of all the RouteTables. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PropagatedRouteTableNfv(IList<string> labels, IList<RoutingConfigurationNfvSubResource> ids, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PropagatedRouteTable(IList<string> labels, IList<WritableSubResource> ids, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Labels = labels;
             Ids = ids;
@@ -38,9 +33,5 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The list of labels. </summary>
         [WirePath("labels")]
         public IList<string> Labels { get; }
-
-        /// <summary> The list of resource ids of all the RouteTables. </summary>
-        [WirePath("ids")]
-        public IList<RoutingConfigurationNfvSubResource> Ids { get; }
     }
 }

@@ -16,6 +16,11 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ApplicationGatewayFirewallRuleSet : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRuleSet"/>. </summary>
+        public ApplicationGatewayFirewallRuleSet()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRuleSet"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
@@ -28,14 +33,9 @@ namespace Azure.ResourceManager.Network.Models
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRuleSet"/>. </summary>
-        public ApplicationGatewayFirewallRuleSet() : this(default)
-        {
-        }
-
         /// <summary> Properties of the application gateway firewall rule set. </summary>
         [WirePath("properties")]
-        internal ApplicationGatewayFirewallRuleSetPropertiesFormat Properties { get; }
+        internal ApplicationGatewayFirewallRuleSetPropertiesFormat Properties { get; set; }
 
         /// <summary> The provisioning state of the web application firewall rule set. </summary>
         [WirePath("properties.provisioningState")]
@@ -55,6 +55,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return Properties is null ? default : Properties.DisplayName;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayFirewallRuleSetPropertiesFormat();
+                }
+                Properties.DisplayName = value;
+            }
         }
 
         /// <summary> The rule groups of the web application firewall rule set. </summary>
@@ -63,7 +71,11 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.RuleGroups;
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayFirewallRuleSetPropertiesFormat();
+                }
+                return Properties.RuleGroups;
             }
         }
 
@@ -73,7 +85,11 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Tiers;
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayFirewallRuleSetPropertiesFormat();
+                }
+                return Properties.Tiers;
             }
         }
     }

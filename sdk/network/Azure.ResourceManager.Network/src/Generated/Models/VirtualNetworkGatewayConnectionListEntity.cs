@@ -17,10 +17,14 @@ namespace Azure.ResourceManager.Network.Models
     public partial class VirtualNetworkGatewayConnectionListEntity : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayConnectionListEntity"/>. </summary>
-        /// <param name="properties"> Properties of the virtual network gateway connection. </param>
-        internal VirtualNetworkGatewayConnectionListEntity(VirtualNetworkGatewayConnectionListEntityPropertiesFormat properties)
+        /// <param name="connectionType"> Gateway connection type. </param>
+        /// <param name="virtualNetworkGateway1Id"> The ID of VirtualNetworkGateway or LocalNetworkGateway resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGateway1Id"/> is null. </exception>
+        public VirtualNetworkGatewayConnectionListEntity(VirtualNetworkGatewayConnectionType connectionType, ResourceIdentifier virtualNetworkGateway1Id)
         {
-            Properties = properties;
+            Argument.AssertNotNull(virtualNetworkGateway1Id, nameof(virtualNetworkGateway1Id));
+
+            Properties = new VirtualNetworkGatewayConnectionListEntityPropertiesFormat(virtualNetworkGateway1Id, connectionType);
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayConnectionListEntity"/>. </summary>
@@ -40,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Properties of the virtual network gateway connection. </summary>
         [WirePath("properties")]
-        internal VirtualNetworkGatewayConnectionListEntityPropertiesFormat Properties { get; }
+        internal VirtualNetworkGatewayConnectionListEntityPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
@@ -52,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties.ConnectionStatus;
+                return Properties is null ? default : Properties.ConnectionStatus;
             }
         }
 
@@ -62,7 +66,11 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.TunnelConnectionStatus;
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkGatewayConnectionListEntityPropertiesFormat();
+                }
+                return Properties.TunnelConnectionStatus;
             }
         }
 
@@ -72,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties.EgressBytesTransferred;
+                return Properties is null ? default : Properties.EgressBytesTransferred;
             }
         }
 
@@ -82,7 +90,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties.IngressBytesTransferred;
+                return Properties is null ? default : Properties.IngressBytesTransferred;
             }
         }
 
@@ -92,7 +100,11 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.GatewayCustomBgpIPAddresses;
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkGatewayConnectionListEntityPropertiesFormat();
+                }
+                return Properties.GatewayCustomBgpIPAddresses;
             }
         }
 
@@ -102,7 +114,11 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.IPsecPolicies;
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkGatewayConnectionListEntityPropertiesFormat();
+                }
+                return Properties.IPsecPolicies;
             }
         }
 
@@ -112,7 +128,11 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.TrafficSelectorPolicies;
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkGatewayConnectionListEntityPropertiesFormat();
+                }
+                return Properties.TrafficSelectorPolicies;
             }
         }
 
@@ -122,17 +142,25 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
         /// <summary> The routing configuration indicating the associated and propagated route tables for this connection. </summary>
         [WirePath("properties.routingConfiguration")]
-        public RoutingConfigurationNfv RoutingConfiguration
+        public RoutingConfiguration RoutingConfiguration
         {
             get
             {
-                return Properties.RoutingConfiguration;
+                return Properties is null ? default : Properties.RoutingConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkGatewayConnectionListEntityPropertiesFormat();
+                }
+                Properties.RoutingConfiguration = value;
             }
         }
     }

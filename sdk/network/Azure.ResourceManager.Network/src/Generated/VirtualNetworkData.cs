@@ -211,24 +211,6 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Private Endpoint VNet Policies. </summary>
-        [WirePath("properties.privateEndpointVNetPolicies")]
-        public PrivateEndpointVnetPolicy? PrivateEndpointVNetPolicies
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivateEndpointVNetPolicies;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualNetworkPropertiesFormat();
-                }
-                Properties.PrivateEndpointVNetPolicies = value;
-            }
-        }
-
         /// <summary> A configurable list of summarized gateway prefixes advertised for the virtual network. </summary>
         [WirePath("properties.summarizedGatewayPrefixes")]
         public VirtualNetworkAddressSpace SummarizedGatewayPrefixes

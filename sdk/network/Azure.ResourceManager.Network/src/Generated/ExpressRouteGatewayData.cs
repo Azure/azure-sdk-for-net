@@ -54,24 +54,6 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> The Virtual Hub where the ExpressRoute gateway is or will be deployed. </summary>
-        [WirePath("properties.virtualHub")]
-        public ResourceIdentifier VirtualHub
-        {
-            get
-            {
-                return Properties is null ? default : Properties.VirtualHub;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExpressRouteGatewayProperties();
-                }
-                Properties.VirtualHub = value;
-            }
-        }
-
         /// <summary> Configures this gateway to accept traffic from non Virtual WAN networks. </summary>
         [WirePath("properties.allowNonVirtualWanTraffic")]
         public bool? AllowNonVirtualWanTraffic

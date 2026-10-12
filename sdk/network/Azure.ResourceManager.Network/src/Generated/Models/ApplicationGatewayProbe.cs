@@ -96,42 +96,6 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        /// <summary> The probing interval in seconds. This is the time interval between two consecutive probes. Acceptable values are from 1 second to 86400 seconds. </summary>
-        [WirePath("properties.interval")]
-        public int? Interval
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Interval;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ApplicationGatewayProbePropertiesFormat();
-                }
-                Properties.Interval = value;
-            }
-        }
-
-        /// <summary> The probe timeout in seconds. Probe marked as failed if valid response is not received with this timeout period. Acceptable values are from 1 second to 86400 seconds. </summary>
-        [WirePath("properties.timeout")]
-        public int? Timeout
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Timeout;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ApplicationGatewayProbePropertiesFormat();
-                }
-                Properties.Timeout = value;
-            }
-        }
-
         /// <summary> The probe retry count. Backend server is marked down after consecutive probe failure count reaches UnhealthyThreshold. Acceptable values are from 1 second to 20. </summary>
         [WirePath("properties.unhealthyThreshold")]
         public int? UnhealthyThreshold
@@ -219,24 +183,6 @@ namespace Azure.ResourceManager.Network.Models
                     Properties = new ApplicationGatewayProbePropertiesFormat();
                 }
                 Properties.Match = value;
-            }
-        }
-
-        /// <summary> Whether to send Proxy Protocol header along with the Health Probe over TCP or TLS protocol. Default value is false. </summary>
-        [WirePath("properties.enableProbeProxyProtocolHeader")]
-        public bool? EnableProbeProxyProtocolHeader
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EnableProbeProxyProtocolHeader;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ApplicationGatewayProbePropertiesFormat();
-                }
-                Properties.EnableProbeProxyProtocolHeader = value;
             }
         }
 

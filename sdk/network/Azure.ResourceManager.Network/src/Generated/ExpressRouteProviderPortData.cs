@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteProviderPortData"/>. </summary>
-        internal ExpressRouteProviderPortData()
+        public ExpressRouteProviderPortData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Properties of the express route Service Provider Port. </summary>
         [WirePath("properties")]
-        internal ExpressRouteProviderPortProperties Properties { get; }
+        internal ExpressRouteProviderPortProperties Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
