@@ -34,11 +34,12 @@ public class ApiVersionOverrideWireTests
         // Exercise the internal constructor with an absent resolver, without changing
         // the public clients, which normally supply a non-null resolver lambda.
         var constructor = restClientType.GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic)
-            .Single(c => c.GetParameters().Length == 6);
+            .Single(c => c.GetParameters().Any(p => p.Name == "getApiVersion"));
+        Assert.That(constructor.GetParameters().Select(p => p.Name), Does.Not.Contain("apiVersion"));
         var restClient = constructor.Invoke(
         [
             null, HttpPipelineBuilder.Build(options), null,
-            new Uri("https://management.azure.com"), "constructor-version", null
+            new Uri("https://management.azure.com"), null
         ]);
         using var message = (HttpMessage)restClientType.GetMethod("CreateGetRequest", BindingFlags.Instance | BindingFlags.NonPublic)!
             .Invoke(restClient, [Guid.Parse(SubscriptionId), "group", "test", null])!;

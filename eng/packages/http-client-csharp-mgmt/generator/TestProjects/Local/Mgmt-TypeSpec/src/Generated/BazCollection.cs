@@ -39,15 +39,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BazCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(BazResource.ResourceType, out string bazApiVersion);
             _bazsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", BazResource.ResourceType.Namespace, Diagnostics);
-            _bazsRestClient = new Bazs(
-                _bazsClientDiagnostics,
-                Pipeline,
-                Diagnostics.ApplicationId,
-                Endpoint,
-                bazApiVersion ?? "2024-05-01",
-                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _bazsRestClient = new Bazs(_bazsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

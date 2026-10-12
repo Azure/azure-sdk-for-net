@@ -111,6 +111,86 @@ internal class ApiVersionOverrideTests
         Assert.That(body, Does.Contain("?? \"opaque-first\""));
     }
 
+    [TestCase(false, false)]
+    [TestCase(true, false)]
+    [TestCase(false, true)]
+    [TestCase(true, true)]
+    public void ResolverOnlyClientOmitsSharedApiVersionPlumbing(bool hasDifferentWireDefaults, bool isSubClient)
+    {
+        var (client, models) = hasDifferentWireDefaults
+            ? InputResourceData.ClientWithResource()
+            : InputResourceData.ClientWithSharedMockableOperations();
+        if (hasDifferentWireDefaults)
+        {
+            AddWireDefaults(client);
+        }
+        if (isSubClient)
+        {
+            client = InputFactory.Client(client.Name, methods: client.Methods, decorators: client.Decorators,
+                parent: InputFactory.Client("ParentClient", decorators: client.Decorators));
+        }
+        var plugin = ManagementMockHelpers.LoadMockPlugin(clients: () => [client.Parent ?? client], inputModels: () => models);
+        var restClient = plugin.Object.TypeFactory.CreateClient(client)!;
+        // Visit requests before inspecting the emitted fields and constructors.
+        var request = GetInitialRequestBody(restClient.RestClient.Methods, hasDifferentWireDefaults ? "Get" : "First");
+        var code = new TypeProviderWriter(restClient).Write().Content;
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(request, Does.Contain("_getApiVersion"));
+            Assert.That(code, Does.Contain("_getApiVersion"));
+            Assert.That(code, Does.Not.Contain("_apiVersion"));
+            Assert.That(restClient.Constructors.SelectMany(c => c.Signature.Parameters).Select(p => p.Name),
+                Does.Not.Contain("apiVersion"));
+        });
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public void ResolverOnlyResourceAndCollectionOmitConstructorVersionLookup(bool isCollection)
+    {
+        var (client, models) = InputResourceData.ClientWithResource();
+        AddWireDefaults(client);
+        var plugin = ManagementMockHelpers.LoadMockPlugin(clients: () => [client], inputModels: () => models);
+        var provider = plugin.Object.OutputLibrary.TypeProviders.Single(p => isCollection
+            ? p is ResourceCollectionClientProvider
+            : p is ResourceClientProvider);
+        var code = new TypeProviderWriter(provider).Write().Content;
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(code, Does.Contain("resourceType => this.TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null"));
+            Assert.That(code.Split("TryGetApiVersion(").Length - 1, Is.EqualTo(1),
+                "Only the request-time resolver should query the resource API version.");
+            Assert.That(code, Does.Not.Contain("\"2023-01-01\""));
+        });
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public void MixedClientRetainsSharedApiVersionPlumbing(bool isSubClient)
+    {
+        var (client, models) = InputResourceData.ClientWithSharedMockableOperations(includeNonResource: true);
+        if (isSubClient)
+        {
+            client = InputFactory.Client(client.Name, methods: client.Methods, decorators: client.Decorators,
+                parent: InputFactory.Client("ParentClient", decorators: client.Decorators));
+        }
+        var plugin = ManagementMockHelpers.LoadMockPlugin(clients: () => [client.Parent ?? client], inputModels: () => models);
+        var restClient = plugin.Object.TypeFactory.CreateClient(client)!;
+        var request = GetInitialRequestBody(restClient.RestClient.Methods, "CheckNameAvailability");
+        var code = new TypeProviderWriter(restClient).Write().Content;
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(request, Does.Contain("AppendQuery(\"api-version\", _apiVersion, true)"));
+            Assert.That(code, Does.Contain("_apiVersion"));
+            Assert.That(code, Does.Contain("_getApiVersion"));
+            Assert.That(restClient.Constructors.SelectMany(c => c.Signature.Parameters).Select(p => p.Name),
+                Does.Contain("apiVersion"));
+        });
+    }
+
     [Test]
     public void ResourceRequestAllowsMissingApiVersionResolver()
     {
@@ -262,7 +342,8 @@ internal class ApiVersionOverrideTests
 
         Assert.Multiple(() =>
         {
-            Assert.That(property, Does.Contain("\"2023-01-01\""));
+            Assert.That(property, Does.Not.Contain("\"2023-01-01\""),
+                "The operation supplies its own default and no longer needs a constructor version.");
             Assert.That(request, Does.Contain("AppendQuery(\"api-version\", \"opaque-provider\", true)"));
             Assert.That(request, Does.Not.Contain("_getApiVersion"));
         });
@@ -413,14 +494,14 @@ internal class ApiVersionOverrideTests
     {
         Assert.Multiple(() =>
         {
-            Assert.That(property, Does.Contain("\"2023-01-01\""));
             if (request.Contains("_getApiVersion"))
             {
                 Assert.That(request, Does.Contain("?? \"2023-01-01\""));
             }
             else
             {
-                // The unchanged generator supplies the default through the constructor.
+                // Requests without an operation resolver still receive the constructor default.
+                Assert.That(property, Does.Contain("\"2023-01-01\""));
                 Assert.That(request, Does.Contain("AppendQuery(\"api-version\", _apiVersion, true)"));
             }
         });

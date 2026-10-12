@@ -27,20 +27,13 @@ internal class RestClientVisitor : ScmLibraryVisitor
     {
         var client = ManagementClientGenerator.Instance.InputLibrary.GetClientByMethod(serviceMethod)!;
         var apiVersionParameter = serviceMethod.Operation.Parameters.FirstOrDefault(p => p.IsApiVersion);
-        if (createRequestMethodProvider?.BodyStatements is null || !client.NeedsApiVersionResolver || apiVersionParameter is not InputQueryParameter apiVersionQuery)
+        if (createRequestMethodProvider?.BodyStatements is null || !client.UsesOperationApiVersion(serviceMethod) || apiVersionParameter is not InputQueryParameter apiVersionQuery)
         {
             return createRequestMethodProvider;
         }
 
         var resources = ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas
             .Where(r => r.Methods.Any(m => ReferenceEquals(m.InputMethod, serviceMethod))).ToArray();
-        if (!client.HasOperationApiVersionDefaults && resources.Length == 0)
-        {
-            // Adding a resolver for another operation must not change the shared constructor
-            // version used by genuinely non-resource requests in this client.
-            return createRequestMethodProvider;
-        }
-
         // The base generator visits the initial request before its continuation. Keep its
         // actual parameters so filtered next-page signatures can retain resource-type context
         // without reconstructing parameter types, wire aliases, or compatibility names.

@@ -50,6 +50,23 @@ internal static class InputClientExtensions
                 resource.CategorizeMethods().MethodsInExtension.Any(method => ReferenceEquals(method.InputClient, inputClient)));
 
         /// <summary>
+        /// Whether any request still reads the shared constructor version. Resolver-only
+        /// clients use operation defaults instead and must not retain unused version plumbing.
+        /// </summary>
+        internal bool NeedsApiVersionField => !inputClient.NeedsApiVersionResolver
+            || inputClient.Methods.Any(method =>
+                method.Operation.Parameters.Any(parameter => parameter.IsApiVersion
+                    && parameter.Scope == InputParameterScope.Client && parameter.Type is not InputLiteralType)
+                && !inputClient.UsesOperationApiVersion(method));
+
+        internal bool UsesOperationApiVersion(InputServiceMethod method)
+            => inputClient.NeedsApiVersionResolver
+                && method.Operation.Parameters.FirstOrDefault(parameter => parameter.IsApiVersion) is InputQueryParameter
+                && (inputClient.HasOperationApiVersionDefaults
+                    || ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas.Any(resource =>
+                        resource.Methods.Any(resourceMethod => ReferenceEquals(resourceMethod.InputMethod, method))));
+
+        /// <summary>
         /// Gets the API version for this client from its <see cref="InputClient.ApiVersions"/>.
         /// </summary>
         public string CurrentApiVersion
