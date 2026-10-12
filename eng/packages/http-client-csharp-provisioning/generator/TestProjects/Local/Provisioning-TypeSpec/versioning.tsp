@@ -33,6 +33,50 @@ model VersionedResourceProperties {
   /** A property introduced in the latest stable API version. */
   @added(Versions.v2024_05_01)
   latestStableProperty?: string;
+
+  /** An enum property available in every API version. */
+  initialStableEnum?: InitialStableEnum;
+
+  /** An enum property available only in the preview API version. */
+  @added(Versions.v2024_03_01_preview)
+  @removed(Versions.v2024_05_01)
+  previewOnlyEnum?: PreviewOnlyEnum;
+
+  /** An enum property introduced in preview and retained in the following stable API version. */
+  @added(Versions.v2024_03_01_preview)
+  previewRetainedEnum?: PreviewRetainedEnum;
+
+  /** An enum property introduced in the latest stable API version. */
+  @added(Versions.v2024_05_01)
+  latestStableEnum?: LatestStableEnum;
+}
+
+/** An enum available in every API version. */
+enum InitialStableEnum {
+  Enabled,
+  Disabled,
+}
+
+/** An enum available only in the preview API version. */
+@added(Versions.v2024_03_01_preview)
+@removed(Versions.v2024_05_01)
+enum PreviewOnlyEnum {
+  Enabled,
+  Disabled,
+}
+
+/** An enum introduced in preview and retained in the following stable API version. */
+@added(Versions.v2024_03_01_preview)
+enum PreviewRetainedEnum {
+  Enabled,
+  Disabled,
+}
+
+/** An enum introduced in the latest stable API version. */
+@added(Versions.v2024_05_01)
+enum LatestStableEnum {
+  Enabled,
+  Disabled,
 }
 
 @armResourceOperations
