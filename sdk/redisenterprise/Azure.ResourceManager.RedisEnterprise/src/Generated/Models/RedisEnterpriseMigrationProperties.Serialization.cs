@@ -109,6 +109,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
+            if (options.Format != "W" && Optional.IsDefined(RollbackEligibleUntil))
+            {
+                writer.WritePropertyName("rollbackEligibleUntil"u8);
+                writer.WriteStringValue(RollbackEligibleUntil.Value, "O");
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
