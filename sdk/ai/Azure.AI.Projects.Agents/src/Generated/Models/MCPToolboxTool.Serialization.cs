@@ -128,7 +128,7 @@ namespace Azure.AI.Projects.Agents
                     writer.WriteNull("headers"u8);
                 }
             }
-            if (_allowedToolsIsDefined || Optional.IsDefined(AllowedTools))
+            if (Optional.IsDefined(AllowedTools, _allowedToolsIsDefined))
             {
                 if (AllowedTools != null)
                 {

@@ -112,7 +112,7 @@ namespace Azure.AI.Projects.Agents
                     writer.WriteNull("headers"u8);
                 }
             }
-            if (_allowedToolsIsDefined || Optional.IsDefined(AllowedTools))
+            if (Optional.IsDefined(AllowedTools, _allowedToolsIsDefined))
             {
                 if (AllowedTools != null)
                 {
@@ -148,7 +148,7 @@ namespace Azure.AI.Projects.Agents
                     writer.WriteNull("allowed_callers"u8);
                 }
             }
-            if (_requireApprovalIsDefined || Optional.IsDefined(RequireApproval))
+            if (Optional.IsDefined(RequireApproval, _requireApprovalIsDefined))
             {
                 if (RequireApproval != null)
                 {

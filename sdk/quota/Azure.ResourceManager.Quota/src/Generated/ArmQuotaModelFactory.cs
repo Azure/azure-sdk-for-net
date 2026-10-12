@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <returns> A new <see cref="Models.QuotaLimitJsonObject"/> instance for mocking. </returns>
         public static QuotaLimitJsonObject QuotaLimitJsonObject(string limitObjectType = default)
         {
-            return new UnknownLimitJsonObject(default, default);
+            return new UnknownLimitJsonObject(limitObjectType is null ? default : new LimitType(limitObjectType), default);
         }
 
         /// <summary> The resource quota limit value. </summary>
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <returns> A new <see cref="Models.QuotaLimitObject"/> instance for mocking. </returns>
         public static QuotaLimitObject QuotaLimitObject(int value = default, QuotaLimitType? limitType = default)
         {
-            return new QuotaLimitObject(default, default, value, limitType);
+            return new QuotaLimitObject(LimitType.LimitValue, default, value, limitType);
         }
 
         /// <summary> Request property. </summary>

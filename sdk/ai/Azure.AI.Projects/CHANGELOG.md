@@ -11,6 +11,7 @@
 - To create a data generation job, `DataGenerationJobInputs` is now need to be used. It can be of three types: `EvaluationDataGenerationJobInputs`, `ReinforcementFineTuningDataGenerationJobInputs` and `SupervisedFineTuningDataGenerationJobInputs`. 
 - `DataGenerationJobOptions` was replaced by `DataGenerationJobConfiguration` subtypes.
 - `DataGenerationJobOutputOptions` was replaced by `EvaluationDataGenerationJobOutputConfiguration`.
+- The `EvaluatorName` property of `EvaluatorGenerationInputs` now can only be set through constructor.
 
 ### Bugs Fixed
 

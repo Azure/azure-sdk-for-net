@@ -435,7 +435,11 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                     await jobsClient.DeleteAsync(jobId: record, cancellationToken: default);
                     break;
                 }
-                catch {
+                catch (ClientResultException e) {
+                    if (e.Status != 409)
+                    {
+                        throw;
+                    }
                     await Task.Delay(500);
                 }
             }

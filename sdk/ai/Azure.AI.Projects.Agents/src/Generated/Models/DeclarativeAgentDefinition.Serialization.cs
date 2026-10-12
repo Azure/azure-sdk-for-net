@@ -84,7 +84,7 @@ namespace Azure.AI.Projects.Agents
             }
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model);
-            if (_instructionsIsDefined || Optional.IsDefined(Instructions))
+            if (Optional.IsDefined(Instructions, _instructionsIsDefined))
             {
                 if (Instructions != null)
                 {
@@ -106,7 +106,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndArray();
             }
-            if (_temperatureIsDefined || Optional.IsDefined(Temperature))
+            if (Optional.IsDefined(Temperature, _temperatureIsDefined))
             {
                 if (Temperature != null)
                 {
@@ -118,7 +118,7 @@ namespace Azure.AI.Projects.Agents
                     writer.WriteNull("temperature"u8);
                 }
             }
-            if (_topPIsDefined || Optional.IsDefined(TopP))
+            if (Optional.IsDefined(TopP, _topPIsDefined))
             {
                 if (TopP != null)
                 {

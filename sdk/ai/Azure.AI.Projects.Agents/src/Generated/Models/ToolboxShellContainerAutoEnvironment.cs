@@ -14,7 +14,7 @@ namespace Azure.AI.Projects.Agents
     {
         [Experimental("AAIP002")]
         private ContainerMemoryLimit? _memoryLimit;
-        internal bool _memoryLimitIsDefined;
+        private bool _memoryLimitIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ToolboxShellContainerAutoEnvironment"/>. </summary>
         public ToolboxShellContainerAutoEnvironment() : base("container_auto")

@@ -78,7 +78,7 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("external_web_access"u8);
                 writer.WriteBooleanValue(ExternalWebAccess.Value);
             }
-            if (_filtersIsDefined || Optional.IsDefined(Filters))
+            if (Optional.IsDefined(Filters, _filtersIsDefined))
             {
                 if (Filters != null)
                 {
@@ -90,7 +90,7 @@ namespace Azure.AI.Projects.Agents
                     writer.WriteNull("filters"u8);
                 }
             }
-            if (_userLocationIsDefined || Optional.IsDefined(UserLocation))
+            if (Optional.IsDefined(UserLocation, _userLocationIsDefined))
             {
                 if (UserLocation != null)
                 {
