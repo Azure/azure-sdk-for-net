@@ -294,6 +294,51 @@ namespace Azure.Security.Attestation.Tests
 
         [TestCase(false)]
         [TestCase(true)]
+        public async System.Threading.Tasks.Task GetTcbBaselines(bool async)
+        {
+            var captured = new List<CapturedRequest>();
+            var client = new AttestationAdministrationClient(new Uri(Endpoint), new MockCredential(), Options(captured,
+                @"{""tcbBaselines"":[{""tcbIdentifier"":""16"",""tcbEvaluationDataNumber"":16,""tcbReleaseDate"":""2023-08-09T00:00:00Z"",
+                    ""minimumPswLinuxVersion"":""2.17"",""minimumPswWindowsVersion"":""2.16"",""isSelectedTcb"":true}]}"));
+
+            TcbBaselineResult result = async
+                ? (await client.GetTcbBaselinesAsync(AttestationType.SgxEnclave)).Value
+                : client.GetTcbBaselines(AttestationType.SgxEnclave).Value;
+
+            CapturedRequest request = captured.Single();
+            Assert.AreEqual(RequestMethod.Get, request.Method);
+            Assert.AreEqual($"{Endpoint}/tcbbaselines/SgxEnclave?{ApiVersion}", request.Uri);
+            TcbBaseline baseline = result.TcbBaselines.Single();
+            Assert.AreEqual("16", baseline.TcbIdentifier);
+            Assert.AreEqual(16, baseline.TcbEvaluationDataNumber);
+            Assert.AreEqual(new DateTimeOffset(2023, 8, 9, 0, 0, 0, TimeSpan.Zero), baseline.TcbReleaseOn);
+            Assert.AreEqual("2.17", baseline.MinimumPswLinuxVersion);
+            Assert.AreEqual("2.16", baseline.MinimumPswWindowsVersion);
+            Assert.IsTrue(baseline.IsSelectedTcb);
+        }
+
+        [Test]
+        public void GetTcbBaselinesRequiresServiceVersion20250601()
+        {
+            var captured = new List<CapturedRequest>();
+            var client = new AttestationAdministrationClient(new Uri(Endpoint), new MockCredential(), Options(captured, "{}", AttestationClientOptions.ServiceVersion.V2020_10_01));
+
+            Assert.Throws<NotSupportedException>(() => client.GetTcbBaselines(AttestationType.SgxEnclave));
+            Assert.ThrowsAsync<NotSupportedException>(() => client.GetTcbBaselinesAsync(AttestationType.SgxEnclave));
+            Assert.IsEmpty(captured);
+        }
+
+        [Test]
+        public void TcbBaselineFactories()
+        {
+            TcbBaselineResult result = AttestationModelFactory.TcbBaselineResult(new[] { AttestationModelFactory.TcbBaseline(tcbIdentifier: "16", isSelectedTcb: true) });
+
+            Assert.AreEqual("16", result.TcbBaselines.Single().TcbIdentifier);
+            Assert.IsTrue(result.TcbBaselines.Single().IsSelectedTcb);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
         public async System.Threading.Tasks.Task GetOpenIdMetadata(bool async)
         {
             var captured = new List<CapturedRequest>();

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Security.Attestation
 {
@@ -30,6 +32,57 @@ namespace Azure.Security.Attestation
         public static TpmAttestationResponse TpmAttestationResponse(BinaryData data = default)
         {
             return new TpmAttestationResponse(data, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// A list of all Azure supported baseline details for the a TEE type along with an
+        /// indication of which one is in enforced for the attestation provider
+        /// </summary>
+        /// <param name="tcbBaselines">
+        /// A list of all Azure supported baseline details for the a TEE type along with an
+        /// indication of which one is in enforced for the attestation provider
+        /// </param>
+        /// <returns> A new <see cref="Attestation.TcbBaselineResult"/> instance for mocking. </returns>
+        public static TcbBaselineResult TcbBaselineResult(IEnumerable<TcbBaseline> tcbBaselines = default)
+        {
+            tcbBaselines ??= new ChangeTrackingList<TcbBaseline>();
+
+            return new TcbBaselineResult(tcbBaselines.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// TEE specific Tcb baseline used in attestation, and baseline details including
+        /// baseline identifier, release date and minimum required software version
+        /// </summary>
+        /// <param name="tcbIdentifier"> The Tcb baseline Identifier used in attestation policy. </param>
+        /// <param name="tcbEvaluationDataNumber">
+        /// A monotonically increasing sequence number changed when Intel updates the
+        /// content of the TCB evaluation data set. SGX TEE specific property
+        /// </param>
+        /// <param name="tcbReleaseOn"> Date and time when the Tcb is released. SGX TEE specific property. </param>
+        /// <param name="minimumPswLinuxVersion">
+        /// Minimum Linux PSW version required to support the corresponding Tcb baseline.
+        /// SGX TEE specific property
+        /// </param>
+        /// <param name="minimumPswWindowsVersion">
+        /// Minimum Windows PSW version required to support the corresponding Tcb baseline.
+        /// SGX TEE specific property
+        /// </param>
+        /// <param name="isSelectedTcb">
+        /// The corresponding Tcb baseline is set in attestation policy and is used in
+        /// attestation request if set to true
+        /// </param>
+        /// <returns> A new <see cref="Attestation.TcbBaseline"/> instance for mocking. </returns>
+        public static TcbBaseline TcbBaseline(string tcbIdentifier = default, int? tcbEvaluationDataNumber = default, DateTimeOffset? tcbReleaseOn = default, string minimumPswLinuxVersion = default, string minimumPswWindowsVersion = default, bool? isSelectedTcb = default)
+        {
+            return new TcbBaseline(
+                tcbIdentifier,
+                tcbEvaluationDataNumber,
+                tcbReleaseOn,
+                minimumPswLinuxVersion,
+                minimumPswWindowsVersion,
+                isSelectedTcb,
+                additionalBinaryDataProperties: null);
         }
     }
 }
