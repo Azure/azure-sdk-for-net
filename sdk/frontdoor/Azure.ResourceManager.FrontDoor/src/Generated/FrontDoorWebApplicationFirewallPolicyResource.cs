@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FrontDoorWebApplicationFirewallPolicyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string frontDoorWebApplicationFirewallPolicyApiVersion);
             _policiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", ResourceType.Namespace, Diagnostics);
-            _policiesRestClient = new Policies(_policiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorWebApplicationFirewallPolicyApiVersion ?? "2025-11-01");
+            _policiesRestClient = new Policies(_policiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/FrontDoorWebApplicationFirewallPolicies", out string policiesApiVersionOverride) ? policiesApiVersionOverride : "2025-11-01");
             ValidateResourceId(id);
         }
 

@@ -104,10 +104,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(Details))
+            if (_detailsIsDefined || Optional.IsDefined(Details))
             {
-                writer.WritePropertyName("details"u8);
-                writer.WriteObjectValue(Details, options);
+                if (Details != null)
+                {
+                    writer.WritePropertyName("details"u8);
+                    writer.WriteObjectValue(Details, options);
+                }
+                else
+                {
+                    writer.WriteNull("details"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(VmssResourceId))
             {
@@ -162,6 +169,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             GuestConfigurationVmInfo vm = default;
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
+            bool detailsIsDefined = false;
             GuestConfigurationAssignmentReportDetails details = default;
             string vmssResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -223,6 +231,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 if (prop.NameEquals("details"u8))
                 {
+                    detailsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         details = null;
@@ -250,7 +259,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 endOn,
                 details,
                 vmssResourceId,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _detailsIsDefined = detailsIsDefined
+            };
         }
     }
 }
