@@ -12,22 +12,22 @@ using Azure.ResourceManager.BillingBenefits;
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
     /// <summary> Benefit validate response. </summary>
-    public partial class BenefitValidateResponse
+    public partial class BenefitValidateResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BenefitValidateResponse"/>. </summary>
-        internal BenefitValidateResponse()
+        /// <summary> Initializes a new instance of <see cref="BenefitValidateResult"/>. </summary>
+        internal BenefitValidateResult()
         {
             Benefits = new ChangeTrackingList<BenefitValidateResponseProperty>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BenefitValidateResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BenefitValidateResult"/>. </summary>
         /// <param name="benefits"> Defines benefit validation response for benefits. </param>
         /// <param name="nextLink"> Url to get the next page. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BenefitValidateResponse(IList<BenefitValidateResponseProperty> benefits, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BenefitValidateResult(IList<BenefitValidateResponseProperty> benefits, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Benefits = benefits;
             NextLink = nextLink;
