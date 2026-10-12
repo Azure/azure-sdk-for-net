@@ -23,7 +23,7 @@ class PackageProps {
     [HashTable]$CIParameters
 
     # Path from root of azure-rest-api-specs repo to spec project (read from
-    # tsp-location.yaml if it exists in the package directory)
+    # non-batch tsp-location.yaml if it exists in the package directory)
     [string]$SpecProjectPath
 
     PackageProps([string]$name, [string]$version, [string]$directoryPath, [string]$serviceDirectory) {
@@ -67,8 +67,8 @@ class PackageProps {
 
         if (Test-Path (Join-Path $directoryPath 'tsp-location.yaml')) {
             $tspLocation = LoadFrom-Yaml (Join-Path $directoryPath 'tsp-location.yaml')
-            if ($tspLocation -and $tspLocation.directory) {
-                $this.SpecProjectPath = $tspLocation.directory
+            if ($tspLocation -and $tspLocation["directory"]) {
+                $this.SpecProjectPath = $tspLocation["directory"]
             }
         }
 
