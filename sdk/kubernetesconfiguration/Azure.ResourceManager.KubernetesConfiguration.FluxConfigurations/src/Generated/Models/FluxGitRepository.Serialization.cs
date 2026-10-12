@@ -74,50 +74,106 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 throw new FormatException($"The model {nameof(FluxGitRepository)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Uri))
+            if (_uriIsDefined || Optional.IsDefined(Uri))
             {
-                writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Uri);
+                if (Uri != null)
+                {
+                    writer.WritePropertyName("url"u8);
+                    writer.WriteStringValue(Uri);
+                }
+                else
+                {
+                    writer.WriteNull("url"u8);
+                }
             }
-            if (Optional.IsDefined(TimeoutInSeconds))
+            if (_timeoutInSecondsIsDefined || Optional.IsDefined(TimeoutInSeconds))
             {
-                writer.WritePropertyName("timeoutInSeconds"u8);
-                writer.WriteNumberValue(TimeoutInSeconds.Value);
+                if (TimeoutInSeconds != null)
+                {
+                    writer.WritePropertyName("timeoutInSeconds"u8);
+                    writer.WriteNumberValue(TimeoutInSeconds.Value);
+                }
+                else
+                {
+                    writer.WriteNull("timeoutInSeconds"u8);
+                }
             }
-            if (Optional.IsDefined(SyncIntervalInSeconds))
+            if (_syncIntervalInSecondsIsDefined || Optional.IsDefined(SyncIntervalInSeconds))
             {
-                writer.WritePropertyName("syncIntervalInSeconds"u8);
-                writer.WriteNumberValue(SyncIntervalInSeconds.Value);
+                if (SyncIntervalInSeconds != null)
+                {
+                    writer.WritePropertyName("syncIntervalInSeconds"u8);
+                    writer.WriteNumberValue(SyncIntervalInSeconds.Value);
+                }
+                else
+                {
+                    writer.WriteNull("syncIntervalInSeconds"u8);
+                }
             }
             if (Optional.IsDefined(RepositoryRef))
             {
                 writer.WritePropertyName("repositoryRef"u8);
                 writer.WriteObjectValue(RepositoryRef, options);
             }
-            if (Optional.IsDefined(SshKnownHosts))
+            if (_sshKnownHostsIsDefined || Optional.IsDefined(SshKnownHosts))
             {
-                writer.WritePropertyName("sshKnownHosts"u8);
-                writer.WriteStringValue(SshKnownHosts);
+                if (SshKnownHosts != null)
+                {
+                    writer.WritePropertyName("sshKnownHosts"u8);
+                    writer.WriteStringValue(SshKnownHosts);
+                }
+                else
+                {
+                    writer.WriteNull("sshKnownHosts"u8);
+                }
             }
-            if (Optional.IsDefined(HttpsUser))
+            if (_httpsUserIsDefined || Optional.IsDefined(HttpsUser))
             {
-                writer.WritePropertyName("httpsUser"u8);
-                writer.WriteStringValue(HttpsUser);
+                if (HttpsUser != null)
+                {
+                    writer.WritePropertyName("httpsUser"u8);
+                    writer.WriteStringValue(HttpsUser);
+                }
+                else
+                {
+                    writer.WriteNull("httpsUser"u8);
+                }
             }
-            if (Optional.IsDefined(HttpsCACert))
+            if (_httpsCACertIsDefined || Optional.IsDefined(HttpsCACert))
             {
-                writer.WritePropertyName("httpsCACert"u8);
-                writer.WriteStringValue(HttpsCACert);
+                if (HttpsCACert != null)
+                {
+                    writer.WritePropertyName("httpsCACert"u8);
+                    writer.WriteStringValue(HttpsCACert);
+                }
+                else
+                {
+                    writer.WriteNull("httpsCACert"u8);
+                }
             }
-            if (Optional.IsDefined(LocalAuthRef))
+            if (_localAuthRefIsDefined || Optional.IsDefined(LocalAuthRef))
             {
-                writer.WritePropertyName("localAuthRef"u8);
-                writer.WriteStringValue(LocalAuthRef);
+                if (LocalAuthRef != null)
+                {
+                    writer.WritePropertyName("localAuthRef"u8);
+                    writer.WriteStringValue(LocalAuthRef);
+                }
+                else
+                {
+                    writer.WriteNull("localAuthRef"u8);
+                }
             }
-            if (Optional.IsDefined(Provider))
+            if (_providerIsDefined || Optional.IsDefined(Provider))
             {
-                writer.WritePropertyName("provider"u8);
-                writer.WriteStringValue(Provider.Value.ToString());
+                if (Provider != null)
+                {
+                    writer.WritePropertyName("provider"u8);
+                    writer.WriteStringValue(Provider.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("provider"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -161,20 +217,29 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 return null;
             }
+            bool uriIsDefined = false;
             string uri = default;
+            bool timeoutInSecondsIsDefined = false;
             long? timeoutInSeconds = default;
+            bool syncIntervalInSecondsIsDefined = false;
             long? syncIntervalInSeconds = default;
             FluxRepositoryReference repositoryRef = default;
+            bool sshKnownHostsIsDefined = false;
             string sshKnownHosts = default;
+            bool httpsUserIsDefined = false;
             string httpsUser = default;
+            bool httpsCACertIsDefined = false;
             string httpsCACert = default;
+            bool localAuthRefIsDefined = false;
             string localAuthRef = default;
+            bool providerIsDefined = false;
             FluxConfigurationProviderType? provider = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("url"u8))
                 {
+                    uriIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         uri = null;
@@ -185,6 +250,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("timeoutInSeconds"u8))
                 {
+                    timeoutInSecondsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         timeoutInSeconds = null;
@@ -195,6 +261,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("syncIntervalInSeconds"u8))
                 {
+                    syncIntervalInSecondsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         syncIntervalInSeconds = null;
@@ -214,6 +281,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("sshKnownHosts"u8))
                 {
+                    sshKnownHostsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         sshKnownHosts = null;
@@ -224,6 +292,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("httpsUser"u8))
                 {
+                    httpsUserIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         httpsUser = null;
@@ -234,6 +303,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("httpsCACert"u8))
                 {
+                    httpsCACertIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         httpsCACert = null;
@@ -244,6 +314,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("localAuthRef"u8))
                 {
+                    localAuthRefIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         localAuthRef = null;
@@ -254,6 +325,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("provider"u8))
                 {
+                    providerIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         provider = null;
@@ -277,7 +349,17 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 httpsCACert,
                 localAuthRef,
                 provider,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _uriIsDefined = uriIsDefined,
+                _timeoutInSecondsIsDefined = timeoutInSecondsIsDefined,
+                _syncIntervalInSecondsIsDefined = syncIntervalInSecondsIsDefined,
+                _sshKnownHostsIsDefined = sshKnownHostsIsDefined,
+                _httpsUserIsDefined = httpsUserIsDefined,
+                _httpsCACertIsDefined = httpsCACertIsDefined,
+                _localAuthRefIsDefined = localAuthRefIsDefined,
+                _providerIsDefined = providerIsDefined
+            };
         }
     }
 }

@@ -16,6 +16,20 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _repositoryPublicKey;
+        internal bool _repositoryPublicKeyIsDefined;
+        private string _sourceSyncedCommitId;
+        internal bool _sourceSyncedCommitIdIsDefined;
+        private DateTimeOffset? _sourceUpdatedOn;
+        internal bool _sourceUpdatedOnIsDefined;
+        private DateTimeOffset? _statusUpdatedOn;
+        internal bool _statusUpdatedOnIsDefined;
+        private bool? _isWaitForReconciliation;
+        internal bool _isWaitForReconciliationIsDefined;
+        private string _reconciliationWaitDuration;
+        internal bool _reconciliationWaitDurationIsDefined;
+        private string _errorMessage;
+        internal bool _errorMessageIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FluxConfigurationProperties"/>. </summary>
         public FluxConfigurationProperties()
@@ -60,15 +74,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             Kustomizations = kustomizations;
             ConfigurationProtectedSettings = configurationProtectedSettings;
             Statuses = statuses;
-            RepositoryPublicKey = repositoryPublicKey;
-            SourceSyncedCommitId = sourceSyncedCommitId;
-            SourceUpdatedOn = sourceUpdatedOn;
-            StatusUpdatedOn = statusUpdatedOn;
-            IsWaitForReconciliation = isWaitForReconciliation;
-            ReconciliationWaitDuration = reconciliationWaitDuration;
+            _repositoryPublicKey = repositoryPublicKey;
+            _sourceSyncedCommitId = sourceSyncedCommitId;
+            _sourceUpdatedOn = sourceUpdatedOn;
+            _statusUpdatedOn = statusUpdatedOn;
+            _isWaitForReconciliation = isWaitForReconciliation;
+            _reconciliationWaitDuration = reconciliationWaitDuration;
             ComplianceState = complianceState;
             ProvisioningState = provisioningState;
-            ErrorMessage = errorMessage;
+            _errorMessage = errorMessage;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -106,22 +120,68 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         public IReadOnlyList<FluxObjectStatus> Statuses { get; } = new ChangeTrackingList<FluxObjectStatus>();
 
         /// <summary> Public Key associated with this fluxConfiguration (either generated within the cluster or provided by the user). </summary>
-        public string RepositoryPublicKey { get; }
+        public string RepositoryPublicKey
+        {
+            get
+            {
+                return _repositoryPublicKey;
+            }
+        }
 
         /// <summary> Branch and/or SHA of the source commit synced with the cluster. </summary>
-        public string SourceSyncedCommitId { get; }
+        public string SourceSyncedCommitId
+        {
+            get
+            {
+                return _sourceSyncedCommitId;
+            }
+        }
 
         /// <summary> Datetime the fluxConfiguration synced its source on the cluster. </summary>
-        public DateTimeOffset? SourceUpdatedOn { get; }
+        public DateTimeOffset? SourceUpdatedOn
+        {
+            get
+            {
+                return _sourceUpdatedOn;
+            }
+        }
 
         /// <summary> Datetime the fluxConfiguration synced its status on the cluster with Azure. </summary>
-        public DateTimeOffset? StatusUpdatedOn { get; }
+        public DateTimeOffset? StatusUpdatedOn
+        {
+            get
+            {
+                return _statusUpdatedOn;
+            }
+        }
 
         /// <summary> Whether flux configuration deployment should wait for cluster to reconcile the kustomizations. </summary>
-        public bool? IsWaitForReconciliation { get; set; }
+        public bool? IsWaitForReconciliation
+        {
+            get
+            {
+                return _isWaitForReconciliation;
+            }
+            set
+            {
+                _isWaitForReconciliation = value;
+                _isWaitForReconciliationIsDefined = true;
+            }
+        }
 
         /// <summary> Maximum duration to wait for flux configuration reconciliation. E.g PT1H, PT5M, P1D. </summary>
-        public string ReconciliationWaitDuration { get; set; }
+        public string ReconciliationWaitDuration
+        {
+            get
+            {
+                return _reconciliationWaitDuration;
+            }
+            set
+            {
+                _reconciliationWaitDuration = value;
+                _reconciliationWaitDurationIsDefined = true;
+            }
+        }
 
         /// <summary> Combined status of the Flux Kubernetes resources created by the fluxConfiguration or created by the managed objects. </summary>
         public FluxComplianceState? ComplianceState { get; }
@@ -130,6 +190,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         public FluxConfigurationProvisioningState? ProvisioningState { get; }
 
         /// <summary> Error message returned to the user in the case of provisioning failure. </summary>
-        public string ErrorMessage { get; }
+        public string ErrorMessage
+        {
+            get
+            {
+                return _errorMessage;
+            }
+        }
     }
 }
