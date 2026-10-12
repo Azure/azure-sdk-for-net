@@ -16,6 +16,8 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _errorMessage;
+        internal bool _errorMessageIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceFile"/>. </summary>
         internal KnowledgeSourceFile()
@@ -42,7 +44,7 @@ namespace Azure.Search.Documents.Indexes.Models
             FileSizeBytes = fileSizeBytes;
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
-            ErrorMessage = errorMessage;
+            _errorMessage = errorMessage;
             Prefix = prefix;
             Metadata = metadata;
             ParsingMode = parsingMode;
@@ -66,7 +68,13 @@ namespace Azure.Search.Documents.Indexes.Models
         public DateTimeOffset? LastUpdatedOn { get; }
 
         /// <summary> The error message if file processing failed, null otherwise. </summary>
-        public string ErrorMessage { get; }
+        public string ErrorMessage
+        {
+            get
+            {
+                return _errorMessage;
+            }
+        }
 
         /// <summary> The prefix (directory-like path) derived from the full file name. </summary>
         public string Prefix { get; }

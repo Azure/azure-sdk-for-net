@@ -14,6 +14,9 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> The multi-region account of an Azure AI service resource that's attached to a skillset. </summary>
     public partial class AIServicesAccountIdentity : CognitiveServicesAccount
     {
+        private SearchIndexerDataIdentity _identity;
+        internal bool _identityIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="AIServicesAccountIdentity"/>. </summary>
         /// <param name="subdomainUri"> The subdomain/Azure AI Services endpoint url for the corresponding AI Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subdomainUri"/> is null. </exception>
@@ -32,12 +35,23 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="subdomainUri"> The subdomain/Azure AI Services endpoint url for the corresponding AI Service. </param>
         internal AIServicesAccountIdentity(string odataType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, SearchIndexerDataIdentity identity, Uri subdomainUri) : base(odataType, description, additionalBinaryDataProperties)
         {
-            Identity = identity;
+            _identity = identity;
             SubdomainUri = subdomainUri;
         }
 
         /// <summary> The user-assigned managed identity used for connections to AI Service. If not specified, the system-assigned managed identity is used. On updates to the skillset, if the identity is unspecified, the value remains unchanged. If set to "none", the value of this property is cleared. </summary>
-        public SearchIndexerDataIdentity Identity { get; set; }
+        public SearchIndexerDataIdentity Identity
+        {
+            get
+            {
+                return _identity;
+            }
+            set
+            {
+                _identity = value;
+                _identityIsDefined = true;
+            }
+        }
 
         /// <summary> The subdomain/Azure AI Services endpoint url for the corresponding AI Service. </summary>
         public Uri SubdomainUri { get; set; }

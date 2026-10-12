@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RouteFilterRuleData, RouteFilterRuleResource>(new RouteFilterRulesGetRouteFilterRulesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RouteFilterRuleData, RouteFilterRuleResource>(new RouteFilterRuleDataAsyncCollectionResultOfT(
                 _routeFilterRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RouteFilterRuleData, RouteFilterRuleResource>(new RouteFilterRulesGetRouteFilterRulesCollectionResultOfT(
+            return new PageableWrapper<RouteFilterRuleData, RouteFilterRuleResource>(new RouteFilterRuleDataCollectionResultOfT(
                 _routeFilterRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

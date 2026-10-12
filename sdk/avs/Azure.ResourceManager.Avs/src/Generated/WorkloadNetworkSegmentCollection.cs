@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkloadNetworkSegmentData, WorkloadNetworkSegmentResource>(new WorkloadNetworksGetSegmentsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WorkloadNetworkSegmentData, WorkloadNetworkSegmentResource>(new WorkloadNetworkSegmentDataAsyncCollectionResultOfT(
                 _workloadNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkloadNetworkSegmentData, WorkloadNetworkSegmentResource>(new WorkloadNetworksGetSegmentsCollectionResultOfT(
+            return new PageableWrapper<WorkloadNetworkSegmentData, WorkloadNetworkSegmentResource>(new WorkloadNetworkSegmentDataCollectionResultOfT(
                 _workloadNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

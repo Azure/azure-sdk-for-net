@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlNetworkSecurityPerimeterConfigurationData, SqlNetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationsGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SqlNetworkSecurityPerimeterConfigurationData, SqlNetworkSecurityPerimeterConfigurationResource>(new SqlNetworkSecurityPerimeterConfigurationDataAsyncCollectionResultOfT(
                 _networkSecurityPerimeterConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlNetworkSecurityPerimeterConfigurationData, SqlNetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationsGetByServerCollectionResultOfT(
+            return new PageableWrapper<SqlNetworkSecurityPerimeterConfigurationData, SqlNetworkSecurityPerimeterConfigurationResource>(new SqlNetworkSecurityPerimeterConfigurationDataCollectionResultOfT(
                 _networkSecurityPerimeterConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkloadNetworkDnsZoneData, WorkloadNetworkDnsZoneResource>(new WorkloadNetworksGetDnsZonesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WorkloadNetworkDnsZoneData, WorkloadNetworkDnsZoneResource>(new WorkloadNetworkDnsZoneDataAsyncCollectionResultOfT(
                 _workloadNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkloadNetworkDnsZoneData, WorkloadNetworkDnsZoneResource>(new WorkloadNetworksGetDnsZonesCollectionResultOfT(
+            return new PageableWrapper<WorkloadNetworkDnsZoneData, WorkloadNetworkDnsZoneResource>(new WorkloadNetworkDnsZoneDataCollectionResultOfT(
                 _workloadNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

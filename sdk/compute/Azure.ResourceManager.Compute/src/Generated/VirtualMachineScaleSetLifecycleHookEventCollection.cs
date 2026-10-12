@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualMachineScaleSetLifecycleHookEventData, VirtualMachineScaleSetLifecycleHookEventResource>(new VirtualMachineScaleSetLifeCycleHookEventsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<VirtualMachineScaleSetLifecycleHookEventData, VirtualMachineScaleSetLifecycleHookEventResource>(new VirtualMachineScaleSetLifecycleHookEventDataAsyncCollectionResultOfT(
                 _virtualMachineScaleSetLifeCycleHookEventsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualMachineScaleSetLifecycleHookEventData, VirtualMachineScaleSetLifecycleHookEventResource>(new VirtualMachineScaleSetLifeCycleHookEventsGetAllCollectionResultOfT(
+            return new PageableWrapper<VirtualMachineScaleSetLifecycleHookEventData, VirtualMachineScaleSetLifecycleHookEventResource>(new VirtualMachineScaleSetLifecycleHookEventDataCollectionResultOfT(
                 _virtualMachineScaleSetLifeCycleHookEventsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

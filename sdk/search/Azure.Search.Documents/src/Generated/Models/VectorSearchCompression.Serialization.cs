@@ -84,15 +84,29 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(CompressionName);
-            if (Optional.IsDefined(RescoringOptions))
+            if (_rescoringOptionsIsDefined || Optional.IsDefined(RescoringOptions))
             {
-                writer.WritePropertyName("rescoringOptions"u8);
-                writer.WriteObjectValue(RescoringOptions, options);
+                if (RescoringOptions != null)
+                {
+                    writer.WritePropertyName("rescoringOptions"u8);
+                    writer.WriteObjectValue(RescoringOptions, options);
+                }
+                else
+                {
+                    writer.WriteNull("rescoringOptions"u8);
+                }
             }
-            if (Optional.IsDefined(TruncationDimension))
+            if (_truncationDimensionIsDefined || Optional.IsDefined(TruncationDimension))
             {
-                writer.WritePropertyName("truncationDimension"u8);
-                writer.WriteNumberValue(TruncationDimension.Value);
+                if (TruncationDimension != null)
+                {
+                    writer.WritePropertyName("truncationDimension"u8);
+                    writer.WriteNumberValue(TruncationDimension.Value);
+                }
+                else
+                {
+                    writer.WriteNull("truncationDimension"u8);
+                }
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());

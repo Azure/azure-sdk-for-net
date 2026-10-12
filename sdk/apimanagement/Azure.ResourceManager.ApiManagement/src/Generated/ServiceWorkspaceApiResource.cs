@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkspaceApiRevisionGetWorkspaceApiRevisionsByServiceAsyncCollectionResultOfT(
+            return new ApiRevisionContractAsyncCollectionResultOfT(
                 _workspaceApiRevisionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkspaceApiRevisionGetWorkspaceApiRevisionsByServiceCollectionResultOfT(
+            return new ApiRevisionContractCollectionResultOfT(
                 _workspaceApiRevisionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

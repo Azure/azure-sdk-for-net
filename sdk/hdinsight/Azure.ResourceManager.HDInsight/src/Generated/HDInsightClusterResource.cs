@@ -3134,7 +3134,7 @@ namespace Azure.ResourceManager.HDInsight
             {
                 CancellationToken = cancellationToken
             };
-            return new ScriptActionsGetScriptActionsAsyncCollectionResultOfT(
+            return new RuntimeScriptActionDetailAsyncCollectionResultOfT(
                 _scriptActionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -3172,7 +3172,7 @@ namespace Azure.ResourceManager.HDInsight
             {
                 CancellationToken = cancellationToken
             };
-            return new ScriptActionsGetScriptActionsCollectionResultOfT(
+            return new RuntimeScriptActionDetailCollectionResultOfT(
                 _scriptActionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -3210,7 +3210,7 @@ namespace Azure.ResourceManager.HDInsight
             {
                 CancellationToken = cancellationToken
             };
-            return new ScriptExecutionHistoryGetScriptExecutionHistoriesAsyncCollectionResultOfT(
+            return new RuntimeScriptActionDetailAsync0CollectionResultOfT(
                 _scriptExecutionHistoryRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -3248,7 +3248,7 @@ namespace Azure.ResourceManager.HDInsight
             {
                 CancellationToken = cancellationToken
             };
-            return new ScriptExecutionHistoryGetScriptExecutionHistoriesCollectionResultOfT(
+            return new RuntimeScriptActionDetail0CollectionResultOfT(
                 _scriptExecutionHistoryRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -15,6 +15,10 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private bool? _enableReprocessing;
+        internal bool _enableReprocessingIsDefined;
+        private SearchIndexerDataIdentity _identity;
+        internal bool _identityIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexerCache"/>. </summary>
         public SearchIndexerCache()
@@ -31,8 +35,8 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             Id = id;
             StorageConnectionString = storageConnectionString;
-            EnableReprocessing = enableReprocessing;
-            Identity = identity;
+            _enableReprocessing = enableReprocessing;
+            _identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,9 +47,31 @@ namespace Azure.Search.Documents.Indexes.Models
         public string StorageConnectionString { get; set; }
 
         /// <summary> Specifies whether incremental reprocessing is enabled. </summary>
-        public bool? EnableReprocessing { get; set; }
+        public bool? EnableReprocessing
+        {
+            get
+            {
+                return _enableReprocessing;
+            }
+            set
+            {
+                _enableReprocessing = value;
+                _enableReprocessingIsDefined = true;
+            }
+        }
 
         /// <summary> The user-assigned managed identity used for connections to the enrichment cache.  If the connection string indicates an identity (ResourceId) and it's not specified, the system-assigned managed identity is used. On updates to the indexer, if the identity is unspecified, the value remains unchanged. If set to "none", the value of this property is cleared. </summary>
-        public SearchIndexerDataIdentity Identity { get; set; }
+        public SearchIndexerDataIdentity Identity
+        {
+            get
+            {
+                return _identity;
+            }
+            set
+            {
+                _identity = value;
+                _identityIsDefined = true;
+            }
+        }
     }
 }

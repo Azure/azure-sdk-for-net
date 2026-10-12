@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkRackData, NetworkRackResource>(new NetworkRacksGetByResourceGroupAsyncCollectionResultOfT(_networkRacksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkRackCollection.GetAll"), data => new NetworkRackResource(Client, data));
+            return new AsyncPageableWrapper<NetworkRackData, NetworkRackResource>(new NetworkRackDataAsyncCollectionResultOfT(_networkRacksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkRackCollection.GetAll"), data => new NetworkRackResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkRackData, NetworkRackResource>(new NetworkRacksGetByResourceGroupCollectionResultOfT(_networkRacksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkRackCollection.GetAll"), data => new NetworkRackResource(Client, data));
+            return new PageableWrapper<NetworkRackData, NetworkRackResource>(new NetworkRackDataCollectionResultOfT(_networkRacksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkRackCollection.GetAll"), data => new NetworkRackResource(Client, data));
         }
 
         /// <summary>

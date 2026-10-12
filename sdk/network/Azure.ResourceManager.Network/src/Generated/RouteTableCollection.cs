@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RouteTableData, RouteTableResource>(new RouteTablesListAsyncCollectionResultOfT(_routeTablesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "RouteTableCollection.GetAll"), data => new RouteTableResource(Client, data));
+            return new AsyncPageableWrapper<RouteTableData, RouteTableResource>(new RouteTableDataAsyncCollectionResultOfT(_routeTablesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "RouteTableCollection.GetAll"), data => new RouteTableResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RouteTableData, RouteTableResource>(new RouteTablesListCollectionResultOfT(_routeTablesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "RouteTableCollection.GetAll"), data => new RouteTableResource(Client, data));
+            return new PageableWrapper<RouteTableData, RouteTableResource>(new RouteTableDataCollectionResultOfT(_routeTablesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "RouteTableCollection.GetAll"), data => new RouteTableResource(Client, data));
         }
 
         /// <summary>

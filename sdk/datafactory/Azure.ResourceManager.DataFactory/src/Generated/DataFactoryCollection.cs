@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataFactoryData, DataFactoryResource>(new FactoriesGetByResourceGroupAsyncCollectionResultOfT(_factoriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DataFactoryCollection.GetAll"), data => new DataFactoryResource(Client, data));
+            return new AsyncPageableWrapper<DataFactoryData, DataFactoryResource>(new DataFactoryDataAsyncCollectionResultOfT(_factoriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DataFactoryCollection.GetAll"), data => new DataFactoryResource(Client, data));
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataFactoryData, DataFactoryResource>(new FactoriesGetByResourceGroupCollectionResultOfT(_factoriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DataFactoryCollection.GetAll"), data => new DataFactoryResource(Client, data));
+            return new PageableWrapper<DataFactoryData, DataFactoryResource>(new DataFactoryDataCollectionResultOfT(_factoriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DataFactoryCollection.GetAll"), data => new DataFactoryResource(Client, data));
         }
 
         /// <summary>

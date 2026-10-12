@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VpnServerConfigurationPolicyGroupData, VpnServerConfigurationPolicyGroupResource>(new ConfigurationPolicyGroupsGetByVpnServerConfigurationAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<VpnServerConfigurationPolicyGroupData, VpnServerConfigurationPolicyGroupResource>(new VpnServerConfigurationPolicyGroupDataAsyncCollectionResultOfT(
                 _configurationPolicyGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VpnServerConfigurationPolicyGroupData, VpnServerConfigurationPolicyGroupResource>(new ConfigurationPolicyGroupsGetByVpnServerConfigurationCollectionResultOfT(
+            return new PageableWrapper<VpnServerConfigurationPolicyGroupData, VpnServerConfigurationPolicyGroupResource>(new VpnServerConfigurationPolicyGroupDataCollectionResultOfT(
                 _configurationPolicyGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

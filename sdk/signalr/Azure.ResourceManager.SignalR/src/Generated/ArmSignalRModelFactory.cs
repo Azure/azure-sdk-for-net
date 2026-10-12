@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <returns> A new <see cref="Models.SignalRClientConnectionCountRule"/> instance for mocking. </returns>
         public static SignalRClientConnectionCountRule SignalRClientConnectionCountRule(string @type = default)
         {
-            return new UnknownSignalRClientConnectionCountRule(default, default);
+            return new UnknownSignalRClientConnectionCountRule(@type is null ? default : new ClientConnectionCountRuleDiscriminator(@type), default);
         }
 
         /// <summary> Throttle the client connection by a custom JWT claim. </summary>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <returns> A new <see cref="Models.SignalRThrottleByJwtCustomClaimRule"/> instance for mocking. </returns>
         public static SignalRThrottleByJwtCustomClaimRule SignalRThrottleByJwtCustomClaimRule(string claimName = default, int? maxCount = default)
         {
-            return new SignalRThrottleByJwtCustomClaimRule(default, default, claimName, maxCount);
+            return new SignalRThrottleByJwtCustomClaimRule(ClientConnectionCountRuleDiscriminator.ThrottleByJwtCustomClaimRule, default, claimName, maxCount);
         }
 
         /// <summary> Throttle the client connection by the JWT signature. </summary>
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <returns> A new <see cref="Models.SignalRThrottleByJwtSignatureRule"/> instance for mocking. </returns>
         public static SignalRThrottleByJwtSignatureRule SignalRThrottleByJwtSignatureRule(int? maxCount = default)
         {
-            return new SignalRThrottleByJwtSignatureRule(default, default, maxCount);
+            return new SignalRThrottleByJwtSignatureRule(ClientConnectionCountRuleDiscriminator.ThrottleByJwtSignatureRule, default, maxCount);
         }
 
         /// <summary> Throttle the client connection by the user ID. </summary>
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <returns> A new <see cref="Models.SignalRThrottleByUserIdRule"/> instance for mocking. </returns>
         public static SignalRThrottleByUserIdRule SignalRThrottleByUserIdRule(int? maxCount = default)
         {
-            return new SignalRThrottleByUserIdRule(default, default, maxCount);
+            return new SignalRThrottleByUserIdRule(ClientConnectionCountRuleDiscriminator.ThrottleByUserIdRule, default, maxCount);
         }
 
         /// <summary>
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <returns> A new <see cref="Models.SignalRClientTrafficControlRule"/> instance for mocking. </returns>
         public static SignalRClientTrafficControlRule SignalRClientTrafficControlRule(string @type = default)
         {
-            return new UnknownSignalRClientTrafficControlRule(default, default);
+            return new UnknownSignalRClientTrafficControlRule(@type is null ? default : new ClientTrafficControlRuleDiscriminator(@type), default);
         }
 
         /// <summary> Throttle the client traffic by a custom JWT claim. </summary>
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <returns> A new <see cref="Models.SignalRTrafficThrottleByJwtCustomClaimRule"/> instance for mocking. </returns>
         public static SignalRTrafficThrottleByJwtCustomClaimRule SignalRTrafficThrottleByJwtCustomClaimRule(string claimName = default, long? maxInboundMessageBytes = default, int? aggregationWindowInSeconds = default)
         {
-            return new SignalRTrafficThrottleByJwtCustomClaimRule(default, default, claimName, maxInboundMessageBytes, aggregationWindowInSeconds);
+            return new SignalRTrafficThrottleByJwtCustomClaimRule(ClientTrafficControlRuleDiscriminator.TrafficThrottleByJwtCustomClaimRule, default, claimName, maxInboundMessageBytes, aggregationWindowInSeconds);
         }
 
         /// <summary> Throttle the client traffic by the JWT signature. </summary>
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <returns> A new <see cref="Models.SignalRTrafficThrottleByJwtSignatureRule"/> instance for mocking. </returns>
         public static SignalRTrafficThrottleByJwtSignatureRule SignalRTrafficThrottleByJwtSignatureRule(long? maxInboundMessageBytes = default, int? aggregationWindowInSeconds = default)
         {
-            return new SignalRTrafficThrottleByJwtSignatureRule(default, default, maxInboundMessageBytes, aggregationWindowInSeconds);
+            return new SignalRTrafficThrottleByJwtSignatureRule(ClientTrafficControlRuleDiscriminator.TrafficThrottleByJwtSignatureRule, default, maxInboundMessageBytes, aggregationWindowInSeconds);
         }
 
         /// <summary> Throttle the client traffic by the user ID. </summary>
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <returns> A new <see cref="Models.SignalRTrafficThrottleByUserIdRule"/> instance for mocking. </returns>
         public static SignalRTrafficThrottleByUserIdRule SignalRTrafficThrottleByUserIdRule(long? maxInboundMessageBytes = default, int? aggregationWindowInSeconds = default)
         {
-            return new SignalRTrafficThrottleByUserIdRule(default, default, maxInboundMessageBytes, aggregationWindowInSeconds);
+            return new SignalRTrafficThrottleByUserIdRule(ClientTrafficControlRuleDiscriminator.TrafficThrottleByUserIdRule, default, maxInboundMessageBytes, aggregationWindowInSeconds);
         }
 
         /// <summary> Route settings for the resource. </summary>

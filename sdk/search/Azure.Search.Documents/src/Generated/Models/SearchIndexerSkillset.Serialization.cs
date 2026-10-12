@@ -132,10 +132,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("@odata.etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(EncryptionKey))
+            if (_encryptionKeyIsDefined || Optional.IsDefined(EncryptionKey))
             {
-                writer.WritePropertyName("encryptionKey"u8);
-                writer.WriteObjectValue(EncryptionKey, options);
+                if (EncryptionKey != null)
+                {
+                    writer.WritePropertyName("encryptionKey"u8);
+                    writer.WriteObjectValue(EncryptionKey, options);
+                }
+                else
+                {
+                    writer.WriteNull("encryptionKey"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -186,6 +193,7 @@ namespace Azure.Search.Documents.Indexes.Models
             KnowledgeStore knowledgeStore = default;
             SearchIndexerIndexProjection indexProjection = default;
             ETag? eTag = default;
+            bool encryptionKeyIsDefined = false;
             SearchResourceEncryptionKey encryptionKey = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -248,6 +256,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("encryptionKey"u8))
                 {
+                    encryptionKeyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         encryptionKey = null;
@@ -264,13 +273,16 @@ namespace Azure.Search.Documents.Indexes.Models
             return new SearchIndexerSkillset(
                 name,
                 description,
-                skills,
+                skills ?? new ChangeTrackingList<SearchIndexerSkill>(),
                 cognitiveServicesAccount,
                 knowledgeStore,
                 indexProjection,
                 eTag,
                 encryptionKey,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _encryptionKeyIsDefined = encryptionKeyIsDefined
+            };
         }
     }
 }

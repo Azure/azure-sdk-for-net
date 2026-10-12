@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.BotService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BotData, BotResource>(new BotsGetAllAsyncCollectionResultOfT(BotsRestClient, Id.SubscriptionId, context, "MockableBotServiceSubscriptionResource.GetBots"), data => new BotResource(Client, data));
+            return new AsyncPageableWrapper<BotData, BotResource>(new BotDataAsync0CollectionResultOfT(BotsRestClient, Id.SubscriptionId, context, "MockableBotServiceSubscriptionResource.GetBots"), data => new BotResource(Client, data));
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.BotService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BotData, BotResource>(new BotsGetAllCollectionResultOfT(BotsRestClient, Id.SubscriptionId, context, "MockableBotServiceSubscriptionResource.GetBots"), data => new BotResource(Client, data));
+            return new PageableWrapper<BotData, BotResource>(new BotData0CollectionResultOfT(BotsRestClient, Id.SubscriptionId, context, "MockableBotServiceSubscriptionResource.GetBots"), data => new BotResource(Client, data));
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.BotService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BotConnectionOperationGroupGetBotConnectionServiceProvidersAsyncCollectionResultOfT(BotConnectionOperationGroupRestClient, Id.SubscriptionId, context, "MockableBotServiceSubscriptionResource.GetBotConnectionServiceProviders");
+            return new BotServiceProviderAsyncCollectionResultOfT(BotConnectionOperationGroupRestClient, Id.SubscriptionId, context, "MockableBotServiceSubscriptionResource.GetBotConnectionServiceProviders");
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.BotService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BotConnectionOperationGroupGetBotConnectionServiceProvidersCollectionResultOfT(BotConnectionOperationGroupRestClient, Id.SubscriptionId, context, "MockableBotServiceSubscriptionResource.GetBotConnectionServiceProviders");
+            return new BotServiceProviderCollectionResultOfT(BotConnectionOperationGroupRestClient, Id.SubscriptionId, context, "MockableBotServiceSubscriptionResource.GetBotConnectionServiceProviders");
         }
 
         /// <summary>

@@ -15,6 +15,8 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DebugInfo _debugInfo;
+        internal bool _debugInfoIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SearchDocumentsResult"/>. </summary>
         public SearchDocumentsResult()
@@ -43,7 +45,7 @@ namespace Azure.Search.Documents.Models
             Coverage = coverage;
             Facets = facets;
             Answers = answers;
-            DebugInfo = debugInfo;
+            _debugInfo = debugInfo;
             NextPageParameters = nextPageParameters;
             Results = results;
             NextLink = nextLink;
@@ -66,7 +68,13 @@ namespace Azure.Search.Documents.Models
         public IReadOnlyList<QueryAnswerResult> Answers { get; }
 
         /// <summary> Debug information that applies to the search results as a whole. </summary>
-        public DebugInfo DebugInfo { get; }
+        public DebugInfo DebugInfo
+        {
+            get
+            {
+                return _debugInfo;
+            }
+        }
 
         /// <summary> Continuation JSON payload returned when the query can't return all the requested results in a single response. You can use this JSON along with. </summary>
         public SearchOptions NextPageParameters { get; }

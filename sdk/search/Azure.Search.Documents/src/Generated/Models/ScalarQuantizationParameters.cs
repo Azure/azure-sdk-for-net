@@ -15,6 +15,8 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private VectorSearchCompressionTarget? _quantizedDataType;
+        internal bool _quantizedDataTypeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ScalarQuantizationParameters"/>. </summary>
         public ScalarQuantizationParameters()
@@ -26,11 +28,22 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ScalarQuantizationParameters(VectorSearchCompressionTarget? quantizedDataType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            QuantizedDataType = quantizedDataType;
+            _quantizedDataType = quantizedDataType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The quantized data type of compressed vector values. </summary>
-        public VectorSearchCompressionTarget? QuantizedDataType { get; set; }
+        public VectorSearchCompressionTarget? QuantizedDataType
+        {
+            get
+            {
+                return _quantizedDataType;
+            }
+            set
+            {
+                _quantizedDataType = value;
+                _quantizedDataTypeIsDefined = true;
+            }
+        }
     }
 }

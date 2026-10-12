@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DdosCustomPolicyData, DdosCustomPolicyResource>(new DdosCustomPoliciesListAsyncCollectionResultOfT(_ddosCustomPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DdosCustomPolicyCollection.GetAll"), data => new DdosCustomPolicyResource(Client, data));
+            return new AsyncPageableWrapper<DdosCustomPolicyData, DdosCustomPolicyResource>(new DdosCustomPolicyDataAsyncCollectionResultOfT(_ddosCustomPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DdosCustomPolicyCollection.GetAll"), data => new DdosCustomPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DdosCustomPolicyData, DdosCustomPolicyResource>(new DdosCustomPoliciesListCollectionResultOfT(_ddosCustomPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DdosCustomPolicyCollection.GetAll"), data => new DdosCustomPolicyResource(Client, data));
+            return new PageableWrapper<DdosCustomPolicyData, DdosCustomPolicyResource>(new DdosCustomPolicyDataCollectionResultOfT(_ddosCustomPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DdosCustomPolicyCollection.GetAll"), data => new DdosCustomPolicyResource(Client, data));
         }
 
         /// <summary>

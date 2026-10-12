@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualNetworkApplianceData, VirtualNetworkApplianceResource>(new VirtualNetworkAppliancesListAsyncCollectionResultOfT(_virtualNetworkAppliancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualNetworkApplianceCollection.GetAll"), data => new VirtualNetworkApplianceResource(Client, data));
+            return new AsyncPageableWrapper<VirtualNetworkApplianceData, VirtualNetworkApplianceResource>(new VirtualNetworkApplianceDataAsyncCollectionResultOfT(_virtualNetworkAppliancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualNetworkApplianceCollection.GetAll"), data => new VirtualNetworkApplianceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualNetworkApplianceData, VirtualNetworkApplianceResource>(new VirtualNetworkAppliancesListCollectionResultOfT(_virtualNetworkAppliancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualNetworkApplianceCollection.GetAll"), data => new VirtualNetworkApplianceResource(Client, data));
+            return new PageableWrapper<VirtualNetworkApplianceData, VirtualNetworkApplianceResource>(new VirtualNetworkApplianceDataCollectionResultOfT(_virtualNetworkAppliancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualNetworkApplianceCollection.GetAll"), data => new VirtualNetworkApplianceResource(Client, data));
         }
 
         /// <summary>

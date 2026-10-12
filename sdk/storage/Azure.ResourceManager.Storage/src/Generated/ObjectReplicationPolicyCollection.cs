@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ObjectReplicationPolicyData, ObjectReplicationPolicyResource>(new ObjectReplicationPoliciesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ObjectReplicationPolicyData, ObjectReplicationPolicyResource>(new ObjectReplicationPolicyDataAsyncCollectionResultOfT(
                 _objectReplicationPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ObjectReplicationPolicyData, ObjectReplicationPolicyResource>(new ObjectReplicationPoliciesGetAllCollectionResultOfT(
+            return new PageableWrapper<ObjectReplicationPolicyData, ObjectReplicationPolicyResource>(new ObjectReplicationPolicyDataCollectionResultOfT(
                 _objectReplicationPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

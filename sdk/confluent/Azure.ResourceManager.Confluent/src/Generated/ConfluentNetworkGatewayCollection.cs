@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Confluent
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConfluentNetworkGatewayData, ConfluentNetworkGatewayResource>(new NetworkGatewayResourcesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ConfluentNetworkGatewayData, ConfluentNetworkGatewayResource>(new ConfluentNetworkGatewayDataAsyncCollectionResultOfT(
                 _networkGatewayResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Confluent
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConfluentNetworkGatewayData, ConfluentNetworkGatewayResource>(new NetworkGatewayResourcesGetAllCollectionResultOfT(
+            return new PageableWrapper<ConfluentNetworkGatewayData, ConfluentNetworkGatewayResource>(new ConfluentNetworkGatewayDataCollectionResultOfT(
                 _networkGatewayResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

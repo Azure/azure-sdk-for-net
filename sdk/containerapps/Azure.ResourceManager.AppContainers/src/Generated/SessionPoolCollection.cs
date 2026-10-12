@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SessionPoolData, SessionPoolResource>(new ContainerAppsSessionPoolsGetByResourceGroupAsyncCollectionResultOfT(_containerAppsSessionPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SessionPoolCollection.GetAll"), data => new SessionPoolResource(Client, data));
+            return new AsyncPageableWrapper<SessionPoolData, SessionPoolResource>(new SessionPoolDataAsyncCollectionResultOfT(_containerAppsSessionPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SessionPoolCollection.GetAll"), data => new SessionPoolResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SessionPoolData, SessionPoolResource>(new ContainerAppsSessionPoolsGetByResourceGroupCollectionResultOfT(_containerAppsSessionPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SessionPoolCollection.GetAll"), data => new SessionPoolResource(Client, data));
+            return new PageableWrapper<SessionPoolData, SessionPoolResource>(new SessionPoolDataCollectionResultOfT(_containerAppsSessionPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SessionPoolCollection.GetAll"), data => new SessionPoolResource(Client, data));
         }
 
         /// <summary>

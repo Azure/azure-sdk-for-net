@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentsGetAllAsyncCollectionResultOfT(DenyAssignmentsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableAuthorizationSubscriptionResource.GetDenyAssignments"), data => new DenyAssignmentResource(Client, data));
+            return new AsyncPageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentDataAsync1CollectionResultOfT(DenyAssignmentsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableAuthorizationSubscriptionResource.GetDenyAssignments"), data => new DenyAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentsGetAllCollectionResultOfT(DenyAssignmentsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableAuthorizationSubscriptionResource.GetDenyAssignments"), data => new DenyAssignmentResource(Client, data));
+            return new PageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentData1CollectionResultOfT(DenyAssignmentsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableAuthorizationSubscriptionResource.GetDenyAssignments"), data => new DenyAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RoleAssignmentData, RoleAssignmentResource>(new RoleAssignmentsGetForSubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RoleAssignmentData, RoleAssignmentResource>(new RoleAssignmentDataAsync0CollectionResultOfT(
                 RoleAssignmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RoleAssignmentData, RoleAssignmentResource>(new RoleAssignmentsGetForSubscriptionCollectionResultOfT(
+            return new PageableWrapper<RoleAssignmentData, RoleAssignmentResource>(new RoleAssignmentData0CollectionResultOfT(
                 RoleAssignmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ClassicAdministratorsGetClassicAdministratorsAsyncCollectionResultOfT(ClassicAdministratorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAuthorizationSubscriptionResource.GetClassicAdministrators");
+            return new AuthorizationClassicAdministratorAsyncCollectionResultOfT(ClassicAdministratorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAuthorizationSubscriptionResource.GetClassicAdministrators");
         }
 
         /// <summary>
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ClassicAdministratorsGetClassicAdministratorsCollectionResultOfT(ClassicAdministratorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAuthorizationSubscriptionResource.GetClassicAdministrators");
+            return new AuthorizationClassicAdministratorCollectionResultOfT(ClassicAdministratorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAuthorizationSubscriptionResource.GetClassicAdministrators");
         }
     }
 }

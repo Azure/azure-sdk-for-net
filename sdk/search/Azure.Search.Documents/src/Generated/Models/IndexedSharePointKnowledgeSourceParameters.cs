@@ -17,6 +17,10 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _query;
+        internal bool _queryIsDefined;
+        private KnowledgeSourceIngestionParameters _ingestionParameters;
+        internal bool _ingestionParametersIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="IndexedSharePointKnowledgeSourceParameters"/>. </summary>
         /// <param name="connectionString"> SharePoint connection string with format: SharePointOnlineEndpoint=[SharePoint site url];ApplicationId=[Azure AD App ID];ApplicationSecret=[Azure AD App client secret];TenantId=[SharePoint site tenant id]. </param>
@@ -42,8 +46,8 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             ConnectionString = connectionString;
             ContainerName = containerName;
-            Query = query;
-            IngestionParameters = ingestionParameters;
+            _query = query;
+            _ingestionParameters = ingestionParameters;
             QueryHints = queryHints;
             CreatedResources = createdResources;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -56,10 +60,32 @@ namespace Azure.Search.Documents.Indexes.Models
         public IndexedSharePointContainerName ContainerName { get; set; }
 
         /// <summary> Optional query to filter SharePoint content. </summary>
-        public string Query { get; set; }
+        public string Query
+        {
+            get
+            {
+                return _query;
+            }
+            set
+            {
+                _query = value;
+                _queryIsDefined = true;
+            }
+        }
 
         /// <summary> Consolidates all general ingestion settings. </summary>
-        public KnowledgeSourceIngestionParameters IngestionParameters { get; set; }
+        public KnowledgeSourceIngestionParameters IngestionParameters
+        {
+            get
+            {
+                return _ingestionParameters;
+            }
+            set
+            {
+                _ingestionParameters = value;
+                _ingestionParametersIsDefined = true;
+            }
+        }
 
         /// <summary> Default hints that guide query planning toward useful filters and boosts for this index-backed knowledge source. Request-time query hints replace these defaults as a complete object. </summary>
         public SearchIndexKnowledgeSourceQueryHints QueryHints { get; set; }

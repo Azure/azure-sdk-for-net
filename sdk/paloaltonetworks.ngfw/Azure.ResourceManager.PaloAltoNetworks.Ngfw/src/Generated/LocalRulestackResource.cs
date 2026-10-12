@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
@@ -818,7 +819,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new LocalRulestacksGetAppIdsAsyncCollectionResultOfT(
+            return new StringAsyncCollectionResultOfT(
                 _localRulestacksRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -864,7 +865,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new LocalRulestacksGetAppIdsCollectionResultOfT(
+            return new StringCollectionResultOfT(
                 _localRulestacksRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -908,7 +909,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new LocalRulestacksGetCountriesAsyncCollectionResultOfT(
+            return new RulestackCountryAsyncCollectionResultOfT(
                 _localRulestacksRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -950,7 +951,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new LocalRulestacksGetCountriesCollectionResultOfT(
+            return new RulestackCountryCollectionResultOfT(
                 _localRulestacksRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -992,7 +993,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new LocalRulestacksGetPredefinedUrlCategoriesAsyncCollectionResultOfT(
+            return new PredefinedUrlCategoryAsyncCollectionResultOfT(
                 _localRulestacksRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1034,7 +1035,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new LocalRulestacksGetPredefinedUrlCategoriesCollectionResultOfT(
+            return new PredefinedUrlCategoryCollectionResultOfT(
                 _localRulestacksRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1343,10 +1344,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -1386,10 +1386,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
