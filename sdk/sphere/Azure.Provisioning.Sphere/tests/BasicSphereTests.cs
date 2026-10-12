@@ -33,6 +33,7 @@ public class BasicSphereTests
     }
 
     [Test]
+    [Description("https://learn.microsoft.com/azure/templates/microsoft.azuresphere/2024-04-01/catalogs")]
     public async Task CreateCatalog()
     {
         await using Trycep test = CreateCatalogTest();
