@@ -956,6 +956,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.DoesNotContain("ingestion endpoints and dropped", summary.Message, StringComparison.Ordinal);
         }
 
+        /// <summary>
+        /// Every event that names a routed destination receives a route label, which carries an
+        /// " (aad)" suffix for Entra ID routes, so none may call that value an ingestion endpoint.
+        /// </summary>
+        [Theory]
+        [InlineData(63)]
+        [InlineData(65)]
+        [InlineData(66)]
+        [InlineData(69)]
+        [InlineData(70)]
+        [InlineData(72)]
+        public void RoutedDestinationEventsDescribeARoute(int eventId)
+        {
+            var message = typeof(AzureMonitorExporterEventSource)
+                .GetMethods(BindingFlags.Instance | BindingFlags.Public)
+                .Select(method => method.GetCustomAttribute<EventAttribute>())
+                .Single(attribute => attribute?.EventId == eventId)!
+                .Message;
+
+            Assert.Contains("route '{", message, StringComparison.Ordinal);
+            Assert.DoesNotContain("ingestion endpoint '{", message, StringComparison.Ordinal);
+        }
+
         /// <summary>A shared sequence would tie unrelated exports together.</summary>
         [Fact]
         public void EachExportGetsItsOwnSequence()
