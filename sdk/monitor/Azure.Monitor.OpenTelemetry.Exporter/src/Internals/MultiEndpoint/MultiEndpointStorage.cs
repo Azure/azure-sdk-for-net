@@ -20,13 +20,25 @@ using OpenTelemetry.PersistentStorage.FileSystem;
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
 {
     /// <summary>
-    /// Offline storage and back-off state, partitioned by ingestion endpoint. The directory is derived
-    /// from the endpoint, not the other way round, so a partition is only reopened when that endpoint
-    /// is routed again. The instrumentation key is not part of the path because it already travels
-    /// inside each serialized envelope.
+    /// Offline storage and back-off state, partitioned by route: ingestion endpoint and whether the
+    /// destination authenticates with Microsoft Entra ID. The directory is derived from the route,
+    /// not the other way round, so a partition is only reopened when that route is used again. The
+    /// instrumentation key is not part of the path because it already travels inside each serialized
+    /// envelope.
     /// </summary>
+    /// <remarks>
+    /// The authentication mode is part of the partition because a stored blob is replayed with a
+    /// single request: draining AAD and instrumentation-key telemetry from one directory would send
+    /// one of them with the wrong authentication. An instrumentation-key route keeps the directory
+    /// it had before AAD routes existed, so a backlog written by an earlier version still drains.
+    /// </remarks>
     internal sealed class MultiEndpointStorage : IDisposable
     {
+        /// <summary>
+        /// Prefixed to an AAD route's endpoint before hashing it into a directory name. A normalized
+        /// endpoint always starts with <c>https://</c>, so no endpoint can hash to an AAD directory.
+        /// </summary>
+        internal const string AadPartitionKeyPrefix = "aad|";
         /// <summary>
         /// Appended to the host's storage directory to form a sibling root. Partitions must not be
         /// nested inside it: <c>DirectorySizeTracker</c> sums subdirectories recursively, so a routed
@@ -70,7 +82,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         /// </summary>
         private const long EvictionRecountIntervalMilliseconds = 1000;
 
-        private readonly ConcurrentDictionary<string, EndpointStorage> _partitions = new(StringComparer.Ordinal);
+        private readonly ConcurrentDictionary<(string IngestionEndpoint, bool IsAad), EndpointStorage> _partitions = new();
         private readonly ApplicationInsightsRestClient _restClient;
         private readonly ConnectionVars _connectionVars;
         private readonly NetworkSdkStatsManager? _networkSdkStatsManager;
@@ -434,7 +446,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         }
 
         /// <summary>
-        /// Names the endpoint that owned an evicted blob. The directory is a one-way hash, so a
+        /// Names the route that owned an evicted blob. The directory is a one-way hash, so a
         /// partition left by an earlier run can only be reported by its directory name.
         /// </summary>
         private string DescribeOwner(string path)
@@ -445,7 +457,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
             {
                 if (string.Equals(partition.Value.Directory, directory, StringComparison.Ordinal))
                 {
-                    return partition.Key;
+                    return EndpointRouting.DescribeRoute(partition.Key.IngestionEndpoint, partition.Key.IsAad);
                 }
             }
 
@@ -471,11 +483,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         }
 
         /// <summary>
-        /// Returns the partition for an endpoint, creating it on first use. Returns
+        /// Returns the partition for a route, creating it on first use. Returns
         /// <see langword="null"/> when the partition cannot be created, in which case the caller
         /// transmits without a persistence fallback.
         /// </summary>
-        internal EndpointStorage? TryGet(string ingestionEndpoint)
+        internal EndpointStorage? TryGet(string ingestionEndpoint, bool isAad = false)
         {
             // Checked first: Dispose empties the dictionary before tearing partitions down, so a
             // hit after this point cannot be on one that is already disposed.
@@ -484,23 +496,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
                 return null;
             }
 
-            if (_partitions.TryGetValue(ingestionEndpoint, out var existing))
+            var key = (ingestionEndpoint, isAad);
+
+            if (_partitions.TryGetValue(key, out var existing))
             {
                 return existing;
             }
 
             lock (_createLock)
             {
-                if (_partitions.TryGetValue(ingestionEndpoint, out existing))
+                if (_partitions.TryGetValue(key, out existing))
                 {
                     return existing;
                 }
+
+                var route = EndpointRouting.DescribeRoute(ingestionEndpoint, isAad);
 
                 if (_disposed || _partitions.Count >= MaxEndpointPartitions)
                 {
                     if (!_disposed)
                     {
-                        AzureMonitorExporterEventSource.Log.MultiEndpointPartitionCapReached(ingestionEndpoint, MaxEndpointPartitions);
+                        AzureMonitorExporterEventSource.Log.MultiEndpointPartitionCapReached(route, MaxEndpointPartitions);
                     }
 
                     return null;
@@ -508,15 +524,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
 
                 try
                 {
-                    var directory = Path.Combine(_rootDirectory, HashHelper.GetSHA256Hash(ingestionEndpoint));
+                    var directory = Path.Combine(_rootDirectory, HashHelper.GetSHA256Hash(isAad ? AadPartitionKeyPrefix + ingestionEndpoint : ingestionEndpoint));
 
                     // A backstop only. The shared budget is enforced by BudgetedBlobProvider, which is
                     // the only handle handed out, because this cap cannot see across partitions.
                     var innerProvider = new FileBlobProvider(directory, maxSizeInBytes: _maxSizeBytes);
-                    var blobProvider = new BudgetedBlobProvider(this, innerProvider, ingestionEndpoint);
+                    var blobProvider = new BudgetedBlobProvider(this, innerProvider, route);
                     var trackUri = ApplicationInsightsRestClient.CreateTrackUri(ingestionEndpoint);
-                    var transmissionStateManager = new TransmissionStateManager(ingestionEndpoint);
+                    var transmissionStateManager = new TransmissionStateManager(route);
 
+                    // The drain still shares the exporter's pipeline and authentication. AAD routes
+                    // only reach here while no credential is configured, so they drain without a token
+                    // exactly as they are sent.
                     var created = new EndpointStorage(
                         directory,
                         innerProvider,
@@ -524,13 +543,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
                         transmissionStateManager,
                         new TransmitFromStorageHandler(_restClient, blobProvider, transmissionStateManager, _connectionVars, _isAadEnabled, _networkSdkStatsManager, directory, trackUri));
 
-                    _partitions[ingestionEndpoint] = created;
+                    _partitions[key] = created;
 
                     AzureMonitorExporterEventSource.Log.InitializedPersistentStorage(_connectionVars.InstrumentationKey, directory);
 
                     // The directory is a one-way hash, so without this there is no way to tell which
-                    // endpoint a partition on disk belongs to.
-                    AzureMonitorExporterEventSource.Log.MultiEndpointPartitionCreated(ingestionEndpoint, directory);
+                    // route a partition on disk belongs to.
+                    AzureMonitorExporterEventSource.Log.MultiEndpointPartitionCreated(route, directory);
 
                     return created;
                 }

@@ -158,6 +158,65 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Contains("ikey-west", request.Body, StringComparison.Ordinal);
         }
 
+        /// <summary>
+        /// The same endpoint reached with and without AAD is two groups, so it is two requests and two
+        /// partitions. Replaying them from one blob would send one of them with the wrong
+        /// authentication.
+        /// </summary>
+        [Fact]
+        public void AadAndInstrumentationKeyGroupsForOneEndpointArePersistedSeparately()
+        {
+            var ingestion = new MockIngestion();
+            ingestion.SetStatus(EastUs, 500);
+
+            using var exporter = CreateExporter(ingestion, out var transmitter);
+
+            exporter.Export(CreateBatch(
+                CreateActivity("ikey-east", EastUs),
+                CreateActivity("aad-east", EastUs, ingestionAuth: "aad")));
+
+            Assert.Equal(2, ingestion.Requests.Count);
+            Assert.All(ingestion.Requests, request => Assert.Equal(EastUs + "v2.1/track", request.Uri));
+
+            // Routing is refused when a credential is configured, so no group carries a token yet.
+            Assert.All(ingestion.Requests, request => Assert.False(request.HasAuthorization));
+
+            var ikeyPartition = transmitter._multiEndpointStorage!.TryGet(EastUs)!;
+            var aadPartition = transmitter._multiEndpointStorage.TryGet(EastUs, isAad: true)!;
+            Assert.Equal(2, transmitter._multiEndpointStorage.Partitions.Count());
+            Assert.NotEqual(ikeyPartition.Directory, aadPartition.Directory);
+
+            var ikeyBlob = Encoding.UTF8.GetString(File.ReadAllBytes(Directory.GetFiles(ikeyPartition.Directory, "*.blob").Single()));
+            var aadBlob = Encoding.UTF8.GetString(File.ReadAllBytes(Directory.GetFiles(aadPartition.Directory, "*.blob").Single()));
+
+            Assert.Contains("ikey-east", ikeyBlob, StringComparison.Ordinal);
+            Assert.DoesNotContain("aad-east", ikeyBlob, StringComparison.Ordinal);
+            Assert.Contains("aad-east", aadBlob, StringComparison.Ordinal);
+            Assert.DoesNotContain("ikey-east", aadBlob, StringComparison.Ordinal);
+        }
+
+        /// <summary>
+        /// Back-off is per route, so throttling an AAD route must not stop the instrumentation-key
+        /// route to the same endpoint.
+        /// </summary>
+        [Fact]
+        public void BackOffOnAnAadRouteDoesNotStopTheInstrumentationKeyRouteToTheSameEndpoint()
+        {
+            var ingestion = new MockIngestion();
+            using var exporter = CreateExporter(ingestion, out var transmitter);
+
+            transmitter._multiEndpointStorage!.TryGet(EastUs, isAad: true)!.TransmissionStateManager.OpenTransmission();
+
+            exporter.Export(CreateBatch(
+                CreateActivity("ikey-east", EastUs),
+                CreateActivity("aad-east", EastUs, ingestionAuth: "aad")));
+
+            // The AAD route is backed off and goes to disk; the instrumentation-key route still transmits.
+            var request = Assert.Single(ingestion.Requests);
+            Assert.Contains("ikey-east", request.Body, StringComparison.Ordinal);
+            Assert.DoesNotContain("aad-east", request.Body, StringComparison.Ordinal);
+        }
+
         [Fact]
         public void PartitionsAreCreatedOutsideTheHostStorageDirectory()
         {
@@ -221,11 +280,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         private static Batch<Activity> CreateBatch(params Activity[] activities) => new(activities, activities.Length);
 
-        private static Activity CreateActivity(string instrumentationKey, string ingestionEndpoint)
+        private static Activity CreateActivity(string instrumentationKey, string ingestionEndpoint, string? ingestionAuth = null)
         {
             var activity = s_activitySource.StartActivity("StorageIntegrationTest", ActivityKind.Server)!;
             activity.SetTag(SemanticConventions.AttributeMicrosoftInstrumentationKey, instrumentationKey);
             activity.SetTag(SemanticConventions.AttributeMicrosoftIngestionEndpoint, ingestionEndpoint);
+
+            if (ingestionAuth != null)
+            {
+                activity.SetTag(SemanticConventions.AttributeMicrosoftIngestionAuth, ingestionAuth);
+            }
+
             activity.Stop();
 
             return activity;
@@ -264,7 +329,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
                 lock (Requests)
                 {
-                    Requests.Add(new CapturedRequest(request.Uri.ToString(), ReadBody(request)));
+                    Requests.Add(new CapturedRequest(request.Uri.ToString(), ReadBody(request), request.Headers.Contains("Authorization")));
                 }
 
                 return new MockResponse(_statusByEndpoint.TryGetValue(host, out var status) ? status : 200);
@@ -286,15 +351,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         private sealed class CapturedRequest
         {
-            internal CapturedRequest(string uri, string body)
+            internal CapturedRequest(string uri, string body, bool hasAuthorization)
             {
                 Uri = uri;
                 Body = body;
+                HasAuthorization = hasAuthorization;
             }
 
             internal string Uri { get; }
 
             internal string Body { get; }
+
+            internal bool HasAuthorization { get; }
         }
     }
 }

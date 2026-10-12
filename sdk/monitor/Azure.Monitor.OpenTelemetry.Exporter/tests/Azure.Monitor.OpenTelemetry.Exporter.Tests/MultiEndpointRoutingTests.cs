@@ -90,6 +90,129 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Single(routeBatch[1].TelemetryItems);
         }
 
+        /// <summary>
+        /// One request carries one authentication mode, so AAD and instrumentation-key telemetry for
+        /// the same region must not share a POST.
+        /// </summary>
+        [Fact]
+        public void AadAndInstrumentationKeyRoutesToOneEndpointBecomeDistinctGroups()
+        {
+            var routeBatch = Convert(
+                CreateActivity("ikey-a", EastUs),
+                CreateActivity("ikey-b", EastUs, ingestionAuth: "aad"),
+                CreateActivity("ikey-c", EastUs),
+                CreateActivity("ikey-d", EastUs, ingestionAuth: "aad"));
+
+            Assert.Equal(2, routeBatch.Count);
+
+            Assert.Equal(EastUs, routeBatch[0].IngestionEndpoint);
+            Assert.False(routeBatch[0].IsAad);
+            Assert.Equal(new[] { "ikey-a", "ikey-c" }, routeBatch[0].TelemetryItems.Select(item => item.InstrumentationKey));
+
+            Assert.Equal(EastUs, routeBatch[1].IngestionEndpoint);
+            Assert.True(routeBatch[1].IsAad);
+            Assert.Equal(new[] { "ikey-b", "ikey-d" }, routeBatch[1].TelemetryItems.Select(item => item.InstrumentationKey));
+        }
+
+        [Fact]
+        public void AadRoutesToDistinctEndpointsBecomeDistinctGroups()
+        {
+            var routeBatch = Convert(
+                CreateActivity("ikey-a", EastUs, ingestionAuth: "aad"),
+                CreateActivity("ikey-b", WestUs, ingestionAuth: "aad"));
+
+            Assert.Equal(2, routeBatch.Count);
+            Assert.All(new[] { routeBatch[0], routeBatch[1] }, group => Assert.True(group.IsAad));
+            Assert.Equal(new[] { EastUs, WestUs }, new[] { routeBatch[0].IngestionEndpoint, routeBatch[1].IngestionEndpoint });
+        }
+
+        [Theory]
+        [InlineData("aad")]
+        [InlineData("AAD")]
+        [InlineData("Aad")]
+        [InlineData(" aad ")]
+        public void AadSpellingsShareOneGroup(string variant)
+        {
+            var routeBatch = Convert(
+                CreateActivity("ikey-a", EastUs, ingestionAuth: "aad"),
+                CreateActivity("ikey-b", EastUs, ingestionAuth: variant));
+
+            var group = Assert.Single(Enumerable.Range(0, routeBatch.Count).Select(i => routeBatch[i]));
+            Assert.True(group.IsAad);
+            Assert.Equal(2, group.TelemetryItems.Count);
+        }
+
+        /// <summary>
+        /// Only <c>"aad"</c> opts in. Anything else, including values that look like a yes, keeps the
+        /// instrumentation-key route that telemetry had before the attribute existed.
+        /// </summary>
+        [Theory]
+        [InlineData("")]
+        [InlineData("   ")]
+        [InlineData("ikey")]
+        [InlineData("entra")]
+        [InlineData("true")]
+        [InlineData("aad,ikey")]
+        [InlineData(true)]
+        [InlineData(1)]
+        public void OtherIngestionAuthValuesAreInstrumentationKeyRoutes(object ingestionAuth)
+        {
+            var routeBatch = Convert(
+                CreateActivity("ikey-a", EastUs),
+                CreateActivity("ikey-b", EastUs, ingestionAuth: ingestionAuth));
+
+            var group = Assert.Single(Enumerable.Range(0, routeBatch.Count).Select(i => routeBatch[i]));
+            Assert.False(group.IsAad);
+            Assert.Equal(2, group.TelemetryItems.Count);
+        }
+
+        [Fact]
+        public void ArrayValuedIngestionAuthIsNotAad()
+        {
+            var routeBatch = Convert(CreateActivity("ikey-a", EastUs, ingestionAuth: new[] { "aad" }));
+
+            Assert.False(routeBatch[0].IsAad);
+        }
+
+        /// <summary>
+        /// The attribute names how to reach a destination, not where; on its own it routes nothing.
+        /// </summary>
+        [Fact]
+        public void IngestionAuthAloneDoesNotMakeAnActivityRoutable()
+        {
+            var routeBatch = Convert(CreateActivity("ikey-a", null, ingestionAuth: "aad"));
+
+            Assert.Equal(0, routeBatch.Count);
+        }
+
+        [Fact]
+        public void AadGroupIsDescribedDistinctlyInSelfDiagnostics()
+        {
+            var routeBatch = Convert(
+                CreateActivity("ikey-a", EastUs),
+                CreateActivity("ikey-b", EastUs, ingestionAuth: "aad"));
+
+            Assert.Equal(EastUs, routeBatch[0].Description);
+            Assert.Equal(EastUs + EndpointRouting.AadRouteSuffix, routeBatch[1].Description);
+        }
+
+        /// <summary>
+        /// Groups are recycled across exports, so a group that was AAD last time must not carry the
+        /// flag into an instrumentation-key route this time.
+        /// </summary>
+        [Fact]
+        public void ARecycledGroupDoesNotKeepItsPreviousAuthenticationMode()
+        {
+            var routeBatch = new EndpointRouteBatch();
+            routeBatch.GetOrAdd(EastUs, isAad: true);
+            routeBatch.Reset();
+
+            var group = routeBatch.GetOrAdd(WestUs);
+
+            Assert.False(group.IsAad);
+            Assert.Equal(WestUs, group.Description);
+        }
+
         [Theory]
         [InlineData("https://eastus-1.in.applicationinsights.azure.com")]
         [InlineData("https://eastus-1.in.applicationinsights.azure.com/")]
@@ -129,11 +252,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void RoutedTelemetryDoesNotCarryTheRoutingTagsAsCustomDimensions()
         {
-            var routeBatch = Convert(CreateActivity("ikey-a", EastUs, cloudRole: "app-role"));
+            var routeBatch = Convert(CreateActivity("ikey-a", EastUs, cloudRole: "app-role", ingestionAuth: "aad"));
 
             var properties = ((RequestData)routeBatch[0].TelemetryItems.Single().Data!.BaseData).Properties;
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftInstrumentationKey, properties.Keys);
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftIngestionEndpoint, properties.Keys);
+            Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftIngestionAuth, properties.Keys);
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole, properties.Keys);
         }
 
@@ -393,7 +517,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void SingleEndpointPathKeepsRoutingTagsAsCustomDimensions()
         {
             var (telemetryItems, _) = TraceHelper.OtelToAzureMonitorTrace(
-                CreateBatch(CreateActivity("ikey-a", EastUs, cloudRole: "app-role")),
+                CreateBatch(CreateActivity("ikey-a", EastUs, cloudRole: "app-role", ingestionAuth: "aad")),
                 null,
                 "exporter-ikey",
                 sampleRate: 100);
@@ -404,6 +528,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var properties = ((RequestData)telemetryItem.Data!.BaseData).Properties;
             Assert.Equal("ikey-a", properties[SemanticConventions.AttributeMicrosoftInstrumentationKey]);
             Assert.Equal(EastUs, properties[SemanticConventions.AttributeMicrosoftIngestionEndpoint]);
+            Assert.Equal("aad", properties[SemanticConventions.AttributeMicrosoftIngestionAuth]);
             Assert.Equal("app-role", properties[SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole]);
         }
 
@@ -845,7 +970,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         private static Batch<Activity> CreateBatch(params Activity[] activities) => new(activities, activities.Length);
 
-        private static Activity CreateActivity(string? instrumentationKey, string? ingestionEndpoint, ActivityKind kind = ActivityKind.Server, object? cloudRole = null)
+        private static Activity CreateActivity(string? instrumentationKey, string? ingestionEndpoint, ActivityKind kind = ActivityKind.Server, object? cloudRole = null, object? ingestionAuth = null)
         {
             var activity = s_activitySource.StartActivity("Test", kind)!;
 
@@ -857,6 +982,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             if (ingestionEndpoint != null)
             {
                 activity.SetTag(SemanticConventions.AttributeMicrosoftIngestionEndpoint, ingestionEndpoint);
+            }
+
+            if (ingestionAuth != null)
+            {
+                activity.SetTag(SemanticConventions.AttributeMicrosoftIngestionAuth, ingestionAuth);
             }
 
             if (cloudRole != null)

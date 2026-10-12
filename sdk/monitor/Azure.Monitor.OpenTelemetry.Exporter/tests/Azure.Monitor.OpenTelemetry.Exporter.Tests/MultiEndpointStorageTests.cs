@@ -83,6 +83,72 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         /// <summary>
+        /// A stored blob is replayed with one request, so AAD and instrumentation-key telemetry for
+        /// one endpoint need separate partitions, each with its own back-off.
+        /// </summary>
+        [Fact]
+        public void AadAndInstrumentationKeyRoutesToOneEndpointGetSeparatePartitions()
+        {
+            using var storage = CreateStorage();
+
+            var ikey = storage.TryGet(EastUs);
+            var aad = storage.TryGet(EastUs, isAad: true);
+
+            Assert.NotNull(ikey);
+            Assert.NotNull(aad);
+            Assert.NotSame(ikey, aad);
+            Assert.NotEqual(ikey!.Directory, aad!.Directory);
+            Assert.NotSame(ikey.TransmissionStateManager, aad.TransmissionStateManager);
+            Assert.Same(aad, storage.TryGet(EastUs, isAad: true));
+            Assert.Same(ikey, storage.TryGet(EastUs, isAad: false));
+        }
+
+        /// <summary>
+        /// An instrumentation-key route keeps the directory it had before AAD routes existed, so a
+        /// backlog written by an earlier version still drains. An AAD route has its own, derivable
+        /// from the route alone for the same reason.
+        /// </summary>
+        [Fact]
+        public void AadPartitionDirectoryIsDerivedFromTheRoute()
+        {
+            using var storage = CreateStorage();
+
+            Assert.Equal(
+                Path.Combine(_rootDirectory, HashHelper.GetSHA256Hash(MultiEndpointStorage.AadPartitionKeyPrefix + EastUs)),
+                storage.TryGet(EastUs, isAad: true)!.Directory);
+            Assert.Equal(
+                Path.Combine(_rootDirectory, HashHelper.GetSHA256Hash(EastUs)),
+                storage.TryGet(EastUs, isAad: false)!.Directory);
+        }
+
+        [Fact]
+        public void AadPartitionCreationNamesTheRoute()
+        {
+            using var storage = CreateStorage();
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Informational, EventKeywords.All);
+
+            storage.TryGet(EastUs, isAad: true);
+
+            var created = Assert.Single(listener.Messages.Where(e => e.EventName == "MultiEndpointPartitionCreated"));
+            Assert.Equal(EastUs + EndpointRouting.AadRouteSuffix, created.Payload![0]);
+        }
+
+        [Fact]
+        public void AadPartitionsCountTowardsTheBound()
+        {
+            using var storage = CreateStorage();
+
+            for (int i = 0; i < MultiEndpointStorage.MaxEndpointPartitions / 2; i++)
+            {
+                Assert.NotNull(storage.TryGet($"https://region-{i}.in.applicationinsights.azure.com/"));
+                Assert.NotNull(storage.TryGet($"https://region-{i}.in.applicationinsights.azure.com/", isAad: true));
+            }
+
+            Assert.Null(storage.TryGet("https://one-too-many.in.applicationinsights.azure.com/", isAad: true));
+        }
+
+        /// <summary>
         /// Each partition owns a directory, a drain timer, and a blob provider, so the count is
         /// capped rather than following the caller's endpoint count.
         /// </summary>
@@ -626,7 +692,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         /// <summary>
         /// Mirrors the provider's own naming, which is what orders blobs by age across directories.
         /// </summary>
-        private static string WriteBlobFile(string directory, DateTime timestampUtc, int length)        {
+        private static string WriteBlobFile(string directory, DateTime timestampUtc, int length)
+        {
             Directory.CreateDirectory(directory);
 
             var path = Path.Combine(
