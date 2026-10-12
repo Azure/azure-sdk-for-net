@@ -11,11 +11,26 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace _Specs_.Azure.ClientGenerator.Core.AlternateType._ExternalType
+namespace Specs.Azure.ClientGenerator.Core.AlternateType._ExternalType
 {
     public partial class ModelWithFeatureProperty : IJsonModel<ModelWithFeatureProperty>
     {
         internal ModelWithFeatureProperty() => throw null;
+
+        protected virtual ModelWithFeatureProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<ModelWithFeatureProperty>.Write(ModelReaderWriterOptions options) => throw null;
+
+        ModelWithFeatureProperty IPersistableModel<ModelWithFeatureProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<ModelWithFeatureProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="modelWithFeatureProperty"> The <see cref="ModelWithFeatureProperty"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(ModelWithFeatureProperty modelWithFeatureProperty) => throw null;
+
+        public static explicit operator ModelWithFeatureProperty(Response response) => throw null;
 
         void IJsonModel<ModelWithFeatureProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
@@ -24,20 +39,5 @@ namespace _Specs_.Azure.ClientGenerator.Core.AlternateType._ExternalType
         ModelWithFeatureProperty IJsonModel<ModelWithFeatureProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual ModelWithFeatureProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<ModelWithFeatureProperty>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        ModelWithFeatureProperty IPersistableModel<ModelWithFeatureProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual ModelWithFeatureProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<ModelWithFeatureProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="modelWithFeatureProperty"> The <see cref="ModelWithFeatureProperty"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ModelWithFeatureProperty modelWithFeatureProperty) => throw null;
-
-        public static explicit operator ModelWithFeatureProperty(Response result) => throw null;
     }
 }
