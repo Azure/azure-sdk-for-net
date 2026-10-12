@@ -833,7 +833,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.RoleManagementPolicyRule"/> instance for mocking. </returns>
         public static RoleManagementPolicyRule RoleManagementPolicyRule(string id = default, string ruleType = default, RoleManagementPolicyRuleTarget target = default)
         {
-            return new UnknownRoleManagementPolicyRule(id, default, target, default);
+            return new UnknownRoleManagementPolicyRule(id, ruleType is null ? default : new RoleManagementPolicyRuleType(ruleType), target, default);
         }
 
         /// <summary> The role management policy rule target. </summary>
@@ -868,7 +868,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.RoleManagementPolicyApprovalRule"/> instance for mocking. </returns>
         public static RoleManagementPolicyApprovalRule RoleManagementPolicyApprovalRule(string id = default, RoleManagementPolicyRuleTarget target = default, RoleManagementApprovalSettings settings = default)
         {
-            return new RoleManagementPolicyApprovalRule(id, default, target, default, settings);
+            return new RoleManagementPolicyApprovalRule(id, RoleManagementPolicyRuleType.RoleManagementPolicyApprovalRule, target, default, settings);
         }
 
         /// <summary> The approval settings. </summary>
@@ -935,7 +935,7 @@ namespace Azure.ResourceManager.Authorization.Models
         {
             return new RoleManagementPolicyAuthenticationContextRule(
                 id,
-                default,
+                RoleManagementPolicyRuleType.RoleManagementPolicyAuthenticationContextRule,
                 target,
                 default,
                 isEnabled,
@@ -951,7 +951,7 @@ namespace Azure.ResourceManager.Authorization.Models
         {
             enablementRules ??= new ChangeTrackingList<RoleAssignmentEnablementRuleType>();
 
-            return new RoleManagementPolicyEnablementRule(id, default, target, default, (enablementRules ?? new ChangeTrackingList<RoleAssignmentEnablementRuleType>()).ToList());
+            return new RoleManagementPolicyEnablementRule(id, RoleManagementPolicyRuleType.RoleManagementPolicyEnablementRule, target, default, (enablementRules ?? new ChangeTrackingList<RoleAssignmentEnablementRuleType>()).ToList());
         }
 
         /// <summary> The role management policy expiration rule. </summary>
@@ -967,7 +967,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
             return new RoleManagementPolicyExpirationRule(
                 id,
-                default,
+                RoleManagementPolicyRuleType.RoleManagementPolicyExpirationRule,
                 target,
                 default,
                 isExpirationRequired,
@@ -990,7 +990,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
             return new RoleManagementPolicyNotificationRule(
                 id,
-                default,
+                RoleManagementPolicyRuleType.RoleManagementPolicyNotificationRule,
                 target,
                 default,
                 notificationDeliveryType,
@@ -1007,7 +1007,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.RoleManagementPolicyPimOnlyModeRule"/> instance for mocking. </returns>
         public static RoleManagementPolicyPimOnlyModeRule RoleManagementPolicyPimOnlyModeRule(string id = default, RoleManagementPolicyRuleTarget target = default, PimOnlyModeSettings pimOnlyModeSettings = default)
         {
-            return new RoleManagementPolicyPimOnlyModeRule(id, default, target, default, pimOnlyModeSettings);
+            return new RoleManagementPolicyPimOnlyModeRule(id, RoleManagementPolicyRuleType.RoleManagementPolicyPimOnlyModeRule, target, default, pimOnlyModeSettings);
         }
 
         /// <summary> The PIM Only Mode settings. </summary>
@@ -1412,7 +1412,7 @@ namespace Azure.ResourceManager.Authorization.Models
         public static AzureRolesAssignedOutsidePimAlertIncidentProperties AzureRolesAssignedOutsidePimAlertIncidentProperties(string assigneeDisplayName = default, string assigneeUserPrincipalName = default, string assigneeId = default, string roleDisplayName = default, string roleTemplateId = default, string roleDefinitionId = default, DateTimeOffset? assignmentActivatedOn = default, string requestorId = default, string requestorDisplayName = default, string requestorUserPrincipalName = default)
         {
             return new AzureRolesAssignedOutsidePimAlertIncidentProperties(
-                default,
+                "AzureRolesAssignedOutsidePimAlertIncident",
                 default,
                 assigneeDisplayName,
                 assigneeUserPrincipalName,
@@ -1433,7 +1433,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.DuplicateRoleCreatedAlertIncidentProperties"/> instance for mocking. </returns>
         public static DuplicateRoleCreatedAlertIncidentProperties DuplicateRoleCreatedAlertIncidentProperties(string roleName = default, string duplicateRoles = default, string reason = default)
         {
-            return new DuplicateRoleCreatedAlertIncidentProperties(default, default, roleName, duplicateRoles, reason);
+            return new DuplicateRoleCreatedAlertIncidentProperties("DuplicateRoleCreatedAlertIncident", default, roleName, duplicateRoles, reason);
         }
 
         /// <summary> Too many owners assigned to resource alert incident properties. </summary>
@@ -1442,7 +1442,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.TooManyOwnersAssignedToResourceAlertIncidentProperties"/> instance for mocking. </returns>
         public static TooManyOwnersAssignedToResourceAlertIncidentProperties TooManyOwnersAssignedToResourceAlertIncidentProperties(string assigneeName = default, string assigneeType = default)
         {
-            return new TooManyOwnersAssignedToResourceAlertIncidentProperties(default, default, assigneeName, assigneeType);
+            return new TooManyOwnersAssignedToResourceAlertIncidentProperties("TooManyOwnersAssignedToResourceAlertIncident", default, assigneeName, assigneeType);
         }
 
         /// <summary> Too many permanent owners assigned to resource alert incident properties. </summary>
@@ -1451,7 +1451,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.TooManyPermanentOwnersAssignedToResourceAlertIncidentProperties"/> instance for mocking. </returns>
         public static TooManyPermanentOwnersAssignedToResourceAlertIncidentProperties TooManyPermanentOwnersAssignedToResourceAlertIncidentProperties(string assigneeName = default, string assigneeType = default)
         {
-            return new TooManyPermanentOwnersAssignedToResourceAlertIncidentProperties(default, default, assigneeName, assigneeType);
+            return new TooManyPermanentOwnersAssignedToResourceAlertIncidentProperties("TooManyPermanentOwnersAssignedToResourceAlertIncident", default, assigneeName, assigneeType);
         }
 
         /// <summary> Alert configuration. </summary>
@@ -1505,7 +1505,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 alertDefinitionId,
                 scope,
                 isEnabled,
-                default,
+                "AzureRolesAssignedOutsidePimAlertConfiguration",
                 alertDefinition,
                 default);
         }
@@ -1522,7 +1522,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 alertDefinitionId,
                 scope,
                 isEnabled,
-                default,
+                "DuplicateRoleCreatedAlertConfiguration",
                 alertDefinition,
                 default);
         }
@@ -1541,7 +1541,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 alertDefinitionId,
                 scope,
                 isEnabled,
-                default,
+                "TooManyOwnersAssignedToResourceAlertConfiguration",
                 alertDefinition,
                 default,
                 thresholdNumberOfOwners,
@@ -1562,7 +1562,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 alertDefinitionId,
                 scope,
                 isEnabled,
-                default,
+                "TooManyPermanentOwnersAssignedToResourceAlertConfiguration",
                 alertDefinition,
                 default,
                 thresholdNumberOfPermanentOwners,
@@ -1673,7 +1673,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.AccessReviewDecisionIdentity"/> instance for mocking. </returns>
         public static AccessReviewDecisionIdentity AccessReviewDecisionIdentity(string @type = default, string id = default, string displayName = default)
         {
-            return new UnknownAccessReviewDecisionIdentity(default, id, displayName, default);
+            return new UnknownAccessReviewDecisionIdentity(@type is null ? default : new DecisionTargetType(@type), id, displayName, default);
         }
 
         /// <summary> User Decision Target. </summary>
@@ -1683,7 +1683,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.AccessReviewDecisionUserIdentity"/> instance for mocking. </returns>
         public static AccessReviewDecisionUserIdentity AccessReviewDecisionUserIdentity(string id = default, string displayName = default, string userPrincipalName = default)
         {
-            return new AccessReviewDecisionUserIdentity(default, id, displayName, default, userPrincipalName);
+            return new AccessReviewDecisionUserIdentity(DecisionTargetType.User, id, displayName, default, userPrincipalName);
         }
 
         /// <summary> Service Principal Decision Target. </summary>
@@ -1693,7 +1693,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.AccessReviewDecisionServicePrincipalIdentity"/> instance for mocking. </returns>
         public static AccessReviewDecisionServicePrincipalIdentity AccessReviewDecisionServicePrincipalIdentity(string id = default, string displayName = default, string appId = default)
         {
-            return new AccessReviewDecisionServicePrincipalIdentity(default, id, displayName, default, appId);
+            return new AccessReviewDecisionServicePrincipalIdentity(DecisionTargetType.ServicePrincipal, id, displayName, default, appId);
         }
 
         /// <summary> Target of the decision. </summary>
@@ -1726,7 +1726,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.AccessReviewDecisionInsightProperties"/> instance for mocking. </returns>
         public static AccessReviewDecisionInsightProperties AccessReviewDecisionInsightProperties(string @type = default, DateTimeOffset? insightCreatedOn = default)
         {
-            return new UnknownAccessReviewDecisionInsightProperties(default, insightCreatedOn, default);
+            return new UnknownAccessReviewDecisionInsightProperties(@type is null ? default : new AccessReviewDecisionInsightType(@type), insightCreatedOn, default);
         }
 
         /// <summary> User Decision Target. </summary>
@@ -1735,7 +1735,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.AccessReviewDecisionUserSignInInsightProperties"/> instance for mocking. </returns>
         public static AccessReviewDecisionUserSignInInsightProperties AccessReviewDecisionUserSignInInsightProperties(DateTimeOffset? insightCreatedOn = default, DateTimeOffset? lastSignInOn = default)
         {
-            return new AccessReviewDecisionUserSignInInsightProperties(default, insightCreatedOn, default, lastSignInOn);
+            return new AccessReviewDecisionUserSignInInsightProperties(AccessReviewDecisionInsightType.UserSignInInsight, insightCreatedOn, default, lastSignInOn);
         }
 
         /// <param name="id"> The access review reviewer id. </param>

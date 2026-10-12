@@ -18,25 +18,40 @@ namespace Azure.ResourceManager.IotHub.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IotHubDeviceRegistry"/>. </summary>
-        public IotHubDeviceRegistry()
+        internal IotHubDeviceRegistry()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="IotHubDeviceRegistry"/>. </summary>
         /// <param name="namespaceResourceId"> The identifier of the Azure Device Registry namespace. </param>
-        /// <param name="identityResourceId"> The identity used to manage the ADR namespace from the data plane. </param>
+        /// <param name="namespaceUuid"> The UUID of the associated Azure Device Registry namespace. </param>
+        /// <param name="dataPlaneHostName"> The host name for the data plane endpoint of the associated Azure Device Registry. </param>
+        /// <param name="identity"> The identity used to manage the ADR namespace from the data plane. </param>
+        /// <param name="linkingProperties"> The properties related to linking the IoT Hub with the Azure Device Registry. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IotHubDeviceRegistry(ResourceIdentifier namespaceResourceId, ResourceIdentifier identityResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IotHubDeviceRegistry(ResourceIdentifier namespaceResourceId, string namespaceUuid, string dataPlaneHostName, DeviceRegistryIdentity identity, DeviceRegistryLinkingProperties linkingProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NamespaceResourceId = namespaceResourceId;
-            IdentityResourceId = identityResourceId;
+            NamespaceUuid = namespaceUuid;
+            DataPlaneHostName = dataPlaneHostName;
+            Identity = identity;
+            LinkingProperties = linkingProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The identifier of the Azure Device Registry namespace. </summary>
-        public ResourceIdentifier NamespaceResourceId { get; set; }
+        public ResourceIdentifier NamespaceResourceId { get; }
+
+        /// <summary> The UUID of the associated Azure Device Registry namespace. </summary>
+        public string NamespaceUuid { get; }
+
+        /// <summary> The host name for the data plane endpoint of the associated Azure Device Registry. </summary>
+        public string DataPlaneHostName { get; }
 
         /// <summary> The identity used to manage the ADR namespace from the data plane. </summary>
-        public ResourceIdentifier IdentityResourceId { get; set; }
+        public DeviceRegistryIdentity Identity { get; }
+
+        /// <summary> The properties related to linking the IoT Hub with the Azure Device Registry. </summary>
+        public DeviceRegistryLinkingProperties LinkingProperties { get; }
     }
 }

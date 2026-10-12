@@ -23,6 +23,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string LegacyRegistrationRequiredValue = "LegacyRegistrationRequired";
         private const string TenantOnlyValue = "TenantOnly";
         private const string AuthorizationFreeValue = "AuthorizationFree";
+        /// <summary> The resource provider has been decommissioned. </summary>
+        private const string DecommissionedValue = "Decommissioned";
 
         /// <summary> Initializes a new instance of <see cref="ResourceProviderType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -57,6 +59,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Gets the AuthorizationFree. </summary>
         public static ResourceProviderType AuthorizationFree { get; } = new ResourceProviderType(AuthorizationFreeValue);
+
+        /// <summary> The resource provider has been decommissioned. </summary>
+        public static ResourceProviderType Decommissioned { get; } = new ResourceProviderType(DecommissionedValue);
 
         /// <summary> Determines if two <see cref="ResourceProviderType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
