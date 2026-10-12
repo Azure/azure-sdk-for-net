@@ -398,9 +398,7 @@ namespace Azure.Communication.CallAutomation
         public virtual Azure.Response<Azure.Communication.CallAutomation.HoldGroupCreatedEventResult> CreateHoldGroup(Azure.Communication.CallAutomation.HoldGroupOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.HoldGroupCreatedEventResult>> CreateHoldGroupAsync(Azure.Communication.CallAutomation.HoldGroupOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteHoldGroup(Azure.Communication.CallAutomation.DeleteHoldGroupOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response DeleteHoldGroup(string holdGroupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteHoldGroupAsync(Azure.Communication.CallAutomation.DeleteHoldGroupOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteHoldGroupAsync(string holdGroupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.CallAutomation.HoldResult> Hold(Azure.Communication.CallAutomation.HoldOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.HoldResult>> HoldAsync(Azure.Communication.CallAutomation.HoldOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.CallAutomation.InterruptAudioAndAnnounceResult> InterruptAudioAndAnnounce(Azure.Communication.CallAutomation.InterruptAudioAndAnnounceOptions announcementOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -747,8 +745,7 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class DeleteHoldGroupOptions
     {
-        public DeleteHoldGroupOptions(string holdGroupId) { }
-        public string HoldGroupId { get { throw null; } }
+        public DeleteHoldGroupOptions() { }
         public string OperationContext { get { throw null; } set { } }
     }
     public partial class DialogCompleted : Azure.Communication.CallAutomation.CallAutomationEventBase

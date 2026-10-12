@@ -759,7 +759,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     Assert.That(createHoldGroupResult.GetRawResponse().Status, Is.EqualTo(StatusCodes.Status201Created).Or.EqualTo(StatusCodes.Status200OK));
 
                     // Delete the hold group
-                    var deleteHoldGroupOptions = new DeleteHoldGroupOptions("test-hold-group-1")
+                    var deleteHoldGroupOptions = new DeleteHoldGroupOptions
                     {
                         OperationContext = "test-delete-hold-group-1"
                     };
@@ -827,7 +827,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     Assert.That(createHoldGroupResult.GetRawResponse().Status, Is.EqualTo(StatusCodes.Status201Created).Or.EqualTo(StatusCodes.Status200OK));
 
                     // Delete the hold group
-                    var deleteHoldGroupOptions = new DeleteHoldGroupOptions("test-hold-group-async");
+                    var deleteHoldGroupOptions = new DeleteHoldGroupOptions();
                     var deleteHoldGroupResult = await callConnection.GetCallMedia().DeleteHoldGroupAsync(deleteHoldGroupOptions);
                     Assert.That(deleteHoldGroupResult, Is.Not.Null);
 
@@ -897,7 +897,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     Assert.That(createResult.GetRawResponse().Status, Is.EqualTo(StatusCodes.Status201Created).Or.EqualTo(StatusCodes.Status200OK));
 
                     // Clean up - delete hold group
-                    var deleteOptions = new DeleteHoldGroupOptions("answer-hold-group")
+                    var deleteOptions = new DeleteHoldGroupOptions
                     {
                         OperationContext = "cleanup-hold-group"
                     };

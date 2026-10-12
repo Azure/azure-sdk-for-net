@@ -1192,11 +1192,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         public void DeleteHoldGroupOptionsConstructorTest()
         {
             // Arrange & Act
-            var holdGroupId = "hold-group-id-123";
-            var deleteOptions = new DeleteHoldGroupOptions(holdGroupId);
+            var deleteOptions = new DeleteHoldGroupOptions();
 
             // Assert
-            Assert.That(deleteOptions.HoldGroupId, Is.EqualTo(holdGroupId));
             Assert.That(deleteOptions.OperationContext, Is.Null);
         }
 
@@ -1204,35 +1202,15 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         public void DeleteHoldGroupOptionsWithOperationContextTest()
         {
             // Arrange
-            var holdGroupId = "hold-group-id-456";
             var operationContext = "delete-context-456";
 
             // Act
-            var deleteOptions = new DeleteHoldGroupOptions(holdGroupId)
+            var deleteOptions = new DeleteHoldGroupOptions
             {
                 OperationContext = operationContext
             };
 
             // Assert
-            Assert.That(deleteOptions.HoldGroupId, Is.EqualTo(holdGroupId));
-            Assert.That(deleteOptions.OperationContext, Is.EqualTo(operationContext));
-        }
-
-        [Test]
-        public void DeleteHoldGroupOptionsWithAllPropertiesTest()
-        {
-            // Arrange
-            var holdGroupId = "hold-group-comprehensive";
-            var operationContext = "comprehensive-context";
-
-            // Act
-            var deleteOptions = new DeleteHoldGroupOptions(holdGroupId)
-            {
-                OperationContext = operationContext
-            };
-
-            // Assert
-            Assert.That(deleteOptions.HoldGroupId, Is.EqualTo(holdGroupId));
             Assert.That(deleteOptions.OperationContext, Is.EqualTo(operationContext));
         }
 

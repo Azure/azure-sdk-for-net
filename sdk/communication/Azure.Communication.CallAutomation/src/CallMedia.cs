@@ -577,28 +577,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Delete a hold group.
         /// </summary>
-        /// <param name="holdGroupId">The ID of the hold group to delete.</param>
-        /// <param name="cancellationToken">Optional CancellationToken to cancel the request.</param>
-        /// <returns>Returns an empty response.</returns>
-        public virtual async Task<Response> DeleteHoldGroupAsync(string holdGroupId, CancellationToken cancellationToken = default)
-        {
-            return await DeleteHoldGroupAsync(new DeleteHoldGroupOptions(holdGroupId), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Delete a hold group.
-        /// </summary>
-        /// <param name="holdGroupId">The ID of the hold group to delete.</param>
-        /// <param name="cancellationToken">Optional CancellationToken to cancel the request.</param>
-        /// <returns>Returns an empty response.</returns>
-        public virtual Response DeleteHoldGroup(string holdGroupId, CancellationToken cancellationToken = default)
-        {
-            return DeleteHoldGroup(new DeleteHoldGroupOptions(holdGroupId), cancellationToken);
-        }
-
-        /// <summary>
-        /// Delete a hold group.
-        /// </summary>
         /// <param name="options">The options for deleting a hold group.</param>
         /// <param name="cancellationToken">Optional CancellationToken to cancel the request.</param>
         /// <returns>Returns an empty response.</returns>

@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
@@ -13,16 +11,9 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Creates a new DeleteHoldGroupOptions object.
         /// </summary>
-        /// <param name="holdGroupId">The ID of the hold group to delete.</param>
-        public DeleteHoldGroupOptions(string holdGroupId)
+        public DeleteHoldGroupOptions()
         {
-            HoldGroupId = holdGroupId;
         }
-
-        /// <summary>
-        /// The ID of the hold group to delete.
-        /// </summary>
-        public string HoldGroupId { get; }
 
         /// <summary>
         /// The operation context to correlate the request to the response event.
