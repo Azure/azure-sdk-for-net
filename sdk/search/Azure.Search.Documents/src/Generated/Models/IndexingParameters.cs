@@ -16,11 +16,11 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private int? _batchSize;
-        internal bool _batchSizeIsDefined;
+        private bool _batchSizeIsDefined;
         private int? _maxFailedItems;
-        internal bool _maxFailedItemsIsDefined;
+        private bool _maxFailedItemsIsDefined;
         private int? _maxFailedItemsPerBatch;
-        internal bool _maxFailedItemsPerBatchIsDefined;
+        private bool _maxFailedItemsPerBatchIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="IndexingParameters"/>. </summary>
         /// <param name="batchSize"> The number of items that are read from the data source and indexed as a single batch in order to improve performance. The default depends on the data source type. </param>

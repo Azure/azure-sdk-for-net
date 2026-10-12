@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class ChatCompletionSkill : SearchIndexerSkill
     {
         private SearchIndexerDataIdentity _authIdentity;
-        internal bool _authIdentityIsDefined;
+        private bool _authIdentityIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ChatCompletionSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
