@@ -39,9 +39,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ClusterResource.ResourceType, out string clusterApiVersion);
             _clustersClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ClusterResource.ResourceType.Namespace, Diagnostics);
-            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, clusterApiVersion ?? "2024-05-01");
+            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("MgmtTypeSpec/clusters", out string clustersApiVersionOverride) ? clustersApiVersionOverride : "2024-05-01");
             ValidateResourceId(id);
         }
 
