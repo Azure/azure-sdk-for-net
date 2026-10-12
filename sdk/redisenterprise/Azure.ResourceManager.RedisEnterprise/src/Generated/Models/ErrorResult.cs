@@ -13,20 +13,20 @@ using Azure.ResourceManager.RedisEnterprise;
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Error response. </summary>
-    internal partial class ErrorResponse
+    internal partial class ErrorResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ErrorResponse"/>. </summary>
-        internal ErrorResponse()
+        /// <summary> Initializes a new instance of <see cref="ErrorResult"/>. </summary>
+        internal ErrorResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ErrorResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorResult"/>. </summary>
         /// <param name="error"> The error object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ErrorResponse(ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ErrorResult(ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Error = error;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
