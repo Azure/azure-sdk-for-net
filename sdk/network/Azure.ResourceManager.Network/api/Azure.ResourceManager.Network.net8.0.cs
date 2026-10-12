@@ -16113,7 +16113,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class DdosSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.DdosSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.DdosSettings>
     {
         public DdosSettings() { }
-        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
         public Azure.Core.ResourceIdentifier DdosCustomPolicyId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier DdosProtectionPlanId { get { throw null; } set { } }
         [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]

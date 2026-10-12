@@ -6,6 +6,7 @@
 using System;
 using System.ComponentModel;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -25,7 +26,8 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        // Preserve the pre-TypeSpec property name because it maps to the same wire property as the generated member.
+        // Internal in 1.15.0; unnecessarily exposed publicly during the 1.16.0 TypeSpec migration.
+        // Retained for released 1.16/1.17 API compatibility; forwards the ID, not the backing object.
         /// <inheritdoc cref="ExpressRouteConnectionId"/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is deprecated and it will be removed in a future version. Please use ExpressRouteConnectionId instead.")]
@@ -34,6 +36,15 @@ namespace Azure.ResourceManager.Network
         {
             get => ExpressRouteConnectionId;
             set => ExpressRouteConnectionId = value;
+        }
+
+        // Internal in 1.15.0; unnecessarily exposed publicly during the 1.16.0 TypeSpec migration.
+        // Retained for released 1.16/1.17 API compatibility; returns a new wrapper and copies only its ID.
+        /// <summary> Compatibility member. </summary>
+        public WritableSubResource RouteFilter
+        {
+            get => RouteFilterId is null ? default : new WritableSubResource { Id = RouteFilterId };
+            set => RouteFilterId = value?.Id;
         }
     }
 }

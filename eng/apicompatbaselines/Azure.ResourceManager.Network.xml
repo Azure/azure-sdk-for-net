@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- https://learn.microsoft.com/dotnet/fundamentals/package-validation/diagnostic-ids -->
+<Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <!-- DdosCustomPolicyId represents a current, non-obsolete native TypeSpec field.
+       Remove the legacy Obsolete attribute whose TagToIPAddresses guidance refers to an unrelated model. -->
+  <Suppression>
+    <DiagnosticId>CP0014</DiagnosticId>
+    <Target>P:Azure.ResourceManager.Network.Models.DdosSettings.DdosCustomPolicyId:[T:System.ObsoleteAttribute]</Target>
+  </Suppression>
+</Suppressions>

@@ -3,15 +3,19 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Compatibility declaration for the ApplicationGatewayBackendHttpSettings type. </summary>
     public partial class ApplicationGatewayBackendHttpSettings
     {
+        // Internal in 1.15.0; unnecessarily exposed publicly during the 1.16.0 TypeSpec migration.
+        // Retained for released 1.16/1.17 API compatibility; returns a new wrapper and copies only its ID.
         /// <summary> Compatibility member. </summary>
-        public global::Azure.ResourceManager.Resources.Models.WritableSubResource Probe
+        public WritableSubResource Probe
         {
-            get => ProbeId is null ? default : new global::Azure.ResourceManager.Resources.Models.WritableSubResource { Id = ProbeId };
+            get => ProbeId is null ? default : new WritableSubResource { Id = ProbeId };
             set => ProbeId = value?.Id;
         }
     }

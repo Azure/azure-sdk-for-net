@@ -9,6 +9,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ConnectivityInformation
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Nullable<global::Azure.ResourceManager.Network.Models.NetworkConnectionStatus> NetworkConnectionStatus => ConnectionStatus;
+        public NetworkConnectionStatus? NetworkConnectionStatus => ConnectionStatus;
     }
 }

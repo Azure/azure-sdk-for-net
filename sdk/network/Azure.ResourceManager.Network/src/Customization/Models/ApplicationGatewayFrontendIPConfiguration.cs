@@ -3,15 +3,19 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Compatibility declaration for the ApplicationGatewayFrontendIPConfiguration type. </summary>
     public partial class ApplicationGatewayFrontendIPConfiguration
     {
+        // Internal in 1.15.0; unnecessarily exposed publicly during the 1.16.0 TypeSpec migration.
+        // Retained for released 1.16/1.17 API compatibility; returns a new wrapper and copies only its ID.
         /// <summary> Compatibility member. </summary>
-        public global::Azure.ResourceManager.Resources.Models.WritableSubResource Subnet
+        public WritableSubResource Subnet
         {
-            get => SubnetId is null ? default : new global::Azure.ResourceManager.Resources.Models.WritableSubResource { Id = SubnetId };
+            get => SubnetId is null ? default : new WritableSubResource { Id = SubnetId };
             set => SubnetId = value?.Id;
         }
     }
