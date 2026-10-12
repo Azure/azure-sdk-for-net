@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 writer.WritePropertyName("company"u8);
                 writer.WriteObjectValue(Company, options);
             }
-            if (Optional.IsCollectionDefined(RoleAssignmentsOnCreate))
+            if (Optional.IsCollectionDefined(RoleAssignmentsOnCcaCreate))
             {
                 writer.WritePropertyName("roleAssignmentsOnCcaCreate"u8);
                 writer.WriteStartArray();
-                foreach (CommvaultRoleAssignment item in RoleAssignmentsOnCreate)
+                foreach (CommvaultRoleAssignment item in RoleAssignmentsOnCcaCreate)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             ResourceProvisioningState? provisioningState = default;
             string ssoUri = default;
             CompanyProfile company = default;
-            IList<CommvaultRoleAssignment> roleAssignmentsOnCreate = default;
+            IList<CommvaultRoleAssignment> roleAssignmentsOnCcaCreate = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         array.Add(CommvaultRoleAssignment.DeserializeCommvaultRoleAssignment(item, options));
                     }
-                    roleAssignmentsOnCreate = array;
+                    roleAssignmentsOnCcaCreate = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 provisioningState,
                 ssoUri,
                 company,
-                roleAssignmentsOnCreate ?? new ChangeTrackingList<CommvaultRoleAssignment>(),
+                roleAssignmentsOnCcaCreate ?? new ChangeTrackingList<CommvaultRoleAssignment>(),
                 additionalBinaryDataProperties);
         }
     }

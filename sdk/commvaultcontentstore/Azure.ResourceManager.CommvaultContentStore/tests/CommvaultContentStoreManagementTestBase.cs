@@ -27,41 +27,41 @@ namespace Azure.ResourceManager.CommvaultContentStore.Tests
             [Test]
             public void ActivationIdentifiersRoundTripWithOriginalWireNames()
             {
-                Guid subscriptionGuid = Guid.Parse("123e4567-e89b-12d3-a456-426614174000");
+                const string subscriptionGuid = "123e4567-e89b-12d3-a456-426614174000";
                 var content = new ActivateSaaSParameterContent(subscriptionGuid)
                 {
-                    ActivationDetails = new SaaSActivationDetails
+                    ActivateSaaSRequestParam = new ActivateSaaSRequestParam
                     {
-                        SaasResourceId = new ResourceIdentifier(SaasResourcePath)
+                        SaasResourceId = SaasResourcePath
                     }
                 };
 
                 BinaryData data = ModelReaderWriter.Write(content, new ModelReaderWriterOptions("W"));
                 using JsonDocument document = JsonDocument.Parse(data.ToString());
-                Assert.That(document.RootElement.GetProperty("saasGuid").GetGuid(), Is.EqualTo(subscriptionGuid));
+                Assert.That(document.RootElement.GetProperty("saasGuid").GetString(), Is.EqualTo(subscriptionGuid));
                 Assert.That(document.RootElement.GetProperty("activateSaaSRequestParam").GetProperty("saasResourceId").GetString(), Is.EqualTo(SaasResourcePath));
                 Assert.That(document.RootElement.TryGetProperty("activationDetails", out _), Is.False);
 
                 ActivateSaaSParameterContent roundTrip = ModelReaderWriter.Read<ActivateSaaSParameterContent>(data, new ModelReaderWriterOptions("W"));
                 Assert.That(roundTrip.SaasGuid, Is.EqualTo(subscriptionGuid));
-                Assert.That(roundTrip.ActivationDetails.SaasResourceId.ToString(), Is.EqualTo(SaasResourcePath));
+                Assert.That(roundTrip.ActivateSaaSRequestParam.SaasResourceId, Is.EqualTo(SaasResourcePath));
             }
 
             [Test]
             public void ActivationDetailsCanBeOmitted()
             {
-                var content = new ActivateSaaSParameterContent(Guid.NewGuid());
+                var content = new ActivateSaaSParameterContent(Guid.NewGuid().ToString());
                 BinaryData data = ModelReaderWriter.Write(content, new ModelReaderWriterOptions("W"));
                 using JsonDocument document = JsonDocument.Parse(data.ToString());
                 Assert.That(document.RootElement.TryGetProperty("activateSaaSRequestParam", out _), Is.False);
-                Assert.That(ModelReaderWriter.Read<ActivateSaaSParameterContent>(data).ActivationDetails, Is.Null);
+                Assert.That(ModelReaderWriter.Read<ActivateSaaSParameterContent>(data).ActivateSaaSRequestParam, Is.Null);
             }
 
             [TestCase("{}")]
             [TestCase("{\"saasResourceId\":null}")]
             public void SaasResourceIdRemainsOptional(string json)
             {
-                SaaSActivationDetails details = ModelReaderWriter.Read<SaaSActivationDetails>(BinaryData.FromString(json));
+                ActivateSaaSRequestParam details = ModelReaderWriter.Read<ActivateSaaSRequestParam>(BinaryData.FromString(json));
                 Assert.That(details.SaasResourceId, Is.Null);
 
                 BinaryData data = ModelReaderWriter.Write(details, new ModelReaderWriterOptions("W"));
@@ -70,17 +70,20 @@ namespace Azure.ResourceManager.CommvaultContentStore.Tests
             }
 
             [Test]
-            public void ActivationRejectsOpaqueGuidValues()
+            public void ActivationIdentifierRemainsStringValued()
             {
                 BinaryData data = BinaryData.FromString("{\"saasGuid\":\"opaque-token\"}");
-                Assert.Throws<FormatException>(() => ModelReaderWriter.Read<ActivateSaaSParameterContent>(data));
+                ActivateSaaSParameterContent content = ModelReaderWriter.Read<ActivateSaaSParameterContent>(data);
+                Assert.That(content.SaasGuid, Is.EqualTo("opaque-token"));
+                using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(content, new ModelReaderWriterOptions("W")).ToString());
+                Assert.That(document.RootElement.GetProperty("saasGuid").GetString(), Is.EqualTo("opaque-token"));
             }
 
             [Test]
             public void RoleAssignmentsRetainOriginalWireName()
             {
                 CloudAccountProperties properties = ArmCommvaultContentStoreModelFactory.CloudAccountProperties();
-                properties.RoleAssignmentsOnCreate.Add(new CommvaultRoleAssignment(
+                properties.RoleAssignmentsOnCcaCreate.Add(new CommvaultRoleAssignment(
                     CommvaultRoleName.BackupAdmin,
                     new[] { new CommvaultEntityInfo() }));
 
@@ -88,7 +91,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Tests
                 using JsonDocument document = JsonDocument.Parse(data.ToString());
                 Assert.That(document.RootElement.GetProperty("roleAssignmentsOnCcaCreate").GetArrayLength(), Is.EqualTo(1));
                 Assert.That(document.RootElement.TryGetProperty("roleAssignmentsOnCreate", out _), Is.False);
-                Assert.That(ModelReaderWriter.Read<CloudAccountProperties>(data).RoleAssignmentsOnCreate.Count, Is.EqualTo(1));
+                Assert.That(ModelReaderWriter.Read<CloudAccountProperties>(data).RoleAssignmentsOnCcaCreate.Count, Is.EqualTo(1));
             }
 
             [Test]
@@ -100,11 +103,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Tests
                     resources: new ProtectionGroupResources(),
                     protectionStatus: CommvaultProtectionStatus.Protected,
                     numberOfProtectedItems: 1,
-                    lastBackupTime: backupTime);
+                    lastBackUpTime: backupTime);
                 BinaryData data = ModelReaderWriter.Write(properties);
                 using JsonDocument document = JsonDocument.Parse(data.ToString());
                 Assert.That(document.RootElement.GetProperty("lastBackUpTime").GetInt64(), Is.EqualTo(backupTime));
-                Assert.That(ModelReaderWriter.Read<ProtectionGroupProperties>(data).LastBackupTime, Is.EqualTo(backupTime));
+                Assert.That(ModelReaderWriter.Read<ProtectionGroupProperties>(data).LastBackUpTime, Is.EqualTo(backupTime));
             }
 
             [Test]
@@ -113,14 +116,14 @@ namespace Azure.ResourceManager.CommvaultContentStore.Tests
                 const long backupTime = 1728000000123;
                 ProtectedItemProperties properties = ArmCommvaultContentStoreModelFactory.ProtectedItemProperties(
                     resourceName: "testVm",
-                    lastBackupTime: backupTime,
+                    lastBackUpTime: backupTime,
                     resourceGroup: "test",
                     location: AzureLocation.EastUS,
                     vmGuid: "123e4567-e89b-12d3-a456-426614174000");
                 BinaryData data = ModelReaderWriter.Write(properties);
                 using JsonDocument document = JsonDocument.Parse(data.ToString());
                 Assert.That(document.RootElement.GetProperty("lastBackUpTime").GetInt64(), Is.EqualTo(backupTime));
-                Assert.That(ModelReaderWriter.Read<ProtectedItemProperties>(data).LastBackupTime, Is.EqualTo(backupTime));
+                Assert.That(ModelReaderWriter.Read<ProtectedItemProperties>(data).LastBackUpTime, Is.EqualTo(backupTime));
             }
         }
 
@@ -138,33 +141,35 @@ namespace Azure.ResourceManager.CommvaultContentStore.Tests
             [TestCase(true, "properties")]
             [TestCase(false, "empty")]
             [TestCase(true, "empty")]
-            public async Task UpdateSendsOnlySuppliedFields(bool isAsync, string scenario)
+            public async Task UpdateIncludesLocationInGeneratedBody(bool isAsync, string scenario)
             {
-                var patch = new CloudAccountPatch();
+                var patch = new CloudAccountData(AzureLocation.EastUS);
                 string expectedBody;
                 switch (scenario)
                 {
                     case "tags":
                         patch.Tags.Add("environment", "test");
-                        expectedBody = "{\"tags\":{\"environment\":\"test\"}}";
+                        expectedBody = "{\"tags\":{\"environment\":\"test\"},\"location\":\"eastus\"}";
                         break;
                     case "identity":
                         patch.Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned);
-                        expectedBody = "{\"identity\":{\"type\":\"SystemAssigned\"}}";
+                        expectedBody = "{\"location\":\"eastus\",\"identity\":{\"type\":\"SystemAssigned\"}}";
                         break;
                     case "removeIdentity":
                         patch.Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.None);
-                        expectedBody = "{\"identity\":{\"type\":\"None\"}}";
+                        expectedBody = "{\"location\":\"eastus\",\"identity\":{\"type\":\"None\"}}";
                         break;
                     case "properties":
-                        patch.Properties = new CloudAccountPatchProperties
+                        patch.Properties = new CloudAccountProperties(
+                            new MarketplaceDetails(new CommvaultOfferDetails("test-publisher", "test-offer")),
+                            new CommvaultUserDetails())
                         {
                             Company = new CompanyProfile { CompanyName = "Test Company" }
                         };
-                        expectedBody = "{\"properties\":{\"company\":{\"companyName\":\"Test Company\"}}}";
+                        expectedBody = "{\"location\":\"eastus\",\"properties\":{\"marketplace\":{\"offerDetails\":{\"publisherId\":\"test-publisher\",\"offerId\":\"test-offer\"}},\"user\":{},\"company\":{\"companyName\":\"Test Company\"}}}";
                         break;
                     default:
-                        expectedBody = "{}";
+                        expectedBody = "{\"location\":\"eastus\"}";
                         break;
                 }
 

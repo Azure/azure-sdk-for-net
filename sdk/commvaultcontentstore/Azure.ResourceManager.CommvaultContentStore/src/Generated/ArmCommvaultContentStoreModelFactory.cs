@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="ssoUri"> SSO URL for the Commvault Cloud Account. </param>
         /// <param name="company"> Optional company details for the cloud account. </param>
-        /// <param name="roleAssignmentsOnCreate"> Role assignments to provision during CCA creation. Each entry maps a Commvault role to its assigned Entra principals. </param>
+        /// <param name="roleAssignmentsOnCcaCreate"> Role assignments to provision during CCA creation. Each entry maps a Commvault role to its assigned Entra principals. </param>
         /// <returns> A new <see cref="Models.CloudAccountProperties"/> instance for mocking. </returns>
-        public static CloudAccountProperties CloudAccountProperties(MarketplaceDetails marketplace = default, CommvaultUserDetails user = default, ResourceProvisioningState? provisioningState = default, string ssoUri = default, CompanyProfile company = default, IEnumerable<CommvaultRoleAssignment> roleAssignmentsOnCreate = default)
+        public static CloudAccountProperties CloudAccountProperties(MarketplaceDetails marketplace = default, CommvaultUserDetails user = default, ResourceProvisioningState? provisioningState = default, string ssoUri = default, CompanyProfile company = default, IEnumerable<CommvaultRoleAssignment> roleAssignmentsOnCcaCreate = default)
         {
-            roleAssignmentsOnCreate ??= new ChangeTrackingList<CommvaultRoleAssignment>();
+            roleAssignmentsOnCcaCreate ??= new ChangeTrackingList<CommvaultRoleAssignment>();
 
             return new CloudAccountProperties(
                 marketplace,
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 provisioningState,
                 ssoUri,
                 company,
-                (roleAssignmentsOnCreate ?? new ChangeTrackingList<CommvaultRoleAssignment>()).ToList(),
+                (roleAssignmentsOnCcaCreate ?? new ChangeTrackingList<CommvaultRoleAssignment>()).ToList(),
                 default);
         }
 
@@ -160,28 +160,6 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             return new CommvaultEntityInfo(id, displayName, entityType, default);
         }
 
-        /// <summary> The type used for update operations of the CloudAccount. </summary>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.CloudAccountPatch"/> instance for mocking. </returns>
-        public static CloudAccountPatch CloudAccountPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, CloudAccountPatchProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CloudAccountPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
-        }
-
-        /// <summary> The updatable properties of the CloudAccount. </summary>
-        /// <param name="marketplace"> Marketplace details of the resource. </param>
-        /// <param name="user"> Details of the user. </param>
-        /// <param name="company"> Optional company details for the cloud account. </param>
-        /// <returns> A new <see cref="Models.CloudAccountPatchProperties"/> instance for mocking. </returns>
-        public static CloudAccountPatchProperties CloudAccountPatchProperties(MarketplaceDetails marketplace = default, CommvaultUserDetails user = default, CompanyProfile company = default)
-        {
-            return new CloudAccountPatchProperties(marketplace, user, company, default);
-        }
-
         /// <summary> SaaS-related data properties. </summary>
         /// <param name="saaSResourceId"> SaaS resource id. </param>
         /// <returns> A new <see cref="Models.CommvaultSaaSDetails"/> instance for mocking. </returns>
@@ -202,21 +180,21 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <summary> SaaS guid for Activate and Validate SaaS Resource. </summary>
         /// <param name="saasGuid"> SaaS guid for Activate and Validate SaaS Resource. </param>
         /// <param name="publisherId"> Optional publisher identifier. </param>
-        /// <param name="activationDetails"> Optional activation request parameters containing user and company details. </param>
+        /// <param name="activateSaaSRequestParam"> Optional activation request parameters containing user and company details. </param>
         /// <returns> A new <see cref="Models.ActivateSaaSParameterContent"/> instance for mocking. </returns>
-        public static ActivateSaaSParameterContent ActivateSaaSParameterContent(Guid saasGuid = default, string publisherId = default, SaaSActivationDetails activationDetails = default)
+        public static ActivateSaaSParameterContent ActivateSaaSParameterContent(string saasGuid = default, string publisherId = default, ActivateSaaSRequestParam activateSaaSRequestParam = default)
         {
-            return new ActivateSaaSParameterContent(saasGuid, publisherId, activationDetails, default);
+            return new ActivateSaaSParameterContent(saasGuid, publisherId, activateSaaSRequestParam, default);
         }
 
         /// <summary> Optional activate SaaS request parameters. </summary>
         /// <param name="saasResourceId"> Optional Marketplace SaaS resource identifier. </param>
         /// <param name="user"> Optional user details. </param>
         /// <param name="company"> Optional company details. </param>
-        /// <returns> A new <see cref="Models.SaaSActivationDetails"/> instance for mocking. </returns>
-        public static SaaSActivationDetails SaaSActivationDetails(ResourceIdentifier saasResourceId = default, CommvaultUserDetails user = default, CompanyProfile company = default)
+        /// <returns> A new <see cref="Models.ActivateSaaSRequestParam"/> instance for mocking. </returns>
+        public static ActivateSaaSRequestParam ActivateSaaSRequestParam(string saasResourceId = default, CommvaultUserDetails user = default, CompanyProfile company = default)
         {
-            return new SaaSActivationDetails(saasResourceId, user, company, default);
+            return new ActivateSaaSRequestParam(saasResourceId, user, company, default);
         }
 
         /// <summary> Marketplace SaaS resource details. </summary>
@@ -402,11 +380,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="resources"> The resources to be protected under Protection Group. </param>
         /// <param name="protectionStatus"> The protection group schedule. </param>
         /// <param name="numberOfProtectedItems"> The number of ProtectedItems under the Protection Group. </param>
-        /// <param name="lastBackupTime"> The Commvault Protection Group backup time. </param>
+        /// <param name="lastBackUpTime"> The Commvault Protection Group backup time. </param>
         /// <param name="backupActivityStatus"> The backup activity status indicating if backup is enabled or not on the protection group. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.ProtectionGroupProperties"/> instance for mocking. </returns>
-        public static ProtectionGroupProperties ProtectionGroupProperties(string plan = default, ProtectionGroupResources resources = default, CommvaultProtectionStatus protectionStatus = default, int numberOfProtectedItems = default, long lastBackupTime = default, string backupActivityStatus = default, ResourceProvisioningState? provisioningState = default)
+        public static ProtectionGroupProperties ProtectionGroupProperties(string plan = default, ProtectionGroupResources resources = default, CommvaultProtectionStatus protectionStatus = default, int numberOfProtectedItems = default, long lastBackUpTime = default, string backupActivityStatus = default, ResourceProvisioningState? provisioningState = default)
         {
             return new ProtectionGroupProperties(
                 default,
@@ -414,7 +392,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 resources,
                 protectionStatus,
                 numberOfProtectedItems,
-                lastBackupTime,
+                lastBackUpTime,
                 backupActivityStatus,
                 provisioningState,
                 default);
@@ -591,16 +569,16 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <summary> The properties of Commvault Protected Item. </summary>
         /// <param name="resourceName"> The Name of the commvault protected item. </param>
-        /// <param name="lastBackupTime"> The Commvault Protected Item backup time. </param>
+        /// <param name="lastBackUpTime"> The Commvault Protected Item backup time. </param>
         /// <param name="resourceGroup"> The resource group of the protected item. </param>
         /// <param name="location"> The location of the protected item. </param>
         /// <param name="vmGuid"> The GUID of VM. </param>
         /// <returns> A new <see cref="Models.ProtectedItemProperties"/> instance for mocking. </returns>
-        public static ProtectedItemProperties ProtectedItemProperties(string resourceName = default, long lastBackupTime = default, string resourceGroup = default, AzureLocation location = default, string vmGuid = default)
+        public static ProtectedItemProperties ProtectedItemProperties(string resourceName = default, long lastBackUpTime = default, string resourceGroup = default, AzureLocation location = default, string vmGuid = default)
         {
             return new ProtectedItemProperties(
                 resourceName,
-                lastBackupTime,
+                lastBackUpTime,
                 resourceGroup,
                 location,
                 vmGuid,

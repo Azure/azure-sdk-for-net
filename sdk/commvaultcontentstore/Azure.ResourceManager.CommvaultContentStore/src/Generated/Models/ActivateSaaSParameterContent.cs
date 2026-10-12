@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CommvaultContentStore;
 
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
@@ -18,31 +19,34 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <summary> Initializes a new instance of <see cref="ActivateSaaSParameterContent"/>. </summary>
         /// <param name="saasGuid"> SaaS guid for Activate and Validate SaaS Resource. </param>
-        public ActivateSaaSParameterContent(Guid saasGuid)
+        /// <exception cref="ArgumentNullException"> <paramref name="saasGuid"/> is null. </exception>
+        public ActivateSaaSParameterContent(string saasGuid)
         {
+            Argument.AssertNotNull(saasGuid, nameof(saasGuid));
+
             SaasGuid = saasGuid;
         }
 
         /// <summary> Initializes a new instance of <see cref="ActivateSaaSParameterContent"/>. </summary>
         /// <param name="saasGuid"> SaaS guid for Activate and Validate SaaS Resource. </param>
         /// <param name="publisherId"> Optional publisher identifier. </param>
-        /// <param name="activationDetails"> Optional activation request parameters containing user and company details. </param>
+        /// <param name="activateSaaSRequestParam"> Optional activation request parameters containing user and company details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActivateSaaSParameterContent(Guid saasGuid, string publisherId, SaaSActivationDetails activationDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ActivateSaaSParameterContent(string saasGuid, string publisherId, ActivateSaaSRequestParam activateSaaSRequestParam, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SaasGuid = saasGuid;
             PublisherId = publisherId;
-            ActivationDetails = activationDetails;
+            ActivateSaaSRequestParam = activateSaaSRequestParam;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> SaaS guid for Activate and Validate SaaS Resource. </summary>
-        public Guid SaasGuid { get; }
+        public string SaasGuid { get; }
 
         /// <summary> Optional publisher identifier. </summary>
         public string PublisherId { get; set; }
 
         /// <summary> Optional activation request parameters containing user and company details. </summary>
-        public SaaSActivationDetails ActivationDetails { get; set; }
+        public ActivateSaaSRequestParam ActivateSaaSRequestParam { get; set; }
     }
 }

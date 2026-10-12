@@ -16,13 +16,12 @@ namespace Azure.ResourceManager.CommvaultContentStore
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ActivateSaaSParameterContent))]
+    [ModelReaderWriterBuildable(typeof(ActivateSaaSRequestParam))]
     [ModelReaderWriterBuildable(typeof(BackupConfig))]
     [ModelReaderWriterBuildable(typeof(BackupProtectionGroupContent))]
     [ModelReaderWriterBuildable(typeof(BackupProtectionGroupResult))]
     [ModelReaderWriterBuildable(typeof(CloudAccountData))]
     [ModelReaderWriterBuildable(typeof(CloudAccountListResult))]
-    [ModelReaderWriterBuildable(typeof(CloudAccountPatch))]
-    [ModelReaderWriterBuildable(typeof(CloudAccountPatchProperties))]
     [ModelReaderWriterBuildable(typeof(CloudAccountProperties))]
     [ModelReaderWriterBuildable(typeof(CloudAccountResource))]
     [ModelReaderWriterBuildable(typeof(CommvaultBackupSchedule))]
@@ -64,7 +63,6 @@ namespace Azure.ResourceManager.CommvaultContentStore
     [ModelReaderWriterBuildable(typeof(RoleMappingData))]
     [ModelReaderWriterBuildable(typeof(RoleMappingProperties))]
     [ModelReaderWriterBuildable(typeof(RoleMappingResource))]
-    [ModelReaderWriterBuildable(typeof(SaaSActivationDetails))]
     [ModelReaderWriterBuildable(typeof(SaaSResourceDetailsData))]
     [ModelReaderWriterBuildable(typeof(StopBackupProtectionGroupContent))]
     [ModelReaderWriterBuildable(typeof(StorageListResult))]

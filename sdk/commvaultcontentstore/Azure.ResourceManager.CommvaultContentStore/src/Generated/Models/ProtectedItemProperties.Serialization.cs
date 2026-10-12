@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("lastBackUpTime"u8);
-                writer.WriteNumberValue(LastBackupTime);
+                writer.WriteNumberValue(LastBackUpTime);
             }
             if (options.Format != "W")
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 return null;
             }
             string resourceName = default;
-            long lastBackupTime = default;
+            long lastBackUpTime = default;
             string resourceGroup = default;
             AzureLocation location = default;
             string vmGuid = default;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 }
                 if (prop.NameEquals("lastBackUpTime"u8))
                 {
-                    lastBackupTime = prop.Value.GetInt64();
+                    lastBackUpTime = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("resourceGroup"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             }
             return new ProtectedItemProperties(
                 resourceName,
-                lastBackupTime,
+                lastBackUpTime,
                 resourceGroup,
                 location,
                 vmGuid,

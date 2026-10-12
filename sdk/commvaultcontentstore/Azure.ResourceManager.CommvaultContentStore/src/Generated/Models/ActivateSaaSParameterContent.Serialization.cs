@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
             }
-            if (Optional.IsDefined(ActivationDetails))
+            if (Optional.IsDefined(ActivateSaaSRequestParam))
             {
                 writer.WritePropertyName("activateSaaSRequestParam"u8);
-                writer.WriteObjectValue(ActivationDetails, options);
+                writer.WriteObjectValue(ActivateSaaSRequestParam, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -144,15 +144,15 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 return null;
             }
-            Guid saasGuid = default;
+            string saasGuid = default;
             string publisherId = default;
-            SaaSActivationDetails activationDetails = default;
+            ActivateSaaSRequestParam activateSaaSRequestParam = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("saasGuid"u8))
                 {
-                    saasGuid = new Guid(prop.Value.GetString());
+                    saasGuid = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("publisherId"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    activationDetails = SaaSActivationDetails.DeserializeSaaSActivationDetails(prop.Value, options);
+                    activateSaaSRequestParam = ActivateSaaSRequestParam.DeserializeActivateSaaSRequestParam(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ActivateSaaSParameterContent(saasGuid, publisherId, activationDetails, additionalBinaryDataProperties);
+            return new ActivateSaaSParameterContent(saasGuid, publisherId, activateSaaSRequestParam, additionalBinaryDataProperties);
         }
     }
 }
