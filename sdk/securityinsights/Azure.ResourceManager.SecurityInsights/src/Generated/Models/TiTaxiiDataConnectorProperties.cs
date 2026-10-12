@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Threat Intelligence TAXII data connector properties. </summary>
     internal partial class TiTaxiiDataConnectorProperties : DataConnectorTenantId
     {
+        private DateTimeOffset? _taxiiLookbackOn;
+        internal bool _taxiiLookbackOnIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="TiTaxiiDataConnectorProperties"/>. </summary>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <param name="pollingFrequency"> The polling frequency for the TAXII server. </param>
@@ -45,7 +48,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             CollectionId = collectionId;
             UserName = userName;
             Password = password;
-            TaxiiLookbackOn = taxiiLookbackOn;
+            _taxiiLookbackOn = taxiiLookbackOn;
             PollingFrequency = pollingFrequency;
             DataTypes = dataTypes;
         }
@@ -76,7 +79,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The lookback period for the TAXII server. </summary>
         [WirePath("taxiiLookbackPeriod")]
-        public DateTimeOffset? TaxiiLookbackOn { get; set; }
+        public DateTimeOffset? TaxiiLookbackOn
+        {
+            get
+            {
+                return _taxiiLookbackOn;
+            }
+            set
+            {
+                _taxiiLookbackOn = value;
+                _taxiiLookbackOnIsDefined = true;
+            }
+        }
 
         /// <summary> The polling frequency for the TAXII server. </summary>
         [WirePath("pollingFrequency")]

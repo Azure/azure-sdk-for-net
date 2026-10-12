@@ -10,63 +10,63 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.ResourceManager.SecurityCenter;
+using Azure.ResourceManager.SecurityInsights;
 
-namespace Azure.ResourceManager.SecurityCenter.Models
+namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> List of RP resources which supports pagination. </summary>
-    internal partial class GitLabProjectListResponse : IJsonModel<GitLabProjectListResponse>
+    /// <summary> The Get Insights result operation response. </summary>
+    internal partial class EntityGetInsightsResult : IJsonModel<EntityGetInsightsResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GitLabProjectListResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EntityGetInsightsResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GitLabProjectListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EntityGetInsightsResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGitLabProjectListResponse(document.RootElement, options);
+                        return DeserializeEntityGetInsightsResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GitLabProjectListResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EntityGetInsightsResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GitLabProjectListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EntityGetInsightsResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GitLabProjectListResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EntityGetInsightsResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GitLabProjectListResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EntityGetInsightsResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GitLabProjectListResponse IPersistableModel<GitLabProjectListResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EntityGetInsightsResult IPersistableModel<EntityGetInsightsResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GitLabProjectListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EntityGetInsightsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GitLabProjectListResponse"/> from. </param>
-        internal static GitLabProjectListResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EntityGetInsightsResult"/> from. </param>
+        internal static EntityGetInsightsResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeGitLabProjectListResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeEntityGetInsightsResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GitLabProjectListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EntityGetInsightsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,25 +77,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GitLabProjectListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EntityGetInsightsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GitLabProjectListResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EntityGetInsightsResult)} does not support writing '{format}' format.");
+            }
+            if (Optional.IsDefined(MetaData))
+            {
+                writer.WritePropertyName("metaData"u8);
+                writer.WriteObjectValue(MetaData, options);
             }
             if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (GitLabProjectData item in Value)
+                foreach (EntityInsightItem item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(NextLink))
-            {
-                writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -116,55 +116,55 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GitLabProjectListResponse IJsonModel<GitLabProjectListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EntityGetInsightsResult IJsonModel<EntityGetInsightsResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GitLabProjectListResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EntityGetInsightsResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GitLabProjectListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EntityGetInsightsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GitLabProjectListResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EntityGetInsightsResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGitLabProjectListResponse(document.RootElement, options);
+            return DeserializeEntityGetInsightsResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GitLabProjectListResponse DeserializeGitLabProjectListResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static EntityGetInsightsResult DeserializeEntityGetInsightsResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<GitLabProjectData> value = default;
-            Uri nextLink = default;
+            GetInsightsResultsMetadata metaData = default;
+            IList<EntityInsightItem> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("metaData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    metaData = GetInsightsResultsMetadata.DeserializeGetInsightsResultsMetadata(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("value"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<GitLabProjectData> array = new List<GitLabProjectData>();
+                    List<EntityInsightItem> array = new List<EntityInsightItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(GitLabProjectData.DeserializeGitLabProjectData(item, options));
+                        array.Add(EntityInsightItem.DeserializeEntityInsightItem(item, options));
                     }
                     value = array;
-                    continue;
-                }
-                if (prop.NameEquals("nextLink"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GitLabProjectListResponse(value ?? new ChangeTrackingList<GitLabProjectData>(), nextLink, additionalBinaryDataProperties);
+            return new EntityGetInsightsResult(metaData, value ?? new ChangeTrackingList<EntityInsightItem>(), additionalBinaryDataProperties);
         }
     }
 }

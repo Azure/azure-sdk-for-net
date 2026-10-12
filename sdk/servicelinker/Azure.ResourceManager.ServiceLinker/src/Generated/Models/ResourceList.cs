@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private Uri _nextLink;
+        internal bool _nextLinkIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ResourceList"/>. </summary>
         internal ResourceList()
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         internal ResourceList(IList<LinkerResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
-            NextLink = nextLink;
+            _nextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -38,6 +40,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public IList<LinkerResourceData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        public Uri NextLink
+        {
+            get
+            {
+                return _nextLink;
+            }
+        }
     }
 }
