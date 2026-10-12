@@ -6,6 +6,7 @@
 - Expanded Agent Optimization with cost estimation, a dedicated candidate-listing client, and new models for optimization configuration, evaluation sets, candidate mutations, results, token usage, and latency metrics.
 - Added toolbox support for browser automation tool, and added external web access configuration for web-search toolbox tools.
 - Added language and keyword metadata to voice telephony call records.
+- Added support for starting an agent's initiated process from a memory snapshot.
 
 ### Breaking Changes
 - Redesigned the Agent Optimization API and model hierarchy. Job creation now uses optimization model and configuration objects, job listings return `AgentOptimizationJob`, and the previous dataset input, job input, options, progress, and list-item models were removed.
