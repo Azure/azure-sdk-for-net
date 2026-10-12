@@ -36,18 +36,18 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="resources"> The resources to be protected under Protection Group. </param>
         /// <param name="protectionStatus"> The protection group schedule. </param>
         /// <param name="numberOfProtectedItems"> The number of ProtectedItems under the Protection Group. </param>
-        /// <param name="lastBackUpTime"> The Commvault Protection Group backup time. </param>
+        /// <param name="lastBackupTime"> The Commvault Protection Group backup time. </param>
         /// <param name="backupActivityStatus"> The backup activity status indicating if backup is enabled or not on the protection group. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProtectionGroupProperties(string dataSourceType, string plan, ProtectionGroupResources resources, CommvaultProtectionStatus protectionStatus, int numberOfProtectedItems, long lastBackUpTime, string backupActivityStatus, ResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProtectionGroupProperties(string dataSourceType, string plan, ProtectionGroupResources resources, CommvaultProtectionStatus protectionStatus, int numberOfProtectedItems, long lastBackupTime, string backupActivityStatus, ResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DataSourceType = dataSourceType;
             Plan = plan;
             Resources = resources;
             ProtectionStatus = protectionStatus;
             NumberOfProtectedItems = numberOfProtectedItems;
-            LastBackUpTime = lastBackUpTime;
+            LastBackupTime = lastBackupTime;
             BackupActivityStatus = backupActivityStatus;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public int NumberOfProtectedItems { get; }
 
         /// <summary> The Commvault Protection Group backup time. </summary>
-        public long LastBackUpTime { get; }
+        public long LastBackupTime { get; }
 
         /// <summary> The backup activity status indicating if backup is enabled or not on the protection group. </summary>
         public string BackupActivityStatus { get; }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
             Marketplace = marketplace;
             User = user;
-            RoleAssignmentsOnCcaCreate = new ChangeTrackingList<CommvaultRoleAssignment>();
+            RoleAssignmentsOnCreate = new ChangeTrackingList<CommvaultRoleAssignment>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudAccountProperties"/>. </summary>
@@ -37,16 +37,16 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="ssoUri"> SSO URL for the Commvault Cloud Account. </param>
         /// <param name="company"> Optional company details for the cloud account. </param>
-        /// <param name="roleAssignmentsOnCcaCreate"> Role assignments to provision during CCA creation. Each entry maps a Commvault role to its assigned Entra principals. </param>
+        /// <param name="roleAssignmentsOnCreate"> Role assignments to provision during CCA creation. Each entry maps a Commvault role to its assigned Entra principals. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CloudAccountProperties(MarketplaceDetails marketplace, CommvaultUserDetails user, ResourceProvisioningState? provisioningState, string ssoUri, CompanyProfile company, IList<CommvaultRoleAssignment> roleAssignmentsOnCcaCreate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CloudAccountProperties(MarketplaceDetails marketplace, CommvaultUserDetails user, ResourceProvisioningState? provisioningState, string ssoUri, CompanyProfile company, IList<CommvaultRoleAssignment> roleAssignmentsOnCreate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Marketplace = marketplace;
             User = user;
             ProvisioningState = provisioningState;
             SsoUri = ssoUri;
             Company = company;
-            RoleAssignmentsOnCcaCreate = roleAssignmentsOnCcaCreate;
+            RoleAssignmentsOnCreate = roleAssignmentsOnCreate;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -66,6 +66,6 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public CompanyProfile Company { get; set; }
 
         /// <summary> Role assignments to provision during CCA creation. Each entry maps a Commvault role to its assigned Entra principals. </summary>
-        public IList<CommvaultRoleAssignment> RoleAssignmentsOnCcaCreate { get; }
+        public IList<CommvaultRoleAssignment> RoleAssignmentsOnCreate { get; }
     }
 }

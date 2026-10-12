@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("lastBackUpTime"u8);
-                writer.WriteNumberValue(LastBackUpTime);
+                writer.WriteNumberValue(LastBackupTime);
             }
             if (options.Format != "W" && Optional.IsDefined(BackupActivityStatus))
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             ProtectionGroupResources resources = default;
             CommvaultProtectionStatus protectionStatus = default;
             int numberOfProtectedItems = default;
-            long lastBackUpTime = default;
+            long lastBackupTime = default;
             string backupActivityStatus = default;
             ResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 }
                 if (prop.NameEquals("lastBackUpTime"u8))
                 {
-                    lastBackUpTime = prop.Value.GetInt64();
+                    lastBackupTime = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("backupActivityStatus"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 resources,
                 protectionStatus,
                 numberOfProtectedItems,
-                lastBackUpTime,
+                lastBackupTime,
                 backupActivityStatus,
                 provisioningState,
                 additionalBinaryDataProperties);
