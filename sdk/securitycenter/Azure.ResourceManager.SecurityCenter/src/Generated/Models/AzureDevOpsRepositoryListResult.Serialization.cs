@@ -15,58 +15,58 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> List of RP resources which supports pagination. </summary>
-    internal partial class AzureDevOpsRepositoryListResponse : IJsonModel<AzureDevOpsRepositoryListResponse>
+    internal partial class AzureDevOpsRepositoryListResult : IJsonModel<AzureDevOpsRepositoryListResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AzureDevOpsRepositoryListResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AzureDevOpsRepositoryListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsRepositoryListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsRepositoryListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAzureDevOpsRepositoryListResponse(document.RootElement, options);
+                        return DeserializeAzureDevOpsRepositoryListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureDevOpsRepositoryListResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureDevOpsRepositoryListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsRepositoryListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsRepositoryListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AzureDevOpsRepositoryListResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureDevOpsRepositoryListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureDevOpsRepositoryListResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AzureDevOpsRepositoryListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureDevOpsRepositoryListResponse IPersistableModel<AzureDevOpsRepositoryListResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AzureDevOpsRepositoryListResult IPersistableModel<AzureDevOpsRepositoryListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureDevOpsRepositoryListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AzureDevOpsRepositoryListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AzureDevOpsRepositoryListResponse"/> from. </param>
-        internal static AzureDevOpsRepositoryListResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AzureDevOpsRepositoryListResult"/> from. </param>
+        internal static AzureDevOpsRepositoryListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAzureDevOpsRepositoryListResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeAzureDevOpsRepositoryListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AzureDevOpsRepositoryListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AzureDevOpsRepositoryListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsRepositoryListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsRepositoryListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureDevOpsRepositoryListResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureDevOpsRepositoryListResult)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(Value))
             {
@@ -116,24 +116,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureDevOpsRepositoryListResponse IJsonModel<AzureDevOpsRepositoryListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AzureDevOpsRepositoryListResult IJsonModel<AzureDevOpsRepositoryListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AzureDevOpsRepositoryListResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AzureDevOpsRepositoryListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsRepositoryListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsRepositoryListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureDevOpsRepositoryListResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureDevOpsRepositoryListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureDevOpsRepositoryListResponse(document.RootElement, options);
+            return DeserializeAzureDevOpsRepositoryListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AzureDevOpsRepositoryListResponse DeserializeAzureDevOpsRepositoryListResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static AzureDevOpsRepositoryListResult DeserializeAzureDevOpsRepositoryListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AzureDevOpsRepositoryListResponse(value ?? new ChangeTrackingList<AzureDevOpsRepositoryData>(), nextLink, additionalBinaryDataProperties);
+            return new AzureDevOpsRepositoryListResult(value ?? new ChangeTrackingList<AzureDevOpsRepositoryData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

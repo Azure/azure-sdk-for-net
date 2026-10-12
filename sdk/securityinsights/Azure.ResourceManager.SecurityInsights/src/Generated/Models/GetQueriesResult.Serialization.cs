@@ -14,59 +14,59 @@ using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The entity timeline result operation response. </summary>
-    internal partial class EntityTimelineResponse : IJsonModel<EntityTimelineResponse>
+    /// <summary> Retrieve queries for entity result operation response. </summary>
+    internal partial class GetQueriesResult : IJsonModel<GetQueriesResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EntityTimelineResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual GetQueriesResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntityTimelineResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetQueriesResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEntityTimelineResponse(document.RootElement, options);
+                        return DeserializeGetQueriesResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EntityTimelineResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetQueriesResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntityTimelineResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetQueriesResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EntityTimelineResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetQueriesResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EntityTimelineResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<GetQueriesResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EntityTimelineResponse IPersistableModel<EntityTimelineResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        GetQueriesResult IPersistableModel<GetQueriesResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EntityTimelineResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GetQueriesResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EntityTimelineResponse"/> from. </param>
-        internal static EntityTimelineResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GetQueriesResult"/> from. </param>
+        internal static GetQueriesResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeEntityTimelineResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeGetQueriesResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EntityTimelineResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GetQueriesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,25 +77,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntityTimelineResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetQueriesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EntityTimelineResponse)} does not support writing '{format}' format.");
-            }
-            if (Optional.IsDefined(MetaData))
-            {
-                writer.WritePropertyName("metaData"u8);
-                writer.WriteObjectValue(MetaData, options);
+                throw new FormatException($"The model {nameof(GetQueriesResult)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (EntityTimelineItem item in Value)
+                foreach (EntityQueryItem item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -116,55 +116,51 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EntityTimelineResponse IJsonModel<EntityTimelineResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        GetQueriesResult IJsonModel<GetQueriesResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EntityTimelineResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual GetQueriesResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntityTimelineResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetQueriesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EntityTimelineResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GetQueriesResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEntityTimelineResponse(document.RootElement, options);
+            return DeserializeGetQueriesResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static EntityTimelineResponse DeserializeEntityTimelineResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static GetQueriesResult DeserializeGetQueriesResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            TimelineResultsMetadata metaData = default;
-            IList<EntityTimelineItem> value = default;
+            IList<EntityQueryItem> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("metaData"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    metaData = TimelineResultsMetadata.DeserializeTimelineResultsMetadata(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("value"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<EntityTimelineItem> array = new List<EntityTimelineItem>();
+                    List<EntityQueryItem> array = new List<EntityQueryItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(EntityTimelineItem.DeserializeEntityTimelineItem(item, options));
+                        array.Add(EntityQueryItem.DeserializeEntityQueryItem(item, options));
                     }
                     value = array;
+                    continue;
+                }
+                if (prop.NameEquals("nextLink"u8))
+                {
+                    nextLink = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -172,7 +168,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EntityTimelineResponse(metaData, value ?? new ChangeTrackingList<EntityTimelineItem>(), additionalBinaryDataProperties);
+            return new GetQueriesResult(value ?? new ChangeTrackingList<EntityQueryItem>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
