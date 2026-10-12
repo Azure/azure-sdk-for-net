@@ -87,7 +87,7 @@ namespace Azure.AI.Projects.Agents
                 writer.WriteStringValue(item.AbsoluteUri);
             }
             writer.WriteEndArray();
-            if (_usernameIsDefined || Optional.IsDefined(Username))
+            if (Optional.IsDefined(Username, _usernameIsDefined))
             {
                 if (Username != null)
                 {
@@ -99,7 +99,7 @@ namespace Azure.AI.Projects.Agents
                     writer.WriteNull("username"u8);
                 }
             }
-            if (_credentialIsDefined || Optional.IsDefined(Credential))
+            if (Optional.IsDefined(Credential, _credentialIsDefined))
             {
                 if (Credential != null)
                 {
