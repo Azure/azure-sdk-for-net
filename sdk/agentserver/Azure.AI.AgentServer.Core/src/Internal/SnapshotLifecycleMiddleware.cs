@@ -10,7 +10,9 @@ internal sealed class SnapshotLifecycleMiddleware : IMiddleware
 {
     private const string SessionIdEnvironmentVariable = "FOUNDRY_AGENT_SESSION_ID";
     private const string BeforeSnapshotPath = "/_agent/before-snapshot";
+    private const string BeforeSnapshotAliasPath = "/_before_snapshot";
     private const string AfterRestorePath = "/_agent/after-restore";
+    private const string AfterRestoreAliasPath = "/_after_restore";
     private const string SuccessResponse = """{"status":"ok"}""";
     private const string InvalidRequestResponse =
         """{"error":{"code":"invalid_request","message":"Invalid lifecycle request."}}""";
@@ -36,13 +38,15 @@ internal sealed class SnapshotLifecycleMiddleware : IMiddleware
             return;
         }
 
-        if (context.Request.Path.Equals(BeforeSnapshotPath))
+        if (context.Request.Path.Equals(BeforeSnapshotPath)
+            || context.Request.Path.Equals(BeforeSnapshotAliasPath))
         {
             await HandleBeforeSnapshotAsync(context).ConfigureAwait(false);
             return;
         }
 
-        if (context.Request.Path.Equals(AfterRestorePath))
+        if (context.Request.Path.Equals(AfterRestorePath)
+            || context.Request.Path.Equals(AfterRestoreAliasPath))
         {
             await HandleAfterRestoreAsync(context).ConfigureAwait(false);
             return;

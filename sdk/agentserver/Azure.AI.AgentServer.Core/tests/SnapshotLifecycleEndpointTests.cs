@@ -68,6 +68,50 @@ public class SnapshotLifecycleEndpointTests
     }
 
     [Test]
+    public async Task AliasRoutes_InvokeLifecycleHooks()
+    {
+        var beforeSnapshotCount = 0;
+        AgentRestoreContext? observedRestoreContext = null;
+        var lifecycle = new TestSnapshotLifecycle
+        {
+            BeforeSnapshot = _ =>
+            {
+                beforeSnapshotCount++;
+                return Task.CompletedTask;
+            },
+            AfterRestore = (context, _) =>
+            {
+                observedRestoreContext = context;
+                return Task.CompletedTask;
+            },
+        };
+
+        await using var app = await StartAppAsync(lifecycle);
+        using var client = app.GetTestClient();
+
+        using var beforeResponse = await PostJsonAsync(client, "/_before_snapshot", "{}");
+        using var afterResponse = await PostJsonAsync(
+            client,
+            "/_after_restore",
+            """
+            {
+              "session_context": {
+                "session_id": "session-alias",
+                "restore_id": "restore-alias"
+              }
+            }
+            """);
+
+        Assert.That(beforeResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(await beforeResponse.Content.ReadAsStringAsync(), Is.EqualTo("""{"status":"ok"}"""));
+        Assert.That(afterResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(await afterResponse.Content.ReadAsStringAsync(), Is.EqualTo("""{"status":"ok"}"""));
+        Assert.That(beforeSnapshotCount, Is.EqualTo(1));
+        Assert.That(observedRestoreContext?.SessionId, Is.EqualTo("session-alias"));
+        Assert.That(observedRestoreContext?.RestoreId, Is.EqualTo("restore-alias"));
+    }
+
+    [Test]
     public async Task Hooks_IgnoreUnknownRequestFields()
     {
         await using var app = await StartAppAsync();

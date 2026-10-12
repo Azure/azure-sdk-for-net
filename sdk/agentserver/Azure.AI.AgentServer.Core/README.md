@@ -178,7 +178,7 @@ app.Run();
 
 ### Snapshot lifecycle
 
-Core always registers the private platform endpoints `POST /_agent/before-snapshot` and `POST /_agent/after-restore`. They are no-ops by default. Implement `IAgentSnapshotLifecycle` when your process owns connections, streams, or other in-memory state that must be released before capture and rebuilt after restoration:
+Core always registers the private platform endpoints `POST /_agent/before-snapshot` and `POST /_agent/after-restore`, with `POST /_before_snapshot` and `POST /_after_restore` as aliases. They are no-ops by default. Implement `IAgentSnapshotLifecycle` when your process owns connections, streams, or other in-memory state that must be released before capture and rebuilt after restoration:
 
 ```C# Snippet:Core_ReadMe_SnapshotLifecycle
 public sealed class DatabaseSnapshotLifecycle : IAgentSnapshotLifecycle
