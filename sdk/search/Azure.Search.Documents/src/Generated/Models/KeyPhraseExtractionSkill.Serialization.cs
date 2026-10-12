@@ -85,7 +85,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("defaultLanguageCode"u8);
                 writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
             }
-            if (_maxKeyPhraseCountIsDefined || Optional.IsDefined(MaxKeyPhraseCount))
+            if (Optional.IsDefined(MaxKeyPhraseCount, _maxKeyPhraseCountIsDefined))
             {
                 if (MaxKeyPhraseCount != null)
                 {
@@ -97,7 +97,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maxKeyPhraseCount"u8);
                 }
             }
-            if (_modelVersionIsDefined || Optional.IsDefined(ModelVersion))
+            if (Optional.IsDefined(ModelVersion, _modelVersionIsDefined))
             {
                 if (ModelVersion != null)
                 {
