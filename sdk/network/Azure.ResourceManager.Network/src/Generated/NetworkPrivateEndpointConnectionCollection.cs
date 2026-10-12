@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkPrivateEndpointConnectionData, NetworkPrivateEndpointConnectionResource>(new PrivateLinkServicesGetPrivateEndpointConnectionsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkPrivateEndpointConnectionData, NetworkPrivateEndpointConnectionResource>(new NetworkPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateLinkServicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkPrivateEndpointConnectionData, NetworkPrivateEndpointConnectionResource>(new PrivateLinkServicesGetPrivateEndpointConnectionsCollectionResultOfT(
+            return new PageableWrapper<NetworkPrivateEndpointConnectionData, NetworkPrivateEndpointConnectionResource>(new NetworkPrivateEndpointConnectionDataCollectionResultOfT(
                 _privateLinkServicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

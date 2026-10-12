@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProfileData, ProfileResource>(new ProfilesGetByResourceGroupAsyncCollectionResultOfT(_profilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ProfileCollection.GetAll"), data => new ProfileResource(Client, data));
+            return new AsyncPageableWrapper<ProfileData, ProfileResource>(new ProfileDataAsyncCollectionResultOfT(_profilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ProfileCollection.GetAll"), data => new ProfileResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProfileData, ProfileResource>(new ProfilesGetByResourceGroupCollectionResultOfT(_profilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ProfileCollection.GetAll"), data => new ProfileResource(Client, data));
+            return new PageableWrapper<ProfileData, ProfileResource>(new ProfileDataCollectionResultOfT(_profilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ProfileCollection.GetAll"), data => new ProfileResource(Client, data));
         }
 
         /// <summary>

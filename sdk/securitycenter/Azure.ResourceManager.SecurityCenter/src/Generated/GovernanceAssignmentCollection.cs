@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GovernanceAssignmentData, GovernanceAssignmentResource>(new GovernanceAssignmentsGetAllAsyncCollectionResultOfT(_governanceAssignmentsRestClient, Id.Parent.ToString(), Id.Name, context, "GovernanceAssignmentCollection.GetAll"), data => new GovernanceAssignmentResource(Client, data));
+            return new AsyncPageableWrapper<GovernanceAssignmentData, GovernanceAssignmentResource>(new GovernanceAssignmentDataAsyncCollectionResultOfT(_governanceAssignmentsRestClient, Id.Parent.ToString(), Id.Name, context, "GovernanceAssignmentCollection.GetAll"), data => new GovernanceAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GovernanceAssignmentData, GovernanceAssignmentResource>(new GovernanceAssignmentsGetAllCollectionResultOfT(_governanceAssignmentsRestClient, Id.Parent.ToString(), Id.Name, context, "GovernanceAssignmentCollection.GetAll"), data => new GovernanceAssignmentResource(Client, data));
+            return new PageableWrapper<GovernanceAssignmentData, GovernanceAssignmentResource>(new GovernanceAssignmentDataCollectionResultOfT(_governanceAssignmentsRestClient, Id.Parent.ToString(), Id.Name, context, "GovernanceAssignmentCollection.GetAll"), data => new GovernanceAssignmentResource(Client, data));
         }
 
         /// <summary>

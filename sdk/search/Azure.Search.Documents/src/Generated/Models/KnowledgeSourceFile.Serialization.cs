@@ -107,10 +107,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("lastUpdatedAt"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
+            if (options.Format != "W" && (_errorMessageIsDefined || Optional.IsDefined(ErrorMessage)))
             {
-                writer.WritePropertyName("errorMessage"u8);
-                writer.WriteStringValue(ErrorMessage);
+                if (ErrorMessage != null)
+                {
+                    writer.WritePropertyName("errorMessage"u8);
+                    writer.WriteStringValue(ErrorMessage);
+                }
+                else
+                {
+                    writer.WriteNull("errorMessage"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(Prefix))
             {
@@ -190,6 +197,7 @@ namespace Azure.Search.Documents.Indexes.Models
             long? fileSizeBytes = default;
             DateTimeOffset? createdOn = default;
             DateTimeOffset? lastUpdatedOn = default;
+            bool errorMessageIsDefined = false;
             string errorMessage = default;
             string prefix = default;
             IReadOnlyDictionary<string, string> metadata = default;
@@ -237,6 +245,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("errorMessage"u8))
                 {
+                    errorMessageIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         errorMessage = null;
@@ -305,7 +314,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 parsingMode,
                 extractionMode,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _errorMessageIsDefined = errorMessageIsDefined
+            };
         }
     }
 }

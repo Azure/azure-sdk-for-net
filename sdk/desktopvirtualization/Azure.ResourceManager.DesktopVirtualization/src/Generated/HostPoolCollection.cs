@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HostPoolData, HostPoolResource>(new HostPoolsGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HostPoolData, HostPoolResource>(new HostPoolDataAsyncCollectionResultOfT(
                 _hostPoolsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HostPoolData, HostPoolResource>(new HostPoolsGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<HostPoolData, HostPoolResource>(new HostPoolDataCollectionResultOfT(
                 _hostPoolsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

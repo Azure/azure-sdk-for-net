@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new AccessReviewHistoryDefinitionInstancesGetAllAsyncCollectionResultOfT(_accessReviewHistoryDefinitionInstancesRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "AccessReviewHistoryDefinitionResource.GetAll");
+            return new AccessReviewHistoryInstanceAsyncCollectionResultOfT(_accessReviewHistoryDefinitionInstancesRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "AccessReviewHistoryDefinitionResource.GetAll");
         }
 
         /// <summary>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new AccessReviewHistoryDefinitionInstancesGetAllCollectionResultOfT(_accessReviewHistoryDefinitionInstancesRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "AccessReviewHistoryDefinitionResource.GetAll");
+            return new AccessReviewHistoryInstanceCollectionResultOfT(_accessReviewHistoryDefinitionInstancesRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "AccessReviewHistoryDefinitionResource.GetAll");
         }
 
         /// <summary>

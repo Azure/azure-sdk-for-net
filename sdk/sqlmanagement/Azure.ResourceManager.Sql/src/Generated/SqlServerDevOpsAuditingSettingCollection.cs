@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlServerDevOpsAuditingSettingData, SqlServerDevOpsAuditingSettingResource>(new ServerDevOpsAuditSettingsGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SqlServerDevOpsAuditingSettingData, SqlServerDevOpsAuditingSettingResource>(new SqlServerDevOpsAuditingSettingDataAsyncCollectionResultOfT(
                 _serverDevOpsAuditSettingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlServerDevOpsAuditingSettingData, SqlServerDevOpsAuditingSettingResource>(new ServerDevOpsAuditSettingsGetByServerCollectionResultOfT(
+            return new PageableWrapper<SqlServerDevOpsAuditingSettingData, SqlServerDevOpsAuditingSettingResource>(new SqlServerDevOpsAuditingSettingDataCollectionResultOfT(
                 _serverDevOpsAuditSettingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

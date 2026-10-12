@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ArcGatewayData, ArcGatewayResource>(new GatewaysGetByResourceGroupAsyncCollectionResultOfT(_gatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ArcGatewayCollection.GetAll"), data => new ArcGatewayResource(Client, data));
+            return new AsyncPageableWrapper<ArcGatewayData, ArcGatewayResource>(new ArcGatewayDataAsyncCollectionResultOfT(_gatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ArcGatewayCollection.GetAll"), data => new ArcGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ArcGatewayData, ArcGatewayResource>(new GatewaysGetByResourceGroupCollectionResultOfT(_gatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ArcGatewayCollection.GetAll"), data => new ArcGatewayResource(Client, data));
+            return new PageableWrapper<ArcGatewayData, ArcGatewayResource>(new ArcGatewayDataCollectionResultOfT(_gatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ArcGatewayCollection.GetAll"), data => new ArcGatewayResource(Client, data));
         }
 
         /// <summary>

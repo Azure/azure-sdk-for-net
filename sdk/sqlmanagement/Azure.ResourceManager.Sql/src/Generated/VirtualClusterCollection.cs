@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualClusterData, VirtualClusterResource>(new VirtualClustersGetByResourceGroupAsyncCollectionResultOfT(_virtualClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualClusterCollection.GetAll"), data => new VirtualClusterResource(Client, data));
+            return new AsyncPageableWrapper<VirtualClusterData, VirtualClusterResource>(new VirtualClusterDataAsyncCollectionResultOfT(_virtualClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualClusterCollection.GetAll"), data => new VirtualClusterResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualClusterData, VirtualClusterResource>(new VirtualClustersGetByResourceGroupCollectionResultOfT(_virtualClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualClusterCollection.GetAll"), data => new VirtualClusterResource(Client, data));
+            return new PageableWrapper<VirtualClusterData, VirtualClusterResource>(new VirtualClusterDataCollectionResultOfT(_virtualClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualClusterCollection.GetAll"), data => new VirtualClusterResource(Client, data));
         }
 
         /// <summary>

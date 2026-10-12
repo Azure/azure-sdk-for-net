@@ -16,6 +16,8 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private FieldMappingFunction _mappingFunction;
+        internal bool _mappingFunctionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FieldMapping"/>. </summary>
         /// <param name="sourceFieldName"> The name of the field in the data source. </param>
@@ -36,7 +38,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             SourceFieldName = sourceFieldName;
             TargetFieldName = targetFieldName;
-            MappingFunction = mappingFunction;
+            _mappingFunction = mappingFunction;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,6 +49,17 @@ namespace Azure.Search.Documents.Indexes.Models
         public string TargetFieldName { get; set; }
 
         /// <summary> A function to apply to each source field value before indexing. </summary>
-        public FieldMappingFunction MappingFunction { get; set; }
+        public FieldMappingFunction MappingFunction
+        {
+            get
+            {
+                return _mappingFunction;
+            }
+            set
+            {
+                _mappingFunction = value;
+                _mappingFunctionIsDefined = true;
+            }
+        }
     }
 }

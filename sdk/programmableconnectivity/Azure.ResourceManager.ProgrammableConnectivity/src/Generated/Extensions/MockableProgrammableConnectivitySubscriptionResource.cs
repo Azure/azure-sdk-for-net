@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProgrammableConnectivityGatewayData, ProgrammableConnectivityGatewayResource>(new GatewaysGetBySubscriptionAsyncCollectionResultOfT(GatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableProgrammableConnectivitySubscriptionResource.GetProgrammableConnectivityGateways"), data => new ProgrammableConnectivityGatewayResource(Client, data));
+            return new AsyncPageableWrapper<ProgrammableConnectivityGatewayData, ProgrammableConnectivityGatewayResource>(new ProgrammableConnectivityGatewayDataAsync0CollectionResultOfT(GatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableProgrammableConnectivitySubscriptionResource.GetProgrammableConnectivityGateways"), data => new ProgrammableConnectivityGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProgrammableConnectivityGatewayData, ProgrammableConnectivityGatewayResource>(new GatewaysGetBySubscriptionCollectionResultOfT(GatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableProgrammableConnectivitySubscriptionResource.GetProgrammableConnectivityGateways"), data => new ProgrammableConnectivityGatewayResource(Client, data));
+            return new PageableWrapper<ProgrammableConnectivityGatewayData, ProgrammableConnectivityGatewayResource>(new ProgrammableConnectivityGatewayData0CollectionResultOfT(GatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableProgrammableConnectivitySubscriptionResource.GetProgrammableConnectivityGateways"), data => new ProgrammableConnectivityGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OperatorApiConnectionData, OperatorApiConnectionResource>(new OperatorApiConnectionsGetBySubscriptionAsyncCollectionResultOfT(OperatorApiConnectionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableProgrammableConnectivitySubscriptionResource.GetOperatorApiConnections"), data => new OperatorApiConnectionResource(Client, data));
+            return new AsyncPageableWrapper<OperatorApiConnectionData, OperatorApiConnectionResource>(new OperatorApiConnectionDataAsync0CollectionResultOfT(OperatorApiConnectionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableProgrammableConnectivitySubscriptionResource.GetOperatorApiConnections"), data => new OperatorApiConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OperatorApiConnectionData, OperatorApiConnectionResource>(new OperatorApiConnectionsGetBySubscriptionCollectionResultOfT(OperatorApiConnectionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableProgrammableConnectivitySubscriptionResource.GetOperatorApiConnections"), data => new OperatorApiConnectionResource(Client, data));
+            return new PageableWrapper<OperatorApiConnectionData, OperatorApiConnectionResource>(new OperatorApiConnectionData0CollectionResultOfT(OperatorApiConnectionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableProgrammableConnectivitySubscriptionResource.GetOperatorApiConnections"), data => new OperatorApiConnectionResource(Client, data));
         }
     }
 }

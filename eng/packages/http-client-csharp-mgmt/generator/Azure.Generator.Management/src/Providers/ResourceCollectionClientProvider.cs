@@ -459,6 +459,12 @@ namespace Azure.Generator.Management.Providers
             return BackCompatHelper.DecorateBackwardCompatibilityMethods(backCompatMethods, originalMethodList);
         }
 
+        internal IEnumerable<ArrayResponseCollectionResultPlan> ArrayCollectionResultPlans =>
+            _getAlls.Where(method => ArrayResponseCollectionResultPlan.IsArrayResponse(method.InputMethod))
+                .Select(method => new ArrayResponseCollectionResultPlan(this, method.InputClient, method.InputMethod, "GetAll", "GetAllAsync"))
+                .Concat(_actions.Where(method => ArrayResponseCollectionResultPlan.IsArrayResponse(method.InputMethod))
+                    .Select(method => new ArrayResponseCollectionResultPlan(this, method.InputClient, method.InputMethod)));
+
         protected override MethodProvider[] BuildMethods()
         {
             var methods = new List<MethodProvider>();

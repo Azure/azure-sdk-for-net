@@ -144,7 +144,7 @@ namespace Azure.Storage.Files.Shares.Models
                 writer.WriteObjectValue(Protocol, options);
                 writer.WriteEndElement();
             }
-            if (Optional.IsCollectionDefined(Cors))
+            if (Cors != null && Optional.IsCollectionDefined(Cors))
             {
                 writer.WriteStartElement("Cors");
                 foreach (ShareCorsRule item in Cors)

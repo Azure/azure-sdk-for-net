@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PolicyAssignmentData, PolicyAssignmentResource>(new PolicyAssignmentsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PolicyAssignmentData, PolicyAssignmentResource>(new PolicyAssignmentDataAsync1CollectionResultOfT(
                 PolicyAssignmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PolicyAssignmentData, PolicyAssignmentResource>(new PolicyAssignmentsGetAllCollectionResultOfT(
+            return new PageableWrapper<PolicyAssignmentData, PolicyAssignmentResource>(new PolicyAssignmentData1CollectionResultOfT(
                 PolicyAssignmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PolicyExemptionData, PolicyExemptionResource>(new PolicyExemptionsGetAllAsyncCollectionResultOfT(PolicyExemptionsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableResourcesPolicySubscriptionResource.GetPolicyExemptions"), data => new PolicyExemptionResource(Client, data));
+            return new AsyncPageableWrapper<PolicyExemptionData, PolicyExemptionResource>(new PolicyExemptionDataAsync1CollectionResultOfT(PolicyExemptionsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableResourcesPolicySubscriptionResource.GetPolicyExemptions"), data => new PolicyExemptionResource(Client, data));
         }
 
         /// <summary>
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PolicyExemptionData, PolicyExemptionResource>(new PolicyExemptionsGetAllCollectionResultOfT(PolicyExemptionsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableResourcesPolicySubscriptionResource.GetPolicyExemptions"), data => new PolicyExemptionResource(Client, data));
+            return new PageableWrapper<PolicyExemptionData, PolicyExemptionResource>(new PolicyExemptionData1CollectionResultOfT(PolicyExemptionsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableResourcesPolicySubscriptionResource.GetPolicyExemptions"), data => new PolicyExemptionResource(Client, data));
         }
 
         /// <summary>

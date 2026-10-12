@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExpressRouteCrossConnectionData, ExpressRouteCrossConnectionResource>(new ExpressRouteCrossConnectionsGetByResourceGroupAsyncCollectionResultOfT(_expressRouteCrossConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRouteCrossConnectionCollection.GetAll"), data => new ExpressRouteCrossConnectionResource(Client, data));
+            return new AsyncPageableWrapper<ExpressRouteCrossConnectionData, ExpressRouteCrossConnectionResource>(new ExpressRouteCrossConnectionDataAsyncCollectionResultOfT(_expressRouteCrossConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRouteCrossConnectionCollection.GetAll"), data => new ExpressRouteCrossConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExpressRouteCrossConnectionData, ExpressRouteCrossConnectionResource>(new ExpressRouteCrossConnectionsGetByResourceGroupCollectionResultOfT(_expressRouteCrossConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRouteCrossConnectionCollection.GetAll"), data => new ExpressRouteCrossConnectionResource(Client, data));
+            return new PageableWrapper<ExpressRouteCrossConnectionData, ExpressRouteCrossConnectionResource>(new ExpressRouteCrossConnectionDataCollectionResultOfT(_expressRouteCrossConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRouteCrossConnectionCollection.GetAll"), data => new ExpressRouteCrossConnectionResource(Client, data));
         }
 
         /// <summary>

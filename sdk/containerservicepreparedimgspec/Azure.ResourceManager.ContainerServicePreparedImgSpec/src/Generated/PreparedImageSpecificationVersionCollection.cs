@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PreparedImageSpecificationVersionData, PreparedImageSpecificationVersionResource>(new PreparedImageSpecificationsGetVersionsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PreparedImageSpecificationVersionData, PreparedImageSpecificationVersionResource>(new PreparedImageSpecificationVersionDataAsyncCollectionResultOfT(
                 _preparedImageSpecificationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PreparedImageSpecificationVersionData, PreparedImageSpecificationVersionResource>(new PreparedImageSpecificationsGetVersionsCollectionResultOfT(
+            return new PageableWrapper<PreparedImageSpecificationVersionData, PreparedImageSpecificationVersionResource>(new PreparedImageSpecificationVersionDataCollectionResultOfT(
                 _preparedImageSpecificationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

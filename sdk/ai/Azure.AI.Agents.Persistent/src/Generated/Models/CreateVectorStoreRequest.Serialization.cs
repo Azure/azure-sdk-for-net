@@ -121,19 +121,26 @@ namespace Azure.AI.Agents.Persistent
             }
             if (Optional.IsCollectionDefined(Metadata))
             {
-                writer.WritePropertyName("metadata"u8);
-                writer.WriteStartObject();
-                foreach (var item in Metadata)
+                if (Metadata != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("metadata"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Metadata)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("metadata"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -182,7 +189,7 @@ namespace Azure.AI.Agents.Persistent
             VectorStoreConfiguration storeConfiguration = default;
             VectorStoreExpirationPolicy expiresAfter = default;
             VectorStoreChunkingStrategy chunkingStrategy = default;
-            IDictionary<string, string> metadata = default;
+            IDictionary<string, string> metadata = new ChangeTrackingDictionary<string, string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -243,6 +250,7 @@ namespace Azure.AI.Agents.Persistent
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        metadata = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -271,7 +279,7 @@ namespace Azure.AI.Agents.Persistent
                 storeConfiguration,
                 expiresAfter,
                 chunkingStrategy,
-                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                metadata,
                 additionalBinaryDataProperties);
         }
     }

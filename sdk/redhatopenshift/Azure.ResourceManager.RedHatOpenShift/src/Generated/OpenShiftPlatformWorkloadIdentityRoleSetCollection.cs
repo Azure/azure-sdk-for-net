@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OpenShiftPlatformWorkloadIdentityRoleSetData, OpenShiftPlatformWorkloadIdentityRoleSetResource>(new PlatformWorkloadIdentityRoleSetsGetAllAsyncCollectionResultOfT(_platformWorkloadIdentityRoleSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OpenShiftPlatformWorkloadIdentityRoleSetCollection.GetAll"), data => new OpenShiftPlatformWorkloadIdentityRoleSetResource(Client, data));
+            return new AsyncPageableWrapper<OpenShiftPlatformWorkloadIdentityRoleSetData, OpenShiftPlatformWorkloadIdentityRoleSetResource>(new OpenShiftPlatformWorkloadIdentityRoleSetDataAsyncCollectionResultOfT(_platformWorkloadIdentityRoleSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OpenShiftPlatformWorkloadIdentityRoleSetCollection.GetAll"), data => new OpenShiftPlatformWorkloadIdentityRoleSetResource(Client, data));
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OpenShiftPlatformWorkloadIdentityRoleSetData, OpenShiftPlatformWorkloadIdentityRoleSetResource>(new PlatformWorkloadIdentityRoleSetsGetAllCollectionResultOfT(_platformWorkloadIdentityRoleSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OpenShiftPlatformWorkloadIdentityRoleSetCollection.GetAll"), data => new OpenShiftPlatformWorkloadIdentityRoleSetResource(Client, data));
+            return new PageableWrapper<OpenShiftPlatformWorkloadIdentityRoleSetData, OpenShiftPlatformWorkloadIdentityRoleSetResource>(new OpenShiftPlatformWorkloadIdentityRoleSetDataCollectionResultOfT(_platformWorkloadIdentityRoleSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OpenShiftPlatformWorkloadIdentityRoleSetCollection.GetAll"), data => new OpenShiftPlatformWorkloadIdentityRoleSetResource(Client, data));
         }
 
         /// <summary>
