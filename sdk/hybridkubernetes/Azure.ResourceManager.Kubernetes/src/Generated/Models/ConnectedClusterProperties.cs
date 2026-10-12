@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.Kubernetes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private Gateway _gateway;
+        internal bool _gatewayIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ConnectedClusterProperties"/>. </summary>
         /// <param name="agentPublicKeyCertificate"> Base64 encoded public certificate used by the agent to do the initial handshake to the backend services in Azure. </param>
@@ -77,7 +79,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             ArcAgentProfile = arcAgentProfile;
             SecurityProfile = securityProfile;
             OidcIssuerProfile = oidcIssuerProfile;
-            Gateway = gateway;
+            _gateway = gateway;
             ArcAgentryConfigurations = arcAgentryConfigurations;
             MiscellaneousProperties = miscellaneousProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -144,7 +146,18 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public ConnectedClusterOidcIssuerProfile OidcIssuerProfile { get; set; }
 
         /// <summary> Details of the gateway used by the Arc router for connectivity. </summary>
-        internal Gateway Gateway { get; set; }
+        internal Gateway Gateway
+        {
+            get
+            {
+                return _gateway;
+            }
+            set
+            {
+                _gateway = value;
+                _gatewayIsDefined = true;
+            }
+        }
 
         /// <summary> Configuration settings for customizing the behavior of the connected cluster. </summary>
         public IList<ConnectedClusterArcAgentryConfiguration> ArcAgentryConfigurations { get; set; }

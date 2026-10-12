@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.ImageBuilder
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ImageTemplateRunOutputResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string imageTemplateRunOutputApiVersion);
             _virtualMachineImageTemplatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ImageBuilder", ResourceType.Namespace, Diagnostics);
-            _virtualMachineImageTemplatesRestClient = new VirtualMachineImageTemplates(_virtualMachineImageTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, imageTemplateRunOutputApiVersion ?? "2025-10-01");
+            _virtualMachineImageTemplatesRestClient = new VirtualMachineImageTemplates(_virtualMachineImageTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

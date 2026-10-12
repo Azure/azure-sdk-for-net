@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PrivateEndpointConnectionResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new PrivateEndpointConnectionResourceListResult(value ?? new ChangeTrackingList<HorizonDBPrivateEndpointConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
