@@ -109,6 +109,8 @@ namespace Azure.ResourceManager.PrivateDns
         public string Fqdn { get { throw null; } }
         public bool? IsAutoRegistered { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
+        public Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.Core.ResourceIdentifier TrafficManagementProfileId { get { throw null; } set { } }
         public long? TtlInSeconds { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -175,6 +177,8 @@ namespace Azure.ResourceManager.PrivateDns
         public static Azure.ResourceManager.PrivateDns.PrivateDnsCnameRecordResource GetPrivateDnsCnameRecordResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.PrivateDns.PrivateDnsMXRecordResource GetPrivateDnsMXRecordResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.PrivateDns.PrivateDnsPtrRecordResource GetPrivateDnsPtrRecordResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceResult> GetPrivateDnsResourceReferencesByTargetResources(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceResult>> GetPrivateDnsResourceReferencesByTargetResourcesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.PrivateDns.PrivateDnsSoaRecordResource GetPrivateDnsSoaRecordResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.PrivateDns.PrivateDnsSrvRecordResource GetPrivateDnsSrvRecordResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.PrivateDns.PrivateDnsTxtRecordResource GetPrivateDnsTxtRecordResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -635,6 +639,8 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
     public partial class MockablePrivateDnsSubscriptionResource : Azure.ResourceManager.ArmResource
     {
         protected MockablePrivateDnsSubscriptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceResult> GetPrivateDnsResourceReferencesByTargetResources(Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceResult>> GetPrivateDnsResourceReferencesByTargetResourcesAsync(Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.PrivateDns.PrivateDnsZoneResource> GetPrivateDnsZones(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.PrivateDns.PrivateDnsZoneResource> GetPrivateDnsZonesAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -647,8 +653,12 @@ namespace Azure.ResourceManager.PrivateDns.Models
         public static Azure.ResourceManager.PrivateDns.Models.PrivateDnsARecordInfo PrivateDnsARecordInfo(System.Net.IPAddress ipv4Address = null) { throw null; }
         public static Azure.ResourceManager.PrivateDns.Models.PrivateDnsMXRecordInfo PrivateDnsMXRecordInfo(int? preference = default(int?), string exchange = null) { throw null; }
         public static Azure.ResourceManager.PrivateDns.Models.PrivateDnsPtrRecordInfo PrivateDnsPtrRecordInfo(string ptrDomainName = null) { throw null; }
+        public static Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReference PrivateDnsResourceReference(System.Collections.Generic.IEnumerable<Azure.ResourceManager.PrivateDns.Models.PrivateDnsSubResourceInfo> privateDnsResources = null, Azure.Core.ResourceIdentifier targetResourceId = null) { throw null; }
+        public static Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceContent PrivateDnsResourceReferenceContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.PrivateDns.Models.PrivateDnsSubResourceInfo> targetResources = null) { throw null; }
+        public static Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceResult PrivateDnsResourceReferenceResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReference> privateDnsResourceReferences = null) { throw null; }
         public static Azure.ResourceManager.PrivateDns.Models.PrivateDnsSoaRecordInfo PrivateDnsSoaRecordInfo(string host = null, string email = null, long? serialNumber = default(long?), long? refreshTimeInSeconds = default(long?), long? retryTimeInSeconds = default(long?), long? expireTimeInSeconds = default(long?), long? minimumTtlInSeconds = default(long?)) { throw null; }
         public static Azure.ResourceManager.PrivateDns.Models.PrivateDnsSrvRecordInfo PrivateDnsSrvRecordInfo(int? priority = default(int?), int? weight = default(int?), int? port = default(int?), string target = null) { throw null; }
+        public static Azure.ResourceManager.PrivateDns.Models.PrivateDnsSubResourceInfo PrivateDnsSubResourceInfo(Azure.Core.ResourceIdentifier id = null) { throw null; }
         public static Azure.ResourceManager.PrivateDns.Models.PrivateDnsTxtRecordInfo PrivateDnsTxtRecordInfo(System.Collections.Generic.IEnumerable<string> values = null) { throw null; }
         public static Azure.ResourceManager.PrivateDns.PrivateDnsZoneData PrivateDnsZoneData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), long? maxNumberOfRecords = default(long?), long? numberOfRecords = default(long?), long? maxNumberOfVirtualNetworkLinks = default(long?), long? numberOfVirtualNetworkLinks = default(long?), long? maxNumberOfVirtualNetworkLinksWithRegistration = default(long?), long? numberOfVirtualNetworkLinksWithRegistration = default(long?), Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState? privateDnsProvisioningState = default(Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState?), string internalId = null) { throw null; }
         public static Azure.ResourceManager.PrivateDns.PrivateDnsZoneData PrivateDnsZoneData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, long? maxNumberOfRecords, long? numberOfRecords, long? maxNumberOfVirtualNetworkLinks, long? numberOfVirtualNetworkLinks, long? maxNumberOfVirtualNetworkLinksWithRegistration, long? numberOfVirtualNetworkLinksWithRegistration, Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState? privateDnsProvisioningState, string internalId, Azure.ETag? eTag) { throw null; }
@@ -761,6 +771,49 @@ namespace Azure.ResourceManager.PrivateDns.Models
         public static bool operator !=(Azure.ResourceManager.PrivateDns.Models.PrivateDnsResolutionPolicy left, Azure.ResourceManager.PrivateDns.Models.PrivateDnsResolutionPolicy right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class PrivateDnsResourceReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReference>
+    {
+        internal PrivateDnsResourceReference() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.PrivateDns.Models.PrivateDnsSubResourceInfo> PrivateDnsResources { get { throw null; } }
+        public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } }
+        protected virtual Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReference PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class PrivateDnsResourceReferenceContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceContent>
+    {
+        public PrivateDnsResourceReferenceContent() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.PrivateDns.Models.PrivateDnsSubResourceInfo> TargetResources { get { throw null; } }
+        protected virtual Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class PrivateDnsResourceReferenceResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceResult>
+    {
+        internal PrivateDnsResourceReferenceResult() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReference> PrivateDnsResourceReferences { get { throw null; } }
+        protected virtual Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsResourceReferenceResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class PrivateDnsSoaRecordInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsSoaRecordInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsSoaRecordInfo>
     {
         public PrivateDnsSoaRecordInfo() { }
@@ -797,6 +850,20 @@ namespace Azure.ResourceManager.PrivateDns.Models
         Azure.ResourceManager.PrivateDns.Models.PrivateDnsSrvRecordInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsSrvRecordInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsSrvRecordInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsSrvRecordInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class PrivateDnsSubResourceInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsSubResourceInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsSubResourceInfo>
+    {
+        public PrivateDnsSubResourceInfo() { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.PrivateDns.Models.PrivateDnsSubResourceInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PrivateDns.Models.PrivateDnsSubResourceInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.PrivateDns.Models.PrivateDnsSubResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsSubResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsSubResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PrivateDns.Models.PrivateDnsSubResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsSubResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsSubResourceInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsSubResourceInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class PrivateDnsTxtRecordInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsTxtRecordInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsTxtRecordInfo>
     {
