@@ -12,30 +12,30 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Network
 {
-    internal partial class IpGroups
+    internal partial class IPGroups
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
 
-        /// <summary> Initializes a new instance of IpGroups for mocking. </summary>
-        protected IpGroups()
+        /// <summary> Initializes a new instance of IPGroups for mocking. </summary>
+        protected IPGroups()
         {
         }
 
-        /// <summary> Initializes a new instance of IpGroups. </summary>
+        /// <summary> Initializes a new instance of IPGroups. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal IpGroups(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        internal IPGroups(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
-            _userAgent = new TelemetryDetails(typeof(IpGroups).Assembly, applicationId);
+            _userAgent = new TelemetryDetails(typeof(IPGroups).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
