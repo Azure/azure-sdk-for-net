@@ -1500,7 +1500,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <returns> A new <see cref="Models.RegionConfigurationResult"/> instance for mocking. </returns>
         public static RegionConfigurationResult RegionConfigurationResult(IEnumerable<DateTimeOffset> scheduleAvailabilityResponseAvailableDates = default, IEnumerable<TransportAvailabilityDetails> transportAvailabilityDetails = default, DataCenterAddressResult dataCenterAddressResponse = default, IEnumerable<DeviceCapabilityDetails> deviceCapabilityDetails = default)
         {
-            return new RegionConfigurationResult(scheduleAvailabilityResponseAvailableDates is null ? default : new ScheduleAvailabilityResponse((scheduleAvailabilityResponseAvailableDates ?? new ChangeTrackingList<DateTimeOffset>()).ToList(), default), transportAvailabilityDetails is null ? default : new TransportAvailabilityResponse((transportAvailabilityDetails ?? new ChangeTrackingList<TransportAvailabilityDetails>()).ToList(), default), dataCenterAddressResponse, deviceCapabilityDetails is null ? default : new DeviceCapabilityResponse((deviceCapabilityDetails ?? new ChangeTrackingList<DeviceCapabilityDetails>()).ToList(), default), default);
+            return new RegionConfigurationResult(scheduleAvailabilityResponseAvailableDates is null ? default : new ScheduleAvailabilityResult((scheduleAvailabilityResponseAvailableDates ?? new ChangeTrackingList<DateTimeOffset>()).ToList(), default), transportAvailabilityDetails is null ? default : new TransportAvailabilityResult((transportAvailabilityDetails ?? new ChangeTrackingList<TransportAvailabilityDetails>()).ToList(), default), dataCenterAddressResponse, deviceCapabilityDetails is null ? default : new DeviceCapabilityResult((deviceCapabilityDetails ?? new ChangeTrackingList<DeviceCapabilityDetails>()).ToList(), default), default);
         }
 
         /// <summary> Transport options availability details for given region. </summary>
@@ -2068,7 +2068,7 @@ namespace Azure.ResourceManager.DataBox.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RegionConfigurationResult RegionConfigurationResult(IEnumerable<DateTimeOffset> scheduleAvailabilityResponseAvailableDates, IEnumerable<TransportAvailabilityDetails> transportAvailabilityDetails, DataCenterAddressResult dataCenterAddressResponse)
         {
-            return new RegionConfigurationResult(scheduleAvailabilityResponseAvailableDates is null ? default : new ScheduleAvailabilityResponse((scheduleAvailabilityResponseAvailableDates ?? new ChangeTrackingList<DateTimeOffset>()).ToList(), default), transportAvailabilityDetails is null ? default : new TransportAvailabilityResponse((transportAvailabilityDetails ?? new ChangeTrackingList<TransportAvailabilityDetails>()).ToList(), default), dataCenterAddressResponse, default, default);
+            return new RegionConfigurationResult(scheduleAvailabilityResponseAvailableDates is null ? default : new ScheduleAvailabilityResult((scheduleAvailabilityResponseAvailableDates ?? new ChangeTrackingList<DateTimeOffset>()).ToList(), default), transportAvailabilityDetails is null ? default : new TransportAvailabilityResult((transportAvailabilityDetails ?? new ChangeTrackingList<TransportAvailabilityDetails>()).ToList(), default), dataCenterAddressResponse, default, default);
         }
     }
 }

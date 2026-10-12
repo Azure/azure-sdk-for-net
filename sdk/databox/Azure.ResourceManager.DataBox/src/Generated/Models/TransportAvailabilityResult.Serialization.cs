@@ -13,52 +13,52 @@ using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    /// <summary> Device capabilities for given sku in a region. </summary>
-    internal partial class DeviceCapabilityResponse : IJsonModel<DeviceCapabilityResponse>
+    /// <summary> Transport options available for given sku in a region. </summary>
+    internal partial class TransportAvailabilityResult : IJsonModel<TransportAvailabilityResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeviceCapabilityResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual TransportAvailabilityResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeviceCapabilityResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TransportAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDeviceCapabilityResponse(document.RootElement, options);
+                        return DeserializeTransportAvailabilityResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeviceCapabilityResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TransportAvailabilityResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeviceCapabilityResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TransportAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DeviceCapabilityResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TransportAvailabilityResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeviceCapabilityResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<TransportAvailabilityResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeviceCapabilityResponse IPersistableModel<DeviceCapabilityResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TransportAvailabilityResult IPersistableModel<TransportAvailabilityResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeviceCapabilityResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TransportAvailabilityResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DeviceCapabilityResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TransportAvailabilityResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,16 +69,16 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeviceCapabilityResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TransportAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceCapabilityResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TransportAvailabilityResult)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DeviceCapabilityDetails))
+            if (options.Format != "W" && Optional.IsCollectionDefined(TransportAvailabilityDetails))
             {
-                writer.WritePropertyName("deviceCapabilityDetails"u8);
+                writer.WritePropertyName("transportAvailabilityDetails"u8);
                 writer.WriteStartArray();
-                foreach (DeviceCapabilityDetails item in DeviceCapabilityDetails)
+                foreach (TransportAvailabilityDetails item in TransportAvailabilityDetails)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -103,45 +103,45 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeviceCapabilityResponse IJsonModel<DeviceCapabilityResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TransportAvailabilityResult IJsonModel<TransportAvailabilityResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeviceCapabilityResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual TransportAvailabilityResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeviceCapabilityResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TransportAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceCapabilityResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TransportAvailabilityResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeviceCapabilityResponse(document.RootElement, options);
+            return DeserializeTransportAvailabilityResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DeviceCapabilityResponse DeserializeDeviceCapabilityResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static TransportAvailabilityResult DeserializeTransportAvailabilityResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<DeviceCapabilityDetails> deviceCapabilityDetails = default;
+            IReadOnlyList<TransportAvailabilityDetails> transportAvailabilityDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("deviceCapabilityDetails"u8))
+                if (prop.NameEquals("transportAvailabilityDetails"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<DeviceCapabilityDetails> array = new List<DeviceCapabilityDetails>();
+                    List<TransportAvailabilityDetails> array = new List<TransportAvailabilityDetails>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.DeviceCapabilityDetails.DeserializeDeviceCapabilityDetails(item, options));
+                        array.Add(Models.TransportAvailabilityDetails.DeserializeTransportAvailabilityDetails(item, options));
                     }
-                    deviceCapabilityDetails = array;
+                    transportAvailabilityDetails = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DeviceCapabilityResponse(deviceCapabilityDetails ?? new ChangeTrackingList<DeviceCapabilityDetails>(), additionalBinaryDataProperties);
+            return new TransportAvailabilityResult(transportAvailabilityDetails ?? new ChangeTrackingList<TransportAvailabilityDetails>(), additionalBinaryDataProperties);
         }
     }
 }
