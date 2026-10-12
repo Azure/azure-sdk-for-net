@@ -23,6 +23,8 @@ namespace Azure.ResourceManager.Advisor.Mocking
     {
         private ClientDiagnostics _advisorClientClientDiagnostics;
         private AdvisorClient _advisorClientRestClient;
+        private ClientDiagnostics _resourceRecommendationBasesClientDiagnostics;
+        private ResourceRecommendationBases _resourceRecommendationBasesRestClient;
         private ClientDiagnostics _configurationsClientDiagnostics;
         private Configurations _configurationsRestClient;
         private ClientDiagnostics _recommendationsOperationGroupClientDiagnostics;
@@ -48,27 +50,31 @@ namespace Azure.ResourceManager.Advisor.Mocking
 
         private ClientDiagnostics AdvisorClientClientDiagnostics => _advisorClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AdvisorClient AdvisorClientRestClient => _advisorClientRestClient ??= new AdvisorClient(AdvisorClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01-preview");
+        private AdvisorClient AdvisorClientRestClient => _advisorClientRestClient ??= new AdvisorClient(AdvisorClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01-preview");
+
+        private ClientDiagnostics ResourceRecommendationBasesClientDiagnostics => _resourceRecommendationBasesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ResourceRecommendationBases ResourceRecommendationBasesRestClient => _resourceRecommendationBasesRestClient ??= new ResourceRecommendationBases(ResourceRecommendationBasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01-preview");
 
         private ClientDiagnostics ConfigurationsClientDiagnostics => _configurationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Configurations ConfigurationsRestClient => _configurationsRestClient ??= new Configurations(ConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01-preview");
+        private Configurations ConfigurationsRestClient => _configurationsRestClient ??= new Configurations(ConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01-preview");
 
         private ClientDiagnostics RecommendationsOperationGroupClientDiagnostics => _recommendationsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RecommendationsOperationGroup RecommendationsOperationGroupRestClient => _recommendationsOperationGroupRestClient ??= new RecommendationsOperationGroup(RecommendationsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01-preview");
+        private RecommendationsOperationGroup RecommendationsOperationGroupRestClient => _recommendationsOperationGroupRestClient ??= new RecommendationsOperationGroup(RecommendationsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01-preview");
 
         private ClientDiagnostics SuppressionsOperationGroupClientDiagnostics => _suppressionsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SuppressionsOperationGroup SuppressionsOperationGroupRestClient => _suppressionsOperationGroupRestClient ??= new SuppressionsOperationGroup(SuppressionsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01-preview");
+        private SuppressionsOperationGroup SuppressionsOperationGroupRestClient => _suppressionsOperationGroupRestClient ??= new SuppressionsOperationGroup(SuppressionsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01-preview");
 
         private ClientDiagnostics AssessmentTypesOperationGroupClientDiagnostics => _assessmentTypesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AssessmentTypesOperationGroup AssessmentTypesOperationGroupRestClient => _assessmentTypesOperationGroupRestClient ??= new AssessmentTypesOperationGroup(AssessmentTypesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01-preview");
+        private AssessmentTypesOperationGroup AssessmentTypesOperationGroupRestClient => _assessmentTypesOperationGroupRestClient ??= new AssessmentTypesOperationGroup(AssessmentTypesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01-preview");
 
         private ClientDiagnostics WorkloadsOperationGroupClientDiagnostics => _workloadsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private WorkloadsOperationGroup WorkloadsOperationGroupRestClient => _workloadsOperationGroupRestClient ??= new WorkloadsOperationGroup(WorkloadsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01-preview");
+        private WorkloadsOperationGroup WorkloadsOperationGroupRestClient => _workloadsOperationGroupRestClient ??= new WorkloadsOperationGroup(WorkloadsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01-preview");
 
         /// <summary> Gets a collection of AdvisorScoreEntities in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of AdvisorScoreEntities and their operations over a AdvisorScoreEntityResource. </returns>
@@ -90,7 +96,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -119,7 +125,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -155,7 +161,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +190,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,7 +226,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -249,7 +255,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -278,7 +284,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -326,7 +332,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -362,6 +368,108 @@ namespace Azure.ResourceManager.Advisor.Mocking
         }
 
         /// <summary>
+        /// Update the state of a Recommendation
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/recommendations/{recommendationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceRecommendationBases_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-08-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="recommendationId"> The recommendation ID. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<AdvisorRecommendationData>> UpdateAsync(string recommendationId, ServiceGroupRecommendationPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = ResourceRecommendationBasesClientDiagnostics.CreateScope("MockableAdvisorSubscriptionResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ResourceRecommendationBasesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), recommendationId, ServiceGroupRecommendationPatch.ToRequestContent(patch), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AdvisorRecommendationData> response = Response.FromValue(AdvisorRecommendationData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update the state of a Recommendation
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/recommendations/{recommendationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceRecommendationBases_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-08-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="recommendationId"> The recommendation ID. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<AdvisorRecommendationData> Update(string recommendationId, ServiceGroupRecommendationPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = ResourceRecommendationBasesClientDiagnostics.CreateScope("MockableAdvisorSubscriptionResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ResourceRecommendationBasesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), recommendationId, ServiceGroupRecommendationPatch.ToRequestContent(patch), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AdvisorRecommendationData> response = Response.FromValue(AdvisorRecommendationData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Retrieve Azure Advisor configurations and also retrieve configurations of contained resource groups.
         /// <list type="bullet">
         /// <item>
@@ -374,7 +482,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -402,7 +510,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -430,7 +538,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -479,7 +587,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -528,7 +636,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -567,7 +675,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -606,7 +714,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -646,7 +754,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -686,7 +794,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -722,7 +830,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -758,7 +866,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -786,7 +894,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -814,7 +922,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -842,7 +950,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Advisor
         {
             TryGetApiVersion(AdvisorMetadataEntityResource.ResourceType, out string advisorMetadataEntityApiVersion);
             _metadataEntitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", AdvisorMetadataEntityResource.ResourceType.Namespace, Diagnostics);
-            _metadataEntitiesRestClient = new MetadataEntities(_metadataEntitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, advisorMetadataEntityApiVersion ?? "2025-05-01-preview");
+            _metadataEntitiesRestClient = new MetadataEntities(_metadataEntitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, advisorMetadataEntityApiVersion ?? "2026-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -166,19 +166,20 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="filter"> The filter to apply to the recommendation metadata.&lt;br&gt;Filter can be applied to properties ['[recommendationCategory](#category)', '[recommendationSubCategory](#recommendationSubCategory)', 'RetirementDate'] with operators ['eq', 'and', 'le', 'ge']&lt;br&gt;The filter can also be applied to property ['[TrackingIds]']&lt;br&gt;&lt;br&gt;⚠ <b>Note:</b> `recommendationControl` is a legacy filter property and will be deprecated in the future. Please use `recommendationSubCategory` for filtering recommendation subcategory.&lt;br&gt;&lt;br&gt;Valid options for recommendationSubCategory: ['BusinessContinuity', 'DisasterRecovery', 'HighAvailability', 'MonitoringAndAlerting', 'Other', 'Personalized', 'PrioritizedRecommendations', 'Scalability', 'ServiceUpgradeAndRetirement', 'Validation']&lt;br&gt;&lt;br&gt;Example:&lt;br&gt;- $filter=recommendationCategory eq 'HighAvailability' and recommendationSubCategory eq 'ServiceUpgradeAndRetirement' and retirementDate ge '2024-01-01' and retirementDate le '2028-01-01'. Filter can be applied on trackingIds as well.&lt;br&gt;- $filter=trackingIds/any(t: t eq 'some-guid')&lt;br&gt;&lt;br&gt;⚠ <b>Note:</b> `trackingIDs` filter can be used for filtering one value at a time. The support to filter multiple values is not currently available. Also the support to add other filters along with `trackingIDs` is not available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AdvisorMetadataEntityResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AdvisorMetadataEntityResource> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AdvisorMetadataEntityResource> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AdvisorMetadataEntityData, AdvisorMetadataEntityResource>(new AdvisorMetadataEntityDataAsyncCollectionResultOfT(_metadataEntitiesRestClient, context, "AdvisorMetadataEntityCollection.GetAll"), data => new AdvisorMetadataEntityResource(Client, data));
+            return new AsyncPageableWrapper<AdvisorMetadataEntityData, AdvisorMetadataEntityResource>(new AdvisorMetadataEntityDataAsyncCollectionResultOfT(_metadataEntitiesRestClient, filter, context, "AdvisorMetadataEntityCollection.GetAll"), data => new AdvisorMetadataEntityResource(Client, data));
         }
 
         /// <summary>
@@ -194,19 +195,20 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="filter"> The filter to apply to the recommendation metadata.&lt;br&gt;Filter can be applied to properties ['[recommendationCategory](#category)', '[recommendationSubCategory](#recommendationSubCategory)', 'RetirementDate'] with operators ['eq', 'and', 'le', 'ge']&lt;br&gt;The filter can also be applied to property ['[TrackingIds]']&lt;br&gt;&lt;br&gt;⚠ <b>Note:</b> `recommendationControl` is a legacy filter property and will be deprecated in the future. Please use `recommendationSubCategory` for filtering recommendation subcategory.&lt;br&gt;&lt;br&gt;Valid options for recommendationSubCategory: ['BusinessContinuity', 'DisasterRecovery', 'HighAvailability', 'MonitoringAndAlerting', 'Other', 'Personalized', 'PrioritizedRecommendations', 'Scalability', 'ServiceUpgradeAndRetirement', 'Validation']&lt;br&gt;&lt;br&gt;Example:&lt;br&gt;- $filter=recommendationCategory eq 'HighAvailability' and recommendationSubCategory eq 'ServiceUpgradeAndRetirement' and retirementDate ge '2024-01-01' and retirementDate le '2028-01-01'. Filter can be applied on trackingIds as well.&lt;br&gt;- $filter=trackingIds/any(t: t eq 'some-guid')&lt;br&gt;&lt;br&gt;⚠ <b>Note:</b> `trackingIDs` filter can be used for filtering one value at a time. The support to filter multiple values is not currently available. Also the support to add other filters along with `trackingIDs` is not available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AdvisorMetadataEntityResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AdvisorMetadataEntityResource> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<AdvisorMetadataEntityResource> GetAll(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AdvisorMetadataEntityData, AdvisorMetadataEntityResource>(new AdvisorMetadataEntityDataCollectionResultOfT(_metadataEntitiesRestClient, context, "AdvisorMetadataEntityCollection.GetAll"), data => new AdvisorMetadataEntityResource(Client, data));
+            return new PageableWrapper<AdvisorMetadataEntityData, AdvisorMetadataEntityResource>(new AdvisorMetadataEntityDataCollectionResultOfT(_metadataEntitiesRestClient, filter, context, "AdvisorMetadataEntityCollection.GetAll"), data => new AdvisorMetadataEntityResource(Client, data));
         }
 
         /// <summary>
@@ -222,7 +224,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -279,7 +281,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -336,7 +338,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -397,7 +399,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Advisor
 {
     /// <summary></summary>
-    public partial class AdvisorRecommendationResource : IJsonModel<AdvisorRecommendationData>
+    public partial class ResourceRecommendationBaseResource : IJsonModel<AdvisorRecommendationData>
     {
         private static IJsonModel<AdvisorRecommendationData> s_dataDeserializationInstance;
 

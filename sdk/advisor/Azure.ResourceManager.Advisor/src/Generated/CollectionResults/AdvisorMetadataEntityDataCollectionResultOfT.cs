@@ -17,16 +17,19 @@ namespace Azure.ResourceManager.Advisor
     internal partial class AdvisorMetadataEntityDataCollectionResultOfT : Pageable<AdvisorMetadataEntityData>
     {
         private readonly MetadataEntities _client;
+        private readonly string _filter;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of AdvisorMetadataEntityDataCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The MetadataEntities client used to send requests. </param>
+        /// <param name="filter"> The filter to apply to the recommendation metadata.&lt;br&gt;Filter can be applied to properties ['[recommendationCategory](#category)', '[recommendationSubCategory](#recommendationSubCategory)', 'RetirementDate'] with operators ['eq', 'and', 'le', 'ge']&lt;br&gt;The filter can also be applied to property ['[TrackingIds]']&lt;br&gt;&lt;br&gt;⚠ <b>Note:</b> `recommendationControl` is a legacy filter property and will be deprecated in the future. Please use `recommendationSubCategory` for filtering recommendation subcategory.&lt;br&gt;&lt;br&gt;Valid options for recommendationSubCategory: ['BusinessContinuity', 'DisasterRecovery', 'HighAvailability', 'MonitoringAndAlerting', 'Other', 'Personalized', 'PrioritizedRecommendations', 'Scalability', 'ServiceUpgradeAndRetirement', 'Validation']&lt;br&gt;&lt;br&gt;Example:&lt;br&gt;- $filter=recommendationCategory eq 'HighAvailability' and recommendationSubCategory eq 'ServiceUpgradeAndRetirement' and retirementDate ge '2024-01-01' and retirementDate le '2028-01-01'. Filter can be applied on trackingIds as well.&lt;br&gt;- $filter=trackingIds/any(t: t eq 'some-guid')&lt;br&gt;&lt;br&gt;⚠ <b>Note:</b> `trackingIDs` filter can be used for filtering one value at a time. The support to filter multiple values is not currently available. Also the support to add other filters along with `trackingIDs` is not available. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public AdvisorMetadataEntityDataCollectionResultOfT(MetadataEntities client, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public AdvisorMetadataEntityDataCollectionResultOfT(MetadataEntities client, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
+            _filter = filter;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
@@ -60,7 +63,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _context) : _client.CreateGetAllRequest(_context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _filter, _context) : _client.CreateGetAllRequest(_filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

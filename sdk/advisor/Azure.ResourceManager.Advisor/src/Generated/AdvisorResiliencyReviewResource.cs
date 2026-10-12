@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Advisor
         {
             TryGetApiVersion(ResourceType, out string advisorResiliencyReviewApiVersion);
             _resiliencyReviewsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", ResourceType.Namespace, Diagnostics);
-            _resiliencyReviewsRestClient = new ResiliencyReviews(_resiliencyReviewsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, advisorResiliencyReviewApiVersion ?? "2025-05-01-preview");
+            _resiliencyReviewsRestClient = new ResiliencyReviews(_resiliencyReviewsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, advisorResiliencyReviewApiVersion ?? "2026-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -184,39 +184,6 @@ namespace Azure.ResourceManager.Advisor
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets a collection of AdvisorTriageRecommendations in the <see cref="AdvisorResiliencyReviewResource"/>. </summary>
-        /// <returns> An object representing collection of AdvisorTriageRecommendations and their operations over a AdvisorTriageRecommendationResource. </returns>
-        public virtual AdvisorTriageRecommendationCollection GetAdvisorTriageRecommendations()
-        {
-            return GetCachedClient(client => new AdvisorTriageRecommendationCollection(client, Id));
-        }
-
-        /// <summary> Get an existing recommendation by id for an existing Azure Advisor Resiliency Review Id. </summary>
-        /// <param name="recommendationId"> Existing triage recommendation id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AdvisorTriageRecommendationResource>> GetAdvisorTriageRecommendationAsync(string recommendationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
-
-            return await GetAdvisorTriageRecommendations().GetAsync(recommendationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get an existing recommendation by id for an existing Azure Advisor Resiliency Review Id. </summary>
-        /// <param name="recommendationId"> Existing triage recommendation id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AdvisorTriageRecommendationResource> GetAdvisorTriageRecommendation(string recommendationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
-
-            return GetAdvisorTriageRecommendations().Get(recommendationId, cancellationToken);
         }
     }
 }

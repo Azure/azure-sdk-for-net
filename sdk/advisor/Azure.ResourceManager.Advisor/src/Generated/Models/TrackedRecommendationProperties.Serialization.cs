@@ -14,7 +14,7 @@ using Azure.ResourceManager.Advisor;
 namespace Azure.ResourceManager.Advisor.Models
 {
     /// <summary> The tracked properties of a Recommendation. </summary>
-    public partial class TrackedRecommendationProperties : IJsonModel<TrackedRecommendationProperties>
+    internal partial class TrackedRecommendationProperties : IJsonModel<TrackedRecommendationProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -74,21 +74,6 @@ namespace Azure.ResourceManager.Advisor.Models
             {
                 throw new FormatException($"The model {nameof(TrackedRecommendationProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(State))
-            {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
-            }
-            if (Optional.IsDefined(PostponedUntil))
-            {
-                writer.WritePropertyName("postponedTime"u8);
-                writer.WriteStringValue(PostponedUntil.Value, "O");
-            }
-            if (Optional.IsDefined(Reason))
-            {
-                writer.WritePropertyName("reason"u8);
-                writer.WriteStringValue(Reason.Value.ToString());
-            }
             if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
@@ -136,40 +121,10 @@ namespace Azure.ResourceManager.Advisor.Models
             {
                 return null;
             }
-            RecommendationState? state = default;
-            DateTimeOffset? postponedUntil = default;
-            RecommendationStateChangeReason? reason = default;
             RecommendationPriority? priority = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("state"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    state = new RecommendationState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("postponedTime"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    postponedUntil = prop.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (prop.NameEquals("reason"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    reason = new RecommendationStateChangeReason(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("priority"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -184,7 +139,7 @@ namespace Azure.ResourceManager.Advisor.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TrackedRecommendationProperties(state, postponedUntil, reason, priority, additionalBinaryDataProperties);
+            return new TrackedRecommendationProperties(priority, additionalBinaryDataProperties);
         }
     }
 }

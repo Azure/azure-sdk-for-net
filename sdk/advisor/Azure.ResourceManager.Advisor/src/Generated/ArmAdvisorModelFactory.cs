@@ -93,12 +93,23 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="impact"> The business impact of the recommendation. </param>
         /// <param name="impactedField"> The resource type identified by Advisor. </param>
         /// <param name="impactedValue"> The resource identified by Advisor. </param>
-        /// <param name="lastUpdatedOn"> The most recent time that Advisor checked the validity of the recommendation. </param>
+        /// <param name="criticalityScore"> The criticality score assigned to the recommendation. </param>
+        /// <param name="criticality"> The criticality assigned to the recommendation. </param>
+        /// <param name="scoreChangedAt"> The time when the recommendation's criticality score last changed. </param>
+        /// <param name="serviceGroupId"> The service group ID associated with the recommendation. </param>
+        /// <param name="savings"> The estimated savings associated with the recommendation. </param>
+        /// <param name="recommendationStatus"> The state of the Recommendation. </param>
+        /// <param name="completionType"> The type of recommendation completion, which is either MarkedByUser or SystemVerified. </param>
+        /// <param name="recommendationDismissReason"> The reason the Recommendation was dismissed. </param>
+        /// <param name="postponedUntilOn"> The time the Recommendation was postponed until. </param>
+        /// <param name="lastRefreshed"> The most recent time Advisor evaluated the recommendation for validity (re-ingested). </param>
+        /// <param name="lastUpdatedOn"> The most recent time the recommendation state changed (manual or automated). </param>
+        /// <param name="createdOn"> The created time of the recommendation. </param>
         /// <param name="metadata"> The recommendation metadata. </param>
         /// <param name="recommendationTypeId"> The recommendation-type GUID. </param>
         /// <param name="risk"> The potential risk of not implementing the recommendation. </param>
         /// <param name="shortDescription"> A summary of the recommendation. </param>
-        /// <param name="suppressionIds"> The list of snoozed and dismissed rules for the recommendation. </param>
+        /// <param name="suppressionId"> The single snoozed or dismissed rule for the recommendation. </param>
         /// <param name="extendedProperties"> Extended properties. </param>
         /// <param name="resourceMetadata"> Metadata of resource that was assessed. </param>
         /// <param name="description"> The detailed description of recommendation. </param>
@@ -108,32 +119,42 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="actions"> The list of recommended actions to implement recommendation. </param>
         /// <param name="remediation"> The automated way to apply recommendation. </param>
         /// <param name="exposedMetadataProperties"> The recommendation metadata properties exposed to customer to provide additional information. </param>
-        /// <param name="isTracked"> If the Recommendation has Tracking enabled. </param>
-        /// <param name="trackedProperties"> The properties of a tracked recommendation. </param>
         /// <param name="review"> The Review that this Recommendation belongs to. </param>
         /// <param name="resourceWorkload"> The Workload that this Resource belongs to. </param>
         /// <param name="sourceSystem"> The Source System that this Recommendation originated from. </param>
         /// <param name="notes"> Additional notes for the Recommendation. </param>
+        /// <param name="trackedPriority"> The Priority of the Recommendation. </param>
         /// <returns> A new <see cref="Advisor.AdvisorRecommendationData"/> instance for mocking. </returns>
-        public static AdvisorRecommendationData AdvisorRecommendationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RecommendationCategory? category = default, RecommendationControlType? control = default, RecommendationBusinessImpact? impact = default, string impactedField = default, string impactedValue = default, DateTimeOffset? lastUpdatedOn = default, IDictionary<string, BinaryData> metadata = default, string recommendationTypeId = default, RecommendationRisk? risk = default, RecommendationShortDescription shortDescription = default, IEnumerable<Guid> suppressionIds = default, IDictionary<string, string> extendedProperties = default, RecommendationResourceMetadata resourceMetadata = default, string description = default, string label = default, string learnMoreLink = default, string potentialBenefits = default, IEnumerable<IDictionary<string, BinaryData>> actions = default, IDictionary<string, BinaryData> remediation = default, IDictionary<string, BinaryData> exposedMetadataProperties = default, bool? isTracked = default, TrackedRecommendationProperties trackedProperties = default, RecommendationReview review = default, RecommendationResourceWorkload resourceWorkload = default, string sourceSystem = default, string notes = default)
+        public static AdvisorRecommendationData AdvisorRecommendationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RecommendationCategory? category = default, RecommendationControlType? control = default, RecommendationBusinessImpact? impact = default, string impactedField = default, string impactedValue = default, string criticalityScore = default, string criticality = default, string scoreChangedAt = default, string serviceGroupId = default, ResourceRecommendationSavings savings = default, RecommendationStatus? recommendationStatus = default, string completionType = default, RecommendationDismissReason? recommendationDismissReason = default, DateTimeOffset? postponedUntilOn = default, DateTimeOffset? lastRefreshed = default, DateTimeOffset? lastUpdatedOn = default, DateTimeOffset? createdOn = default, IDictionary<string, BinaryData> metadata = default, string recommendationTypeId = default, RecommendationRisk? risk = default, RecommendationShortDescription shortDescription = default, string suppressionId = default, IDictionary<string, string> extendedProperties = default, RecommendationResourceMetadata resourceMetadata = default, string description = default, string label = default, string learnMoreLink = default, string potentialBenefits = default, IEnumerable<IDictionary<string, BinaryData>> actions = default, IDictionary<string, BinaryData> remediation = default, IDictionary<string, BinaryData> exposedMetadataProperties = default, RecommendationReview review = default, RecommendationResourceWorkload resourceWorkload = default, string sourceSystem = default, string notes = default, RecommendationPriority? trackedPriority = default)
         {
             return new AdvisorRecommendationData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                category is null && control is null && impact is null && impactedField is null && impactedValue is null && lastUpdatedOn is null && metadata is null && recommendationTypeId is null && risk is null && shortDescription is null && suppressionIds is null && extendedProperties is null && resourceMetadata is null && description is null && label is null && learnMoreLink is null && potentialBenefits is null && actions is null && remediation is null && exposedMetadataProperties is null && isTracked is null && trackedProperties is null && review is null && resourceWorkload is null && sourceSystem is null && notes is null ? default : new AdvisorRecommendationProperties(
+                category is null && control is null && impact is null && impactedField is null && impactedValue is null && criticalityScore is null && criticality is null && scoreChangedAt is null && serviceGroupId is null && savings is null && recommendationStatus is null && completionType is null && recommendationDismissReason is null && postponedUntilOn is null && lastRefreshed is null && lastUpdatedOn is null && createdOn is null && metadata is null && recommendationTypeId is null && risk is null && shortDescription is null && suppressionId is null && extendedProperties is null && resourceMetadata is null && description is null && label is null && learnMoreLink is null && potentialBenefits is null && actions is null && remediation is null && exposedMetadataProperties is null && trackedPriority is null && review is null && resourceWorkload is null && sourceSystem is null && notes is null ? default : new AdvisorRecommendationProperties(
                     category,
                     control,
                     impact,
                     impactedField,
                     impactedValue,
+                    criticalityScore,
+                    criticality,
+                    scoreChangedAt,
+                    serviceGroupId,
+                    savings,
+                    recommendationStatus,
+                    completionType,
+                    recommendationDismissReason,
+                    postponedUntilOn,
+                    lastRefreshed,
                     lastUpdatedOn,
+                    createdOn,
                     metadata ?? new ChangeTrackingDictionary<string, BinaryData>(),
                     recommendationTypeId,
                     risk,
                     shortDescription,
-                    (suppressionIds ?? new ChangeTrackingList<Guid>()).ToList(),
+                    suppressionId,
                     extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
                     resourceMetadata,
                     description,
@@ -143,13 +164,52 @@ namespace Azure.ResourceManager.Advisor.Models
                     (actions ?? new ChangeTrackingList<IDictionary<string, BinaryData>>()).ToList(),
                     remediation ?? new ChangeTrackingDictionary<string, BinaryData>(),
                     exposedMetadataProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                    isTracked,
-                    trackedProperties,
+                    trackedPriority is null ? default : new TrackedRecommendationProperties(trackedPriority, default),
                     review,
                     resourceWorkload,
                     sourceSystem,
                     notes,
                     default),
+                default);
+        }
+
+        /// <summary> The estimated savings associated with a resource recommendation. </summary>
+        /// <param name="providerCurrency"> The currency used by the recommendation provider. </param>
+        /// <param name="billingCurrency"> The currency used for billing. </param>
+        /// <param name="isDirectChannel"> Indicates whether the recommendation is for a direct billing channel. </param>
+        /// <param name="resourceDeletedOn"> The time when the recommended resource was deleted. </param>
+        /// <param name="retail"> The savings calculated using retail pricing. </param>
+        /// <param name="contracted"> The savings calculated using contracted pricing. </param>
+        /// <returns> A new <see cref="Models.ResourceRecommendationSavings"/> instance for mocking. </returns>
+        public static ResourceRecommendationSavings ResourceRecommendationSavings(string providerCurrency = default, string billingCurrency = default, bool? isDirectChannel = default, DateTimeOffset? resourceDeletedOn = default, ResourceRecommendationSavingsDetails retail = default, ResourceRecommendationSavingsDetails contracted = default)
+        {
+            return new ResourceRecommendationSavings(
+                providerCurrency,
+                billingCurrency,
+                isDirectChannel,
+                resourceDeletedOn,
+                retail,
+                contracted,
+                default);
+        }
+
+        /// <summary> The detailed savings amounts for a resource recommendation. </summary>
+        /// <param name="potentialSavings"> The potential savings in the provider currency. </param>
+        /// <param name="potentialSavingsInBillingCurrency"> The potential savings in the billing currency. </param>
+        /// <param name="wastedTillDate"> The amount wasted to date in the provider currency. </param>
+        /// <param name="wastedTillDateInBillingCurrency"> The amount wasted to date in the billing currency. </param>
+        /// <param name="realizedSavings"> The realized savings in the provider currency. </param>
+        /// <param name="realizedSavingsInBillingCurrency"> The realized savings in the billing currency. </param>
+        /// <returns> A new <see cref="Models.ResourceRecommendationSavingsDetails"/> instance for mocking. </returns>
+        public static ResourceRecommendationSavingsDetails ResourceRecommendationSavingsDetails(double? potentialSavings = default, double? potentialSavingsInBillingCurrency = default, double? wastedTillDate = default, double? wastedTillDateInBillingCurrency = default, double? realizedSavings = default, double? realizedSavingsInBillingCurrency = default)
+        {
+            return new ResourceRecommendationSavingsDetails(
+                potentialSavings,
+                potentialSavingsInBillingCurrency,
+                wastedTillDate,
+                wastedTillDateInBillingCurrency,
+                realizedSavings,
+                realizedSavingsInBillingCurrency,
                 default);
         }
 
@@ -173,17 +233,6 @@ namespace Azure.ResourceManager.Advisor.Models
                 default);
         }
 
-        /// <summary> The tracked properties of a Recommendation. </summary>
-        /// <param name="state"> The state of the Recommendation. </param>
-        /// <param name="postponedUntil"> The time the Recommendation was postponed until. </param>
-        /// <param name="reason"> The reason the state of the Recommendation was changed. </param>
-        /// <param name="priority"> The Priority of the Recommendation. </param>
-        /// <returns> A new <see cref="Models.TrackedRecommendationProperties"/> instance for mocking. </returns>
-        public static TrackedRecommendationProperties TrackedRecommendationProperties(RecommendationState? state = default, DateTimeOffset? postponedUntil = default, RecommendationStateChangeReason? reason = default, RecommendationPriority? priority = default)
-        {
-            return new TrackedRecommendationProperties(state, postponedUntil, reason, priority, default);
-        }
-
         /// <summary> The Review that this Recommendation belongs to. </summary>
         /// <param name="id"> The ARM Resource Id of the Review. </param>
         /// <param name="name"> The Name of the Review. </param>
@@ -202,11 +251,22 @@ namespace Azure.ResourceManager.Advisor.Models
             return new RecommendationResourceWorkload(id, name, default);
         }
 
-        /// <param name="advisorRecommendationPatchTrackedProperties"> The tracked properties of a Recommendation. </param>
-        /// <returns> A new <see cref="Models.AdvisorRecommendationPatch"/> instance for mocking. </returns>
-        public static AdvisorRecommendationPatch AdvisorRecommendationPatch(TrackedRecommendationProperties advisorRecommendationPatchTrackedProperties = default)
+        /// <summary> The recommendation patch payload. </summary>
+        /// <param name="properties"> The properties for recommendation patch payload. </param>
+        /// <returns> A new <see cref="Models.ServiceGroupRecommendationPatch"/> instance for mocking. </returns>
+        public static ServiceGroupRecommendationPatch ServiceGroupRecommendationPatch(RecommendationStatePropertiesPayload properties = default)
         {
-            return new AdvisorRecommendationPatch(advisorRecommendationPatchTrackedProperties is null ? default : new AdvisorRecommendationPatchProperties(advisorRecommendationPatchTrackedProperties, default), default);
+            return new ServiceGroupRecommendationPatch(properties, default);
+        }
+
+        /// <summary> Properties for recommendation state patch payload. </summary>
+        /// <param name="recommendationStatus"> The state of the recommendation. </param>
+        /// <param name="recommendationDismissReason"> The reason the state of the Recommendation was changed. </param>
+        /// <param name="postponedUntilOn"> The time the Recommendation was postponed until. </param>
+        /// <returns> A new <see cref="Models.RecommendationStatePropertiesPayload"/> instance for mocking. </returns>
+        public static RecommendationStatePropertiesPayload RecommendationStatePropertiesPayload(RecommendationStatus? recommendationStatus = default, RecommendationDismissReason? recommendationDismissReason = default, DateTimeOffset? postponedUntilOn = default)
+        {
+            return new RecommendationStatePropertiesPayload(recommendationStatus, recommendationDismissReason, postponedUntilOn, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -339,82 +399,6 @@ namespace Azure.ResourceManager.Advisor.Models
                     recommendationsCount,
                     publishedOn,
                     updatedOn,
-                    default),
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="reviewId"> Review id. </param>
-        /// <param name="title"> Recommendation label. </param>
-        /// <param name="priority"> Recommendation priority. </param>
-        /// <param name="appliesToSubscriptions"> List of subscription ids. </param>
-        /// <param name="recommendationStatus"> Recommendation status. </param>
-        /// <param name="updatedOn"> Recommendation potential benefit. </param>
-        /// <param name="rejectReason"> Recommendation rejection reason. </param>
-        /// <param name="potentialBenefits"> Recommendation potential benefit. </param>
-        /// <param name="description"> Recommendation description. </param>
-        /// <param name="notes"> Recommendation notes. </param>
-        /// <returns> A new <see cref="Advisor.AdvisorTriageRecommendationData"/> instance for mocking. </returns>
-        public static AdvisorTriageRecommendationData AdvisorTriageRecommendationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string reviewId = default, string title = default, RecommendationPriorityName? priority = default, IEnumerable<string> appliesToSubscriptions = default, RecommendationStatusName? recommendationStatus = default, DateTimeOffset? updatedOn = default, string rejectReason = default, string potentialBenefits = default, string description = default, string notes = default)
-        {
-            return new AdvisorTriageRecommendationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                reviewId is null && title is null && priority is null && appliesToSubscriptions is null && recommendationStatus is null && updatedOn is null && rejectReason is null && potentialBenefits is null && description is null && notes is null ? default : new AdvisorTriageRecommendationProperties(
-                    reviewId,
-                    title,
-                    priority,
-                    (appliesToSubscriptions ?? new ChangeTrackingList<string>()).ToList(),
-                    recommendationStatus,
-                    updatedOn,
-                    rejectReason,
-                    potentialBenefits,
-                    description,
-                    notes,
-                    default),
-                default);
-        }
-
-        /// <summary> Recommendation reject body. </summary>
-        /// <param name="reasonForRejection"> Reason for rejecting recommendation. </param>
-        /// <returns> A new <see cref="Models.RecommendationRejectContent"/> instance for mocking. </returns>
-        public static RecommendationRejectContent RecommendationRejectContent(RejectingRecommendationReason? reasonForRejection = default)
-        {
-            return new RecommendationRejectContent(reasonForRejection, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="reviewId"> Unique identifier for the review resource this triageResource belongs to. </param>
-        /// <param name="recommendationId"> Unique identifier for the recommendation resource this triageResource belongs to. </param>
-        /// <param name="subscriptionId"> Unique identifier for the subscription resource this triageResource belongs to. </param>
-        /// <param name="resourceGroup"> Name of the resource group this triageResource belongs to. </param>
-        /// <param name="triageResourceType"> Type of resource this triageResource corresponds to e.g. "Cosmos DB". </param>
-        /// <param name="resourceId"> Full Azure resource id path of the resource this triageResource corresponds to. </param>
-        /// <param name="resourceName"> Name of the resource this triageResource corresponds to. </param>
-        /// <returns> A new <see cref="Advisor.AdvisorTriageData"/> instance for mocking. </returns>
-        public static AdvisorTriageData AdvisorTriageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string reviewId = default, string recommendationId = default, string subscriptionId = default, string resourceGroup = default, string triageResourceType = default, ResourceIdentifier resourceId = default, string resourceName = default)
-        {
-            return new AdvisorTriageData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                reviewId is null && recommendationId is null && subscriptionId is null && resourceGroup is null && triageResourceType is null && resourceId is null && resourceName is null ? default : new AdvisorTriageProperties(
-                    reviewId,
-                    recommendationId,
-                    subscriptionId,
-                    resourceGroup,
-                    triageResourceType,
-                    resourceId,
-                    resourceName,
                     default),
                 default);
         }

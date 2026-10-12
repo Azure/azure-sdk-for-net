@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Advisor
 {
     /// <summary>
     /// A class representing a collection of <see cref="AdvisorSuppressionContractResource"/> and their operations.
-    /// Each <see cref="AdvisorSuppressionContractResource"/> in the collection will belong to the same instance of <see cref="AdvisorRecommendationResource"/>.
-    /// To get a <see cref="AdvisorSuppressionContractCollection"/> instance call the GetAdvisorSuppressionContracts method from an instance of <see cref="AdvisorRecommendationResource"/>.
+    /// Each <see cref="AdvisorSuppressionContractResource"/> in the collection will belong to the same instance of <see cref="ResourceRecommendationBaseResource"/>.
+    /// To get a <see cref="AdvisorSuppressionContractCollection"/> instance call the GetAdvisorSuppressionContracts method from an instance of <see cref="ResourceRecommendationBaseResource"/>.
     /// </summary>
     public partial class AdvisorSuppressionContractCollection : ArmCollection
     {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Advisor
         {
             TryGetApiVersion(AdvisorSuppressionContractResource.ResourceType, out string advisorSuppressionContractApiVersion);
             _suppressionContractsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", AdvisorSuppressionContractResource.ResourceType.Namespace, Diagnostics);
-            _suppressionContractsRestClient = new SuppressionContracts(_suppressionContractsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, advisorSuppressionContractApiVersion ?? "2025-05-01-preview");
+            _suppressionContractsRestClient = new SuppressionContracts(_suppressionContractsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, advisorSuppressionContractApiVersion ?? "2026-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.Advisor
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != AdvisorRecommendationResource.ResourceType)
+            if (id.ResourceType != ResourceRecommendationBaseResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AdvisorRecommendationResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceRecommendationBaseResource.ResourceType), nameof(id));
             }
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
