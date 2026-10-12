@@ -12,23 +12,23 @@ using System.Linq;
 namespace Azure.ResourceManager.Elastic.Models
 {
     /// <summary> List of elastic versions available in a region. </summary>
-    internal partial class ElasticVersionsListResponse
+    internal partial class ElasticVersionsListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ElasticVersionsListResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticVersionsListResult"/>. </summary>
         /// <param name="value"> The ElasticVersionListFormat items on this page. </param>
-        internal ElasticVersionsListResponse(IEnumerable<ElasticVersion> value)
+        internal ElasticVersionsListResult(IEnumerable<ElasticVersion> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ElasticVersionsListResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticVersionsListResult"/>. </summary>
         /// <param name="value"> The ElasticVersionListFormat items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticVersionsListResponse(IList<ElasticVersion> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ElasticVersionsListResult(IList<ElasticVersion> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;

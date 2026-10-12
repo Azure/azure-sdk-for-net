@@ -14,64 +14,64 @@ using Azure.ResourceManager.Elastic;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    /// <summary> Response of a list operation. </summary>
-    internal partial class MonitoringTagRulesListResponse : IJsonModel<MonitoringTagRulesListResponse>
+    /// <summary> List of elastic versions available in a region. </summary>
+    internal partial class ElasticVersionsListResult : IJsonModel<ElasticVersionsListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="MonitoringTagRulesListResponse"/> for deserialization. </summary>
-        internal MonitoringTagRulesListResponse()
+        /// <summary> Initializes a new instance of <see cref="ElasticVersionsListResult"/> for deserialization. </summary>
+        internal ElasticVersionsListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MonitoringTagRulesListResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ElasticVersionsListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitoringTagRulesListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticVersionsListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMonitoringTagRulesListResponse(document.RootElement, options);
+                        return DeserializeElasticVersionsListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitoringTagRulesListResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticVersionsListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitoringTagRulesListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticVersionsListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MonitoringTagRulesListResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticVersionsListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MonitoringTagRulesListResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ElasticVersionsListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MonitoringTagRulesListResponse IPersistableModel<MonitoringTagRulesListResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ElasticVersionsListResult IPersistableModel<ElasticVersionsListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MonitoringTagRulesListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ElasticVersionsListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MonitoringTagRulesListResponse"/> from. </param>
-        internal static MonitoringTagRulesListResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ElasticVersionsListResult"/> from. </param>
+        internal static ElasticVersionsListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeMonitoringTagRulesListResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeElasticVersionsListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MonitoringTagRulesListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ElasticVersionsListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitoringTagRulesListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticVersionsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitoringTagRulesListResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticVersionsListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ElasticTagRuleData item in Value)
+            foreach (ElasticVersion item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -118,40 +118,40 @@ namespace Azure.ResourceManager.Elastic.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MonitoringTagRulesListResponse IJsonModel<MonitoringTagRulesListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ElasticVersionsListResult IJsonModel<ElasticVersionsListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MonitoringTagRulesListResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ElasticVersionsListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitoringTagRulesListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticVersionsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitoringTagRulesListResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticVersionsListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMonitoringTagRulesListResponse(document.RootElement, options);
+            return DeserializeElasticVersionsListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MonitoringTagRulesListResponse DeserializeMonitoringTagRulesListResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static ElasticVersionsListResult DeserializeElasticVersionsListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<ElasticTagRuleData> value = default;
+            IList<ElasticVersion> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ElasticTagRuleData> array = new List<ElasticTagRuleData>();
+                    List<ElasticVersion> array = new List<ElasticVersion>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ElasticTagRuleData.DeserializeElasticTagRuleData(item, options));
+                        array.Add(ElasticVersion.DeserializeElasticVersion(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MonitoringTagRulesListResponse(value, nextLink, additionalBinaryDataProperties);
+            return new ElasticVersionsListResult(value ?? new ChangeTrackingList<ElasticVersion>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
