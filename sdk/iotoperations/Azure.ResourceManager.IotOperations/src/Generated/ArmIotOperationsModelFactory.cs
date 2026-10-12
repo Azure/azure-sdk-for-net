@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.BrokerRetainMessagesPolicy"/> instance for mocking. </returns>
         public static BrokerRetainMessagesPolicy BrokerRetainMessagesPolicy(string mode = default)
         {
-            return new UnknownBrokerRetainMessagesPolicy(default, default);
+            return new UnknownBrokerRetainMessagesPolicy(mode is null ? default : new BrokerPersistencePolicyMode(mode), default);
         }
 
         /// <summary> Custom Broker Retain Message Policy. </summary>
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.BrokerRetainMessagesCustomPolicy"/> instance for mocking. </returns>
         public static BrokerRetainMessagesCustomPolicy BrokerRetainMessagesCustomPolicy(BrokerRetainMessagesSettings retainSettings = default)
         {
-            return new BrokerRetainMessagesCustomPolicy(default, default, retainSettings);
+            return new BrokerRetainMessagesCustomPolicy(BrokerPersistencePolicyMode.Custom, default, retainSettings);
         }
 
         /// <param name="topics"> List of topics under which retained messages would be persisted to disk. Wildcards # and + supported. </param>
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.BrokerStateStorePolicy"/> instance for mocking. </returns>
         public static BrokerStateStorePolicy BrokerStateStorePolicy(string mode = default)
         {
-            return new UnknownBrokerStateStorePolicy(default, default);
+            return new UnknownBrokerStateStorePolicy(mode is null ? default : new BrokerPersistencePolicyMode(mode), default);
         }
 
         /// <summary> Broker State Store Custom Policy. </summary>
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.BrokerStateStoreCustomPolicy"/> instance for mocking. </returns>
         public static BrokerStateStoreCustomPolicy BrokerStateStoreCustomPolicy(BrokerStateStorePolicySettings stateStoreSettings = default)
         {
-            return new BrokerStateStoreCustomPolicy(default, default, stateStoreSettings);
+            return new BrokerStateStoreCustomPolicy(BrokerPersistencePolicyMode.Custom, default, stateStoreSettings);
         }
 
         /// <param name="stateStoreResources"> List of key and key type to persist to disk. </param>
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.BrokerSubscriberQueuePolicy"/> instance for mocking. </returns>
         public static BrokerSubscriberQueuePolicy BrokerSubscriberQueuePolicy(string mode = default)
         {
-            return new UnknownBrokerSubscriberQueuePolicy(default, default);
+            return new UnknownBrokerSubscriberQueuePolicy(mode is null ? default : new BrokerPersistencePolicyMode(mode), default);
         }
 
         /// <summary> Custom Subscriber Queue Policy Properties. </summary>
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.BrokerSubscriberQueueCustomPolicy"/> instance for mocking. </returns>
         public static BrokerSubscriberQueueCustomPolicy BrokerSubscriberQueueCustomPolicy(BrokerSubscriberQueueCustomPolicySettings subscriberQueueSettings = default)
         {
-            return new BrokerSubscriberQueueCustomPolicy(default, default, subscriberQueueSettings);
+            return new BrokerSubscriberQueueCustomPolicy(BrokerPersistencePolicyMode.Custom, default, subscriberQueueSettings);
         }
 
         /// <param name="subscriberClientIds"> List of client IDs of the subscribers, wildcard * supported. </param>
@@ -1036,7 +1036,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.DataflowDestinationHeaderAction"/> instance for mocking. </returns>
         public static DataflowDestinationHeaderAction DataflowDestinationHeaderAction(string actionType = default)
         {
-            return new UnknownDataflowDestinationHeaderAction(default, default);
+            return new UnknownDataflowDestinationHeaderAction(actionType is null ? default : new DataflowHeaderActionType(actionType), default);
         }
 
         /// <summary> Dataflow Destination Add if not present HeaderAction properties. </summary>
@@ -1045,7 +1045,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.DataflowDestinationAddIfNotPresentHeaderAction"/> instance for mocking. </returns>
         public static DataflowDestinationAddIfNotPresentHeaderAction DataflowDestinationAddIfNotPresentHeaderAction(string key = default, string value = default)
         {
-            return new DataflowDestinationAddIfNotPresentHeaderAction(default, default, key, value);
+            return new DataflowDestinationAddIfNotPresentHeaderAction(DataflowHeaderActionType.AddIfNotPresent, default, key, value);
         }
 
         /// <summary> Dataflow Destination Remove HeaderAction properties. </summary>
@@ -1053,7 +1053,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.DataflowDestinationRemoveHeaderAction"/> instance for mocking. </returns>
         public static DataflowDestinationRemoveHeaderAction DataflowDestinationRemoveHeaderAction(string key = default)
         {
-            return new DataflowDestinationRemoveHeaderAction(default, default, key);
+            return new DataflowDestinationRemoveHeaderAction(DataflowHeaderActionType.Remove, default, key);
         }
 
         /// <summary> Dataflow Destination Add or Replace HeaderAction properties. </summary>
@@ -1062,7 +1062,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.DataflowDestinationAddOrReplaceHeaderAction"/> instance for mocking. </returns>
         public static DataflowDestinationAddOrReplaceHeaderAction DataflowDestinationAddOrReplaceHeaderAction(string key = default, string value = default)
         {
-            return new DataflowDestinationAddOrReplaceHeaderAction(default, default, key, value);
+            return new DataflowDestinationAddOrReplaceHeaderAction(DataflowHeaderActionType.AddOrReplace, default, key, value);
         }
 
         /// <summary> Instance dataflowEndpoint resource. </summary>
@@ -1349,7 +1349,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.DataflowOpenTelemetryAuthentication"/> instance for mocking. </returns>
         public static DataflowOpenTelemetryAuthentication DataflowOpenTelemetryAuthentication(string @method = default)
         {
-            return new UnknownDataflowOpenTelemetryAuthentication(default, default);
+            return new UnknownDataflowOpenTelemetryAuthentication(@method is null ? default : new DataflowOpenTelemetryAuthenticationMethod(@method), default);
         }
 
         /// <param name="serviceAccountTokenAudience"> Audience of the service account. Optional, defaults to the broker internal service account audience. </param>
@@ -1357,7 +1357,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.DataflowOpenTelemetryServiceAccountAuthentication"/> instance for mocking. </returns>
         public static DataflowOpenTelemetryServiceAccountAuthentication DataflowOpenTelemetryServiceAccountAuthentication(string serviceAccountTokenAudience = default)
         {
-            return new DataflowOpenTelemetryServiceAccountAuthentication(default, default, serviceAccountTokenAudience is null ? default : new DataflowEndpointAuthenticationServiceAccountToken(serviceAccountTokenAudience, default));
+            return new DataflowOpenTelemetryServiceAccountAuthentication(DataflowOpenTelemetryAuthenticationMethod.ServiceAccountToken, default, serviceAccountTokenAudience is null ? default : new DataflowEndpointAuthenticationServiceAccountToken(serviceAccountTokenAudience, default));
         }
 
         /// <param name="x509CertificateSecretRef"> Secret reference of the X.509 certificate. </param>
@@ -1365,7 +1365,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.DataflowOpenTelemetryX509CertificateAuthentication"/> instance for mocking. </returns>
         public static DataflowOpenTelemetryX509CertificateAuthentication DataflowOpenTelemetryX509CertificateAuthentication(string x509CertificateSecretRef = default)
         {
-            return new DataflowOpenTelemetryX509CertificateAuthentication(default, default, x509CertificateSecretRef is null ? default : new DataflowEndpointAuthenticationX509(x509CertificateSecretRef, default));
+            return new DataflowOpenTelemetryX509CertificateAuthentication(DataflowOpenTelemetryAuthenticationMethod.X509Certificate, default, x509CertificateSecretRef is null ? default : new DataflowEndpointAuthenticationX509(x509CertificateSecretRef, default));
         }
 
         /// <summary> DataflowOpenTelemetryAnonymousAuthentication properties. </summary>
@@ -1373,7 +1373,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.DataflowOpenTelemetryAnonymousAuthentication"/> instance for mocking. </returns>
         public static DataflowOpenTelemetryAnonymousAuthentication DataflowOpenTelemetryAnonymousAuthentication(DataflowEndpointAuthenticationAnonymous anonymousSettings = default)
         {
-            return new DataflowOpenTelemetryAnonymousAuthentication(default, default, anonymousSettings);
+            return new DataflowOpenTelemetryAnonymousAuthentication(DataflowOpenTelemetryAuthenticationMethod.Anonymous, default, anonymousSettings);
         }
 
         /// <summary> DataflowEndpoint Anonymous Authentication properties. </summary>
@@ -1436,7 +1436,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.DataflowGraphNode"/> instance for mocking. </returns>
         public static DataflowGraphNode DataflowGraphNode(string name = default, string nodeType = default)
         {
-            return new UnknownDataflowGraphNode(name, default, default);
+            return new UnknownDataflowGraphNode(name, nodeType is null ? default : new DataflowGraphNodeType(nodeType), default);
         }
 
         /// <summary> DataflowGraph source node properties. </summary>
@@ -1445,7 +1445,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.DataflowGraphSourceNode"/> instance for mocking. </returns>
         public static DataflowGraphSourceNode DataflowGraphSourceNode(string name = default, DataflowGraphSourceSettings sourceSettings = default)
         {
-            return new DataflowGraphSourceNode(name, default, default, sourceSettings);
+            return new DataflowGraphSourceNode(name, DataflowGraphNodeType.Source, default, sourceSettings);
         }
 
         /// <summary> DataflowGraph source node settings. </summary>
@@ -1466,7 +1466,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.DataflowGraphGraphNode"/> instance for mocking. </returns>
         public static DataflowGraphGraphNode DataflowGraphGraphNode(string name = default, DataflowGraphNodeGraphSettings graphSettings = default)
         {
-            return new DataflowGraphGraphNode(name, default, default, graphSettings);
+            return new DataflowGraphGraphNode(name, DataflowGraphNodeType.Graph, default, graphSettings);
         }
 
         /// <summary> DataflowGraph graph node settings. </summary>
@@ -1496,7 +1496,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.DataflowGraphDestinationNode"/> instance for mocking. </returns>
         public static DataflowGraphDestinationNode DataflowGraphDestinationNode(string name = default, DataflowGraphDestinationNodeSettings destinationSettings = default)
         {
-            return new DataflowGraphDestinationNode(name, default, default, destinationSettings);
+            return new DataflowGraphDestinationNode(name, DataflowGraphNodeType.Destination, default, destinationSettings);
         }
 
         /// <summary> DataflowGraph destination node settings. </summary>
@@ -1519,7 +1519,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.DataflowGraphDestinationHeaderAction"/> instance for mocking. </returns>
         public static DataflowGraphDestinationHeaderAction DataflowGraphDestinationHeaderAction(string actionType = default)
         {
-            return new UnknownDataflowGraphDestinationHeaderAction(default, default);
+            return new UnknownDataflowGraphDestinationHeaderAction(actionType is null ? default : new DataflowGraphDestinationHeaderActionType(actionType), default);
         }
 
         /// <summary> DataflowGraph Destination Add if not present HeaderAction properties. </summary>
@@ -1528,7 +1528,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.DataflowGraphDestinationAddIfNotPresentHeaderAction"/> instance for mocking. </returns>
         public static DataflowGraphDestinationAddIfNotPresentHeaderAction DataflowGraphDestinationAddIfNotPresentHeaderAction(string key = default, string value = default)
         {
-            return new DataflowGraphDestinationAddIfNotPresentHeaderAction(default, default, key, value);
+            return new DataflowGraphDestinationAddIfNotPresentHeaderAction(DataflowGraphDestinationHeaderActionType.AddIfNotPresent, default, key, value);
         }
 
         /// <summary> DataflowGraph Destination Remove HeaderAction properties. </summary>
@@ -1536,7 +1536,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.DataflowGraphDestinationRemoveHeaderAction"/> instance for mocking. </returns>
         public static DataflowGraphDestinationRemoveHeaderAction DataflowGraphDestinationRemoveHeaderAction(string key = default)
         {
-            return new DataflowGraphDestinationRemoveHeaderAction(default, default, key);
+            return new DataflowGraphDestinationRemoveHeaderAction(DataflowGraphDestinationHeaderActionType.Remove, default, key);
         }
 
         /// <summary> DataflowGraph Destination Add or Replace HeaderAction properties. </summary>
@@ -1545,7 +1545,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.DataflowGraphDestinationAddOrReplaceHeaderAction"/> instance for mocking. </returns>
         public static DataflowGraphDestinationAddOrReplaceHeaderAction DataflowGraphDestinationAddOrReplaceHeaderAction(string key = default, string value = default)
         {
-            return new DataflowGraphDestinationAddOrReplaceHeaderAction(default, default, key, value);
+            return new DataflowGraphDestinationAddOrReplaceHeaderAction(DataflowGraphDestinationHeaderActionType.AddOrReplace, default, key, value);
         }
 
         /// <param name="from"> Information about the source node. </param>
@@ -1623,14 +1623,14 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.RegistryEndpointAuthentication"/> instance for mocking. </returns>
         public static RegistryEndpointAuthentication RegistryEndpointAuthentication(string @method = default)
         {
-            return new UnknownRegistryEndpointAuthentication(default, default);
+            return new UnknownRegistryEndpointAuthentication(@method is null ? default : new RegistryEndpointAuthenticationMethod(@method), default);
         }
 
         /// <param name="systemAssignedManagedIdentityAudience"> Audience of the service to authenticate against. Optional; defaults to the audience for Service host configuration. </param>
         /// <returns> A new <see cref="Models.RegistryEndpointSystemAssignedIdentityAuthentication"/> instance for mocking. </returns>
         public static RegistryEndpointSystemAssignedIdentityAuthentication RegistryEndpointSystemAssignedIdentityAuthentication(string systemAssignedManagedIdentityAudience = default)
         {
-            return new RegistryEndpointSystemAssignedIdentityAuthentication(default, default, systemAssignedManagedIdentityAudience is null ? default : new RegistryEndpointSystemAssignedManagedIdentitySettings(systemAssignedManagedIdentityAudience, default));
+            return new RegistryEndpointSystemAssignedIdentityAuthentication(RegistryEndpointAuthenticationMethod.SystemAssignedManagedIdentity, default, systemAssignedManagedIdentityAudience is null ? default : new RegistryEndpointSystemAssignedManagedIdentitySettings(systemAssignedManagedIdentityAudience, default));
         }
 
         /// <summary> User assigned identity authentication. </summary>
@@ -1638,7 +1638,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.RegistryEndpointUserAssignedIdentityAuthentication"/> instance for mocking. </returns>
         public static RegistryEndpointUserAssignedIdentityAuthentication RegistryEndpointUserAssignedIdentityAuthentication(RegistryEndpointUserAssignedManagedIdentitySettings userAssignedManagedIdentitySettings = default)
         {
-            return new RegistryEndpointUserAssignedIdentityAuthentication(default, default, userAssignedManagedIdentitySettings);
+            return new RegistryEndpointUserAssignedIdentityAuthentication(RegistryEndpointAuthenticationMethod.UserAssignedManagedIdentity, default, userAssignedManagedIdentitySettings);
         }
 
         /// <summary> User assigned managed identity properties. </summary>
@@ -1656,7 +1656,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.RegistryEndpointAnonymousAuthentication"/> instance for mocking. </returns>
         public static RegistryEndpointAnonymousAuthentication RegistryEndpointAnonymousAuthentication(RegistryEndpointAnonymousSettings anonymousSettings = default)
         {
-            return new RegistryEndpointAnonymousAuthentication(default, default, anonymousSettings);
+            return new RegistryEndpointAnonymousAuthentication(RegistryEndpointAuthenticationMethod.Anonymous, default, anonymousSettings);
         }
 
         /// <summary> RegistryEndpoint Anonymous authentication properties. </summary>
@@ -1671,7 +1671,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.RegistryEndpointArtifactPullSecretAuthentication"/> instance for mocking. </returns>
         public static RegistryEndpointArtifactPullSecretAuthentication RegistryEndpointArtifactPullSecretAuthentication(string secretRef = default)
         {
-            return new RegistryEndpointArtifactPullSecretAuthentication(default, default, secretRef is null ? default : new RegistryEndpointArtifactPullSecretSettings(secretRef, default));
+            return new RegistryEndpointArtifactPullSecretAuthentication(RegistryEndpointAuthenticationMethod.ArtifactPullSecret, default, secretRef is null ? default : new RegistryEndpointArtifactPullSecretSettings(secretRef, default));
         }
 
         /// <summary>
@@ -1682,7 +1682,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.RegistryEndpointTrustedSigningKey"/> instance for mocking. </returns>
         public static RegistryEndpointTrustedSigningKey RegistryEndpointTrustedSigningKey(string @type = default)
         {
-            return new UnknownRegistryEndpointTrustedSigningKey(default, default);
+            return new UnknownRegistryEndpointTrustedSigningKey(@type is null ? default : new RegistryEndpointTrustedSigningKeyType(@type), default);
         }
 
         /// <summary> Settings for RegistryEndpoint trust provided through a secret. </summary>
@@ -1690,7 +1690,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.RegistryEndpointTrustedSigningKeySecret"/> instance for mocking. </returns>
         public static RegistryEndpointTrustedSigningKeySecret RegistryEndpointTrustedSigningKeySecret(string secretRef = default)
         {
-            return new RegistryEndpointTrustedSigningKeySecret(default, default, secretRef);
+            return new RegistryEndpointTrustedSigningKeySecret(RegistryEndpointTrustedSigningKeyType.Secret, default, secretRef);
         }
 
         /// <summary> Settings for RegistryEndpoint trust provided through a configmap. </summary>
@@ -1698,7 +1698,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.RegistryEndpointTrustedSigningKeyConfigMap"/> instance for mocking. </returns>
         public static RegistryEndpointTrustedSigningKeyConfigMap RegistryEndpointTrustedSigningKeyConfigMap(string configMapRef = default)
         {
-            return new RegistryEndpointTrustedSigningKeyConfigMap(default, default, configMapRef);
+            return new RegistryEndpointTrustedSigningKeyConfigMap(RegistryEndpointTrustedSigningKeyType.ConfigMap, default, configMapRef);
         }
 
         /// <summary> AkriConnectorTemplate resource. </summary>
@@ -1763,7 +1763,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.AkriConnectorTemplateRuntimeConfiguration"/> instance for mocking. </returns>
         public static AkriConnectorTemplateRuntimeConfiguration AkriConnectorTemplateRuntimeConfiguration(string runtimeConfigurationType = default)
         {
-            return new UnknownAkriConnectorTemplateRuntimeConfiguration(default, default);
+            return new UnknownAkriConnectorTemplateRuntimeConfiguration(runtimeConfigurationType is null ? default : new AkriConnectorTemplateRuntimeConfigurationType(runtimeConfigurationType), default);
         }
 
         /// <summary> AkriConnectorTemplateManagedConfiguration properties. </summary>
@@ -1771,7 +1771,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.AkriConnectorTemplateManagedConfiguration"/> instance for mocking. </returns>
         public static AkriConnectorTemplateManagedConfiguration AkriConnectorTemplateManagedConfiguration(AkriConnectorTemplateManagedConfigurationSettings managedConfigurationSettings = default)
         {
-            return new AkriConnectorTemplateManagedConfiguration(default, default, managedConfigurationSettings);
+            return new AkriConnectorTemplateManagedConfiguration(AkriConnectorTemplateRuntimeConfigurationType.ManagedConfiguration, default, managedConfigurationSettings);
         }
 
         /// <param name="managedConfigurationType"> The type of the managed configuration. </param>
@@ -1793,7 +1793,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             secrets ??= new ChangeTrackingList<AkriConnectorsSecret>();
 
             return new UnknownAkriConnectorTemplateManagedConfigurationSettings(
-                default,
+                managedConfigurationType is null ? default : new AkriConnectorTemplateManagedConfigurationType(managedConfigurationType),
                 allocation,
                 (persistentVolumeClaims ?? new ChangeTrackingList<AkriConnectorTemplatePersistentVolumeClaim>()).ToList(),
                 additionalConfiguration ?? new ChangeTrackingDictionary<string, string>(),
@@ -1811,7 +1811,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.AkriConnectorTemplateAllocation"/> instance for mocking. </returns>
         public static AkriConnectorTemplateAllocation AkriConnectorTemplateAllocation(string policy = default)
         {
-            return new UnknownAkriConnectorTemplateAllocation(default, default);
+            return new UnknownAkriConnectorTemplateAllocation(policy is null ? default : new AkriConnectorTemplateAllocationPolicy(policy), default);
         }
 
         /// <summary> AkriConnectorTemplateBucketizedAllocation properties. </summary>
@@ -1819,7 +1819,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.AkriConnectorTemplateBucketizedAllocation"/> instance for mocking. </returns>
         public static AkriConnectorTemplateBucketizedAllocation AkriConnectorTemplateBucketizedAllocation(int bucketSize = default)
         {
-            return new AkriConnectorTemplateBucketizedAllocation(default, default, bucketSize);
+            return new AkriConnectorTemplateBucketizedAllocation(AkriConnectorTemplateAllocationPolicy.Bucketized, default, bucketSize);
         }
 
         /// <summary> AkriConnectorTemplatePersistentVolumeClaim properties. </summary>
@@ -1860,7 +1860,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             secrets ??= new ChangeTrackingList<AkriConnectorsSecret>();
 
             return new AkriConnectorTemplateRuntimeImageConfiguration(
-                default,
+                AkriConnectorTemplateManagedConfigurationType.ImageConfiguration,
                 allocation,
                 (persistentVolumeClaims ?? new ChangeTrackingList<AkriConnectorTemplatePersistentVolumeClaim>()).ToList(),
                 additionalConfiguration ?? new ChangeTrackingDictionary<string, string>(),
@@ -1918,7 +1918,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.AkriConnectorsRegistrySettings"/> instance for mocking. </returns>
         public static AkriConnectorsRegistrySettings AkriConnectorsRegistrySettings(string registrySettingsType = default)
         {
-            return new UnknownAkriConnectorsRegistrySettings(default, default);
+            return new UnknownAkriConnectorsRegistrySettings(registrySettingsType is null ? default : new AkriConnectorsRegistrySettingsType(registrySettingsType), default);
         }
 
         /// <summary> AkriConnectorsRegistryEndpointRef properties. </summary>
@@ -1926,7 +1926,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.AkriConnectorsRegistryEndpointRef"/> instance for mocking. </returns>
         public static AkriConnectorsRegistryEndpointRef AkriConnectorsRegistryEndpointRef(string registryEndpointRef = default)
         {
-            return new AkriConnectorsRegistryEndpointRef(default, default, registryEndpointRef);
+            return new AkriConnectorsRegistryEndpointRef(AkriConnectorsRegistrySettingsType.RegistryEndpointRef, default, registryEndpointRef);
         }
 
         /// <summary> AkriConnectorsContainerRegistry properties. </summary>
@@ -1934,7 +1934,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.AkriConnectorsContainerRegistry"/> instance for mocking. </returns>
         public static AkriConnectorsContainerRegistry AkriConnectorsContainerRegistry(AkriConnectorsContainerRegistrySettings containerRegistrySettings = default)
         {
-            return new AkriConnectorsContainerRegistry(default, default, containerRegistrySettings);
+            return new AkriConnectorsContainerRegistry(AkriConnectorsRegistrySettingsType.ContainerRegistry, default, containerRegistrySettings);
         }
 
         /// <summary> AkriConnectorsContainerRegistry properties. </summary>
@@ -1964,7 +1964,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.AkriConnectorsTagDigestSettings"/> instance for mocking. </returns>
         public static AkriConnectorsTagDigestSettings AkriConnectorsTagDigestSettings(string tagDigestType = default)
         {
-            return new UnknownAkriConnectorsTagDigestSettings(default, default);
+            return new UnknownAkriConnectorsTagDigestSettings(tagDigestType is null ? default : new AkriConnectorsTagDigestType(tagDigestType), default);
         }
 
         /// <summary> AkriConnectorsTag properties. </summary>
@@ -1972,7 +1972,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.AkriConnectorsTag"/> instance for mocking. </returns>
         public static AkriConnectorsTag AkriConnectorsTag(string tag = default)
         {
-            return new AkriConnectorsTag(default, default, tag);
+            return new AkriConnectorsTag(AkriConnectorsTagDigestType.Tag, default, tag);
         }
 
         /// <summary> AkriConnectorsDigest properties. </summary>
@@ -1980,7 +1980,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.AkriConnectorsDigest"/> instance for mocking. </returns>
         public static AkriConnectorsDigest AkriConnectorsDigest(string digest = default)
         {
-            return new AkriConnectorsDigest(default, default, digest);
+            return new AkriConnectorsDigest(AkriConnectorsTagDigestType.Digest, default, digest);
         }
 
         /// <param name="allocation"> Allocation settings for the managed configuration. </param>
@@ -2006,7 +2006,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             statefulSetConfigurationSettings ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new AkriConnectorTemplateRuntimeStatefulSetConfiguration(
-                default,
+                AkriConnectorTemplateManagedConfigurationType.StatefulSetConfiguration,
                 allocation,
                 (persistentVolumeClaims ?? new ChangeTrackingList<AkriConnectorTemplatePersistentVolumeClaim>()).ToList(),
                 additionalConfiguration ?? new ChangeTrackingDictionary<string, string>(),
@@ -2064,7 +2064,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.AkriConnectorsMqttAuthentication"/> instance for mocking. </returns>
         public static AkriConnectorsMqttAuthentication AkriConnectorsMqttAuthentication(string @method = default)
         {
-            return new UnknownAkriConnectorsMqttAuthentication(default, default);
+            return new UnknownAkriConnectorsMqttAuthentication(@method is null ? default : new AkriConnectorsMqttAuthenticationMethod(@method), default);
         }
 
         /// <param name="serviceAccountTokenAudience"> The audience for the service account token. </param>
@@ -2072,7 +2072,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="Models.AkriConnectorsServiceAccountAuthentication"/> instance for mocking. </returns>
         public static AkriConnectorsServiceAccountAuthentication AkriConnectorsServiceAccountAuthentication(string serviceAccountTokenAudience = default)
         {
-            return new AkriConnectorsServiceAccountAuthentication(default, default, serviceAccountTokenAudience is null ? default : new AkriConnectorsServiceAccountTokenSettings(serviceAccountTokenAudience, default));
+            return new AkriConnectorsServiceAccountAuthentication(AkriConnectorsMqttAuthenticationMethod.ServiceAccountToken, default, serviceAccountTokenAudience is null ? default : new AkriConnectorsServiceAccountTokenSettings(serviceAccountTokenAudience, default));
         }
 
         /// <summary> AkriConnector resource. </summary>

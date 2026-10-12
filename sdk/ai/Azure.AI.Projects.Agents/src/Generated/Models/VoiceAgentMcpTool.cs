@@ -17,9 +17,9 @@ namespace Azure.AI.Projects.Agents
     public partial class VoiceAgentMcpTool : VoiceAgentTool
     {
         private BinaryData _allowedTools;
-        internal bool _allowedToolsIsDefined;
+        private bool _allowedToolsIsDefined;
         private BinaryData _requireApproval;
-        internal bool _requireApprovalIsDefined;
+        private bool _requireApprovalIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentMcpTool"/>. </summary>
         /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>

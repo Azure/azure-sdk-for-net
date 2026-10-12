@@ -80,15 +80,29 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new FormatException($"The model {nameof(LanguageDetectionSkill)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(DefaultCountryHint))
+            if (_defaultCountryHintIsDefined || Optional.IsDefined(DefaultCountryHint))
             {
-                writer.WritePropertyName("defaultCountryHint"u8);
-                writer.WriteStringValue(DefaultCountryHint);
+                if (DefaultCountryHint != null)
+                {
+                    writer.WritePropertyName("defaultCountryHint"u8);
+                    writer.WriteStringValue(DefaultCountryHint);
+                }
+                else
+                {
+                    writer.WriteNull("defaultCountryHint"u8);
+                }
             }
-            if (Optional.IsDefined(ModelVersion))
+            if (_modelVersionIsDefined || Optional.IsDefined(ModelVersion))
             {
-                writer.WritePropertyName("modelVersion"u8);
-                writer.WriteStringValue(ModelVersion);
+                if (ModelVersion != null)
+                {
+                    writer.WritePropertyName("modelVersion"u8);
+                    writer.WriteStringValue(ModelVersion);
+                }
+                else
+                {
+                    writer.WriteNull("modelVersion"u8);
+                }
             }
         }
 
@@ -124,7 +138,9 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool defaultCountryHintIsDefined = false;
             string defaultCountryHint = default;
+            bool modelVersionIsDefined = false;
             string modelVersion = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -170,6 +186,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("defaultCountryHint"u8))
                 {
+                    defaultCountryHintIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         defaultCountryHint = null;
@@ -180,6 +197,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("modelVersion"u8))
                 {
+                    modelVersionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         modelVersion = null;
@@ -202,7 +220,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 outputs ?? new ChangeTrackingList<OutputFieldMappingEntry>(),
                 additionalBinaryDataProperties,
                 defaultCountryHint,
-                modelVersion);
+                modelVersion)
+            {
+                _defaultCountryHintIsDefined = defaultCountryHintIsDefined,
+                _modelVersionIsDefined = modelVersionIsDefined
+            };
         }
     }
 }

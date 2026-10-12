@@ -15,6 +15,12 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private PermissionFilter? _permissionFilter;
+        internal bool _permissionFilterIsDefined;
+        private string _vectorSearchProfileName;
+        internal bool _vectorSearchProfileNameIsDefined;
+        private VectorEncodingFormat? _vectorEncodingFormat;
+        internal bool _vectorEncodingFormatIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SearchField"/>. </summary>
         /// <param name="name"> The name of the field, which must be unique within the fields collection of the index or parent field. </param>
@@ -52,7 +58,7 @@ namespace Azure.Search.Documents.Indexes.Models
             IsFilterable = isFilterable;
             IsSortable = isSortable;
             IsFacetable = isFacetable;
-            PermissionFilter = permissionFilter;
+            _permissionFilter = permissionFilter;
             SensitivityLabelId = sensitivityLabelId;
             SensitivityLabelName = sensitivityLabelName;
             SourceDocumentId = sourceDocumentId;
@@ -62,15 +68,26 @@ namespace Azure.Search.Documents.Indexes.Models
             IndexAnalyzerName = indexAnalyzerName;
             NormalizerName = normalizerName;
             VectorSearchDimensions = vectorSearchDimensions;
-            VectorSearchProfileName = vectorSearchProfileName;
-            VectorEncodingFormat = vectorEncodingFormat;
+            _vectorSearchProfileName = vectorSearchProfileName;
+            _vectorEncodingFormat = vectorEncodingFormat;
             SynonymMapNames = synonymMapNames;
             Fields = fields;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A value indicating whether the field should be used as a permission filter. </summary>
-        public PermissionFilter? PermissionFilter { get; set; }
+        public PermissionFilter? PermissionFilter
+        {
+            get
+            {
+                return _permissionFilter;
+            }
+            set
+            {
+                _permissionFilter = value;
+                _permissionFilterIsDefined = true;
+            }
+        }
 
         /// <summary> A value indicating whether the field should be used for sensitivity label ID filtering. This enables document-level filtering based on Microsoft Purview sensitivity label IDs. </summary>
         public bool? SensitivityLabelId { get; set; }
@@ -88,9 +105,31 @@ namespace Azure.Search.Documents.Indexes.Models
         public int? VectorSearchDimensions { get; set; }
 
         /// <summary> The name of the vector search profile that specifies the algorithm and vectorizer to use when searching the vector field. </summary>
-        public string VectorSearchProfileName { get; set; }
+        public string VectorSearchProfileName
+        {
+            get
+            {
+                return _vectorSearchProfileName;
+            }
+            set
+            {
+                _vectorSearchProfileName = value;
+                _vectorSearchProfileNameIsDefined = true;
+            }
+        }
 
         /// <summary> The encoding format to interpret the field contents. </summary>
-        public VectorEncodingFormat? VectorEncodingFormat { get; set; }
+        public VectorEncodingFormat? VectorEncodingFormat
+        {
+            get
+            {
+                return _vectorEncodingFormat;
+            }
+            set
+            {
+                _vectorEncodingFormat = value;
+                _vectorEncodingFormatIsDefined = true;
+            }
+        }
     }
 }

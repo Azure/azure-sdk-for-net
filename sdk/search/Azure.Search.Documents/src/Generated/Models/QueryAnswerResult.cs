@@ -15,6 +15,8 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, object> _additionalBinaryDataProperties;
+        private string _highlights;
+        internal bool _highlightsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="QueryAnswerResult"/>. </summary>
         public QueryAnswerResult()
@@ -33,7 +35,7 @@ namespace Azure.Search.Documents.Models
             Score = score;
             Key = key;
             Text = text;
-            Highlights = highlights;
+            _highlights = highlights;
             _additionalBinaryDataProperties = additionalProperties;
         }
 
@@ -47,6 +49,12 @@ namespace Azure.Search.Documents.Models
         public string Text { get; }
 
         /// <summary> Same text passage as in the Text property with highlighted text phrases most relevant to the query. </summary>
-        public string Highlights { get; }
+        public string Highlights
+        {
+            get
+            {
+                return _highlights;
+            }
+        }
     }
 }

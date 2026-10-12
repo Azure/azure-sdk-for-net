@@ -96,7 +96,7 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("interrupt_response"u8);
                 writer.WriteBooleanValue(InterruptResponse.Value);
             }
-            if (_idleTimeoutMsIsDefined || Optional.IsDefined(IdleTimeoutMs))
+            if (Optional.IsDefined(IdleTimeoutMs, _idleTimeoutMsIsDefined))
             {
                 if (IdleTimeoutMs != null)
                 {
@@ -113,7 +113,7 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("speech_duration_ms"u8);
                 writer.WriteNumberValue(Convert.ToInt32(Math.Round(SpeechDurationMs.Value.TotalMilliseconds)));
             }
-            if (_endOfUtteranceDetectionIsDefined || Optional.IsDefined(EndOfUtteranceDetection))
+            if (Optional.IsDefined(EndOfUtteranceDetection, _endOfUtteranceDetectionIsDefined))
             {
                 if (EndOfUtteranceDetection != null)
                 {
