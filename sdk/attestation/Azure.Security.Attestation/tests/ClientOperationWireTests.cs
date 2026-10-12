@@ -239,6 +239,27 @@ namespace Azure.Security.Attestation.Tests
             Assert.AreEqual("Attestation token expired.", ex.Message);
         }
 
+        // 61 s is outside a 10 s slack even though its seconds component (1) is inside it.
+        [TestCase("exp", -61, "Attestation token expired before the slack time provided.")]
+        [TestCase("nbf", 61, "Attestation token will not become valid before the slack time provided.")]
+        [TestCase("exp", -5, null)]
+        [TestCase("nbf", 5, null)]
+        public void TimeValidationSlackComparesTotalSeconds(string claim, int offsetSeconds, string expectedError)
+        {
+            long time = DateTimeOffset.UtcNow.AddSeconds(offsetSeconds).ToUnixTimeSeconds();
+            AttestationClient client = ValidatingClient($"{{\"iss\":\"{Endpoint}\",\"{claim}\":{time}}}", new AttestationTokenValidationOptions { TimeValidationSlack = 10 });
+            var request = new AttestationRequest { Evidence = BinaryData.FromString("{}"), DraftPolicyForAttestation = Policy };
+
+            if (expectedError == null)
+            {
+                Assert.DoesNotThrow(() => client.AttestSevSnpVm(request));
+            }
+            else
+            {
+                Assert.AreEqual(expectedError, Assert.Catch(() => client.AttestSevSnpVm(request)).Message);
+            }
+        }
+
         [Test]
         public void DraftPolicyAttestationStillRaisesTokenValidated([Values] bool async)
         {

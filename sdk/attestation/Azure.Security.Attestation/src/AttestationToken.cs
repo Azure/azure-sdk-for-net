@@ -524,7 +524,7 @@ namespace Azure.Security.Attestation
                     if (options?.TimeValidationSlack != 0)
                     {
                         var delta = timeNow.Subtract(ExpirationTime.Value);
-                        if (delta.Seconds > options?.TimeValidationSlack)
+                        if (delta.TotalSeconds > options?.TimeValidationSlack)
                         {
                             throw new Exception("Attestation token expired before the slack time provided.");
                         }
@@ -543,7 +543,7 @@ namespace Azure.Security.Attestation
                     if (options?.TimeValidationSlack != 0)
                     {
                         var delta = timeNow.Subtract(NotBeforeTime.Value);
-                        if (Math.Abs(delta.Seconds) > options?.TimeValidationSlack)
+                        if (Math.Abs(delta.TotalSeconds) > options?.TimeValidationSlack)
                         {
                             throw new Exception("Attestation token will not become valid before the slack time provided.");
                         }
