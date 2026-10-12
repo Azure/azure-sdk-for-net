@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <returns> The pages of DeviceRegistryAssetData0CollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<DeviceRegistryAssetData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

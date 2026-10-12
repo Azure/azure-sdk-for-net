@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DataMigrationMongoDBShardKeySetting(fields, isUnique, additionalBinaryDataProperties);
+            return new DataMigrationMongoDBShardKeySetting(fields ?? new ChangeTrackingList<DataMigrationMongoDBShardKeyField>(), isUnique, additionalBinaryDataProperties);
         }
     }
 }
