@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -390,18 +389,11 @@ public class BicepValueTests
     }
 
     [Test]
-    public void ValidateInvalidJsonBinaryDataThrowsJsonException()
+    public void ValidateJsonBinaryDataDefersValidationToBicep()
     {
-        foreach (BinaryData data in new[]
-        {
-            BinaryData.FromString("plain string"),
-            BinaryData.FromString("{", "application/json"),
-            BinaryData.FromString("{} trailing", "application/json"),
-            BinaryData.FromBytes([0xFF], "application/json")
-        })
-        {
-            Assert.Catch<JsonException>(() => new BicepValue<BinaryData>(data).Compile());
-        }
+        TestHelpers.AssertExpression("json('plain string')", new BicepValue<BinaryData>(BinaryData.FromString("plain string")));
+        TestHelpers.AssertExpression("json('{')", new BicepValue<BinaryData>(BinaryData.FromString("{", "application/json")));
+        TestHelpers.AssertExpression("json('{} trailing')", new BicepValue<BinaryData>(BinaryData.FromString("{} trailing", "application/json")));
     }
 
     [TestCase("")]
@@ -427,6 +419,15 @@ public class BicepValueTests
     {
         InvalidOperationException? exception = Assert.Catch<InvalidOperationException>(
             () => new BicepValue<BinaryData>(BinaryData.FromBytes([0xFF], "text/vnd.microsoft.bicep")).Compile());
+
+        Assert.That(exception!.Message, Does.Contain("not valid UTF-8"));
+    }
+
+    [Test]
+    public void ValidateJsonBinaryDataRequiresUtf8()
+    {
+        InvalidOperationException? exception = Assert.Catch<InvalidOperationException>(
+            () => new BicepValue<BinaryData>(BinaryData.FromBytes([0xFF], "application/json")).Compile());
 
         Assert.That(exception!.Message, Does.Contain("not valid UTF-8"));
     }

@@ -145,8 +145,8 @@ BicepDictionary<string> dynamicTags = parameter;
 Properties typed as `BicepValue<BinaryData>` accept free-form JSON or an
 explicitly tagged raw Bicep expression. See
 [BinaryData provisioning values](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/provisioning/Azure.Provisioning/docs/BinaryDataValues.md)
-for supported media types, executable examples, validation behavior, and
-security guidance.
+for supported media types, executable examples, parsing behavior, and security
+guidance.
 
 #### Working with Azure Resources
 

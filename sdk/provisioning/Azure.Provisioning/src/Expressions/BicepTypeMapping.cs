@@ -7,7 +7,6 @@ using System.Net;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.Json;
 using System.Xml;
 using Azure.Core;
 
@@ -136,25 +135,28 @@ internal static class BicepTypeMapping
         string? mediaType = value.MediaType;
         if (mediaType is null || IsMediaType(mediaType, JsonMediaType))
         {
-            byte[] json = value.ToArray();
-            using JsonDocument document = JsonDocument.Parse(json);
-            return BicepFunction.ParseJson(BicepSyntax.Value(s_strictUtf8.GetString(json))).Compile();
+            return BicepFunction.ParseJson(BicepSyntax.Value(DecodeUtf8(value, mediaType ?? JsonMediaType))).Compile();
         }
 
         if (IsMediaType(mediaType, BicepMediaType))
         {
-            try
-            {
-                return new RawExpression(s_strictUtf8.GetString(value.ToArray()));
-            }
-            catch (DecoderFallbackException exception)
-            {
-                throw new InvalidOperationException($"Cannot compile BinaryData with media type '{mediaType}' because its contents are not valid UTF-8.", exception);
-            }
+            return new RawExpression(DecodeUtf8(value, mediaType));
         }
         throw new InvalidOperationException(
             $"Cannot compile BinaryData with unsupported media type '{mediaType}'. " +
             $"Use '{JsonMediaType}', '{BicepMediaType}', or omit the media type for JSON.");
+    }
+
+    private static string DecodeUtf8(BinaryData value, string mediaType)
+    {
+        try
+        {
+            return s_strictUtf8.GetString(value.ToArray());
+        }
+        catch (DecoderFallbackException exception)
+        {
+            throw new InvalidOperationException($"Cannot compile BinaryData with media type '{mediaType}' because its contents are not valid UTF-8.", exception);
+        }
     }
 
     private static bool IsMediaType(string value, string expected)

@@ -10,7 +10,7 @@
 
 ### Bugs Fixed
 
-- Fixed `BicepValue<BinaryData>` literal compilation to validate JSON and emit it through Bicep's `json(...)` function while preserving generated base64-encoded properties.
+- Fixed `BicepValue<BinaryData>` literal compilation to emit JSON through Bicep's `json(...)` function while preserving generated base64-encoded properties.
 
 ### Other Changes
 

@@ -23,8 +23,8 @@ official or IANA-registered Bicep media type.
 
 ## JSON values
 
-Use `BinaryData.FromObjectAsJson` for CLR values. Azure.Provisioning validates
-the serialized JSON and emits it through Bicep's `json` function.
+Use `BinaryData.FromObjectAsJson` for CLR values. Azure.Provisioning decodes the
+payload as UTF-8 and emits it through Bicep's `json` function.
 
 ```C# Snippet:BinaryDataJsonProvisioningValue
 ArmApplication application = new("application")
@@ -63,8 +63,9 @@ BinaryData jsonString = BinaryData.FromObjectAsJson("enabled");
 BinaryData jsonObject = BinaryData.FromString("""{"enabled":true}""");
 ```
 
-Invalid JSON throws `JsonException` when the value is compiled. It does not
-fall back to raw Bicep.
+Azure.Provisioning does not parse the JSON payload. Invalid JSON does not fall
+back to raw Bicep; it is emitted to `json(...)` and reported when Bicep compiles
+the generated source.
 
 ## Raw Bicep expressions
 
