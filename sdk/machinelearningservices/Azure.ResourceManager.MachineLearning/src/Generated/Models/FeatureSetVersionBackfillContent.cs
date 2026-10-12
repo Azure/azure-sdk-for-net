@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private FeatureWindow _featureWindow;
+        internal bool _featureWindowIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FeatureSetVersionBackfillContent"/>. </summary>
         public FeatureSetVersionBackfillContent()
@@ -42,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DataAvailabilityStatus = dataAvailabilityStatus;
             Description = description;
             DisplayName = displayName;
-            FeatureWindow = featureWindow;
+            _featureWindow = featureWindow;
             JobId = jobId;
             Properties = properties;
             Resource = resource;
@@ -65,7 +67,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Specifies the backfill feature window to be materialized. </summary>
         [WirePath("featureWindow")]
-        public FeatureWindow FeatureWindow { get; set; }
+        public FeatureWindow FeatureWindow
+        {
+            get
+            {
+                return _featureWindow;
+            }
+            set
+            {
+                _featureWindow = value;
+                _featureWindowIsDefined = true;
+            }
+        }
 
         /// <summary> Specify the jobId to retry the failed materialization. </summary>
         [WirePath("jobId")]

@@ -79,33 +79,47 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("instanceCount"u8);
                 writer.WriteNumberValue(InstanceCount.Value);
             }
-            if (Optional.IsDefined(InstanceType))
+            if (_instanceTypeIsDefined || Optional.IsDefined(InstanceType))
             {
-                writer.WritePropertyName("instanceType"u8);
-                writer.WriteStringValue(InstanceType);
+                if (InstanceType != null)
+                {
+                    writer.WritePropertyName("instanceType"u8);
+                    writer.WriteStringValue(InstanceType);
+                }
+                else
+                {
+                    writer.WriteNull("instanceType"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Properties))
             {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteStartObject();
-                foreach (var item in Properties)
+                if (Properties != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("properties"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Properties)
                     {
-                        writer.WriteNullValue();
-                        continue;
-                    }
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+                        writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
+                        using (JsonDocument document = JsonDocument.Parse(item.Value))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
 #endif
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("properties"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -150,8 +164,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             int? instanceCount = default;
+            bool instanceTypeIsDefined = false;
             string instanceType = default;
-            IDictionary<string, BinaryData> properties = default;
+            IDictionary<string, BinaryData> properties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -166,6 +181,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("instanceType"u8))
                 {
+                    instanceTypeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         instanceType = null;
@@ -178,6 +194,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
@@ -200,7 +217,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MachineLearningResourceConfiguration(instanceCount, instanceType, properties ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalBinaryDataProperties);
+            return new MachineLearningResourceConfiguration(instanceCount, instanceType, properties, additionalBinaryDataProperties)
+            {
+                _instanceTypeIsDefined = instanceTypeIsDefined
+            };
         }
     }
 }

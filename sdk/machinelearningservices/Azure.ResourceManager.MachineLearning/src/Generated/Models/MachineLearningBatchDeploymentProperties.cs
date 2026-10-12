@@ -14,6 +14,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Batch inference settings per deployment. </summary>
     public partial class MachineLearningBatchDeploymentProperties : MachineLearningEndpointDeploymentProperties
     {
+        private string _compute;
+        internal bool _computeIsDefined;
+        private BatchDeploymentConfiguration _deploymentConfiguration;
+        internal bool _deploymentConfigurationIsDefined;
+        private MachineLearningAssetReferenceBase _model;
+        internal bool _modelIsDefined;
+        private MachineLearningDeploymentResourceConfiguration _resources;
+        internal bool _resourcesIsDefined;
+        private MachineLearningBatchRetrySettings _retrySettings;
+        internal bool _retrySettingsIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningBatchDeploymentProperties"/>. </summary>
         public MachineLearningBatchDeploymentProperties()
         {
@@ -60,27 +71,49 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         internal MachineLearningBatchDeploymentProperties(MachineLearningCodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties, string compute, BatchDeploymentConfiguration deploymentConfiguration, int? errorThreshold, MachineLearningBatchLoggingLevel? loggingLevel, int? maxConcurrencyPerInstance, long? miniBatchSize, MachineLearningAssetReferenceBase model, MachineLearningBatchOutputAction? outputAction, string outputFileName, MachineLearningDeploymentProvisioningState? provisioningState, MachineLearningDeploymentResourceConfiguration resources, MachineLearningBatchRetrySettings retrySettings) : base(codeConfiguration, description, environmentId, environmentVariables, properties, additionalBinaryDataProperties)
         {
-            Compute = compute;
-            DeploymentConfiguration = deploymentConfiguration;
+            _compute = compute;
+            _deploymentConfiguration = deploymentConfiguration;
             ErrorThreshold = errorThreshold;
             LoggingLevel = loggingLevel;
             MaxConcurrencyPerInstance = maxConcurrencyPerInstance;
             MiniBatchSize = miniBatchSize;
-            Model = model;
+            _model = model;
             OutputAction = outputAction;
             OutputFileName = outputFileName;
             ProvisioningState = provisioningState;
-            Resources = resources;
-            RetrySettings = retrySettings;
+            _resources = resources;
+            _retrySettings = retrySettings;
         }
 
         /// <summary> Compute target for batch inference operation. </summary>
         [WirePath("compute")]
-        public string Compute { get; set; }
+        public string Compute
+        {
+            get
+            {
+                return _compute;
+            }
+            set
+            {
+                _compute = value;
+                _computeIsDefined = true;
+            }
+        }
 
         /// <summary> Properties relevant to different deployment types. </summary>
         [WirePath("deploymentConfiguration")]
-        public BatchDeploymentConfiguration DeploymentConfiguration { get; set; }
+        public BatchDeploymentConfiguration DeploymentConfiguration
+        {
+            get
+            {
+                return _deploymentConfiguration;
+            }
+            set
+            {
+                _deploymentConfiguration = value;
+                _deploymentConfigurationIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Error threshold, if the error count for the entire input goes above this value,
@@ -114,7 +147,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Reference to the model asset for the endpoint deployment. </summary>
         [WirePath("model")]
-        public MachineLearningAssetReferenceBase Model { get; set; }
+        public MachineLearningAssetReferenceBase Model
+        {
+            get
+            {
+                return _model;
+            }
+            set
+            {
+                _model = value;
+                _modelIsDefined = true;
+            }
+        }
 
         /// <summary> Enum to determine how batch inferencing will handle output. </summary>
         [WirePath("outputAction")]
@@ -133,13 +177,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// If not provided, will default to the defaults defined in ResourceConfiguration.
         /// </summary>
         [WirePath("resources")]
-        public MachineLearningDeploymentResourceConfiguration Resources { get; set; }
+        public MachineLearningDeploymentResourceConfiguration Resources
+        {
+            get
+            {
+                return _resources;
+            }
+            set
+            {
+                _resources = value;
+                _resourcesIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Retry Settings for the batch inference operation.
         /// If not provided, will default to the defaults defined in BatchRetrySettings.
         /// </summary>
         [WirePath("retrySettings")]
-        public MachineLearningBatchRetrySettings RetrySettings { get; set; }
+        public MachineLearningBatchRetrySettings RetrySettings
+        {
+            get
+            {
+                return _retrySettings;
+            }
+            set
+            {
+                _retrySettings = value;
+                _retrySettingsIsDefined = true;
+            }
+        }
     }
 }

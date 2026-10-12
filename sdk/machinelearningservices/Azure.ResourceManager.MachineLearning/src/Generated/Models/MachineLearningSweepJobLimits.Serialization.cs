@@ -75,20 +75,41 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningSweepJobLimits)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(MaxConcurrentTrials))
+            if (_maxConcurrentTrialsIsDefined || Optional.IsDefined(MaxConcurrentTrials))
             {
-                writer.WritePropertyName("maxConcurrentTrials"u8);
-                writer.WriteNumberValue(MaxConcurrentTrials.Value);
+                if (MaxConcurrentTrials != null)
+                {
+                    writer.WritePropertyName("maxConcurrentTrials"u8);
+                    writer.WriteNumberValue(MaxConcurrentTrials.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maxConcurrentTrials"u8);
+                }
             }
-            if (Optional.IsDefined(MaxTotalTrials))
+            if (_maxTotalTrialsIsDefined || Optional.IsDefined(MaxTotalTrials))
             {
-                writer.WritePropertyName("maxTotalTrials"u8);
-                writer.WriteNumberValue(MaxTotalTrials.Value);
+                if (MaxTotalTrials != null)
+                {
+                    writer.WritePropertyName("maxTotalTrials"u8);
+                    writer.WriteNumberValue(MaxTotalTrials.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maxTotalTrials"u8);
+                }
             }
-            if (Optional.IsDefined(TrialTimeout))
+            if (_trialTimeoutIsDefined || Optional.IsDefined(TrialTimeout))
             {
-                writer.WritePropertyName("trialTimeout"u8);
-                writer.WriteStringValue(TrialTimeout.Value, "P");
+                if (TrialTimeout != null)
+                {
+                    writer.WritePropertyName("trialTimeout"u8);
+                    writer.WriteStringValue(TrialTimeout.Value, "P");
+                }
+                else
+                {
+                    writer.WriteNull("trialTimeout"u8);
+                }
             }
         }
 
@@ -118,10 +139,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             JobLimitsType jobLimitsType = default;
+            bool timeoutIsDefined = false;
             TimeSpan? timeout = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool maxConcurrentTrialsIsDefined = false;
             int? maxConcurrentTrials = default;
+            bool maxTotalTrialsIsDefined = false;
             int? maxTotalTrials = default;
+            bool trialTimeoutIsDefined = false;
             TimeSpan? trialTimeout = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -132,6 +157,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("timeout"u8))
                 {
+                    timeoutIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         timeout = null;
@@ -142,6 +168,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("maxConcurrentTrials"u8))
                 {
+                    maxConcurrentTrialsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         maxConcurrentTrials = null;
@@ -152,6 +179,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("maxTotalTrials"u8))
                 {
+                    maxTotalTrialsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         maxTotalTrials = null;
@@ -162,6 +190,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("trialTimeout"u8))
                 {
+                    trialTimeoutIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         trialTimeout = null;
@@ -181,7 +210,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 additionalBinaryDataProperties,
                 maxConcurrentTrials,
                 maxTotalTrials,
-                trialTimeout);
+                trialTimeout)
+            {
+                _timeoutIsDefined = timeoutIsDefined,
+                _maxConcurrentTrialsIsDefined = maxConcurrentTrialsIsDefined,
+                _maxTotalTrialsIsDefined = maxTotalTrialsIsDefined,
+                _trialTimeoutIsDefined = trialTimeoutIsDefined
+            };
         }
     }
 }

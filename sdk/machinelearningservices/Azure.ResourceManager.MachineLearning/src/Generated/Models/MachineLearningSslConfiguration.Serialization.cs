@@ -79,25 +79,53 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Cert))
+            if (_certIsDefined || Optional.IsDefined(Cert))
             {
-                writer.WritePropertyName("cert"u8);
-                writer.WriteStringValue(Cert);
+                if (Cert != null)
+                {
+                    writer.WritePropertyName("cert"u8);
+                    writer.WriteStringValue(Cert);
+                }
+                else
+                {
+                    writer.WriteNull("cert"u8);
+                }
             }
-            if (Optional.IsDefined(Key))
+            if (_keyIsDefined || Optional.IsDefined(Key))
             {
-                writer.WritePropertyName("key"u8);
-                writer.WriteStringValue(Key);
+                if (Key != null)
+                {
+                    writer.WritePropertyName("key"u8);
+                    writer.WriteStringValue(Key);
+                }
+                else
+                {
+                    writer.WriteNull("key"u8);
+                }
             }
-            if (Optional.IsDefined(Cname))
+            if (_cnameIsDefined || Optional.IsDefined(Cname))
             {
-                writer.WritePropertyName("cname"u8);
-                writer.WriteStringValue(Cname);
+                if (Cname != null)
+                {
+                    writer.WritePropertyName("cname"u8);
+                    writer.WriteStringValue(Cname);
+                }
+                else
+                {
+                    writer.WriteNull("cname"u8);
+                }
             }
-            if (Optional.IsDefined(LeafDomainLabel))
+            if (_leafDomainLabelIsDefined || Optional.IsDefined(LeafDomainLabel))
             {
-                writer.WritePropertyName("leafDomainLabel"u8);
-                writer.WriteStringValue(LeafDomainLabel);
+                if (LeafDomainLabel != null)
+                {
+                    writer.WritePropertyName("leafDomainLabel"u8);
+                    writer.WriteStringValue(LeafDomainLabel);
+                }
+                else
+                {
+                    writer.WriteNull("leafDomainLabel"u8);
+                }
             }
             if (Optional.IsDefined(OverwriteExistingDomain))
             {
@@ -147,9 +175,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             MachineLearningSslConfigStatus? status = default;
+            bool certIsDefined = false;
             string cert = default;
+            bool keyIsDefined = false;
             string key = default;
+            bool cnameIsDefined = false;
             string cname = default;
+            bool leafDomainLabelIsDefined = false;
             string leafDomainLabel = default;
             bool? overwriteExistingDomain = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -166,6 +198,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("cert"u8))
                 {
+                    certIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         cert = null;
@@ -176,6 +209,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("key"u8))
                 {
+                    keyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         key = null;
@@ -186,6 +220,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("cname"u8))
                 {
+                    cnameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         cname = null;
@@ -196,6 +231,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("leafDomainLabel"u8))
                 {
+                    leafDomainLabelIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         leafDomainLabel = null;
@@ -225,7 +261,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 cname,
                 leafDomainLabel,
                 overwriteExistingDomain,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _certIsDefined = certIsDefined,
+                _keyIsDefined = keyIsDefined,
+                _cnameIsDefined = cnameIsDefined,
+                _leafDomainLabelIsDefined = leafDomainLabelIsDefined
+            };
         }
     }
 }

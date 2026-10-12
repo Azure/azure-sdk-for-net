@@ -79,10 +79,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("jobLimitsType"u8);
             writer.WriteStringValue(JobLimitsType.ToString());
-            if (Optional.IsDefined(Timeout))
+            if (_timeoutIsDefined || Optional.IsDefined(Timeout))
             {
-                writer.WritePropertyName("timeout"u8);
-                writer.WriteStringValue(Timeout.Value, "P");
+                if (Timeout != null)
+                {
+                    writer.WritePropertyName("timeout"u8);
+                    writer.WriteStringValue(Timeout.Value, "P");
+                }
+                else
+                {
+                    writer.WriteNull("timeout"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

@@ -16,6 +16,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _cpu;
+        internal bool _cpuIsDefined;
+        private string _gpu;
+        internal bool _gpuIsDefined;
+        private string _memory;
+        internal bool _memoryIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningContainerResourceSettings"/>. </summary>
         public MachineLearningContainerResourceSettings()
@@ -38,9 +44,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MachineLearningContainerResourceSettings(string cpu, string gpu, string memory, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Cpu = cpu;
-            Gpu = gpu;
-            Memory = memory;
+            _cpu = cpu;
+            _gpu = gpu;
+            _memory = memory;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -49,20 +55,53 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         /// </summary>
         [WirePath("cpu")]
-        public string Cpu { get; set; }
+        public string Cpu
+        {
+            get
+            {
+                return _cpu;
+            }
+            set
+            {
+                _cpu = value;
+                _cpuIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Number of Nvidia GPU cards request/limit for container. More info:
         /// https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         /// </summary>
         [WirePath("gpu")]
-        public string Gpu { get; set; }
+        public string Gpu
+        {
+            get
+            {
+                return _gpu;
+            }
+            set
+            {
+                _gpu = value;
+                _gpuIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Memory size request/limit for container. More info:
         /// https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         /// </summary>
         [WirePath("memory")]
-        public string Memory { get; set; }
+        public string Memory
+        {
+            get
+            {
+                return _memory;
+            }
+            set
+            {
+                _memory = value;
+                _memoryIsDefined = true;
+            }
+        }
     }
 }
