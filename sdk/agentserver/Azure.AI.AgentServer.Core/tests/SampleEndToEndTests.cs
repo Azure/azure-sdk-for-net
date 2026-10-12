@@ -108,15 +108,20 @@ public class SampleEndToEndTests
     }
 
     [Test]
-    public async Task Sample2_HealthChecks_ReadinessEndpoint_ReturnsHealthy()
+    public async Task ReadMe_CustomReadinessCheck_ControlsReadinessEndpoint()
     {
         var builder = AgentHost.CreateBuilder();
         builder.WebApplicationBuilder.WebHost.UseTestServer();
+        var readiness = new TaskCompletionSource(
+            TaskCreationOptions.RunContinuationsAsynchronously);
 
         builder.ConfigureHealth(health =>
         {
-            health.AddCheck("database", () =>
-                Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult.Healthy("DB reachable"));
+            health.AddCheck("application", () =>
+                readiness.Task.IsCompletedSuccessfully
+                    ? Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult.Healthy()
+                    : Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult.Unhealthy(
+                        "Application initialization is still in progress."));
         });
 
         builder.RegisterProtocol("MyProtocol", endpoints =>
@@ -128,9 +133,13 @@ public class SampleEndToEndTests
         await app.App.StartAsync();
 
         var client = app.App.GetTestClient();
-        var response = await client.GetAsync("/readiness");
+        using var initializingResponse = await client.GetAsync("/readiness");
+        Assert.That(initializingResponse.StatusCode, Is.EqualTo(HttpStatusCode.ServiceUnavailable));
 
-        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        readiness.TrySetResult();
+
+        using var readyResponse = await client.GetAsync("/readiness");
+        Assert.That(readyResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         await app.App.StopAsync();
     }

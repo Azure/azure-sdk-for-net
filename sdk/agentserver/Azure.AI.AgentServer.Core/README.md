@@ -152,6 +152,30 @@ Azure SDK and outbound `HttpClient` dependency spans are disabled by default to 
 
 A `/readiness` endpoint is registered by default, responding to liveness and readiness probes. It reports healthy as soon as the host finishes starting.
 
+Add an application health check to control when the endpoint reports ready. The endpoint returns `503 Service Unavailable` while any registered check is unhealthy and `200 OK` after all checks become healthy:
+
+```C# Snippet:Core_ReadMe_ConfigureReadiness
+var builder = AgentHost.CreateBuilder();
+var readiness = new TaskCompletionSource(
+    TaskCreationOptions.RunContinuationsAsynchronously);
+
+builder.ConfigureHealth(health =>
+{
+    health.AddCheck("application", () =>
+        readiness.Task.IsCompletedSuccessfully
+            ? Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult.Healthy()
+            : Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult.Unhealthy(
+                "Application initialization is still in progress."));
+});
+
+var app = builder.Build();
+
+// Complete required initialization before reporting ready.
+readiness.TrySetResult();
+
+app.Run();
+```
+
 ### Snapshot lifecycle
 
 Core always registers the private platform endpoints `POST /_agent/before-snapshot` and `POST /_agent/after-restore`. They are no-ops by default. Implement `IAgentSnapshotLifecycle` when your process owns connections, streams, or other in-memory state that must be released before capture and rebuilt after restoration:

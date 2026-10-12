@@ -84,5 +84,33 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
 
             #endregion
         }
+
+        [Test]
+        public void ConfigureReadiness()
+        {
+            #region Snippet:Core_ReadMe_ConfigureReadiness
+
+            var builder = AgentHost.CreateBuilder();
+            var readiness = new TaskCompletionSource(
+                TaskCreationOptions.RunContinuationsAsynchronously);
+
+            builder.ConfigureHealth(health =>
+            {
+                health.AddCheck("application", () =>
+                    readiness.Task.IsCompletedSuccessfully
+                        ? Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult.Healthy()
+                        : Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult.Unhealthy(
+                            "Application initialization is still in progress."));
+            });
+
+            var app = builder.Build();
+
+            // Complete required initialization before reporting ready.
+            readiness.TrySetResult();
+
+            app.Run();
+
+            #endregion
+        }
     }
 }
