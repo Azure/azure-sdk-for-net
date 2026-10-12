@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="accessKeysAuthentication"> This property can be Enabled/Disabled to allow or deny access with the current access keys. Can be updated even after database is created. </param>
         /// <param name="notifyKeyspaceEvents"> Specifies which keyspace events should trigger notifications. Default is an empty string, meaning this feature is disabled. When enabled, at least 'K' (keyspace events) or 'E' (keyevent events) must be present. For example, 'AKE' enables all standard events. See https://redis.io/docs/latest/develop/use/keyspace-notifications/ for the complete list of event types. </param>
         /// <returns> A new <see cref="RedisEnterprise.RedisEnterpriseDatabaseData"/> instance for mocking. </returns>
-        public static RedisEnterpriseDatabaseData RedisEnterpriseDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RedisEnterpriseClientProtocol? clientProtocol = default, int? port = default, RedisEnterpriseProvisioningStatus? provisioningState = default, RedisEnterpriseClusterResourceState? resourceState = default, RedisEnterpriseClusteringPolicy? clusteringPolicy = default, RedisEnterpriseEvictionPolicy? evictionPolicy = default, RedisPersistenceSettings persistence = default, IEnumerable<RedisEnterpriseModule> modules = default, RedisEnterpriseDatabaseGeoReplication geoReplication = default, string redisVersion = default, DeferUpgradeSetting? deferUpgrade = default, AccessKeysAuthentication? accessKeysAuthentication = default, string notifyKeyspaceEvents = default)
+        public static RedisEnterpriseDatabaseData RedisEnterpriseDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RedisEnterpriseClientProtocol? clientProtocol, int? port, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseClusterResourceState? resourceState, RedisEnterpriseClusteringPolicy? clusteringPolicy, RedisEnterpriseEvictionPolicy? evictionPolicy, RedisPersistenceSettings persistence, IEnumerable<RedisEnterpriseModule> modules, RedisEnterpriseDatabaseGeoReplication geoReplication, string redisVersion, DeferUpgradeSetting? deferUpgrade, AccessKeysAuthentication? accessKeysAuthentication, string notifyKeyspaceEvents)
         {
             return new RedisEnterpriseDatabaseData(
                 id,
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="accessKeysAuthentication"> This property can be Enabled/Disabled to allow or deny access with the current access keys. Can be updated even after database is created. </param>
         /// <param name="notifyKeyspaceEvents"> Specifies which keyspace events should trigger notifications. Default is an empty string, meaning this feature is disabled. When enabled, at least 'K' (keyspace events) or 'E' (keyevent events) must be present. For example, 'AKE' enables all standard events. See https://redis.io/docs/latest/develop/use/keyspace-notifications/ for the complete list of event types. </param>
         /// <returns> A new <see cref="Models.RedisEnterpriseDatabasePatch"/> instance for mocking. </returns>
-        public static RedisEnterpriseDatabasePatch RedisEnterpriseDatabasePatch(RedisEnterpriseClientProtocol? clientProtocol = default, int? port = default, RedisEnterpriseProvisioningStatus? provisioningState = default, RedisEnterpriseClusterResourceState? resourceState = default, RedisEnterpriseClusteringPolicy? clusteringPolicy = default, RedisEnterpriseEvictionPolicy? evictionPolicy = default, RedisPersistenceSettings persistence = default, IEnumerable<RedisEnterpriseModule> modules = default, RedisEnterpriseDatabaseGeoReplication geoReplication = default, string redisVersion = default, DeferUpgradeSetting? deferUpgrade = default, AccessKeysAuthentication? accessKeysAuthentication = default, string notifyKeyspaceEvents = default)
+        public static RedisEnterpriseDatabasePatch RedisEnterpriseDatabasePatch(RedisEnterpriseClientProtocol? clientProtocol, int? port, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseClusterResourceState? resourceState, RedisEnterpriseClusteringPolicy? clusteringPolicy, RedisEnterpriseEvictionPolicy? evictionPolicy, RedisPersistenceSettings persistence, IEnumerable<RedisEnterpriseModule> modules, RedisEnterpriseDatabaseGeoReplication geoReplication, string redisVersion, DeferUpgradeSetting? deferUpgrade, AccessKeysAuthentication? accessKeysAuthentication, string notifyKeyspaceEvents)
         {
             return new RedisEnterpriseDatabasePatch(clientProtocol is null && port is null && provisioningState is null && resourceState is null && clusteringPolicy is null && evictionPolicy is null && persistence is null && modules is null && geoReplication is null && redisVersion is null && deferUpgrade is null && accessKeysAuthentication is null && notifyKeyspaceEvents is null ? default : new DatabaseUpdateProperties(
                 clientProtocol,
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
         /// <returns> A new <see cref="RedisEnterprise.RedisEnterprisePrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static RedisEnterprisePrivateEndpointConnectionData RedisEnterprisePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> groupIds = default, RedisEnterprisePrivateLinkServiceConnectionState connectionState = default, RedisEnterprisePrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
+        public static RedisEnterprisePrivateEndpointConnectionData RedisEnterprisePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<string> groupIds, RedisEnterprisePrivateLinkServiceConnectionState connectionState, RedisEnterprisePrivateEndpointConnectionProvisioningState? provisioningState, ResourceIdentifier privateEndpointId)
         {
             return new RedisEnterprisePrivateEndpointConnectionData(
                 id,
@@ -269,8 +269,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="statusDetails"> Additional details about the migration operation's status in free text format. </param>
         /// <param name="createdOn"> The timestamp when the migration operation was created. </param>
         /// <param name="lastModifiedOn"> The timestamp when the migration operation was last updated. </param>
+        /// <param name="rollbackEligibleUntil"> The timestamp until which a successful migration remains eligible to be undone (rolled back) to the source cache. This property is only returned while the migration is in the Succeeded state, and is calculated from the time the migration succeeded plus the rollback window. After this time the source cache is released and the migration can no longer be undone. </param>
         /// <returns> A new <see cref="Models.RedisEnterpriseMigrationProperties"/> instance for mocking. </returns>
-        public static RedisEnterpriseMigrationProperties RedisEnterpriseMigrationProperties(string sourceType = default, ResourceIdentifier targetResourceId = default, RedisEnterpriseMigrationProvisioningState? provisioningState = default, string statusDetails = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default)
+        public static RedisEnterpriseMigrationProperties RedisEnterpriseMigrationProperties(string sourceType = default, ResourceIdentifier targetResourceId = default, RedisEnterpriseMigrationProvisioningState? provisioningState = default, string statusDetails = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? rollbackEligibleUntil = default)
         {
             return new UnknownRedisEnterpriseMigrationProperties(
                 sourceType is null ? default : new SourceType(sourceType),
@@ -279,6 +280,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 statusDetails,
                 createdOn,
                 lastModifiedOn,
+                rollbackEligibleUntil,
                 default);
         }
 
@@ -288,12 +290,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="statusDetails"> Additional details about the migration operation's status in free text format. </param>
         /// <param name="createdOn"> The timestamp when the migration operation was created. </param>
         /// <param name="lastModifiedOn"> The timestamp when the migration operation was last updated. </param>
+        /// <param name="rollbackEligibleUntil"> The timestamp until which a successful migration remains eligible to be undone (rolled back) to the source cache. This property is only returned while the migration is in the Succeeded state, and is calculated from the time the migration succeeded plus the rollback window. After this time the source cache is released and the migration can no longer be undone. </param>
         /// <param name="sourceResourceId"> The source resource ID to migrate from. This is the resource ID of the Azure Cache for Redis. </param>
         /// <param name="isSwitchDns"> Sets whether the DNS is switched automatically after the data is transferred from the source cache to the target cache. This property must be true during the preview. </param>
-        /// <param name="isSkipDataMigration"> Sets whether the data is migrated from source to target or not. This property must be true during the preview. </param>
+        /// <param name="isSkipDataMigration"> Sets whether the data is migrated from source to target or not. Set this property to true to skip data migration. </param>
         /// <param name="isForceMigrate"> Sets whether to ignore warnings when performing validation of the migration request. If this property is true, warning-level disparities between the source and target resources will be ignored, and the request will only fail validation if there are error-level disparities. The default value is false. </param>
         /// <returns> A new <see cref="Models.AzureCacheForRedisMigrationProperties"/> instance for mocking. </returns>
-        public static AzureCacheForRedisMigrationProperties AzureCacheForRedisMigrationProperties(ResourceIdentifier targetResourceId = default, RedisEnterpriseMigrationProvisioningState? provisioningState = default, string statusDetails = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, ResourceIdentifier sourceResourceId = default, bool isSwitchDns = default, bool isSkipDataMigration = default, bool? isForceMigrate = default)
+        public static AzureCacheForRedisMigrationProperties AzureCacheForRedisMigrationProperties(ResourceIdentifier targetResourceId = default, RedisEnterpriseMigrationProvisioningState? provisioningState = default, string statusDetails = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? rollbackEligibleUntil = default, ResourceIdentifier sourceResourceId = default, bool isSwitchDns = default, bool isSkipDataMigration = default, bool? isForceMigrate = default)
         {
             return new AzureCacheForRedisMigrationProperties(
                 SourceType.AzureCacheForRedis,
@@ -302,6 +305,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 statusDetails,
                 createdOn,
                 lastModifiedOn,
+                rollbackEligibleUntil,
                 default,
                 sourceResourceId,
                 isSwitchDns,
@@ -309,14 +313,21 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 isForceMigrate);
         }
 
+        /// <summary> Parameters supplied to the undo migration operation. </summary>
+        /// <param name="rollbackReason"> The reason for undoing (rolling back) the migration. Choose the value that best describes why the rollback is needed. This information helps us improve the migration experience and does not change how the rollback is performed. </param>
+        /// <returns> A new <see cref="Models.RedisEnterpriseMigrationUndoContent"/> instance for mocking. </returns>
+        public static RedisEnterpriseMigrationUndoContent RedisEnterpriseMigrationUndoContent(MigrationRollbackReason? rollbackReason = default)
+        {
+            return new RedisEnterpriseMigrationUndoContent(rollbackReason, default);
+        }
+
         /// <summary> Properties for validating migration from Azure Cache for Redis to Redis Enterprise. </summary>
         /// <param name="sourceResourceId"> The source resource ID to validate migration from. This is the resource ID of the Azure Cache for Redis. </param>
         /// <param name="isSkipDataMigration"> Sets whether the data is migrated from source to target or not. The default value is true. </param>
-        /// <param name="isForceMigrate"> Sets whether to ignore warnings when validating if the source cache can be migrated to the target cache. If this property is true, the isValid property in the response will ignore warning-level disparities between the source and target resource. The default value is false. </param>
         /// <returns> A new <see cref="Models.RedisEnterpriseMigrationValidationRequestContent"/> instance for mocking. </returns>
-        public static RedisEnterpriseMigrationValidationRequestContent RedisEnterpriseMigrationValidationRequestContent(ResourceIdentifier sourceResourceId = default, bool? isSkipDataMigration = default, bool? isForceMigrate = default)
+        public static RedisEnterpriseMigrationValidationRequestContent RedisEnterpriseMigrationValidationRequestContent(ResourceIdentifier sourceResourceId = default, bool? isSkipDataMigration = default)
         {
-            return new RedisEnterpriseMigrationValidationRequestContent(sourceResourceId, isSkipDataMigration, isForceMigrate, default);
+            return new RedisEnterpriseMigrationValidationRequestContent(sourceResourceId, isSkipDataMigration, default);
         }
 
         /// <summary> Response for migration validation operation. </summary>
@@ -384,7 +395,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="zones"> The availability zones. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="RedisEnterprise.RedisEnterpriseClusterData"/> instance for mocking. </returns>
-        public static RedisEnterpriseClusterData RedisEnterpriseClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, RedisEnterpriseHighAvailability? highAvailability = default, RedisEnterpriseTlsVersion? minimumTlsVersion = default, string hostName = default, RedisEnterpriseProvisioningStatus? provisioningState = default, RedisEnterpriseRedundancyMode? redundancyMode = default, RedisEnterpriseClusterResourceState? resourceState = default, string redisVersion = default, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = default, string migratedEndpoint = default, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption = default, IEnumerable<RedisEnterpriseMaintenanceWindow> maintenanceWindows = default, RedisEnterprisePublicNetworkAccess? publicNetworkAccess = default, RedisEnterpriseKind? kind = default, RedisEnterpriseSku sku = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default)
+        public static RedisEnterpriseClusterData RedisEnterpriseClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RedisEnterpriseHighAvailability? highAvailability, RedisEnterpriseTlsVersion? minimumTlsVersion, string hostName, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseRedundancyMode? redundancyMode, RedisEnterpriseClusterResourceState? resourceState, string redisVersion, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections, string migratedEndpoint, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption, IEnumerable<RedisEnterpriseMaintenanceWindow> maintenanceWindows, RedisEnterprisePublicNetworkAccess? publicNetworkAccess, RedisEnterpriseKind? kind, RedisEnterpriseSku sku, IEnumerable<string> zones, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -470,7 +481,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.RedisEnterpriseClusterPatch"/> instance for mocking. </returns>
-        public static RedisEnterpriseClusterPatch RedisEnterpriseClusterPatch(RedisEnterpriseSku sku = default, RedisEnterpriseHighAvailability? highAvailability = default, RedisEnterpriseTlsVersion? minimumTlsVersion = default, string hostName = default, RedisEnterpriseProvisioningStatus? provisioningState = default, RedisEnterpriseRedundancyMode? redundancyMode = default, RedisEnterpriseClusterResourceState? resourceState = default, string redisVersion = default, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = default, string migratedEndpoint = default, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption = default, IEnumerable<RedisEnterpriseMaintenanceWindow> maintenanceWindows = default, RedisEnterprisePublicNetworkAccess? publicNetworkAccess = default, ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default)
+        public static RedisEnterpriseClusterPatch RedisEnterpriseClusterPatch(RedisEnterpriseSku sku, RedisEnterpriseHighAvailability? highAvailability, RedisEnterpriseTlsVersion? minimumTlsVersion, string hostName, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseRedundancyMode? redundancyMode, RedisEnterpriseClusterResourceState? resourceState, string redisVersion, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections, string migratedEndpoint, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption, IEnumerable<RedisEnterpriseMaintenanceWindow> maintenanceWindows, RedisEnterprisePublicNetworkAccess? publicNetworkAccess, ManagedServiceIdentity identity, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -533,36 +544,18 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="provisioningState"> Current provisioning status of the access policy assignment. </param>
-        /// <param name="accessPolicyName"> <b>Deprecated.</b> This property always returns "default". Use `accessString` to configure custom Redis ACL permissions instead. </param>
-        /// <param name="accessString"> The Redis ACL permissions string applied to this assignment, for example `+@read ~cache:<i>`. Defaults to `+@all ~</i>` if not specified. </param>
-        /// <param name="provisioningError"> Provisioning error details when the access string failed to apply (e.g., invalid ACL syntax). Null when provisioning succeeded. </param>
+        /// <param name="accessPolicyName"> Name of access policy under specific access policy assignment. Only "default" policy is supported for now. </param>
         /// <param name="userObjectId"> The object ID of the user. </param>
         /// <returns> A new <see cref="RedisEnterprise.AccessPolicyAssignmentData"/> instance for mocking. </returns>
-        public static AccessPolicyAssignmentData AccessPolicyAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RedisEnterpriseProvisioningStatus? provisioningState = default, string accessPolicyName = default, string accessString = default, AccessPolicyAssignmentProvisioningError provisioningError = default, Guid? userObjectId = default)
+        public static AccessPolicyAssignmentData AccessPolicyAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RedisEnterpriseProvisioningStatus? provisioningState = default, string accessPolicyName = default, Guid? userObjectId = default)
         {
             return new AccessPolicyAssignmentData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && accessPolicyName is null && accessString is null && provisioningError is null && userObjectId is null ? default : new AccessPolicyAssignmentProperties(
-                    provisioningState,
-                    accessPolicyName,
-                    accessString,
-                    provisioningError,
-                    new AccessPolicyAssignmentPropertiesUser(userObjectId, default),
-                    default),
+                provisioningState is null && accessPolicyName is null && userObjectId is null ? default : new AccessPolicyAssignmentProperties(provisioningState, accessPolicyName, new AccessPolicyAssignmentPropertiesUser(userObjectId, default), default),
                 default);
-        }
-
-        /// <summary> Error details for access policy assignment provisioning failures. </summary>
-        /// <param name="code"> Machine-readable error code (e.g., "InvalidAccessString"). </param>
-        /// <param name="message"> Human-readable error message describing the failure. </param>
-        /// <param name="target"> The property that caused the error (e.g., "properties.accessString"). </param>
-        /// <returns> A new <see cref="Models.AccessPolicyAssignmentProvisioningError"/> instance for mocking. </returns>
-        public static AccessPolicyAssignmentProvisioningError AccessPolicyAssignmentProvisioningError(string code = default, string message = default, string target = default)
-        {
-            return new AccessPolicyAssignmentProvisioningError(code, message, target, default);
         }
 
         /// <param name="id"> The operation's unique id. </param>
@@ -607,7 +600,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="publicNetworkAccess"> Whether or not public network traffic can access the Redis cluster. Only 'Enabled' or 'Disabled' can be set. null is returned only for clusters created using an old API version which do not have this property and cannot be set. </param>
         /// <returns> A new <see cref="RedisEnterprise.RedisEnterpriseClusterData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RedisEnterpriseClusterData RedisEnterpriseClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RedisEnterpriseKind? kind, RedisEnterpriseSku sku, IEnumerable<string> zones, ManagedServiceIdentity identity, RedisEnterpriseHighAvailability? highAvailability, RedisEnterpriseTlsVersion? minimumTlsVersion, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption, string hostName, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseRedundancyMode? redundancyMode, RedisEnterpriseClusterResourceState? resourceState, string redisVersion, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections, RedisEnterprisePublicNetworkAccess? publicNetworkAccess)
+        public static RedisEnterpriseClusterData RedisEnterpriseClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, RedisEnterpriseKind? kind = default, RedisEnterpriseSku sku = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default, RedisEnterpriseHighAvailability? highAvailability = default, RedisEnterpriseTlsVersion? minimumTlsVersion = default, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption = default, string hostName = default, RedisEnterpriseProvisioningStatus? provisioningState = default, RedisEnterpriseRedundancyMode? redundancyMode = default, RedisEnterpriseClusterResourceState? resourceState = default, string redisVersion = default, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = default, RedisEnterprisePublicNetworkAccess? publicNetworkAccess = default)
         {
             return new RedisEnterpriseClusterData(
                 id,
@@ -647,7 +640,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <returns> A new <see cref="RedisEnterprise.RedisEnterprisePrivateEndpointConnectionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RedisEnterprisePrivateEndpointConnectionData RedisEnterprisePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier privateEndpointId, RedisEnterprisePrivateLinkServiceConnectionState connectionState, RedisEnterprisePrivateEndpointConnectionProvisioningState? provisioningState)
+        public static RedisEnterprisePrivateEndpointConnectionData RedisEnterprisePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier privateEndpointId = default, RedisEnterprisePrivateLinkServiceConnectionState connectionState = default, RedisEnterprisePrivateEndpointConnectionProvisioningState? provisioningState = default)
         {
             return new RedisEnterprisePrivateEndpointConnectionData(
                 id,
@@ -674,7 +667,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="publicNetworkAccess"> Whether or not public network traffic can access the Redis cluster. Only 'Enabled' or 'Disabled' can be set. null is returned only for clusters created using an old API version which do not have this property and cannot be set. </param>
         /// <returns> A new <see cref="Models.RedisEnterpriseClusterPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RedisEnterpriseClusterPatch RedisEnterpriseClusterPatch(RedisEnterpriseSku sku, ManagedServiceIdentity identity, IDictionary<string, string> tags, RedisEnterpriseHighAvailability? highAvailability, RedisEnterpriseTlsVersion? minimumTlsVersion, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption, string hostName, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseRedundancyMode? redundancyMode, RedisEnterpriseClusterResourceState? resourceState, string redisVersion, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections, RedisEnterprisePublicNetworkAccess? publicNetworkAccess)
+        public static RedisEnterpriseClusterPatch RedisEnterpriseClusterPatch(RedisEnterpriseSku sku = default, ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, RedisEnterpriseHighAvailability? highAvailability = default, RedisEnterpriseTlsVersion? minimumTlsVersion = default, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption = default, string hostName = default, RedisEnterpriseProvisioningStatus? provisioningState = default, RedisEnterpriseRedundancyMode? redundancyMode = default, RedisEnterpriseClusterResourceState? resourceState = default, string redisVersion = default, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = default, RedisEnterprisePublicNetworkAccess? publicNetworkAccess = default)
         {
             return new RedisEnterpriseClusterPatch(sku, highAvailability is null && minimumTlsVersion is null && customerManagedKeyEncryption is null && hostName is null && provisioningState is null && redundancyMode is null && resourceState is null && redisVersion is null && privateEndpointConnections is null && publicNetworkAccess is null ? default : new ClusterUpdateProperties(
                 highAvailability,
@@ -711,7 +704,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="accessKeysAuthentication"> This property can be Enabled/Disabled to allow or deny access with the current access keys. Can be updated even after database is created. </param>
         /// <returns> A new <see cref="RedisEnterprise.RedisEnterpriseDatabaseData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RedisEnterpriseDatabaseData RedisEnterpriseDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RedisEnterpriseClientProtocol? clientProtocol, int? port, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseClusterResourceState? resourceState, RedisEnterpriseClusteringPolicy? clusteringPolicy, RedisEnterpriseEvictionPolicy? evictionPolicy, RedisPersistenceSettings persistence, IEnumerable<RedisEnterpriseModule> modules, RedisEnterpriseDatabaseGeoReplication geoReplication, string redisVersion, DeferUpgradeSetting? deferUpgrade, AccessKeysAuthentication? accessKeysAuthentication)
+        public static RedisEnterpriseDatabaseData RedisEnterpriseDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RedisEnterpriseClientProtocol? clientProtocol = default, int? port = default, RedisEnterpriseProvisioningStatus? provisioningState = default, RedisEnterpriseClusterResourceState? resourceState = default, RedisEnterpriseClusteringPolicy? clusteringPolicy = default, RedisEnterpriseEvictionPolicy? evictionPolicy = default, RedisPersistenceSettings persistence = default, IEnumerable<RedisEnterpriseModule> modules = default, RedisEnterpriseDatabaseGeoReplication geoReplication = default, string redisVersion = default, DeferUpgradeSetting? deferUpgrade = default, AccessKeysAuthentication? accessKeysAuthentication = default)
         {
             return new RedisEnterpriseDatabaseData(
                 id,
@@ -751,7 +744,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="accessKeysAuthentication"> This property can be Enabled/Disabled to allow or deny access with the current access keys. Can be updated even after database is created. </param>
         /// <returns> A new <see cref="Models.RedisEnterpriseDatabasePatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RedisEnterpriseDatabasePatch RedisEnterpriseDatabasePatch(RedisEnterpriseClientProtocol? clientProtocol, int? port, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseClusterResourceState? resourceState, RedisEnterpriseClusteringPolicy? clusteringPolicy, RedisEnterpriseEvictionPolicy? evictionPolicy, RedisPersistenceSettings persistence, IEnumerable<RedisEnterpriseModule> modules, RedisEnterpriseDatabaseGeoReplication geoReplication, string redisVersion, DeferUpgradeSetting? deferUpgrade, AccessKeysAuthentication? accessKeysAuthentication)
+        public static RedisEnterpriseDatabasePatch RedisEnterpriseDatabasePatch(RedisEnterpriseClientProtocol? clientProtocol = default, int? port = default, RedisEnterpriseProvisioningStatus? provisioningState = default, RedisEnterpriseClusterResourceState? resourceState = default, RedisEnterpriseClusteringPolicy? clusteringPolicy = default, RedisEnterpriseEvictionPolicy? evictionPolicy = default, RedisPersistenceSettings persistence = default, IEnumerable<RedisEnterpriseModule> modules = default, RedisEnterpriseDatabaseGeoReplication geoReplication = default, string redisVersion = default, DeferUpgradeSetting? deferUpgrade = default, AccessKeysAuthentication? accessKeysAuthentication = default)
         {
             return new RedisEnterpriseDatabasePatch(clientProtocol is null && port is null && provisioningState is null && resourceState is null && clusteringPolicy is null && evictionPolicy is null && persistence is null && modules is null && geoReplication is null && redisVersion is null && deferUpgrade is null && accessKeysAuthentication is null ? default : new DatabaseUpdateProperties(
                 clientProtocol,
@@ -768,33 +761,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 accessKeysAuthentication,
                 default,
                 default), default);
-        }
-
-        /// <summary> Describes the access policy assignment of Redis Enterprise database. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> Current provisioning status of the access policy assignment. </param>
-        /// <param name="accessPolicyName"> <b>Deprecated.</b> This property always returns "default". Use `accessString` to configure custom Redis ACL permissions instead. </param>
-        /// <param name="userObjectId"> The object ID of the user. </param>
-        /// <returns> A new <see cref="RedisEnterprise.AccessPolicyAssignmentData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AccessPolicyAssignmentData AccessPolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RedisEnterpriseProvisioningStatus? provisioningState, string accessPolicyName, Guid? userObjectId)
-        {
-            return new AccessPolicyAssignmentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && accessPolicyName is null && userObjectId is null ? default : new AccessPolicyAssignmentProperties(
-                    provisioningState,
-                    accessPolicyName,
-                    default,
-                    default,
-                    new AccessPolicyAssignmentPropertiesUser(userObjectId, default),
-                    default),
-                default);
         }
 
         /// <summary> Describes the Redis Enterprise cluster. </summary>

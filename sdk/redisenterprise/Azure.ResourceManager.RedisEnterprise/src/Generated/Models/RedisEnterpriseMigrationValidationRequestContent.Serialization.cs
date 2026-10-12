@@ -97,11 +97,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 writer.WritePropertyName("skipDataMigration"u8);
                 writer.WriteBooleanValue(IsSkipDataMigration.Value);
             }
-            if (Optional.IsDefined(IsForceMigrate))
-            {
-                writer.WritePropertyName("forceMigrate"u8);
-                writer.WriteBooleanValue(IsForceMigrate.Value);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -146,7 +141,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
             ResourceIdentifier sourceResourceId = default;
             bool? isSkipDataMigration = default;
-            bool? isForceMigrate = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -164,21 +158,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     isSkipDataMigration = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("forceMigrate"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isForceMigrate = prop.Value.GetBoolean();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RedisEnterpriseMigrationValidationRequestContent(sourceResourceId, isSkipDataMigration, isForceMigrate, additionalBinaryDataProperties);
+            return new RedisEnterpriseMigrationValidationRequestContent(sourceResourceId, isSkipDataMigration, additionalBinaryDataProperties);
         }
     }
 }
