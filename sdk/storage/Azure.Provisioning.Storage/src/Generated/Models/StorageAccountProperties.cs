@@ -50,9 +50,6 @@ namespace Azure.Provisioning.Storage
         private BicepValue<bool> _isSkuConversionBlocked;
         private BicepValue<bool> _isAccountMigrationInProgress;
         private GeoPriorityReplicationStatus _geoPriorityReplicationStatus;
-        private StorageAccountSharedKeyAccessProperties _allowSharedKeyAccessForServices;
-        private StorageDataCollaborationPolicyProperties _dataCollaborationPolicyProperties;
-        private BicepValue<bool> _allowCrossTenantDelegationSas;
 
         /// <summary> Creates a new StorageAccountProperties. </summary>
         public StorageAccountProperties()
@@ -524,51 +521,6 @@ namespace Azure.Provisioning.Storage
             }
         }
 
-        /// <summary> Gets or sets the AllowSharedKeyAccessForServices. </summary>
-        public StorageAccountSharedKeyAccessProperties AllowSharedKeyAccessForServices
-        {
-            get
-            {
-                Initialize();
-                return _allowSharedKeyAccessForServices;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _allowSharedKeyAccessForServices, value);
-            }
-        }
-
-        /// <summary> Gets or sets the DataCollaborationPolicyProperties. </summary>
-        public StorageDataCollaborationPolicyProperties DataCollaborationPolicyProperties
-        {
-            get
-            {
-                Initialize();
-                return _dataCollaborationPolicyProperties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _dataCollaborationPolicyProperties, value);
-            }
-        }
-
-        /// <summary> Gets or sets the AllowCrossTenantDelegationSas. </summary>
-        public BicepValue<bool> AllowCrossTenantDelegationSas
-        {
-            get
-            {
-                Initialize();
-                return _allowCrossTenantDelegationSas;
-            }
-            set
-            {
-                Initialize();
-                _allowCrossTenantDelegationSas.Assign(value);
-            }
-        }
-
         /// <summary> Gets or sets the IsIPv6EndpointToBePublished. </summary>
         public BicepValue<bool> IsIPv6EndpointToBePublished
         {
@@ -643,9 +595,6 @@ namespace Azure.Provisioning.Storage
             _isSkuConversionBlocked = DefineProperty<bool>(nameof(IsSkuConversionBlocked), new string[] { "isSkuConversionBlocked" }, isOutput: true);
             _isAccountMigrationInProgress = DefineProperty<bool>(nameof(IsAccountMigrationInProgress), new string[] { "accountMigrationInProgress" }, isOutput: true);
             _geoPriorityReplicationStatus = DefineModelProperty<GeoPriorityReplicationStatus>(nameof(GeoPriorityReplicationStatus), new string[] { "geoPriorityReplicationStatus" });
-            _allowSharedKeyAccessForServices = DefineModelProperty<StorageAccountSharedKeyAccessProperties>(nameof(AllowSharedKeyAccessForServices), new string[] { "allowSharedKeyAccessForServices" });
-            _dataCollaborationPolicyProperties = DefineModelProperty<StorageDataCollaborationPolicyProperties>(nameof(DataCollaborationPolicyProperties), new string[] { "dataCollaborationPolicyProperties" });
-            _allowCrossTenantDelegationSas = DefineProperty<bool>(nameof(AllowCrossTenantDelegationSas), new string[] { "allowCrossTenantDelegationSas" });
             DefineAdditionalProperties();
         }
 

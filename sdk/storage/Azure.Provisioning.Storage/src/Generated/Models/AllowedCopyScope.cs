@@ -16,8 +16,6 @@ namespace Azure.Provisioning.Storage
         PrivateLink = 0,
         /// <summary> Aad. </summary>
         [DataMember(Name = "AAD")]
-        Aad = 1,
-        /// <summary> All. </summary>
-        All = 2
+        Aad = 1
     }
 }

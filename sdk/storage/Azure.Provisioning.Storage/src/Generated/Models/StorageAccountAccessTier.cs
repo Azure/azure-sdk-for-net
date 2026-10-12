@@ -17,8 +17,6 @@ namespace Azure.Provisioning.Storage
         /// <summary> Premium. </summary>
         Premium = 2,
         /// <summary> Cold. </summary>
-        Cold = 3,
-        /// <summary> Smart. </summary>
-        Smart = 4
+        Cold = 3
     }
 }

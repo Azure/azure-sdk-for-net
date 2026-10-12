@@ -26,7 +26,7 @@ namespace Azure.Provisioning.Storage
         /// <summary> Creates a new ObjectReplicationPolicy. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ObjectReplicationPolicy(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/objectReplicationPolicies", resourceVersion ?? "2026-06-01")
+        public ObjectReplicationPolicy(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/objectReplicationPolicies", resourceVersion ?? "2025-06-01")
         {
         }
 
@@ -206,23 +206,6 @@ namespace Azure.Provisioning.Storage
             }
         }
 
-        /// <summary> Gets or sets the IsTagsReplicationEnabled. </summary>
-        public BicepValue<bool> IsTagsReplicationEnabled
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IsTagsReplicationEnabled;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ObjectReplicationPolicyProperties();
-                }
-                Properties.IsTagsReplicationEnabled = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for ObjectReplicationPolicy. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -256,12 +239,6 @@ namespace Azure.Provisioning.Storage
         /// <summary></summary>
         public static partial class ResourceVersions
         {
-            /// <summary> API version "2026-06-01". </summary>
-            public static readonly string V2026_06_01 = "2026-06-01";
-            /// <summary> API version "2026-04-01". </summary>
-            public static readonly string V2026_04_01 = "2026-04-01";
-            /// <summary> API version "2025-08-01". </summary>
-            public static readonly string V2025_08_01 = "2025-08-01";
             /// <summary> API version "2025-06-01". </summary>
             public static readonly string V2025_06_01 = "2025-06-01";
         }

@@ -26,7 +26,7 @@ namespace Azure.Provisioning.Storage
         /// <summary> Creates a new ImmutabilityPolicy. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ImmutabilityPolicy(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies", resourceVersion ?? "2026-06-01")
+        public ImmutabilityPolicy(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies", resourceVersion ?? "2025-06-01")
         {
         }
 
@@ -193,12 +193,6 @@ namespace Azure.Provisioning.Storage
         /// <summary></summary>
         public static partial class ResourceVersions
         {
-            /// <summary> API version "2026-06-01". </summary>
-            public static readonly string V2026_06_01 = "2026-06-01";
-            /// <summary> API version "2026-04-01". </summary>
-            public static readonly string V2026_04_01 = "2026-04-01";
-            /// <summary> API version "2025-08-01". </summary>
-            public static readonly string V2025_08_01 = "2025-08-01";
             /// <summary> API version "2025-06-01". </summary>
             public static readonly string V2025_06_01 = "2025-06-01";
         }

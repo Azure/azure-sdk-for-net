@@ -16,7 +16,6 @@ namespace Azure.Provisioning.Storage
         private StorageCorsRules _cors;
         private BicepValue<string> _defaultServiceVersion;
         private DeleteRetentionPolicy _deleteRetentionPolicy;
-        private BlobServiceStaticWebsite _staticWebsite;
         private BicepValue<bool> _isVersioningEnabled;
         private BicepValue<bool> _isAutomaticSnapshotPolicyEnabled;
         private BlobServiceChangeFeed _changeFeed;
@@ -71,21 +70,6 @@ namespace Azure.Provisioning.Storage
             {
                 Initialize();
                 AssignOrReplace(ref _deleteRetentionPolicy, value);
-            }
-        }
-
-        /// <summary> Gets or sets the StaticWebsite. </summary>
-        public BlobServiceStaticWebsite StaticWebsite
-        {
-            get
-            {
-                Initialize();
-                return _staticWebsite;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _staticWebsite, value);
             }
         }
 
@@ -203,7 +187,6 @@ namespace Azure.Provisioning.Storage
             _cors = DefineModelProperty<StorageCorsRules>(nameof(Cors), new string[] { "cors" });
             _defaultServiceVersion = DefineProperty<string>(nameof(DefaultServiceVersion), new string[] { "defaultServiceVersion" });
             _deleteRetentionPolicy = DefineModelProperty<DeleteRetentionPolicy>(nameof(DeleteRetentionPolicy), new string[] { "deleteRetentionPolicy" });
-            _staticWebsite = DefineModelProperty<BlobServiceStaticWebsite>(nameof(StaticWebsite), new string[] { "staticWebsite" });
             _isVersioningEnabled = DefineProperty<bool>(nameof(IsVersioningEnabled), new string[] { "isVersioningEnabled" });
             _isAutomaticSnapshotPolicyEnabled = DefineProperty<bool>(nameof(IsAutomaticSnapshotPolicyEnabled), new string[] { "automaticSnapshotPolicyEnabled" });
             _changeFeed = DefineModelProperty<BlobServiceChangeFeed>(nameof(ChangeFeed), new string[] { "changeFeed" });

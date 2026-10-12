@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Storage
@@ -13,40 +12,15 @@ namespace Azure.Provisioning.Storage
     /// <summary> SasPolicy assigned to the storage account. </summary>
     public partial class StorageAccountSasPolicy : ProvisionableConstruct
     {
-        private BicepValue<bool> _isUserBoundUserDelegationSasRequired;
-        private BicepValue<PolicyViolationAction> _requireUserBoundUserDelegationSasAction;
-
         /// <summary> Creates a new StorageAccountSasPolicy. </summary>
         public StorageAccountSasPolicy()
         {
-        }
-
-        /// <summary> Gets the IsUserBoundUserDelegationSasRequired. </summary>
-        public BicepValue<bool> IsUserBoundUserDelegationSasRequired
-        {
-            get
-            {
-                Initialize();
-                return _isUserBoundUserDelegationSasRequired;
-            }
-        }
-
-        /// <summary> Gets the RequireUserBoundUserDelegationSasAction. </summary>
-        public BicepValue<PolicyViolationAction> RequireUserBoundUserDelegationSasAction
-        {
-            get
-            {
-                Initialize();
-                return _requireUserBoundUserDelegationSasAction;
-            }
         }
 
         /// <summary> Define all the provisionable properties for StorageAccountSasPolicy. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _isUserBoundUserDelegationSasRequired = DefineProperty<bool>(nameof(IsUserBoundUserDelegationSasRequired), new string[] { "requireUserBoundUserDelegationSas" });
-            _requireUserBoundUserDelegationSasAction = DefineProperty<PolicyViolationAction>(nameof(RequireUserBoundUserDelegationSasAction), new string[] { "requireUserBoundUserDelegationSasAction" });
             DefineAdditionalProperties();
         }
 

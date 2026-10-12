@@ -21,7 +21,6 @@ namespace Azure.Provisioning.Storage
         private BicepList<ObjectReplicationPolicyRule> _rules;
         private ObjectReplicationPolicyPropertiesMetrics _metrics;
         private ObjectReplicationPolicyPropertiesPriorityReplication _priorityReplication;
-        private ObjectReplicationPolicyPropertiesTagsReplication _tagsReplication;
 
         /// <summary> Creates a new ObjectReplicationPolicyProperties. </summary>
         public ObjectReplicationPolicyProperties()
@@ -123,21 +122,6 @@ namespace Azure.Provisioning.Storage
             }
         }
 
-        /// <summary> Gets or sets the TagsReplication. </summary>
-        internal ObjectReplicationPolicyPropertiesTagsReplication TagsReplication
-        {
-            get
-            {
-                Initialize();
-                return _tagsReplication;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _tagsReplication, value);
-            }
-        }
-
         /// <summary> Gets or sets the IsMetricsEnabled. </summary>
         public BicepValue<bool> IsMetricsEnabled
         {
@@ -172,23 +156,6 @@ namespace Azure.Provisioning.Storage
             }
         }
 
-        /// <summary> Gets or sets the IsTagsReplicationEnabled. </summary>
-        public BicepValue<bool> IsTagsReplicationEnabled
-        {
-            get
-            {
-                return TagsReplication is null ? default : TagsReplication.IsTagsReplicationEnabled;
-            }
-            set
-            {
-                if (TagsReplication is null)
-                {
-                    TagsReplication = new ObjectReplicationPolicyPropertiesTagsReplication();
-                }
-                TagsReplication.IsTagsReplicationEnabled = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for ObjectReplicationPolicyProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -200,7 +167,6 @@ namespace Azure.Provisioning.Storage
             _rules = DefineListProperty<ObjectReplicationPolicyRule>(nameof(Rules), new string[] { "rules" });
             _metrics = DefineModelProperty<ObjectReplicationPolicyPropertiesMetrics>(nameof(Metrics), new string[] { "metrics" });
             _priorityReplication = DefineModelProperty<ObjectReplicationPolicyPropertiesPriorityReplication>(nameof(PriorityReplication), new string[] { "priorityReplication" });
-            _tagsReplication = DefineModelProperty<ObjectReplicationPolicyPropertiesTagsReplication>(nameof(TagsReplication), new string[] { "tagsReplication" });
             DefineAdditionalProperties();
         }
 
