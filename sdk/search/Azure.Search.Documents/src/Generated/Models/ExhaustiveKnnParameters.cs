@@ -15,6 +15,8 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private VectorSearchAlgorithmMetric? _metric;
+        internal bool _metricIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ExhaustiveKnnParameters"/>. </summary>
         public ExhaustiveKnnParameters()
@@ -26,11 +28,22 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ExhaustiveKnnParameters(VectorSearchAlgorithmMetric? metric, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Metric = metric;
+            _metric = metric;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The similarity metric to use for vector comparisons. </summary>
-        public VectorSearchAlgorithmMetric? Metric { get; set; }
+        public VectorSearchAlgorithmMetric? Metric
+        {
+            get
+            {
+                return _metric;
+            }
+            set
+            {
+                _metric = value;
+                _metricIsDefined = true;
+            }
+        }
     }
 }

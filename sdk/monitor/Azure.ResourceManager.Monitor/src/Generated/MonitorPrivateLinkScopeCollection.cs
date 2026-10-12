@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MonitorPrivateLinkScopeData, MonitorPrivateLinkScopeResource>(new PrivateLinkScopesGetByResourceGroupAsyncCollectionResultOfT(_privateLinkScopesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MonitorPrivateLinkScopeCollection.GetAll"), data => new MonitorPrivateLinkScopeResource(Client, data));
+            return new AsyncPageableWrapper<MonitorPrivateLinkScopeData, MonitorPrivateLinkScopeResource>(new MonitorPrivateLinkScopeDataAsyncCollectionResultOfT(_privateLinkScopesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MonitorPrivateLinkScopeCollection.GetAll"), data => new MonitorPrivateLinkScopeResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MonitorPrivateLinkScopeData, MonitorPrivateLinkScopeResource>(new PrivateLinkScopesGetByResourceGroupCollectionResultOfT(_privateLinkScopesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MonitorPrivateLinkScopeCollection.GetAll"), data => new MonitorPrivateLinkScopeResource(Client, data));
+            return new PageableWrapper<MonitorPrivateLinkScopeData, MonitorPrivateLinkScopeResource>(new MonitorPrivateLinkScopeDataCollectionResultOfT(_privateLinkScopesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MonitorPrivateLinkScopeCollection.GetAll"), data => new MonitorPrivateLinkScopeResource(Client, data));
         }
 
         /// <summary>

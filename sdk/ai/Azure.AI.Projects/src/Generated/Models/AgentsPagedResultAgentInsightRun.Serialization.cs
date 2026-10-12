@@ -182,7 +182,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentsPagedResultAgentInsightRun(data, firstId, lastId, hasMore, additionalBinaryDataProperties);
+            return new AgentsPagedResultAgentInsightRun(data ?? new ChangeTrackingList<AgentInsightRun>(), firstId, lastId, hasMore, additionalBinaryDataProperties);
         }
     }
 }

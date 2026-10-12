@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json.Nodes;
+using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Tasks.Serialization;
 
 namespace Azure.AI.AgentServer.Core.Tasks.Engine;
@@ -231,7 +232,7 @@ internal sealed class SteeringQueue<TOutput>
                 pending.Add(input.Slot is null ? null : input.Slot.DeepClone());
 
                 // Persist each queued input's id in a parallel array so recovery restores its real
-                // per-turn identity (ctx.InputId + last_input_id advance) rather than inheriting the
+                // per-turn identity rather than inheriting the
                 // chain head. Kept as a sibling array so `pending_inputs` stays raw slots and the
                 // wire shape is unchanged for readers that ignore this key.
                 pendingIds.Add(input.InputId);
@@ -254,14 +255,27 @@ internal sealed class SteeringQueue<TOutput>
 /// <typeparam name="TOutput">The chain output type.</typeparam>
 internal sealed class QueuedInput<TOutput>
 {
-    public QueuedInput(JsonNode? slot, JsonObject? attachments, string inputId, bool persistInputId, TaskRunState<TOutput> runState)
+    private readonly TaskCompletionSource<bool> _admission = new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+    public QueuedInput(JsonNode? slot, JsonObject? attachments, string inputId, bool persistInputId, TaskRunState<TOutput> runState,
+        bool accepted = true)
     {
         Slot = slot;
         Attachments = attachments;
         InputId = inputId;
         PersistInputId = persistInputId;
         RunState = runState;
+        if (accepted)
+        {
+            _admission.TrySetResult(true);
+        }
     }
+
+    public Task<bool> Admission => _admission.Task;
+
+    public void Accept() => _admission.TrySetResult(true);
+
+    public void Reject() => _admission.TrySetResult(false);
 
     /// <summary>The input slot (inline value or attachment ref).</summary>
     public JsonNode? Slot { get; }
@@ -272,7 +286,7 @@ internal sealed class QueuedInput<TOutput>
     /// <summary>The input id assigned to this queued input.</summary>
     public string InputId { get; }
 
-    /// <summary>Whether the framework advances the persisted <c>last_input_id</c> chain head to this input's id when its steered turn drains.</summary>
+    /// <summary>Whether this input has its own persisted id rather than an inherited legacy id.</summary>
     public bool PersistInputId { get; }
 
     /// <summary>The awaitable handle resolved when this input's steered turn completes.</summary>

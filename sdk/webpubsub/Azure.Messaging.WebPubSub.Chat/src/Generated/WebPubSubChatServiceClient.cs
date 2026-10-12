@@ -1678,10 +1678,10 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <param name="minutesToExpire"> Lifetime of the generated token, in minutes. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<GenerateClientTokenResponse> GenerateClientToken(string userId = default, IEnumerable<string> role = default, int? minutesToExpire = default, CancellationToken cancellationToken = default)
+        internal virtual Response<GenerateClientTokenResult> GenerateClientToken(string userId = default, IEnumerable<string> role = default, int? minutesToExpire = default, CancellationToken cancellationToken = default)
         {
             Response result = GenerateClientToken(userId, role, minutesToExpire, cancellationToken.ToRequestContext());
-            return Response.FromValue((GenerateClientTokenResponse)result, result);
+            return Response.FromValue((GenerateClientTokenResult)result, result);
         }
 
         /// <summary> Generate a token for connecting a client to Azure Web PubSub. </summary>
@@ -1690,10 +1690,10 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <param name="minutesToExpire"> Lifetime of the generated token, in minutes. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<GenerateClientTokenResponse>> GenerateClientTokenAsync(string userId = default, IEnumerable<string> role = default, int? minutesToExpire = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<GenerateClientTokenResult>> GenerateClientTokenAsync(string userId = default, IEnumerable<string> role = default, int? minutesToExpire = default, CancellationToken cancellationToken = default)
         {
             Response result = await GenerateClientTokenAsync(userId, role, minutesToExpire, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((GenerateClientTokenResponse)result, result);
+            return Response.FromValue((GenerateClientTokenResult)result, result);
         }
     }
 }

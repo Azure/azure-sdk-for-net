@@ -817,7 +817,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 defaultMoveCost,
                 default,
                 provisioningState,
-                default,
+                serviceKind is null ? default : new ApplicationServiceKind(serviceKind),
                 serviceTypeName,
                 partitionDescription,
                 servicePackageActivationMode,
@@ -832,7 +832,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <returns> A new <see cref="Models.PartitionSchemeDescription"/> instance for mocking. </returns>
         public static PartitionSchemeDescription PartitionSchemeDescription(string partitionScheme = default)
         {
-            return new UnknownPartitionSchemeDescription(default, default);
+            return new UnknownPartitionSchemeDescription(partitionScheme is null ? default : new ApplicationPartitionScheme(partitionScheme), default);
         }
 
         /// <summary> Describes the named partition scheme of the service. </summary>
@@ -843,14 +843,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         {
             names ??= new ChangeTrackingList<string>();
 
-            return new NamedPartitionSchemeDescription(default, default, count, (names ?? new ChangeTrackingList<string>()).ToList());
+            return new NamedPartitionSchemeDescription(ApplicationPartitionScheme.Named, default, count, (names ?? new ChangeTrackingList<string>()).ToList());
         }
 
         /// <summary> Describes the partition scheme of a singleton-partitioned, or non-partitioned service. </summary>
         /// <returns> A new <see cref="Models.SingletonPartitionSchemeDescription"/> instance for mocking. </returns>
         public static SingletonPartitionSchemeDescription SingletonPartitionSchemeDescription()
         {
-            return new SingletonPartitionSchemeDescription(default, default);
+            return new SingletonPartitionSchemeDescription(ApplicationPartitionScheme.Singleton, default);
         }
 
         /// <summary> Describes a partitioning scheme where an integer range is allocated evenly across a number of partitions. </summary>
@@ -866,7 +866,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <returns> A new <see cref="Models.UniformInt64RangePartitionSchemeDescription"/> instance for mocking. </returns>
         public static UniformInt64RangePartitionSchemeDescription UniformInt64RangePartitionSchemeDescription(int count = default, string lowKey = default, string highKey = default)
         {
-            return new UniformInt64RangePartitionSchemeDescription(default, default, count, lowKey, highKey);
+            return new UniformInt64RangePartitionSchemeDescription(ApplicationPartitionScheme.UniformInt64Range, default, count, lowKey, highKey);
         }
 
         /// <summary> The common service resource properties. </summary>
@@ -923,7 +923,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <returns> A new <see cref="Models.ServicePlacementPolicyDescription"/> instance for mocking. </returns>
         public static ServicePlacementPolicyDescription ServicePlacementPolicyDescription(string @type = default)
         {
-            return new UnknownServicePlacementPolicyDescription(default, default);
+            return new UnknownServicePlacementPolicyDescription(@type is null ? default : new ServicePlacementPolicyType(@type), default);
         }
 
         /// <summary> The properties of a stateful service resource. </summary>
@@ -962,7 +962,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 defaultMoveCost,
                 default,
                 provisioningState,
-                default,
+                ApplicationServiceKind.Stateful,
                 serviceTypeName,
                 partitionDescription,
                 servicePackageActivationMode,
@@ -1009,7 +1009,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 defaultMoveCost,
                 default,
                 provisioningState,
-                default,
+                ApplicationServiceKind.Stateless,
                 serviceTypeName,
                 partitionDescription,
                 servicePackageActivationMode,
@@ -1068,7 +1068,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 (servicePlacementPolicies ?? new ChangeTrackingList<ServicePlacementPolicyDescription>()).ToList(),
                 defaultMoveCost,
                 default,
-                default);
+                serviceKind is null ? default : new ApplicationServiceKind(serviceKind));
         }
 
         /// <summary> The properties of a stateful service resource for patch operations. </summary>
@@ -1096,7 +1096,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 (servicePlacementPolicies ?? new ChangeTrackingList<ServicePlacementPolicyDescription>()).ToList(),
                 defaultMoveCost,
                 default,
-                default,
+                ApplicationServiceKind.Stateful,
                 targetReplicaSetSize,
                 minReplicaSetSize,
                 replicaRestartWaitDuration,
@@ -1126,7 +1126,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 (servicePlacementPolicies ?? new ChangeTrackingList<ServicePlacementPolicyDescription>()).ToList(),
                 defaultMoveCost,
                 default,
-                default,
+                ApplicationServiceKind.Stateless,
                 instanceCount,
                 instanceCloseDelayDuration);
         }

@@ -12,6 +12,138 @@ function LogVsoCommand([string]$message) {
     Write-Host $message
 }
 
+<#
+.SYNOPSIS
+Resolves the outcome of a deployment after New-AzResourceGroupDeployment threw or
+returned a non-'Succeeded' state, without starting a redundant concurrent deployment.
+
+.DESCRIPTION
+A non-'Succeeded' result (or a thrown error) from New-AzResourceGroupDeployment doesn't
+necessarily mean the deployment failed - it can also mean the deployment is still
+genuinely running server-side (e.g. long-running templates like database server
+provisioning that can take well past this cmdlet's own client-side wait). Starting a
+second, concurrent deployment in that case - whether reusing the same name or a new one -
+races the still-active original: same name fails fast with Code=DeploymentActive, but even
+a different name can still cause resource-level conflicts if both deployments try to
+manage the same underlying resource, and either way leaves an orphaned duplicate
+deployment record behind.
+
+This function asks ARM for the deployment's actual current state before deciding what to
+do:
+  - Not found at all: nothing is in flight server-side, so it's safe to submit a brand
+    new deployment under a unique name.
+  - Still running: poll it to completion (bounded by PollTimeoutMinutes) instead of
+    submitting another deployment.
+  - Already succeeded: treat it as a success.
+  - Already failed/canceled: return it as-is so the caller's normal failure handling
+    (HandleDeploymentFailure) reports the real error, instead of masking it with a retry.
+
+.PARAMETER DeploymentName
+The name of the deployment that was originally attempted (and may or may not still be
+active server-side).
+
+.PARAMETER ResourceGroupName
+The resource group the deployment was made (or attempted) against.
+
+.PARAMETER TemplateFile
+Path to the ARM template file to deploy, used only if a brand new deployment needs to be
+submitted (i.e. no existing deployment record is found).
+
+.PARAMETER TemplateFileParameters
+Template parameters to pass to New-AzResourceGroupDeployment, used only if a brand new
+deployment needs to be submitted.
+
+.PARAMETER Force
+Passed through to New-AzResourceGroupDeployment if a brand new deployment needs to be
+submitted.
+
+.PARAMETER PollTimeoutMinutes
+Maximum time to poll a still-active existing deployment before giving up and throwing.
+Defaults to 60 minutes.
+
+.OUTPUTS
+A deployment object of the same type/shape returned by New-AzResourceGroupDeployment and
+Get-AzResourceGroupDeployment (has a ProvisioningState property callers can check the same
+way they already do for the initial deployment attempt), in one of these states:
+  - 'Succeeded', 'Failed', or 'Canceled' - the pre-existing deployment reached that
+    terminal state (either immediately, or after polling); or
+  - whatever New-AzResourceGroupDeployment returns for a freshly submitted retry
+    deployment (the "not found at all" case above).
+
+Throws if the pre-existing deployment never reaches a terminal state within
+PollTimeoutMinutes, or if the new retry deployment submission itself throws.
+#>
+function Resolve-DeploymentAfterFailure(
+    [string] $DeploymentName,
+    [string] $ResourceGroupName,
+    [string] $TemplateFile,
+    [hashtable] $TemplateFileParameters,
+    [switch] $Force,
+    [int] $PollTimeoutMinutes = 60
+) {
+    $terminalStates = @('Succeeded', 'Failed', 'Canceled')
+    $existing = Get-AzResourceGroupDeployment -ResourceGroupName $ResourceGroupName -Name $DeploymentName -ErrorAction SilentlyContinue
+
+    if ($existing) {
+        if ($existing.ProvisioningState -in $terminalStates) {
+            Write-Warning "Deployment '$DeploymentName' already reached terminal state '$($existing.ProvisioningState)' server-side."
+            return $existing
+        }
+
+        Write-Warning "Deployment '$DeploymentName' is still active server-side (state '$($existing.ProvisioningState)'). Polling instead of starting a redundant concurrent deployment."
+        $start = Get-Date
+        $deadline = $start.AddMinutes($PollTimeoutMinutes)
+        $lastLoggedState = $null
+        $nextHeartbeat = $start
+
+        while ((Get-Date) -lt $deadline) {
+            $existing = Get-AzResourceGroupDeployment -ResourceGroupName $ResourceGroupName -Name $DeploymentName -ErrorAction SilentlyContinue
+            if (!$existing) {
+                # The deployment record disappeared between polls; fall through to submitting
+                # a new deployment below.
+                break
+            }
+
+            $now = Get-Date
+            if ($existing.ProvisioningState -ne $lastLoggedState -or $now -ge $nextHeartbeat) {
+                $elapsedMinutes = [int] ($now - $start).TotalMinutes
+                Write-Host "  Deployment '$DeploymentName' provisioningState = $($existing.ProvisioningState) (elapsedMinutes = $elapsedMinutes)"
+                $lastLoggedState = $existing.ProvisioningState
+                $nextHeartbeat = $now.AddMinutes(1)
+            }
+
+            if ($existing.ProvisioningState -in $terminalStates) {
+                return $existing
+            }
+
+            Start-Sleep -Seconds 15
+        }
+
+        if ($existing -and $existing.ProvisioningState -notin $terminalStates) {
+            throw "Timed out after $PollTimeoutMinutes minute(s) waiting for deployment '$DeploymentName' to finish. Latest provisioningState: '$($existing.ProvisioningState)'."
+        }
+    }
+
+    # No existing deployment record was found: nothing is actually in flight server-side (e.g.
+    # the client call failed before ARM even registered the deployment), so it's safe to submit
+    # a brand new deployment. ARM deployment names are limited to 64 characters; truncate only
+    # the base portion (not the unique "-retry-<suffix>" we append) so the result always stays
+    # within the limit, even when $DeploymentName is already close to 64 chars.
+    Write-Warning "No deployment named '$DeploymentName' was found; submitting a new deployment under a unique name."
+    $retrySuffix = "-retry-$([Guid]::NewGuid().ToString('N').Substring(0, 8))"
+    $maxBaseLength = 64 - $retrySuffix.Length
+    $truncatedBaseName = if ($DeploymentName.Length -gt $maxBaseLength) { $DeploymentName.Substring(0, $maxBaseLength) } else { $DeploymentName }
+    $retryDeploymentName = "$truncatedBaseName$retrySuffix"
+    Write-Host "Submitting new deployment as '$retryDeploymentName'"
+
+    return New-AzResourceGroupDeployment `
+        -Name $retryDeploymentName `
+        -ResourceGroupName $ResourceGroupName `
+        -TemplateFile $TemplateFile `
+        -TemplateParameterObject $TemplateFileParameters `
+        -Force:$Force
+}
+
 function Retry([scriptblock] $Action, [int] $Attempts = 5) {
     $attempt = 0
     $sleep = 5

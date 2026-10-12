@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new BillingSubscriptionsGetByEnrollmentAccountAsyncCollectionResultOfT(
+            return new BillingSubscriptionDataAsync3CollectionResultOfT(
                 _billingSubscriptionsRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new BillingSubscriptionsGetByEnrollmentAccountCollectionResultOfT(
+            return new BillingSubscriptionData3CollectionResultOfT(
                 _billingSubscriptionsRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftBillingEnrollmentAccountOperationGroupCheckAccessByEnrollmentAccountAsyncCollectionResultOfT(
+            return new BillingEnrollmentAccountResourceCheckAccessBillingPermissionsAsyncCollectionResultOfT(
                 _enrollmentAccountOperationGroupRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftBillingEnrollmentAccountOperationGroupCheckAccessByEnrollmentAccountCollectionResultOfT(
+            return new BillingEnrollmentAccountResourceCheckAccessBillingPermissionsCollectionResultOfT(
                 _enrollmentAccountOperationGroupRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new EnrollmentAccountOperationGroupGetBillingPermissionsAsyncCollectionResultOfT(_enrollmentAccountOperationGroupRestClient, Id.Parent.Name, Id.Name, context, "BillingEnrollmentAccountResource.GetBillingPermissions");
+            return new BillingPermissionAsync5CollectionResultOfT(_enrollmentAccountOperationGroupRestClient, Id.Parent.Name, Id.Name, context, "BillingEnrollmentAccountResource.GetBillingPermissions");
         }
 
         /// <summary>
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new EnrollmentAccountOperationGroupGetBillingPermissionsCollectionResultOfT(_enrollmentAccountOperationGroupRestClient, Id.Parent.Name, Id.Name, context, "BillingEnrollmentAccountResource.GetBillingPermissions");
+            return new BillingPermission5CollectionResultOfT(_enrollmentAccountOperationGroupRestClient, Id.Parent.Name, Id.Name, context, "BillingEnrollmentAccountResource.GetBillingPermissions");
         }
 
         /// <summary> Gets a collection of BillingEnrollmentAccountRoleAssignments in the <see cref="BillingEnrollmentAccountResource"/>. </summary>

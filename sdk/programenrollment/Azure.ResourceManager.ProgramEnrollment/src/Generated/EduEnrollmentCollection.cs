@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ProgramEnrollment
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EduEnrollmentData, EduEnrollmentResource>(new EduEnrollmentsGetByResourceGroupAsyncCollectionResultOfT(_eduEnrollmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EduEnrollmentCollection.GetAll"), data => new EduEnrollmentResource(Client, data));
+            return new AsyncPageableWrapper<EduEnrollmentData, EduEnrollmentResource>(new EduEnrollmentDataAsyncCollectionResultOfT(_eduEnrollmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EduEnrollmentCollection.GetAll"), data => new EduEnrollmentResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ProgramEnrollment
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EduEnrollmentData, EduEnrollmentResource>(new EduEnrollmentsGetByResourceGroupCollectionResultOfT(_eduEnrollmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EduEnrollmentCollection.GetAll"), data => new EduEnrollmentResource(Client, data));
+            return new PageableWrapper<EduEnrollmentData, EduEnrollmentResource>(new EduEnrollmentDataCollectionResultOfT(_eduEnrollmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EduEnrollmentCollection.GetAll"), data => new EduEnrollmentResource(Client, data));
         }
 
         /// <summary>

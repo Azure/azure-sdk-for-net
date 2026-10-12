@@ -284,16 +284,6 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentCardSkill>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentCardSkill>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum AgentDefinitionOptInKeys
-    {
-        WorkflowAgentsV1Preview = 0,
-        ExternalAgentsV1Preview = 1,
-        DraftAgentsV1Preview = 2,
-        VoiceAgentsV1Preview = 3,
-        DigitalWorkerV1Preview = 4,
-        GithubCopilotV1Preview = 5,
-        SkillsV1Preview = 6,
-    }
     public abstract partial class AgentEndpointAuthorizationScheme : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.AgentEndpointAuthorizationScheme>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentEndpointAuthorizationScheme>
     {
         internal AgentEndpointAuthorizationScheme() { }
@@ -5077,34 +5067,6 @@ namespace OpenAI
         ConnectorOutlookcalendar = 5,
         ConnectorOutlookemail = 6,
         ConnectorSharepoint = 7,
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RealtimeClientEventType : System.IEquatable<OpenAI.RealtimeClientEventType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RealtimeClientEventType(string value) { throw null; }
-        public static OpenAI.RealtimeClientEventType ConversationItemCreate { get { throw null; } }
-        public static OpenAI.RealtimeClientEventType ConversationItemDelete { get { throw null; } }
-        public static OpenAI.RealtimeClientEventType ConversationItemRetrieve { get { throw null; } }
-        public static OpenAI.RealtimeClientEventType ConversationItemTruncate { get { throw null; } }
-        public static OpenAI.RealtimeClientEventType InputAudioBufferAppend { get { throw null; } }
-        public static OpenAI.RealtimeClientEventType InputAudioBufferClear { get { throw null; } }
-        public static OpenAI.RealtimeClientEventType InputAudioBufferCommit { get { throw null; } }
-        public static OpenAI.RealtimeClientEventType OutputAudioBufferClear { get { throw null; } }
-        public static OpenAI.RealtimeClientEventType ResponseCancel { get { throw null; } }
-        public static OpenAI.RealtimeClientEventType ResponseCreate { get { throw null; } }
-        public static OpenAI.RealtimeClientEventType RtcCallSdpCreate { get { throw null; } }
-        public static OpenAI.RealtimeClientEventType SessionAvatarConnect { get { throw null; } }
-        public static OpenAI.RealtimeClientEventType SessionUpdate { get { throw null; } }
-        public bool Equals(OpenAI.RealtimeClientEventType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(OpenAI.RealtimeClientEventType left, OpenAI.RealtimeClientEventType right) { throw null; }
-        public static implicit operator OpenAI.RealtimeClientEventType (string value) { throw null; }
-        public static implicit operator OpenAI.RealtimeClientEventType? (string value) { throw null; }
-        public static bool operator !=(OpenAI.RealtimeClientEventType left, OpenAI.RealtimeClientEventType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class RealtimeFunctionToolParameters : System.ClientModel.Primitives.IJsonModel<OpenAI.RealtimeFunctionToolParameters>, System.ClientModel.Primitives.IPersistableModel<OpenAI.RealtimeFunctionToolParameters>
     {

@@ -243,7 +243,7 @@ namespace Azure.AI.DocumentIntelligence
                 description,
                 classifierId,
                 split,
-                documentTypes,
+                documentTypes ?? new ChangeTrackingDictionary<string, DocumentTypeDetails>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties);
         }

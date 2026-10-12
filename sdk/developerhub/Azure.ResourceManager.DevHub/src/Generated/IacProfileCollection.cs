@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DevHub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IacProfileData, IacProfileResource>(new IacProfilesGetByResourceGroupAsyncCollectionResultOfT(_iacProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IacProfileCollection.GetAll"), data => new IacProfileResource(Client, data));
+            return new AsyncPageableWrapper<IacProfileData, IacProfileResource>(new IacProfileDataAsyncCollectionResultOfT(_iacProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IacProfileCollection.GetAll"), data => new IacProfileResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.DevHub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IacProfileData, IacProfileResource>(new IacProfilesGetByResourceGroupCollectionResultOfT(_iacProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IacProfileCollection.GetAll"), data => new IacProfileResource(Client, data));
+            return new PageableWrapper<IacProfileData, IacProfileResource>(new IacProfileDataCollectionResultOfT(_iacProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IacProfileCollection.GetAll"), data => new IacProfileResource(Client, data));
         }
 
         /// <summary>

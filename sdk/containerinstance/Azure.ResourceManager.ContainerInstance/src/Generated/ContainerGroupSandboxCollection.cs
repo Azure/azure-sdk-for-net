@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerGroupSandboxData, ContainerGroupSandboxResource>(new SandboxGroupsGetByResourceGroupAsyncCollectionResultOfT(_sandboxGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerGroupSandboxCollection.GetAll"), data => new ContainerGroupSandboxResource(Client, data));
+            return new AsyncPageableWrapper<ContainerGroupSandboxData, ContainerGroupSandboxResource>(new ContainerGroupSandboxDataAsync0CollectionResultOfT(_sandboxGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerGroupSandboxCollection.GetAll"), data => new ContainerGroupSandboxResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerGroupSandboxData, ContainerGroupSandboxResource>(new SandboxGroupsGetByResourceGroupCollectionResultOfT(_sandboxGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerGroupSandboxCollection.GetAll"), data => new ContainerGroupSandboxResource(Client, data));
+            return new PageableWrapper<ContainerGroupSandboxData, ContainerGroupSandboxResource>(new ContainerGroupSandboxData0CollectionResultOfT(_sandboxGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerGroupSandboxCollection.GetAll"), data => new ContainerGroupSandboxResource(Client, data));
         }
 
         /// <summary>

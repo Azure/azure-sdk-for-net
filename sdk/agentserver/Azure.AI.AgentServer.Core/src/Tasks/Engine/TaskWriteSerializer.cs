@@ -162,11 +162,60 @@ internal sealed class TaskWriteSerializer : IDisposable
     /// <param name="intent">The write intent that governs 412 resolution.</param>
     /// <param name="cancellationToken">A cancellation token.</param>
     /// <returns>The updated record (or the unchanged current record on no-op).</returns>
-    public async Task<TaskRecord> UpdateAsync(
+    public Task<TaskRecord> UpdateAsync(
         string taskId,
         Func<TaskRecord, TaskPatchRequest?> compute,
         WriteIntent intent,
         CancellationToken cancellationToken = default)
+        => UpdateCoreAsync(taskId, compute, intent, null, null, cancellationToken);
+
+    /// <summary>Updates storage and publishes or rolls back coupled in-memory state before releasing the write gate.</summary>
+    /// <param name="taskId">The task id.</param>
+    /// <param name="compute">Computes the patch from the current record.</param>
+    /// <param name="intent">The write intent.</param>
+    /// <param name="onSuccess">Publishes successful acceptance; must not throw.</param>
+    /// <param name="onFailure">Rolls back provisional state; must not throw.</param>
+    /// <param name="cancellationToken">A cancellation token.</param>
+    /// <returns>The updated record.</returns>
+    public Task<TaskRecord> UpdateAndPublishAsync(
+        string taskId,
+        Func<TaskRecord, TaskPatchRequest?> compute,
+        WriteIntent intent,
+        Action onSuccess,
+        Action onFailure,
+        CancellationToken cancellationToken = default)
+        => UpdateCoreAsync(taskId, compute, intent, onSuccess, onFailure, cancellationToken);
+
+    private Task<TaskRecord> UpdateCoreAsync(
+        string taskId,
+        Func<TaskRecord, TaskPatchRequest?> compute,
+        WriteIntent intent,
+        Action? onSuccess,
+        Action? onFailure,
+        CancellationToken cancellationToken)
+        => ExecuteAsync(taskId, async () =>
+        {
+            TaskRecord updated;
+            try
+            {
+                updated = await UpdateLockedAsync(taskId, compute, intent, cancellationToken).ConfigureAwait(false);
+            }
+            catch
+            {
+                onFailure?.Invoke();
+                throw;
+            }
+            onSuccess?.Invoke();
+            return updated;
+        }, cancellationToken);
+
+    /// <summary>Runs a compound decision and mutation while pinning the task's write gate.</summary>
+    /// <typeparam name="T">The operation result.</typeparam>
+    /// <param name="taskId">The task id.</param>
+    /// <param name="operation">The operation to run while holding the gate.</param>
+    /// <param name="cancellationToken">A cancellation token.</param>
+    /// <returns>The operation result.</returns>
+    public async Task<T> ExecuteAsync<T>(string taskId, Func<Task<T>> operation, CancellationToken cancellationToken = default)
     {
         ActiveTaskEntry entry = AcquireForWrite(taskId);
         try
@@ -174,7 +223,7 @@ internal sealed class TaskWriteSerializer : IDisposable
             await entry.WriteGate.WaitAsync(cancellationToken).ConfigureAwait(false);
             try
             {
-                return await UpdateLockedAsync(taskId, compute, intent, cancellationToken).ConfigureAwait(false);
+                return await operation().ConfigureAwait(false);
             }
             finally
             {

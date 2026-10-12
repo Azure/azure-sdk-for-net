@@ -347,10 +347,10 @@ namespace Azure.Storage.Blobs
         /// <param name="include"> Specify to include additional, optional information. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ListContainersSegmentResponse> GetContainersSegment(string prefix = default, string marker = default, int? maxresults = default, int? timeout = default, IEnumerable<ListContainersIncludeType> include = default, CancellationToken cancellationToken = default)
+        public virtual Response<ListContainersSegmentResult> GetContainersSegment(string prefix = default, string marker = default, int? maxresults = default, int? timeout = default, IEnumerable<ListContainersIncludeType> include = default, CancellationToken cancellationToken = default)
         {
             Response result = GetContainersSegment(prefix, marker, maxresults, timeout, include, cancellationToken.ToRequestContext());
-            return Response.FromValue((ListContainersSegmentResponse)result, result);
+            return Response.FromValue((ListContainersSegmentResult)result, result);
         }
 
         /// <summary> Returns a list of the containers in the specified account. </summary>
@@ -361,10 +361,10 @@ namespace Azure.Storage.Blobs
         /// <param name="include"> Specify to include additional, optional information. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ListContainersSegmentResponse>> GetContainersSegmentAsync(string prefix = default, string marker = default, int? maxresults = default, int? timeout = default, IEnumerable<ListContainersIncludeType> include = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ListContainersSegmentResult>> GetContainersSegmentAsync(string prefix = default, string marker = default, int? maxresults = default, int? timeout = default, IEnumerable<ListContainersIncludeType> include = default, CancellationToken cancellationToken = default)
         {
             Response result = await GetContainersSegmentAsync(prefix, marker, maxresults, timeout, include, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ListContainersSegmentResponse)result, result);
+            return Response.FromValue((ListContainersSegmentResult)result, result);
         }
 
         /// <summary>

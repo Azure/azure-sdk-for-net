@@ -193,7 +193,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return new AssetMetadata(
                 key,
                 kind,
-                roles,
+                roles ?? new ChangeTrackingList<string>(),
                 title,
                 description,
                 additionalBinaryDataProperties);

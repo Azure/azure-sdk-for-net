@@ -83,19 +83,26 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Name);
             if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters"u8);
-                writer.WriteStartObject();
-                foreach (var item in Parameters)
+                if (Parameters != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("parameters"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Parameters)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteObjectValue<object>(item.Value, options);
                     }
-                    writer.WriteObjectValue<object>(item.Value, options);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("parameters"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -140,7 +147,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string name = default;
-            IDictionary<string, object> parameters = default;
+            IDictionary<string, object> parameters = new ChangeTrackingDictionary<string, object>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,6 +160,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        parameters = null;
                         continue;
                     }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
@@ -175,7 +183,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FieldMappingFunction(name, parameters ?? new ChangeTrackingDictionary<string, object>(), additionalBinaryDataProperties);
+            return new FieldMappingFunction(name, parameters, additionalBinaryDataProperties);
         }
     }
 }

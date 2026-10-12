@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityConnectorData, SecurityConnectorResource>(new SecurityConnectorsGetByResourceGroupAsyncCollectionResultOfT(_securityConnectorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityConnectorCollection.GetAll"), data => new SecurityConnectorResource(Client, data));
+            return new AsyncPageableWrapper<SecurityConnectorData, SecurityConnectorResource>(new SecurityConnectorDataAsyncCollectionResultOfT(_securityConnectorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityConnectorCollection.GetAll"), data => new SecurityConnectorResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityConnectorData, SecurityConnectorResource>(new SecurityConnectorsGetByResourceGroupCollectionResultOfT(_securityConnectorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityConnectorCollection.GetAll"), data => new SecurityConnectorResource(Client, data));
+            return new PageableWrapper<SecurityConnectorData, SecurityConnectorResource>(new SecurityConnectorDataCollectionResultOfT(_securityConnectorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityConnectorCollection.GetAll"), data => new SecurityConnectorResource(Client, data));
         }
 
         /// <summary>

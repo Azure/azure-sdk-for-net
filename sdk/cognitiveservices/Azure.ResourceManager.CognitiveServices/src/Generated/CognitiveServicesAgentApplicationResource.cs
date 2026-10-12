@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AgentApplicationsGetAgentsAsyncCollectionResultOfT(
+            return new CognitiveServicesAgentReferenceAsyncCollectionResultOfT(
                 _agentApplicationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AgentApplicationsGetAgentsCollectionResultOfT(
+            return new CognitiveServicesAgentReferenceCollectionResultOfT(
                 _agentApplicationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

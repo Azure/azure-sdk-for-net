@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PeerExpressRouteCircuitConnectionData, PeerExpressRouteCircuitConnectionResource>(new PeerExpressRouteCircuitConnectionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PeerExpressRouteCircuitConnectionData, PeerExpressRouteCircuitConnectionResource>(new PeerExpressRouteCircuitConnectionDataAsyncCollectionResultOfT(
                 _peerExpressRouteCircuitConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PeerExpressRouteCircuitConnectionData, PeerExpressRouteCircuitConnectionResource>(new PeerExpressRouteCircuitConnectionsGetAllCollectionResultOfT(
+            return new PageableWrapper<PeerExpressRouteCircuitConnectionData, PeerExpressRouteCircuitConnectionResource>(new PeerExpressRouteCircuitConnectionDataCollectionResultOfT(
                 _peerExpressRouteCircuitConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

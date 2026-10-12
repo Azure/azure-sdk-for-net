@@ -14,6 +14,15 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> A skill looks for text from a custom, user-defined list of words and phrases. </summary>
     public partial class CustomEntityLookupSkill : SearchIndexerSkill
     {
+        private CustomEntityLookupSkillLanguage? _defaultLanguageCode;
+        internal bool _defaultLanguageCodeIsDefined;
+        private bool? _globalDefaultCaseSensitive;
+        internal bool _globalDefaultCaseSensitiveIsDefined;
+        private bool? _globalDefaultAccentSensitive;
+        internal bool _globalDefaultAccentSensitiveIsDefined;
+        private int? _globalDefaultFuzzyEditDistance;
+        internal bool _globalDefaultFuzzyEditDistanceIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="CustomEntityLookupSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
@@ -42,27 +51,71 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="globalDefaultFuzzyEditDistance"> A global flag for FuzzyEditDistance. If FuzzyEditDistance is not set in CustomEntity, this value will be the default value. </param>
         internal CustomEntityLookupSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, CustomEntityLookupSkillLanguage? defaultLanguageCode, Uri entitiesDefinitionUri, IList<CustomEntity> inlineEntitiesDefinition, bool? globalDefaultCaseSensitive, bool? globalDefaultAccentSensitive, int? globalDefaultFuzzyEditDistance) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
-            DefaultLanguageCode = defaultLanguageCode;
+            _defaultLanguageCode = defaultLanguageCode;
             EntitiesDefinitionUri = entitiesDefinitionUri;
             InlineEntitiesDefinition = inlineEntitiesDefinition;
-            GlobalDefaultCaseSensitive = globalDefaultCaseSensitive;
-            GlobalDefaultAccentSensitive = globalDefaultAccentSensitive;
-            GlobalDefaultFuzzyEditDistance = globalDefaultFuzzyEditDistance;
+            _globalDefaultCaseSensitive = globalDefaultCaseSensitive;
+            _globalDefaultAccentSensitive = globalDefaultAccentSensitive;
+            _globalDefaultFuzzyEditDistance = globalDefaultFuzzyEditDistance;
         }
 
         /// <summary> A value indicating which language code to use. Default is `en`. </summary>
-        public CustomEntityLookupSkillLanguage? DefaultLanguageCode { get; set; }
+        public CustomEntityLookupSkillLanguage? DefaultLanguageCode
+        {
+            get
+            {
+                return _defaultLanguageCode;
+            }
+            set
+            {
+                _defaultLanguageCode = value;
+                _defaultLanguageCodeIsDefined = true;
+            }
+        }
 
         /// <summary> Path to a JSON or CSV file containing all the target text to match against. This entity definition is read at the beginning of an indexer run. Any updates to this file during an indexer run will not take effect until subsequent runs. This config must be accessible over HTTPS. </summary>
         public Uri EntitiesDefinitionUri { get; set; }
 
         /// <summary> A global flag for CaseSensitive. If CaseSensitive is not set in CustomEntity, this value will be the default value. </summary>
-        public bool? GlobalDefaultCaseSensitive { get; set; }
+        public bool? GlobalDefaultCaseSensitive
+        {
+            get
+            {
+                return _globalDefaultCaseSensitive;
+            }
+            set
+            {
+                _globalDefaultCaseSensitive = value;
+                _globalDefaultCaseSensitiveIsDefined = true;
+            }
+        }
 
         /// <summary> A global flag for AccentSensitive. If AccentSensitive is not set in CustomEntity, this value will be the default value. </summary>
-        public bool? GlobalDefaultAccentSensitive { get; set; }
+        public bool? GlobalDefaultAccentSensitive
+        {
+            get
+            {
+                return _globalDefaultAccentSensitive;
+            }
+            set
+            {
+                _globalDefaultAccentSensitive = value;
+                _globalDefaultAccentSensitiveIsDefined = true;
+            }
+        }
 
         /// <summary> A global flag for FuzzyEditDistance. If FuzzyEditDistance is not set in CustomEntity, this value will be the default value. </summary>
-        public int? GlobalDefaultFuzzyEditDistance { get; set; }
+        public int? GlobalDefaultFuzzyEditDistance
+        {
+            get
+            {
+                return _globalDefaultFuzzyEditDistance;
+            }
+            set
+            {
+                _globalDefaultFuzzyEditDistance = value;
+                _globalDefaultFuzzyEditDistanceIsDefined = true;
+            }
+        }
     }
 }

@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the Azure.Data.AI client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>SDK Code Generation Azure.Data.AI</AssemblyTitle>
-    <Version>1.0.0-beta.1</Version>
+    <Version>1.0.0-beta.2</Version>
     <PackageTags>Azure.Data.AI</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GenerateAPIListing>true</GenerateAPIListing>

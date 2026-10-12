@@ -18,6 +18,8 @@ namespace Azure.AI.Agents.Persistent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private int? _lastMessages;
+        internal bool _lastMessagesIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="Truncation"/>. </summary>
         /// <param name="type">
@@ -41,7 +43,7 @@ namespace Azure.AI.Agents.Persistent
         internal Truncation(TruncationStrategy @type, int? lastMessages, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
-            LastMessages = lastMessages;
+            _lastMessages = lastMessages;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -53,6 +55,17 @@ namespace Azure.AI.Agents.Persistent
         public TruncationStrategy Type { get; set; }
 
         /// <summary> The number of most recent messages from the thread when constructing the context for the run. </summary>
-        public int? LastMessages { get; set; }
+        public int? LastMessages
+        {
+            get
+            {
+                return _lastMessages;
+            }
+            set
+            {
+                _lastMessages = value;
+                _lastMessagesIsDefined = true;
+            }
+        }
     }
 }

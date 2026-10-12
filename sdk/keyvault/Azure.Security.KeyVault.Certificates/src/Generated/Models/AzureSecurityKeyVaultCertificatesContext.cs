@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure.Security.KeyVault.Certificates.Models;
 
 namespace Azure.Security.KeyVault.Certificates
 {
@@ -14,40 +13,7 @@ namespace Azure.Security.KeyVault.Certificates
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(Action))]
-    [ModelReaderWriterBuildable(typeof(AdministratorDetails))]
-    [ModelReaderWriterBuildable(typeof(BackupCertificateResult))]
-    [ModelReaderWriterBuildable(typeof(CertificateAttributesBundle))]
-    [ModelReaderWriterBuildable(typeof(CertificateBundle))]
-    [ModelReaderWriterBuildable(typeof(CertificateCreateParametersBundle))]
-    [ModelReaderWriterBuildable(typeof(CertificateImportParameters))]
-    [ModelReaderWriterBuildable(typeof(CertificateIssuerItem))]
-    [ModelReaderWriterBuildable(typeof(CertificateIssuerListResult))]
-    [ModelReaderWriterBuildable(typeof(CertificateIssuerSetParameters))]
-    [ModelReaderWriterBuildable(typeof(CertificateItem))]
-    [ModelReaderWriterBuildable(typeof(CertificateListResult))]
-    [ModelReaderWriterBuildable(typeof(CertificateMergeParameters))]
-    [ModelReaderWriterBuildable(typeof(CertificateOperationBundle))]
-    [ModelReaderWriterBuildable(typeof(CertificatePolicyBundle))]
-    [ModelReaderWriterBuildable(typeof(CertificateRestoreParameters))]
-    [ModelReaderWriterBuildable(typeof(Contact))]
-    [ModelReaderWriterBuildable(typeof(Contacts))]
-    [ModelReaderWriterBuildable(typeof(DeletedCertificateBundle))]
-    [ModelReaderWriterBuildable(typeof(DeletedCertificateItem))]
-    [ModelReaderWriterBuildable(typeof(DeletedCertificateListResult))]
-    [ModelReaderWriterBuildable(typeof(IssuerAttributes))]
-    [ModelReaderWriterBuildable(typeof(IssuerBundle))]
-    [ModelReaderWriterBuildable(typeof(IssuerCredentials))]
-    [ModelReaderWriterBuildable(typeof(IssuerParametersBundle))]
-    [ModelReaderWriterBuildable(typeof(KeyProperties))]
-    [ModelReaderWriterBuildable(typeof(KeyVaultErrorError))]
-    [ModelReaderWriterBuildable(typeof(LifetimeActionBundle))]
-    [ModelReaderWriterBuildable(typeof(OrganizationDetails))]
     [ModelReaderWriterBuildable(typeof(PlatformManaged))]
-    [ModelReaderWriterBuildable(typeof(SecretProperties))]
-    [ModelReaderWriterBuildable(typeof(SubjectAlternativeNamesProperties))]
-    [ModelReaderWriterBuildable(typeof(Trigger))]
-    [ModelReaderWriterBuildable(typeof(X509CertificateProperties))]
     public partial class AzureSecurityKeyVaultCertificatesContext : ModelReaderWriterContext
     {
     }

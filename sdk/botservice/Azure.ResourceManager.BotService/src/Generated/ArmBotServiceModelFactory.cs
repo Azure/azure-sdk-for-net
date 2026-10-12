@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.BotService.Models
         public static AlexaChannel AlexaChannel(ETag? etag = default, string provisioningState = default, AzureLocation? location = default, AlexaChannelProperties properties = default)
         {
             return new AlexaChannel(
-                default,
+                "AlexaChannel",
                 etag,
                 provisioningState,
                 location,
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.BotService.Models
         public static FacebookChannel FacebookChannel(ETag? etag = default, string provisioningState = default, AzureLocation? location = default, FacebookChannelProperties properties = default)
         {
             return new FacebookChannel(
-                default,
+                "FacebookChannel",
                 etag,
                 provisioningState,
                 location,
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.BotService.Models
         public static EmailChannel EmailChannel(ETag? etag = default, string provisioningState = default, AzureLocation? location = default, EmailChannelProperties properties = default)
         {
             return new EmailChannel(
-                default,
+                "EmailChannel",
                 etag,
                 provisioningState,
                 location,
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <returns> A new <see cref="Models.OutlookChannel"/> instance for mocking. </returns>
         public static OutlookChannel OutlookChannel(ETag? etag = default, string provisioningState = default, AzureLocation? location = default)
         {
-            return new OutlookChannel(default, etag, provisioningState, location, default);
+            return new OutlookChannel("OutlookChannel", etag, provisioningState, location, default);
         }
 
         /// <param name="etag"> Entity Tag of the resource. </param>
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.BotService.Models
         public static MsTeamsChannel MsTeamsChannel(ETag? etag = default, string provisioningState = default, AzureLocation? location = default, MsTeamsChannelProperties properties = default)
         {
             return new MsTeamsChannel(
-                default,
+                "MsTeamsChannel",
                 etag,
                 provisioningState,
                 location,
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.BotService.Models
         public static SkypeChannel SkypeChannel(ETag? etag = default, string provisioningState = default, AzureLocation? location = default, SkypeChannelProperties properties = default)
         {
             return new SkypeChannel(
-                default,
+                "SkypeChannel",
                 etag,
                 provisioningState,
                 location,
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.BotService.Models
         public static KikChannel KikChannel(ETag? etag = default, string provisioningState = default, AzureLocation? location = default, KikChannelProperties properties = default)
         {
             return new KikChannel(
-                default,
+                "KikChannel",
                 etag,
                 provisioningState,
                 location,
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.BotService.Models
         public static WebChatChannel WebChatChannel(ETag? etag = default, string provisioningState = default, AzureLocation? location = default, WebChatChannelProperties properties = default)
         {
             return new WebChatChannel(
-                default,
+                "WebChatChannel",
                 etag,
                 provisioningState,
                 location,
@@ -755,7 +755,7 @@ namespace Azure.ResourceManager.BotService.Models
         public static DirectLineChannel DirectLineChannel(ETag? etag = default, string provisioningState = default, AzureLocation? location = default, DirectLineChannelProperties properties = default)
         {
             return new DirectLineChannel(
-                default,
+                "DirectLineChannel",
                 etag,
                 provisioningState,
                 location,
@@ -831,7 +831,7 @@ namespace Azure.ResourceManager.BotService.Models
         public static TelegramChannel TelegramChannel(ETag? etag = default, string provisioningState = default, AzureLocation? location = default, TelegramChannelProperties properties = default)
         {
             return new TelegramChannel(
-                default,
+                "TelegramChannel",
                 etag,
                 provisioningState,
                 location,
@@ -857,7 +857,7 @@ namespace Azure.ResourceManager.BotService.Models
         public static SmsChannel SmsChannel(ETag? etag = default, string provisioningState = default, AzureLocation? location = default, SmsChannelProperties properties = default)
         {
             return new SmsChannel(
-                default,
+                "SmsChannel",
                 etag,
                 provisioningState,
                 location,
@@ -891,7 +891,7 @@ namespace Azure.ResourceManager.BotService.Models
         public static SlackChannel SlackChannel(ETag? etag = default, string provisioningState = default, AzureLocation? location = default, SlackChannelProperties properties = default)
         {
             return new SlackChannel(
-                default,
+                "SlackChannel",
                 etag,
                 provisioningState,
                 location,
@@ -937,7 +937,7 @@ namespace Azure.ResourceManager.BotService.Models
         public static LineChannel LineChannel(ETag? etag = default, string provisioningState = default, AzureLocation? location = default, LineChannelProperties properties = default)
         {
             return new LineChannel(
-                default,
+                "LineChannel",
                 etag,
                 provisioningState,
                 location,
@@ -975,7 +975,7 @@ namespace Azure.ResourceManager.BotService.Models
         public static DirectLineSpeechChannel DirectLineSpeechChannel(ETag? etag = default, string provisioningState = default, AzureLocation? location = default, DirectLineSpeechChannelProperties properties = default)
         {
             return new DirectLineSpeechChannel(
-                default,
+                "DirectLineSpeechChannel",
                 etag,
                 provisioningState,
                 location,
@@ -1012,7 +1012,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <returns> A new <see cref="Models.Dynamics365OmnichannelChannel"/> instance for mocking. </returns>
         public static Dynamics365OmnichannelChannel Dynamics365OmnichannelChannel(ETag? eTag = default, string provisioningState = default, AzureLocation? location = default)
         {
-            return new Dynamics365OmnichannelChannel(default, eTag, provisioningState, location, default);
+            return new Dynamics365OmnichannelChannel("Omnichannel", eTag, provisioningState, location, default);
         }
 
         /// <param name="etag"> Entity Tag of the resource. </param>
@@ -1023,7 +1023,7 @@ namespace Azure.ResourceManager.BotService.Models
         public static TelephonyChannel TelephonyChannel(ETag? etag = default, string provisioningState = default, AzureLocation? location = default, TelephonyChannelProperties properties = default)
         {
             return new TelephonyChannel(
-                default,
+                "TelephonyChannel",
                 etag,
                 provisioningState,
                 location,
@@ -1110,7 +1110,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <returns> A new <see cref="Models.AcsChatChannel"/> instance for mocking. </returns>
         public static AcsChatChannel AcsChatChannel(ETag? etag = default, string provisioningState = default, AzureLocation? location = default)
         {
-            return new AcsChatChannel(default, etag, provisioningState, location, default);
+            return new AcsChatChannel("AcsChatChannel", etag, provisioningState, location, default);
         }
 
         /// <param name="etag"> Entity Tag of the resource. </param>
@@ -1119,7 +1119,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <returns> A new <see cref="Models.SearchAssistant"/> instance for mocking. </returns>
         public static SearchAssistant SearchAssistant(ETag? etag = default, string provisioningState = default, AzureLocation? location = default)
         {
-            return new SearchAssistant(default, etag, provisioningState, location, default);
+            return new SearchAssistant("SearchAssistant", etag, provisioningState, location, default);
         }
 
         /// <param name="etag"> Entity Tag of the resource. </param>
@@ -1128,7 +1128,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <returns> A new <see cref="Models.M365Extensions"/> instance for mocking. </returns>
         public static M365Extensions M365Extensions(ETag? etag = default, string provisioningState = default, AzureLocation? location = default)
         {
-            return new M365Extensions(default, etag, provisioningState, location, default);
+            return new M365Extensions("M365Extensions", etag, provisioningState, location, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

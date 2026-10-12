@@ -204,7 +204,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 additionalBinaryDataProperties,
                 deliveryStatus,
                 deliveryStatusDetails,
-                deliveryAttempts,
+                deliveryAttempts ?? new ChangeTrackingList<AcsSmsDeliveryAttemptProperties>(),
                 receivedTimestamp,
                 tag);
         }

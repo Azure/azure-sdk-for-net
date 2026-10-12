@@ -82,10 +82,17 @@ namespace Azure.Search.Documents.Indexes.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
-            if (Optional.IsDefined(AuthIdentity))
+            if (_authIdentityIsDefined || Optional.IsDefined(AuthIdentity))
             {
-                writer.WritePropertyName("authIdentity"u8);
-                writer.WriteObjectValue(AuthIdentity, options);
+                if (AuthIdentity != null)
+                {
+                    writer.WritePropertyName("authIdentity"u8);
+                    writer.WriteObjectValue(AuthIdentity, options);
+                }
+                else
+                {
+                    writer.WriteNull("authIdentity"u8);
+                }
             }
             if (Optional.IsDefined(ApiKey))
             {
@@ -99,26 +106,33 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsCollectionDefined(ExtraParameters))
             {
-                writer.WritePropertyName("extraParameters"u8);
-                writer.WriteStartObject();
-                foreach (var item in ExtraParameters)
+                if (ExtraParameters != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("extraParameters"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in ExtraParameters)
                     {
-                        writer.WriteNullValue();
-                        continue;
-                    }
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+                        writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
+                        using (JsonDocument document = JsonDocument.Parse(item.Value))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
 #endif
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("extraParameters"u8);
+                }
             }
             if (Optional.IsDefined(ExtraParametersBehavior))
             {
@@ -165,10 +179,11 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<OutputFieldMappingEntry> outputs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             Uri uri = default;
+            bool authIdentityIsDefined = false;
             SearchIndexerDataIdentity authIdentity = default;
             string apiKey = default;
             ChatCompletionCommonModelParameters commonModelParameters = default;
-            IDictionary<string, BinaryData> extraParameters = default;
+            IDictionary<string, BinaryData> extraParameters = new ChangeTrackingDictionary<string, BinaryData>();
             ChatCompletionExtraParametersBehavior? extraParametersBehavior = default;
             ChatCompletionResponseFormat responseFormat = default;
             foreach (var prop in element.EnumerateObject())
@@ -220,6 +235,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("authIdentity"u8))
                 {
+                    authIdentityIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         authIdentity = null;
@@ -246,6 +262,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        extraParameters = null;
                         continue;
                     }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
@@ -291,16 +308,19 @@ namespace Azure.Search.Documents.Indexes.Models
                 name,
                 description,
                 context,
-                inputs,
-                outputs,
+                inputs ?? new ChangeTrackingList<InputFieldMappingEntry>(),
+                outputs ?? new ChangeTrackingList<OutputFieldMappingEntry>(),
                 additionalBinaryDataProperties,
                 uri,
                 authIdentity,
                 apiKey,
                 commonModelParameters,
-                extraParameters ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                extraParameters,
                 extraParametersBehavior,
-                responseFormat);
+                responseFormat)
+            {
+                _authIdentityIsDefined = authIdentityIsDefined
+            };
         }
     }
 }

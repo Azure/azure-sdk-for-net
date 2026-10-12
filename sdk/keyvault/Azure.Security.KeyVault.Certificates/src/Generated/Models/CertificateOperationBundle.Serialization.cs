@@ -111,10 +111,17 @@ namespace Azure.Security.KeyVault.Certificates.Models
                 writer.WritePropertyName("status_details"u8);
                 writer.WriteStringValue(StatusDetails);
             }
-            if (Optional.IsDefined(Error))
+            if (_errorIsDefined || Optional.IsDefined(Error))
             {
-                writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                if (Error != null)
+                {
+                    writer.WritePropertyName("error"u8);
+                    writer.WriteObjectValue(Error, options);
+                }
+                else
+                {
+                    writer.WriteNull("error"u8);
+                }
             }
             if (Optional.IsDefined(Target))
             {
@@ -179,6 +186,7 @@ namespace Azure.Security.KeyVault.Certificates.Models
             bool? cancellationRequested = default;
             string status = default;
             string statusDetails = default;
+            bool errorIsDefined = false;
             KeyVaultErrorError error = default;
             string target = default;
             bool? preserveCertOrder = default;
@@ -230,6 +238,7 @@ namespace Azure.Security.KeyVault.Certificates.Models
                 }
                 if (prop.NameEquals("error"u8))
                 {
+                    errorIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         error = null;
@@ -273,7 +282,10 @@ namespace Azure.Security.KeyVault.Certificates.Models
                 target,
                 preserveCertOrder,
                 requestId,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _errorIsDefined = errorIsDefined
+            };
         }
     }
 }
