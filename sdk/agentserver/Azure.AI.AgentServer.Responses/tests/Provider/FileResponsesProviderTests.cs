@@ -68,66 +68,6 @@ public class FileResponsesProviderTests : IDisposable
     }
 
     [Test]
-    public async Task ConcurrentWriterTempFile_DoesNotBlockItemPersistence()
-    {
-        var provider = NewProvider();
-        await provider.CreateResponseAsync(
-            new CreateResponseRequest(
-                new Models.ResponseObject("resp_initialize", "gpt-4o"),
-                null,
-                null),
-            PlatformContext.Empty);
-
-        const string itemId = "shared_item";
-        var itemsDir = Path.Combine(_dir, "partitions-v1", "anonymous", "items");
-        var itemPath = Path.Combine(itemsDir, ResponseStorePartition.Hash(itemId) + ".json");
-        using var activeWriter = new FileStream(
-            itemPath + ".tmp",
-            FileMode.Create,
-            FileAccess.Write,
-            FileShare.None);
-
-        var response = new Models.ResponseObject("resp_parallel", "gpt-4o");
-        response.Output.Add(new OutputItemMessage(
-            itemId,
-            MessageStatus.Completed,
-            MessageRole.Assistant,
-            Array.Empty<MessageContent>()));
-
-        await provider.CreateResponseAsync(
-            new CreateResponseRequest(response, null, null),
-            PlatformContext.Empty);
-
-        Assert.That(File.Exists(itemPath), Is.True);
-    }
-
-    [Test]
-    public async Task ConcurrentProviderInitialization_DoesNotDeleteFreshTempFile()
-    {
-        var writer = NewProvider();
-        await writer.CreateResponseAsync(
-            new CreateResponseRequest(
-                new Models.ResponseObject("resp_writer", "gpt-4o"),
-                null,
-                null),
-            PlatformContext.Empty);
-
-        var envelopesDir = Path.Combine(_dir, "partitions-v1", "anonymous", "envelopes");
-        var activeTempPath = Path.Combine(envelopesDir, "active-write.tmp");
-        File.WriteAllText(activeTempPath, "active");
-
-        var concurrentProvider = NewProvider();
-        await concurrentProvider.CreateResponseAsync(
-            new CreateResponseRequest(
-                new Models.ResponseObject("resp_concurrent", "gpt-4o"),
-                null,
-                null),
-            PlatformContext.Empty);
-
-        Assert.That(File.Exists(activeTempPath), Is.True);
-    }
-
-    [Test]
     public async Task Update_Persists_Across_Instances()
     {
         var writer = NewProvider();

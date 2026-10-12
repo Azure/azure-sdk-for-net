@@ -131,7 +131,6 @@ internal sealed class FileResponseStore : ResponsesProvider
     private const string ItemsDirName = "items";
 
     private static readonly JsonSerializerOptions s_indented = new() { WriteIndented = true };
-    private static readonly TimeSpan s_staleTempFileAge = TimeSpan.FromMinutes(5);
 
     private readonly string _envelopesDir;
     private readonly string _itemsDir;
@@ -476,29 +475,15 @@ internal sealed class FileResponseStore : ResponsesProvider
     {
         lock (_diskGate)
         {
-            var tempPath = $"{path}.{Guid.NewGuid():N}.tmp";
+            var tempPath = path + ".tmp";
             var bytes = Encoding.UTF8.GetBytes(node.ToJsonString(s_indented));
-            try
+            using (var fs = new FileStream(tempPath, FileMode.Create, FileAccess.Write, FileShare.None))
             {
-                using (var fs = new FileStream(tempPath, FileMode.CreateNew, FileAccess.Write, FileShare.None))
-                {
-                    fs.Write(bytes, 0, bytes.Length);
-                    fs.Flush(flushToDisk: true);
-                }
+                fs.Write(bytes, 0, bytes.Length);
+                fs.Flush(flushToDisk: true);
+            }
 
-                File.Move(tempPath, path, overwrite: true);
-            }
-            finally
-            {
-                try
-                {
-                    File.Delete(tempPath);
-                }
-                catch (IOException)
-                {
-                    // Best-effort. Startup cleanup removes abandoned temporary files.
-                }
-            }
+            File.Move(tempPath, path, overwrite: true);
         }
     }
 
@@ -595,11 +580,6 @@ internal sealed class FileResponseStore : ResponsesProvider
         {
             try
             {
-                if (DateTime.UtcNow - File.GetLastWriteTimeUtc(tempFile) < s_staleTempFileAge)
-                {
-                    continue;
-                }
-
                 File.Delete(tempFile);
             }
             catch (IOException)
