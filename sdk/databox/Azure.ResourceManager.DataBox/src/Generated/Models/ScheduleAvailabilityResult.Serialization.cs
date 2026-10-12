@@ -13,52 +13,52 @@ using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    /// <summary> Transport options available for given sku in a region. </summary>
-    internal partial class TransportAvailabilityResponse : IJsonModel<TransportAvailabilityResponse>
+    /// <summary> Schedule availability for given sku in a region. </summary>
+    internal partial class ScheduleAvailabilityResult : IJsonModel<ScheduleAvailabilityResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TransportAvailabilityResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ScheduleAvailabilityResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TransportAvailabilityResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduleAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTransportAvailabilityResponse(document.RootElement, options);
+                        return DeserializeScheduleAvailabilityResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TransportAvailabilityResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduleAvailabilityResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TransportAvailabilityResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduleAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TransportAvailabilityResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduleAvailabilityResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TransportAvailabilityResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ScheduleAvailabilityResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TransportAvailabilityResponse IPersistableModel<TransportAvailabilityResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ScheduleAvailabilityResult IPersistableModel<ScheduleAvailabilityResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TransportAvailabilityResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ScheduleAvailabilityResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TransportAvailabilityResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ScheduleAvailabilityResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,18 +69,18 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TransportAvailabilityResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduleAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TransportAvailabilityResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduleAvailabilityResult)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(TransportAvailabilityDetails))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AvailableDates))
             {
-                writer.WritePropertyName("transportAvailabilityDetails"u8);
+                writer.WritePropertyName("availableDates"u8);
                 writer.WriteStartArray();
-                foreach (TransportAvailabilityDetails item in TransportAvailabilityDetails)
+                foreach (DateTimeOffset item in AvailableDates)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteStringValue(item, "O");
                 }
                 writer.WriteEndArray();
             }
@@ -103,45 +103,45 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TransportAvailabilityResponse IJsonModel<TransportAvailabilityResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ScheduleAvailabilityResult IJsonModel<ScheduleAvailabilityResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TransportAvailabilityResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ScheduleAvailabilityResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TransportAvailabilityResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduleAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TransportAvailabilityResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduleAvailabilityResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTransportAvailabilityResponse(document.RootElement, options);
+            return DeserializeScheduleAvailabilityResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TransportAvailabilityResponse DeserializeTransportAvailabilityResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static ScheduleAvailabilityResult DeserializeScheduleAvailabilityResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<TransportAvailabilityDetails> transportAvailabilityDetails = default;
+            IReadOnlyList<DateTimeOffset> availableDates = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("transportAvailabilityDetails"u8))
+                if (prop.NameEquals("availableDates"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<TransportAvailabilityDetails> array = new List<TransportAvailabilityDetails>();
+                    List<DateTimeOffset> array = new List<DateTimeOffset>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.TransportAvailabilityDetails.DeserializeTransportAvailabilityDetails(item, options));
+                        array.Add(item.GetDateTimeOffset("O"));
                     }
-                    transportAvailabilityDetails = array;
+                    availableDates = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TransportAvailabilityResponse(transportAvailabilityDetails ?? new ChangeTrackingList<TransportAvailabilityDetails>(), additionalBinaryDataProperties);
+            return new ScheduleAvailabilityResult(availableDates ?? new ChangeTrackingList<DateTimeOffset>(), additionalBinaryDataProperties);
         }
     }
 }
