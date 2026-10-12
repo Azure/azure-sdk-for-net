@@ -194,6 +194,7 @@ namespace BasicTypeSpec.Tests
         [Test]
         public async Task ProtocolPreservesRequestContext(
             [Values] bool pages,
+            [Values] Paging paging,
             [Values("status", "handler", "noThrow", "throw")] string behavior)
         {
             using var methodSource = new CancellationTokenSource();
@@ -220,7 +221,7 @@ namespace BasicTypeSpec.Tests
             }
 
             BasicTypeSpecClient client = CreateClient(httpClient);
-            await using IAsyncEnumerator<object> enumerator = Enumerate(client.GetWithNextLinkAsync(context), pages)
+            await using IAsyncEnumerator<object> enumerator = Enumerate(CreateProtocolPageable(client, paging, context), pages)
                 .GetAsyncEnumerator(enumerationSource.Token);
             if (behavior == "throw")
             {
@@ -229,10 +230,10 @@ namespace BasicTypeSpec.Tests
             else
             {
                 Assert.That(await enumerator.MoveNextAsync(), Is.True);
-                Assert.That(await enumerator.MoveNextAsync(), Is.True);
+                Assert.That(await enumerator.MoveNextAsync(), Is.EqualTo(paging != Paging.SinglePage));
             }
 
-            int requests = behavior == "throw" ? 1 : 2;
+            int requests = behavior == "throw" || paging == Paging.SinglePage ? 1 : 2;
             Assert.That(perCall.Tokens, Has.Count.EqualTo(requests));
             Assert.That(perRetry.Tokens, Has.Count.EqualTo(requests));
             Assert.That(context.CancellationToken, Is.EqualTo(methodSource.Token));
@@ -241,6 +242,20 @@ namespace BasicTypeSpec.Tests
             {
                 Assert.That(classifier.Calls, Is.GreaterThanOrEqualTo(requests));
             }
+        }
+
+        [Test]
+        public async Task ProtocolWithoutContextThrowsOnError([Values] bool pages, [Values] Paging paging)
+        {
+            using var enumerationSource = new CancellationTokenSource();
+            using var handler = new CancellationHandler { Status = 418 };
+            using var httpClient = new HttpClient(handler);
+            BasicTypeSpecClient client = CreateClient(httpClient);
+            await using IAsyncEnumerator<object> enumerator = Enumerate(CreateProtocolPageable(client, paging, null!), pages)
+                .GetAsyncEnumerator(enumerationSource.Token);
+
+            Assert.ThrowsAsync<RequestFailedException>(async () => await enumerator.MoveNextAsync());
+            Assert.That(handler.Requests, Has.Count.EqualTo(1));
         }
 
         [Test]

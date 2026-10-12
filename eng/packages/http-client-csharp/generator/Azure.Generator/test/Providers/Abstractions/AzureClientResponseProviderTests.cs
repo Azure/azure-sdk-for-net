@@ -75,7 +75,7 @@ namespace Azure.Generator.Tests.Providers.Abstractions
         }
 
         [Test]
-        public void PipelineSendUsesEnumerationTokenAndNamedErrorOptions()
+        public void PipelineSendUsesEnumerationTokenAndContextErrorOptions()
         {
             MockHelpers.LoadMockGenerator();
             var pipeline = new HttpPipelineProvider(new VariableExpression(typeof(HttpPipeline), "pipeline"));
@@ -84,7 +84,10 @@ namespace Azure.Generator.Tests.Providers.Abstractions
             var token = new VariableExpression(typeof(CancellationToken), "enumerationCancellationToken");
             string body = new MethodBodyStatements(pipeline.SendMessageAsync(message, context, token)).ToDisplayString();
 
-            Assert.That(body, Does.Contain("(global::System.Threading.CancellationToken userCancellationToken, global::Azure.ErrorOptions errorOptions) = context.Parse();"));
+            Assert.That(body, Does.Contain("global::Azure.ErrorOptions errorOptions = "));
+            Assert.That(body, Does.Contain("context?.ErrorOptions ?? global::Azure.ErrorOptions.Default"));
+            Assert.That(body, Does.Not.Contain("userCancellationToken"));
+            Assert.That(body, Does.Not.Contain("context.Parse()"));
             Assert.That(body, Does.Not.Contain("Item2"));
             Assert.That(body, Does.Contain("await pipeline.SendAsync(message, enumerationCancellationToken)"));
             Assert.That(body, Does.Contain("errorOptions & global::Azure.ErrorOptions.NoThrow"));
