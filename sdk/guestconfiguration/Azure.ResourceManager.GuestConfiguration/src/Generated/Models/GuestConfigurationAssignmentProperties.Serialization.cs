@@ -75,10 +75,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 throw new FormatException($"The model {nameof(GuestConfigurationAssignmentProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetResourceId))
+            if (options.Format != "W" && (_targetResourceIdIsDefined || Optional.IsDefined(TargetResourceId)))
             {
-                writer.WritePropertyName("targetResourceId"u8);
-                writer.WriteStringValue(TargetResourceId);
+                if (TargetResourceId != null)
+                {
+                    writer.WritePropertyName("targetResourceId"u8);
+                    writer.WriteStringValue(TargetResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("targetResourceId"u8);
+                }
             }
             if (Optional.IsDefined(GuestConfiguration))
             {
@@ -90,20 +97,34 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WritePropertyName("complianceStatus"u8);
                 writer.WriteStringValue(ComplianceStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastComplianceStatusCheckedOn))
+            if (options.Format != "W" && (_lastComplianceStatusCheckedOnIsDefined || Optional.IsDefined(LastComplianceStatusCheckedOn)))
             {
-                writer.WritePropertyName("lastComplianceStatusChecked"u8);
-                writer.WriteStringValue(LastComplianceStatusCheckedOn.Value, "O");
+                if (LastComplianceStatusCheckedOn != null)
+                {
+                    writer.WritePropertyName("lastComplianceStatusChecked"u8);
+                    writer.WriteStringValue(LastComplianceStatusCheckedOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("lastComplianceStatusChecked"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(LatestReportId))
             {
                 writer.WritePropertyName("latestReportId"u8);
                 writer.WriteStringValue(LatestReportId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ParameterHash))
+            if (options.Format != "W" && (_parameterHashIsDefined || Optional.IsDefined(ParameterHash)))
             {
-                writer.WritePropertyName("parameterHash"u8);
-                writer.WriteStringValue(ParameterHash);
+                if (ParameterHash != null)
+                {
+                    writer.WritePropertyName("parameterHash"u8);
+                    writer.WriteStringValue(ParameterHash);
+                }
+                else
+                {
+                    writer.WriteNull("parameterHash"u8);
+                }
             }
             if (Optional.IsDefined(LatestAssignmentReport))
             {
@@ -115,20 +136,41 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
             }
-            if (options.Format != "W" && Optional.IsDefined(AssignmentHash))
+            if (options.Format != "W" && (_assignmentHashIsDefined || Optional.IsDefined(AssignmentHash)))
             {
-                writer.WritePropertyName("assignmentHash"u8);
-                writer.WriteStringValue(AssignmentHash);
+                if (AssignmentHash != null)
+                {
+                    writer.WritePropertyName("assignmentHash"u8);
+                    writer.WriteStringValue(AssignmentHash);
+                }
+                else
+                {
+                    writer.WriteNull("assignmentHash"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && (_provisioningStateIsDefined || Optional.IsDefined(ProvisioningState)))
             {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                if (ProvisioningState != null)
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("provisioningState"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && (_resourceTypeIsDefined || Optional.IsDefined(ResourceType)))
             {
-                writer.WritePropertyName("resourceType"u8);
-                writer.WriteStringValue(ResourceType);
+                if (ResourceType != null)
+                {
+                    writer.WritePropertyName("resourceType"u8);
+                    writer.WriteStringValue(ResourceType);
+                }
+                else
+                {
+                    writer.WriteNull("resourceType"u8);
+                }
             }
             if (Optional.IsCollectionDefined(VmssVmList))
             {
@@ -182,16 +224,22 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
+            bool targetResourceIdIsDefined = false;
             string targetResourceId = default;
             GuestConfigurationNavigation guestConfiguration = default;
             AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default;
+            bool lastComplianceStatusCheckedOnIsDefined = false;
             DateTimeOffset? lastComplianceStatusCheckedOn = default;
             ResourceIdentifier latestReportId = default;
+            bool parameterHashIsDefined = false;
             string parameterHash = default;
             GuestConfigurationAssignmentReportInfo latestAssignmentReport = default;
             string context = default;
+            bool assignmentHashIsDefined = false;
             string assignmentHash = default;
+            bool provisioningStateIsDefined = false;
             GuestConfigurationProvisioningState? provisioningState = default;
+            bool resourceTypeIsDefined = false;
             string resourceType = default;
             IList<GuestConfigurationVmssVmInfo> vmssVmList = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -199,6 +247,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 if (prop.NameEquals("targetResourceId"u8))
                 {
+                    targetResourceIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         targetResourceId = null;
@@ -227,6 +276,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 if (prop.NameEquals("lastComplianceStatusChecked"u8))
                 {
+                    lastComplianceStatusCheckedOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         lastComplianceStatusCheckedOn = null;
@@ -246,6 +296,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 if (prop.NameEquals("parameterHash"u8))
                 {
+                    parameterHashIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         parameterHash = null;
@@ -270,6 +321,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 if (prop.NameEquals("assignmentHash"u8))
                 {
+                    assignmentHashIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         assignmentHash = null;
@@ -280,6 +332,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 if (prop.NameEquals("provisioningState"u8))
                 {
+                    provisioningStateIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         provisioningState = null;
@@ -290,6 +343,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 if (prop.NameEquals("resourceType"u8))
                 {
+                    resourceTypeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         resourceType = null;
@@ -330,7 +384,15 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 provisioningState,
                 resourceType,
                 vmssVmList ?? new ChangeTrackingList<GuestConfigurationVmssVmInfo>(),
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _targetResourceIdIsDefined = targetResourceIdIsDefined,
+                _lastComplianceStatusCheckedOnIsDefined = lastComplianceStatusCheckedOnIsDefined,
+                _parameterHashIsDefined = parameterHashIsDefined,
+                _assignmentHashIsDefined = assignmentHashIsDefined,
+                _provisioningStateIsDefined = provisioningStateIsDefined,
+                _resourceTypeIsDefined = resourceTypeIsDefined
+            };
         }
     }
 }
