@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/apicenter/Azure.ResourceManager.ApiCenter
+    - sdk/apicenter/Azure.Provisioning.ApiCenter
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
