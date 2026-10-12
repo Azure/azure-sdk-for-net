@@ -1,3 +1,11 @@
+parameters:
+  - name: SearchDirectory
+    type: string
+    default: '$(Build.SourcesDirectory)'
+  - name: CopyFiles
+    type: boolean
+    default: false
+
 steps:
   - pwsh: |
       New-Item $(Build.ArtifactStagingDirectory)/dumps -ItemType directory
@@ -5,9 +13,16 @@ steps:
       {
         $fileFullName = $dumpFile.FullName
         $fileName = $dumpFile.Name
-        Move-Item -Path $fileFullName -Destination $(Build.ArtifactStagingDirectory)/dumps/$fileName -ErrorAction SilentlyContinue
+        $copyFiles = $${{ parameters.CopyFiles }}
+        if ($copyFiles) {
+          Copy-Item -Path $fileFullName -Destination $(Build.ArtifactStagingDirectory)/dumps/$fileName -ErrorAction SilentlyContinue
+        }
+        else {
+          Move-Item -Path $fileFullName -Destination $(Build.ArtifactStagingDirectory)/dumps/$fileName -ErrorAction SilentlyContinue
+        }
         Write-Host "##vso[task.setvariable variable=uploadDump]true"
       }
       [System.IO.Compression.ZipFile]::CreateFromDirectory("$(Build.ArtifactStagingDirectory)/dumps","$(Build.ArtifactStagingDirectory)/dumps.zip")
     condition: always()
     displayName: Copy dumps to staging directory
+    workingDirectory: '${{ parameters.SearchDirectory }}'
