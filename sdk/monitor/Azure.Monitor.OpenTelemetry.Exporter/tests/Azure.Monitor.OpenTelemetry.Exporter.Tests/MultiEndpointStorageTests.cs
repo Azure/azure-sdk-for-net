@@ -82,10 +82,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(expected, storage.TryGet(EastUs)!.Directory);
         }
 
-        /// <summary>
-        /// A stored blob is replayed with one request, so AAD and instrumentation-key telemetry for
-        /// one endpoint need separate partitions, each with its own back-off.
-        /// </summary>
         [Fact]
         public void AadAndInstrumentationKeyRoutesToOneEndpointGetSeparatePartitions()
         {
@@ -103,11 +99,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Same(ikey, storage.TryGet(EastUs, isAad: false));
         }
 
-        /// <summary>
-        /// An instrumentation-key route keeps the directory it had before AAD routes existed, so a
-        /// backlog written by an earlier version still drains. An AAD route has its own, derivable
-        /// from the route alone for the same reason.
-        /// </summary>
+        // Ikey routes keep their pre-AAD directory, so older backlogs still drain.
         [Fact]
         public void AadPartitionDirectoryIsDerivedFromTheRoute()
         {

@@ -250,16 +250,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// </summary>
         public const string AttributeMicrosoftIngestionEndpoint = "microsoft.ingestion_endpoint";
 
-        /// <summary>
-        /// Routing attribute naming how the destination authenticates ingestion for multi-endpoint
-        /// routing. <see cref="IngestionAuthAad"/> marks a Microsoft Entra ID destination; absent or
-        /// any other value means instrumentation-key-only.
-        /// </summary>
+        /// <summary>Routing attribute; <see cref="IngestionAuthAad"/> marks a Microsoft Entra ID destination, anything else is ikey-only.</summary>
         public const string AttributeMicrosoftIngestionAuth = "microsoft.ingestion_auth";
 
-        /// <summary>
-        /// Value of <see cref="AttributeMicrosoftIngestionAuth"/> that marks a Microsoft Entra ID destination.
-        /// </summary>
+        /// <summary>Value of <see cref="AttributeMicrosoftIngestionAuth"/> that marks a Microsoft Entra ID destination.</summary>
         public const string IngestionAuthAad = "aad";
 
         /// <summary>

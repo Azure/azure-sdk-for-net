@@ -20,24 +20,13 @@ using OpenTelemetry.PersistentStorage.FileSystem;
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
 {
     /// <summary>
-    /// Offline storage and back-off state, partitioned by route: ingestion endpoint and whether the
-    /// destination authenticates with Microsoft Entra ID. The directory is derived from the route,
-    /// not the other way round, so a partition is only reopened when that route is used again. The
-    /// instrumentation key is not part of the path because it already travels inside each serialized
-    /// envelope.
+    /// Offline storage and back-off state, partitioned by route (ingestion endpoint and AAD flag). The
+    /// directory is derived from the route, so a partition is only reopened when that route is used
+    /// again. Instrumentation-key routes keep their existing directories, so older backlogs still drain.
     /// </summary>
-    /// <remarks>
-    /// The authentication mode is part of the partition because a stored blob is replayed with a
-    /// single request: draining AAD and instrumentation-key telemetry from one directory would send
-    /// one of them with the wrong authentication. An instrumentation-key route keeps the directory
-    /// it had before AAD routes existed, so a backlog written by an earlier version still drains.
-    /// </remarks>
     internal sealed class MultiEndpointStorage : IDisposable
     {
-        /// <summary>
-        /// Prefixed to an AAD route's endpoint before hashing it into a directory name. A normalized
-        /// endpoint always starts with <c>https://</c>, so no endpoint can hash to an AAD directory.
-        /// </summary>
+        /// <summary>Prefixed to an AAD route's endpoint before hashing it into a directory name.</summary>
         internal const string AadPartitionKeyPrefix = "aad|";
         /// <summary>
         /// Appended to the host's storage directory to form a sibling root. Partitions must not be
@@ -533,8 +522,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
                     var trackUri = ApplicationInsightsRestClient.CreateTrackUri(ingestionEndpoint);
                     var transmissionStateManager = new TransmissionStateManager(route);
 
-                    // The drain shares the transmitter's pipeline, so a partition drains with the same
-                    // authentication its telemetry was sent with.
                     var created = new EndpointStorage(
                         directory,
                         innerProvider,

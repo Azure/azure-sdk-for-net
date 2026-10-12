@@ -158,11 +158,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Contains("ikey-west", request.Body, StringComparison.Ordinal);
         }
 
-        /// <summary>
-        /// The same endpoint reached with and without AAD is two groups, so it is two requests and two
-        /// partitions. Replaying them from one blob would send one of them with the wrong
-        /// authentication.
-        /// </summary>
         [Fact]
         public void AadAndInstrumentationKeyGroupsForOneEndpointArePersistedSeparately()
         {
@@ -195,10 +190,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.DoesNotContain("ikey-east", aadBlob, StringComparison.Ordinal);
         }
 
-        /// <summary>
-        /// Back-off is per route, so throttling an AAD route must not stop the instrumentation-key
-        /// route to the same endpoint.
-        /// </summary>
         [Fact]
         public void BackOffOnAnAadRouteDoesNotStopTheInstrumentationKeyRouteToTheSameEndpoint()
         {

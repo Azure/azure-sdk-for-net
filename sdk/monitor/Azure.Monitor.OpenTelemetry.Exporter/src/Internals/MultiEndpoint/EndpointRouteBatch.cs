@@ -9,10 +9,9 @@ using Azure.Monitor.OpenTelemetry.Exporter.Models;
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
 {
     /// <summary>
-    /// Telemetry for one export, grouped by route - ingestion endpoint and whether that destination
-    /// authenticates with Microsoft Entra ID - so each group becomes a single POST. Groups, item
-    /// lists, and their bookkeeping are reused across exports; only growth past a previous
-    /// high-water mark allocates.
+    /// Telemetry for one export, grouped by route (ingestion endpoint and AAD flag) so each group
+    /// becomes a single POST. Groups, item lists, and their bookkeeping are reused across exports;
+    /// only growth past a previous high-water mark allocates.
     /// </summary>
     internal sealed class EndpointRouteBatch
     {
@@ -48,9 +47,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         /// ordinal scan is exact. At the handful of regions a process talks to, scanning beats
         /// hashing and allocates nothing.
         /// <para/>
-        /// The same endpoint reached with and without Microsoft Entra ID is two groups: one request
-        /// carries a single authentication mode, so mixing them would send ikey-only telemetry with a
-        /// token, or AAD telemetry without one.
+        /// The same endpoint with and without AAD is two groups: a request has one authentication mode.
         /// </remarks>
         internal Group GetOrAdd(string ingestionEndpoint, bool isAad = false)
         {

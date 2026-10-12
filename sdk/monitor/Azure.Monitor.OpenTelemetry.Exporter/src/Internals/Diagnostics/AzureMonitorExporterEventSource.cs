@@ -571,9 +571,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         [Event(64, Message = "Rate-limited sampling of {0} traces per second was ignored because multi-endpoint routing is enabled. The limit is per process, so it would be shared across every destination the process carries. Fixed-rate sampling of {1} is used instead; set SamplingRatio to change it.", Level = EventLevel.Warning)]
         public void RateLimitedSamplingIgnoredForMultiEndpointRouting(double tracesPerSecond, float samplingRatio) => WriteEvent(64, tracesPerSecond, samplingRatio);
 
-        // The parameter names are the payload contract, so they keep their original names even though
-        // the values are now routes: an instrumentation-key route reads exactly as before, and an
-        // AAD route carries the " (aad)" suffix.
+        // Parameter names are the payload contract and are kept; AAD routes carry an " (aad)" suffix.
         [Event(65, Message = "Storage partition for route '{0}' is directory '{1}'. The directory name is a hash of the route's partition key - the ingestion endpoint, prefixed with 'aad|' for a Microsoft Entra ID route - and cannot be reversed.", Level = EventLevel.Informational)]
         public void MultiEndpointPartitionCreated(string ingestionEndpoint, string directory) => WriteEvent(65, ingestionEndpoint, directory);
 

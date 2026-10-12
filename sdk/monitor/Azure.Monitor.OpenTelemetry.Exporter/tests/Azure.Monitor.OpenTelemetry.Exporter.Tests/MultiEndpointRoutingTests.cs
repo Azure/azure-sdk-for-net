@@ -90,10 +90,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Single(routeBatch[1].TelemetryItems);
         }
 
-        /// <summary>
-        /// One request carries one authentication mode, so AAD and instrumentation-key telemetry for
-        /// the same region must not share a POST.
-        /// </summary>
         [Fact]
         public void AadAndInstrumentationKeyRoutesToOneEndpointBecomeDistinctGroups()
         {
@@ -142,10 +138,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(2, group.TelemetryItems.Count);
         }
 
-        /// <summary>
-        /// Only <c>"aad"</c> opts in. Anything else, including values that look like a yes, keeps the
-        /// instrumentation-key route that telemetry had before the attribute existed.
-        /// </summary>
         [Theory]
         [InlineData("")]
         [InlineData("   ")]
@@ -174,9 +166,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.False(routeBatch[0].IsAad);
         }
 
-        /// <summary>
-        /// The attribute names how to reach a destination, not where; on its own it routes nothing.
-        /// </summary>
         [Fact]
         public void IngestionAuthAloneDoesNotMakeAnActivityRoutable()
         {
@@ -196,10 +185,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(EastUs + EndpointRouting.AadRouteSuffix, routeBatch[1].Description);
         }
 
-        /// <summary>
-        /// Groups are recycled across exports, so a group that was AAD last time must not carry the
-        /// flag into an instrumentation-key route this time.
-        /// </summary>
         [Fact]
         public void ARecycledGroupDoesNotKeepItsPreviousAuthenticationMode()
         {
@@ -938,10 +923,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.All(listener.Messages, e => Assert.Equal(summary.Payload[0], e.Payload![0]));
         }
 
-        /// <summary>
-        /// The summary counts routes, not endpoints: one endpoint reached with and without AAD is two
-        /// requests, and the message says so rather than claiming two endpoints.
-        /// </summary>
         [Fact]
         public void TheSummaryCountsAnEndpointReachedInBothAuthenticationModesAsTwoRoutes()
         {
@@ -956,10 +937,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.DoesNotContain("ingestion endpoints and dropped", summary.Message, StringComparison.Ordinal);
         }
 
-        /// <summary>
-        /// Every event that names a routed destination receives a route label, which carries an
-        /// " (aad)" suffix for Entra ID routes, so none may call that value an ingestion endpoint.
-        /// </summary>
         [Theory]
         [InlineData(63)]
         [InlineData(65)]

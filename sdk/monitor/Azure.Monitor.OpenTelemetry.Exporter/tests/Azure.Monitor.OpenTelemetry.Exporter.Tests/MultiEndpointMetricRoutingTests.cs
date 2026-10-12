@@ -98,10 +98,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 group.TelemetryItems.Select(i => i.InstrumentationKey).OrderBy(k => k, StringComparer.Ordinal));
         }
 
-        /// <summary>
-        /// The authentication mode is part of a metric's dimensions, so AAD and instrumentation-key
-        /// measurements for one endpoint are separate time series and separate groups.
-        /// </summary>
         [Fact]
         public void AadAndInstrumentationKeyRoutesToOneEndpointBecomeDistinctGroups()
         {

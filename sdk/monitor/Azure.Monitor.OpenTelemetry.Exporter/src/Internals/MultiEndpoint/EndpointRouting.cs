@@ -124,22 +124,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         internal static bool IsAadRoute(ref AzMonList mappedTags)
             => IsAadRoute(mappedTags[SemanticSlot.MicrosoftIngestionAuth]);
 
-        /// <summary>
-        /// Reads <see cref="SemanticConventions.AttributeMicrosoftIngestionAuth"/>. Only the string
-        /// <see cref="SemanticConventions.IngestionAuthAad"/> (case-insensitive, surrounding
-        /// whitespace ignored) marks a Microsoft Entra ID destination. Absent, non-string, or any
-        /// other value is instrumentation-key-only, which is how routing behaved before the
-        /// attribute existed.
-        /// </summary>
+        /// <summary>Only the string "aad" (case-insensitive, trimmed) marks an AAD route; anything else is ikey-only.</summary>
         internal static bool IsAadRoute(object? rawIngestionAuth)
             => rawIngestionAuth is string value
                 && string.Equals(value.Trim(), SemanticConventions.IngestionAuthAad, StringComparison.OrdinalIgnoreCase);
 
-        /// <summary>
-        /// Names a route in self-diagnostics. An AAD route to an endpoint is a different group and
-        /// partition from an instrumentation-key route to the same endpoint, so it has to read
-        /// differently too.
-        /// </summary>
+        /// <summary>The route as shown in self-diagnostics; AAD routes get an " (aad)" suffix.</summary>
         internal static string DescribeRoute(string ingestionEndpoint, bool isAad)
             => isAad ? ingestionEndpoint + AadRouteSuffix : ingestionEndpoint;
 
