@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 rateLimitDurationInMinutes,
                 rateLimitThreshold,
                 groupBy ?? new ChangeTrackingList<RateLimitGroupByVariable>(),
-                matchConditions,
+                matchConditions ?? new ChangeTrackingList<MatchConditionFrontDoor>(),
                 action,
                 additionalBinaryDataProperties);
         }

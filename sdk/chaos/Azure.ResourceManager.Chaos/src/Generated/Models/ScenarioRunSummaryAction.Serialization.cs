@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
             }
             return new ScenarioRunSummaryAction(
-                resources,
+                resources ?? new ChangeTrackingList<ScenarioRunResource>(),
                 actionUrn,
                 state,
                 startedOn,
