@@ -46,6 +46,8 @@ ApiCenterWorkspace workspace =
 infra.Add(workspace);
 ```
 
+## Next steps
+
 ## Troubleshooting
 
 - File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
