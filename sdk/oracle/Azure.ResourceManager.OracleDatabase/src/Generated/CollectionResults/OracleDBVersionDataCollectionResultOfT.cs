@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.OracleDatabase
 {
     internal partial class OracleDBVersionDataCollectionResultOfT : Pageable<OracleDBVersionData>
     {
-        private readonly DbVersions _client;
+        private readonly DBVersions _client;
         private readonly Guid _subscriptionId;
         private readonly AzureLocation _location;
         private readonly string _dbSystemShape;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.OracleDatabase
         private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of OracleDBVersionDataCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The DbVersions client used to send requests. </param>
+        /// <param name="client"> The DBVersions client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="dbSystemShape"> If provided, filters the results to the set of database versions which are supported for the given shape. e.g., VM.Standard.E5.Flex. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="shapeFamily"> If provided, filters the results to the set of database versions which are supported for the given shape family. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public OracleDBVersionDataCollectionResultOfT(DbVersions client, Guid subscriptionId, AzureLocation location, string dbSystemShape, ResourceIdentifier dbSystemId, string storageManagement, bool? isUpgradeSupported, bool? isDatabaseSoftwareImageSupported, string shapeFamily, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public OracleDBVersionDataCollectionResultOfT(DBVersions client, Guid subscriptionId, AzureLocation location, string dbSystemShape, ResourceIdentifier dbSystemId, string storageManagement, bool? isUpgradeSupported, bool? isDatabaseSoftwareImageSupported, string shapeFamily, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <returns> The pages of OracleDBVersionDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<OracleDBVersionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
