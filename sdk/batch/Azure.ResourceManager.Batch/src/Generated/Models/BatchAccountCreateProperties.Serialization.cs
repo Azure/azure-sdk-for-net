@@ -106,13 +106,20 @@ namespace Azure.ResourceManager.Batch.Models
             }
             if (Optional.IsCollectionDefined(AllowedAuthenticationModes))
             {
-                writer.WritePropertyName("allowedAuthenticationModes"u8);
-                writer.WriteStartArray();
-                foreach (BatchAuthenticationMode item in AllowedAuthenticationModes)
+                if (AllowedAuthenticationModes != null)
                 {
-                    writer.WriteStringValue(item.ToSerialString());
+                    writer.WritePropertyName("allowedAuthenticationModes"u8);
+                    writer.WriteStartArray();
+                    foreach (BatchAuthenticationMode item in AllowedAuthenticationModes)
+                    {
+                        writer.WriteStringValue(item.ToSerialString());
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("allowedAuthenticationModes"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -162,7 +169,7 @@ namespace Azure.ResourceManager.Batch.Models
             BatchPublicNetworkAccess? publicNetworkAccess = default;
             BatchNetworkProfile networkProfile = default;
             BatchAccountEncryptionConfiguration encryption = default;
-            IList<BatchAuthenticationMode> allowedAuthenticationModes = default;
+            IList<BatchAuthenticationMode> allowedAuthenticationModes = new ChangeTrackingList<BatchAuthenticationMode>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -224,6 +231,7 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        allowedAuthenticationModes = null;
                         continue;
                     }
                     List<BatchAuthenticationMode> array = new List<BatchAuthenticationMode>();
@@ -246,7 +254,7 @@ namespace Azure.ResourceManager.Batch.Models
                 publicNetworkAccess,
                 networkProfile,
                 encryption,
-                allowedAuthenticationModes ?? new ChangeTrackingList<BatchAuthenticationMode>(),
+                allowedAuthenticationModes,
                 additionalBinaryDataProperties);
         }
     }

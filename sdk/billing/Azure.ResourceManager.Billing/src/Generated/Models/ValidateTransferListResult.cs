@@ -12,21 +12,21 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Result of transfer validation. </summary>
-    internal partial class ValidateTransferListResponse
+    internal partial class ValidateTransferListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ValidateTransferListResponse"/>. </summary>
-        internal ValidateTransferListResponse()
+        /// <summary> Initializes a new instance of <see cref="ValidateTransferListResult"/>. </summary>
+        internal ValidateTransferListResult()
         {
             Value = new ChangeTrackingList<BillingTransferValidationResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ValidateTransferListResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateTransferListResult"/>. </summary>
         /// <param name="value"> The list of transfer validation results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ValidateTransferListResponse(IReadOnlyList<BillingTransferValidationResult> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ValidateTransferListResult(IReadOnlyList<BillingTransferValidationResult> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

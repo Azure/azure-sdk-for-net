@@ -85,15 +85,29 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 throw new FormatException($"The model {nameof(AccessReviewDecisionPatch)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Principal))
+            if (options.Format != "W" && (_principalIsDefined || Optional.IsDefined(Principal)))
             {
-                writer.WritePropertyName("principal"u8);
-                writer.WriteObjectValue(Principal, options);
+                if (Principal != null)
+                {
+                    writer.WritePropertyName("principal"u8);
+                    writer.WriteObjectValue(Principal, options);
+                }
+                else
+                {
+                    writer.WriteNull("principal"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(Resource))
+            if (options.Format != "W" && (_resourceIsDefined || Optional.IsDefined(Resource)))
             {
-                writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue(Resource, options);
+                if (Resource != null)
+                {
+                    writer.WritePropertyName("resource"u8);
+                    writer.WriteObjectValue(Resource, options);
+                }
+                else
+                {
+                    writer.WriteNull("resource"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(Recommendation))
             {
@@ -110,30 +124,58 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("justification"u8);
                 writer.WriteStringValue(Justification);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReviewedOn))
+            if (options.Format != "W" && (_reviewedOnIsDefined || Optional.IsDefined(ReviewedOn)))
             {
-                writer.WritePropertyName("reviewedDateTime"u8);
-                writer.WriteStringValue(ReviewedOn.Value, "O");
+                if (ReviewedOn != null)
+                {
+                    writer.WritePropertyName("reviewedDateTime"u8);
+                    writer.WriteStringValue(ReviewedOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("reviewedDateTime"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(ReviewedBy))
+            if (options.Format != "W" && (_reviewedByIsDefined || Optional.IsDefined(ReviewedBy)))
             {
-                writer.WritePropertyName("reviewedBy"u8);
-                writer.WriteObjectValue(ReviewedBy, options);
+                if (ReviewedBy != null)
+                {
+                    writer.WritePropertyName("reviewedBy"u8);
+                    writer.WriteObjectValue(ReviewedBy, options);
+                }
+                else
+                {
+                    writer.WriteNull("reviewedBy"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ApplyResult))
             {
                 writer.WritePropertyName("applyResult"u8);
                 writer.WriteStringValue(ApplyResult.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AppliedOn))
+            if (options.Format != "W" && (_appliedOnIsDefined || Optional.IsDefined(AppliedOn)))
             {
-                writer.WritePropertyName("appliedDateTime"u8);
-                writer.WriteStringValue(AppliedOn.Value, "O");
+                if (AppliedOn != null)
+                {
+                    writer.WritePropertyName("appliedDateTime"u8);
+                    writer.WriteStringValue(AppliedOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("appliedDateTime"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(AppliedBy))
+            if (options.Format != "W" && (_appliedByIsDefined || Optional.IsDefined(AppliedBy)))
             {
-                writer.WritePropertyName("appliedBy"u8);
-                writer.WriteObjectValue(AppliedBy, options);
+                if (AppliedBy != null)
+                {
+                    writer.WritePropertyName("appliedBy"u8);
+                    writer.WriteObjectValue(AppliedBy, options);
+                }
+                else
+                {
+                    writer.WriteNull("appliedBy"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Insights))
             {
@@ -145,10 +187,17 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(PrincipalResourceMembership))
+            if (options.Format != "W" && (_principalResourceMembershipIsDefined || Optional.IsDefined(PrincipalResourceMembership)))
             {
-                writer.WritePropertyName("principalResourceMembership"u8);
-                writer.WriteObjectValue(PrincipalResourceMembership, options);
+                if (PrincipalResourceMembership != null)
+                {
+                    writer.WritePropertyName("principalResourceMembership"u8);
+                    writer.WriteObjectValue(PrincipalResourceMembership, options);
+                }
+                else
+                {
+                    writer.WriteNull("principalResourceMembership"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -192,23 +241,31 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
+            bool principalIsDefined = false;
             AccessReviewDecisionIdentity principal = default;
+            bool resourceIsDefined = false;
             AccessReviewDecisionResourceTarget resource = default;
             AccessRecommendationType? recommendation = default;
             AccessReviewResult? decision = default;
             string justification = default;
+            bool reviewedOnIsDefined = false;
             DateTimeOffset? reviewedOn = default;
+            bool reviewedByIsDefined = false;
             AccessReviewActorIdentity reviewedBy = default;
             AccessReviewApplyResult? applyResult = default;
+            bool appliedOnIsDefined = false;
             DateTimeOffset? appliedOn = default;
+            bool appliedByIsDefined = false;
             AccessReviewActorIdentity appliedBy = default;
             IList<AccessReviewDecisionInsight> insights = default;
+            bool principalResourceMembershipIsDefined = false;
             AccessReviewDecisionPrincipalResourceMembership principalResourceMembership = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("principal"u8))
                 {
+                    principalIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         principal = null;
@@ -219,6 +276,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (prop.NameEquals("resource"u8))
                 {
+                    resourceIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         resource = null;
@@ -252,6 +310,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (prop.NameEquals("reviewedDateTime"u8))
                 {
+                    reviewedOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         reviewedOn = null;
@@ -262,6 +321,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (prop.NameEquals("reviewedBy"u8))
                 {
+                    reviewedByIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         reviewedBy = null;
@@ -281,6 +341,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (prop.NameEquals("appliedDateTime"u8))
                 {
+                    appliedOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         appliedOn = null;
@@ -291,6 +352,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (prop.NameEquals("appliedBy"u8))
                 {
+                    appliedByIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         appliedBy = null;
@@ -315,6 +377,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (prop.NameEquals("principalResourceMembership"u8))
                 {
+                    principalResourceMembershipIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         principalResourceMembership = null;
@@ -341,7 +404,16 @@ namespace Azure.ResourceManager.Authorization.Models
                 appliedBy,
                 insights ?? new ChangeTrackingList<AccessReviewDecisionInsight>(),
                 principalResourceMembership,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _principalIsDefined = principalIsDefined,
+                _resourceIsDefined = resourceIsDefined,
+                _reviewedOnIsDefined = reviewedOnIsDefined,
+                _reviewedByIsDefined = reviewedByIsDefined,
+                _appliedOnIsDefined = appliedOnIsDefined,
+                _appliedByIsDefined = appliedByIsDefined,
+                _principalResourceMembershipIsDefined = principalResourceMembershipIsDefined
+            };
         }
     }
 }
