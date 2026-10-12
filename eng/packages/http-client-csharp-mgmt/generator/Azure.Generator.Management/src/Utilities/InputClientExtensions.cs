@@ -55,8 +55,13 @@ internal static class InputClientExtensions
         /// </summary>
         internal bool NeedsApiVersionField => !inputClient.NeedsApiVersionResolver
             || inputClient.Methods.Any(method =>
-                method.Operation.Parameters.Any(parameter => parameter.IsApiVersion
-                    && parameter.Scope == InputParameterScope.Client && parameter.Type is not InputLiteralType)
+                method.Operation.Parameters.Any(parameter =>
+                    (parameter.IsApiVersion || parameter is InputQueryParameter { SerializedName: "api-version" })
+                    && parameter.Type is not InputLiteralType && parameter.Scope != InputParameterScope.Constant
+                    // The base generator also reads the client field for a method-scoped
+                    // API-version default. Scope alone does not identify all field users.
+                    && (parameter.Scope == InputParameterScope.Client
+                        || parameter.IsApiVersion && parameter.DefaultValue is not null))
                 && !inputClient.UsesOperationApiVersion(method));
 
         internal bool UsesOperationApiVersion(InputServiceMethod method)

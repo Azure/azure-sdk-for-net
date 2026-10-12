@@ -191,6 +191,108 @@ internal class ApiVersionOverrideTests
         });
     }
 
+    [TestCase(false)]
+    [TestCase(true)]
+    public void MixedClientRetainsUnmarkedClientApiVersionField(bool isApiVersion)
+    {
+        var (client, models) = InputResourceData.ClientWithSharedMockableOperations(includeNonResource: true);
+        var operation = client.Methods.Single(m => m.Name == "CheckNameAvailability").Operation;
+        operation.Update(parameters: [.. operation.Parameters.Where(p => !p.IsApiVersion),
+            InputFactory.QueryParameter("apiVersion", InputPrimitiveType.String, isApiVersion: isApiVersion,
+                serializedName: "api-version", scope: InputParameterScope.Client)]);
+        var plugin = ManagementMockHelpers.LoadMockPlugin(clients: () => [client], inputModels: () => models);
+        var restClient = plugin.Object.TypeFactory.CreateClient(client)!;
+        var request = GetInitialRequestBody(restClient.RestClient.Methods, "CheckNameAvailability");
+        var code = new TypeProviderWriter(restClient).Write().Content;
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(request, Does.Contain("AppendQuery(\"api-version\", _apiVersion, true)"));
+            Assert.That(code, Does.Contain("private readonly string _apiVersion;"),
+                "A retained request must not reference a removed constructor field.");
+            Assert.That(restClient.Constructors.SelectMany(c => c.Signature.Parameters).Select(p => p.Name),
+                Does.Contain("apiVersion"));
+        });
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public void MixedClientRetainsMethodScopedApiVersionDefault(bool isSubClient)
+    {
+        var (client, models) = InputResourceData.ClientWithSharedMockableOperations(includeNonResource: true);
+        var operation = client.Methods.Single(m => m.Name == "CheckNameAvailability").Operation;
+        // The affected Network and SecurityCenter inputs mark these query parameters as
+        // method-scoped, but the base generator uses the client field for their default.
+        operation.Update(parameters: [.. operation.Parameters.Where(p => !p.IsApiVersion),
+            InputFactory.QueryParameter("apiVersion", InputPrimitiveType.String, isApiVersion: true,
+                defaultValue: new InputConstant("2023-01-01", InputPrimitiveType.String),
+                serializedName: "api-version", scope: InputParameterScope.Method)]);
+        if (isSubClient)
+        {
+            client = InputFactory.Client(client.Name, methods: client.Methods, decorators: client.Decorators,
+                parent: InputFactory.Client("ParentClient", decorators: client.Decorators));
+        }
+        var plugin = ManagementMockHelpers.LoadMockPlugin(clients: () => [client.Parent ?? client], inputModels: () => models);
+        var restClient = plugin.Object.TypeFactory.CreateClient(client)!;
+        var request = GetInitialRequestBody(restClient.RestClient.Methods, "CheckNameAvailability");
+        var code = new TypeProviderWriter(restClient).Write().Content;
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(request, Does.Contain("AppendQuery(\"api-version\", _apiVersion, true)"));
+            Assert.That(code, Does.Contain("private readonly string _apiVersion;"));
+            Assert.That(restClient.Constructors.SelectMany(c => c.Signature.Parameters).Select(p => p.Name),
+                Does.Contain("apiVersion"));
+        });
+    }
+
+    [Test]
+    public void MixedSubClientRetainsUnmarkedClientApiVersionField()
+    {
+        var (client, models) = InputResourceData.ClientWithSharedMockableOperations(includeNonResource: true);
+        var operation = client.Methods.Single(m => m.Name == "CheckNameAvailability").Operation;
+        operation.Update(parameters: [.. operation.Parameters.Where(p => !p.IsApiVersion),
+            InputFactory.QueryParameter("apiVersion", InputPrimitiveType.String,
+                serializedName: "api-version", scope: InputParameterScope.Client)]);
+        client = InputFactory.Client(client.Name, methods: client.Methods, decorators: client.Decorators,
+            parent: InputFactory.Client("ParentClient", decorators: client.Decorators));
+        var plugin = ManagementMockHelpers.LoadMockPlugin(clients: () => [client.Parent!], inputModels: () => models);
+        var restClient = plugin.Object.TypeFactory.CreateClient(client)!;
+        var request = GetInitialRequestBody(restClient.RestClient.Methods, "CheckNameAvailability");
+        var code = new TypeProviderWriter(restClient).Write().Content;
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(request, Does.Contain("AppendQuery(\"api-version\", _apiVersion, true)"));
+            Assert.That(code, Does.Contain("private readonly string _apiVersion;"));
+            Assert.That(restClient.Constructors.SelectMany(c => c.Signature.Parameters).Select(p => p.Name),
+                Does.Contain("apiVersion"));
+        });
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public void MixedClientConstantApiVersionDoesNotRequireSharedField(bool isApiVersion)
+    {
+        var (client, models) = InputResourceData.ClientWithSharedMockableOperations(includeNonResource: true);
+        var operation = client.Methods.Single(m => m.Name == "CheckNameAvailability").Operation;
+        operation.Update(parameters: [.. operation.Parameters.Where(p => !p.IsApiVersion),
+            InputFactory.QueryParameter("apiVersion", InputFactory.Literal.String("constant-version"),
+                isRequired: true, isApiVersion: isApiVersion, serializedName: "api-version", scope: InputParameterScope.Constant)]);
+        var plugin = ManagementMockHelpers.LoadMockPlugin(clients: () => [client], inputModels: () => models);
+        var restClient = plugin.Object.TypeFactory.CreateClient(client)!;
+        var request = GetInitialRequestBody(restClient.RestClient.Methods, "CheckNameAvailability");
+        var code = new TypeProviderWriter(restClient).Write().Content;
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(request, Does.Contain("AppendQuery(\"api-version\", \"constant-version\", true)"));
+            Assert.That(code, Does.Not.Contain("_apiVersion"));
+            Assert.That(restClient.Constructors.SelectMany(c => c.Signature.Parameters).Select(p => p.Name),
+                Does.Not.Contain("apiVersion"));
+        });
+    }
+
     [Test]
     public void ResourceRequestAllowsMissingApiVersionResolver()
     {
