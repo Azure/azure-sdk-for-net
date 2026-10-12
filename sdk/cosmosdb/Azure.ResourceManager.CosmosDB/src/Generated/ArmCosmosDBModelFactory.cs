@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.CosmosDBAccountBackupPolicy"/> instance for mocking. </returns>
         public static CosmosDBAccountBackupPolicy CosmosDBAccountBackupPolicy(string backupPolicyType = default, BackupPolicyMigrationState migrationState = default)
         {
-            return new UnknownBackupPolicy(default, migrationState, default);
+            return new UnknownBackupPolicy(backupPolicyType is null ? default : new BackupPolicyType(backupPolicyType), migrationState, default);
         }
 
         /// <summary> The object representing the state of the migration between the backup policies. </summary>
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.PeriodicModeBackupPolicy"/> instance for mocking. </returns>
         public static PeriodicModeBackupPolicy PeriodicModeBackupPolicy(BackupPolicyMigrationState migrationState = default, PeriodicModeProperties periodicModeProperties = default)
         {
-            return new PeriodicModeBackupPolicy(default, migrationState, default, periodicModeProperties);
+            return new PeriodicModeBackupPolicy(BackupPolicyType.Periodic, migrationState, default, periodicModeProperties);
         }
 
         /// <summary> Configuration values for periodic mode backup. </summary>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.ContinuousModeBackupPolicy"/> instance for mocking. </returns>
         public static ContinuousModeBackupPolicy ContinuousModeBackupPolicy(BackupPolicyMigrationState migrationState = default, ContinuousTier? continuousModeTier = default)
         {
-            return new ContinuousModeBackupPolicy(default, migrationState, default, continuousModeTier is null ? default : new ContinuousModeProperties(continuousModeTier, default));
+            return new ContinuousModeBackupPolicy(BackupPolicyType.Continuous, migrationState, default, continuousModeTier is null ? default : new ContinuousModeProperties(continuousModeTier, default));
         }
 
         /// <summary> The CORS policy for the Cosmos DB database account. </summary>
@@ -853,7 +853,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.CosmosDBCopyJobBaseProperties"/> instance for mocking. </returns>
         public static CosmosDBCopyJobBaseProperties CosmosDBCopyJobBaseProperties(string jobType = default)
         {
-            return new UnknownCosmosDBCopyJobBaseProperties(default, default);
+            return new UnknownCosmosDBCopyJobBaseProperties(jobType is null ? default : new CopyJobType(jobType), default);
         }
 
         /// <param name="sourceDetailsRemoteAccountName"> Name of remote account in case of cross-account data transfer. </param>
@@ -864,7 +864,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tasks ??= new ChangeTrackingList<CassandraRUToCassandraRUCopyJobTask>();
 
-            return new CassandraRUToCassandraRUCopyJobProperties(default, default, sourceDetailsRemoteAccountName is null ? default : new CosmosDBSourceSinkDetails(sourceDetailsRemoteAccountName, default), destinationDetailsRemoteAccountName is null ? default : new CosmosDBSourceSinkDetails(destinationDetailsRemoteAccountName, default), (tasks ?? new ChangeTrackingList<CassandraRUToCassandraRUCopyJobTask>()).ToList());
+            return new CassandraRUToCassandraRUCopyJobProperties(CopyJobType.CassandraRUToCassandraRU, default, sourceDetailsRemoteAccountName is null ? default : new CosmosDBSourceSinkDetails(sourceDetailsRemoteAccountName, default), destinationDetailsRemoteAccountName is null ? default : new CosmosDBSourceSinkDetails(destinationDetailsRemoteAccountName, default), (tasks ?? new ChangeTrackingList<CassandraRUToCassandraRUCopyJobTask>()).ToList());
         }
 
         /// <summary> The CassandraRUToCassandraRUCopyJobTask. </summary>
@@ -904,7 +904,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tasks ??= new ChangeTrackingList<BlobToCassandraRUCopyJobTask>();
 
-            return new BlobToCassandraRUCopyJobProperties(default, default, sourceDetailsEndpointUri is null ? default : new AzureBlobSourceSinkDetails(sourceDetailsEndpointUri, default), destinationDetailsRemoteAccountName is null ? default : new CosmosDBSourceSinkDetails(destinationDetailsRemoteAccountName, default), (tasks ?? new ChangeTrackingList<BlobToCassandraRUCopyJobTask>()).ToList());
+            return new BlobToCassandraRUCopyJobProperties(CopyJobType.AzureBlobStorageToCassandraRU, default, sourceDetailsEndpointUri is null ? default : new AzureBlobSourceSinkDetails(sourceDetailsEndpointUri, default), destinationDetailsRemoteAccountName is null ? default : new CosmosDBSourceSinkDetails(destinationDetailsRemoteAccountName, default), (tasks ?? new ChangeTrackingList<BlobToCassandraRUCopyJobTask>()).ToList());
         }
 
         /// <param name="totalCount"> Task level Total Count. </param>
@@ -925,7 +925,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tasks ??= new ChangeTrackingList<CassandraRUToBlobCopyJobTask>();
 
-            return new CassandraRUToBlobCopyJobProperties(default, default, sourceDetailsRemoteAccountName is null ? default : new CosmosDBSourceSinkDetails(sourceDetailsRemoteAccountName, default), destinationDetailsEndpointUri is null ? default : new AzureBlobSourceSinkDetails(destinationDetailsEndpointUri, default), (tasks ?? new ChangeTrackingList<CassandraRUToBlobCopyJobTask>()).ToList());
+            return new CassandraRUToBlobCopyJobProperties(CopyJobType.CassandraRUToAzureBlobStorage, default, sourceDetailsRemoteAccountName is null ? default : new CosmosDBSourceSinkDetails(sourceDetailsRemoteAccountName, default), destinationDetailsEndpointUri is null ? default : new AzureBlobSourceSinkDetails(destinationDetailsEndpointUri, default), (tasks ?? new ChangeTrackingList<CassandraRUToBlobCopyJobTask>()).ToList());
         }
 
         /// <param name="totalCount"> Task level Total Count. </param>
@@ -946,7 +946,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tasks ??= new ChangeTrackingList<MongoRUToMongoRUCopyJobTask>();
 
-            return new MongoRUToMongoRUCopyJobProperties(default, default, sourceDetailsRemoteAccountName is null ? default : new CosmosDBSourceSinkDetails(sourceDetailsRemoteAccountName, default), destinationDetailsRemoteAccountName is null ? default : new CosmosDBSourceSinkDetails(destinationDetailsRemoteAccountName, default), (tasks ?? new ChangeTrackingList<MongoRUToMongoRUCopyJobTask>()).ToList());
+            return new MongoRUToMongoRUCopyJobProperties(CopyJobType.MongoRUToMongoRU, default, sourceDetailsRemoteAccountName is null ? default : new CosmosDBSourceSinkDetails(sourceDetailsRemoteAccountName, default), destinationDetailsRemoteAccountName is null ? default : new CosmosDBSourceSinkDetails(destinationDetailsRemoteAccountName, default), (tasks ?? new ChangeTrackingList<MongoRUToMongoRUCopyJobTask>()).ToList());
         }
 
         /// <summary> The MongoRUToMongoRUCopyJobTask. </summary>
@@ -977,7 +977,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tasks ??= new ChangeTrackingList<MongoRUToMongoVCoreCopyJobTask>();
 
-            return new MongoRUToMongoVCoreCopyJobProperties(default, default, sourceDetailsRemoteAccountName is null ? default : new CosmosDBSourceSinkDetails(sourceDetailsRemoteAccountName, default), destinationDetails, (tasks ?? new ChangeTrackingList<MongoRUToMongoVCoreCopyJobTask>()).ToList());
+            return new MongoRUToMongoVCoreCopyJobProperties(CopyJobType.MongoRUToMongoVCore, default, sourceDetailsRemoteAccountName is null ? default : new CosmosDBSourceSinkDetails(sourceDetailsRemoteAccountName, default), destinationDetails, (tasks ?? new ChangeTrackingList<MongoRUToMongoVCoreCopyJobTask>()).ToList());
         }
 
         /// <summary> A CosmosDB Mongo vCore data source/sink details. </summary>
@@ -1017,7 +1017,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tasks ??= new ChangeTrackingList<NoSqlRUToNoSqlRUCopyJobTask>();
 
-            return new NoSqlRUToNoSqlRUCopyJobProperties(default, default, sourceDetailsRemoteAccountName is null ? default : new CosmosDBSourceSinkDetails(sourceDetailsRemoteAccountName, default), destinationDetailsRemoteAccountName is null ? default : new CosmosDBSourceSinkDetails(destinationDetailsRemoteAccountName, default), (tasks ?? new ChangeTrackingList<NoSqlRUToNoSqlRUCopyJobTask>()).ToList());
+            return new NoSqlRUToNoSqlRUCopyJobProperties(CopyJobType.NoSqlRUToNoSqlRU, default, sourceDetailsRemoteAccountName is null ? default : new CosmosDBSourceSinkDetails(sourceDetailsRemoteAccountName, default), destinationDetailsRemoteAccountName is null ? default : new CosmosDBSourceSinkDetails(destinationDetailsRemoteAccountName, default), (tasks ?? new ChangeTrackingList<NoSqlRUToNoSqlRUCopyJobTask>()).ToList());
         }
 
         /// <summary> The NoSqlRUToNoSqlRUCopyJobTask. </summary>
@@ -3381,7 +3381,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.DataTransferDataSourceSink"/> instance for mocking. </returns>
         public static DataTransferDataSourceSink DataTransferDataSourceSink(string component = default)
         {
-            return new UnknownDataTransferDataSourceSink(default, default);
+            return new UnknownDataTransferDataSourceSink(component is null ? default : new DataTransferComponent(component), default);
         }
 
         /// <summary> A base CosmosDB data source/sink. </summary>
@@ -3389,7 +3389,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.BaseCosmosDataTransferDataSourceSink"/> instance for mocking. </returns>
         public static BaseCosmosDataTransferDataSourceSink BaseCosmosDataTransferDataSourceSink(string remoteAccountName = default)
         {
-            return new BaseCosmosDataTransferDataSourceSink(default, default, remoteAccountName);
+            return new BaseCosmosDataTransferDataSourceSink(DataTransferComponent.BaseCosmosDataTransferDataSourceSink, default, remoteAccountName);
         }
 
         /// <summary> A CosmosDB Cassandra API data source/sink. </summary>
@@ -3399,7 +3399,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.CosmosCassandraDataTransferDataSourceSink"/> instance for mocking. </returns>
         public static CosmosCassandraDataTransferDataSourceSink CosmosCassandraDataTransferDataSourceSink(string remoteAccountName = default, string keyspaceName = default, string tableName = default)
         {
-            return new CosmosCassandraDataTransferDataSourceSink(default, default, remoteAccountName, keyspaceName, tableName);
+            return new CosmosCassandraDataTransferDataSourceSink(DataTransferComponent.BaseCosmosDataTransferDataSourceSink, default, remoteAccountName, keyspaceName, tableName);
         }
 
         /// <summary> A CosmosDB Mongo API data source/sink. </summary>
@@ -3409,7 +3409,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.CosmosMongoDataTransferDataSourceSink"/> instance for mocking. </returns>
         public static CosmosMongoDataTransferDataSourceSink CosmosMongoDataTransferDataSourceSink(string remoteAccountName = default, string databaseName = default, string collectionName = default)
         {
-            return new CosmosMongoDataTransferDataSourceSink(default, default, remoteAccountName, databaseName, collectionName);
+            return new CosmosMongoDataTransferDataSourceSink(DataTransferComponent.BaseCosmosDataTransferDataSourceSink, default, remoteAccountName, databaseName, collectionName);
         }
 
         /// <summary> A CosmosDB No Sql API data source/sink. </summary>
@@ -3419,7 +3419,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.CosmosSqlDataTransferDataSourceSink"/> instance for mocking. </returns>
         public static CosmosSqlDataTransferDataSourceSink CosmosSqlDataTransferDataSourceSink(string remoteAccountName = default, string databaseName = default, string containerName = default)
         {
-            return new CosmosSqlDataTransferDataSourceSink(default, default, remoteAccountName, databaseName, containerName);
+            return new CosmosSqlDataTransferDataSourceSink(DataTransferComponent.BaseCosmosDataTransferDataSourceSink, default, remoteAccountName, databaseName, containerName);
         }
 
         /// <summary> A CosmosDB Mongo vCore API data source/sink. </summary>
@@ -3431,7 +3431,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CosmosMongoVCoreDataTransferDataSourceSink CosmosMongoVCoreDataTransferDataSourceSink(string databaseName = default, string collectionName = default, string hostName = default, string connectionStringKeyVaultUri = default)
         {
             return new CosmosMongoVCoreDataTransferDataSourceSink(
-                default,
+                DataTransferComponent.CosmosDBMongoVCore,
                 default,
                 databaseName,
                 collectionName,
@@ -3445,7 +3445,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.AzureBlobDataTransferDataSourceSink"/> instance for mocking. </returns>
         public static AzureBlobDataTransferDataSourceSink AzureBlobDataTransferDataSourceSink(string containerName = default, string endpointUri = default)
         {
-            return new AzureBlobDataTransferDataSourceSink(default, default, containerName, endpointUri);
+            return new AzureBlobDataTransferDataSourceSink(DataTransferComponent.AzureBlobStorage, default, containerName, endpointUri);
         }
 
         /// <summary> Parameters to create Data Transfer Job. </summary>
@@ -5043,7 +5043,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 createdOn,
                 instanceSize,
                 instanceCount,
-                default,
+                serviceType is null ? default : new CosmosDBServiceType(serviceType),
                 status,
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
@@ -5065,7 +5065,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 createdOn,
                 instanceSize,
                 instanceCount,
-                default,
+                CosmosDBServiceType.DataTransfer,
                 status,
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 (locations ?? new ChangeTrackingList<DataTransferRegionalService>()).ToList());
@@ -5110,7 +5110,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 createdOn,
                 instanceSize,
                 instanceCount,
-                default,
+                CosmosDBServiceType.SqlDedicatedGateway,
                 status,
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 sqlDedicatedGatewayEndpoint,
@@ -5147,7 +5147,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 createdOn,
                 instanceSize,
                 instanceCount,
-                default,
+                CosmosDBServiceType.GraphApiCompute,
                 status,
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 graphApiComputeEndpoint,
@@ -5182,7 +5182,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 createdOn,
                 instanceSize,
                 instanceCount,
-                default,
+                CosmosDBServiceType.MaterializedViewsBuilder,
                 status,
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 (locations ?? new ChangeTrackingList<MaterializedViewsBuilderRegionalService>()).ToList());
@@ -5216,7 +5216,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.ServiceResourceCreateUpdateProperties"/> instance for mocking. </returns>
         public static ServiceResourceCreateUpdateProperties ServiceResourceCreateUpdateProperties(CosmosDBServiceSize? instanceSize = default, int? instanceCount = default, string serviceType = default)
         {
-            return new UnknownServiceResourceCreateUpdateProperties(instanceSize, instanceCount, default, default);
+            return new UnknownServiceResourceCreateUpdateProperties(instanceSize, instanceCount, serviceType is null ? default : new CosmosDBServiceType(serviceType), default);
         }
 
         /// <summary> Properties for Create or Update request for DataTransferServiceResource. </summary>
@@ -5225,7 +5225,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.DataTransferServiceResourceCreateUpdateProperties"/> instance for mocking. </returns>
         public static DataTransferServiceResourceCreateUpdateProperties DataTransferServiceResourceCreateUpdateProperties(CosmosDBServiceSize? instanceSize = default, int? instanceCount = default)
         {
-            return new DataTransferServiceResourceCreateUpdateProperties(instanceSize, instanceCount, default, default);
+            return new DataTransferServiceResourceCreateUpdateProperties(instanceSize, instanceCount, CosmosDBServiceType.DataTransfer, default);
         }
 
         /// <summary> Properties for Create or Update request for SqlDedicatedGatewayServiceResource. </summary>
@@ -5235,7 +5235,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.SqlDedicatedGatewayServiceResourceCreateUpdateProperties"/> instance for mocking. </returns>
         public static SqlDedicatedGatewayServiceResourceCreateUpdateProperties SqlDedicatedGatewayServiceResourceCreateUpdateProperties(CosmosDBServiceSize? instanceSize = default, int? instanceCount = default, DedicatedGatewayType? dedicatedGatewayType = default)
         {
-            return new SqlDedicatedGatewayServiceResourceCreateUpdateProperties(instanceSize, instanceCount, default, default, dedicatedGatewayType);
+            return new SqlDedicatedGatewayServiceResourceCreateUpdateProperties(instanceSize, instanceCount, CosmosDBServiceType.SqlDedicatedGateway, default, dedicatedGatewayType);
         }
 
         /// <summary> Properties for Create or Update request for GraphAPIComputeServiceResource. </summary>
@@ -5244,7 +5244,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.GraphApiComputeServiceResourceCreateUpdateProperties"/> instance for mocking. </returns>
         public static GraphApiComputeServiceResourceCreateUpdateProperties GraphApiComputeServiceResourceCreateUpdateProperties(CosmosDBServiceSize? instanceSize = default, int? instanceCount = default)
         {
-            return new GraphApiComputeServiceResourceCreateUpdateProperties(instanceSize, instanceCount, default, default);
+            return new GraphApiComputeServiceResourceCreateUpdateProperties(instanceSize, instanceCount, CosmosDBServiceType.GraphApiCompute, default);
         }
 
         /// <summary> Properties for Create or Update request for MaterializedViewsBuilderServiceResource. </summary>
@@ -5253,7 +5253,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.MaterializedViewsBuilderServiceResourceCreateUpdateProperties"/> instance for mocking. </returns>
         public static MaterializedViewsBuilderServiceResourceCreateUpdateProperties MaterializedViewsBuilderServiceResourceCreateUpdateProperties(CosmosDBServiceSize? instanceSize = default, int? instanceCount = default)
         {
-            return new MaterializedViewsBuilderServiceResourceCreateUpdateProperties(instanceSize, instanceCount, default, default);
+            return new MaterializedViewsBuilderServiceResourceCreateUpdateProperties(instanceSize, instanceCount, CosmosDBServiceType.MaterializedViewsBuilder, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

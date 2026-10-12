@@ -29,6 +29,193 @@ namespace Azure.Generator.Mgmt.Tests
 {
     internal class FlattenedCompatibilityTests
     {
+        // Regression for #63717: a required, getter-only outer wrapper must not
+        // hide the mutable collection exposed by the inner model's lazy getter.
+        [Test]
+        public void RequiredGetterOnlyWrapperPreservesMutableFlattenedCollection()
+        {
+            var resourceId = InputFactory.Primitive.String("armResourceIdentifier", "Azure.Core.armResourceIdentifier");
+            const InputModelTypeUsage usage = InputModelTypeUsage.Input | InputModelTypeUsage.Json;
+            var requestProperties = InputFactory.Model("ReprotectRequestProperties", usage: usage, properties:
+                [InputFactory.Property("selectedResourceIds", InputFactory.Array(resourceId))]);
+            var reprotectContent = InputFactory.Model("ReprotectContent", usage: usage, properties:
+                [InputFactory.Property("reprotectRequestProperties", requestProperties)]);
+            var wrapper = InputFactory.Property("reprotectProperties", reprotectContent, isRequired: true);
+            Flatten(wrapper);
+            var input = InputFactory.Model("DrillRunReprotectContent", usage: usage, properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [input, reprotectContent, requestProperties]);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+
+            var internalWrapper = model.Properties.Single(p => p.Name == "ReprotectProperties");
+            Assert.That(internalWrapper.WireInfo!.IsRequired, Is.True);
+            Assert.That(internalWrapper.Body.HasSetter, Is.False,
+                "The regression requires a wrapper that callers cannot assign.");
+
+            var assembly = Compile(plugin.Object);
+            const string collectionName = "ReprotectRequestSelectedResourceIds";
+            var innerType = assembly.GetType("Samples.Models.ReprotectContent")!;
+            var inner = Activator.CreateInstance(innerType)!;
+            Assert.That(innerType.GetProperty(collectionName)!.GetValue(inner), Is.Not.Null,
+                "The inner model already exposes a usable lazy-initialized collection.");
+
+            var outerType = assembly.GetType("Samples.Models.DrillRunReprotectContent")!;
+            var outer = Activator.CreateInstance(outerType)!;
+            var collectionProperty = outerType.GetProperty(collectionName)!;
+            Assert.That(collectionProperty.SetMethod, Is.Null);
+            var ids = (IList<ResourceIdentifier>?)collectionProperty.GetValue(outer);
+            Assert.That(ids, Is.Not.Null,
+                "Public parameterless construction must expose a mutable collection, not null.");
+            var id = new ResourceIdentifier("/subscriptions/sub/resourceGroups/rg/providers/Test/widgets/a");
+            ids!.Add(id);
+            Assert.That(collectionProperty.GetValue(outer), Is.SameAs(ids));
+
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(outer, new ModelReaderWriterOptions("W")));
+            var serializedIds = json.RootElement.GetProperty("reprotectProperties")
+                .GetProperty("reprotectRequestProperties").GetProperty("selectedResourceIds");
+            Assert.That(serializedIds.GetArrayLength(), Is.EqualTo(1));
+            Assert.That(serializedIds[0].GetString(), Is.EqualTo(id.ToString()));
+        }
+
+        [Test]
+        public void CollectionWrapperInitializerPreservesOptionalAndSerializationStates([Values] bool wrapperRequired)
+        {
+            const InputModelTypeUsage usage = InputModelTypeUsage.Input | InputModelTypeUsage.Json;
+            var requestProperties = InputFactory.Model("ReprotectRequestProperties", usage: usage, properties:
+                [InputFactory.Property("selectedResourceIds", InputFactory.Array(InputPrimitiveType.String))]);
+            var reprotectContent = InputFactory.Model("ReprotectContent", usage: usage, properties:
+                [InputFactory.Property("reprotectRequestProperties", requestProperties)]);
+            var wrapper = InputFactory.Property("reprotectProperties", reprotectContent, isRequired: wrapperRequired);
+            Flatten(wrapper);
+            var input = InputFactory.Model("DrillRunReprotectContent", usage: usage, properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [input, reprotectContent, requestProperties]);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+
+            var wrapperBody = (AutoPropertyBody)model.Properties.Single(p => p.Name == "ReprotectProperties").Body;
+            Assert.That(wrapperBody.InitializationExpression is not null, Is.EqualTo(wrapperRequired));
+            var assembly = Compile(plugin.Object);
+            var outerType = assembly.GetType("Samples.Models.DrillRunReprotectContent")!;
+            var innerType = assembly.GetType("Samples.Models.ReprotectContent")!;
+            var wrapperProperty = outerType.GetProperty("ReprotectProperties", BindingFlags.Instance | BindingFlags.NonPublic)!;
+            if (!wrapperRequired)
+            {
+                var publiclyConstructed = Activator.CreateInstance(outerType)!;
+                Assert.That(wrapperProperty.GetValue(publiclyConstructed), Is.Null);
+                using var json = JsonDocument.Parse(ModelReaderWriter.Write(publiclyConstructed, new ModelReaderWriterOptions("W")));
+                Assert.That(json.RootElement.TryGetProperty("reprotectProperties", out _), Is.False,
+                    "The fix must not materialize an absent optional wrapper.");
+            }
+
+            // The full constructor used by deserialization must retain its supplied
+            // wrapper state, including null, rather than the public-construction default.
+            var fullConstructor = outerType.GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, null,
+                [innerType, typeof(IDictionary<string, BinaryData>)], null)!;
+            Assert.That(fullConstructor, Is.Not.Null);
+            var absent = fullConstructor.Invoke([null, null]);
+            Assert.That(wrapperProperty.GetValue(absent), Is.Null);
+            if (wrapperRequired)
+            {
+                Assert.That(outerType.GetProperty("ReprotectRequestSelectedResourceIds")!.GetValue(absent), Is.Null);
+            }
+
+            var inner = Activator.CreateInstance(innerType)!;
+            var ids = (IList<string>)innerType.GetProperty("ReprotectRequestSelectedResourceIds")!.GetValue(inner)!;
+            ids.Add("selected-resource");
+            var populated = fullConstructor.Invoke([inner, null]);
+            Assert.That(wrapperProperty.GetValue(populated), Is.SameAs(inner));
+            using var populatedJson = JsonDocument.Parse(ModelReaderWriter.Write(populated, new ModelReaderWriterOptions("W")));
+            Assert.That(populatedJson.RootElement.GetProperty("reprotectProperties")
+                .GetProperty("reprotectRequestProperties").GetProperty("selectedResourceIds")[0].GetString(),
+                Is.EqualTo("selected-resource"));
+        }
+
+        [Test]
+        public void RequiredCollectionWrapperSupportsDirectFlattening(
+            [Values] bool safeFlatten, [Values] bool dictionary)
+        {
+            var (plugin, model) = CreateCollectionWrapperModel(safeFlatten, dictionary, wrapperRequired: true);
+            Visit(model);
+            var wrapper = model.Properties.Single(p => p.Name == "CollectionProperties");
+            Assert.That(wrapper.Body.HasSetter, Is.False);
+            Assert.That(((AutoPropertyBody)wrapper.Body).InitializationExpression, Is.Not.Null);
+            Assert.That(model.Constructors.Single(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public))
+                .Signature.Parameters, Is.Empty);
+
+            var type = Compile(plugin.Object).GetType("Samples.Models.CollectionContent")!;
+            var instance = Activator.CreateInstance(type)!;
+            var property = type.GetProperty(safeFlatten ? "CollectionItems" : "Items")!;
+            var collection = property.GetValue(instance);
+            Assert.That(collection, Is.Not.Null);
+            Assert.That(property.SetMethod, Is.Null);
+            if (dictionary)
+            {
+                ((IDictionary<string, string>)collection!).Add("key", "value");
+            }
+            else
+            {
+                ((IList<string>)collection!).Add("value");
+            }
+            Assert.That(property.GetValue(instance), Is.SameAs(collection));
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(instance, new ModelReaderWriterOptions("W")));
+            var items = json.RootElement.GetProperty("collectionProperties").GetProperty("items");
+            Assert.That(dictionary ? items.GetProperty("key").GetString() : items[0].GetString(), Is.EqualTo("value"));
+        }
+
+        [Test]
+        public void CollectionWrapperJsonReaderPreservesWireState(
+            [Values] bool safeFlatten, [Values] bool dictionary, [Values] bool wrapperRequired)
+        {
+            var (plugin, model) = CreateCollectionWrapperModel(safeFlatten, dictionary, wrapperRequired);
+            Visit(model);
+            var type = Compile(plugin.Object).GetType("Samples.Models.CollectionContent")!;
+            var wrapper = type.GetProperty("CollectionProperties", BindingFlags.Instance | BindingFlags.NonPublic)!;
+            var collection = type.GetProperty(safeFlatten ? "CollectionItems" : "Items")!;
+            var options = new ModelReaderWriterOptions("J");
+            var populated = dictionary
+                ? """{"collectionProperties":{"items":{"key":"value"}}}"""
+                : """{"collectionProperties":{"items":["value"]}}""";
+            foreach (var payload in new[] { "{}", """{"collectionProperties":null}""", """{"collectionProperties":{}}""", populated })
+            {
+                var instance = ModelReaderWriter.Read(new BinaryData(payload), type, options)!;
+                using var inputJson = JsonDocument.Parse(payload);
+                var hasWrapper = inputJson.RootElement.TryGetProperty("collectionProperties", out var inputWrapper)
+                    && inputWrapper.ValueKind != JsonValueKind.Null;
+                Assert.That(wrapper.GetValue(instance) is not null, Is.EqualTo(hasWrapper), payload);
+                if (hasWrapper)
+                {
+                    var value = collection.GetValue(instance);
+                    Assert.That(value, Is.Not.Null, payload);
+                    var expectedCount = payload == populated ? 1 : 0;
+                    Assert.That(dictionary ? ((IDictionary<string, string>)value!).Count : ((IList<string>)value!).Count,
+                        Is.EqualTo(expectedCount), payload);
+                }
+                else if (wrapperRequired)
+                {
+                    Assert.That(collection.GetValue(instance), Is.Null,
+                        "Reading an absent required wrapper must retain the existing deserialization state.");
+                }
+
+                using var output = JsonDocument.Parse(ModelReaderWriter.Write(instance, new ModelReaderWriterOptions("W")));
+                var hasOutputWrapper = output.RootElement.TryGetProperty("collectionProperties", out var outputWrapper);
+                Assert.That(hasOutputWrapper, Is.EqualTo(hasWrapper || wrapperRequired), payload);
+                if (!hasWrapper && wrapperRequired)
+                {
+                    Assert.That(outputWrapper.ValueKind, Is.EqualTo(JsonValueKind.Null), payload);
+                }
+                else if (hasWrapper)
+                {
+                    Assert.That(outputWrapper.TryGetProperty("items", out var items), Is.EqualTo(payload == populated), payload);
+                    if (payload == populated)
+                    {
+                        Assert.That(dictionary ? items.GetProperty("key").GetString() : items[0].GetString(), Is.EqualTo("value"));
+                    }
+                }
+            }
+        }
+
         [Test]
         public void PreservesHistoricalLeafType(
             [Values] bool safeFlatten, [Values] bool previouslyNullable, [Values] bool wrapperRequired, [Values] bool leafRequired)
@@ -1000,6 +1187,25 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(body, Does.Contain("legacyTimestamp"));
             Assert.That(body, Does.Contain("count.GetValueOrDefault()"));
             Assert.That(body, Does.Contain("ToList()"));
+        }
+
+        private static (Moq.Mock<ManagementClientGenerator> Plugin, ModelProvider Model) CreateCollectionWrapperModel(
+            bool safeFlatten, bool dictionary, bool wrapperRequired)
+        {
+            const InputModelTypeUsage usage = InputModelTypeUsage.Input | InputModelTypeUsage.Json;
+            InputType collection = dictionary
+                ? new InputDictionaryType("dictionary", InputPrimitiveType.String, InputPrimitiveType.String)
+                : InputFactory.Array(InputPrimitiveType.String);
+            var properties = InputFactory.Model("CollectionProperties", usage: usage, properties:
+                [InputFactory.Property("items", collection)]);
+            var wrapper = InputFactory.Property("collectionProperties", properties, isRequired: wrapperRequired);
+            if (!safeFlatten)
+            {
+                Flatten(wrapper);
+            }
+            var input = InputFactory.Model("CollectionContent", usage: usage, properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties]);
+            return (plugin, plugin.Object.TypeFactory.CreateModel(input)!);
         }
 
         private static (Moq.Mock<ManagementClientGenerator> Plugin, ModelProvider Model, ModelProvider Inner) CreateCapacityModel(

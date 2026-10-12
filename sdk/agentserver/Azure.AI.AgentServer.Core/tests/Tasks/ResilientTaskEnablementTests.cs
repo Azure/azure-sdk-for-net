@@ -1,0 +1,1162 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.AI.AgentServer.Core.Tasks;
+using Azure.AI.AgentServer.Core.Tasks.Engine;
+using Azure.AI.AgentServer.Core.Tasks.Providers;
+using Azure.AI.AgentServer.Core.Tasks.Serialization;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using NUnit.Framework;
+
+namespace Azure.AI.AgentServer.Core.Tests.Tasks;
+
+[TestFixture]
+public sealed class ResilientTaskEnablementTests
+{
+    [Test]
+    public async Task RegisteredTask_DefaultsDisabled_AndDoesNotResolveStoreAtStartup()
+    {
+        int storeResolutions = 0;
+        HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+        builder.Services.AddSingleton<ITaskStore>(_ =>
+        {
+            Interlocked.Increment(ref storeResolutions);
+            throw new InvalidOperationException("The disabled task store must not resolve.");
+        });
+        TaskDefinition<string, string> task = builder.Services.AddResilientTask<string, string>(
+            "disabled",
+            (ctx, ct) => Task.FromResult(ctx.Input));
+
+        using IHost host = builder.Build();
+        await host.StartAsync();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(
+                host.Services.GetRequiredService<IOptions<ResilientTaskOptions>>().Value.Enabled,
+                Is.False);
+            Assert.That(storeResolutions, Is.Zero);
+        });
+
+        TaskDefinition<string, string> resolved =
+            host.Services.GetResilientTask<string, string>("disabled");
+        Assert.That(resolved, Is.SameAs(task));
+        Assert.That(storeResolutions, Is.Zero);
+
+        ResilientTaskException exception = Assert.ThrowsAsync<ResilientTaskException>(
+            () => resolved.RunAsync("payload"))!;
+        Assert.That(exception.ErrorCode, Is.EqualTo(ResilientTaskErrorCode.NotEnabled));
+        Assert.That(storeResolutions, Is.Zero);
+
+        await host.StopAsync();
+    }
+
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task ExplicitEnablement_RunsTask_RegardlessOfRegistrationOrder(bool enableFirst)
+    {
+        string root = Path.Combine(
+            Path.GetTempPath(),
+            "agentserver-task-optin-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        try
+        {
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+            builder.Services.AddSingleton<ITaskStore>(new LocalTaskStore(root));
+            TaskDefinition<string, string> task;
+            if (enableFirst)
+            {
+                builder.SetResilientTasksEnabled();
+                task = builder.Services.AddResilientTask<string, string>(
+                    "enabled",
+                    (ctx, ct) => Task.FromResult("done:" + ctx.Input));
+            }
+            else
+            {
+                task = builder.Services.AddResilientTask<string, string>(
+                    "enabled",
+                    (ctx, ct) => Task.FromResult("done:" + ctx.Input));
+                builder.SetResilientTasksEnabled();
+            }
+
+            using IHost host = builder.Build();
+            await host.StartAsync();
+
+            Assert.That(
+                host.Services.GetRequiredService<IOptions<ResilientTaskOptions>>().Value.Enabled,
+                Is.True);
+            Assert.That(await task.RunAsync("payload"), Is.EqualTo("done:payload"));
+
+            await host.StopAsync();
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Test]
+    public async Task SetResilientTasksEnabled_DefaultArgumentEnablesServiceCollection()
+    {
+        var services = new ServiceCollection();
+
+        services.SetResilientTasksEnabled();
+
+        await using ServiceProvider provider = services.BuildServiceProvider();
+        Assert.Multiple(() =>
+        {
+            Assert.That(
+                provider.GetRequiredService<IOptions<ResilientTaskOptions>>().Value.Enabled,
+                Is.True);
+            Assert.That(
+                provider.GetServices<IHostedService>().OfType<TaskDurabilityService>(),
+                Is.Not.Empty,
+                "Opting in without declaring a task must still prepare the manager/recovery service.");
+        });
+    }
+
+    [Test]
+    public async Task EnabledStartup_RecoveryInitializationFailureFailsHost()
+    {
+        string root = Path.Combine(
+            Path.GetTempPath(),
+            "agentserver-task-optin-failure-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        try
+        {
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+            builder.SetResilientTasksEnabled();
+            builder.Services.AddSingleton<ITaskStore>(
+                new FailingListStore(new LocalTaskStore(root)));
+            builder.Services.AddResilientTask<string, string>(
+                "enabled",
+                (ctx, ct) => Task.FromResult(ctx.Input));
+
+            using IHost host = builder.Build();
+            IOException exception = Assert.ThrowsAsync<IOException>(
+                () => host.StartAsync())!;
+            Assert.That(exception.Message, Does.Contain("startup recovery"));
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Test]
+    public async Task EnabledStartup_TaskStoreTimeoutFailsHost()
+    {
+        string root = Path.Combine(
+            Path.GetTempPath(),
+            "agentserver-task-optin-timeout-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        try
+        {
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+            builder.SetResilientTasksEnabled();
+            builder.Services.AddSingleton<ITaskStore>(
+                new FailingListStore(
+                    new LocalTaskStore(root),
+                    new TaskCanceledException("Injected task-store timeout.")));
+            builder.Services.AddResilientTask<string, string>(
+                "enabled",
+                (ctx, ct) => Task.FromResult(ctx.Input));
+
+            using IHost host = builder.Build();
+            TaskCanceledException exception = Assert.ThrowsAsync<TaskCanceledException>(
+                () => host.StartAsync())!;
+            Assert.That(exception.Message, Does.Contain("task-store timeout"));
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Test]
+    public async Task OptInWithoutTaskDeclaration_StillRunsStartupRecovery()
+    {
+        string root = Path.Combine(
+            Path.GetTempPath(),
+            "agentserver-task-optin-switch-only-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        try
+        {
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+            builder.SetResilientTasksEnabled();
+            var store = new CountingListStore(new LocalTaskStore(root));
+            builder.Services.AddSingleton<ITaskStore>(store);
+
+            using IHost host = builder.Build();
+            await host.StartAsync();
+
+            Assert.That(store.ListCalls, Is.GreaterThan(0));
+            await host.StopAsync();
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Test]
+    public async Task EnabledDefinition_IsCallableOnlyWhileRuntimeIsReady()
+    {
+        string root = Path.Combine(
+            Path.GetTempPath(),
+            "agentserver-task-optin-readiness-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        try
+        {
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+            builder.SetResilientTasksEnabled();
+            builder.Services.AddSingleton<ITaskStore>(new LocalTaskStore(root));
+            TaskDefinition<string, string> task = builder.Services.AddResilientTask<string, string>(
+                "ready",
+                (ctx, ct) => Task.FromResult(ctx.Input));
+
+            using IHost host = builder.Build();
+            Assert.ThrowsAsync<InvalidOperationException>(() => task.RunAsync("before-start"));
+
+            await host.StartAsync();
+            Assert.That(await task.RunAsync("running"), Is.EqualTo("running"));
+
+            await host.StopAsync();
+            Assert.ThrowsAsync<InvalidOperationException>(() => task.RunAsync("after-stop"));
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Test]
+    public async Task HostedServiceRegisteredBeforeCore_CannotRunTaskBeforeRecovery()
+    {
+        string root = Path.Combine(
+            Path.GetTempPath(),
+            "agentserver-task-optin-order-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        try
+        {
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+            var holder = new TaskDefinitionHolder();
+            builder.Services.AddSingleton(holder);
+            builder.Services.AddSingleton<IHostedService, EarlyTaskProbe>();
+            builder.SetResilientTasksEnabled();
+            builder.Services.AddSingleton<ITaskStore>(new LocalTaskStore(root));
+            holder.Definition = builder.Services.AddResilientTask<string, string>(
+                "ordered",
+                (ctx, ct) => Task.FromResult(ctx.Input));
+
+            using IHost host = builder.Build();
+            await host.StartAsync();
+
+            var probe = (EarlyTaskProbe)host.Services
+                .GetServices<IHostedService>()
+                .Single(service => service is EarlyTaskProbe);
+            Assert.That(probe.StartException, Is.InstanceOf<InvalidOperationException>());
+            Assert.That(await holder.Definition.RunAsync("after-start"), Is.EqualTo("after-start"));
+
+            await host.StopAsync();
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Test]
+    public async Task RecoveredHandler_CanInvokeTaskDefinitionBeforeStartupScanCompletes()
+    {
+        string root = Path.Combine(
+            Path.GetTempPath(),
+            "agentserver-task-optin-recovery-nested-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        const string ParentTaskId = "a-recovered-parent";
+        const string BlockerTaskId = "b-recovery-blocker";
+        TaskTestHost? seed = null;
+        try
+        {
+            seed = TaskTestHost.Create(
+                root,
+                agentName: TaskEngineConstants.DefaultAgentName,
+                sessionId: TaskEngineConstants.DefaultSessionId);
+            TaskDefinition<string, string> parent =
+                seed.Builder.AddTask<string, string>(
+                    "recovered-parent",
+                    async (ctx, ct) =>
+                    {
+                        await ctx.ExitForRecoveryAsync(ct);
+                        return ctx.Input;
+                    });
+            TaskDefinition<string, string> blocker =
+                seed.Builder.AddTask<string, string>(
+                    "recovery-blocker",
+                    async (ctx, ct) =>
+                    {
+                        await ctx.ExitForRecoveryAsync(ct);
+                        return ctx.Input;
+                    });
+
+            seed.SignalShutdown();
+            await parent.StartAsync(
+                "parent-input",
+                new RunOptions { TaskId = ParentTaskId });
+            await blocker.StartAsync(
+                "blocker-input",
+                new RunOptions { TaskId = BlockerTaskId });
+            await seed.WaitUntilInactiveAsync(ParentTaskId, TimeSpan.FromSeconds(5));
+            await seed.WaitUntilInactiveAsync(BlockerTaskId, TimeSpan.FromSeconds(5));
+
+            var childInvocationStarted =
+                new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+            var childResult =
+                new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var store = new RecoveryOrderingStore(
+                new LocalTaskStore(root),
+                ParentTaskId,
+                BlockerTaskId,
+                childInvocationStarted.Task);
+
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+            builder.SetResilientTasksEnabled();
+            builder.Services.AddSingleton<ITaskStore>(store);
+            TaskDefinition<string, string> child =
+                builder.Services.AddResilientTask<string, string>(
+                    "recovery-child",
+                    (ctx, ct) => Task.FromResult("child:" + ctx.Input));
+            builder.Services.AddResilientTask<string, string>(
+                "recovered-parent",
+                async (ctx, ct) =>
+                {
+                    if (ctx.EntryMode == EntryMode.Recovered)
+                    {
+                        childInvocationStarted.TrySetResult();
+                        try
+                        {
+                            childResult.TrySetResult(
+                                await child.RunAsync("nested", cancellationToken: ct));
+                        }
+                        catch (Exception ex)
+                        {
+                            childResult.TrySetException(ex);
+                            throw;
+                        }
+                    }
+
+                    return ctx.Input;
+                });
+
+            builder.Services.AddResilientTask<string, string>(
+                "recovery-blocker",
+                (ctx, ct) => Task.FromResult(ctx.Input));
+
+            using IHost host = builder.Build();
+            Task start = host.StartAsync();
+            await store.BlockerGetEntered.Task.WaitAsync(TimeSpan.FromSeconds(5));
+            Assert.ThrowsAsync<InvalidOperationException>(
+                () => child.RunAsync("external-before-ready"));
+            store.ReleaseBlocker.TrySetResult();
+            await start.WaitAsync(TimeSpan.FromSeconds(10));
+
+            Assert.That(
+                await childResult.Task.WaitAsync(TimeSpan.FromSeconds(5)),
+                Is.EqualTo("child:nested"));
+
+            await host.StopAsync();
+        }
+        finally
+        {
+            seed?.Dispose();
+            if (Directory.Exists(root))
+            {
+                Directory.Delete(root, recursive: true);
+            }
+        }
+    }
+
+    [Test]
+    public async Task RecoveredQueuedTurn_CanInvokeTaskDefinitionBeforeStartupScanCompletes()
+    {
+        string root = Path.Combine(
+            Path.GetTempPath(),
+            "agentserver-task-optin-recovery-queued-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        const string ParentTaskId = "a-recovered-queued-parent";
+        const string BlockerTaskId = "b-recovery-queued-blocker";
+        TaskTestHost? seed = null;
+        try
+        {
+            seed = TaskTestHost.Create(
+                root,
+                agentName: TaskEngineConstants.DefaultAgentName,
+                sessionId: TaskEngineConstants.DefaultSessionId);
+            var firstTurnGate =
+                new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+            TaskDefinition<string, string> parent =
+                seed.Builder.AddMultiTurnTask<string, string>(
+                    "recovered-queued-parent",
+                    async (ctx, ct) =>
+                    {
+                        if (ctx.IsSteeredTurn)
+                        {
+                            await ctx.ExitForRecoveryAsync(ct);
+                            return "deferred";
+                        }
+
+                        await firstTurnGate.Task;
+                        return ctx.Input;
+                    },
+                    steerable: true);
+            TaskDefinition<string, string> blocker =
+                seed.Builder.AddTask<string, string>(
+                    "recovery-queued-blocker",
+                    async (ctx, ct) =>
+                    {
+                        await ctx.ExitForRecoveryAsync(ct);
+                        return ctx.Input;
+                    });
+
+            seed.SignalShutdown();
+            TaskRun<string> first = await parent.StartAsync(
+                "first",
+                new RunOptions { TaskId = ParentTaskId, InputId = "input-1" });
+            await seed.WaitForStatusAsync(
+                ParentTaskId,
+                TaskWireKeys.StatusInProgress,
+                TimeSpan.FromSeconds(5));
+            TaskRun<string> recoveredTurn = await parent.StartAsync(
+                "recovered-turn",
+                new RunOptions { TaskId = ParentTaskId, InputId = "input-2" });
+            TaskRun<string> queuedTurn = await parent.StartAsync(
+                "queued-turn",
+                new RunOptions { TaskId = ParentTaskId, InputId = "input-3" });
+            Assert.That(recoveredTurn.IsQueued, Is.True);
+            Assert.That(queuedTurn.IsQueued, Is.True);
+
+            firstTurnGate.TrySetResult();
+            Assert.That(await first.Completion, Is.EqualTo("first"));
+            await seed.WaitUntilInactiveAsync(ParentTaskId, TimeSpan.FromSeconds(5));
+            await blocker.StartAsync(
+                "blocker",
+                new RunOptions { TaskId = BlockerTaskId });
+            await seed.WaitUntilInactiveAsync(BlockerTaskId, TimeSpan.FromSeconds(5));
+
+            var recoveredChildResult =
+                new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var queuedChildResult =
+                new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var queuedChildAttemptCompleted =
+                new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+            var store = new RecoveryOrderingStore(
+                new LocalTaskStore(root),
+                ParentTaskId,
+                BlockerTaskId,
+                queuedChildAttemptCompleted.Task);
+
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+            builder.SetResilientTasksEnabled();
+            builder.Services.AddSingleton<ITaskStore>(store);
+            TaskDefinition<string, string> child =
+                builder.Services.AddResilientTask<string, string>(
+                    "recovery-queued-child",
+                    (ctx, ct) => Task.FromResult("child:" + ctx.Input));
+            builder.Services.AddResilientMultiTurnTask<string, string>(
+                "recovered-queued-parent",
+                async (ctx, ct) =>
+                {
+                    try
+                    {
+                        string result = await child.RunAsync(
+                            ctx.Input,
+                            cancellationToken: ct);
+                        if (ctx.Input == "recovered-turn")
+                        {
+                            recoveredChildResult.TrySetResult(result);
+                        }
+                        else if (ctx.Input == "queued-turn")
+                        {
+                            queuedChildResult.TrySetResult(result);
+                        }
+
+                        return ctx.Input;
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ctx.Input == "recovered-turn")
+                        {
+                            recoveredChildResult.TrySetException(ex);
+                        }
+                        else if (ctx.Input == "queued-turn")
+                        {
+                            queuedChildResult.TrySetException(ex);
+                        }
+
+                        throw;
+                    }
+                    finally
+                    {
+                        if (ctx.Input == "queued-turn")
+                        {
+                            queuedChildAttemptCompleted.TrySetResult();
+                        }
+                    }
+                },
+                steerable: true);
+            builder.Services.AddResilientTask<string, string>(
+                "recovery-queued-blocker",
+                (ctx, ct) => Task.FromResult(ctx.Input));
+
+            using IHost host = builder.Build();
+            Task start = host.StartAsync();
+            await store.BlockerGetEntered.Task.WaitAsync(TimeSpan.FromSeconds(5));
+            Assert.ThrowsAsync<InvalidOperationException>(
+                () => child.RunAsync("external-before-ready"));
+            await queuedChildAttemptCompleted.Task.WaitAsync(TimeSpan.FromSeconds(5));
+            store.ReleaseBlocker.TrySetResult();
+            await start.WaitAsync(TimeSpan.FromSeconds(10));
+
+            string recoveredResult =
+                await recoveredChildResult.Task.WaitAsync(TimeSpan.FromSeconds(5));
+            string queuedResult =
+                await queuedChildResult.Task.WaitAsync(TimeSpan.FromSeconds(5));
+            Assert.Multiple(() =>
+            {
+                Assert.That(recoveredResult, Is.EqualTo("child:recovered-turn"));
+                Assert.That(queuedResult, Is.EqualTo("child:queued-turn"));
+            });
+
+            await host.StopAsync();
+        }
+        finally
+        {
+            seed?.Dispose();
+            if (Directory.Exists(root))
+            {
+                Directory.Delete(root, recursive: true);
+            }
+        }
+    }
+
+    [Test]
+    public async Task Shutdown_ClosesAdmissionBeforeWaitingForPeriodicRecoveryScan()
+    {
+        string root = Path.Combine(
+            Path.GetTempPath(),
+            "agentserver-task-optin-stop-scan-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        const string ParentTaskId = "recovered-stop-parent";
+        TaskTestHost? seed = null;
+        try
+        {
+            seed = TaskTestHost.Create(
+                root,
+                agentName: TaskEngineConstants.DefaultAgentName,
+                sessionId: TaskEngineConstants.DefaultSessionId);
+            TaskDefinition<string, string> parent =
+                seed.Builder.AddTask<string, string>(
+                    "recovered-stop-parent",
+                    async (ctx, ct) =>
+                    {
+                        await ctx.ExitForRecoveryAsync(ct);
+                        return ctx.Input;
+                    });
+            seed.SignalShutdown();
+            await parent.StartAsync(
+                "parent",
+                new RunOptions { TaskId = ParentTaskId });
+            await seed.WaitUntilInactiveAsync(ParentTaskId, TimeSpan.FromSeconds(5));
+
+            var invokeChild =
+                new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+            var childOutcome =
+                new TaskCompletionSource<Exception?>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var childInvoked =
+                new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+            var store = new PeriodicListGateStore(new LocalTaskStore(root));
+
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+            builder.SetResilientTasksEnabled();
+            builder.Services.AddSingleton<ITaskStore>(store);
+            TaskDefinition<string, string> child =
+                builder.Services.AddResilientTask<string, string>(
+                    "recovered-stop-child",
+                    (ctx, ct) =>
+                    {
+                        childInvoked.TrySetResult();
+                        return Task.FromResult(ctx.Input);
+                    });
+            builder.Services.AddResilientTask<string, string>(
+                "recovered-stop-parent",
+                async (ctx, ct) =>
+                {
+                    if (ctx.EntryMode == EntryMode.Recovered)
+                    {
+                        await invokeChild.Task;
+                        try
+                        {
+                            await child.RunAsync("after-stop", cancellationToken: ct);
+                            childOutcome.TrySetResult(null);
+                        }
+                        catch (Exception ex)
+                        {
+                            childOutcome.TrySetResult(ex);
+                        }
+                    }
+
+                    return ctx.Input;
+                });
+            builder.Services.RemoveAll<TaskDurabilityService>();
+            builder.Services.AddSingleton(sp =>
+                new TaskDurabilityService(
+                    sp.GetRequiredService<RecoveryScanner>(),
+                    sp.GetRequiredService<TaskEngine>(),
+                    scanInterval: TimeSpan.FromMilliseconds(10),
+                    shutdownGrace: TimeSpan.Zero,
+                    logger: null,
+                    enablement: sp.GetRequiredService<ResilientTaskEnablementState>()));
+
+            using IHost host = builder.Build();
+            await host.StartAsync();
+            await store.PeriodicListEntered.Task.WaitAsync(TimeSpan.FromSeconds(5));
+
+            Task stop = host.StopAsync();
+            ResilientTaskEnablementState enablement =
+                host.Services.GetRequiredService<ResilientTaskEnablementState>();
+            var timeout = System.Diagnostics.Stopwatch.StartNew();
+            while (enablement.IsReady && timeout.Elapsed < TimeSpan.FromSeconds(5))
+            {
+                await Task.Delay(10);
+            }
+
+            Assert.That(enablement.IsReady, Is.False);
+            invokeChild.TrySetResult();
+            Exception? outcome =
+                await childOutcome.Task.WaitAsync(TimeSpan.FromSeconds(5));
+            Assert.Multiple(() =>
+            {
+                Assert.That(outcome, Is.InstanceOf<InvalidOperationException>());
+                Assert.That(childInvoked.Task.IsCompleted, Is.False);
+            });
+
+            store.ReleasePeriodicList.TrySetResult();
+            await stop.WaitAsync(TimeSpan.FromSeconds(10));
+        }
+        finally
+        {
+            seed?.Dispose();
+            if (Directory.Exists(root))
+            {
+                Directory.Delete(root, recursive: true);
+            }
+        }
+    }
+
+    [Test]
+    public async Task Shutdown_CancelsAdmittedStartBeforeItCanBecomeActive()
+    {
+        string root = Path.Combine(
+            Path.GetTempPath(),
+            "agentserver-task-optin-start-race-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        try
+        {
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+            builder.SetResilientTasksEnabled();
+            var store = new GatedCreateStore(new LocalTaskStore(root));
+            builder.Services.AddSingleton<ITaskStore>(store);
+            TaskDefinition<string, string> task = builder.Services.AddResilientTask<string, string>(
+                "race",
+                (ctx, ct) => Task.FromResult(ctx.Input));
+
+            using IHost host = builder.Build();
+            await host.StartAsync();
+
+            Task<TaskRun<string>> start = task.StartAsync(
+                "payload",
+                new RunOptions { TaskId = "shutdown-race" });
+            await store.CreateEntered.Task.WaitAsync(TimeSpan.FromSeconds(5));
+
+            Task stop = host.StopAsync();
+            ResilientTaskEnablementState enablement =
+                host.Services.GetRequiredService<ResilientTaskEnablementState>();
+            var timeout = System.Diagnostics.Stopwatch.StartNew();
+            while (enablement.IsReady && timeout.Elapsed < TimeSpan.FromSeconds(5))
+            {
+                await Task.Delay(10);
+            }
+
+            Assert.That(enablement.IsReady, Is.False, "shutdown must revoke readiness first");
+            store.ReleaseCreate.TrySetResult();
+
+            Assert.ThrowsAsync<OperationCanceledException>(async () => await start);
+            await stop.WaitAsync(TimeSpan.FromSeconds(5));
+            Assert.That(
+                host.Services.GetRequiredService<TaskEngine>().IsActive("shutdown-race"),
+                Is.False);
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Test]
+    public async Task ShutdownDeadline_DoesNotPermitLateActiveRunPublication()
+    {
+        string root = Path.Combine(
+            Path.GetTempPath(),
+            "agentserver-task-optin-start-timeout-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        try
+        {
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+            builder.SetResilientTasksEnabled();
+            var store = new GatedCreateStore(new LocalTaskStore(root));
+            builder.Services.AddSingleton<ITaskStore>(store);
+            TaskDefinition<string, string> task = builder.Services.AddResilientTask<string, string>(
+                "race",
+                (ctx, ct) => Task.FromResult(ctx.Input));
+
+            using IHost host = builder.Build();
+            await host.StartAsync();
+
+            Task<TaskRun<string>> start = task.StartAsync(
+                "payload",
+                new RunOptions { TaskId = "shutdown-timeout-race" });
+            await store.CreateEntered.Task.WaitAsync(TimeSpan.FromSeconds(5));
+
+            var expiredDeadline = new CancellationTokenSource();
+            expiredDeadline.Cancel();
+            TaskEngine engine = host.Services.GetRequiredService<TaskEngine>();
+            await engine.ShutdownAsync(TimeSpan.Zero, expiredDeadline.Token);
+
+            Assert.That(start.IsCompleted, Is.False);
+            store.ReleaseCreate.TrySetResult();
+
+            Assert.ThrowsAsync<OperationCanceledException>(async () => await start);
+            Assert.That(engine.IsActive("shutdown-timeout-race"), Is.False);
+            await host.StopAsync().WaitAsync(TimeSpan.FromSeconds(5));
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task AmbiguousCreateFailure_ExpiresCommittedLease(bool multiTurn)
+    {
+        string root = Path.Combine(
+            Path.GetTempPath(),
+            "agentserver-task-optin-create-failure-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        try
+        {
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+            builder.SetResilientTasksEnabled();
+            var store = new CommitThenFailCreateStore(new LocalTaskStore(root));
+            builder.Services.AddSingleton<ITaskStore>(store);
+            TaskDefinition<string, string> task = multiTurn
+                ? builder.Services.AddResilientMultiTurnTask<string, string>(
+                    "create-failure",
+                    (ctx, ct) => Task.FromResult(ctx.Input))
+                : builder.Services.AddResilientTask<string, string>(
+                    "create-failure",
+                    (ctx, ct) => Task.FromResult(ctx.Input));
+
+            using IHost host = builder.Build();
+            await host.StartAsync();
+
+            Assert.ThrowsAsync<IOException>(async () =>
+                await task.StartAsync(
+                    "payload",
+                    new RunOptions { TaskId = "ambiguous-create" }));
+
+            TaskRecord? record = await store.GetAsync("ambiguous-create");
+            Assert.That(record, Is.Not.Null);
+            Assert.That(record!.Status, Is.EqualTo(TaskWireKeys.StatusInProgress));
+            Assert.That(record.Lease, Is.Not.Null);
+            Assert.That(
+                DateTimeOffset.Parse(record.Lease!.ExpiresAt),
+                Is.LessThanOrEqualTo(DateTimeOffset.UtcNow));
+            Assert.That(
+                host.Services.GetRequiredService<TaskEngine>().IsActive("ambiguous-create"),
+                Is.False);
+
+            await host.StopAsync();
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Test]
+    public void Enablement_IsIsolatedPerServiceProvider()
+    {
+        var enabledServices = new ServiceCollection();
+        enabledServices.SetResilientTasksEnabled();
+        var disabledServices = new ServiceCollection();
+        disabledServices.AddResilientTask<string, string>(
+            "disabled",
+            (ctx, ct) => Task.FromResult(ctx.Input));
+
+        using ServiceProvider enabledProvider = enabledServices.BuildServiceProvider();
+        using ServiceProvider disabledProvider = disabledServices.BuildServiceProvider();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(
+                enabledProvider.GetRequiredService<IOptions<ResilientTaskOptions>>().Value.Enabled,
+                Is.True);
+            Assert.That(
+                disabledProvider.GetRequiredService<IOptions<ResilientTaskOptions>>().Value.Enabled,
+                Is.False);
+        });
+    }
+
+    [Test]
+    public void LaterExplicitDisableWinsBeforeStartup()
+    {
+        var services = new ServiceCollection();
+        services.SetResilientTasksEnabled();
+        services.SetResilientTasksEnabled(false);
+        TaskDefinition<string, string> task = services.AddResilientTask<string, string>(
+            "disabled",
+            (ctx, ct) => Task.FromResult(ctx.Input));
+
+        using ServiceProvider provider = services.BuildServiceProvider();
+        Assert.That(
+            provider.GetRequiredService<IOptions<ResilientTaskOptions>>().Value.Enabled,
+            Is.False);
+        Assert.That(
+            Assert.ThrowsAsync<ResilientTaskException>(() => task.RunAsync("payload"))!.ErrorCode,
+            Is.EqualTo(ResilientTaskErrorCode.NotEnabled));
+    }
+
+    [Test]
+    public void AgentHostBuilderOptInConfiguresItsServiceCollection()
+    {
+        AgentHostBuilder builder = AgentHost.CreateBuilder();
+
+        Assert.That(builder.SetResilientTasksEnabled(), Is.SameAs(builder));
+
+        using ServiceProvider provider = builder.Services.BuildServiceProvider();
+        Assert.That(
+            provider.GetRequiredService<IOptions<ResilientTaskOptions>>().Value.Enabled,
+            Is.True);
+    }
+
+    private sealed class FailingListStore(
+        ITaskStore inner,
+        Exception? failure = null) : ITaskStore
+    {
+        public Task<TaskRecord> CreateAsync(
+            TaskCreateRequest request,
+            CancellationToken cancellationToken = default)
+            => inner.CreateAsync(request, cancellationToken);
+
+        public Task<TaskRecord?> GetAsync(
+            string taskId,
+            CancellationToken cancellationToken = default)
+            => inner.GetAsync(taskId, cancellationToken);
+
+        public Task<TaskRecord> PatchAsync(
+            string taskId,
+            TaskPatchRequest patch,
+            string? ifMatch,
+            CancellationToken cancellationToken = default)
+            => inner.PatchAsync(taskId, patch, ifMatch, cancellationToken);
+
+        public Task DeleteAsync(
+            string taskId,
+            string? ifMatch = null,
+            bool force = false,
+            bool cascade = false,
+            CancellationToken cancellationToken = default)
+            => inner.DeleteAsync(taskId, ifMatch, force, cascade, cancellationToken);
+
+        public Task<TaskListResult> ListAsync(
+            TaskListQuery query,
+            CancellationToken cancellationToken = default)
+            => Task.FromException<TaskListResult>(
+                failure ?? new IOException("Injected startup recovery failure."));
+    }
+
+    private sealed class CountingListStore(ITaskStore inner) : ITaskStore
+    {
+        private int _listCalls;
+
+        public int ListCalls => Volatile.Read(ref _listCalls);
+
+        public Task<TaskRecord> CreateAsync(
+            TaskCreateRequest request,
+            CancellationToken cancellationToken = default)
+            => inner.CreateAsync(request, cancellationToken);
+
+        public Task<TaskRecord?> GetAsync(
+            string taskId,
+            CancellationToken cancellationToken = default)
+            => inner.GetAsync(taskId, cancellationToken);
+
+        public Task<TaskRecord> PatchAsync(
+            string taskId,
+            TaskPatchRequest patch,
+            string? ifMatch,
+            CancellationToken cancellationToken = default)
+            => inner.PatchAsync(taskId, patch, ifMatch, cancellationToken);
+
+        public Task DeleteAsync(
+            string taskId,
+            string? ifMatch = null,
+            bool force = false,
+            bool cascade = false,
+            CancellationToken cancellationToken = default)
+            => inner.DeleteAsync(taskId, ifMatch, force, cascade, cancellationToken);
+
+        public Task<TaskListResult> ListAsync(
+            TaskListQuery query,
+            CancellationToken cancellationToken = default)
+        {
+            Interlocked.Increment(ref _listCalls);
+            return inner.ListAsync(query, cancellationToken);
+        }
+    }
+
+    private sealed class GatedCreateStore(ITaskStore inner) : ITaskStore
+    {
+        public TaskCompletionSource CreateEntered { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public TaskCompletionSource ReleaseCreate { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public async Task<TaskRecord> CreateAsync(
+            TaskCreateRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            CreateEntered.TrySetResult();
+            await ReleaseCreate.Task.ConfigureAwait(false);
+            // Deliberately ignore cancellation to model a provider that commits after shutdown.
+            return await inner.CreateAsync(request, CancellationToken.None).ConfigureAwait(false);
+        }
+
+        public Task<TaskRecord?> GetAsync(
+            string taskId,
+            CancellationToken cancellationToken = default)
+            => inner.GetAsync(taskId, cancellationToken);
+
+        public Task<TaskRecord> PatchAsync(
+            string taskId,
+            TaskPatchRequest patch,
+            string? ifMatch,
+            CancellationToken cancellationToken = default)
+            => inner.PatchAsync(taskId, patch, ifMatch, cancellationToken);
+
+        public Task DeleteAsync(
+            string taskId,
+            string? ifMatch = null,
+            bool force = false,
+            bool cascade = false,
+            CancellationToken cancellationToken = default)
+            => inner.DeleteAsync(taskId, ifMatch, force, cascade, cancellationToken);
+
+        public Task<TaskListResult> ListAsync(
+            TaskListQuery query,
+            CancellationToken cancellationToken = default)
+            => inner.ListAsync(query, cancellationToken);
+    }
+
+    private sealed class CommitThenFailCreateStore(ITaskStore inner) : ITaskStore
+    {
+        private int _failCreate = 1;
+
+        public async Task<TaskRecord> CreateAsync(
+            TaskCreateRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            TaskRecord record = await inner.CreateAsync(request, CancellationToken.None);
+            if (Interlocked.Exchange(ref _failCreate, 0) == 1)
+            {
+                throw new IOException("Simulated transport failure after create commit.");
+            }
+
+            return record;
+        }
+
+        public Task<TaskRecord?> GetAsync(
+            string taskId,
+            CancellationToken cancellationToken = default)
+            => inner.GetAsync(taskId, cancellationToken);
+
+        public Task<TaskRecord> PatchAsync(
+            string taskId,
+            TaskPatchRequest patch,
+            string? ifMatch,
+            CancellationToken cancellationToken = default)
+            => inner.PatchAsync(taskId, patch, ifMatch, cancellationToken);
+
+        public Task DeleteAsync(
+            string taskId,
+            string? ifMatch = null,
+            bool force = false,
+            bool cascade = false,
+            CancellationToken cancellationToken = default)
+            => inner.DeleteAsync(taskId, ifMatch, force, cascade, cancellationToken);
+
+        public Task<TaskListResult> ListAsync(
+            TaskListQuery query,
+            CancellationToken cancellationToken = default)
+            => inner.ListAsync(query, cancellationToken);
+    }
+
+    private sealed class RecoveryOrderingStore(
+        ITaskStore inner,
+        string parentTaskId,
+        string blockerTaskId,
+        Task childInvocationStarted) : ITaskStore
+    {
+        private int _scanListed;
+
+        public TaskCompletionSource BlockerGetEntered { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public TaskCompletionSource ReleaseBlocker { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public Task<TaskRecord> CreateAsync(
+            TaskCreateRequest request,
+            CancellationToken cancellationToken = default)
+            => inner.CreateAsync(request, cancellationToken);
+
+        public async Task<TaskRecord?> GetAsync(
+            string taskId,
+            CancellationToken cancellationToken = default)
+        {
+            if (Volatile.Read(ref _scanListed) != 0
+                && string.Equals(taskId, blockerTaskId, StringComparison.Ordinal))
+            {
+                BlockerGetEntered.TrySetResult();
+                await childInvocationStarted.WaitAsync(cancellationToken);
+                await ReleaseBlocker.Task.WaitAsync(cancellationToken);
+            }
+
+            return await inner.GetAsync(taskId, cancellationToken);
+        }
+
+        public Task<TaskRecord> PatchAsync(
+            string taskId,
+            TaskPatchRequest patch,
+            string? ifMatch,
+            CancellationToken cancellationToken = default)
+            => inner.PatchAsync(taskId, patch, ifMatch, cancellationToken);
+
+        public Task DeleteAsync(
+            string taskId,
+            string? ifMatch = null,
+            bool force = false,
+            bool cascade = false,
+            CancellationToken cancellationToken = default)
+            => inner.DeleteAsync(taskId, ifMatch, force, cascade, cancellationToken);
+
+        public async Task<TaskListResult> ListAsync(
+            TaskListQuery query,
+            CancellationToken cancellationToken = default)
+        {
+            TaskListResult result = await inner.ListAsync(query, cancellationToken);
+            if (query.Status == TaskWireKeys.StatusInProgress)
+            {
+                result.Items = result.Items
+                    .OrderBy(item =>
+                        string.Equals(item.Record.Id, parentTaskId, StringComparison.Ordinal)
+                            ? 0
+                            : string.Equals(item.Record.Id, blockerTaskId, StringComparison.Ordinal)
+                                ? 1
+                                : 2)
+                    .ToArray();
+                Volatile.Write(ref _scanListed, 1);
+            }
+
+            return result;
+        }
+    }
+
+    private sealed class PeriodicListGateStore(ITaskStore inner) : ITaskStore
+    {
+        private int _listCalls;
+
+        public TaskCompletionSource PeriodicListEntered { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public TaskCompletionSource ReleasePeriodicList { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public Task<TaskRecord> CreateAsync(
+            TaskCreateRequest request,
+            CancellationToken cancellationToken = default)
+            => inner.CreateAsync(request, cancellationToken);
+
+        public Task<TaskRecord?> GetAsync(
+            string taskId,
+            CancellationToken cancellationToken = default)
+            => inner.GetAsync(taskId, cancellationToken);
+
+        public Task<TaskRecord> PatchAsync(
+            string taskId,
+            TaskPatchRequest patch,
+            string? ifMatch,
+            CancellationToken cancellationToken = default)
+            => inner.PatchAsync(taskId, patch, ifMatch, cancellationToken);
+
+        public Task DeleteAsync(
+            string taskId,
+            string? ifMatch = null,
+            bool force = false,
+            bool cascade = false,
+            CancellationToken cancellationToken = default)
+            => inner.DeleteAsync(taskId, ifMatch, force, cascade, cancellationToken);
+
+        public async Task<TaskListResult> ListAsync(
+            TaskListQuery query,
+            CancellationToken cancellationToken = default)
+        {
+            if (Interlocked.Increment(ref _listCalls) > 1)
+            {
+                PeriodicListEntered.TrySetResult();
+                await ReleasePeriodicList.Task;
+            }
+
+            return await inner.ListAsync(query, CancellationToken.None);
+        }
+    }
+
+    private sealed class TaskDefinitionHolder
+    {
+        public TaskDefinition<string, string> Definition { get; set; } = null!;
+    }
+
+    private sealed class EarlyTaskProbe(TaskDefinitionHolder holder) : IHostedService
+    {
+        public Exception? StartException { get; private set; }
+
+        public async Task StartAsync(CancellationToken cancellationToken)
+        {
+            try
+            {
+                await holder.Definition.RunAsync("too-early", cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                StartException = ex;
+            }
+        }
+
+        public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
+    }
+}
