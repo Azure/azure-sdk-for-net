@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ComputeLimit
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MemberCapOverrideData, MemberCapOverrideResource>(new MemberCapOverridesGetByParentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MemberCapOverrideData, MemberCapOverrideResource>(new MemberCapOverrideDataAsyncCollectionResultOfT(
                 _memberCapOverridesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ComputeLimit
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MemberCapOverrideData, MemberCapOverrideResource>(new MemberCapOverridesGetByParentCollectionResultOfT(
+            return new PageableWrapper<MemberCapOverrideData, MemberCapOverrideResource>(new MemberCapOverrideDataCollectionResultOfT(
                 _memberCapOverridesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,

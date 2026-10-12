@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary>
     /// Describes how the service is partitioned.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UniformInt64RangePartitionScheme"/>, <see cref="SingletonPartitionScheme"/>, and <see cref="NamedPartitionScheme"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="NamedPartitionScheme"/>, <see cref="SingletonPartitionScheme"/>, and <see cref="UniformInt64RangePartitionScheme"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownPartition))]
     public abstract partial class ManagedServicePartitionScheme : IJsonModel<ManagedServicePartitionScheme>
@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "UniformInt64Range":
-                        return UniformInt64RangePartitionScheme.DeserializeUniformInt64RangePartitionScheme(element, options);
-                    case "Singleton":
-                        return SingletonPartitionScheme.DeserializeSingletonPartitionScheme(element, options);
                     case "Named":
                         return NamedPartitionScheme.DeserializeNamedPartitionScheme(element, options);
+                    case "Singleton":
+                        return SingletonPartitionScheme.DeserializeSingletonPartitionScheme(element, options);
+                    case "UniformInt64Range":
+                        return UniformInt64RangePartitionScheme.DeserializeUniformInt64RangePartitionScheme(element, options);
                 }
             }
             return UnknownPartition.DeserializeUnknownPartition(element, options);

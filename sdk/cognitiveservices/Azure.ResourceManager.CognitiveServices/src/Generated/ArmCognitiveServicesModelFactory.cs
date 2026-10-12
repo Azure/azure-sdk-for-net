@@ -1616,7 +1616,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary>
         /// Connection property base schema.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.PatAuthTypeConnectionProperties"/>, <see cref="Models.ManagedIdentityAuthTypeConnectionProperties"/>, <see cref="Models.UsernamePasswordAuthTypeConnectionProperties"/>, <see cref="Models.NoneAuthTypeConnectionProperties"/>, <see cref="Models.SASAuthTypeConnectionProperties"/>, <see cref="Models.AccountKeyAuthTypeConnectionProperties"/>, <see cref="Models.ServicePrincipalAuthTypeConnectionProperties"/>, <see cref="Models.AccessKeyAuthTypeConnectionProperties"/>, <see cref="Models.ApiKeyAuthConnectionProperties"/>, <see cref="Models.CustomKeysConnectionProperties"/>, <see cref="Models.OAuth2AuthTypeConnectionProperties"/>, and <see cref="Models.AadAuthTypeConnectionProperties"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AadAuthTypeConnectionProperties"/>, <see cref="Models.AccessKeyAuthTypeConnectionProperties"/>, <see cref="Models.AccountKeyAuthTypeConnectionProperties"/>, <see cref="Models.ApiKeyAuthConnectionProperties"/>, <see cref="Models.CustomKeysConnectionProperties"/>, <see cref="Models.ManagedIdentityAuthTypeConnectionProperties"/>, <see cref="Models.NoneAuthTypeConnectionProperties"/>, <see cref="Models.OAuth2AuthTypeConnectionProperties"/>, <see cref="Models.PatAuthTypeConnectionProperties"/>, <see cref="Models.SASAuthTypeConnectionProperties"/>, <see cref="Models.ServicePrincipalAuthTypeConnectionProperties"/>, and <see cref="Models.UsernamePasswordAuthTypeConnectionProperties"/>.
         /// </summary>
         /// <param name="authType"> Authentication type of the connection target. </param>
         /// <param name="category"> Category of the connection. </param>
@@ -1638,7 +1638,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             sharedUserList ??= new ChangeTrackingList<string>();
 
             return new UnknownConnectionPropertiesV2(
-                default,
+                authType is null ? default : new ConnectionAuthType(authType),
                 category,
                 createdByWorkspaceArmId,
                 error,
@@ -1674,7 +1674,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             sharedUserList ??= new ChangeTrackingList<string>();
 
             return new PatAuthTypeConnectionProperties(
-                default,
+                ConnectionAuthType.PAT,
                 category,
                 createdByWorkspaceArmId,
                 error,
@@ -1712,7 +1712,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             sharedUserList ??= new ChangeTrackingList<string>();
 
             return new ManagedIdentityAuthTypeConnectionProperties(
-                default,
+                ConnectionAuthType.ManagedIdentity,
                 category,
                 createdByWorkspaceArmId,
                 error,
@@ -1759,7 +1759,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             sharedUserList ??= new ChangeTrackingList<string>();
 
             return new UsernamePasswordAuthTypeConnectionProperties(
-                default,
+                ConnectionAuthType.UsernamePassword,
                 category,
                 createdByWorkspaceArmId,
                 error,
@@ -1806,7 +1806,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             sharedUserList ??= new ChangeTrackingList<string>();
 
             return new NoneAuthTypeConnectionProperties(
-                default,
+                ConnectionAuthType.None,
                 category,
                 createdByWorkspaceArmId,
                 error,
@@ -1842,7 +1842,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             sharedUserList ??= new ChangeTrackingList<string>();
 
             return new SASAuthTypeConnectionProperties(
-                default,
+                ConnectionAuthType.SAS,
                 category,
                 createdByWorkspaceArmId,
                 error,
@@ -1879,7 +1879,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             sharedUserList ??= new ChangeTrackingList<string>();
 
             return new AccountKeyAuthTypeConnectionProperties(
-                default,
+                ConnectionAuthType.AccountKey,
                 category,
                 createdByWorkspaceArmId,
                 error,
@@ -1917,7 +1917,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             sharedUserList ??= new ChangeTrackingList<string>();
 
             return new ServicePrincipalAuthTypeConnectionProperties(
-                default,
+                ConnectionAuthType.ServicePrincipal,
                 category,
                 createdByWorkspaceArmId,
                 error,
@@ -1965,7 +1965,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             sharedUserList ??= new ChangeTrackingList<string>();
 
             return new AccessKeyAuthTypeConnectionProperties(
-                default,
+                ConnectionAuthType.AccessKey,
                 category,
                 createdByWorkspaceArmId,
                 error,
@@ -2011,7 +2011,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             sharedUserList ??= new ChangeTrackingList<string>();
 
             return new ApiKeyAuthConnectionProperties(
-                default,
+                ConnectionAuthType.ApiKey,
                 category,
                 createdByWorkspaceArmId,
                 error,
@@ -2048,7 +2048,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             sharedUserList ??= new ChangeTrackingList<string>();
 
             return new CustomKeysConnectionProperties(
-                default,
+                ConnectionAuthType.CustomKeys,
                 category,
                 createdByWorkspaceArmId,
                 error,
@@ -2089,7 +2089,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             sharedUserList ??= new ChangeTrackingList<string>();
 
             return new OAuth2AuthTypeConnectionProperties(
-                default,
+                ConnectionAuthType.OAuth2,
                 category,
                 createdByWorkspaceArmId,
                 error,
@@ -2159,7 +2159,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             sharedUserList ??= new ChangeTrackingList<string>();
 
             return new AadAuthTypeConnectionProperties(
-                default,
+                ConnectionAuthType.AAD,
                 category,
                 createdByWorkspaceArmId,
                 error,
@@ -2362,7 +2362,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new UnknownCognitiveServicesOutboundRuleBasicProperties(
                 category,
                 status,
-                default,
+                @type is null ? default : new RuleType(@type),
                 errorInformation,
                 (parentRuleNames ?? new ChangeTrackingList<string>()).ToList(),
                 default);
@@ -2382,7 +2382,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesFqdnOutboundRule(
                 category,
                 status,
-                default,
+                RuleType.FQDN,
                 errorInformation,
                 (parentRuleNames ?? new ChangeTrackingList<string>()).ToList(),
                 default,
@@ -2405,7 +2405,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesPrivateEndpointOutboundRule(
                 category,
                 status,
-                default,
+                RuleType.PrivateEndpoint,
                 errorInformation,
                 (parentRuleNames ?? new ChangeTrackingList<string>()).ToList(),
                 default,
@@ -2436,7 +2436,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesServiceTagOutboundRule(
                 category,
                 status,
-                default,
+                RuleType.ServiceTag,
                 errorInformation,
                 (parentRuleNames ?? new ChangeTrackingList<string>()).ToList(),
                 default,
@@ -2642,34 +2642,34 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary>
         /// Represents a policy for authorizing applications based on specified authentication and authorization schemes.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CognitiveServicesRoleBasedBuiltInAuthorizationPolicy"/>, <see cref="Models.OrganizationSharedBuiltInAuthorizationPolicy"/>, and <see cref="Models.ChannelsBuiltInAuthorizationPolicy"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ChannelsBuiltInAuthorizationPolicy"/>, <see cref="Models.CognitiveServicesRoleBasedBuiltInAuthorizationPolicy"/>, and <see cref="Models.OrganizationSharedBuiltInAuthorizationPolicy"/>.
         /// </summary>
         /// <param name="type"> Authorization scheme type. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesApplicationAuthorizationPolicy"/> instance for mocking. </returns>
         public static CognitiveServicesApplicationAuthorizationPolicy CognitiveServicesApplicationAuthorizationPolicy(string @type = default)
         {
-            return new UnknownCognitiveServicesApplicationAuthorizationPolicy(default, default);
+            return new UnknownCognitiveServicesApplicationAuthorizationPolicy(@type is null ? default : new BuiltInAuthorizationScheme(@type), default);
         }
 
         /// <summary> Built-in role-based authorization policy. </summary>
         /// <returns> A new <see cref="Models.CognitiveServicesRoleBasedBuiltInAuthorizationPolicy"/> instance for mocking. </returns>
         public static CognitiveServicesRoleBasedBuiltInAuthorizationPolicy CognitiveServicesRoleBasedBuiltInAuthorizationPolicy()
         {
-            return new CognitiveServicesRoleBasedBuiltInAuthorizationPolicy(default, default);
+            return new CognitiveServicesRoleBasedBuiltInAuthorizationPolicy(BuiltInAuthorizationScheme.Default, default);
         }
 
         /// <summary> Built-in authorization policy scoped to organization/tenant. </summary>
         /// <returns> A new <see cref="Models.OrganizationSharedBuiltInAuthorizationPolicy"/> instance for mocking. </returns>
         public static OrganizationSharedBuiltInAuthorizationPolicy OrganizationSharedBuiltInAuthorizationPolicy()
         {
-            return new OrganizationSharedBuiltInAuthorizationPolicy(default, default);
+            return new OrganizationSharedBuiltInAuthorizationPolicy(BuiltInAuthorizationScheme.OrganizationScope, default);
         }
 
         /// <summary> Represents a built-in authorization policy specific to Azure Bot Service/Channels authentication. </summary>
         /// <returns> A new <see cref="Models.ChannelsBuiltInAuthorizationPolicy"/> instance for mocking. </returns>
         public static ChannelsBuiltInAuthorizationPolicy ChannelsBuiltInAuthorizationPolicy()
         {
-            return new ChannelsBuiltInAuthorizationPolicy(default, default);
+            return new ChannelsBuiltInAuthorizationPolicy(BuiltInAuthorizationScheme.Channels, default);
         }
 
         /// <summary> Type representing an application traffic policy as a property of an agentic application. </summary>
@@ -2732,7 +2732,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary>
         /// Type representing an agent deployment as a management construct.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CognitiveServicesManagedAgentDeployment"/> and <see cref="Models.CognitiveServicesHostedAgentDeployment"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CognitiveServicesHostedAgentDeployment"/> and <see cref="Models.CognitiveServicesManagedAgentDeployment"/>.
         /// </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -2759,7 +2759,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 state,
                 (protocols ?? new ChangeTrackingList<CognitiveServicesAgentProtocolVersion>()).ToList(),
                 (agents ?? new ChangeTrackingList<CognitiveServicesVersionedAgentReference>()).ToList(),
-                default,
+                deploymentType is null ? default : new AgentDeploymentType(deploymentType),
                 provisioningState);
         }
 
@@ -2807,7 +2807,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 state,
                 (protocols ?? new ChangeTrackingList<CognitiveServicesAgentProtocolVersion>()).ToList(),
                 (agents ?? new ChangeTrackingList<CognitiveServicesVersionedAgentReference>()).ToList(),
-                default,
+                AgentDeploymentType.Managed,
                 provisioningState);
         }
 
@@ -2838,7 +2838,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 state,
                 (protocols ?? new ChangeTrackingList<CognitiveServicesAgentProtocolVersion>()).ToList(),
                 (agents ?? new ChangeTrackingList<CognitiveServicesVersionedAgentReference>()).ToList(),
-                default,
+                AgentDeploymentType.Hosted,
                 provisioningState,
                 minReplicas,
                 maxReplicas);

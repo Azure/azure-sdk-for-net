@@ -1599,15 +1599,15 @@ namespace Azure.AI.Projects.Agents
         /// <param name="temperature"> The sampling temperature used for the response. </param>
         /// <param name="createdOn"> The Unix timestamp (in seconds) for when the response was created. </param>
         /// <param name="completedOn"> The Unix timestamp (in seconds) for when the response completed. </param>
-        /// <returns> A new <see cref="Agents.VoiceResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceResult"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceResponse VoiceResponse(VoiceResponseBaseObject? @object = default, VoiceResponseBaseStatus? status = default, RealtimeResponseStatusDetails statusDetails = default, RealtimeResponseUsage usage = default, IEnumerable<VoiceResponseBaseOutputModality> outputModalities = default, BinaryData maxOutputTokens = default, string id = default, IEnumerable<RealtimeItem> output = default, string conversationId = default, VoiceResponseAudio audio = default, IDictionary<string, string> metadata = default, float? temperature = default, DateTimeOffset? createdOn = default, DateTimeOffset? completedOn = default)
+        public static VoiceResult VoiceResult(VoiceResponseBaseObject? @object = default, VoiceResponseBaseStatus? status = default, RealtimeResponseStatusDetails statusDetails = default, RealtimeResponseUsage usage = default, IEnumerable<VoiceResponseBaseOutputModality> outputModalities = default, BinaryData maxOutputTokens = default, string id = default, IEnumerable<RealtimeItem> output = default, string conversationId = default, VoiceResponseAudio audio = default, IDictionary<string, string> metadata = default, float? temperature = default, DateTimeOffset? createdOn = default, DateTimeOffset? completedOn = default)
         {
             outputModalities ??= new ChangeTrackingList<VoiceResponseBaseOutputModality>();
             output ??= new ChangeTrackingList<RealtimeItem>();
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
-            return new VoiceResponse(
+            return new VoiceResult(
                 @object,
                 status,
                 statusDetails,
@@ -3073,10 +3073,10 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Response from uploading a file to a session sandbox. </summary>
         /// <param name="path"> The path where the file was written, relative to the session home directory. </param>
         /// <param name="bytesWritten"> Number of bytes written. </param>
-        /// <returns> A new <see cref="Agents.SessionFileWriteResponse"/> instance for mocking. </returns>
-        public static SessionFileWriteResponse SessionFileWriteResponse(string path = default, long bytesWritten = default)
+        /// <returns> A new <see cref="Agents.SessionFileWriteResult"/> instance for mocking. </returns>
+        public static SessionFileWriteResult SessionFileWriteResult(string path = default, long bytesWritten = default)
         {
-            return new SessionFileWriteResponse(path, bytesWritten, additionalBinaryDataProperties: null);
+            return new SessionFileWriteResult(path, bytesWritten, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A single entry in a directory listing. </summary>

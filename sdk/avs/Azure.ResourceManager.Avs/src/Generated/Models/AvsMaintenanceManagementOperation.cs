@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary>
     /// Defines operations that can be performed on maintenance
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AvsScheduleOperation"/>, <see cref="AvsRescheduleOperation"/>, and <see cref="AvsMaintenanceReadinessRefreshOperation"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AvsMaintenanceReadinessRefreshOperation"/>, <see cref="AvsRescheduleOperation"/>, and <see cref="AvsScheduleOperation"/>.
     /// </summary>
     public abstract partial class AvsMaintenanceManagementOperation
     {

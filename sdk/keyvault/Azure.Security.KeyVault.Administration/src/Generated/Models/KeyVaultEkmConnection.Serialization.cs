@@ -207,7 +207,7 @@ namespace Azure.Security.KeyVault.Administration
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new KeyVaultEkmConnection(hostName, pathPrefix, serverCaCertificates, serverSubjectCommonName, additionalBinaryDataProperties);
+            return new KeyVaultEkmConnection(hostName, pathPrefix, serverCaCertificates ?? new ChangeTrackingList<BinaryData>(), serverSubjectCommonName, additionalBinaryDataProperties);
         }
     }
 }

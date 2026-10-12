@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DeviceSecurityGroupProperties(thresholdRules ?? new ChangeTrackingList<ThresholdCustomAlertRule>(), timeWindowRules ?? new ChangeTrackingList<TimeWindowCustomAlertRule>(), allowlistRules ?? new ChangeTrackingList<AllowlistCustomAlertRule>(), denylistRules ?? new ChangeTrackingList<DenylistCustomAlertRule>(), additionalBinaryDataProperties);

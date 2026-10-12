@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(PrivateEndpointResource.ResourceType, out string privateEndpointApiVersion);
             _privateEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", PrivateEndpointResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointsRestClient = new PrivateEndpoints(_privateEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, privateEndpointApiVersion ?? "2025-09-01");
+            _privateEndpointsRestClient = new PrivateEndpoints(_privateEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, privateEndpointApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PrivateEndpointData, PrivateEndpointResource>(new PrivateEndpointsGetAllAsyncCollectionResultOfT(_privateEndpointsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PrivateEndpointCollection.GetAll"), data => new PrivateEndpointResource(Client, data));
+            return new AsyncPageableWrapper<PrivateEndpointData, PrivateEndpointResource>(new PrivateEndpointDataAsyncCollectionResultOfT(_privateEndpointsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PrivateEndpointCollection.GetAll"), data => new PrivateEndpointResource(Client, data));
         }
 
         /// <summary>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PrivateEndpointData, PrivateEndpointResource>(new PrivateEndpointsGetAllCollectionResultOfT(_privateEndpointsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PrivateEndpointCollection.GetAll"), data => new PrivateEndpointResource(Client, data));
+            return new PageableWrapper<PrivateEndpointData, PrivateEndpointResource>(new PrivateEndpointDataCollectionResultOfT(_privateEndpointsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PrivateEndpointCollection.GetAll"), data => new PrivateEndpointResource(Client, data));
         }
 
         /// <summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -16,6 +16,26 @@ namespace Azure.AI.Agents.Persistent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _overrideModelName;
+        internal bool _overrideModelNameIsDefined;
+        private string _overrideInstructions;
+        internal bool _overrideInstructionsIsDefined;
+        private ToolResources _toolResources;
+        internal bool _toolResourcesIsDefined;
+        private float? _temperature;
+        internal bool _temperatureIsDefined;
+        private float? _topP;
+        internal bool _topPIsDefined;
+        private int? _maxPromptTokens;
+        internal bool _maxPromptTokensIsDefined;
+        private int? _maxCompletionTokens;
+        internal bool _maxCompletionTokensIsDefined;
+        private Truncation _truncationStrategy;
+        internal bool _truncationStrategyIsDefined;
+        private BinaryData _toolChoice;
+        internal bool _toolChoiceIsDefined;
+        private BinaryData _responseFormat;
+        internal bool _responseFormatIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CreateThreadAndRunRequest"/>. </summary>
         /// <param name="assistantId"> The ID of the agent for which the thread should be created. </param>
@@ -67,18 +87,18 @@ namespace Azure.AI.Agents.Persistent
         {
             AssistantId = assistantId;
             Thread = thread;
-            OverrideModelName = overrideModelName;
-            OverrideInstructions = overrideInstructions;
+            _overrideModelName = overrideModelName;
+            _overrideInstructions = overrideInstructions;
             OverrideTools = overrideTools;
-            ToolResources = toolResources;
+            _toolResources = toolResources;
             Stream = stream;
-            Temperature = temperature;
-            TopP = topP;
-            MaxPromptTokens = maxPromptTokens;
-            MaxCompletionTokens = maxCompletionTokens;
-            TruncationStrategy = truncationStrategy;
-            ToolChoice = toolChoice;
-            ResponseFormat = responseFormat;
+            _temperature = temperature;
+            _topP = topP;
+            _maxPromptTokens = maxPromptTokens;
+            _maxCompletionTokens = maxCompletionTokens;
+            _truncationStrategy = truncationStrategy;
+            _toolChoice = toolChoice;
+            _responseFormat = responseFormat;
             ParallelToolCalls = parallelToolCalls;
             Metadata = metadata;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -91,16 +111,34 @@ namespace Azure.AI.Agents.Persistent
         public PersistentAgentThreadCreationOptions Thread { get; }
 
         /// <summary> The overridden model that the agent should use to run the thread. </summary>
-        public string OverrideModelName { get; }
+        public string OverrideModelName
+        {
+            get
+            {
+                return _overrideModelName;
+            }
+        }
 
         /// <summary> The overridden system instructions the agent should use to run the thread. </summary>
-        public string OverrideInstructions { get; }
+        public string OverrideInstructions
+        {
+            get
+            {
+                return _overrideInstructions;
+            }
+        }
 
         /// <summary> The overridden list of enabled tools the agent should use to run the thread. </summary>
         public IList<ToolDefinition> OverrideTools { get; }
 
         /// <summary> Override the tools the agent can use for this run. This is useful for modifying the behavior on a per-run basis. </summary>
-        public ToolResources ToolResources { get; }
+        public ToolResources ToolResources
+        {
+            get
+            {
+                return _toolResources;
+            }
+        }
 
         /// <summary>
         /// If `true`, returns a stream of events that happen during the Run as server-sent events,
@@ -112,7 +150,13 @@ namespace Azure.AI.Agents.Persistent
         /// What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output
         /// more random, while lower values like 0.2 will make it more focused and deterministic.
         /// </summary>
-        public float? Temperature { get; }
+        public float? Temperature
+        {
+            get
+            {
+                return _temperature;
+            }
+        }
 
         /// <summary>
         /// An alternative to sampling with temperature, called nucleus sampling, where the model
@@ -120,24 +164,48 @@ namespace Azure.AI.Agents.Persistent
         /// comprising the top 10% probability mass are considered.
         /// We generally recommend altering this or temperature but not both.
         /// </summary>
-        public float? TopP { get; }
+        public float? TopP
+        {
+            get
+            {
+                return _topP;
+            }
+        }
 
         /// <summary>
         /// The maximum number of prompt tokens that may be used over the course of the run. The run will make a best effort to use only
         /// the number of prompt tokens specified, across multiple turns of the run. If the run exceeds the number of prompt tokens specified,
         /// the run will end with status `incomplete`. See `incomplete_details` for more info.
         /// </summary>
-        public int? MaxPromptTokens { get; }
+        public int? MaxPromptTokens
+        {
+            get
+            {
+                return _maxPromptTokens;
+            }
+        }
 
         /// <summary>
         /// The maximum number of completion tokens that may be used over the course of the run. The run will make a best effort to use only
         /// the number of completion tokens specified, across multiple turns of the run. If the run exceeds the number of completion tokens
         /// specified, the run will end with status `incomplete`. See `incomplete_details` for more info.
         /// </summary>
-        public int? MaxCompletionTokens { get; }
+        public int? MaxCompletionTokens
+        {
+            get
+            {
+                return _maxCompletionTokens;
+            }
+        }
 
         /// <summary> The strategy to use for dropping messages as the context windows moves forward. </summary>
-        public Truncation TruncationStrategy { get; }
+        public Truncation TruncationStrategy
+        {
+            get
+            {
+                return _truncationStrategy;
+            }
+        }
 
         /// <summary>
         /// Controls whether or not and which tool is called by the model.
@@ -181,7 +249,13 @@ namespace Azure.AI.Agents.Persistent
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData ToolChoice { get; }
+        public BinaryData ToolChoice
+        {
+            get
+            {
+                return _toolChoice;
+            }
+        }
 
         /// <summary>
         /// Specifies the format that the model must output.
@@ -228,7 +302,13 @@ namespace Azure.AI.Agents.Persistent
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData ResponseFormat { get; }
+        public BinaryData ResponseFormat
+        {
+            get
+            {
+                return _responseFormat;
+            }
+        }
 
         /// <summary> If `true` functions will run in parallel during tool use. </summary>
         public bool? ParallelToolCalls { get; }

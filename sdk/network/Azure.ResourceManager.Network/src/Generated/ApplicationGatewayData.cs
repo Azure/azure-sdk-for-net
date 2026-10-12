@@ -314,6 +314,20 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> Advanced routing maps of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
+        [WirePath("properties.advancedRoutingMaps")]
+        public IList<ApplicationGatewayAdvancedRoutingMap> AdvancedRoutingMaps
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                return Properties.AdvancedRoutingMaps;
+            }
+        }
+
         /// <summary> Request routing rules of the application gateway resource. </summary>
         [WirePath("properties.requestRoutingRules")]
         public IList<ApplicationGatewayRequestRoutingRule> RequestRoutingRules
@@ -353,6 +367,20 @@ namespace Azure.ResourceManager.Network
                     Properties = new ApplicationGatewayPropertiesFormat();
                 }
                 return Properties.RewriteRuleSets;
+            }
+        }
+
+        /// <summary> Advanced routing condition sets of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
+        [WirePath("properties.advancedRoutingConditionSets")]
+        public IList<ApplicationGatewayAdvancedRoutingConditionSet> AdvancedRoutingConditionSets
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                return Properties.AdvancedRoutingConditionSets;
             }
         }
 
@@ -439,6 +467,24 @@ namespace Azure.ResourceManager.Network
                     Properties = new ApplicationGatewayPropertiesFormat();
                 }
                 Properties.AutoscaleConfiguration = value;
+            }
+        }
+
+        /// <summary> The reserved capacity of the application gateway resource. Applicable to the Basic_v2 and Basic_WAF_v2 SKU tiers. </summary>
+        [WirePath("properties.reservedCapacity")]
+        public int? ReservedCapacity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReservedCapacity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                Properties.ReservedCapacity = value;
             }
         }
 

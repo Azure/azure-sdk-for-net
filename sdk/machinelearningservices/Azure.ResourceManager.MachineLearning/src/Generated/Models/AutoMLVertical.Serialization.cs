@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary>
     /// AutoML vertical class.
     /// Base class for AutoML verticals - TableVertical/ImageVertical/NLPVertical
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ClassificationTask"/>, <see cref="MachineLearningForecasting"/>, <see cref="ImageClassification"/>, <see cref="ImageClassificationMultilabel"/>, <see cref="ImageInstanceSegmentation"/>, <see cref="ImageObjectDetection"/>, <see cref="AutoMLVerticalRegression"/>, <see cref="TextClassification"/>, <see cref="TextClassificationMultilabel"/>, and <see cref="TextNer"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AutoMLVerticalRegression"/>, <see cref="ClassificationTask"/>, <see cref="ImageClassification"/>, <see cref="ImageClassificationMultilabel"/>, <see cref="ImageInstanceSegmentation"/>, <see cref="ImageObjectDetection"/>, <see cref="MachineLearningForecasting"/>, <see cref="TextClassification"/>, <see cref="TextClassificationMultilabel"/>, and <see cref="TextNer"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAutoMLVertical))]
     public abstract partial class AutoMLVertical : IJsonModel<AutoMLVertical>
@@ -143,10 +143,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "Regression":
+                        return AutoMLVerticalRegression.DeserializeAutoMLVerticalRegression(element, options);
                     case "Classification":
                         return ClassificationTask.DeserializeClassificationTask(element, options);
-                    case "Forecasting":
-                        return MachineLearningForecasting.DeserializeMachineLearningForecasting(element, options);
                     case "ImageClassification":
                         return ImageClassification.DeserializeImageClassification(element, options);
                     case "ImageClassificationMultilabel":
@@ -155,8 +155,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return ImageInstanceSegmentation.DeserializeImageInstanceSegmentation(element, options);
                     case "ImageObjectDetection":
                         return ImageObjectDetection.DeserializeImageObjectDetection(element, options);
-                    case "Regression":
-                        return AutoMLVerticalRegression.DeserializeAutoMLVerticalRegression(element, options);
+                    case "Forecasting":
+                        return MachineLearningForecasting.DeserializeMachineLearningForecasting(element, options);
                     case "TextClassification":
                         return TextClassification.DeserializeTextClassification(element, options);
                     case "TextClassificationMultilabel":

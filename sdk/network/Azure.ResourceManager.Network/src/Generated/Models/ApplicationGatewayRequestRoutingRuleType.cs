@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.Network.Models
         private const string BasicValue = "Basic";
         /// <summary> PathBasedRouting. </summary>
         private const string PathBasedRoutingValue = "PathBasedRouting";
+        /// <summary> AdvancedRouting. </summary>
+        private const string AdvancedRoutingValue = "AdvancedRouting";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRequestRoutingRuleType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,6 +37,9 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> PathBasedRouting. </summary>
         public static ApplicationGatewayRequestRoutingRuleType PathBasedRouting { get; } = new ApplicationGatewayRequestRoutingRuleType(PathBasedRoutingValue);
+
+        /// <summary> AdvancedRouting. </summary>
+        public static ApplicationGatewayRequestRoutingRuleType AdvancedRouting { get; } = new ApplicationGatewayRequestRoutingRuleType(AdvancedRoutingValue);
 
         /// <summary> Determines if two <see cref="ApplicationGatewayRequestRoutingRuleType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

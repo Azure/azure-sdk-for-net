@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AIManagerData, AIManagerResource>(new AIManagersGetByResourceGroupAsyncCollectionResultOfT(_aiManagersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AIManagerCollection.GetAll"), data => new AIManagerResource(Client, data));
+            return new AsyncPageableWrapper<AIManagerData, AIManagerResource>(new AIManagerDataAsyncCollectionResultOfT(_aiManagersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AIManagerCollection.GetAll"), data => new AIManagerResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AIManagerData, AIManagerResource>(new AIManagersGetByResourceGroupCollectionResultOfT(_aiManagersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AIManagerCollection.GetAll"), data => new AIManagerResource(Client, data));
+            return new PageableWrapper<AIManagerData, AIManagerResource>(new AIManagerDataCollectionResultOfT(_aiManagersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AIManagerCollection.GetAll"), data => new AIManagerResource(Client, data));
         }
 
         /// <summary>

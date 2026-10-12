@@ -31,6 +31,11 @@ namespace Azure.ResourceManager.Network
             ETag = eTag;
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceSkuData"/>. </summary>
+        public NetworkVirtualApplianceSkuData() : this(default)
+        {
+        }
+
         /// <summary> NetworkVirtualApplianceSku properties. </summary>
         [WirePath("properties")]
         internal NetworkVirtualApplianceSkuPropertiesFormat Properties { get; }

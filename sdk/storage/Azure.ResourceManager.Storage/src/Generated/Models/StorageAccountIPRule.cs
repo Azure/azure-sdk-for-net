@@ -7,12 +7,23 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> IP rule with specific IP or IP range in CIDR format. </summary>
     public partial class StorageAccountIPRule
     {
+        /// <summary> Initializes a new instance of <see cref="StorageAccountIPRule"/>. </summary>
+        /// <param name="ipAddressOrRange"> Specifies the IP or IP range in CIDR format. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipAddressOrRange"/> is null. </exception>
+        public StorageAccountIPRule(string ipAddressOrRange)
+        {
+            Argument.AssertNotNull(ipAddressOrRange, nameof(ipAddressOrRange));
+
+            IPAddressOrRange = ipAddressOrRange;
+        }
+
         /// <summary> Initializes a new instance of <see cref="StorageAccountIPRule"/>. </summary>
         /// <param name="ipAddressOrRange"> Specifies the IP or IP range in CIDR format. </param>
         /// <param name="action"> The action of IP ACL rule. </param>

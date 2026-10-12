@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AvailabilityGroupListenerData, AvailabilityGroupListenerResource>(new AvailabilityGroupListenersGetByGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AvailabilityGroupListenerData, AvailabilityGroupListenerResource>(new AvailabilityGroupListenerDataAsyncCollectionResultOfT(
                 _availabilityGroupListenersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AvailabilityGroupListenerData, AvailabilityGroupListenerResource>(new AvailabilityGroupListenersGetByGroupCollectionResultOfT(
+            return new PageableWrapper<AvailabilityGroupListenerData, AvailabilityGroupListenerResource>(new AvailabilityGroupListenerDataCollectionResultOfT(
                 _availabilityGroupListenersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

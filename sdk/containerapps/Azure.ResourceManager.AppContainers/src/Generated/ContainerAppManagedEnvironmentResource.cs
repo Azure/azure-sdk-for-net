@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
@@ -856,7 +857,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedEnvironmentPrivateLinkResourcesGetManagedEnvironmentPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new ContainerAppPrivateLinkAsync0CollectionResultOfT(
                 _managedEnvironmentPrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -894,7 +895,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedEnvironmentPrivateLinkResourcesGetManagedEnvironmentPrivateLinkResourcesCollectionResultOfT(
+            return new ContainerAppPrivateLink0CollectionResultOfT(
                 _managedEnvironmentPrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -932,7 +933,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new ContainerAppManagedEnvironmentsGetWorkloadProfileStatesAsyncCollectionResultOfT(
+            return new ContainerAppWorkloadProfileStateAsyncCollectionResultOfT(
                 _containerAppManagedEnvironmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -970,7 +971,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new ContainerAppManagedEnvironmentsGetWorkloadProfileStatesCollectionResultOfT(
+            return new ContainerAppWorkloadProfileStateCollectionResultOfT(
                 _containerAppManagedEnvironmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1008,7 +1009,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedEnvironmentUsagesGetManagedEnvironmentUsagesAsyncCollectionResultOfT(
+            return new ContainerAppUsageAsyncCollectionResultOfT(
                 _managedEnvironmentUsagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1046,7 +1047,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedEnvironmentUsagesGetManagedEnvironmentUsagesCollectionResultOfT(
+            return new ContainerAppUsageCollectionResultOfT(
                 _managedEnvironmentUsagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1165,10 +1166,9 @@ namespace Azure.ResourceManager.AppContainers
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -1208,10 +1208,9 @@ namespace Azure.ResourceManager.AppContainers
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

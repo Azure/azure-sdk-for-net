@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataProtectionBackupRecoveryPointData, DataProtectionBackupRecoveryPointResource>(new FetchSecondaryRecoveryPointsOperationGroupGetSecondaryRecoveryPointsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataProtectionBackupRecoveryPointData, DataProtectionBackupRecoveryPointResource>(new DataProtectionBackupRecoveryPointDataAsync0CollectionResultOfT(
                 FetchSecondaryRecoveryPointsOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataProtectionBackupRecoveryPointData, DataProtectionBackupRecoveryPointResource>(new FetchSecondaryRecoveryPointsOperationGroupGetSecondaryRecoveryPointsCollectionResultOfT(
+            return new PageableWrapper<DataProtectionBackupRecoveryPointData, DataProtectionBackupRecoveryPointResource>(new DataProtectionBackupRecoveryPointData0CollectionResultOfT(
                 FetchSecondaryRecoveryPointsOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataProtectionBackupJobData, DataProtectionBackupJobResource>(new FetchCrossRegionRestoreJobsOperationGroupGetCrossRegionRestoreJobsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataProtectionBackupJobData, DataProtectionBackupJobResource>(new DataProtectionBackupJobDataAsync0CollectionResultOfT(
                 FetchCrossRegionRestoreJobsOperationGroupRestClient,
                 Id.ResourceGroupName,
                 Guid.Parse(Id.SubscriptionId),
@@ -775,7 +775,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataProtectionBackupJobData, DataProtectionBackupJobResource>(new FetchCrossRegionRestoreJobsOperationGroupGetCrossRegionRestoreJobsCollectionResultOfT(
+            return new PageableWrapper<DataProtectionBackupJobData, DataProtectionBackupJobResource>(new DataProtectionBackupJobData0CollectionResultOfT(
                 FetchCrossRegionRestoreJobsOperationGroupRestClient,
                 Id.ResourceGroupName,
                 Guid.Parse(Id.SubscriptionId),

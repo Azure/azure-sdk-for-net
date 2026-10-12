@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Purview
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PurviewAccountData, PurviewAccountResource>(new AccountsGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PurviewAccountData, PurviewAccountResource>(new PurviewAccountDataAsyncCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Purview
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PurviewAccountData, PurviewAccountResource>(new AccountsGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<PurviewAccountData, PurviewAccountResource>(new PurviewAccountDataCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ExpressRoutePortsLocationResource.ResourceType, out string expressRoutePortsLocationApiVersion);
             _expressRoutePortsLocationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRoutePortsLocationResource.ResourceType.Namespace, Diagnostics);
-            _expressRoutePortsLocationsRestClient = new ExpressRoutePortsLocations(_expressRoutePortsLocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRoutePortsLocationApiVersion ?? "2025-09-01");
+            _expressRoutePortsLocationsRestClient = new ExpressRoutePortsLocations(_expressRoutePortsLocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRoutePortsLocationApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExpressRoutePortsLocationData, ExpressRoutePortsLocationResource>(new ExpressRoutePortsLocationsGetAllAsyncCollectionResultOfT(_expressRoutePortsLocationsRestClient, Guid.Parse(Id.SubscriptionId), context, "ExpressRoutePortsLocationCollection.GetAll"), data => new ExpressRoutePortsLocationResource(Client, data));
+            return new AsyncPageableWrapper<ExpressRoutePortsLocationData, ExpressRoutePortsLocationResource>(new ExpressRoutePortsLocationDataAsyncCollectionResultOfT(_expressRoutePortsLocationsRestClient, Guid.Parse(Id.SubscriptionId), context, "ExpressRoutePortsLocationCollection.GetAll"), data => new ExpressRoutePortsLocationResource(Client, data));
         }
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExpressRoutePortsLocationData, ExpressRoutePortsLocationResource>(new ExpressRoutePortsLocationsGetAllCollectionResultOfT(_expressRoutePortsLocationsRestClient, Guid.Parse(Id.SubscriptionId), context, "ExpressRoutePortsLocationCollection.GetAll"), data => new ExpressRoutePortsLocationResource(Client, data));
+            return new PageableWrapper<ExpressRoutePortsLocationData, ExpressRoutePortsLocationResource>(new ExpressRoutePortsLocationDataCollectionResultOfT(_expressRoutePortsLocationsRestClient, Guid.Parse(Id.SubscriptionId), context, "ExpressRoutePortsLocationCollection.GetAll"), data => new ExpressRoutePortsLocationResource(Client, data));
         }
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(DdosCustomPolicyResource.ResourceType, out string ddosCustomPolicyApiVersion);
             _ddosCustomPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", DdosCustomPolicyResource.ResourceType.Namespace, Diagnostics);
-            _ddosCustomPoliciesRestClient = new DdosCustomPolicies(_ddosCustomPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, ddosCustomPolicyApiVersion ?? "2025-09-01");
+            _ddosCustomPoliciesRestClient = new DdosCustomPolicies(_ddosCustomPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, ddosCustomPolicyApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DdosCustomPolicyData, DdosCustomPolicyResource>(new DdosCustomPoliciesListAsyncCollectionResultOfT(_ddosCustomPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DdosCustomPolicyCollection.GetAll"), data => new DdosCustomPolicyResource(Client, data));
+            return new AsyncPageableWrapper<DdosCustomPolicyData, DdosCustomPolicyResource>(new DdosCustomPolicyDataAsyncCollectionResultOfT(_ddosCustomPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DdosCustomPolicyCollection.GetAll"), data => new DdosCustomPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DdosCustomPolicyData, DdosCustomPolicyResource>(new DdosCustomPoliciesListCollectionResultOfT(_ddosCustomPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DdosCustomPolicyCollection.GetAll"), data => new DdosCustomPolicyResource(Client, data));
+            return new PageableWrapper<DdosCustomPolicyData, DdosCustomPolicyResource>(new DdosCustomPolicyDataCollectionResultOfT(_ddosCustomPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DdosCustomPolicyCollection.GetAll"), data => new DdosCustomPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

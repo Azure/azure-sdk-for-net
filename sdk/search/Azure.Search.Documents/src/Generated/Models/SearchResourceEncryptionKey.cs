@@ -15,6 +15,8 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private SearchIndexerDataIdentity _identity;
+        internal bool _identityIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SearchResourceEncryptionKey"/>. </summary>
         /// <param name="keyName"> The name of your Azure Key Vault key to be used to encrypt your data at rest. </param>
@@ -29,14 +31,25 @@ namespace Azure.Search.Documents.Indexes.Models
             KeyName = keyName;
             KeyVersion = keyVersion;
             AccessCredentialsInternal = accessCredentialsInternal;
-            Identity = identity;
+            _identity = identity;
             IsServiceLevelKey = isServiceLevelKey;
             _vaultUri = vaultUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> An explicit managed identity to use for this encryption key. If not specified and the access credentials property is null, the system-assigned managed identity is used. On update to the resource, if the explicit identity is unspecified, it remains unchanged. If "none" is specified, the value of this property is cleared. </summary>
-        public SearchIndexerDataIdentity Identity { get; set; }
+        public SearchIndexerDataIdentity Identity
+        {
+            get
+            {
+                return _identity;
+            }
+            set
+            {
+                _identity = value;
+                _identityIsDefined = true;
+            }
+        }
 
         /// <summary> An optional value indicating whether this key is a service-level key. Default is false. </summary>
         public bool? IsServiceLevelKey { get; set; }

@@ -1,0 +1,455 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.Net;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Text.Json;
+using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Core.Tasks;
+using Azure.AI.AgentServer.Core.Tasks.Providers;
+using Azure.AI.AgentServer.Core.Tasks.Serialization;
+using Azure.AI.AgentServer.Responses.Internal.Resilience;
+using Azure.AI.AgentServer.Responses.Models;
+using Azure.AI.AgentServer.Responses.Tests.Helpers;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
+
+[TestFixture]
+[NonParallelizable]
+public sealed class SessionInstanceIdTaskIdProtocolTests
+{
+    private const string PublicSessionId = "same-public-name";
+    private const string ConversationId = "conv-session-guid";
+    private const string AgentName = "server-default-agent";
+
+    [Test]
+    public async Task HostedSessionInstanceIdScopesMultiTurnPhysicalTaskId()
+    {
+        string root = CreateRoot();
+        string? previousHosted = Environment.GetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT");
+        string? previousGuid = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_SESSION_GUID");
+        try
+        {
+            const string sessionGuid = "11111111111111111111111111111111";
+            SetHostedSessionGuid(sessionGuid);
+
+            var store = new SpyTaskStore(new LocalTaskStore(Path.Combine(root, "tasks")));
+            using var factory = CreateFactory(root, store);
+            using HttpClient client = factory.CreateClient();
+
+            using HttpResponseMessage response = await PostConversationAsync(client);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            string responseId = await ReadResponseIdAsync(response);
+
+            string legacyTaskId = ConversationChainIdDerivation.Derive(
+                ConversationId,
+                previousResponseId: null,
+                responseId,
+                AgentName,
+                PublicSessionId,
+                steerable: false);
+            string taskScope = TaskIdDerivation.DeriveSessionScope(
+                PublicSessionId,
+                Guid.ParseExact(sessionGuid, "N"));
+            string physicalTaskId = TaskIdDerivation.Derive(
+                ConversationId,
+                previousResponseId: null,
+                responseId,
+                AgentName,
+                PublicSessionId,
+                taskScope,
+                steerable: false);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(store.LastCreateRequest?.Id, Is.EqualTo(physicalTaskId));
+                Assert.That(store.LastCreateRequest?.Id, Is.Not.EqualTo(legacyTaskId));
+            });
+        }
+        finally
+        {
+            RestoreEnvironment(previousHosted, previousGuid);
+            DeleteRoot(root);
+        }
+    }
+
+    [Test]
+    public async Task HostedSessionInstanceIdReusesSuspendedLegacyTask()
+    {
+        string root = CreateRoot();
+        string tasksDirectory = Path.Combine(root, "tasks");
+        string? previousHosted = Environment.GetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT");
+        string? previousGuid = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_SESSION_GUID");
+        try
+        {
+            SetHostedSessionGuid(null);
+            string firstResponseId;
+            string legacyTaskId;
+            var firstStore = new SpyTaskStore(new LocalTaskStore(tasksDirectory));
+            using (var firstFactory = CreateFactory(root, firstStore))
+            using (HttpClient firstClient = firstFactory.CreateClient())
+            {
+                using HttpResponseMessage firstResponse = await PostConversationAsync(firstClient);
+                Assert.That(firstResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+                firstResponseId = await ReadResponseIdAsync(firstResponse);
+                legacyTaskId = firstStore.LastCreateRequest!.Id!;
+                await WaitForStatusAsync(firstStore, legacyTaskId, TaskWireKeys.StatusSuspended);
+                await firstFactory.StopAsync();
+            }
+
+            SetHostedSessionGuid("22222222222222222222222222222222");
+            var secondStore = new SpyTaskStore(new LocalTaskStore(tasksDirectory));
+            using var secondFactory = CreateFactory(root, secondStore);
+            using HttpClient secondClient = secondFactory.CreateClient();
+
+            using HttpResponseMessage secondResponse = await PostConversationAsync(
+                secondClient,
+                previousResponseId: firstResponseId);
+            Assert.That(secondResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+            Assert.That(
+                secondStore.CreateCallCount,
+                Is.Zero,
+                "an active pre-rollout suspended chain must continue under its legacy task ID");
+            await WaitForStatusAsync(secondStore, legacyTaskId, TaskWireKeys.StatusSuspended);
+        }
+        finally
+        {
+            RestoreEnvironment(previousHosted, previousGuid);
+            DeleteRoot(root);
+        }
+    }
+
+    [Test]
+    public async Task HostedSessionInstanceIdFallsBackWhenLegacyTaskIsDeletedAfterProbe()
+    {
+        string root = CreateRoot();
+        string tasksDirectory = Path.Combine(root, "tasks");
+        string? previousHosted = Environment.GetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT");
+        string? previousGuid = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_SESSION_GUID");
+        try
+        {
+            SetHostedSessionGuid(null);
+            string firstResponseId;
+            string legacyTaskId;
+            var firstStore = new SpyTaskStore(new LocalTaskStore(tasksDirectory));
+            using (var firstFactory = CreateFactory(root, firstStore))
+            using (HttpClient firstClient = firstFactory.CreateClient())
+            {
+                using HttpResponseMessage firstResponse = await PostConversationAsync(firstClient);
+                Assert.That(firstResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+                firstResponseId = await ReadResponseIdAsync(firstResponse);
+                legacyTaskId = firstStore.LastCreateRequest!.Id!;
+                await WaitForStatusAsync(firstStore, legacyTaskId, TaskWireKeys.StatusSuspended);
+                await firstFactory.StopAsync();
+            }
+
+            const string sessionInstanceValue = "33333333333333333333333333333333";
+            SetHostedSessionGuid(sessionInstanceValue);
+            var secondStore = new DeleteAfterLegacyProbeStore(
+                new LocalTaskStore(tasksDirectory));
+            using var secondFactory = CreateFactory(root, secondStore);
+            using HttpClient secondClient = secondFactory.CreateClient();
+            secondStore.Arm(legacyTaskId);
+
+            using HttpResponseMessage secondResponse = await PostConversationAsync(
+                secondClient,
+                previousResponseId: firstResponseId);
+            Assert.That(secondResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            string secondResponseId = await ReadResponseIdAsync(secondResponse);
+
+            string scopedTaskId = TaskIdDerivation.Derive(
+                ConversationId,
+                firstResponseId,
+                secondResponseId,
+                AgentName,
+                PublicSessionId,
+                TaskIdDerivation.DeriveSessionScope(
+                    PublicSessionId,
+                    Guid.ParseExact(sessionInstanceValue, "N")),
+                steerable: false);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(secondStore.CreatedTaskIds, Does.Contain(scopedTaskId));
+                Assert.That(secondStore.CreatedTaskIds, Does.Not.Contain(legacyTaskId));
+            });
+        }
+        finally
+        {
+            RestoreEnvironment(previousHosted, previousGuid);
+            DeleteRoot(root);
+        }
+    }
+
+    [Test]
+    public async Task HostedSessionInstanceIdFallsBackWhenActiveLegacyTaskIsDeletedAfterProbe()
+    {
+        string root = CreateRoot();
+        string tasksDirectory = Path.Combine(root, "tasks");
+        string? previousHosted = Environment.GetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT");
+        string? previousGuid = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_SESSION_GUID");
+        var firstTurnGate =
+            new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var firstTurnStarted =
+            new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        try
+        {
+            SetHostedSessionGuid(null);
+            var handler = new TestHandler
+            {
+                EventFactory = (request, context, ct) =>
+                    EmitFirstTurnGatedAsync(
+                        request,
+                        context,
+                        firstTurnStarted,
+                        firstTurnGate,
+                        ct),
+            };
+            var store = new DeleteAfterLegacyProbeStore(
+                new LocalTaskStore(tasksDirectory));
+            using var factory = CreateFactory(
+                root,
+                store,
+                handler,
+                steerable: true);
+            using HttpClient client = factory.CreateClient();
+
+            using HttpResponseMessage firstResponse = await PostConversationAsync(client);
+            Assert.That(firstResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            string firstResponseId = await ReadResponseIdAsync(firstResponse);
+            await firstTurnStarted.Task.WaitAsync(TimeSpan.FromSeconds(5));
+            string legacyTaskId = store.CreatedTaskIds.Single();
+
+            const string sessionInstanceValue = "44444444444444444444444444444444";
+            SetHostedSessionGuid(sessionInstanceValue);
+            store.Arm(legacyTaskId);
+
+            using HttpResponseMessage secondResponse = await PostConversationAsync(
+                client,
+                previousResponseId: firstResponseId);
+            string secondBody = await secondResponse.Content.ReadAsStringAsync();
+            Assert.That(
+                secondResponse.StatusCode,
+                Is.EqualTo(HttpStatusCode.OK),
+                secondBody);
+            using JsonDocument secondDocument = JsonDocument.Parse(secondBody);
+            string secondResponseId =
+                secondDocument.RootElement.GetProperty("id").GetString()!;
+
+            string scopedTaskId = TaskIdDerivation.Derive(
+                ConversationId,
+                firstResponseId,
+                secondResponseId,
+                AgentName,
+                PublicSessionId,
+                TaskIdDerivation.DeriveSessionScope(
+                    PublicSessionId,
+                    Guid.ParseExact(sessionInstanceValue, "N")),
+                steerable: false);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(store.CreatedTaskIds, Does.Contain(scopedTaskId));
+                Assert.That(
+                    store.CreatedTaskIds.Count(id => id == legacyTaskId),
+                    Is.EqualTo(1),
+                    "the active legacy ID must not be recreated after deletion");
+            });
+
+            firstTurnGate.TrySetResult();
+            await factory.StopAsync();
+        }
+        finally
+        {
+            firstTurnGate.TrySetResult();
+            RestoreEnvironment(previousHosted, previousGuid);
+            DeleteRoot(root);
+        }
+    }
+
+    private static TestWebApplicationFactory CreateFactory(
+        string root,
+        ITaskStore store,
+        TestHandler? handler = null,
+        bool steerable = false)
+        => new(
+            handler,
+            configureOptions: options =>
+            {
+                options.ResilientBackground = true;
+                options.SteerableConversations = steerable;
+            },
+            configureTestServices: services =>
+            {
+                services.AddSingleton(store);
+                services.AddSingleton<ITaskStore>(store);
+                services.AddSingleton<ResponsesProvider>(
+                    _ => new FileResponsesProvider(Path.Combine(root, "responses")));
+            },
+            hosted: true);
+
+    private static async IAsyncEnumerable<ResponseStreamEvent> EmitFirstTurnGatedAsync(
+        CreateResponse request,
+        ResponseContext context,
+        TaskCompletionSource firstTurnStarted,
+        TaskCompletionSource firstTurnGate,
+        [EnumeratorCancellation] CancellationToken cancellationToken)
+    {
+        var response = new ResponseObject(
+            context.ResponseId,
+            request.Model ?? "test-model");
+        yield return new ResponseCreatedEvent(0, response);
+
+        if (firstTurnStarted.TrySetResult())
+        {
+            await firstTurnGate.Task.WaitAsync(cancellationToken);
+        }
+
+        response.SetCompleted();
+        yield return new ResponseCompletedEvent(0, response);
+    }
+
+    private static async Task<HttpResponseMessage> PostConversationAsync(
+        HttpClient client,
+        string? previousResponseId = null)
+    {
+        var body = new
+        {
+            model = "test",
+            background = true,
+            conversation = ConversationId,
+            previous_response_id = previousResponseId,
+            agent_session_id = PublicSessionId,
+        };
+        return await client.PostAsync(
+            "/responses",
+            new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json"));
+    }
+
+    private static async Task<string> ReadResponseIdAsync(HttpResponseMessage response)
+    {
+        using JsonDocument document =
+            JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+        return document.RootElement.GetProperty("id").GetString()!;
+    }
+
+    private static async Task WaitForStatusAsync(
+        ITaskStore store,
+        string taskId,
+        string expectedStatus)
+    {
+        DateTimeOffset deadline = DateTimeOffset.UtcNow.AddSeconds(10);
+        while (DateTimeOffset.UtcNow < deadline)
+        {
+            TaskRecord? record = await store.GetAsync(taskId);
+            if (record?.Status == expectedStatus)
+            {
+                return;
+            }
+
+            await Task.Delay(20);
+        }
+
+        Assert.Fail($"Task '{taskId}' did not reach status '{expectedStatus}'.");
+    }
+
+    private static void SetHostedSessionGuid(string? sessionGuid)
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", "production");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_SESSION_GUID", sessionGuid);
+        FoundryEnvironment.Reload();
+    }
+
+    private static void RestoreEnvironment(string? hosted, string? sessionGuid)
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", hosted);
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_SESSION_GUID", sessionGuid);
+        FoundryEnvironment.Reload();
+    }
+
+    private static string CreateRoot()
+    {
+        string root = Path.Combine(
+            Path.GetTempPath(),
+            "agentserver-session-guid-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        return root;
+    }
+
+    private static void DeleteRoot(string root)
+    {
+        try
+        {
+            Directory.Delete(root, recursive: true);
+        }
+        catch (IOException)
+        {
+        }
+    }
+
+    private sealed class DeleteAfterLegacyProbeStore(
+        ITaskStore inner) : ITaskStore
+    {
+        private int _armed;
+        private int _deleted;
+        private string? _legacyTaskId;
+
+        public List<string> CreatedTaskIds { get; } = new();
+
+        public void Arm(string legacyTaskId)
+        {
+            _legacyTaskId = legacyTaskId;
+            Volatile.Write(ref _armed, 1);
+        }
+
+        public async Task<TaskRecord> CreateAsync(
+            TaskCreateRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            CreatedTaskIds.Add(request.Id!);
+            return await inner.CreateAsync(request, cancellationToken);
+        }
+
+        public async Task<TaskRecord?> GetAsync(
+            string taskId,
+            CancellationToken cancellationToken = default)
+        {
+            TaskRecord? record = await inner.GetAsync(taskId, cancellationToken);
+            if (Volatile.Read(ref _armed) != 0
+                && record is not null
+                && string.Equals(taskId, _legacyTaskId, StringComparison.Ordinal)
+                && Interlocked.Exchange(ref _deleted, 1) == 0)
+            {
+                await inner.DeleteAsync(
+                    taskId,
+                    force: true,
+                    cancellationToken: CancellationToken.None);
+            }
+
+            return record;
+        }
+
+        public Task<TaskRecord> PatchAsync(
+            string taskId,
+            TaskPatchRequest patch,
+            string? ifMatch,
+            CancellationToken cancellationToken = default)
+            => inner.PatchAsync(taskId, patch, ifMatch, cancellationToken);
+
+        public Task DeleteAsync(
+            string taskId,
+            string? ifMatch = null,
+            bool force = false,
+            bool cascade = false,
+            CancellationToken cancellationToken = default)
+            => inner.DeleteAsync(taskId, ifMatch, force, cascade, cancellationToken);
+
+        public Task<TaskListResult> ListAsync(
+            TaskListQuery query,
+            CancellationToken cancellationToken = default)
+            => inner.ListAsync(query, cancellationToken);
+    }
+}

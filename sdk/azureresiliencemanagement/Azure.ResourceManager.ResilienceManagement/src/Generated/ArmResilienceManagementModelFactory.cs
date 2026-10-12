@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary>
         /// Defines an action for the recovery orchestration group.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.RecoveryGroupManualAction"/> and <see cref="Models.RecoveryGroupCustomRunbookAction"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.RecoveryGroupCustomRunbookAction"/> and <see cref="Models.RecoveryGroupManualAction"/>.
         /// </summary>
         /// <param name="name"> The name of the recovery orchestration group action. </param>
         /// <param name="description"> A description of the recovery orchestration group action, containing the instructions to be performed during this action. </param>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <returns> A new <see cref="Models.RecoveryGroupBaseAction"/> instance for mocking. </returns>
         public static RecoveryGroupBaseAction RecoveryGroupBaseAction(string name = default, string description = default, string @type = default, int timeoutInMinutes = default)
         {
-            return new UnknownRecoveryGroupBaseAction(name, description, default, timeoutInMinutes, default);
+            return new UnknownRecoveryGroupBaseAction(name, description, @type is null ? default : new RecoveryGroupActionType(@type), timeoutInMinutes, default);
         }
 
         /// <summary> Defines a manual action for the recovery orchestration group. </summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <returns> A new <see cref="Models.RecoveryGroupManualAction"/> instance for mocking. </returns>
         public static RecoveryGroupManualAction RecoveryGroupManualAction(string name = default, string description = default, int timeoutInMinutes = default)
         {
-            return new RecoveryGroupManualAction(name, description, default, timeoutInMinutes, default);
+            return new RecoveryGroupManualAction(name, description, RecoveryGroupActionType.ManualAction, timeoutInMinutes, default);
         }
 
         /// <summary> Defines a custom runbook action for the recovery orchestration group. </summary>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new RecoveryGroupCustomRunbookAction(
                 name,
                 description,
-                default,
+                RecoveryGroupActionType.CustomRunbook,
                 timeoutInMinutes,
                 default,
                 actionResourceId,
@@ -485,20 +485,20 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary>
         /// Definition of recovery orchestration resource protection solution setting with recovery orchestration plan.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ResourceNativeProtectionSolutionSetting"/>, <see cref="Models.ResourceCustomProtectionSetting"/>, and <see cref="Models.ResourceSiteRecoveryProtectionSetting"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ResourceCustomProtectionSetting"/>, <see cref="Models.ResourceNativeProtectionSolutionSetting"/>, and <see cref="Models.ResourceSiteRecoveryProtectionSetting"/>.
         /// </summary>
         /// <param name="protectionSolutionType"> A setting that indicates the resource protected with which recovery solution. </param>
         /// <returns> A new <see cref="Models.ResourceBaseProtectionSolutionSetting"/> instance for mocking. </returns>
         public static ResourceBaseProtectionSolutionSetting ResourceBaseProtectionSolutionSetting(string protectionSolutionType = default)
         {
-            return new UnknownResourceBaseProtectionSolutionSetting(default, default);
+            return new UnknownResourceBaseProtectionSolutionSetting(protectionSolutionType is null ? default : new ResourceProtectionSolutionType(protectionSolutionType), default);
         }
 
         /// <summary> Definition of recovery orchestration resource native protection solution setting with recovery orchestration plan. </summary>
         /// <returns> A new <see cref="Models.ResourceNativeProtectionSolutionSetting"/> instance for mocking. </returns>
         public static ResourceNativeProtectionSolutionSetting ResourceNativeProtectionSolutionSetting()
         {
-            return new ResourceNativeProtectionSolutionSetting(default, default);
+            return new ResourceNativeProtectionSolutionSetting(ResourceProtectionSolutionType.AzureNative, default);
         }
 
         /// <param name="failoverActionResourceId"> The Azure resource ID hosting the custom action automation script. </param>
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public static ResourceCustomProtectionSetting ResourceCustomProtectionSetting(ResourceIdentifier failoverActionResourceId = default, ResourceIdentifier failoverCommitActionResourceId = default, ResourceIdentifier testFailoverActionResourceId = default, ResourceIdentifier testFailoverCleanupActionResourceId = default, ResourceIdentifier reprotectActionResourceId = default)
         {
             return new ResourceCustomProtectionSetting(
-                default,
+                ResourceProtectionSolutionType.CustomRunbook,
                 default,
                 failoverActionResourceId is null ? default : new ResourceCustomProtectionAction(failoverActionResourceId, default),
                 failoverCommitActionResourceId is null ? default : new ResourceCustomProtectionAction(failoverCommitActionResourceId, default),
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <returns> A new <see cref="Models.ResourceSiteRecoveryProtectionSetting"/> instance for mocking. </returns>
         public static ResourceSiteRecoveryProtectionSetting ResourceSiteRecoveryProtectionSetting(ResourceIdentifier testFailoverParamsNetworkResourceId = default, string testFailoverCleanupParamsComments = default, IEnumerable<DiskReprotectInputDetails> diskReprotectInputDetails = default)
         {
-            return new ResourceSiteRecoveryProtectionSetting(default, default, testFailoverParamsNetworkResourceId is null ? default : new ResourceSiteRecoveryTestFailoverParams(testFailoverParamsNetworkResourceId, default), testFailoverCleanupParamsComments is null ? default : new ResourceSiteRecoveryTestFailoverCleanupParams(testFailoverCleanupParamsComments, default), diskReprotectInputDetails is null ? default : new ResourceSiteRecoveryReprotectParams((diskReprotectInputDetails ?? new ChangeTrackingList<DiskReprotectInputDetails>()).ToList(), default));
+            return new ResourceSiteRecoveryProtectionSetting(ResourceProtectionSolutionType.AzureSiteRecovery, default, testFailoverParamsNetworkResourceId is null ? default : new ResourceSiteRecoveryTestFailoverParams(testFailoverParamsNetworkResourceId, default), testFailoverCleanupParamsComments is null ? default : new ResourceSiteRecoveryTestFailoverCleanupParams(testFailoverCleanupParamsComments, default), diskReprotectInputDetails is null ? default : new ResourceSiteRecoveryReprotectParams((diskReprotectInputDetails ?? new ChangeTrackingList<DiskReprotectInputDetails>()).ToList(), default));
         }
 
         /// <summary> Disk Reprotect Input Details. </summary>
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 (retryDetails ?? new ChangeTrackingList<JobRetryDetails>()).ToList(),
                 jobExtendedInfo,
                 (userComments ?? new ChangeTrackingList<JobUserComment>()).ToList(),
-                default,
+                JobType.RecoveryPlan,
                 executionConfigurationsUserConsent is null ? default : new ExecutionConfigurations(executionConfigurationsUserConsent.GetValueOrDefault(), default),
                 triggeredBy,
                 default,
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 (retryDetails ?? new ChangeTrackingList<JobRetryDetails>()).ToList(),
                 jobExtendedInfo,
                 (userComments ?? new ChangeTrackingList<JobUserComment>()).ToList(),
-                default,
+                jobType is null ? (JobType?)default : new JobType(jobType),
                 executionConfigurationsUserConsent is null ? default : new ExecutionConfigurations(executionConfigurationsUserConsent.GetValueOrDefault(), default),
                 triggeredBy,
                 default);
@@ -849,7 +849,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 (retryDetails ?? new ChangeTrackingList<JobRetryDetails>()).ToList(),
                 jobExtendedInfo,
                 (userComments ?? new ChangeTrackingList<JobUserComment>()).ToList(),
-                default,
+                JobType.DrillRun,
                 executionConfigurationsUserConsent is null ? default : new ExecutionConfigurations(executionConfigurationsUserConsent.GetValueOrDefault(), default),
                 triggeredBy,
                 default,
@@ -935,7 +935,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 jobId,
                 taskId,
                 taskName,
-                default,
+                JobResourceType.RecoveryPlan,
                 default,
                 provisioningState,
                 protectionSolutionType,
@@ -962,7 +962,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary>
         /// Definition of job-resource.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.RecoveryJobResourceProperties"/> and <see cref="Models.DrillRunResourceProperties"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DrillRunResourceProperties"/> and <see cref="Models.RecoveryJobResourceProperties"/>.
         /// </summary>
         /// <param name="status"> The current status of the job execution. </param>
         /// <param name="startsOn"> The start time of the job execution. </param>
@@ -998,7 +998,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 jobId,
                 taskId,
                 taskName,
-                default,
+                jobResourceType is null ? default : new JobResourceType(jobResourceType),
                 default);
         }
 
@@ -1037,7 +1037,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 jobId,
                 taskId,
                 taskName,
-                default,
+                JobResourceType.DrillRun,
                 default,
                 provisioningState);
         }
@@ -1097,7 +1097,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 lastSyncOn,
                 lastResyncReadinessCheckOn,
                 managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<ManagedBrokerTarget>()).ToList(), default),
-                default,
+                drillType is null ? default : new DrillType(drillType),
                 monitoringProperties,
                 errorDetails,
                 default);
@@ -1290,7 +1290,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 lastSyncOn,
                 lastResyncReadinessCheckOn,
                 managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<ManagedBrokerTarget>()).ToList(), default),
-                default,
+                DrillType.Zonal,
                 monitoringProperties,
                 errorDetails,
                 default,
@@ -1331,7 +1331,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 lastSyncOn,
                 lastResyncReadinessCheckOn,
                 managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<ManagedBrokerTarget>()).ToList(), default),
-                default,
+                DrillType.Regional,
                 monitoringProperties,
                 errorDetails,
                 default);

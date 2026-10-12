@@ -12,6 +12,11 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary></summary>
     public readonly partial struct ListKeysRequestExpand : IEquatable<ListKeysRequestExpand>
     {
+        private const string KerbValue = "kerb";
+
+        /// <summary> Gets the Kerb. </summary>
+        public static ListKeysRequestExpand Kerb { get; } = new ListKeysRequestExpand(KerbValue);
+
         /// <summary> Determines if two <see cref="ListKeysRequestExpand"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>

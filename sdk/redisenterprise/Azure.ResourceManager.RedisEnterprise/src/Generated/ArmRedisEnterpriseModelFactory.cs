@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static RedisEnterpriseMigrationProperties RedisEnterpriseMigrationProperties(string sourceType = default, ResourceIdentifier targetResourceId = default, RedisEnterpriseMigrationProvisioningState? provisioningState = default, string statusDetails = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default)
         {
             return new UnknownRedisEnterpriseMigrationProperties(
-                default,
+                sourceType is null ? default : new SourceType(sourceType),
                 targetResourceId,
                 provisioningState,
                 statusDetails,
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static AzureCacheForRedisMigrationProperties AzureCacheForRedisMigrationProperties(ResourceIdentifier targetResourceId = default, RedisEnterpriseMigrationProvisioningState? provisioningState = default, string statusDetails = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, ResourceIdentifier sourceResourceId = default, bool isSwitchDns = default, bool isSkipDataMigration = default, bool? isForceMigrate = default)
         {
             return new AzureCacheForRedisMigrationProperties(
-                default,
+                SourceType.AzureCacheForRedis,
                 targetResourceId,
                 provisioningState,
                 statusDetails,

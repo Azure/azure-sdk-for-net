@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Databricks
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatabricksAccessConnectorData, DatabricksAccessConnectorResource>(new AccessConnectorsGetByResourceGroupAsyncCollectionResultOfT(_accessConnectorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DatabricksAccessConnectorCollection.GetAll"), data => new DatabricksAccessConnectorResource(Client, data));
+            return new AsyncPageableWrapper<DatabricksAccessConnectorData, DatabricksAccessConnectorResource>(new DatabricksAccessConnectorDataAsyncCollectionResultOfT(_accessConnectorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DatabricksAccessConnectorCollection.GetAll"), data => new DatabricksAccessConnectorResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Databricks
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatabricksAccessConnectorData, DatabricksAccessConnectorResource>(new AccessConnectorsGetByResourceGroupCollectionResultOfT(_accessConnectorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DatabricksAccessConnectorCollection.GetAll"), data => new DatabricksAccessConnectorResource(Client, data));
+            return new PageableWrapper<DatabricksAccessConnectorData, DatabricksAccessConnectorResource>(new DatabricksAccessConnectorDataCollectionResultOfT(_accessConnectorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DatabricksAccessConnectorCollection.GetAll"), data => new DatabricksAccessConnectorResource(Client, data));
         }
 
         /// <summary>

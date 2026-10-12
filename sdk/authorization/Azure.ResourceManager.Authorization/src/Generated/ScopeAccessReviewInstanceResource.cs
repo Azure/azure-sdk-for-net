@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new ScopeAccessReviewInstanceContactedReviewersGetAllAsyncCollectionResultOfT(
+            return new AccessReviewContactedReviewerAsync0CollectionResultOfT(
                 _scopeAccessReviewInstanceContactedReviewersRestClient,
                 Id.Parent.Parent.ToString(),
                 Id.Parent.Name,
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new ScopeAccessReviewInstanceContactedReviewersGetAllCollectionResultOfT(
+            return new AccessReviewContactedReviewer0CollectionResultOfT(
                 _scopeAccessReviewInstanceContactedReviewersRestClient,
                 Id.Parent.Parent.ToString(),
                 Id.Parent.Name,
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AccessReviewDecisionData, AccessReviewDecisionResource>(new ScopeAccessReviewInstanceDecisionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AccessReviewDecisionData, AccessReviewDecisionResource>(new AccessReviewDecisionDataAsync0CollectionResultOfT(
                 _scopeAccessReviewInstanceDecisionsRestClient,
                 Id.Parent.Parent.ToString(),
                 Id.Parent.Name,
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AccessReviewDecisionData, AccessReviewDecisionResource>(new ScopeAccessReviewInstanceDecisionsGetAllCollectionResultOfT(
+            return new PageableWrapper<AccessReviewDecisionData, AccessReviewDecisionResource>(new AccessReviewDecisionData0CollectionResultOfT(
                 _scopeAccessReviewInstanceDecisionsRestClient,
                 Id.Parent.Parent.ToString(),
                 Id.Parent.Name,

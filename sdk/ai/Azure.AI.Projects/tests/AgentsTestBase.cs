@@ -230,6 +230,10 @@ public class AgentsTestBase : ProjectsClientTestBase
     protected const string HOSTED_AGENT = "cs-e2e-tests-hosted";
     protected const string VECTOR_STORE = "cs-e2e-tests-vector-store";
     protected const string STREAMING_CONSTRAINT = "The test framework does not support iteration of stream in Sync mode.";
+    protected const string CONVERSATION_AGENT_NAME = "cs-e2e-tests-voice-conversation";
+    protected const string LIFECYCLE_AGENT_NAME = "cs-e2e-tests-voice-lifecycle";
+    protected const string AUDIO_CONVERSATION_AGENT_NAME = "cs-e2e-tests-voice-audio";
+    protected const string TOOLCALL_AGENT_NAME = "cs-e2e-tests-voice-toolcall";
     private readonly List<string> _conversationIDs = [];
     private ProjectConversationsClient _conversations = null;
     protected readonly string MEMORY_STORE_NAME = "test-memory-store";
@@ -722,6 +726,22 @@ public class AgentsTestBase : ProjectsClientTestBase
             projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }
         foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: AGENT_NAME2))
+        {
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+        }
+        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: CONVERSATION_AGENT_NAME))
+        {
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+        }
+        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: LIFECYCLE_AGENT_NAME))
+        {
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+        }
+        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: AUDIO_CONVERSATION_AGENT_NAME))
+        {
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+        }
+        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: TOOLCALL_AGENT_NAME))
         {
             projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }

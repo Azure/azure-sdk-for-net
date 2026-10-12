@@ -33,13 +33,17 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="provisioningState"> State of the operation on the resource. </param>
         /// <param name="sourceVolumeSizeGiB"> Size of Source Volume. </param>
         /// <param name="volumeName"> Source Volume Name of a snapshot. </param>
+        /// <param name="snapshotAccessState"> The state of snapshot which determines the access availability of the snapshot. </param>
+        /// <param name="completionPercent"> Percentage complete for the background copy of the snapshot when a snapshot is in InstantAccess state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SnapshotProperties(SnapshotCreationInfo creationData, ElasticSanProvisioningState? provisioningState, long? sourceVolumeSizeGiB, string volumeName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SnapshotProperties(SnapshotCreationInfo creationData, ElasticSanProvisioningState? provisioningState, long? sourceVolumeSizeGiB, string volumeName, SnapshotAccessState? snapshotAccessState, float? completionPercent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreationData = creationData;
             ProvisioningState = provisioningState;
             SourceVolumeSizeGiB = sourceVolumeSizeGiB;
             VolumeName = volumeName;
+            SnapshotAccessState = snapshotAccessState;
+            CompletionPercent = completionPercent;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -54,6 +58,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <summary> Source Volume Name of a snapshot. </summary>
         public string VolumeName { get; }
+
+        /// <summary> The state of snapshot which determines the access availability of the snapshot. </summary>
+        public SnapshotAccessState? SnapshotAccessState { get; }
+
+        /// <summary> Percentage complete for the background copy of the snapshot when a snapshot is in InstantAccess state. </summary>
+        public float? CompletionPercent { get; }
 
         /// <summary> Fully qualified resource ID of the volume. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}". </summary>
         public ResourceIdentifier CreationDataSourceId

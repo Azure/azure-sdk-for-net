@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AiGatewayData, AiGatewayResource>(new AiGatewaysGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AiGatewayData, AiGatewayResource>(new AiGatewayDataAsync0CollectionResultOfT(
                 _aiGatewaysRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AiGatewayData, AiGatewayResource>(new AiGatewaysGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<AiGatewayData, AiGatewayResource>(new AiGatewayData0CollectionResultOfT(
                 _aiGatewaysRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

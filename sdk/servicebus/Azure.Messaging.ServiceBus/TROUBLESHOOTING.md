@@ -206,7 +206,9 @@ Most of the spans are self-explanatory and are started and stopped during the op
 
 ![image](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/assets/Tracing.png)
 
-In the above screenshot, we see the end-to-end transaction that can be viewed in Application Insights in the portal. In this scenario, the application is sending messages and using the [ServiceBusSessionProcessor][ServiceBusSessionProcessor] to process them. The `Message` activity is linked to `ServiceBusSender.Send`, `ServiceBusReceiver.Receive`, `ServiceBusSessionProcessor.ProcessSessionMessage`, and `ServiceBusReceiver.Complete`. 
+The screenshot shows an end-to-end transaction from an earlier version of the client, with messages sent and processed by [ServiceBusSessionProcessor][ServiceBusSessionProcessor]. Processor message traces link `Message` to `ServiceBusSender.Send`, `ServiceBusSessionProcessor.ProcessSessionMessage`, and `ServiceBusReceiver.Complete`.
+
+[ServiceBusProcessor][ServiceBusProcessor] and [ServiceBusSessionProcessor][ServiceBusSessionProcessor] emit processing and settlement activities in both tracing modes. Application-initiated receives, including receives through `ProcessorReceiveActions` in a callback, emit `Receive` activities. For internal receive-loop diagnostics, including idle polling and shutdown cancellation, collect the receive start and completion events described in [Logging and diagnostics](#logging-and-diagnostics). These EventSource logs are available independently of tracing.
 
 ## Troubleshoot sender issues
 
@@ -316,7 +318,7 @@ Information about Service Bus quotas can be found [here][ServiceBusQuotas].
 [RetryOptionsSample]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample13_AdvancedConfiguration.md#customizing-the-retry-options
 [TransportSample]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample13_AdvancedConfiguration.md#configuring-the-transport
 [ServiceBusMessagingExceptions]: https://learn.microsoft.com/azure/service-bus-messaging/service-bus-messaging-exceptions
-[AmqpSpec]: https://www.amqp.org/resources/specifications
+[AmqpSpec]: https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-types-v1.0-os.html
 [GetConnectionString]: https://learn.microsoft.com/azure/service-bus-messaging/service-bus-quickstart-portal#get-the-connection-string
 [AuthorizeSAS]: https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas
 [RBAC]: https://learn.microsoft.com/azure/service-bus-messaging/service-bus-managed-service-identity

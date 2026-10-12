@@ -163,7 +163,7 @@ namespace Azure.AI.Language.Conversations.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ConversationPiiItemResult(id, redactedContent, entities, additionalBinaryDataProperties);
+            return new ConversationPiiItemResult(id, redactedContent, entities ?? new ChangeTrackingList<NamedEntity>(), additionalBinaryDataProperties);
         }
     }
 }
