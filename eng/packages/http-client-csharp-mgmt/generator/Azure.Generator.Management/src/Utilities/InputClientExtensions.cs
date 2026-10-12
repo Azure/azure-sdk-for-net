@@ -29,6 +29,18 @@ internal static class InputClientExtensions
         return new FuncExpression([resourceType.Declaration], new TernaryConditionalExpression(tryGetVersion, apiVersion, Null));
     }
 
+    internal static ValueExpression BuildConstructorApiVersion(
+        (string ResourceType, string DefaultVersion) version,
+        bool isCollection = false,
+        string variableName = "apiVersion")
+    {
+        Microsoft.TypeSpec.Generator.Snippets.ScopedApi<string> apiVersion;
+        var tryGetVersion = isCollection
+            ? This.As<ArmCollection>().TryGetApiVersion(Literal(version.ResourceType), variableName, out apiVersion)
+            : This.As<ArmResource>().TryGetApiVersion(Literal(version.ResourceType), variableName, out apiVersion);
+        return new TernaryConditionalExpression(tryGetVersion, apiVersion, Literal(version.DefaultVersion));
+    }
+
     extension(InputClient inputClient)
     {
         /// <summary>
@@ -45,9 +57,75 @@ internal static class InputClientExtensions
         /// collection clients already resolve their constructor version; mockable extension
         /// operations need their own lookup even when every wire default is the client version.
         /// </summary>
-        internal bool NeedsApiVersionResolver => inputClient.HasOperationApiVersionDefaults
+        internal bool NeedsOperationApiVersion => inputClient.HasOperationApiVersionDefaults
             || ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas.Any(resource =>
                 resource.CategorizeMethods().MethodsInExtension.Any(method => ReferenceEquals(method.InputClient, inputClient)));
+
+        /// <summary>
+        /// A single fixed resource key and common wire default can be resolved by the caller
+        /// at construction. Mixed requests, dynamic keys and differing defaults keep a resolver.
+        /// </summary>
+        internal (string ResourceType, string DefaultVersion)? ConstructorApiVersion
+        {
+            get
+            {
+                var plans = ManagementClientGenerator.Instance.InputLibrary.ConstructorApiVersions;
+                if (plans.TryGetValue(inputClient, out var plan))
+                {
+                    return plan;
+                }
+                // Reuse the same decision during field, caller and request discovery,
+                // rather than repeatedly walking the resource metadata.
+                return plans[inputClient] = BuildPlan();
+
+                (string ResourceType, string DefaultVersion)? BuildPlan()
+                {
+                if (!inputClient.NeedsOperationApiVersion)
+                {
+                    return null;
+                }
+                (string ResourceType, string DefaultVersion)? result = null;
+                foreach (var method in inputClient.Methods)
+                {
+                    var parameter = method.Operation.Parameters.FirstOrDefault(parameter => parameter.IsApiVersion
+                        || parameter is InputQueryParameter { SerializedName: "api-version" });
+                    if (parameter is null)
+                    {
+                        continue;
+                    }
+                    // Keep the base generator's method/constant parameter representation
+                    // unchanged. Only client query fields have a matching string constructor.
+                    if (parameter is not InputQueryParameter || parameter.Scope != InputParameterScope.Client
+                        || !inputClient.UsesOperationApiVersion(method))
+                    {
+                        return null;
+                    }
+                    var resources = ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas
+                        .Where(resource => resource.Methods.Any(resourceMethod => ReferenceEquals(resourceMethod.InputMethod, method)))
+                        .ToArray();
+                    if (resources.Length == 0 || resources.Any(resource => !resource.ResourceType.All(segment => segment.IsConstant)))
+                    {
+                        return null;
+                    }
+                    string resourceType = resources[0].ResourceType.SerializedResourceType;
+                    if (resources.Any(resource => resource.ResourceType.SerializedResourceType != resourceType))
+                    {
+                        return null;
+                    }
+                    var wireDefault = parameter.Type is InputLiteralType literal ? literal.Value : parameter.DefaultValue?.Value;
+                    var version = (resourceType, wireDefault as string ?? inputClient.CurrentApiVersion);
+                    if (result is not null && result.Value != version)
+                    {
+                        return null;
+                    }
+                    result = version;
+                }
+                return result;
+                }
+            }
+        }
+
+        internal bool NeedsApiVersionResolver => inputClient.NeedsOperationApiVersion && inputClient.ConstructorApiVersion is null;
 
         /// <summary>
         /// Whether any request still reads the shared constructor version. Resolver-only
@@ -65,7 +143,7 @@ internal static class InputClientExtensions
                 && !inputClient.UsesOperationApiVersion(method));
 
         internal bool UsesOperationApiVersion(InputServiceMethod method)
-            => inputClient.NeedsApiVersionResolver
+            => inputClient.NeedsOperationApiVersion
                 && method.Operation.Parameters.FirstOrDefault(parameter => parameter.IsApiVersion) is InputQueryParameter
                 && (inputClient.HasOperationApiVersionDefaults
                     || ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas.Any(resource =>

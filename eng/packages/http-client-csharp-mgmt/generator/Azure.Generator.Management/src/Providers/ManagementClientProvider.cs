@@ -66,6 +66,10 @@ internal sealed class ManagementClientProvider : ClientProvider
 
     internal FieldProvider ApiVersionResolverField => _apiVersionResolverField!;
 
+    internal FieldProvider ConstructorApiVersionField => _isRootClient
+        ? _apiVersionField!
+        : Fields.Single(candidate => candidate.WireInfo?.IsApiVersion == true);
+
     protected override FieldProvider[] BuildFields()
     {
         List<FieldProvider> fields = _isRootClient

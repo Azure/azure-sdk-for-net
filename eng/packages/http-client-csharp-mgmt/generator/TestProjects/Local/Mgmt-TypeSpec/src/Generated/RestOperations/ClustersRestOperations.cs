@@ -15,8 +15,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     internal partial class Clusters
     {
         private readonly Uri _endpoint;
+        private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
-        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of Clusters for mocking. </summary>
         protected Clusters()
@@ -28,13 +28,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
-        internal Clusters(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, Func<ResourceType, string> getApiVersion)
+        /// <param name="apiVersion"></param>
+        internal Clusters(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
-            _getApiVersion = getApiVersion;
+            _apiVersion = apiVersion;
             _userAgent = new TelemetryDetails(typeof(Clusters).Assembly, applicationId);
         }
 
@@ -54,7 +54,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/clusters/", false);
             uri.AppendPath(clusterName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/clusters") ?? "2024-05-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-05-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +74,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/clusters/", false);
             uri.AppendPath(clusterName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/clusters") ?? "2024-05-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-05-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -96,7 +96,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/clusters/", false);
             uri.AppendPath(clusterName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/clusters") ?? "2024-05-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-05-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -118,7 +118,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/clusters/", false);
             uri.AppendPath(clusterName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/clusters") ?? "2024-05-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-05-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -136,7 +136,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/clusters", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/clusters") ?? "2024-05-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-05-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -157,7 +157,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/clusters") ?? "2024-05-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2024-05-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -174,7 +174,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/MgmtTypeSpec/clusters", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/clusters") ?? "2024-05-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-05-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -195,7 +195,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/clusters") ?? "2024-05-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2024-05-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

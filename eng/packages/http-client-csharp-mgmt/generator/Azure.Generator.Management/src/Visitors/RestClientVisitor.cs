@@ -53,10 +53,13 @@ internal class RestClientVisitor : ScmLibraryVisitor
         ValueExpression defaultVersion = Literal(wireDefault as string ?? client.CurrentApiVersion);
         // Runtime overrides are resource-type keyed. Non-resource operations retain
         // their spec-defined defaults and do not acquire a key from their request path.
-        var effectiveVersion = resources.Length == 0
-            ? defaultVersion
-            : ((ManagementClientProvider)enclosingType.ClientProvider).ApiVersionResolverField.As<Func<Azure.Core.ResourceType, string>>().NullConditional()
-                .Invoke("Invoke", BuildResourceTypeExpression(resources, serviceMethod, createRequestMethodProvider, initialSignature)).NullCoalesce(defaultVersion);
+        var managementClient = (ManagementClientProvider)enclosingType.ClientProvider;
+        var effectiveVersion = client.ConstructorApiVersion is not null
+            ? managementClient.ConstructorApiVersionField.As<string>().NullCoalesce(defaultVersion)
+            : resources.Length == 0
+                ? defaultVersion
+                : managementClient.ApiVersionResolverField.As<Func<Azure.Core.ResourceType, string>>().NullConditional()
+                    .Invoke("Invoke", BuildResourceTypeExpression(resources, serviceMethod, createRequestMethodProvider, initialSignature)).NullCoalesce(defaultVersion);
 
         var statements = new List<MethodBodyStatement>();
         foreach (var statement in createRequestMethodProvider.BodyStatements)

@@ -40,7 +40,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         internal FooCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _foosClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", FooResource.ResourceType.Namespace, Diagnostics);
-            _foosRestClient = new Foos(_foosClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _foosRestClient = new Foos(_foosClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("MgmtTypeSpec/foos", out string foosApiVersionOverride) ? foosApiVersionOverride : "2024-05-01");
             ValidateResourceId(id);
         }
 

@@ -44,15 +44,15 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests.Mocking
 
         private ClientDiagnostics EscapedWireVersionReadsClientDiagnostics => _escapedWireVersionReadsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtApiVersionOverride.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private EscapedWireVersionReads EscapedWireVersionReadsRestClient => _escapedWireVersionReadsRestClient ??= new EscapedWireVersionReads(EscapedWireVersionReadsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private EscapedWireVersionReads EscapedWireVersionReadsRestClient => _escapedWireVersionReadsRestClient ??= new EscapedWireVersionReads(EscapedWireVersionReadsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("MgmtTypeSpec/escapedWireVersionTests", out string apiVersion) ? apiVersion : "opaque-read&channel=legacy%2Fplus+#hash");
 
         private ClientDiagnostics WireVersionOperationsClientDiagnostics => _wireVersionOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtApiVersionOverride.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private WireVersionOperations WireVersionOperationsRestClient => _wireVersionOperationsRestClient ??= new WireVersionOperations(WireVersionOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private WireVersionOperations WireVersionOperationsRestClient => _wireVersionOperationsRestClient ??= new WireVersionOperations(WireVersionOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion0) ? apiVersion0 : null);
 
         private ClientDiagnostics OrdinaryWireVersionOperationsClientDiagnostics => _ordinaryWireVersionOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtApiVersionOverride.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private OrdinaryWireVersionOperations OrdinaryWireVersionOperationsRestClient => _ordinaryWireVersionOperationsRestClient ??= new OrdinaryWireVersionOperations(OrdinaryWireVersionOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private OrdinaryWireVersionOperations OrdinaryWireVersionOperationsRestClient => _ordinaryWireVersionOperationsRestClient ??= new OrdinaryWireVersionOperations(OrdinaryWireVersionOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("MgmtTypeSpec/ordinaryWireVersionTests", out string apiVersion1) ? apiVersion1 : "2024-05-01");
 
         private ClientDiagnostics OrdinaryProviderOperationsClientDiagnostics => _ordinaryProviderOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtApiVersionOverride.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

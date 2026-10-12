@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         internal ClusterResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _clustersClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("MgmtTypeSpec/clusters", out string clustersApiVersionOverride) ? clustersApiVersionOverride : "2024-05-01");
             ValidateResourceId(id);
         }
 

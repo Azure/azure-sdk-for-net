@@ -113,7 +113,9 @@ namespace Azure.Generator.Management.Providers
                     ResourceHelpers.GetRestClientPropertyName(restClientProvider.Name),
                     new ExpressionPropertyBody(
                         restClientField.Assign(
-                            New.Instance(restClientProvider.Type, [clientDiagnosticsProperty, thisResource.Pipeline(), thisResource.Diagnostics().Property(nameof(DiagnosticsOptions.ApplicationId)), thisResource.Endpoint(), .. inputClient.NeedsApiVersionField ? new[] { Literal(inputClient.CurrentApiVersion) } : [], .. inputClient.NeedsApiVersionResolver ? new[] { InputClientExtensions.BuildApiVersionResolver() } : []]),
+                            New.Instance(restClientProvider.Type, [clientDiagnosticsProperty, thisResource.Pipeline(), thisResource.Diagnostics().Property(nameof(DiagnosticsOptions.ApplicationId)), thisResource.Endpoint(), .. inputClient.NeedsApiVersionField ? new[] { inputClient.ConstructorApiVersion is { } constructorVersion
+                            ? InputClientExtensions.BuildConstructorApiVersion(constructorVersion)
+                            : Literal(inputClient.CurrentApiVersion) } : [], .. inputClient.NeedsApiVersionResolver ? new[] { InputClientExtensions.BuildApiVersionResolver() } : []]),
                             nullCoalesce: true)),
                     enclosingType);
 

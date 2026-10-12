@@ -38,7 +38,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
         internal OrdinaryWireVersionTestCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _ordinaryWireVersionOperationsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtApiVersionOverride.Tests", OrdinaryWireVersionTestResource.ResourceType.Namespace, Diagnostics);
-            _ordinaryWireVersionOperationsRestClient = new OrdinaryWireVersionOperations(_ordinaryWireVersionOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _ordinaryWireVersionOperationsRestClient = new OrdinaryWireVersionOperations(_ordinaryWireVersionOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("MgmtTypeSpec/ordinaryWireVersionTests", out string ordinaryWireVersionOperationsApiVersionOverride) ? ordinaryWireVersionOperationsApiVersionOverride : "2024-05-01");
             ValidateResourceId(id);
         }
 

@@ -373,7 +373,7 @@ namespace Azure.Generator.Management.Providers
             var bodyStatements = new List<MethodBodyStatement>();
 
             ScopedApi<string>? apiVersion = null;
-            if (_clientInfos.Keys.Any(client => client.NeedsApiVersionField))
+            if (_clientInfos.Keys.Any(client => client.NeedsApiVersionField && client.ConstructorApiVersion is null))
             {
                 bodyStatements.Add(thisCollection.TryGetApiVersion(_resourceTypeExpression, $"{ResourceName}ApiVersion".ToVariableName(), out var resolvedApiVersion).Terminate());
                 apiVersion = resolvedApiVersion;
@@ -392,7 +392,10 @@ namespace Azure.Generator.Management.Providers
                 bodyStatements.Add(clientInfo.RestClientField.Assign(New.Instance(clientInfo.RestClientProvider.Type,
                 [
                     clientInfo.DiagnosticsField, thisCollection.Pipeline(), thisCollection.Diagnostics().Property(nameof(DiagnosticsOptions.ApplicationId)), thisCollection.Endpoint(),
-                    .. inputClient.NeedsApiVersionField ? new[] { apiVersion!.NullCoalesce(Literal(inputClient.CurrentApiVersion)) } : [],
+                    .. inputClient.NeedsApiVersionField ? new[] { inputClient.ConstructorApiVersion is { } constructorVersion
+                        ? InputClientExtensions.BuildConstructorApiVersion(constructorVersion, isCollection: true,
+                            variableName: $"{clientInfo.RestClientProvider.Name}ApiVersionOverride".ToVariableName())
+                        : apiVersion!.NullCoalesce(Literal(inputClient.CurrentApiVersion)) } : [],
                     .. inputClient.NeedsApiVersionResolver ? new[] { InputClientExtensions.BuildApiVersionResolver(isCollection: true) } : []
                 ])).Terminate());
             }

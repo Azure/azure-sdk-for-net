@@ -40,7 +40,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
         internal EscapedWireVersionTestCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _escapedWireVersionReadsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtApiVersionOverride.Tests", EscapedWireVersionTestResource.ResourceType.Namespace, Diagnostics);
-            _escapedWireVersionReadsRestClient = new EscapedWireVersionReads(_escapedWireVersionReadsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _escapedWireVersionReadsRestClient = new EscapedWireVersionReads(_escapedWireVersionReadsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("MgmtTypeSpec/escapedWireVersionTests", out string escapedWireVersionReadsApiVersionOverride) ? escapedWireVersionReadsApiVersionOverride : "opaque-read&channel=legacy%2Fplus+#hash");
             ValidateResourceId(id);
         }
 

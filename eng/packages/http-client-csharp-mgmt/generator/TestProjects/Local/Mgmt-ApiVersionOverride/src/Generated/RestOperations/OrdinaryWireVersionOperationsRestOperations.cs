@@ -15,8 +15,8 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
     internal partial class OrdinaryWireVersionOperations
     {
         private readonly Uri _endpoint;
+        private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
-        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of OrdinaryWireVersionOperations for mocking. </summary>
         protected OrdinaryWireVersionOperations()
@@ -28,13 +28,13 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
-        internal OrdinaryWireVersionOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, Func<ResourceType, string> getApiVersion)
+        /// <param name="apiVersion"></param>
+        internal OrdinaryWireVersionOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
-            _getApiVersion = getApiVersion;
+            _apiVersion = apiVersion;
             _userAgent = new TelemetryDetails(typeof(OrdinaryWireVersionOperations).Assembly, applicationId);
         }
 
@@ -54,7 +54,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/ordinaryWireVersionTests/", false);
             uri.AppendPath(ordinaryWireVersionTestName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/ordinaryWireVersionTests") ?? "2024-05-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-05-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -71,7 +71,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/MgmtTypeSpec/ordinaryWireVersionTests", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/ordinaryWireVersionTests") ?? "2024-05-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-05-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -92,7 +92,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/ordinaryWireVersionTests") ?? "2024-05-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2024-05-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
