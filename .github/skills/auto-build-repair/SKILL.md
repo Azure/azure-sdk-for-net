@@ -59,7 +59,9 @@ process fails, retain its actual output/error for the failure report; do not
 substitute an earlier successful result.
 
 For CLI invocations, execute a Bash argument array and record that same array,
-serialized with `printf '%q '`, as `engine-command.txt` in the results directory.
+serialized with `LC_ALL=C printf '%q '`, as `engine-command.txt` in the results
+directory. Scope the C locale to this serialization only, not the engine process:
+it encodes non-ASCII bytes as ASCII shell escapes that survive comment sanitization.
 Include every argument and its actual value, including `-o json`, the package
 path, customization request, and `--max-attempts`; never reconstruct or
 abbreviate the command for reporting.
@@ -106,6 +108,11 @@ comment or telemetry yourself.
 - The engine command comes only from `engine-command.txt`, displayed verbatim in
   a Bash code block. Missing capture is explicitly unavailable, not a guessed
   invocation. Already-green and ineligible outcomes must not display a stale command.
+- Pass `-CommandArtifactDir` pointing to the workflow's existing uploaded,
+  secret-redacted agent log directory. If the complete report exceeds the
+  65,000-character safe-output limit, the emitter saves the full command and report
+  there and emits a compact summary with telemetry and a workflow-artifacts link.
+  Do not truncate the recorded command or actual engine arguments to fit the comment.
 - Iterations come from `attemptsUsed`: completed patch proposals reaching host
   validation, including a no-progress proposal. Baseline/classifier-only builds
   and tool/Exit reminders do not count. Never count JSON files or infer attempts

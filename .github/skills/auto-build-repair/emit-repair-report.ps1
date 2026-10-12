@@ -65,6 +65,9 @@ param(
     # Captured CLI output/capability errors, including response-capture failures.
     [string]$EngineErrorsFile = '',
 
+    # Existing secret-redacted, uploaded agent log directory for oversized reports.
+    [string]$CommandArtifactDir = '',
+
     # Identity fields (default to GitHub Actions env; overridable for tests).
     [string]$Repo = $env:GITHUB_REPOSITORY,
     [int]$Pr = 0,
@@ -340,6 +343,7 @@ function Format-Cell([string]$s) {
 }
 
 $sb = [System.Text.StringBuilder]::new()
+$summaryEnd = 0
 # NOTE: no HTML identity marker — gh-aw's add_comment sanitizer (removeXmlComments)
 # strips <!-- ... --> from the posted body. Comment identity for dedup/parsing is the
 # visible "SDK Build Repair" heading plus the "schema_version":"v1" telemetry object.
@@ -377,6 +381,7 @@ else {
         [void]$sb.AppendLine("[Workflow logs]($server/$Repo/actions/runs/$($Matches[1]))")
     }
     [void]$sb.AppendLine('')
+    $summaryEnd = $sb.Length
 
     if ($engineCommand) {
         $fenceLength = 3
@@ -543,6 +548,7 @@ else {
     [void]$sb.AppendLine('')
 }
 
+$telemetryStart = $sb.Length
 [void]$sb.AppendLine('<details><summary>Telemetry (machine-readable)</summary>')
 [void]$sb.AppendLine('')
 [void]$sb.AppendLine('```json')
@@ -556,6 +562,25 @@ $body = $sb.ToString()
 # Normalize to LF so the rendered bytes are identical on Windows and the Linux runner
 # (the gh-aw sanitizer trims trailing whitespace; CRLF would otherwise perturb the object).
 $body = $body -replace "`r`n", "`n"
+if ($body.Length -gt 65000) {
+    if (-not $CommandArtifactDir -or -not (Test-Path -LiteralPath $CommandArtifactDir -PathType Container)) {
+        throw 'The repair report exceeds the 65,000-character safe-output limit. Supply -CommandArtifactDir for lossless workflow artifact reporting.'
+    }
+    if ($engineCommand) {
+        Set-Content -LiteralPath (Join-Path $CommandArtifactDir 'engine-command.txt') -Value $engineCommand -NoNewline -Encoding utf8
+    }
+    Set-Content -LiteralPath (Join-Path $CommandArtifactDir 'repair-report-full.md') -Value $body -NoNewline -Encoding utf8
+    $compact = $sb.ToString(0, $summaryEnd).Replace('See exact invocation below', 'See full invocation in workflow artifacts')
+    $compact += "The full report exceeds the 65,000-character comment limit. No command or engine argument was truncated.`n`n"
+    $compact += "Inspect ``repair-report-full.md``$(if ($engineCommand) { ' and `engine-command.txt`' }) in the workflow's ``agent`` artifact for the complete record.`n`n"
+    if ($RunId -match '^gha-(\d+)-\d+$') {
+        $server = if ($env:GITHUB_SERVER_URL) { $env:GITHUB_SERVER_URL.TrimEnd('/') } else { 'https://github.com' }
+        $compact += "[Workflow artifacts]($server/$Repo/actions/runs/$($Matches[1])#artifacts)`n`n"
+    }
+    $compact += $sb.ToString($telemetryStart, $sb.Length - $telemetryStart)
+    $body = $compact -replace "`r`n", "`n"
+    if ($body.Length -gt 65000) { throw 'The compact repair summary exceeds the 65,000-character safe-output limit.' }
+}
 Set-Content -LiteralPath $OutFile -Value $body -NoNewline -Encoding utf8
 
 Write-Host "Rendered repair comment ($status) -> $OutFile"

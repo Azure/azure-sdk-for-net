@@ -138,6 +138,7 @@ const invocation = /```bash\r?\n(mkdir -p "\$RUNNER_TEMP\/repair-results"[\s\S]*
 const bash = process.env.BASH || "bash";
 for (const [bound, mode, expected, quoted = false] of [[1, "success", 0], [3, "success", 0], [10, "success", 0],
   [3, "success", 0, true], [3, "failed", 1, true],
+  [3, "success", 0, "oversized"], [3, "failed", 1, "oversized"],
   [3, "failed", 1], [3, "failed-stderr", 1], [3, "failed-stderr-upgrade", 1], [3, "failed-stderr-array", 1],
   [3, "invalid-result", 1], [3, "invalid-array-result", 1],
   [3, "contradictory-result", 1], [3, "old-cli", 1], [3, "help-failed", 1]]) {
@@ -155,6 +156,7 @@ azsdk() {
   fi
   printf '%s\\n' "$*" >> "$RUNNER_TEMP/calls"
   printf '%s\\0' "$@" >> "$RUNNER_TEMP/calls-argv"
+  printf '%s\\n' "$LC_ALL" > "$RUNNER_TEMP/engine-locale"
   if [[ "$MODE" == "invalid-result" ]]; then echo "not JSON"; return 0; fi
   if [[ "$MODE" == "invalid-array-result" ]]; then
     printf '[\\n {"success":true,"attemptsUsed":%s}\\n]\\n' "$BOUND"; return 0
@@ -173,14 +175,18 @@ azsdk() {
   if [[ "$MODE" == "failed" || "$MODE" == "contradictory-result" ]]; then echo "Actual engine diagnostic" >&2; return 1; fi
 }
 `;
-    const packagePath = quoted ? "sdk/contoso widgets/'[x] & $HOME; Azure.Widgets" : "sdk/contoso/Azure.Contoso.Widgets";
-    const request = quoted ? "Fix 'X' | `Y` <Z> & $HOME; $(touch \"$RUNNER_TEMP/injected\")\nnext line\r\n```bash\nhttp://example.test/error https://example.test/error @contoso/types #42" : "Fix CS1061 in custom code";
+    const unicode = "caf\u00e9 e\u0301 \uff21\uff22\uff23 \u0430\u0441 \ud83d\ude80";
+    const packagePath = quoted ? `sdk/${unicode} widgets/'[x] & $HOME; Azure.Widgets` : "sdk/contoso/Azure.Contoso.Widgets";
+    const request = quoted === "oversized" ? "x".repeat(70000)
+      : quoted ? `Fix ${unicode} 'X' | \`Y\` <Z> & $HOME; $(touch "$RUNNER_TEMP/injected")\nnext line\r\n\`\`\`bash\nhttp://example.test/error https://example.test/error @contoso/types #42` : "Fix CS1061 in custom code";
+    const requestFile = path.join(root, "request.txt");
+    fs.writeFileSync(requestFile, request);
     const environment = { ...process.env, RUNNER_TEMP: root.replace(/\\/g, "/"),
       GITHUB_WORKSPACE: path.resolve(__dirname, "../../../..").replace(/\\/g, "/"), MODE: mode, BOUND: String(bound),
-      TEST_PACKAGE_PATH: packagePath, TEST_CUSTOMIZATION_REQUEST: request };
+      TEST_PACKAGE_PATH: packagePath, TEST_CUSTOMIZATION_REQUEST_FILE: requestFile.replace(/\\/g, "/"), LC_ALL: "C.UTF-8" };
     const command = invocation.replaceAll("<maxIterations from repair-config.yml>", String(bound))
       .replace('"<failing SDK package dir>"', '"$TEST_PACKAGE_PATH"')
-      .replace('"<the build errors / failure context>"', '"$TEST_CUSTOMIZATION_REQUEST"');
+      .replace('"<the build errors / failure context>"', '"$(cat "$TEST_CUSTOMIZATION_REQUEST_FILE")"');
     const run = spawnSync(bash, ["--noprofile", "--norc", "-c", fake + command], {
       env: environment,
       encoding: "utf8", timeout: 30000,
@@ -198,19 +204,41 @@ azsdk() {
         "--package-path", packagePath, "--customization-request", request, "--max-attempts", String(bound)];
       const readArgs = (directory) => fs.readFileSync(path.join(directory, "calls-argv"), "utf8").split("\0").slice(0, -1);
       assert.deepEqual(readArgs(root), expectedArgs);
+      assert.equal(fs.readFileSync(path.join(root, "engine-locale"), "utf8").trim(), "C.UTF-8", "serialization does not change the engine locale");
       const recordedCommand = fs.readFileSync(path.join(root, "repair-results", "engine-command.txt"), "utf8");
+      assert.match(recordedCommand, /^[\x00-\x7f]*$/, "Unicode argv is recorded using ASCII byte escapes");
       assert.match(recordedCommand, /^azsdk -o json tsp client customized-update /);
       assert.match(recordedCommand, new RegExp("--max-attempts " + bound + "\\n$"));
       const replayRoot = path.join(root, "replay");
       fs.mkdirSync(replayRoot);
-      const replay = spawnSync(bash, ["--noprofile", "--norc", "-c", fake + recordedCommand], {
-        env: { ...environment, RUNNER_TEMP: replayRoot.replace(/\\/g, "/") },
+      const replay = spawnSync(bash, ["--noprofile", "--norc", "-c", fake + '\nsource "$RECORDED_COMMAND_FILE"'], {
+        env: { ...environment, RUNNER_TEMP: replayRoot.replace(/\\/g, "/"),
+          RECORDED_COMMAND_FILE: path.join(root, "repair-results", "engine-command.txt").replace(/\\/g, "/") },
         encoding: "utf8", timeout: 10000,
       });
       assert.ifError(replay.error);
       assert.deepEqual(readArgs(replayRoot), expectedArgs, "recorded command preserves every executed argument");
       assert.equal(fs.existsSync(path.join(root, "injected")), false);
       assert.equal(fs.existsSync(path.join(replayRoot, "injected")), false);
+      const reportPath = path.join(root, "report.md");
+      const artifactDir = path.join(root, "agent-logs");
+      fs.mkdirSync(artifactDir);
+      const emit = spawnSync("pwsh", ["-NoProfile", "-File",
+        path.resolve(__dirname, "../emit-repair-report.ps1"),
+        "-ResultsDir", path.join(root, "repair-results"), "-CommandArtifactDir", artifactDir,
+        "-RepoRoot", root, "-Repo", "Azure/azure-sdk-for-net", "-Pr", "123", "-RunId", "gha-12345-1",
+        "-OutFile", reportPath], { encoding: "utf8", timeout: 30000 });
+      assert.ifError(emit.error);
+      assert.equal(emit.status, 0, emit.stderr);
+      const report = fs.readFileSync(reportPath, "utf8");
+      assert(report.length <= 65000, "report fits the actual add_comment.body limit");
+      if (quoted === "oversized") {
+        assert.match(report, /No command or engine argument was truncated/);
+        assert.equal(fs.readFileSync(path.join(artifactDir, "engine-command.txt"), "utf8"), recordedCommand.trimEnd());
+        assert(fs.readFileSync(path.join(artifactDir, "repair-report-full.md"), "utf8").includes(recordedCommand.trimEnd()));
+      } else {
+        assert(report.includes(recordedCommand.trimEnd()), "comment includes the complete executed command");
+      }
       const resultPath = path.join(root, "repair-results", "result.json");
       assert.equal(fs.readFileSync(path.join(root, "repair-results", "engine-exit-code.txt"), "utf8").trim(),
         mode.startsWith("failed") || mode === "contradictory-result" ? "1" : "0");
