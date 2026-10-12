@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CustomHostnameSitesCollection(value, nextLink, additionalBinaryDataProperties);
+            return new CustomHostnameSitesCollection(value ?? new ChangeTrackingList<CustomHostnameSites>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DynamicSchemaVersionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DynamicSchemaVersionListResult(value ?? new ChangeTrackingList<EdgeDynamicSchemaVersionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
