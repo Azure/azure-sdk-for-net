@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -44,6 +45,7 @@ namespace Azure.Provisioning.Fabric
         }
 
         /// <summary> Gets or sets the Overage. </summary>
+        [Experimental("AZPROVISION001")]
         public CapacityOverageProperties Overage
         {
             get

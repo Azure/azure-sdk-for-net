@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Destination Type Enum. </summary>
+    [Experimental("AZPROVISION001")]
     public enum VirtualEnclaveCommunityEndpointDestinationType
     {
         /// <summary> DestinationType Type FQDN. </summary>

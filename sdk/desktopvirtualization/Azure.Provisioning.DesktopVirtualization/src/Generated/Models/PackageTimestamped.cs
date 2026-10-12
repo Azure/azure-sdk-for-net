@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Is package timestamped so it can ignore the certificate expiry date. </summary>
+    [Experimental("AZPROVISION001")]
     public enum PackageTimestamped
     {
         /// <summary> Package is timestamped. </summary>

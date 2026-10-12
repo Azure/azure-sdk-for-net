@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> ConnectionState information. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class EventGridPrivateEndpointConnectionState : ProvisionableConstruct
     {
         private BicepValue<EventGridPrivateEndpointPersistedConnectionStatus> _status;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Status. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EventGridPrivateEndpointPersistedConnectionStatus> Status
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ActionsRequired. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ActionsRequired
         {
             get

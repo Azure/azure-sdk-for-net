@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary></summary>
+    [Experimental("AZPROVISION001")]
     public enum ContainerRegistryTaskSourceTriggerEvent
     {
         /// <summary> Commit. </summary>

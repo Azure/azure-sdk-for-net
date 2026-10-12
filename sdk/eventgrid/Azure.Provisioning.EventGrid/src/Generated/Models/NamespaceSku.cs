@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Represents available Sku pricing tiers. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class NamespaceSku : ProvisionableConstruct
     {
         private BicepValue<EventGridSkuName> _name;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EventGridSkuName> Name
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Capacity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Capacity
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Properties of the Topic Spaces Configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class TopicSpacesConfiguration : ProvisionableConstruct
     {
         private BicepValue<TopicSpacesConfigurationState> _state;
@@ -29,6 +31,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the State. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TopicSpacesConfigurationState> State
         {
             get
@@ -44,6 +47,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the RouteTopicResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RouteTopicResourceId
         {
             get
@@ -59,6 +63,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the Hostname. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Hostname
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the RoutingEnrichments. </summary>
+        [Experimental("AZPROVISION001")]
         public RoutingEnrichments RoutingEnrichments
         {
             get
@@ -84,6 +90,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ClientAuthentication. </summary>
+        [Experimental("AZPROVISION001")]
         public ClientAuthenticationSettings ClientAuthentication
         {
             get
@@ -99,6 +106,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the MaximumSessionExpiryInHours. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaximumSessionExpiryInHours
         {
             get
@@ -114,6 +122,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the MaximumClientSessionsPerAuthenticationName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaximumClientSessionsPerAuthenticationName
         {
             get
@@ -129,6 +138,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the RoutingIdentityInfo. </summary>
+        [Experimental("AZPROVISION001")]
         public RoutingIdentityInfo RoutingIdentityInfo
         {
             get
@@ -144,6 +154,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the CustomDomains. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<CustomDomainConfiguration> CustomDomains
         {
             get

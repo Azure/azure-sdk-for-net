@@ -18,6 +18,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
     /// The task run that has the ARM resource and properties.
     /// The task run will have the information of request and result of a run.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerRegistryTaskRun : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -85,6 +86,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerRegistryTaskIdentityProperties Identity
         {
             get
@@ -100,6 +102,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Location. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AzureLocation> Location
         {
             get
@@ -115,6 +118,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerRegistryTaskProvisioningState> ProvisioningState
         {
             get
@@ -128,6 +132,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the RunRequest. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerRegistryRunContent RunRequest
         {
             get
@@ -145,6 +150,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the RunResult. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerRegistryRun RunResult
         {
             get
@@ -154,6 +160,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the ForceUpdateTag. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ForceUpdateTag
         {
             get

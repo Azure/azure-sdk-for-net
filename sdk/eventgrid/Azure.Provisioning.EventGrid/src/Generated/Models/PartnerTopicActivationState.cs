@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Activation state of the partner topic. </summary>
+    [Experimental("AZPROVISION001")]
     public enum PartnerTopicActivationState
     {
         /// <summary> NeverActivated. </summary>

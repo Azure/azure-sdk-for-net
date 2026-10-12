@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The type of the auto trigger for base image dependency updates. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ContainerRegistryTaskBaseImageTriggerType
     {
         /// <summary> All. </summary>

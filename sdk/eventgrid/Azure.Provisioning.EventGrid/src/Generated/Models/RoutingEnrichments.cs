@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The RoutingEnrichments. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class RoutingEnrichments : ProvisionableConstruct
     {
         private BicepList<StaticRoutingEnrichment> _static;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Static. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<StaticRoutingEnrichment> Static
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Dynamic. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DynamicRoutingEnrichment> Dynamic
         {
             get

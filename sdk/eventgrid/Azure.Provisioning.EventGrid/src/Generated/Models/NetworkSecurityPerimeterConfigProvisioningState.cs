@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Provisioning state to reflect configuration state and indicate status of nsp profile configuration retrieval. </summary>
+    [Experimental("AZPROVISION001")]
     public enum NetworkSecurityPerimeterConfigProvisioningState
     {
         /// <summary> Creating. </summary>

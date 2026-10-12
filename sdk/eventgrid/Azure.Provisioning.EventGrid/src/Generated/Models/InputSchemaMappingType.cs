@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Type of the custom mapping. </summary>
+    [Experimental("AZPROVISION001")]
     internal enum InputSchemaMappingType
     {
         /// <summary> Json. </summary>

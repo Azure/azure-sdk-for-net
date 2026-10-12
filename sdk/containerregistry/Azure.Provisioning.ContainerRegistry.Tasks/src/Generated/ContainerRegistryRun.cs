@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> Run resource properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerRegistryRun : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -75,6 +76,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the RunId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RunId
         {
             get
@@ -84,6 +86,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the Status. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerRegistryTaskRunStatus> Status
         {
             get
@@ -93,6 +96,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the LastUpdatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> LastUpdatedOn
         {
             get
@@ -102,6 +106,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the RunType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerRegistryTaskRunType> RunType
         {
             get
@@ -111,6 +116,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the AgentPoolName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AgentPoolName
         {
             get
@@ -120,6 +126,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the CreatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> CreatedOn
         {
             get
@@ -129,6 +136,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the StartsOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> StartsOn
         {
             get
@@ -138,6 +146,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the FinishOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> FinishOn
         {
             get
@@ -147,6 +156,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the OutputImages. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerRegistryTaskImageDescriptor> OutputImages
         {
             get
@@ -156,6 +166,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the Task. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Task
         {
             get
@@ -165,6 +176,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the ImageUpdateTrigger. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerRegistryTaskImageUpdateTrigger ImageUpdateTrigger
         {
             get
@@ -174,6 +186,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the SourceTrigger. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerRegistryTaskSourceTriggerDescriptor SourceTrigger
         {
             get
@@ -183,6 +196,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the TimerTrigger. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerRegistryTaskTimerTriggerDescriptor TimerTrigger
         {
             get
@@ -192,6 +206,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the Platform. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerRegistryTaskPlatformProperties Platform
         {
             get
@@ -201,6 +216,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the SourceRegistryAuth. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SourceRegistryAuth
         {
             get
@@ -210,6 +226,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the CustomRegistries. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> CustomRegistries
         {
             get
@@ -219,6 +236,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the RunErrorMessage. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RunErrorMessage
         {
             get
@@ -228,6 +246,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the UpdateTriggerToken. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> UpdateTriggerToken
         {
             get
@@ -237,6 +256,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the LogArtifact. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerRegistryTaskImageDescriptor LogArtifact
         {
             get
@@ -246,6 +266,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerRegistryTaskProvisioningState> ProvisioningState
         {
             get
@@ -255,6 +276,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the IsArchiveEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsArchiveEnabled
         {
             get
@@ -264,6 +286,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Cpu. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> AgentCpu
         {
             get

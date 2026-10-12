@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> List of destination types for monitoring logs. </summary>
+    [Experimental("AZPROVISION001")]
     public enum VirtualEnclaveMonitoringDestinationType
     {
         /// <summary> MonitoringDestinationType Type CommunityWorkspace. </summary>

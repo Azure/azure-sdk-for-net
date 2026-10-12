@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Provisioning state of the partner registration. </summary>
+    [Experimental("AZPROVISION001")]
     public enum PartnerRegistrationProvisioningState
     {
         /// <summary> Creating. </summary>

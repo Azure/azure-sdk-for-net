@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> The type of maintenance for session host components. </summary>
+    [Experimental("AZPROVISION001")]
     public enum SessionHostComponentUpdateType
     {
         /// <summary> Agent and other agent side components are delivery schedule is controlled by WVD Infra. </summary>

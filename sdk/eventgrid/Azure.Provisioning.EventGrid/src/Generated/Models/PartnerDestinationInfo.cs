@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,6 +15,7 @@ namespace Azure.Provisioning.EventGrid
     /// Properties of the corresponding partner destination of a Channel.
     /// Please note this is the base class. The derived classes available for instantiation are: <see cref="WebhookPartnerDestinationInfo"/>.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class PartnerDestinationInfo : ProvisionableConstruct
     {
         private BicepValue<string> _azureSubscriptionId;
@@ -29,6 +31,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the AzureSubscriptionId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AzureSubscriptionId
         {
             get
@@ -44,6 +47,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ResourceGroupName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ResourceGroupName
         {
             get
@@ -59,6 +63,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -74,6 +79,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Type of the endpoint for the partner destination. </summary>
+        [Experimental("AZPROVISION001")]
         internal BicepValue<PartnerEndpointType> EndpointType
         {
             get
@@ -84,6 +90,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the EndpointServiceContext. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EndpointServiceContext
         {
             get
@@ -99,6 +106,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ResourceMoveChangeHistory. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ResourceMoveChangeHistory> ResourceMoveChangeHistory
         {
             get

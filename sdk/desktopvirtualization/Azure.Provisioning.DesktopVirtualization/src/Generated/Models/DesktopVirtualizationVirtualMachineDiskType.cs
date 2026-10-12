@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> The disk type used by virtual machine in hostpool session host. </summary>
+    [Experimental("AZPROVISION001")]
     public enum DesktopVirtualizationVirtualMachineDiskType
     {
         /// <summary> Standard HDD locally redundant storage. Best for backup, non-critical, and infrequent access. </summary>

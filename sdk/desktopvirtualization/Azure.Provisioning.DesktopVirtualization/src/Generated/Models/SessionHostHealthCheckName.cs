@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Represents the name of the health check operation performed. </summary>
+    [Experimental("AZPROVISION001")]
     public enum SessionHostHealthCheckName
     {
         /// <summary> Verifies the SessionHost is joined to a domain. If this check fails is classified as fatal as no connection can succeed if the SessionHost is not joined to the domain. (Currently Enabled). </summary>

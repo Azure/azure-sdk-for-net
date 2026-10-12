@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> EventGrid System Topic. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SystemTopic : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -113,6 +114,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public ManagedServiceIdentity Identity
         {
             get
@@ -128,6 +130,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EventGridResourceProvisioningState> ProvisioningState
         {
             get
@@ -141,6 +144,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Source. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> Source
         {
             get
@@ -158,6 +162,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the TopicType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TopicType
         {
             get
@@ -175,6 +180,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the MetricResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> MetricResourceId
         {
             get
@@ -188,6 +194,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the CustomerManagedKeyEncryption. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<EventGridCustomerManagedKeyEncryption> CustomerManagedKeyEncryption
         {
             get
@@ -205,6 +212,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Mode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EventGridConfidentialComputeMode> PlatformCapabilitiesConfidentialComputeMode
         {
             get

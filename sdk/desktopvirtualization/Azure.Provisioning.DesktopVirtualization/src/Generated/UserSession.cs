@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Represents a UserSession definition. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class UserSession : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -92,6 +93,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the ObjectId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ObjectId
         {
             get
@@ -101,6 +103,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the UserPrincipalName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> UserPrincipalName
         {
             get
@@ -110,6 +113,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the ApplicationType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualApplicationType> ApplicationType
         {
             get
@@ -119,6 +123,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the SessionState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<UserSessionState> SessionState
         {
             get
@@ -128,6 +133,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the ActiveDirectoryUserName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ActiveDirectoryUserName
         {
             get
@@ -137,6 +143,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the CreateOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> CreateOn
         {
             get

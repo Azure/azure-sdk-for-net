@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Provisioning state of the domain topic. </summary>
+    [Experimental("AZPROVISION001")]
     public enum DomainTopicProvisioningState
     {
         /// <summary> Creating. </summary>

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The properties of a timer trigger. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerRegistryTaskTimerTrigger : ProvisionableConstruct
     {
         private BicepValue<string> _schedule;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Schedule. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Schedule
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Status. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerRegistryTaskTriggerStatus> Status
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get

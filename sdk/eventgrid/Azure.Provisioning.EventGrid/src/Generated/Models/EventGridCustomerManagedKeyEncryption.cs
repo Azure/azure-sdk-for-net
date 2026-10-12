@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> All Customer-managed key encryption properties for the resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class EventGridCustomerManagedKeyEncryption : ProvisionableConstruct
     {
         private BicepValue<Uri> _keyEncryptionKeyUri;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the KeyEncryptionKeyUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> KeyEncryptionKeyUri
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the KeyEncryptionKeyIdentity. </summary>
+        [Experimental("AZPROVISION001")]
         public EventGridKeyEncryptionKeyIdentity KeyEncryptionKeyIdentity
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the KeyEncryptionKeyStatus. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EventGridKeyEncryptionKeyStatus> KeyEncryptionKeyStatus
         {
             get
@@ -65,6 +70,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the KeyEncryptionKeyStatusFriendlyDescription. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> KeyEncryptionKeyStatusFriendlyDescription
         {
             get

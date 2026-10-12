@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Virtual Enclave Default Settings. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class EnclaveDefaultSettings : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _keyVaultResourceId;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the KeyVaultResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> KeyVaultResourceId
         {
             get
@@ -35,6 +38,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the StorageAccountResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> StorageAccountResourceId
         {
             get
@@ -45,6 +49,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the LogAnalyticsResourceIdCollection. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ResourceIdentifier> LogAnalyticsResourceIdCollection
         {
             get
@@ -55,6 +60,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the DiagnosticDestination. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualEnclaveDiagnosticDestination> DiagnosticDestination
         {
             get

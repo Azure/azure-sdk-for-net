@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Information about a partner registration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class PartnerRegistration : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -112,6 +113,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PartnerRegistrationProvisioningState> ProvisioningState
         {
             get
@@ -125,6 +127,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the PartnerRegistrationImmutableId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> PartnerRegistrationImmutableId
         {
             get

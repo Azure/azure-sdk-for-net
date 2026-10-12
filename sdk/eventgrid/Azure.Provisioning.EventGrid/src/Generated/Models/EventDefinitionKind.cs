@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The kind of event type used. </summary>
+    [Experimental("AZPROVISION001")]
     public enum EventDefinitionKind
     {
         /// <summary> Inline. </summary>

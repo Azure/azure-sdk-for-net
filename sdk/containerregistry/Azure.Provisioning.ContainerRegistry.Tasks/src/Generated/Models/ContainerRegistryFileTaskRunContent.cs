@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The request parameters for a scheduling run against a task file. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerRegistryFileTaskRunContent : ContainerRegistryRunContent
     {
         private BicepValue<string> _taskFilePath;
@@ -28,6 +30,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the TaskFilePath. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TaskFilePath
         {
             get
@@ -43,6 +46,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the ValuesFilePath. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ValuesFilePath
         {
             get
@@ -58,6 +62,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Values. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerRegistryTaskSetValue> Values
         {
             get
@@ -73,6 +78,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the TimeoutInSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> TimeoutInSeconds
         {
             get
@@ -88,6 +94,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Platform. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerRegistryTaskPlatformProperties Platform
         {
             get
@@ -103,6 +110,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the AgentConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         internal AgentProperties AgentConfiguration
         {
             get
@@ -118,6 +126,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the SourceLocation. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SourceLocation
         {
             get
@@ -133,6 +142,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Credentials. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerRegistryTaskCredentials Credentials
         {
             get
@@ -148,6 +158,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Cpu. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> AgentCpu
         {
             get

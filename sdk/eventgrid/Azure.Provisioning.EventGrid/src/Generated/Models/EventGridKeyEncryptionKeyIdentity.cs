@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The EventGridKeyEncryptionKeyIdentity. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class EventGridKeyEncryptionKeyIdentity : ProvisionableConstruct
     {
         private BicepValue<EventGridKeyEncryptionIdentityType> _type;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Type. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EventGridKeyEncryptionIdentityType> Type
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the UserAssignedIdentityResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> UserAssignedIdentityResourceId
         {
             get

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Provisioning state of the Session Host Configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public enum SessionHostConfigurationProvisioningState
     {
         /// <summary> Provisioning Successful. </summary>

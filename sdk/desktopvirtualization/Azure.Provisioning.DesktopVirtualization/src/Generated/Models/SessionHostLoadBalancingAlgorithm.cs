@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Load balancing algorithm for ramp up period. </summary>
+    [Experimental("AZPROVISION001")]
     public enum SessionHostLoadBalancingAlgorithm
     {
         /// <summary> Breadth First Algorithm for Load Balancing. </summary>

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Specifies the designation of the dedicated hub. </summary>
+    [Experimental("AZPROVISION001")]
     public enum VirtualEnclaveDesignation
     {
         /// <summary> Designation Type Pooled. </summary>

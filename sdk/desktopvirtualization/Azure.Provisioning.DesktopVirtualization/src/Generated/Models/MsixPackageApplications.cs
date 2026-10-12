@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Schema for MSIX Package Application properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class MsixPackageApplications : ProvisionableConstruct
     {
         private BicepValue<string> _appId;
@@ -28,6 +30,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the AppId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AppId
         {
             get
@@ -43,6 +46,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -58,6 +62,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the AppUserModelId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AppUserModelId
         {
             get
@@ -73,6 +78,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the FriendlyName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> FriendlyName
         {
             get
@@ -88,6 +94,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the IconImageName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> IconImageName
         {
             get
@@ -103,6 +110,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RawIcon. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> RawIcon
         {
             get
@@ -118,6 +126,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RawPng. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> RawPng
         {
             get

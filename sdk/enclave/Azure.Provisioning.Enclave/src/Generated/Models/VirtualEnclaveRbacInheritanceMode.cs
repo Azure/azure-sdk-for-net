@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Rbac Inheritance Mode. </summary>
+    [Experimental("AZPROVISION001")]
     public enum VirtualEnclaveRbacInheritanceMode
     {
         /// <summary> RbacInheritanceMode Type Enabled. </summary>

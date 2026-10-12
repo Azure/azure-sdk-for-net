@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -13,6 +14,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Represents a ActiveSessionHostConfiguration definition. This has all of the sessionHostConfiguration properties except provisioningState. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ActiveSessionHostConfigurationProperties : ProvisionableConstruct
     {
         private BicepValue<DateTimeOffset> _version;
@@ -38,6 +40,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the Version. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> Version
         {
             get
@@ -48,6 +51,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the FriendlyName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> FriendlyName
         {
             get
@@ -58,6 +62,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the VmTags. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> VmTags
         {
             get
@@ -68,6 +73,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the VmLocation. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AzureLocation> VmLocation
         {
             get
@@ -78,6 +84,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the VmResourceGroup. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> VmResourceGroup
         {
             get
@@ -88,6 +95,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the VmNamePrefix. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> VmNamePrefix
         {
             get
@@ -98,6 +106,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the AvailabilityZones. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<int> AvailabilityZones
         {
             get
@@ -108,6 +117,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the NetworkInfo. </summary>
+        [Experimental("AZPROVISION001")]
         public DesktopVirtualizationNetworkInfoProperties NetworkInfo
         {
             get
@@ -118,6 +128,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the VmSizeId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> VmSizeId
         {
             get
@@ -128,6 +139,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the DiskInfo. </summary>
+        [Experimental("AZPROVISION001")]
         public DesktopVirtualizationDiskInfoProperties DiskInfo
         {
             get
@@ -138,6 +150,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the CustomConfigurationScriptUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> CustomConfigurationScriptUri
         {
             get
@@ -148,6 +161,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the ImageInfo. </summary>
+        [Experimental("AZPROVISION001")]
         public DesktopVirtualizationImageInfoProperties ImageInfo
         {
             get
@@ -158,6 +172,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the DomainInfo. </summary>
+        [Experimental("AZPROVISION001")]
         public DesktopVirtualizationDomainInfoProperties DomainInfo
         {
             get
@@ -168,6 +183,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the SecurityInfo. </summary>
+        [Experimental("AZPROVISION001")]
         public DesktopVirtualizationSecurityInfoProperties SecurityInfo
         {
             get
@@ -178,6 +194,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the VmAdminCredentials. </summary>
+        [Experimental("AZPROVISION001")]
         public DesktopVirtualizationKeyVaultCredentialsProperties VmAdminCredentials
         {
             get
@@ -188,6 +205,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the BootDiagnosticsInfo. </summary>
+        [Experimental("AZPROVISION001")]
         public DesktopVirtualizationBootDiagnosticsInfoProperties BootDiagnosticsInfo
         {
             get

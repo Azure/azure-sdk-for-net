@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Properties of the destination info for event subscription supporting push. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class PushInfo : ProvisionableConstruct
     {
         private BicepValue<int> _maxDeliveryCount;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the MaxDeliveryCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxDeliveryCount
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the EventTimeToLive. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EventTimeToLive
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the DeadLetterDestinationWithResourceIdentity. </summary>
+        [Experimental("AZPROVISION001")]
         public DeadLetterWithResourceIdentity DeadLetterDestinationWithResourceIdentity
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the DeliveryWithResourceIdentity. </summary>
+        [Experimental("AZPROVISION001")]
         public DeliveryWithResourceIdentity DeliveryWithResourceIdentity
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Destination. </summary>
+        [Experimental("AZPROVISION001")]
         public EventSubscriptionDestination Destination
         {
             get

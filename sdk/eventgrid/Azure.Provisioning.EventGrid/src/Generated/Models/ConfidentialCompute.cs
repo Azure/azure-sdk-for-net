@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Azure Confidential Compute properties of the resource. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ConfidentialCompute : ProvisionableConstruct
     {
         private BicepValue<EventGridConfidentialComputeMode> _mode;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Mode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EventGridConfidentialComputeMode> Mode
         {
             get

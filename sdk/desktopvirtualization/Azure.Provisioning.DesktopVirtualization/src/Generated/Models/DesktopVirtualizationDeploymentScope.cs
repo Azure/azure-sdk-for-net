@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> DeploymentScope type for HostPool. </summary>
+    [Experimental("AZPROVISION001")]
     public enum DesktopVirtualizationDeploymentScope
     {
         /// <summary> For geographical Broker and ArmProvider talking to Geographical SQL DB. </summary>

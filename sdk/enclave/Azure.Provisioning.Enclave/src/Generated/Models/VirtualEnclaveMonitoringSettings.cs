@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Monitoring Settings. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VirtualEnclaveMonitoringSettings : ProvisionableConstruct
     {
         private BicepList<VirtualEnclaveMonitoringDestination> _diagnosticDestinations;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the DiagnosticDestinations. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<VirtualEnclaveMonitoringDestination> DiagnosticDestinations
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the FlowLogDestination. </summary>
+        [Experimental("AZPROVISION001")]
         public VirtualEnclaveMonitoringDestination FlowLogDestination
         {
             get

@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The identity information with the event subscription. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class EventSubscriptionIdentity : ProvisionableConstruct
     {
         private BicepValue<EventSubscriptionIdentityType> _identityType;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the IdentityType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EventSubscriptionIdentityType> IdentityType
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the UserAssignedIdentity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> UserAssignedIdentity
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the FederatedIdentityCredentialInfo. </summary>
+        [Experimental("AZPROVISION001")]
         internal FederatedIdentityCredentialInfo FederatedIdentityCredentialInfo
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the FederatedClientId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> FederatedClientId
         {
             get

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Fabric
 {
     /// <summary> The capacity overage state for the Fabric capacity resource. </summary>
+    [Experimental("AZPROVISION001")]
     public enum CapacityOverageState
     {
         /// <summary> Capacity overage is disabled. </summary>

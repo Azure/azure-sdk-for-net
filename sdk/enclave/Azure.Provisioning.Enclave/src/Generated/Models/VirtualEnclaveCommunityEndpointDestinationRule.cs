@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Base type for destination rules. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VirtualEnclaveCommunityEndpointDestinationRule : ProvisionableConstruct
     {
         private BicepValue<VirtualEnclaveCommunityEndpointDestinationType> _destinationType;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the DestinationType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualEnclaveCommunityEndpointDestinationType> DestinationType
         {
             get
@@ -42,6 +45,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the Protocols. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<VirtualEnclaveCommunityEndpointProtocol> Protocols
         {
             get
@@ -57,6 +61,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the TransitHubResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> TransitHubResourceId
         {
             get
@@ -72,6 +77,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the EndpointRuleName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EndpointRuleName
         {
             get
@@ -87,6 +93,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the Destination. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Destination
         {
             get
@@ -102,6 +109,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the Ports. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Ports
         {
             get

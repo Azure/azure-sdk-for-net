@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,6 +15,7 @@ namespace Azure.Provisioning.EventGrid
     /// Information about the dead letter destination for an event subscription. To configure a deadletter destination, do not directly instantiate an object of this class. Instead, instantiate an object of a derived class. Currently, StorageBlobDeadLetterDestination is the only class that derives from this class.
     /// Please note this is the base class. The derived classes available for instantiation are: <see cref="StorageBlobDeadLetterDestination"/>.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DeadLetterDestination : ProvisionableConstruct
     {
         private BicepValue<DeadLetterEndPointType> _endpointType;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Type of the endpoint for the dead letter destination. </summary>
+        [Experimental("AZPROVISION001")]
         internal BicepValue<DeadLetterEndPointType> EndpointType
         {
             get

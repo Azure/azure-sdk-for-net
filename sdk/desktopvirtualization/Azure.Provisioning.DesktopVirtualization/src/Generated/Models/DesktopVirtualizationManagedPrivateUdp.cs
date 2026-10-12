@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Managed Private UDP Connection Settings. </summary>
+    [Experimental("AZPROVISION001")]
     public enum DesktopVirtualizationManagedPrivateUdp
     {
         /// <summary> AVD-wide settings are used to determine connection availability. </summary>

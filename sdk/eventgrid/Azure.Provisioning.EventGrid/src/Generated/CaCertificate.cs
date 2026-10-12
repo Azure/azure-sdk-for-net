@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The CA Certificate resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class CaCertificate : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -97,6 +98,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -114,6 +116,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the EncodedCertificate. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EncodedCertificate
         {
             get
@@ -131,6 +134,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the IssueTimeInUtc. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> IssueTimeInUtc
         {
             get
@@ -144,6 +148,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ExpiryTimeInUtc. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> ExpiryTimeInUtc
         {
             get
@@ -157,6 +162,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<CaCertificateProvisioningState> ProvisioningState
         {
             get

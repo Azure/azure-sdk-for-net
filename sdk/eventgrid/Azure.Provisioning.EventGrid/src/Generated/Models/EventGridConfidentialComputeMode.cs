@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary>
@@ -13,6 +15,7 @@ namespace Azure.Provisioning.EventGrid
     /// This is an immutable property set at the time of resource creation and cannot be modified later.
     /// Enabling this property ensures that messages are processed and stored in a Azure Confidential Compute environment.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public enum EventGridConfidentialComputeMode
     {
         /// <summary> Disabled. </summary>

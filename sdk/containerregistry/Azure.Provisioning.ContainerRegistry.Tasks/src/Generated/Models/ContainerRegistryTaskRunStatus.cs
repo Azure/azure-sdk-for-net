@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The current status of the run. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ContainerRegistryTaskRunStatus
     {
         /// <summary> Queued. </summary>

@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Schema for App Attach Package properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AppAttachPackageProperties : ProvisionableConstruct
     {
         private BicepValue<AppAttachPackageProvisioningState> _provisioningState;
@@ -30,6 +32,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AppAttachPackageProvisioningState> ProvisioningState
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the Image. </summary>
+        [Experimental("AZPROVISION001")]
         public AppAttachPackageInfoProperties Image
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the HostPoolReferences. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> HostPoolReferences
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the KeyVaultUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> KeyVaultUri
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the FailHealthCheckOnStagingFailure. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<FailHealthCheckOnStagingFailure> FailHealthCheckOnStagingFailure
         {
             get
@@ -100,6 +107,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the PackageOwnerName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PackageOwnerName
         {
             get
@@ -115,6 +123,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the PackageLookbackUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> PackageLookbackUri
         {
             get
@@ -130,6 +139,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the CustomData. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CustomData
         {
             get
@@ -145,6 +155,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the DeploymentScope. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DesktopVirtualizationDeploymentScope> DeploymentScope
         {
             get

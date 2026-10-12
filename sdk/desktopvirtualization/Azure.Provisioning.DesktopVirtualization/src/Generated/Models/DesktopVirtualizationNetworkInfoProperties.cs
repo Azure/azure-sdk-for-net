@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Network information. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DesktopVirtualizationNetworkInfoProperties : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _subnetId;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the SubnetId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> SubnetId
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the SecurityGroupId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> SecurityGroupId
         {
             get

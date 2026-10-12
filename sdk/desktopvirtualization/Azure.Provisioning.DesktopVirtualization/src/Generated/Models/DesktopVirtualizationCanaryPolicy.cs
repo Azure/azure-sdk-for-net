@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Policy on whether a Canary VM(a single VM to validate the configuration) should be provisioned during a session host provisioning operation. </summary>
+    [Experimental("AZPROVISION001")]
     public enum DesktopVirtualizationCanaryPolicy
     {
         /// <summary> Decided by service whether to provision Canary VM. </summary>

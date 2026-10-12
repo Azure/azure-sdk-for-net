@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Managed Disk information. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ManagedDiskProperties : ProvisionableConstruct
     {
         private BicepValue<DesktopVirtualizationVirtualMachineDiskType> _type;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the Type. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DesktopVirtualizationVirtualMachineDiskType> Type
         {
             get

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> The provisioning status of the resource. </summary>
+    [Experimental("AZPROVISION001")]
     public enum VirtualEnclaveProvisioningState
     {
         /// <summary> Resource has been created. </summary>

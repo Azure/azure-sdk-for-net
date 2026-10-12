@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> The type of preferred application group type, default to Desktop Application Group. </summary>
+    [Experimental("AZPROVISION001")]
     public enum PreferredAppGroupType
     {
         /// <summary> Internal Use Only. </summary>

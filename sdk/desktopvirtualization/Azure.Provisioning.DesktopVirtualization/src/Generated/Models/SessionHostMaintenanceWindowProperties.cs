@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Maintenance window starting hour and day of week. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SessionHostMaintenanceWindowProperties : ProvisionableConstruct
     {
         private BicepValue<int> _hour;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the Hour. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Hour
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the DayOfWeek. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DesktopVirtualizationDayOfWeek> DayOfWeek
         {
             get

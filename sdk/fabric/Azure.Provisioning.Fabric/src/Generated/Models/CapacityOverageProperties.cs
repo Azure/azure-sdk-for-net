@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Fabric
 {
     /// <summary> The capacity overage properties of the Fabric capacity resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class CapacityOverageProperties : ProvisionableConstruct
     {
         private BicepValue<CapacityOverageState> _state;

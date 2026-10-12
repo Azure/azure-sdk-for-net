@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The properties of task run. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class TaskRunProperties : ProvisionableConstruct
     {
         private BicepValue<ContainerRegistryTaskProvisioningState> _provisioningState;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerRegistryTaskProvisioningState> ProvisioningState
         {
             get
@@ -34,6 +37,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the RunRequest. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerRegistryRunContent RunRequest
         {
             get
@@ -49,6 +53,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the RunResult. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerRegistryRun RunResult
         {
             get
@@ -59,6 +64,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the ForceUpdateTag. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ForceUpdateTag
         {
             get
