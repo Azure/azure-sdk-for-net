@@ -101,11 +101,6 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(ManagedBy))
-            {
-                writer.WritePropertyName("managedBy"u8);
-                writer.WriteStringValue(ManagedBy);
-            }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
@@ -158,7 +153,6 @@ namespace Azure.ResourceManager.ContainerService
             ResourceType resourceType = default;
             SystemData systemData = default;
             ManagedClusterIdentityBindingProperties properties = default;
-            string managedBy = default;
             ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -204,11 +198,6 @@ namespace Azure.ResourceManager.ContainerService
                     properties = ManagedClusterIdentityBindingProperties.DeserializeManagedClusterIdentityBindingProperties(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("managedBy"u8))
-                {
-                    managedBy = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("eTag"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -229,7 +218,6 @@ namespace Azure.ResourceManager.ContainerService
                 resourceType,
                 systemData,
                 properties,
-                managedBy,
                 eTag,
                 additionalBinaryDataProperties);
         }
