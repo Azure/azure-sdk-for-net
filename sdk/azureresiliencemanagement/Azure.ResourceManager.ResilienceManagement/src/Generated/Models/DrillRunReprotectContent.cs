@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> The reprotect properties. </summary>
-        internal ReprotectContent ReprotectProperties { get; }
+        internal ReprotectContent ReprotectProperties { get; } = new ReprotectContent();
 
         /// <summary> Selected recovery resource Ids to be processed. If not provided, all qualified resources will be processed. </summary>
         public IList<ResourceIdentifier> ReprotectRequestSelectedResourceIds
