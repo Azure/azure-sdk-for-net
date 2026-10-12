@@ -12,20 +12,20 @@ using Azure.ResourceManager.AppService;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Error response indicates Logic service is not able to process the incoming request. The error property contains the error details. </summary>
-    internal partial class WebAppErrorResponse
+    internal partial class WebAppErrorResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="WebAppErrorResponse"/>. </summary>
-        public WebAppErrorResponse()
+        /// <summary> Initializes a new instance of <see cref="WebAppErrorResult"/>. </summary>
+        public WebAppErrorResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="WebAppErrorResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppErrorResult"/>. </summary>
         /// <param name="errorInfo"> The error properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppErrorResponse(WebAppErrorProperties errorInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebAppErrorResult(WebAppErrorProperties errorInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ErrorInfo = errorInfo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
