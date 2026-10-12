@@ -15,7 +15,7 @@ using Azure.ResourceManager.PlatformValidation.Models;
 
 namespace Azure.ResourceManager.PlatformValidation
 {
-    internal partial class ValidationTestRunsGetByExecutionPlanRunAsyncCollectionResultOfT : AsyncPageable<ValidationTestRunData>
+    internal partial class ValidationTestRunDataAsyncCollectionResultOfT : AsyncPageable<ValidationTestRunData>
     {
         private readonly ValidationTestRuns _client;
         private readonly Guid _subscriptionId;
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PlatformValidation
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ValidationTestRunsGetByExecutionPlanRunAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ValidationTestRunDataAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ValidationTestRuns client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PlatformValidation
         /// <param name="executionPlanRunName"> The name of the ExecutionPlanRun. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ValidationTestRunsGetByExecutionPlanRunAsyncCollectionResultOfT(ValidationTestRuns client, Guid subscriptionId, string resourceGroupName, string cloudValidationName, string validationExecutionPlanName, string executionPlanRunName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ValidationTestRunDataAsyncCollectionResultOfT(ValidationTestRuns client, Guid subscriptionId, string resourceGroupName, string cloudValidationName, string validationExecutionPlanName, string executionPlanRunName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.PlatformValidation
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ValidationTestRunsGetByExecutionPlanRunAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ValidationTestRunDataAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ValidationTestRunsGetByExecutionPlanRunAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ValidationTestRunDataAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<ValidationTestRunData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;

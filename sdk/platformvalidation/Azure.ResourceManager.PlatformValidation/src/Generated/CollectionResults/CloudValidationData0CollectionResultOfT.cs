@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -15,7 +14,7 @@ using Azure.ResourceManager.PlatformValidation.Models;
 
 namespace Azure.ResourceManager.PlatformValidation
 {
-    internal partial class CloudValidationsGetBySubscriptionAsyncCollectionResultOfT : AsyncPageable<CloudValidationData>
+    internal partial class CloudValidationData0CollectionResultOfT : Pageable<CloudValidationData>
     {
         private readonly CloudValidations _client;
         private readonly Guid _subscriptionId;
@@ -23,13 +22,13 @@ namespace Azure.ResourceManager.PlatformValidation
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of CloudValidationsGetBySubscriptionAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of CloudValidationData0CollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The CloudValidations client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="filter"> The OData filter expression to apply to the list operation. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public CloudValidationsGetBySubscriptionAsyncCollectionResultOfT(CloudValidations client, Guid subscriptionId, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public CloudValidationData0CollectionResultOfT(CloudValidations client, Guid subscriptionId, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,16 +37,16 @@ namespace Azure.ResourceManager.PlatformValidation
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of CloudValidationsGetBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of CloudValidationData0CollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of CloudValidationsGetBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<CloudValidationData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of CloudValidationData0CollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<CloudValidationData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
@@ -65,14 +64,14 @@ namespace Azure.ResourceManager.PlatformValidation
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _filter, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {

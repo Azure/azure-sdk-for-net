@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.PlatformValidation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ValidationTestCategoryData, ValidationTestCategoryResource>(new ValidationTestCategoriesGetBySubscriptionAsyncCollectionResultOfT(_validationTestCategoriesRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "ValidationTestCategoryCollection.GetAll"), data => new ValidationTestCategoryResource(Client, data));
+            return new AsyncPageableWrapper<ValidationTestCategoryData, ValidationTestCategoryResource>(new ValidationTestCategoryDataAsyncCollectionResultOfT(_validationTestCategoriesRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "ValidationTestCategoryCollection.GetAll"), data => new ValidationTestCategoryResource(Client, data));
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.PlatformValidation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ValidationTestCategoryData, ValidationTestCategoryResource>(new ValidationTestCategoriesGetBySubscriptionCollectionResultOfT(_validationTestCategoriesRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "ValidationTestCategoryCollection.GetAll"), data => new ValidationTestCategoryResource(Client, data));
+            return new PageableWrapper<ValidationTestCategoryData, ValidationTestCategoryResource>(new ValidationTestCategoryDataCollectionResultOfT(_validationTestCategoriesRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "ValidationTestCategoryCollection.GetAll"), data => new ValidationTestCategoryResource(Client, data));
         }
 
         /// <summary>
