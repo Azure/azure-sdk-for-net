@@ -80,7 +80,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             scope.Start();
             try
             {
-                ErrorOptions errorOptions = _context.Parse().Item2;
+                (CancellationToken userCancellationToken, ErrorOptions errorOptions) = _context.Parse();
                 await _client.Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
 
                 if (message.Response.IsError && (errorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
