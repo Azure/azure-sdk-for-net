@@ -92,7 +92,7 @@ function Verify-TspLocation([System.Object]$tspLocationObj, [string]$tspLocation
       LogError "TypeSpec batch must be a non-empty array of directory paths. ServiceDir:$ServiceDirectory, PackageName:$PackageName, tsp-location.yaml path:$tspLocationYamlPath."
       exit 1
     }
-    if ($tspLocationObj["repo"] -or $tspLocationObj["commit"] -or $tspLocationObj["directory"]) {
+    if ($tspLocationObj.Contains("repo") -or $tspLocationObj.Contains("commit") -or $tspLocationObj.Contains("directory")) {
       LogError "TypeSpec batch configuration cannot have repo, commit, or directory settings. ServiceDir:$ServiceDirectory, PackageName:$PackageName, tsp-location.yaml path:$tspLocationYamlPath."
       exit 1
     }
