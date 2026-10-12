@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DeletedServerListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DeletedServerListResult(value ?? new ChangeTrackingList<DeletedServerData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
