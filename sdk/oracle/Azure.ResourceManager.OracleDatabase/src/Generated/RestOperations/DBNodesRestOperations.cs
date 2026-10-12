@@ -12,30 +12,30 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
-    internal partial class DbSystemShapes
+    internal partial class DBNodes
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
 
-        /// <summary> Initializes a new instance of DbSystemShapes for mocking. </summary>
-        protected DbSystemShapes()
+        /// <summary> Initializes a new instance of DBNodes for mocking. </summary>
+        protected DBNodes()
         {
         }
 
-        /// <summary> Initializes a new instance of DbSystemShapes. </summary>
+        /// <summary> Initializes a new instance of DBNodes. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal DbSystemShapes(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        internal DBNodes(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
-            _userAgent = new TelemetryDetails(typeof(DbSystemShapes).Assembly, applicationId);
+            _userAgent = new TelemetryDetails(typeof(DBNodes).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -44,16 +44,18 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, AzureLocation location, string dbsystemshapename, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string cloudvmclustername, string dbnodeocid, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/providers/Oracle.Database/locations/", false);
-            uri.AppendPath(location.ToString(), true);
-            uri.AppendPath("/dbSystemShapes/", false);
-            uri.AppendPath(dbsystemshapename, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Oracle.Database/cloudVmClusters/", false);
+            uri.AppendPath(cloudvmclustername, true);
+            uri.AppendPath("/dbNodes/", false);
+            uri.AppendPath(dbnodeocid, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -67,26 +69,20 @@ namespace Azure.ResourceManager.OracleDatabase
             return message;
         }
 
-        internal HttpMessage CreateGetByLocationRequest(Guid subscriptionId, AzureLocation location, string zone, string shapeAttribute, RequestContext context)
+        internal HttpMessage CreateGetByParentRequest(Guid subscriptionId, string resourceGroupName, string cloudvmclustername, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/providers/Oracle.Database/locations/", false);
-            uri.AppendPath(location.ToString(), true);
-            uri.AppendPath("/dbSystemShapes", false);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Oracle.Database/cloudVmClusters/", false);
+            uri.AppendPath(cloudvmclustername, true);
+            uri.AppendPath("/dbNodes", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            if (zone != null)
-            {
-                uri.AppendQuery("zone", zone, true);
-            }
-            if (shapeAttribute != null)
-            {
-                uri.AppendQuery("shapeAttribute", shapeAttribute, true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -97,7 +93,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return message;
         }
 
-        internal HttpMessage CreateNextGetByLocationRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, string zone, string shapeAttribute, RequestContext context)
+        internal HttpMessage CreateNextGetByParentRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string cloudvmclustername, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -118,6 +114,34 @@ namespace Azure.ResourceManager.OracleDatabase
             request.Method = RequestMethod.Get;
             _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateActionRequest(Guid subscriptionId, string resourceGroupName, string cloudvmclustername, string dbnodeocid, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Oracle.Database/cloudVmClusters/", false);
+            uri.AppendPath(cloudvmclustername, true);
+            uri.AppendPath("/dbNodes/", false);
+            uri.AppendPath(dbnodeocid, true);
+            uri.AppendPath("/action", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
             return message;
         }
     }

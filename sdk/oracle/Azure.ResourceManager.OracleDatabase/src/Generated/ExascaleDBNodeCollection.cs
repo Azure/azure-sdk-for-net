@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.OracleDatabase
     /// </summary>
     public partial class ExascaleDBNodeCollection : ArmCollection, IEnumerable<ExascaleDBNodeResource>, IAsyncEnumerable<ExascaleDBNodeResource>
     {
-        private readonly ClientDiagnostics _exascaleDbNodesClientDiagnostics;
-        private readonly ExascaleDbNodes _exascaleDbNodesRestClient;
+        private readonly ClientDiagnostics _exascaleDBNodesClientDiagnostics;
+        private readonly ExascaleDBNodes _exascaleDBNodesRestClient;
 
         /// <summary> Initializes a new instance of ExascaleDBNodeCollection for mocking. </summary>
         protected ExascaleDBNodeCollection()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.OracleDatabase
         internal ExascaleDBNodeCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ExascaleDBNodeResource.ResourceType, out string exascaleDBNodeApiVersion);
-            _exascaleDbNodesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ExascaleDBNodeResource.ResourceType.Namespace, Diagnostics);
-            _exascaleDbNodesRestClient = new ExascaleDbNodes(_exascaleDbNodesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, exascaleDBNodeApiVersion ?? "2025-09-01");
+            _exascaleDBNodesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ExascaleDBNodeResource.ResourceType.Namespace, Diagnostics);
+            _exascaleDBNodesRestClient = new ExascaleDBNodes(_exascaleDBNodesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, exascaleDBNodeApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNullOrEmpty(exascaleDbNodeName, nameof(exascaleDbNodeName));
 
-            using DiagnosticScope scope = _exascaleDbNodesClientDiagnostics.CreateScope("ExascaleDBNodeCollection.Get");
+            using DiagnosticScope scope = _exascaleDBNodesClientDiagnostics.CreateScope("ExascaleDBNodeCollection.Get");
             scope.Start();
             try
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exascaleDbNodesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, exascaleDbNodeName, context);
+                HttpMessage message = _exascaleDBNodesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, exascaleDbNodeName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExascaleDBNodeData> response = Response.FromValue(ExascaleDBNodeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNullOrEmpty(exascaleDbNodeName, nameof(exascaleDbNodeName));
 
-            using DiagnosticScope scope = _exascaleDbNodesClientDiagnostics.CreateScope("ExascaleDBNodeCollection.Get");
+            using DiagnosticScope scope = _exascaleDBNodesClientDiagnostics.CreateScope("ExascaleDBNodeCollection.Get");
             scope.Start();
             try
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exascaleDbNodesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, exascaleDbNodeName, context);
+                HttpMessage message = _exascaleDBNodesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, exascaleDbNodeName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExascaleDBNodeData> response = Response.FromValue(ExascaleDBNodeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 CancellationToken = cancellationToken
             };
             return new AsyncPageableWrapper<ExascaleDBNodeData, ExascaleDBNodeResource>(new ExascaleDBNodeDataAsyncCollectionResultOfT(
-                _exascaleDbNodesRestClient,
+                _exascaleDBNodesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 CancellationToken = cancellationToken
             };
             return new PageableWrapper<ExascaleDBNodeData, ExascaleDBNodeResource>(new ExascaleDBNodeDataCollectionResultOfT(
-                _exascaleDbNodesRestClient,
+                _exascaleDBNodesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNullOrEmpty(exascaleDbNodeName, nameof(exascaleDbNodeName));
 
-            using DiagnosticScope scope = _exascaleDbNodesClientDiagnostics.CreateScope("ExascaleDBNodeCollection.Exists");
+            using DiagnosticScope scope = _exascaleDBNodesClientDiagnostics.CreateScope("ExascaleDBNodeCollection.Exists");
             scope.Start();
             try
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exascaleDbNodesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, exascaleDbNodeName, context);
+                HttpMessage message = _exascaleDBNodesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, exascaleDbNodeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExascaleDBNodeData> response = default;
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNullOrEmpty(exascaleDbNodeName, nameof(exascaleDbNodeName));
 
-            using DiagnosticScope scope = _exascaleDbNodesClientDiagnostics.CreateScope("ExascaleDBNodeCollection.Exists");
+            using DiagnosticScope scope = _exascaleDBNodesClientDiagnostics.CreateScope("ExascaleDBNodeCollection.Exists");
             scope.Start();
             try
             {
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exascaleDbNodesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, exascaleDbNodeName, context);
+                HttpMessage message = _exascaleDBNodesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, exascaleDbNodeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExascaleDBNodeData> response = default;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNullOrEmpty(exascaleDbNodeName, nameof(exascaleDbNodeName));
 
-            using DiagnosticScope scope = _exascaleDbNodesClientDiagnostics.CreateScope("ExascaleDBNodeCollection.GetIfExists");
+            using DiagnosticScope scope = _exascaleDBNodesClientDiagnostics.CreateScope("ExascaleDBNodeCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exascaleDbNodesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, exascaleDbNodeName, context);
+                HttpMessage message = _exascaleDBNodesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, exascaleDbNodeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExascaleDBNodeData> response = default;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNullOrEmpty(exascaleDbNodeName, nameof(exascaleDbNodeName));
 
-            using DiagnosticScope scope = _exascaleDbNodesClientDiagnostics.CreateScope("ExascaleDBNodeCollection.GetIfExists");
+            using DiagnosticScope scope = _exascaleDBNodesClientDiagnostics.CreateScope("ExascaleDBNodeCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exascaleDbNodesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, exascaleDbNodeName, context);
+                HttpMessage message = _exascaleDBNodesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, exascaleDbNodeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExascaleDBNodeData> response = default;
