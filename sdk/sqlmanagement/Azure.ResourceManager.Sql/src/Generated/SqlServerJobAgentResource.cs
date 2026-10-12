@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new JobExecutionsGetByAgentAsyncCollectionResultOfT(
+            return new SqlServerJobExecutionDataAsync0CollectionResultOfT(
                 _jobExecutionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new JobExecutionsGetByAgentCollectionResultOfT(
+            return new SqlServerJobExecutionData0CollectionResultOfT(
                 _jobExecutionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new NetworkConnectionsGetOutboundEnvironmentEndpointsAsyncCollectionResultOfT(
+            return new OutboundEnvironmentEndpointAsyncCollectionResultOfT(
                 _networkConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new NetworkConnectionsGetOutboundEnvironmentEndpointsCollectionResultOfT(
+            return new OutboundEnvironmentEndpointCollectionResultOfT(
                 _networkConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

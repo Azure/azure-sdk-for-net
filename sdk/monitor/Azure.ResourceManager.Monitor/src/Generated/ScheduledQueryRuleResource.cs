@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new ScheduledQueryRuleGetNetworkSecurityPerimeterConfigurationsAsyncCollectionResultOfT(
+            return new MonitorNetworkSecurityPerimeterConfigurationDataAsync0CollectionResultOfT(
                 _scheduledQueryRuleRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new ScheduledQueryRuleGetNetworkSecurityPerimeterConfigurationsCollectionResultOfT(
+            return new MonitorNetworkSecurityPerimeterConfigurationData0CollectionResultOfT(
                 _scheduledQueryRuleRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

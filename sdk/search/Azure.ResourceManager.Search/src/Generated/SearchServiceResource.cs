@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.Search
             {
                 CancellationToken = cancellationToken
             };
-            return new QueryKeysGetQueryKeysBySearchServiceAsyncCollectionResultOfT(
+            return new SearchServiceQueryKeyAsyncCollectionResultOfT(
                 _queryKeysRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.Search
             {
                 CancellationToken = cancellationToken
             };
-            return new QueryKeysGetQueryKeysBySearchServiceCollectionResultOfT(
+            return new SearchServiceQueryKeyCollectionResultOfT(
                 _queryKeysRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -732,7 +732,7 @@ namespace Azure.ResourceManager.Search
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkResourcesGetSupportedPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new SearchPrivateLinkResourceAsyncCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -772,7 +772,7 @@ namespace Azure.ResourceManager.Search
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkResourcesGetSupportedPrivateLinkResourcesCollectionResultOfT(
+            return new SearchPrivateLinkResourceCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -683,7 +683,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseOperationsGetDatabaseOperationsAsyncCollectionResultOfT(
+            return new DatabaseOperationDataAsyncCollectionResultOfT(
                 _databaseOperationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseOperationsGetDatabaseOperationsCollectionResultOfT(
+            return new DatabaseOperationDataCollectionResultOfT(
                 _databaseOperationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -761,7 +761,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseUsagesGetDatabaseUsagesAsyncCollectionResultOfT(
+            return new DatabaseUsageAsyncCollectionResultOfT(
                 _databaseUsagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseUsagesGetDatabaseUsagesCollectionResultOfT(
+            return new DatabaseUsageCollectionResultOfT(
                 _databaseUsagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1877,7 +1877,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new SynapseLinkWorkspacesGetSynapseLinkWorkspacesAsyncCollectionResultOfT(
+            return new SqlSynapseLinkWorkspaceAsyncCollectionResultOfT(
                 _synapseLinkWorkspacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1916,7 +1916,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new SynapseLinkWorkspacesGetSynapseLinkWorkspacesCollectionResultOfT(
+            return new SqlSynapseLinkWorkspaceCollectionResultOfT(
                 _synapseLinkWorkspacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2177,7 +2177,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseExtensionsGetDatabaseExtensionsAsyncCollectionResultOfT(
+            return new ImportExportExtensionsOperationResultAsyncCollectionResultOfT(
                 _databaseExtensionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2216,7 +2216,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabaseExtensionsGetDatabaseExtensionsCollectionResultOfT(
+            return new ImportExportExtensionsOperationResultCollectionResultOfT(
                 _databaseExtensionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

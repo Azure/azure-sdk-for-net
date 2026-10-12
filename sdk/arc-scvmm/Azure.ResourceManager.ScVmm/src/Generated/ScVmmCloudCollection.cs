@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ScVmm
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScVmmCloudData, ScVmmCloudResource>(new CloudsGetByResourceGroupAsyncCollectionResultOfT(_cloudsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScVmmCloudCollection.GetAll"), data => new ScVmmCloudResource(Client, data));
+            return new AsyncPageableWrapper<ScVmmCloudData, ScVmmCloudResource>(new ScVmmCloudDataAsyncCollectionResultOfT(_cloudsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScVmmCloudCollection.GetAll"), data => new ScVmmCloudResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ScVmm
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScVmmCloudData, ScVmmCloudResource>(new CloudsGetByResourceGroupCollectionResultOfT(_cloudsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScVmmCloudCollection.GetAll"), data => new ScVmmCloudResource(Client, data));
+            return new PageableWrapper<ScVmmCloudData, ScVmmCloudResource>(new ScVmmCloudDataCollectionResultOfT(_cloudsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScVmmCloudCollection.GetAll"), data => new ScVmmCloudResource(Client, data));
         }
 
         /// <summary>

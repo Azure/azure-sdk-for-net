@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CognitiveServicesAccountData, CognitiveServicesAccountResource>(new AccountsGetCognitiveServicesAccountsAsyncCollectionResultOfT(AccountsRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesAccounts"), data => new CognitiveServicesAccountResource(Client, data));
+            return new AsyncPageableWrapper<CognitiveServicesAccountData, CognitiveServicesAccountResource>(new CognitiveServicesAccountDataAsync0CollectionResultOfT(AccountsRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesAccounts"), data => new CognitiveServicesAccountResource(Client, data));
         }
 
         /// <summary>
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CognitiveServicesAccountData, CognitiveServicesAccountResource>(new AccountsGetCognitiveServicesAccountsCollectionResultOfT(AccountsRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesAccounts"), data => new CognitiveServicesAccountResource(Client, data));
+            return new PageableWrapper<CognitiveServicesAccountData, CognitiveServicesAccountResource>(new CognitiveServicesAccountData0CollectionResultOfT(AccountsRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesAccounts"), data => new CognitiveServicesAccountResource(Client, data));
         }
 
         /// <summary>
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CommitmentPlanData, CognitiveServicesCommitmentPlanResource>(new CommitmentPlanOperationGroupGetCognitiveServicesCommitmentPlansAsyncCollectionResultOfT(CommitmentPlanOperationGroupRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesCommitmentPlans"), data => new CognitiveServicesCommitmentPlanResource(Client, data));
+            return new AsyncPageableWrapper<CommitmentPlanData, CognitiveServicesCommitmentPlanResource>(new CommitmentPlanDataAsync1CollectionResultOfT(CommitmentPlanOperationGroupRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesCommitmentPlans"), data => new CognitiveServicesCommitmentPlanResource(Client, data));
         }
 
         /// <summary>
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CommitmentPlanData, CognitiveServicesCommitmentPlanResource>(new CommitmentPlanOperationGroupGetCognitiveServicesCommitmentPlansCollectionResultOfT(CommitmentPlanOperationGroupRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesCommitmentPlans"), data => new CognitiveServicesCommitmentPlanResource(Client, data));
+            return new PageableWrapper<CommitmentPlanData, CognitiveServicesCommitmentPlanResource>(new CommitmentPlanData1CollectionResultOfT(CommitmentPlanOperationGroupRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesCommitmentPlans"), data => new CognitiveServicesCommitmentPlanResource(Client, data));
         }
 
         /// <summary>
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CognitiveServicesClientCheckSkuAvailabilityAsyncCollectionResultOfT(
+            return new CognitiveServicesSkuAvailabilityListAsyncCollectionResultOfT(
                 CognitiveServicesClientRestClient,
                 Id.SubscriptionId,
                 location,
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CognitiveServicesClientCheckSkuAvailabilityCollectionResultOfT(
+            return new CognitiveServicesSkuAvailabilityListCollectionResultOfT(
                 CognitiveServicesClientRestClient,
                 Id.SubscriptionId,
                 location,
@@ -835,7 +835,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DeletedAccountsGetCognitiveServicesDeletedAccountsAsyncCollectionResultOfT(DeletedAccountsRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesDeletedAccounts");
+            return new CognitiveServicesAccountDataAsync1CollectionResultOfT(DeletedAccountsRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesDeletedAccounts");
         }
 
         /// <summary>
@@ -863,7 +863,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DeletedAccountsGetCognitiveServicesDeletedAccountsCollectionResultOfT(DeletedAccountsRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesDeletedAccounts");
+            return new CognitiveServicesAccountData1CollectionResultOfT(DeletedAccountsRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesDeletedAccounts");
         }
 
         /// <summary>
@@ -891,7 +891,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceSkusOperationGroupGetResourceSkusAsyncCollectionResultOfT(ResourceSkusOperationGroupRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetResourceSkus");
+            return new AvailableCognitiveServicesSkuAsyncCollectionResultOfT(ResourceSkusOperationGroupRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetResourceSkus");
         }
 
         /// <summary>
@@ -919,7 +919,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceSkusOperationGroupGetResourceSkusCollectionResultOfT(ResourceSkusOperationGroupRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetResourceSkus");
+            return new AvailableCognitiveServicesSkuCollectionResultOfT(ResourceSkusOperationGroupRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetResourceSkus");
         }
 
         /// <summary>
@@ -949,7 +949,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesOperationGroupGetUsagesAsyncCollectionResultOfT(
+            return new ServiceAccountUsageAsync0CollectionResultOfT(
                 UsagesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -985,7 +985,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesOperationGroupGetUsagesCollectionResultOfT(
+            return new ServiceAccountUsage0CollectionResultOfT(
                 UsagesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1020,7 +1020,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CommitmentTiersOperationGroupGetCommitmentTiersAsyncCollectionResultOfT(CommitmentTiersOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableCognitiveServicesSubscriptionResource.GetCommitmentTiers");
+            return new CommitmentTierAsyncCollectionResultOfT(CommitmentTiersOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableCognitiveServicesSubscriptionResource.GetCommitmentTiers");
         }
 
         /// <summary>
@@ -1049,7 +1049,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CommitmentTiersOperationGroupGetCommitmentTiersCollectionResultOfT(CommitmentTiersOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableCognitiveServicesSubscriptionResource.GetCommitmentTiers");
+            return new CommitmentTierCollectionResultOfT(CommitmentTiersOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableCognitiveServicesSubscriptionResource.GetCommitmentTiers");
         }
 
         /// <summary>
@@ -1087,7 +1087,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationBasedModelCapacitiesOperationGroupGetLocationBasedModelCapacitiesAsyncCollectionResultOfT(
+            return new ModelCapacityListResultValueItemAsyncCollectionResultOfT(
                 LocationBasedModelCapacitiesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1133,7 +1133,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationBasedModelCapacitiesOperationGroupGetLocationBasedModelCapacitiesCollectionResultOfT(
+            return new ModelCapacityListResultValueItemCollectionResultOfT(
                 LocationBasedModelCapacitiesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1178,7 +1178,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ModelCapacitiesOperationGroupGetModelCapacitiesAsyncCollectionResultOfT(
+            return new ModelCapacityListResultValueItemAsync0CollectionResultOfT(
                 ModelCapacitiesOperationGroupRestClient,
                 Id.SubscriptionId,
                 modelFormat,
@@ -1222,7 +1222,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ModelCapacitiesOperationGroupGetModelCapacitiesCollectionResultOfT(
+            return new ModelCapacityListResultValueItem0CollectionResultOfT(
                 ModelCapacitiesOperationGroupRestClient,
                 Id.SubscriptionId,
                 modelFormat,
@@ -1258,7 +1258,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CognitiveServicesModelsGetModelsAsyncCollectionResultOfT(CognitiveServicesModelsRestClient, Id.SubscriptionId, location, context, "MockableCognitiveServicesSubscriptionResource.GetModels");
+            return new CognitiveServicesModelAsyncCollectionResultOfT(CognitiveServicesModelsRestClient, Id.SubscriptionId, location, context, "MockableCognitiveServicesSubscriptionResource.GetModels");
         }
 
         /// <summary>
@@ -1287,7 +1287,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CognitiveServicesModelsGetModelsCollectionResultOfT(CognitiveServicesModelsRestClient, Id.SubscriptionId, location, context, "MockableCognitiveServicesSubscriptionResource.GetModels");
+            return new CognitiveServicesModelCollectionResultOfT(CognitiveServicesModelsRestClient, Id.SubscriptionId, location, context, "MockableCognitiveServicesSubscriptionResource.GetModels");
         }
     }
 }

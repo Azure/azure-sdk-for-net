@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GarnetClusterData, GarnetClusterResource>(new GarnetClustersGetByResourceGroupAsyncCollectionResultOfT(_garnetClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "GarnetClusterCollection.GetAll"), data => new GarnetClusterResource(Client, data));
+            return new AsyncPageableWrapper<GarnetClusterData, GarnetClusterResource>(new GarnetClusterDataAsyncCollectionResultOfT(_garnetClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "GarnetClusterCollection.GetAll"), data => new GarnetClusterResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GarnetClusterData, GarnetClusterResource>(new GarnetClustersGetByResourceGroupCollectionResultOfT(_garnetClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "GarnetClusterCollection.GetAll"), data => new GarnetClusterResource(Client, data));
+            return new PageableWrapper<GarnetClusterData, GarnetClusterResource>(new GarnetClusterDataCollectionResultOfT(_garnetClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "GarnetClusterCollection.GetAll"), data => new GarnetClusterResource(Client, data));
         }
 
         /// <summary>

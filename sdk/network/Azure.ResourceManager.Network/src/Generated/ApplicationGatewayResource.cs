@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new ApplicationGatewayPrivateLinkResourcesGetAllAsyncCollectionResultOfT(
+            return new ApplicationGatewayPrivateLinkResourceAsyncCollectionResultOfT(
                 _applicationGatewayPrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new ApplicationGatewayPrivateLinkResourcesGetAllCollectionResultOfT(
+            return new ApplicationGatewayPrivateLinkResourceCollectionResultOfT(
                 _applicationGatewayPrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

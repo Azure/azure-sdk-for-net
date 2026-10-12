@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static ForwardingConfiguration ForwardingConfiguration(string customForwardingPath = default, FrontDoorForwardingProtocol? forwardingProtocol = default, FrontDoorCacheConfiguration cacheConfiguration = default, ResourceIdentifier backendPoolId = default)
         {
             return new ForwardingConfiguration(
-                default,
+                "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration",
                 default,
                 customForwardingPath,
                 forwardingProtocol,
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static RedirectConfiguration RedirectConfiguration(FrontDoorRedirectType? redirectType = default, FrontDoorRedirectProtocol? redirectProtocol = default, string customHost = default, string customPath = default, string customFragment = default, string customQueryString = default)
         {
             return new RedirectConfiguration(
-                default,
+                "#Microsoft.Azure.FrontDoor.Models.FrontdoorRedirectConfiguration",
                 default,
                 redirectType,
                 redirectProtocol,

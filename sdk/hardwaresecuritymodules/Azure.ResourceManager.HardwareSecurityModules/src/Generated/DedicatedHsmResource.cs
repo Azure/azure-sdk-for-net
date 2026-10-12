@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new DedicatedHsmsGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(
+            return new DedicatedHsmEgressEndpointAsyncCollectionResultOfT(
                 _dedicatedHsmsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new DedicatedHsmsGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(
+            return new DedicatedHsmEgressEndpointCollectionResultOfT(
                 _dedicatedHsmsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

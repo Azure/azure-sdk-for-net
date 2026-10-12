@@ -1288,7 +1288,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualMachinesGetAvailableSizesAsyncCollectionResultOfT(
+            return new VirtualMachineSizeAsyncCollectionResultOfT(
                 _virtualMachinesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1326,7 +1326,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualMachinesGetAvailableSizesCollectionResultOfT(
+            return new VirtualMachineSizeCollectionResultOfT(
                 _virtualMachinesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

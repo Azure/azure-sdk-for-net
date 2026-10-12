@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AccessReviewHistoryDefinitionData, ScopeAccessReviewHistoryDefinitionResource>(new ScopeAccessReviewHistoryDefinitionsGetAllAsyncCollectionResultOfT(_scopeAccessReviewHistoryDefinitionsRestClient, Id.ToString(), filter, context, "ScopeAccessReviewHistoryDefinitionCollection.GetAll"), data => new ScopeAccessReviewHistoryDefinitionResource(Client, data));
+            return new AsyncPageableWrapper<AccessReviewHistoryDefinitionData, ScopeAccessReviewHistoryDefinitionResource>(new AccessReviewHistoryDefinitionDataAsync0CollectionResultOfT(_scopeAccessReviewHistoryDefinitionsRestClient, Id.ToString(), filter, context, "ScopeAccessReviewHistoryDefinitionCollection.GetAll"), data => new ScopeAccessReviewHistoryDefinitionResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AccessReviewHistoryDefinitionData, ScopeAccessReviewHistoryDefinitionResource>(new ScopeAccessReviewHistoryDefinitionsGetAllCollectionResultOfT(_scopeAccessReviewHistoryDefinitionsRestClient, Id.ToString(), filter, context, "ScopeAccessReviewHistoryDefinitionCollection.GetAll"), data => new ScopeAccessReviewHistoryDefinitionResource(Client, data));
+            return new PageableWrapper<AccessReviewHistoryDefinitionData, ScopeAccessReviewHistoryDefinitionResource>(new AccessReviewHistoryDefinitionData0CollectionResultOfT(_scopeAccessReviewHistoryDefinitionsRestClient, Id.ToString(), filter, context, "ScopeAccessReviewHistoryDefinitionCollection.GetAll"), data => new ScopeAccessReviewHistoryDefinitionResource(Client, data));
         }
 
         /// <summary>

@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GalleryApplicationVersionData, GalleryApplicationVersionResource>(new GalleryApplicationVersionsGetByGalleryApplicationAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<GalleryApplicationVersionData, GalleryApplicationVersionResource>(new GalleryApplicationVersionDataAsyncCollectionResultOfT(
                 _galleryApplicationVersionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GalleryApplicationVersionData, GalleryApplicationVersionResource>(new GalleryApplicationVersionsGetByGalleryApplicationCollectionResultOfT(
+            return new PageableWrapper<GalleryApplicationVersionData, GalleryApplicationVersionResource>(new GalleryApplicationVersionDataCollectionResultOfT(
                 _galleryApplicationVersionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

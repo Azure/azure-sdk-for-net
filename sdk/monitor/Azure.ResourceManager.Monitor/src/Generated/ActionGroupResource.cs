@@ -853,7 +853,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new NspActionGroupGetNetworkSecurityPerimeterConfigurationsAsyncCollectionResultOfT(
+            return new MonitorNetworkSecurityPerimeterConfigurationDataAsync1CollectionResultOfT(
                 _nspActionGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -891,7 +891,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new NspActionGroupGetNetworkSecurityPerimeterConfigurationsCollectionResultOfT(
+            return new MonitorNetworkSecurityPerimeterConfigurationData1CollectionResultOfT(
                 _nspActionGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

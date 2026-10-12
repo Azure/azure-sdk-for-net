@@ -755,7 +755,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new RegistriesGetUsagesAsyncCollectionResultOfT(
+            return new ContainerRegistryUsageAsyncCollectionResultOfT(
                 _registriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -793,7 +793,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new RegistriesGetUsagesCollectionResultOfT(
+            return new ContainerRegistryUsageCollectionResultOfT(
                 _registriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

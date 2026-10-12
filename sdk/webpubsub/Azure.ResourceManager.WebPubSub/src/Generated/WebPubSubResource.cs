@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new WebPubSubResourcesGetWebPubSubPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new WebPubSubPrivateLinkAsyncCollectionResultOfT(
                 _webPubSubResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new WebPubSubResourcesGetWebPubSubPrivateLinkResourcesCollectionResultOfT(
+            return new WebPubSubPrivateLinkCollectionResultOfT(
                 _webPubSubResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new WebPubSubResourcesGetSkusAsyncCollectionResultOfT(
+            return new WebPubSubSkuAsyncCollectionResultOfT(
                 _webPubSubResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new WebPubSubResourcesGetSkusCollectionResultOfT(
+            return new WebPubSubSkuCollectionResultOfT(
                 _webPubSubResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

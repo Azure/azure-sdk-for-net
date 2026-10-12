@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new DiskEncryptionSetsGetAssociatedResourcesAsyncCollectionResultOfT(
+            return new StringAsync0CollectionResultOfT(
                 _diskEncryptionSetsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new DiskEncryptionSetsGetAssociatedResourcesCollectionResultOfT(
+            return new String0CollectionResultOfT(
                 _diskEncryptionSetsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

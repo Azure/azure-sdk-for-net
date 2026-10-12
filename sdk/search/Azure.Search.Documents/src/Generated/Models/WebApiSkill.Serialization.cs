@@ -109,25 +109,46 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
             }
-            if (Optional.IsDefined(BatchSize))
+            if (_batchSizeIsDefined || Optional.IsDefined(BatchSize))
             {
-                writer.WritePropertyName("batchSize"u8);
-                writer.WriteNumberValue(BatchSize.Value);
+                if (BatchSize != null)
+                {
+                    writer.WritePropertyName("batchSize"u8);
+                    writer.WriteNumberValue(BatchSize.Value);
+                }
+                else
+                {
+                    writer.WriteNull("batchSize"u8);
+                }
             }
-            if (Optional.IsDefined(DegreeOfParallelism))
+            if (_degreeOfParallelismIsDefined || Optional.IsDefined(DegreeOfParallelism))
             {
-                writer.WritePropertyName("degreeOfParallelism"u8);
-                writer.WriteNumberValue(DegreeOfParallelism.Value);
+                if (DegreeOfParallelism != null)
+                {
+                    writer.WritePropertyName("degreeOfParallelism"u8);
+                    writer.WriteNumberValue(DegreeOfParallelism.Value);
+                }
+                else
+                {
+                    writer.WriteNull("degreeOfParallelism"u8);
+                }
             }
             if (Optional.IsDefined(AuthResourceId))
             {
                 writer.WritePropertyName("authResourceId"u8);
                 writer.WriteStringValue(AuthResourceId);
             }
-            if (Optional.IsDefined(AuthIdentity))
+            if (_authIdentityIsDefined || Optional.IsDefined(AuthIdentity))
             {
-                writer.WritePropertyName("authIdentity"u8);
-                writer.WriteObjectValue(AuthIdentity, options);
+                if (AuthIdentity != null)
+                {
+                    writer.WritePropertyName("authIdentity"u8);
+                    writer.WriteObjectValue(AuthIdentity, options);
+                }
+                else
+                {
+                    writer.WriteNull("authIdentity"u8);
+                }
             }
         }
 
@@ -167,9 +188,12 @@ namespace Azure.Search.Documents.Indexes.Models
             IDictionary<string, string> httpHeaders = default;
             string httpMethod = default;
             TimeSpan? timeout = default;
+            bool batchSizeIsDefined = false;
             int? batchSize = default;
+            bool degreeOfParallelismIsDefined = false;
             int? degreeOfParallelism = default;
             ResourceIdentifier authResourceId = default;
+            bool authIdentityIsDefined = false;
             SearchIndexerDataIdentity authIdentity = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -255,6 +279,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("batchSize"u8))
                 {
+                    batchSizeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         batchSize = null;
@@ -265,6 +290,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("degreeOfParallelism"u8))
                 {
+                    degreeOfParallelismIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         degreeOfParallelism = null;
@@ -284,6 +310,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("authIdentity"u8))
                 {
+                    authIdentityIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         authIdentity = null;
@@ -312,7 +339,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 batchSize,
                 degreeOfParallelism,
                 authResourceId,
-                authIdentity);
+                authIdentity)
+            {
+                _batchSizeIsDefined = batchSizeIsDefined,
+                _degreeOfParallelismIsDefined = degreeOfParallelismIsDefined,
+                _authIdentityIsDefined = authIdentityIsDefined
+            };
         }
     }
 }

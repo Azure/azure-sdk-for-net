@@ -2430,7 +2430,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualNetworkGatewaysGetConnectionsAsyncCollectionResultOfT(
+            return new VirtualNetworkGatewayConnectionListEntityAsyncCollectionResultOfT(
                 _virtualNetworkGatewaysRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2468,7 +2468,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualNetworkGatewaysGetConnectionsCollectionResultOfT(
+            return new VirtualNetworkGatewayConnectionListEntityCollectionResultOfT(
                 _virtualNetworkGatewaysRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

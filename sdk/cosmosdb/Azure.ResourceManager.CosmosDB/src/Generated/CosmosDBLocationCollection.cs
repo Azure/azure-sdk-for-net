@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBLocationData, CosmosDBLocationResource>(new LocationsGetAllAsyncCollectionResultOfT(_locationsRestClient, Guid.Parse(Id.SubscriptionId), context, "CosmosDBLocationCollection.GetAll"), data => new CosmosDBLocationResource(Client, data));
+            return new AsyncPageableWrapper<CosmosDBLocationData, CosmosDBLocationResource>(new CosmosDBLocationDataAsyncCollectionResultOfT(_locationsRestClient, Guid.Parse(Id.SubscriptionId), context, "CosmosDBLocationCollection.GetAll"), data => new CosmosDBLocationResource(Client, data));
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBLocationData, CosmosDBLocationResource>(new LocationsGetAllCollectionResultOfT(_locationsRestClient, Guid.Parse(Id.SubscriptionId), context, "CosmosDBLocationCollection.GetAll"), data => new CosmosDBLocationResource(Client, data));
+            return new PageableWrapper<CosmosDBLocationData, CosmosDBLocationResource>(new CosmosDBLocationDataCollectionResultOfT(_locationsRestClient, Guid.Parse(Id.SubscriptionId), context, "CosmosDBLocationCollection.GetAll"), data => new CosmosDBLocationResource(Client, data));
         }
 
         /// <summary>

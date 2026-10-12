@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new RpUnbilledPrefixesGetRpUnbilledPrefixesAsyncCollectionResultOfT(
+            return new RoutingPreferenceUnbilledPrefixAsyncCollectionResultOfT(
                 _rpUnbilledPrefixesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new RpUnbilledPrefixesGetRpUnbilledPrefixesCollectionResultOfT(
+            return new RoutingPreferenceUnbilledPrefixCollectionResultOfT(
                 _rpUnbilledPrefixesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new ReceivedRoutesGetReceivedRoutesAsyncCollectionResultOfT(
+            return new PeeringReceivedRouteAsyncCollectionResultOfT(
                 _receivedRoutesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new ReceivedRoutesGetReceivedRoutesCollectionResultOfT(
+            return new PeeringReceivedRouteCollectionResultOfT(
                 _receivedRoutesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

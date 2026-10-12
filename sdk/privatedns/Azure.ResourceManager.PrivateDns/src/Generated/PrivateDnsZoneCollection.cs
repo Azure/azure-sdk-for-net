@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PrivateDnsZoneData, PrivateDnsZoneResource>(new PrivateZonesGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PrivateDnsZoneData, PrivateDnsZoneResource>(new PrivateDnsZoneDataAsyncCollectionResultOfT(
                 _privateZonesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PrivateDnsZoneData, PrivateDnsZoneResource>(new PrivateZonesGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<PrivateDnsZoneData, PrivateDnsZoneResource>(new PrivateDnsZoneDataCollectionResultOfT(
                 _privateZonesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

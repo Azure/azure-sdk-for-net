@@ -14,6 +14,10 @@ namespace Azure.Security.KeyVault.Administration.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private KeyVaultServiceError _error;
+        internal bool _errorIsDefined;
+        private DateTimeOffset? _endsOn;
+        internal bool _endsOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SelectiveKeyRestoreDetailsInternal"/>. </summary>
         internal SelectiveKeyRestoreDetailsInternal()
@@ -32,10 +36,10 @@ namespace Azure.Security.KeyVault.Administration.Models
         {
             Status = status;
             StatusDetails = statusDetails;
-            Error = error;
+            _error = error;
             JobId = jobId;
             StartsOn = startsOn;
-            EndsOn = endsOn;
+            _endsOn = endsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,7 +50,13 @@ namespace Azure.Security.KeyVault.Administration.Models
         public string StatusDetails { get; }
 
         /// <summary> Error encountered, if any, during the selective key restore operation. </summary>
-        public KeyVaultServiceError Error { get; }
+        public KeyVaultServiceError Error
+        {
+            get
+            {
+                return _error;
+            }
+        }
 
         /// <summary> Identifier for the selective key restore operation. </summary>
         public string JobId { get; }
@@ -55,6 +65,12 @@ namespace Azure.Security.KeyVault.Administration.Models
         public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The end time of the restore operation. </summary>
-        public DateTimeOffset? EndsOn { get; }
+        public DateTimeOffset? EndsOn
+        {
+            get
+            {
+                return _endsOn;
+            }
+        }
     }
 }

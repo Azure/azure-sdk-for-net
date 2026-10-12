@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AuthorizationProviderOperationsMetadataData, AuthorizationProviderOperationsMetadataResource>(new ProviderOperationsMetadataGetAllAsyncCollectionResultOfT(_providerOperationsMetadataRestClient, expand, context, "AuthorizationProviderOperationsMetadataCollection.GetAll"), data => new AuthorizationProviderOperationsMetadataResource(Client, data));
+            return new AsyncPageableWrapper<AuthorizationProviderOperationsMetadataData, AuthorizationProviderOperationsMetadataResource>(new AuthorizationProviderOperationsMetadataDataAsyncCollectionResultOfT(_providerOperationsMetadataRestClient, expand, context, "AuthorizationProviderOperationsMetadataCollection.GetAll"), data => new AuthorizationProviderOperationsMetadataResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AuthorizationProviderOperationsMetadataData, AuthorizationProviderOperationsMetadataResource>(new ProviderOperationsMetadataGetAllCollectionResultOfT(_providerOperationsMetadataRestClient, expand, context, "AuthorizationProviderOperationsMetadataCollection.GetAll"), data => new AuthorizationProviderOperationsMetadataResource(Client, data));
+            return new PageableWrapper<AuthorizationProviderOperationsMetadataData, AuthorizationProviderOperationsMetadataResource>(new AuthorizationProviderOperationsMetadataDataCollectionResultOfT(_providerOperationsMetadataRestClient, expand, context, "AuthorizationProviderOperationsMetadataCollection.GetAll"), data => new AuthorizationProviderOperationsMetadataResource(Client, data));
         }
 
         /// <summary>

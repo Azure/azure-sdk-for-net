@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlServerTrustGroupData, SqlServerTrustGroupResource>(new ServerTrustGroupsGetSqlServerTrustGroupsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SqlServerTrustGroupData, SqlServerTrustGroupResource>(new SqlServerTrustGroupDataAsync0CollectionResultOfT(
                 _serverTrustGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlServerTrustGroupData, SqlServerTrustGroupResource>(new ServerTrustGroupsGetSqlServerTrustGroupsCollectionResultOfT(
+            return new PageableWrapper<SqlServerTrustGroupData, SqlServerTrustGroupResource>(new SqlServerTrustGroupData0CollectionResultOfT(
                 _serverTrustGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -738,7 +738,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedInstancesGetTopQueriesAsyncCollectionResultOfT(
+            return new TopQueriesAsyncCollectionResultOfT(
                 _managedInstancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -790,7 +790,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedInstancesGetTopQueriesCollectionResultOfT(
+            return new TopQueriesCollectionResultOfT(
                 _managedInstancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -835,7 +835,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedDatabaseData, ManagedDatabaseResource>(new ManagedDatabasesGetInaccessibleManagedDatabasesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ManagedDatabaseData, ManagedDatabaseResource>(new ManagedDatabaseDataAsync0CollectionResultOfT(
                 _managedDatabasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -873,7 +873,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedDatabaseData, ManagedDatabaseResource>(new ManagedDatabasesGetInaccessibleManagedDatabasesCollectionResultOfT(
+            return new PageableWrapper<ManagedDatabaseData, ManagedDatabaseResource>(new ManagedDatabaseData0CollectionResultOfT(
                 _managedDatabasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -911,7 +911,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedInstancesGetOutboundNetworkDependenciesAsyncCollectionResultOfT(
+            return new SqlOutboundEnvironmentEndpointAsyncCollectionResultOfT(
                 _managedInstancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -949,7 +949,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedInstancesGetOutboundNetworkDependenciesCollectionResultOfT(
+            return new SqlOutboundEnvironmentEndpointCollectionResultOfT(
                 _managedInstancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

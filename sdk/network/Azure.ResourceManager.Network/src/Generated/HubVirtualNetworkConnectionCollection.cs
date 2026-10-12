@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HubVirtualNetworkConnectionData, HubVirtualNetworkConnectionResource>(new HubVirtualNetworkConnectionsGetHubVirtualNetworkConnectionsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HubVirtualNetworkConnectionData, HubVirtualNetworkConnectionResource>(new HubVirtualNetworkConnectionDataAsyncCollectionResultOfT(
                 _hubVirtualNetworkConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HubVirtualNetworkConnectionData, HubVirtualNetworkConnectionResource>(new HubVirtualNetworkConnectionsGetHubVirtualNetworkConnectionsCollectionResultOfT(
+            return new PageableWrapper<HubVirtualNetworkConnectionData, HubVirtualNetworkConnectionResource>(new HubVirtualNetworkConnectionDataCollectionResultOfT(
                 _hubVirtualNetworkConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

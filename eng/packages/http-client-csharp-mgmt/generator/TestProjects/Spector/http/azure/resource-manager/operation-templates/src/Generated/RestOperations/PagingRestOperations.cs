@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.OperationTemplates
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = RequestMethod.Get;
             _userAgent.Apply(message);
             if ("application/json" != null)
             {

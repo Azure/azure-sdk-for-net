@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkResourcesAutomationPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new AutomationPrivateLinkResourceAsyncCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkResourcesAutomationPrivateLinkResourcesCollectionResultOfT(
+            return new AutomationPrivateLinkResourceCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1231,7 +1231,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new StatisticsGetStatisticsAsyncCollectionResultOfT(
+            return new AutomationAccountStatisticsAsyncCollectionResultOfT(
                 _statisticsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1271,7 +1271,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new StatisticsGetStatisticsCollectionResultOfT(
+            return new AutomationAccountStatisticsCollectionResultOfT(
                 _statisticsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1310,7 +1310,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new AutomationAccountGetDeletedRunbooksAsyncCollectionResultOfT(
+            return new DeletedRunbookAsyncCollectionResultOfT(
                 _automationAccountRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1348,7 +1348,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new AutomationAccountGetDeletedRunbooksCollectionResultOfT(
+            return new DeletedRunbookCollectionResultOfT(
                 _automationAccountRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1391,7 +1391,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new ObjectDataTypesGetFieldsByTypeAsyncCollectionResultOfT(
+            return new AutomationModuleFieldAsyncCollectionResultOfT(
                 _objectDataTypesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1435,7 +1435,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new ObjectDataTypesGetFieldsByTypeCollectionResultOfT(
+            return new AutomationModuleFieldCollectionResultOfT(
                 _objectDataTypesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1475,7 +1475,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new NodeCountInformationGetAllNodeCountInformationAsyncCollectionResultOfT(
+            return new DscNodeCountAsyncCollectionResultOfT(
                 _nodeCountInformationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1515,7 +1515,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new NodeCountInformationGetAllNodeCountInformationCollectionResultOfT(
+            return new DscNodeCountCollectionResultOfT(
                 _nodeCountInformationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1662,7 +1662,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new SoftwareUpdateConfigurationMachineRunsGetSoftwareUpdateConfigurationMachineRunsAsyncCollectionResultOfT(
+            return new SoftwareUpdateConfigurationMachineRunAsyncCollectionResultOfT(
                 _softwareUpdateConfigurationMachineRunsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1708,7 +1708,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new SoftwareUpdateConfigurationMachineRunsGetSoftwareUpdateConfigurationMachineRunsCollectionResultOfT(
+            return new SoftwareUpdateConfigurationMachineRunCollectionResultOfT(
                 _softwareUpdateConfigurationMachineRunsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1854,7 +1854,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new SoftwareUpdateConfigurationRunsGetSoftwareUpdateConfigurationRunsAsyncCollectionResultOfT(
+            return new SoftwareUpdateConfigurationRunAsyncCollectionResultOfT(
                 _softwareUpdateConfigurationRunsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1900,7 +1900,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new SoftwareUpdateConfigurationRunsGetSoftwareUpdateConfigurationRunsCollectionResultOfT(
+            return new SoftwareUpdateConfigurationRunCollectionResultOfT(
                 _softwareUpdateConfigurationRunsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2026,7 +2026,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetUsagesAsyncCollectionResultOfT(
+            return new AutomationUsageAsyncCollectionResultOfT(
                 _usagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2064,7 +2064,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetUsagesCollectionResultOfT(
+            return new AutomationUsageCollectionResultOfT(
                 _usagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.Purview
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PurviewPrivateEndpointConnectionData, PurviewPrivateEndpointConnectionResource>(new IngestionPrivateEndpointConnectionsGetIngestionPrivateEndpointConnectionsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PurviewPrivateEndpointConnectionData, PurviewPrivateEndpointConnectionResource>(new PurviewPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _ingestionPrivateEndpointConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.Purview
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PurviewPrivateEndpointConnectionData, PurviewPrivateEndpointConnectionResource>(new IngestionPrivateEndpointConnectionsGetIngestionPrivateEndpointConnectionsCollectionResultOfT(
+            return new PageableWrapper<PurviewPrivateEndpointConnectionData, PurviewPrivateEndpointConnectionResource>(new PurviewPrivateEndpointConnectionDataCollectionResultOfT(
                 _ingestionPrivateEndpointConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

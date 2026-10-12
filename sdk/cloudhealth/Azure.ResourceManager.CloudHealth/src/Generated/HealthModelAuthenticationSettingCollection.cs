@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.CloudHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HealthModelAuthenticationSettingData, HealthModelAuthenticationSettingResource>(new AuthenticationSettingsGetByHealthModelAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HealthModelAuthenticationSettingData, HealthModelAuthenticationSettingResource>(new HealthModelAuthenticationSettingDataAsyncCollectionResultOfT(
                 _authenticationSettingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.CloudHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HealthModelAuthenticationSettingData, HealthModelAuthenticationSettingResource>(new AuthenticationSettingsGetByHealthModelCollectionResultOfT(
+            return new PageableWrapper<HealthModelAuthenticationSettingData, HealthModelAuthenticationSettingResource>(new HealthModelAuthenticationSettingDataCollectionResultOfT(
                 _authenticationSettingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

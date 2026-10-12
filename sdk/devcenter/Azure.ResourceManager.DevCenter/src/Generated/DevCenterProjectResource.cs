@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new SkusGetByProjectAsyncCollectionResultOfT(
+            return new DevCenterSkuDetailsAsyncCollectionResultOfT(
                 _skusRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new SkusGetByProjectCollectionResultOfT(
+            return new DevCenterSkuDetailsCollectionResultOfT(
                 _skusRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

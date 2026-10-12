@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualNetworksGetUsageAsyncCollectionResultOfT(
+            return new VirtualNetworkUsageAsyncCollectionResultOfT(
                 _virtualNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualNetworksGetUsageCollectionResultOfT(
+            return new VirtualNetworkUsageCollectionResultOfT(
                 _virtualNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

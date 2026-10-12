@@ -15,6 +15,8 @@ namespace Azure.AI.Agents.Persistent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DateTimeOffset? _expiresAt;
+        internal bool _expiresAtIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="PersistentAgentsVectorStore"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
@@ -60,7 +62,7 @@ namespace Azure.AI.Agents.Persistent
             FileCounts = fileCounts;
             Status = status;
             ExpiresAfter = expiresAfter;
-            ExpiresAt = expiresAt;
+            _expiresAt = expiresAt;
             LastActiveAt = lastActiveAt;
             Metadata = metadata;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -88,7 +90,13 @@ namespace Azure.AI.Agents.Persistent
         public VectorStoreExpirationPolicy ExpiresAfter { get; }
 
         /// <summary> The Unix timestamp (in seconds) for when the vector store will expire. </summary>
-        public DateTimeOffset? ExpiresAt { get; }
+        public DateTimeOffset? ExpiresAt
+        {
+            get
+            {
+                return _expiresAt;
+            }
+        }
 
         /// <summary> The Unix timestamp (in seconds) for when the vector store was last active. </summary>
         public DateTimeOffset? LastActiveAt { get; }

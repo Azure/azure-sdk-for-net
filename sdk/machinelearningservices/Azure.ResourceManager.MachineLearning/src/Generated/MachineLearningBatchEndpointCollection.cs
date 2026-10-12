@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MachineLearningBatchEndpointData, MachineLearningBatchEndpointResource>(new BatchEndpointsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MachineLearningBatchEndpointData, MachineLearningBatchEndpointResource>(new MachineLearningBatchEndpointDataAsyncCollectionResultOfT(
                 _batchEndpointsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MachineLearningBatchEndpointData, MachineLearningBatchEndpointResource>(new BatchEndpointsGetAllCollectionResultOfT(
+            return new PageableWrapper<MachineLearningBatchEndpointData, MachineLearningBatchEndpointResource>(new MachineLearningBatchEndpointDataCollectionResultOfT(
                 _batchEndpointsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

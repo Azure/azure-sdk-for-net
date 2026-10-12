@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HorizonDBClusterData, HorizonDBClusterResource>(new HorizonDBClustersGetByResourceGroupAsyncCollectionResultOfT(_horizonDBClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HorizonDBClusterCollection.GetAll"), data => new HorizonDBClusterResource(Client, data));
+            return new AsyncPageableWrapper<HorizonDBClusterData, HorizonDBClusterResource>(new HorizonDBClusterDataAsyncCollectionResultOfT(_horizonDBClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HorizonDBClusterCollection.GetAll"), data => new HorizonDBClusterResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HorizonDBClusterData, HorizonDBClusterResource>(new HorizonDBClustersGetByResourceGroupCollectionResultOfT(_horizonDBClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HorizonDBClusterCollection.GetAll"), data => new HorizonDBClusterResource(Client, data));
+            return new PageableWrapper<HorizonDBClusterData, HorizonDBClusterResource>(new HorizonDBClusterDataCollectionResultOfT(_horizonDBClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HorizonDBClusterCollection.GetAll"), data => new HorizonDBClusterResource(Client, data));
         }
 
         /// <summary>

@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedHsmsGetMHSMPrivateLinkResourcesByManagedHsmResourceAsyncCollectionResultOfT(
+            return new ManagedHsmPrivateLinkResourceDataAsyncCollectionResultOfT(
                 _managedHsmsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedHsmsGetMHSMPrivateLinkResourcesByManagedHsmResourceCollectionResultOfT(
+            return new ManagedHsmPrivateLinkResourceDataCollectionResultOfT(
                 _managedHsmsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedHsmsGetMHSMRegionsByResourceAsyncCollectionResultOfT(
+            return new ManagedHsmGeoReplicatedRegionAsyncCollectionResultOfT(
                 _managedHsmsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedHsmsGetMHSMRegionsByResourceCollectionResultOfT(
+            return new ManagedHsmGeoReplicatedRegionCollectionResultOfT(
                 _managedHsmsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

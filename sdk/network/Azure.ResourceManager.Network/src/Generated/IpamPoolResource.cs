@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new IpamPoolsGetAssociatedResourcesAsyncCollectionResultOfT(
+            return new IpamPoolAssociationAsyncCollectionResultOfT(
                 _ipamPoolsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new IpamPoolsGetAssociatedResourcesCollectionResultOfT(
+            return new IpamPoolAssociationCollectionResultOfT(
                 _ipamPoolsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

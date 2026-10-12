@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.PowerPlatform
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PowerPlatformPrivateEndpointConnectionData, PowerPlatformPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByEnterprisePolicyAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PowerPlatformPrivateEndpointConnectionData, PowerPlatformPrivateEndpointConnectionResource>(new PowerPlatformPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.PowerPlatform
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PowerPlatformPrivateEndpointConnectionData, PowerPlatformPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByEnterprisePolicyCollectionResultOfT(
+            return new PageableWrapper<PowerPlatformPrivateEndpointConnectionData, PowerPlatformPrivateEndpointConnectionResource>(new PowerPlatformPrivateEndpointConnectionDataCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

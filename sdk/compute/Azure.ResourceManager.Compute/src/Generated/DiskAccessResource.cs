@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new DiskAccessesGetPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new ComputePrivateLinkResourceDataAsyncCollectionResultOfT(
                 _diskAccessesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new DiskAccessesGetPrivateLinkResourcesCollectionResultOfT(
+            return new ComputePrivateLinkResourceDataCollectionResultOfT(
                 _diskAccessesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

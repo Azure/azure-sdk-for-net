@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.Fabric
             {
                 CancellationToken = cancellationToken
             };
-            return new FabricCapacitiesGetSkusForCapacityAsyncCollectionResultOfT(
+            return new FabricSkuDetailsForExistingCapacityAsyncCollectionResultOfT(
                 _fabricCapacitiesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.Fabric
             {
                 CancellationToken = cancellationToken
             };
-            return new FabricCapacitiesGetSkusForCapacityCollectionResultOfT(
+            return new FabricSkuDetailsForExistingCapacityCollectionResultOfT(
                 _fabricCapacitiesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

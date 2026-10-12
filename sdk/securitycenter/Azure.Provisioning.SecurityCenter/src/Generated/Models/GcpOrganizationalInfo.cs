@@ -12,7 +12,7 @@ namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary>
     /// The gcpOrganization data
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="GcpParentOrganizationalInfo"/> and <see cref="GcpMemberOrganizationalInfo"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="GcpMemberOrganizationalInfo"/> and <see cref="GcpParentOrganizationalInfo"/>.
     /// </summary>
     public partial class GcpOrganizationalInfo : ProvisionableConstruct
     {

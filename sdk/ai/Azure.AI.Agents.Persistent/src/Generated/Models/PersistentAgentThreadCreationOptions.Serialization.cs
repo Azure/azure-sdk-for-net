@@ -83,26 +83,40 @@ namespace Azure.AI.Agents.Persistent
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ToolResources))
+            if (_toolResourcesIsDefined || Optional.IsDefined(ToolResources))
             {
-                writer.WritePropertyName("tool_resources"u8);
-                writer.WriteObjectValue(ToolResources, options);
+                if (ToolResources != null)
+                {
+                    writer.WritePropertyName("tool_resources"u8);
+                    writer.WriteObjectValue(ToolResources, options);
+                }
+                else
+                {
+                    writer.WriteNull("tool_resources"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Metadata))
             {
-                writer.WritePropertyName("metadata"u8);
-                writer.WriteStartObject();
-                foreach (var item in Metadata)
+                if (Metadata != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("metadata"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Metadata)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("metadata"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -147,8 +161,9 @@ namespace Azure.AI.Agents.Persistent
                 return null;
             }
             IList<ThreadMessageOptions> messages = default;
+            bool toolResourcesIsDefined = false;
             ToolResources toolResources = default;
-            IDictionary<string, string> metadata = default;
+            IDictionary<string, string> metadata = new ChangeTrackingDictionary<string, string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,6 +183,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("tool_resources"u8))
                 {
+                    toolResourcesIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         toolResources = null;
@@ -180,6 +196,7 @@ namespace Azure.AI.Agents.Persistent
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        metadata = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -202,7 +219,10 @@ namespace Azure.AI.Agents.Persistent
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PersistentAgentThreadCreationOptions(messages ?? new ChangeTrackingList<ThreadMessageOptions>(), toolResources, metadata ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new PersistentAgentThreadCreationOptions(messages ?? new ChangeTrackingList<ThreadMessageOptions>(), toolResources, metadata, additionalBinaryDataProperties)
+            {
+                _toolResourcesIsDefined = toolResourcesIsDefined
+            };
         }
     }
 }

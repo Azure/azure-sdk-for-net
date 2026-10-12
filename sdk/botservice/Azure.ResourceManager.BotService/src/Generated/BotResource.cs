@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.BotService
             {
                 CancellationToken = cancellationToken
             };
-            return new BotsGetPrivateLinkResourcesByBotResourceAsyncCollectionResultOfT(
+            return new BotServicePrivateLinkResourceDataAsyncCollectionResultOfT(
                 _botsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.BotService
             {
                 CancellationToken = cancellationToken
             };
-            return new BotsGetPrivateLinkResourcesByBotResourceCollectionResultOfT(
+            return new BotServicePrivateLinkResourceDataCollectionResultOfT(
                 _botsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             {
                 CancellationToken = cancellationToken
             };
-            return new BulkCreateVirtualMachinesGetOperationStatusAsyncCollectionResultOfT(
+            return new ComputeBulkOperationResultAsync0CollectionResultOfT(
                 _bulkCreateRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             {
                 CancellationToken = cancellationToken
             };
-            return new BulkCreateVirtualMachinesGetOperationStatusCollectionResultOfT(
+            return new ComputeBulkOperationResult0CollectionResultOfT(
                 _bulkCreateRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

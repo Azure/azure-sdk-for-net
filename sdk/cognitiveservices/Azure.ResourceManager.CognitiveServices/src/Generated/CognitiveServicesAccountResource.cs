@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetModelsAsyncCollectionResultOfT(
+            return new CognitiveServicesAccountModelAsyncCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetModelsCollectionResultOfT(
+            return new CognitiveServicesAccountModelCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetSkusAsyncCollectionResultOfT(
+            return new CognitiveServicesAccountSkuAsyncCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -755,7 +755,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetSkusCollectionResultOfT(
+            return new CognitiveServicesAccountSkuCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -794,7 +794,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetUsagesAsyncCollectionResultOfT(
+            return new ServiceAccountUsageAsyncCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -834,7 +834,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetUsagesCollectionResultOfT(
+            return new ServiceAccountUsageCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -873,7 +873,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new CognitiveServicesPrivateLinkResourceAsyncCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -911,7 +911,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetPrivateLinkResourcesCollectionResultOfT(
+            return new CognitiveServicesPrivateLinkResourceCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

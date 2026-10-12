@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedClusterIdentityBindingData, ManagedClusterIdentityBindingResource>(new IdentityBindingsGetByManagedClusterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ManagedClusterIdentityBindingData, ManagedClusterIdentityBindingResource>(new ManagedClusterIdentityBindingDataAsyncCollectionResultOfT(
                 _identityBindingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedClusterIdentityBindingData, ManagedClusterIdentityBindingResource>(new IdentityBindingsGetByManagedClusterCollectionResultOfT(
+            return new PageableWrapper<ManagedClusterIdentityBindingData, ManagedClusterIdentityBindingResource>(new ManagedClusterIdentityBindingDataCollectionResultOfT(
                 _identityBindingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

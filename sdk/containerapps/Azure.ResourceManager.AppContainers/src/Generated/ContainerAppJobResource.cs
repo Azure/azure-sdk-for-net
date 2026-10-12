@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new ContainerAppJobsGetSecretsAsyncCollectionResultOfT(
+            return new ContainerAppWritableSecretAsyncCollectionResultOfT(
                 _containerAppJobsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new ContainerAppJobsGetSecretsCollectionResultOfT(
+            return new ContainerAppWritableSecretCollectionResultOfT(
                 _containerAppJobsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

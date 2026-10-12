@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NotebookWorkspaceData, NotebookWorkspaceResource>(new NotebookWorkspacesGetByDatabaseAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NotebookWorkspaceData, NotebookWorkspaceResource>(new NotebookWorkspaceDataAsyncCollectionResultOfT(
                 _notebookWorkspacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NotebookWorkspaceData, NotebookWorkspaceResource>(new NotebookWorkspacesGetByDatabaseAccountCollectionResultOfT(
+            return new PageableWrapper<NotebookWorkspaceData, NotebookWorkspaceResource>(new NotebookWorkspaceDataCollectionResultOfT(
                 _notebookWorkspacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

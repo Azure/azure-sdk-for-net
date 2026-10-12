@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBServiceData, CosmosDBServiceResource>(new ServiceGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CosmosDBServiceData, CosmosDBServiceResource>(new CosmosDBServiceDataAsyncCollectionResultOfT(
                 _serviceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBServiceData, CosmosDBServiceResource>(new ServiceGetAllCollectionResultOfT(
+            return new PageableWrapper<CosmosDBServiceData, CosmosDBServiceResource>(new CosmosDBServiceDataCollectionResultOfT(
                 _serviceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

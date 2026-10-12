@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 CancellationToken = cancellationToken
             };
-            return new RecordSetsGetRecordsAsyncCollectionResultOfT(
+            return new PrivateDnsRecordDataAsyncCollectionResultOfT(
                 _recordSetsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 CancellationToken = cancellationToken
             };
-            return new RecordSetsGetRecordsCollectionResultOfT(
+            return new PrivateDnsRecordDataCollectionResultOfT(
                 _recordSetsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

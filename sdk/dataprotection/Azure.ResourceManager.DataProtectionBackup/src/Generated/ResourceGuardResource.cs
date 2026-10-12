@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new DppBaseResourceOperationGroupGetBackupSecurityPinObjectsAsyncCollectionResultOfT(
+            return new ResourceGuardProtectedObjectDataAsync3CollectionResultOfT(
                 _dppBaseResourceOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new DppBaseResourceOperationGroupGetBackupSecurityPinObjectsCollectionResultOfT(
+            return new ResourceGuardProtectedObjectData3CollectionResultOfT(
                 _dppBaseResourceOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1039,7 +1039,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new DppBaseResourceOperationGroupGetDeleteProtectedItemObjectsAsyncCollectionResultOfT(
+            return new ResourceGuardProtectedObjectDataAsync2CollectionResultOfT(
                 _dppBaseResourceOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1077,7 +1077,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new DppBaseResourceOperationGroupGetDeleteProtectedItemObjectsCollectionResultOfT(
+            return new ResourceGuardProtectedObjectData2CollectionResultOfT(
                 _dppBaseResourceOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1115,7 +1115,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new DppBaseResourceOperationGroupGetDisableSoftDeleteObjectsAsyncCollectionResultOfT(
+            return new ResourceGuardProtectedObjectDataAsyncCollectionResultOfT(
                 _dppBaseResourceOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1153,7 +1153,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new DppBaseResourceOperationGroupGetDisableSoftDeleteObjectsCollectionResultOfT(
+            return new ResourceGuardProtectedObjectDataCollectionResultOfT(
                 _dppBaseResourceOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1191,7 +1191,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new DppBaseResourceOperationGroupGetUpdateProtectedItemObjectsAsyncCollectionResultOfT(
+            return new ResourceGuardProtectedObjectDataAsync0CollectionResultOfT(
                 _dppBaseResourceOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1229,7 +1229,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new DppBaseResourceOperationGroupGetUpdateProtectedItemObjectsCollectionResultOfT(
+            return new ResourceGuardProtectedObjectData0CollectionResultOfT(
                 _dppBaseResourceOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1267,7 +1267,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new DppBaseResourceOperationGroupGetUpdateProtectionPolicyObjectsAsyncCollectionResultOfT(
+            return new ResourceGuardProtectedObjectDataAsync1CollectionResultOfT(
                 _dppBaseResourceOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1305,7 +1305,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new DppBaseResourceOperationGroupGetUpdateProtectionPolicyObjectsCollectionResultOfT(
+            return new ResourceGuardProtectedObjectData1CollectionResultOfT(
                 _dppBaseResourceOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1449,7 +1449,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceGuardsGetDeleteResourceGuardProxyObjectsAsyncCollectionResultOfT(
+            return new ResourceGuardProtectedObjectDataAsync4CollectionResultOfT(
                 _resourceGuardsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1487,7 +1487,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceGuardsGetDeleteResourceGuardProxyObjectsCollectionResultOfT(
+            return new ResourceGuardProtectedObjectData4CollectionResultOfT(
                 _resourceGuardsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

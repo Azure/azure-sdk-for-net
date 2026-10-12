@@ -943,7 +943,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetApiKeysAsyncCollectionResultOfT(
+            return new DatadogApiKeyAsyncCollectionResultOfT(
                 _monitorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -981,7 +981,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetApiKeysCollectionResultOfT(
+            return new DatadogApiKeyCollectionResultOfT(
                 _monitorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1019,7 +1019,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetHostsAsyncCollectionResultOfT(
+            return new DatadogHostAsyncCollectionResultOfT(
                 _monitorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1057,7 +1057,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetHostsCollectionResultOfT(
+            return new DatadogHostCollectionResultOfT(
                 _monitorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1095,7 +1095,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetLinkedResourcesAsyncCollectionResultOfT(
+            return new DatadogLinkedResourceResultAsyncCollectionResultOfT(
                 _monitorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1133,7 +1133,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetLinkedResourcesCollectionResultOfT(
+            return new DatadogLinkedResourceResultCollectionResultOfT(
                 _monitorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1171,7 +1171,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetMonitoredResourcesAsyncCollectionResultOfT(
+            return new DatadogMonitoredResourceResultAsyncCollectionResultOfT(
                 _monitorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1209,7 +1209,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetMonitoredResourcesCollectionResultOfT(
+            return new DatadogMonitoredResourceResultCollectionResultOfT(
                 _monitorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1251,7 +1251,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsManageSreAgentConnectorsAsyncCollectionResultOfT(
+            return new DatadogSreAgentConfigurationAsyncCollectionResultOfT(
                 _monitorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1294,7 +1294,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsManageSreAgentConnectorsCollectionResultOfT(
+            return new DatadogSreAgentConfigurationCollectionResultOfT(
                 _monitorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

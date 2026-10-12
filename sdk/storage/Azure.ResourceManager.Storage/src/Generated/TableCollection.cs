@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TableData, TableResource>(new TableGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<TableData, TableResource>(new TableDataAsyncCollectionResultOfT(
                 _tableRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TableData, TableResource>(new TableGetAllCollectionResultOfT(
+            return new PageableWrapper<TableData, TableResource>(new TableDataCollectionResultOfT(
                 _tableRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MongoMIRoleAssignmentData, MongoMIRoleAssignmentResource>(new MongoMIResourcesGetMongoMIRoleAssignmentsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MongoMIRoleAssignmentData, MongoMIRoleAssignmentResource>(new MongoMIRoleAssignmentDataAsyncCollectionResultOfT(
                 _mongoMIResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MongoMIRoleAssignmentData, MongoMIRoleAssignmentResource>(new MongoMIResourcesGetMongoMIRoleAssignmentsCollectionResultOfT(
+            return new PageableWrapper<MongoMIRoleAssignmentData, MongoMIRoleAssignmentResource>(new MongoMIRoleAssignmentDataCollectionResultOfT(
                 _mongoMIResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

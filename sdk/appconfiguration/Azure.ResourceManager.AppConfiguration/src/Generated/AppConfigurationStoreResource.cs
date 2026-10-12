@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new ConfigurationStoresGetKeysAsyncCollectionResultOfT(
+            return new AppConfigurationStoreApiKeyAsyncCollectionResultOfT(
                 _configurationStoresRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new ConfigurationStoresGetKeysCollectionResultOfT(
+            return new AppConfigurationStoreApiKeyCollectionResultOfT(
                 _configurationStoresRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new NetworkSecurityPerimeterConfigurationsGetNetworkSecurityPerimeterConfigurationsAsyncCollectionResultOfT(
+            return new NetworkSecurityPerimeterConfigurationAsyncCollectionResultOfT(
                 _networkSecurityPerimeterConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -767,7 +767,7 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new NetworkSecurityPerimeterConfigurationsGetNetworkSecurityPerimeterConfigurationsCollectionResultOfT(
+            return new NetworkSecurityPerimeterConfigurationCollectionResultOfT(
                 _networkSecurityPerimeterConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

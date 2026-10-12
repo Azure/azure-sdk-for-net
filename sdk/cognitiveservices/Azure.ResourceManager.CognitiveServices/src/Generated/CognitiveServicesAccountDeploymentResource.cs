@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new DeploymentsGetSkusAsyncCollectionResultOfT(
+            return new CognitiveServicesResourceSkuAsyncCollectionResultOfT(
                 _deploymentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new DeploymentsGetSkusCollectionResultOfT(
+            return new CognitiveServicesResourceSkuCollectionResultOfT(
                 _deploymentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

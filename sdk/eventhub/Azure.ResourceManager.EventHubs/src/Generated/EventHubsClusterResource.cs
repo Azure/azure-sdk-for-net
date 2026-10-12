@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetNamespacesAsyncCollectionResultOfT(
+            return new SubResourceAsyncCollectionResultOfT(
                 _clustersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetNamespacesCollectionResultOfT(
+            return new SubResourceCollectionResultOfT(
                 _clustersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

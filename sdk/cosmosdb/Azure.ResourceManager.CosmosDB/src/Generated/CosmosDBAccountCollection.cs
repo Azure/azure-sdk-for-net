@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBAccountData, CosmosDBAccountResource>(new DatabaseAccountsGetByResourceGroupAsyncCollectionResultOfT(_databaseAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CosmosDBAccountCollection.GetAll"), data => new CosmosDBAccountResource(Client, data));
+            return new AsyncPageableWrapper<CosmosDBAccountData, CosmosDBAccountResource>(new CosmosDBAccountDataAsyncCollectionResultOfT(_databaseAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CosmosDBAccountCollection.GetAll"), data => new CosmosDBAccountResource(Client, data));
         }
 
         /// <summary>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBAccountData, CosmosDBAccountResource>(new DatabaseAccountsGetByResourceGroupCollectionResultOfT(_databaseAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CosmosDBAccountCollection.GetAll"), data => new CosmosDBAccountResource(Client, data));
+            return new PageableWrapper<CosmosDBAccountData, CosmosDBAccountResource>(new CosmosDBAccountDataCollectionResultOfT(_databaseAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CosmosDBAccountCollection.GetAll"), data => new CosmosDBAccountResource(Client, data));
         }
 
         /// <summary>

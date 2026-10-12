@@ -1198,7 +1198,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetCalloutPoliciesAsyncCollectionResultOfT(
+            return new KustoCalloutPolicyAsyncCollectionResultOfT(
                 _clustersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1236,7 +1236,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetCalloutPoliciesCollectionResultOfT(
+            return new KustoCalloutPolicyCollectionResultOfT(
                 _clustersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1274,7 +1274,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetFollowerDatabasesAsyncCollectionResultOfT(
+            return new KustoFollowerDatabaseDefinitionAsyncCollectionResultOfT(
                 _clustersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1312,7 +1312,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetFollowerDatabasesCollectionResultOfT(
+            return new KustoFollowerDatabaseDefinitionCollectionResultOfT(
                 _clustersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1350,7 +1350,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetFollowerDatabasesGetAsyncCollectionResultOfT(
+            return new KustoFollowerDatabaseAsyncCollectionResultOfT(
                 _clustersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1388,7 +1388,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetFollowerDatabasesGetCollectionResultOfT(
+            return new KustoFollowerDatabaseCollectionResultOfT(
                 _clustersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1426,7 +1426,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetLanguageExtensionsAsyncCollectionResultOfT(
+            return new KustoLanguageExtensionAsyncCollectionResultOfT(
                 _clustersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1464,7 +1464,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetLanguageExtensionsCollectionResultOfT(
+            return new KustoLanguageExtensionCollectionResultOfT(
                 _clustersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1502,7 +1502,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(
+            return new OutboundNetworkDependenciesEndpointAsyncCollectionResultOfT(
                 _clustersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1540,7 +1540,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(
+            return new OutboundNetworkDependenciesEndpointCollectionResultOfT(
                 _clustersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1578,7 +1578,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetAvailableSkusAsyncCollectionResultOfT(
+            return new KustoAvailableSkuDetailsAsyncCollectionResultOfT(
                 _clustersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1616,7 +1616,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetAvailableSkusCollectionResultOfT(
+            return new KustoAvailableSkuDetailsCollectionResultOfT(
                 _clustersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceDetailsGetResourceDetailsAsyncCollectionResultOfT(
+            return new DevOpsResourceDetailsAsyncCollectionResultOfT(
                 _resourceDetailsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceDetailsGetResourceDetailsCollectionResultOfT(
+            return new DevOpsResourceDetailsCollectionResultOfT(
                 _resourceDetailsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

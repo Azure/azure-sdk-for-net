@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AzureFirewallData, AzureFirewallResource>(new AzureFirewallsListAsyncCollectionResultOfT(_azureFirewallsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AzureFirewallCollection.GetAll"), data => new AzureFirewallResource(Client, data));
+            return new AsyncPageableWrapper<AzureFirewallData, AzureFirewallResource>(new AzureFirewallDataAsyncCollectionResultOfT(_azureFirewallsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AzureFirewallCollection.GetAll"), data => new AzureFirewallResource(Client, data));
         }
 
         /// <summary>
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AzureFirewallData, AzureFirewallResource>(new AzureFirewallsListCollectionResultOfT(_azureFirewallsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AzureFirewallCollection.GetAll"), data => new AzureFirewallResource(Client, data));
+            return new PageableWrapper<AzureFirewallData, AzureFirewallResource>(new AzureFirewallDataCollectionResultOfT(_azureFirewallsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AzureFirewallCollection.GetAll"), data => new AzureFirewallResource(Client, data));
         }
 
         /// <summary>

@@ -1013,7 +1013,7 @@ namespace Azure.ResourceManager.Hci.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                kind is null ? default : new EdgeDeviceKind(kind),
                 default);
         }
 
@@ -1031,7 +1031,7 @@ namespace Azure.ResourceManager.Hci.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                EdgeDeviceKind.HCI,
                 default,
                 properties);
         }
@@ -1057,7 +1057,7 @@ namespace Azure.ResourceManager.Hci.Models
                 startOn,
                 endOn,
                 status,
-                default,
+                jobType is null ? default : new HciEdgeDeviceJobType(jobType),
                 default);
         }
 
@@ -1082,7 +1082,7 @@ namespace Azure.ResourceManager.Hci.Models
                 startOn,
                 endOn,
                 status,
-                default,
+                HciEdgeDeviceJobType.CollectLog,
                 default,
                 collectionStartOn,
                 collectionEndOn,
@@ -1144,7 +1144,7 @@ namespace Azure.ResourceManager.Hci.Models
                 startOn,
                 endOn,
                 status,
-                default,
+                HciEdgeDeviceJobType.RemoteSupport,
                 default,
                 accessLevel,
                 expireOn,
@@ -1225,7 +1225,7 @@ namespace Azure.ResourceManager.Hci.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                kind is null ? default : new DeviceKind(kind),
                 default);
         }
 
@@ -1243,7 +1243,7 @@ namespace Azure.ResourceManager.Hci.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DeviceKind.HCI,
                 default,
                 properties);
         }

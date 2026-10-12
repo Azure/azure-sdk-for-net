@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.StorageSync
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CloudEndpointData, CloudEndpointResource>(new CloudEndpointsGetBySyncGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CloudEndpointData, CloudEndpointResource>(new CloudEndpointDataAsyncCollectionResultOfT(
                 _cloudEndpointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.StorageSync
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CloudEndpointData, CloudEndpointResource>(new CloudEndpointsGetBySyncGroupCollectionResultOfT(
+            return new PageableWrapper<CloudEndpointData, CloudEndpointResource>(new CloudEndpointDataCollectionResultOfT(
                 _cloudEndpointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

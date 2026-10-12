@@ -984,7 +984,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CassandraClustersGetBackupsAsyncCollectionResultOfT(
+            return new CassandraClusterBackupResourceInfoAsyncCollectionResultOfT(
                 _cassandraClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1022,7 +1022,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CassandraClustersGetBackupsCollectionResultOfT(
+            return new CassandraClusterBackupResourceInfoCollectionResultOfT(
                 _cassandraClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1060,7 +1060,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CassandraClustersGetCommandAsyncCollectionResultOfT(
+            return new CassandraClusterCommandAsyncCollectionResultOfT(
                 _cassandraClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1098,7 +1098,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CassandraClustersGetCommandCollectionResultOfT(
+            return new CassandraClusterCommandCollectionResultOfT(
                 _cassandraClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

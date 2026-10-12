@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerServiceFleetUpdateRunData, ContainerServiceFleetUpdateRunResource>(new UpdateRunsGetByFleetAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ContainerServiceFleetUpdateRunData, ContainerServiceFleetUpdateRunResource>(new ContainerServiceFleetUpdateRunDataAsyncCollectionResultOfT(
                 _updateRunsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerServiceFleetUpdateRunData, ContainerServiceFleetUpdateRunResource>(new UpdateRunsGetByFleetCollectionResultOfT(
+            return new PageableWrapper<ContainerServiceFleetUpdateRunData, ContainerServiceFleetUpdateRunResource>(new ContainerServiceFleetUpdateRunDataCollectionResultOfT(
                 _updateRunsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

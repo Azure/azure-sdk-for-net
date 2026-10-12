@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Chaos
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ChaosScenarioConfigurationData, ChaosScenarioConfigurationResource>(new ScenarioConfigurationsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ChaosScenarioConfigurationData, ChaosScenarioConfigurationResource>(new ChaosScenarioConfigurationDataAsyncCollectionResultOfT(
                 _scenarioConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Chaos
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ChaosScenarioConfigurationData, ChaosScenarioConfigurationResource>(new ScenarioConfigurationsGetAllCollectionResultOfT(
+            return new PageableWrapper<ChaosScenarioConfigurationData, ChaosScenarioConfigurationResource>(new ChaosScenarioConfigurationDataCollectionResultOfT(
                 _scenarioConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

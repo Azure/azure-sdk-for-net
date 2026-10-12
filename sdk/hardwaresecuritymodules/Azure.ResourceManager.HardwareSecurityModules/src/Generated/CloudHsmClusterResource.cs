@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new CloudHsmClusterPrivateLinkResourcesGetCloudHsmClusterPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new CloudHsmClusterPrivateLinkDataAsyncCollectionResultOfT(
                 _cloudHsmClusterPrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -809,7 +809,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new CloudHsmClusterPrivateLinkResourcesGetCloudHsmClusterPrivateLinkResourcesCollectionResultOfT(
+            return new CloudHsmClusterPrivateLinkDataCollectionResultOfT(
                 _cloudHsmClusterPrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new BackupWorkloadItemsGetBackupWorkloadItemsAsyncCollectionResultOfT(
+            return new WorkloadItemResourceAsyncCollectionResultOfT(
                 _backupWorkloadItemsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new BackupWorkloadItemsGetBackupWorkloadItemsCollectionResultOfT(
+            return new WorkloadItemResourceCollectionResultOfT(
                 _backupWorkloadItemsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
