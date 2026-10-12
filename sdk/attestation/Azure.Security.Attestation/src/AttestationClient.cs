@@ -266,6 +266,7 @@ namespace Azure.Security.Attestation
         /// <see cref="AttestationClientOptions.ServiceVersion.V2025_06_01"/> or later, and does not support <see cref="AttestationRequest.DraftPolicyForAttestation"/>.
         /// </remarks>
         /// <exception cref="NotSupportedException">The client targets a service version that does not support TDX attestation.</exception>
+        /// <exception cref="ArgumentException"><see cref="AttestationRequest.DraftPolicyForAttestation"/> is set.</exception>
         public virtual AttestationResponse<AttestationResult> AttestTdxVm(AttestationRequest request, CancellationToken cancellationToken = default)
             => AttestTdxVmInternalAsync(request, false, cancellationToken).EnsureCompleted();
 
@@ -280,6 +281,7 @@ namespace Azure.Security.Attestation
         /// <see cref="AttestationClientOptions.ServiceVersion.V2025_06_01"/> or later, and does not support <see cref="AttestationRequest.DraftPolicyForAttestation"/>.
         /// </remarks>
         /// <exception cref="NotSupportedException">The client targets a service version that does not support TDX attestation.</exception>
+        /// <exception cref="ArgumentException"><see cref="AttestationRequest.DraftPolicyForAttestation"/> is set.</exception>
         public virtual async Task<AttestationResponse<AttestationResult>> AttestTdxVmAsync(AttestationRequest request, CancellationToken cancellationToken = default)
             => await AttestTdxVmInternalAsync(request, true, cancellationToken).ConfigureAwait(false);
 

@@ -9,6 +9,7 @@ namespace Azure.Security.Attestation
     /// A trusted computing base (TCB) baseline that an attestation policy can require for SGX attestation,
     /// by setting the <c>x-ms-sgx-tcbidentifier</c> claim to its <see cref="TcbIdentifier"/>.
     /// </summary>
+    // Makes the generated model public, for GetTcbBaselines; the generator emits the accessibility declared here.
     [CodeGenType("TcbBaseline")]
     public partial class TcbBaseline
     {

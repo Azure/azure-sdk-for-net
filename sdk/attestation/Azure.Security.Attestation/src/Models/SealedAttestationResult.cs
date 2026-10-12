@@ -15,6 +15,7 @@ namespace Azure.Security.Attestation
     /// <see cref="AttestationToken.ValidateToken(AttestationTokenValidationOptions, System.Collections.Generic.IReadOnlyList{AttestationSigner}, System.Threading.CancellationToken)"/>,
     /// and get its claims with <see cref="AttestationToken.GetBody{T}"/> and <see cref="AttestationResult"/>.
     /// </remarks>
+    // Makes the generated model public, for AttestAzureGuest; the generator emits the accessibility declared here.
     [CodeGenType("SealedAttestationResult")]
     public partial class SealedAttestationResult
     {

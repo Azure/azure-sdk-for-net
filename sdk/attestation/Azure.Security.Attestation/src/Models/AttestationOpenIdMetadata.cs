@@ -10,6 +10,7 @@ namespace Azure.Security.Attestation
     /// <summary>
     /// The <see href="https://openid.net/specs/openid-connect-discovery-1_0.html">OpenID Connect discovery document</see> of an attestation provider.
     /// </summary>
+    // The generated OpenIDConfigurationResult, renamed and typed (Uri, read-only lists) to match the Java library's AttestationOpenIdMetadata.
     [CodeGenType("OpenIDConfigurationResult")]
     public partial class AttestationOpenIdMetadata
     {
@@ -41,6 +42,7 @@ namespace Azure.Security.Attestation
         [CodeGenMember("ClaimsSupported")]
         public IReadOnlyList<string> SupportedClaims { get; }
 
+        // Not exposed, as in the Java library; kept so the property stays internal instead of being generated public.
         internal string RevocationEndpoint { get; }
     }
 }

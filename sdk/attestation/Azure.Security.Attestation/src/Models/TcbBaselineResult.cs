@@ -9,6 +9,7 @@ namespace Azure.Security.Attestation
     /// <summary>
     /// The TCB baselines available to an attestation provider for an attestation type.
     /// </summary>
+    // Makes the generated model public, for GetTcbBaselines, with a read-only list; the generator emits the accessibility declared here.
     [CodeGenType("TcbBaselineResult")]
     public partial class TcbBaselineResult
     {

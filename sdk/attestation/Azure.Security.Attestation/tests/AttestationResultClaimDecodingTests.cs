@@ -5,6 +5,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text.Json;
 using Azure.Core;
 using NUnit.Framework;
@@ -191,6 +192,32 @@ namespace Azure.Security.Attestation.Tests
         {
             Assert.IsEmpty(Parse(AllClaims).AdditionalClaims);
             Assert.IsEmpty(AttestationModelFactory.AttestationResult(jti: "id-1").AdditionalClaims);
+        }
+
+        [Test]
+        public void ModelFactorySetsAdditionalClaims()
+        {
+            AttestationResult result = AttestationModelFactory.AttestationResult(
+                verifierType: "tdxvm",
+                additionalClaims: new Dictionary<string, BinaryData> { ["tdx_mrtd"] = BinaryData.FromObjectAsJson("abc") });
+
+            Assert.AreEqual("tdxvm", result.VerifierType);
+            Assert.AreEqual("abc", result.AdditionalClaims["tdx_mrtd"].ToObjectFromJson<string>());
+        }
+
+        [Test]
+        public void ModelFactoryKeepsTheVersion1Signature()
+        {
+            // Code compiled against 1.0.0 binds to the 34-parameter overload.
+            MethodInfo version1 = typeof(AttestationModelFactory).GetMethods()
+                .Single(m => m.Name == nameof(AttestationModelFactory.AttestationResult) && m.GetParameters().Length == 34);
+            object[] arguments = version1.GetParameters().Select(p => p.ParameterType.IsValueType ? Activator.CreateInstance(p.ParameterType) : null).ToArray();
+            arguments[0] = "id-1";
+
+            var result = (AttestationResult)version1.Invoke(null, arguments);
+
+            Assert.AreEqual("id-1", result.UniqueIdentifier);
+            Assert.IsEmpty(result.AdditionalClaims);
         }
 
         [Test]

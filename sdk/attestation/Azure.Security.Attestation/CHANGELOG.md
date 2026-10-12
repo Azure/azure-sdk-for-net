@@ -9,7 +9,7 @@
 - Added the `AttestationType.AzureGuest`, `AttestationType.SevSnpVm`, and `AttestationType.TdxVm` values. `TdxVm` requires service version `V2025_06_01`.
 - Added `AttestationClient.AttestTdxVm` and `AttestationClient.AttestSevSnpVm` (and their async counterparts) to attest Intel TDX and AMD SEV-SNP confidential virtual machines. `AttestTdxVm` requires service version `V2025_06_01`.
 - Added `AttestationRequest.Nonce`, which the service returns in the `nonce` claim of the attestation token.
-- Added `AttestationResult.AdditionalClaims`, which exposes the token's claims that have no dedicated property, such as the TDX and SEV-SNP claims and claims issued by attestation policy.
+- Added `AttestationResult.AdditionalClaims`, which exposes the token's claims that have no dedicated property, such as the TDX and SEV-SNP claims and claims issued by attestation policy. `AttestationModelFactory.AttestationResult` accepts them as `additionalClaims` for mocking.
 - Added `AttestationClient.GetOpenIdMetadata` (and its async counterpart), which retrieves the attestation provider's OpenID Connect discovery document as an `AttestationOpenIdMetadata`.
 - Added `AttestationClient.AttestAzureGuest` (and its async counterpart) to attest Azure confidential and Trusted Launch virtual machines. It returns a `SealedAttestationResult` whose token is encrypted to the virtual machine's TPM, so the client does not validate it.
 - Added `AttestationAdministrationClient.GetTcbBaselines` (and its async counterpart), which lists the SGX trusted computing base (TCB) baselines an attestation policy can require, as `TcbBaselineResult` and `TcbBaseline`. It requires service version `V2025_06_01`.
