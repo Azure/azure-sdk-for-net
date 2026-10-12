@@ -101,6 +101,7 @@ namespace Azure.ResourceManager.BillingBenefits
     [ModelReaderWriterBuildable(typeof(SavingsPlanUpdateValidateContent))]
     [ModelReaderWriterBuildable(typeof(SavingsPlanValidateModel))]
     [ModelReaderWriterBuildable(typeof(SavingsPlanValidateResult))]
+    [ModelReaderWriterBuildable(typeof(SavingsPlanValidationDetail))]
     [ModelReaderWriterBuildable(typeof(SellerResourceListRequest))]
     [ModelReaderWriterBuildable(typeof(Shortfall))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
