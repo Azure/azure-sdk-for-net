@@ -18,7 +18,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private BinaryData _responseFormat;
-        internal bool _responseFormatIsDefined;
+        private bool _responseFormatIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="PersistentAgent"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>

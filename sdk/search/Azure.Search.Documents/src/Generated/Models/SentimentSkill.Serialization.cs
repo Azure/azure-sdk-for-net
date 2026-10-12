@@ -80,7 +80,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new FormatException($"The model {nameof(SentimentSkill)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_defaultLanguageCodeIsDefined || Optional.IsDefined(DefaultLanguageCode))
+            if (Optional.IsDefined(DefaultLanguageCode, _defaultLanguageCodeIsDefined))
             {
                 if (DefaultLanguageCode != null)
                 {
@@ -97,7 +97,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("includeOpinionMining"u8);
                 writer.WriteBooleanValue(IncludeOpinionMining.Value);
             }
-            if (_modelVersionIsDefined || Optional.IsDefined(ModelVersion))
+            if (Optional.IsDefined(ModelVersion, _modelVersionIsDefined))
             {
                 if (ModelVersion != null)
                 {

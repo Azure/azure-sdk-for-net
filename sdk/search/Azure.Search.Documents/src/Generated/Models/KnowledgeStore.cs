@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private SearchIndexerDataIdentity _identity;
-        internal bool _identityIsDefined;
+        private bool _identityIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeStore"/>. </summary>
         /// <param name="storageConnectionString"> The connection string to the storage account projections will be stored in. </param>
