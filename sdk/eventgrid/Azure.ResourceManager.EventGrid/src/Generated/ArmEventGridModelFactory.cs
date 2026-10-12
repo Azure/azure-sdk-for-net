@@ -69,11 +69,13 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.PubSub.NamespaceProperties.InboundIpRules" /&gt;
         /// </param>
         /// <param name="inboundIPRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
-        /// <param name="minimumTlsVersionAllowed"> Minimum TLS version of the publisher allowed to publish to this namespace. Only TLS version 1.2 is supported. </param>
+        /// <param name="minimumTlsVersionAllowed"> Minimum TLS version of the publisher allowed to publish to this namespace. The TlsVersion values are shared with topics and domains; for namespaces, only TLS version 1.2 is currently supported. </param>
+        /// <param name="ipAddressType"> IP address type for the namespace resource. </param>
+        /// <param name="autoScaleConfiguration"> Auto-scale configuration for the namespace resource. </param>
         /// <param name="sku"> Represents available Sku pricing tiers. </param>
         /// <param name="identity"> Identity information for the Namespace resource. </param>
         /// <returns> A new <see cref="EventGrid.EventGridNamespaceData"/> instance for mocking. </returns>
-        public static EventGridNamespaceData EventGridNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<EventGridPrivateEndpointConnectionData> privateEndpointConnections, NamespaceProvisioningState? provisioningState, TopicsConfiguration topicsConfiguration, TopicSpacesConfiguration topicSpacesConfiguration, bool? isZoneRedundant, EventGridPublicNetworkAccess? publicNetworkAccess, IEnumerable<EventGridInboundIPRule> inboundIPRules, TlsVersion? minimumTlsVersionAllowed, NamespaceSku sku, ManagedServiceIdentity identity)
+        public static EventGridNamespaceData EventGridNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<EventGridPrivateEndpointConnectionData> privateEndpointConnections, NamespaceProvisioningState? provisioningState, TopicsConfiguration topicsConfiguration, TopicSpacesConfiguration topicSpacesConfiguration, bool? isZoneRedundant, EventGridPublicNetworkAccess? publicNetworkAccess, IEnumerable<EventGridInboundIPRule> inboundIPRules, TlsVersion? minimumTlsVersionAllowed, IPAddressType? ipAddressType, AutoScaleConfiguration autoScaleConfiguration, NamespaceSku sku, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -84,7 +86,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                privateEndpointConnections is null && provisioningState is null && topicsConfiguration is null && topicSpacesConfiguration is null && isZoneRedundant is null && publicNetworkAccess is null && inboundIPRules is null && minimumTlsVersionAllowed is null ? default : new NamespaceProperties(
+                privateEndpointConnections is null && provisioningState is null && topicsConfiguration is null && topicSpacesConfiguration is null && isZoneRedundant is null && publicNetworkAccess is null && inboundIPRules is null && minimumTlsVersionAllowed is null && ipAddressType is null && autoScaleConfiguration is null ? default : new NamespaceProperties(
                     (privateEndpointConnections ?? new ChangeTrackingList<EventGridPrivateEndpointConnectionData>()).ToList(),
                     provisioningState,
                     topicsConfiguration,
@@ -93,6 +95,8 @@ namespace Azure.ResourceManager.EventGrid.Models
                     publicNetworkAccess,
                     (inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>()).ToList(),
                     minimumTlsVersionAllowed,
+                    ipAddressType,
+                    autoScaleConfiguration,
                     default),
                 sku,
                 identity,
@@ -341,6 +345,19 @@ namespace Azure.ResourceManager.EventGrid.Models
             return new EventGridInboundIPRule(ipMask, action, default);
         }
 
+        /// <summary> Auto-scale configuration for the namespace resource. </summary>
+        /// <param name="enableAutoScale">
+        /// Indicates whether auto-scaling is enabled for the namespace. When enabled, the namespace will automatically scale
+        /// between minimumThroughputUnits and maximumThroughputUnits based on usage patterns.
+        /// </param>
+        /// <param name="minimumThroughputUnits"> Minimum number of Throughput Units for auto-scaling. Valid only when EnableAutoScale is true. </param>
+        /// <param name="maximumThroughputUnits"> Maximum number of Throughput Units for auto-scaling. Valid only when EnableAutoScale is true. </param>
+        /// <returns> A new <see cref="Models.AutoScaleConfiguration"/> instance for mocking. </returns>
+        public static AutoScaleConfiguration AutoScaleConfiguration(bool? enableAutoScale = default, int? minimumThroughputUnits = default, int? maximumThroughputUnits = default)
+        {
+            return new AutoScaleConfiguration(enableAutoScale, minimumThroughputUnits, maximumThroughputUnits, default);
+        }
+
         /// <summary> Represents available Sku pricing tiers. </summary>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="capacity">
@@ -363,13 +380,22 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.PubSub.NamespaceUpdateParameterProperties.InboundIpRules" /&gt;
         /// </param>
         /// <param name="inboundIPRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
+        /// <param name="ipAddressType"> IP address type for the namespace resource. </param>
+        /// <param name="autoScaleConfiguration"> Auto-scale configuration for the namespace resource. </param>
         /// <param name="topicsCustomDomains"> Custom domain info for topics configuration. </param>
         /// <returns> A new <see cref="Models.EventGridNamespacePatch"/> instance for mocking. </returns>
-        public static EventGridNamespacePatch EventGridNamespacePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, NamespaceSku sku = default, UpdateTopicSpacesConfigurationInfo topicSpacesConfiguration = default, EventGridPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<EventGridInboundIPRule> inboundIPRules = default, IEnumerable<CustomDomainConfiguration> topicsCustomDomains = default)
+        public static EventGridNamespacePatch EventGridNamespacePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, NamespaceSku sku = default, UpdateTopicSpacesConfigurationInfo topicSpacesConfiguration = default, EventGridPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<EventGridInboundIPRule> inboundIPRules = default, IPAddressType? ipAddressType = default, UpdateAutoScaleConfiguration autoScaleConfiguration = default, IEnumerable<CustomDomainConfiguration> topicsCustomDomains = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new EventGridNamespacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, sku, topicSpacesConfiguration is null && topicsCustomDomains is null && publicNetworkAccess is null && inboundIPRules is null ? default : new NamespaceUpdateParameterProperties(topicSpacesConfiguration, topicsCustomDomains is null ? default : new UpdateTopicsConfigurationInfo((topicsCustomDomains ?? new ChangeTrackingList<CustomDomainConfiguration>()).ToList(), default), publicNetworkAccess, (inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>()).ToList(), default), default);
+            return new EventGridNamespacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, sku, topicSpacesConfiguration is null && topicsCustomDomains is null && publicNetworkAccess is null && inboundIPRules is null && ipAddressType is null && autoScaleConfiguration is null ? default : new NamespaceUpdateParameterProperties(
+                topicSpacesConfiguration,
+                topicsCustomDomains is null ? default : new UpdateTopicsConfigurationInfo((topicsCustomDomains ?? new ChangeTrackingList<CustomDomainConfiguration>()).ToList(), default),
+                publicNetworkAccess,
+                (inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>()).ToList(),
+                ipAddressType,
+                autoScaleConfiguration,
+                default), default);
         }
 
         /// <summary> Properties of the topic spaces configuration info of a namespace. </summary>
@@ -402,6 +428,19 @@ namespace Azure.ResourceManager.EventGrid.Models
                 routingIdentityInfo,
                 (customDomains ?? new ChangeTrackingList<CustomDomainConfiguration>()).ToList(),
                 default);
+        }
+
+        /// <summary> UpdateAutoScaleConfiguration definition. </summary>
+        /// <param name="enableAutoScale">
+        /// Indicates whether auto-scaling is enabled for the namespace. When enabled, the namespace will automatically scale
+        /// between minimumThroughputUnits and maximumThroughputUnits based on usage patterns.
+        /// </param>
+        /// <param name="minimumThroughputUnits"> Minimum number of Throughput Units for auto-scaling. Valid only when EnableAutoScale is true. </param>
+        /// <param name="maximumThroughputUnits"> Maximum number of Throughput Units for auto-scaling. Valid only when EnableAutoScale is true. </param>
+        /// <returns> A new <see cref="Models.UpdateAutoScaleConfiguration"/> instance for mocking. </returns>
+        public static UpdateAutoScaleConfiguration UpdateAutoScaleConfiguration(bool? enableAutoScale = default, int? minimumThroughputUnits = default, int? maximumThroughputUnits = default)
+        {
+            return new UpdateAutoScaleConfiguration(enableAutoScale, minimumThroughputUnits, maximumThroughputUnits, default);
         }
 
         /// <summary> Shared access keys of the Namespace. </summary>
@@ -2744,7 +2783,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.PubSub.NamespaceProperties.InboundIpRules" /&gt;
         /// </param>
         /// <param name="inboundIPRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
-        /// <param name="minimumTlsVersionAllowed"> Minimum TLS version of the publisher allowed to publish to this namespace. Only TLS version 1.2 is supported. </param>
+        /// <param name="minimumTlsVersionAllowed"> Minimum TLS version of the publisher allowed to publish to this namespace. The TlsVersion values are shared with topics and domains; for namespaces, only TLS version 1.2 is currently supported. </param>
         /// <returns> A new <see cref="EventGrid.EventGridNamespaceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static EventGridNamespaceData EventGridNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NamespaceSku sku = default, ManagedServiceIdentity identity = default, IEnumerable<EventGridPrivateEndpointConnectionData> privateEndpointConnections = default, NamespaceProvisioningState? provisioningState = default, TopicsConfiguration topicsConfiguration = default, TopicSpacesConfiguration topicSpacesConfiguration = default, bool? isZoneRedundant = default, EventGridPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<EventGridInboundIPRule> inboundIPRules = default, TlsVersion? minimumTlsVersionAllowed = default)
@@ -2765,6 +2804,8 @@ namespace Azure.ResourceManager.EventGrid.Models
                     publicNetworkAccess,
                     (inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>()).ToList(),
                     minimumTlsVersionAllowed,
+                    default,
+                    default,
                     default),
                 sku,
                 identity,

@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.EventGrid.Models
         private const string One1Value = "1.1";
         /// <summary> 1.2. </summary>
         private const string One2Value = "1.2";
+        /// <summary> TLS version 1.3. </summary>
+        private const string One3Value = "1.3";
 
         /// <summary> Initializes a new instance of <see cref="TlsVersion"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -40,6 +42,9 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> 1.2. </summary>
         public static TlsVersion One2 { get; } = new TlsVersion(One2Value);
+
+        /// <summary> TLS version 1.3. </summary>
+        public static TlsVersion One3 { get; } = new TlsVersion(One3Value);
 
         /// <summary> Determines if two <see cref="TlsVersion"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

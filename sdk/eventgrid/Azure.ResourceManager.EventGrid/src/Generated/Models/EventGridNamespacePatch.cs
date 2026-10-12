@@ -107,5 +107,41 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return Properties.InboundIPRules;
             }
         }
+
+        /// <summary> IP address type for the namespace resource. </summary>
+        [WirePath("properties.ipAddressType")]
+        public IPAddressType? IPAddressType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IPAddressType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NamespaceUpdateParameterProperties();
+                }
+                Properties.IPAddressType = value;
+            }
+        }
+
+        /// <summary> Auto-scale configuration for the namespace resource. </summary>
+        [WirePath("properties.autoScaleConfiguration")]
+        public UpdateAutoScaleConfiguration AutoScaleConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AutoScaleConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NamespaceUpdateParameterProperties();
+                }
+                Properties.AutoScaleConfiguration = value;
+            }
+        }
     }
 }

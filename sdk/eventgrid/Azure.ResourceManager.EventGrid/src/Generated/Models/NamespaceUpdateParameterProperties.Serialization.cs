@@ -99,6 +99,16 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(IPAddressType))
+            {
+                writer.WritePropertyName("ipAddressType"u8);
+                writer.WriteStringValue(IPAddressType.Value.ToString());
+            }
+            if (Optional.IsDefined(AutoScaleConfiguration))
+            {
+                writer.WritePropertyName("autoScaleConfiguration"u8);
+                writer.WriteObjectValue(AutoScaleConfiguration, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -145,6 +155,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             UpdateTopicsConfigurationInfo topicsConfiguration = default;
             EventGridPublicNetworkAccess? publicNetworkAccess = default;
             IList<EventGridInboundIPRule> inboundIPRules = default;
+            IPAddressType? ipAddressType = default;
+            UpdateAutoScaleConfiguration autoScaleConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,12 +201,37 @@ namespace Azure.ResourceManager.EventGrid.Models
                     inboundIPRules = array;
                     continue;
                 }
+                if (prop.NameEquals("ipAddressType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipAddressType = new IPAddressType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("autoScaleConfiguration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoScaleConfiguration = UpdateAutoScaleConfiguration.DeserializeUpdateAutoScaleConfiguration(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NamespaceUpdateParameterProperties(topicSpacesConfiguration, topicsConfiguration, publicNetworkAccess, inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(), additionalBinaryDataProperties);
+            return new NamespaceUpdateParameterProperties(
+                topicSpacesConfiguration,
+                topicsConfiguration,
+                publicNetworkAccess,
+                inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(),
+                ipAddressType,
+                autoScaleConfiguration,
+                additionalBinaryDataProperties);
         }
     }
 }

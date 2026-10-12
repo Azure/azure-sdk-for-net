@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.EventGrid
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AdvancedFilter))]
+    [ModelReaderWriterBuildable(typeof(AutoScaleConfiguration))]
     [ModelReaderWriterBuildable(typeof(AzureADPartnerClientAuthentication))]
     [ModelReaderWriterBuildable(typeof(AzureADPartnerClientAuthenticationProperties))]
     [ModelReaderWriterBuildable(typeof(AzureFunctionEventSubscriptionDestination))]
@@ -297,6 +298,7 @@ namespace Azure.ResourceManager.EventGrid
     [ModelReaderWriterBuildable(typeof(UnknownPartnerDestinationInfo))]
     [ModelReaderWriterBuildable(typeof(UnknownPartnerUpdateDestinationInfo))]
     [ModelReaderWriterBuildable(typeof(UnknownStaticRoutingEnrichment))]
+    [ModelReaderWriterBuildable(typeof(UpdateAutoScaleConfiguration))]
     [ModelReaderWriterBuildable(typeof(UpdateTopicsConfigurationInfo))]
     [ModelReaderWriterBuildable(typeof(UpdateTopicSpacesConfigurationInfo))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
