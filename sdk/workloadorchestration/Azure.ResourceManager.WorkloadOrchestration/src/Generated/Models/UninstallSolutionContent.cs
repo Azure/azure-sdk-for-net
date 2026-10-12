@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> Solution Template ARM Id. </summary>
-        public ResourceIdentifier SolutionTemplateId { get; }
+        public ResourceIdentifier SolutionTemplateId { get; set; }
 
         /// <summary> Solution Instance Name. </summary>
         public string SolutionInstanceName { get; set; }

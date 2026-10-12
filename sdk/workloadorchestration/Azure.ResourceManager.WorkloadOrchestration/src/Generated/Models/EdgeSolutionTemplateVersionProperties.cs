@@ -19,15 +19,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EdgeSolutionTemplateVersionProperties"/>. </summary>
-        /// <param name="configurations"> Config expressions for this solution version. </param>
         /// <param name="specification"> App components spec. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurations"/> or <paramref name="specification"/> is null. </exception>
-        public EdgeSolutionTemplateVersionProperties(string configurations, IDictionary<string, BinaryData> specification)
+        /// <exception cref="ArgumentNullException"> <paramref name="specification"/> is null. </exception>
+        public EdgeSolutionTemplateVersionProperties(IDictionary<string, BinaryData> specification)
         {
-            Argument.AssertNotNull(configurations, nameof(configurations));
             Argument.AssertNotNull(specification, nameof(specification));
 
-            Configurations = configurations;
             Specification = specification;
         }
 
@@ -35,18 +32,66 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="configurations"> Config expressions for this solution version. </param>
         /// <param name="specification"> App components spec. </param>
         /// <param name="orchestratorType"> Orchestrator type. </param>
+        /// <param name="internalState"> Internal State of resource. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeSolutionTemplateVersionProperties(string configurations, IDictionary<string, BinaryData> specification, SolutionVersionOrchestratorType? orchestratorType, WorkloadOrchestrationProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeSolutionTemplateVersionProperties(string configurations, IDictionary<string, BinaryData> specification, SolutionVersionOrchestratorType? orchestratorType, InternalState? internalState, WorkloadOrchestrationProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Configurations = configurations;
             Specification = specification;
             OrchestratorType = orchestratorType;
+            InternalState = internalState;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Config expressions for this solution version. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeSolutionTemplateVersionProperties"/>. </summary>
+        /// <param name="configurations"> Config expressions for this solution version. </param>
+        /// <param name="specification"> App components spec. </param>
+        public EdgeSolutionTemplateVersionProperties(string configurations, IDictionary<string, BinaryData> specification) : this(specification)
+        {
+            Configurations = configurations;
+        }
+
+        /// <summary>
+        /// Config expressions for this solution version
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// <remarks>
+        /// Supported types:
+        /// <list type="bullet">
+        /// <item>
+        /// <description> <see cref="string"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="IDictionary{TKey,TValue}"/> where <c>TKey</c> is of type <see cref="string"/>, where <c>TValue</c> is of type <see cref="BinaryData"/>. </description>
+        /// </item>
+        /// </list>
+        /// </remarks>
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public string Configurations { get; set; }
 
         /// <summary>
@@ -79,6 +124,9 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
 
         /// <summary> Orchestrator type. </summary>
         public SolutionVersionOrchestratorType? OrchestratorType { get; set; }
+
+        /// <summary> Internal State of resource. </summary>
+        public InternalState? InternalState { get; }
 
         /// <summary> Provisioning state of resource. </summary>
         public WorkloadOrchestrationProvisioningState? ProvisioningState { get; }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             TryGetApiVersion(EdgeDynamicSchemaVersionResource.ResourceType, out string edgeDynamicSchemaVersionApiVersion);
             _dynamicSchemaVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeDynamicSchemaVersionResource.ResourceType.Namespace, Diagnostics);
-            _dynamicSchemaVersionsRestClient = new DynamicSchemaVersions(_dynamicSchemaVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeDynamicSchemaVersionApiVersion ?? "2025-06-01");
+            _dynamicSchemaVersionsRestClient = new DynamicSchemaVersions(_dynamicSchemaVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeDynamicSchemaVersionApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

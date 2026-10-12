@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="description"> Description of Solution template. </param>
         /// <param name="capabilities"> List of capabilities. </param>
         /// <param name="state"> State of resource. </param>
-        /// <param name="isExternalValidationEnabled"> Flag to enable external validation. </param>
+        /// <param name="enableExternalValidation"> Flag to enable external validation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeSolutionTemplatePatchProperties(string description, IList<string> capabilities, EdgeResourceState? state, bool? isExternalValidationEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeSolutionTemplatePatchProperties(string description, IList<string> capabilities, EdgeResourceState? state, bool? enableExternalValidation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Capabilities = capabilities;
             State = state;
-            IsExternalValidationEnabled = isExternalValidationEnabled;
+            EnableExternalValidation = enableExternalValidation;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public EdgeResourceState? State { get; set; }
 
         /// <summary> Flag to enable external validation. </summary>
-        public bool? IsExternalValidationEnabled { get; set; }
+        public bool? EnableExternalValidation { get; set; }
     }
 }

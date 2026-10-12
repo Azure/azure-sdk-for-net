@@ -22,10 +22,15 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeDiagnosticPatchProperties"/>. </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeDiagnosticPatchProperties(IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeDiagnosticPatchProperties(WorkloadOrchestrationProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The status of the last operation. </summary>
+        public WorkloadOrchestrationProvisioningState? ProvisioningState { get; }
     }
 }

@@ -183,6 +183,96 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             return new EdgeSolutionResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="SolutionMetadataResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SolutionMetadataResource"/> object. </returns>
+        public virtual SolutionMetadataResource GetSolutionMetadataResource(ResourceIdentifier id)
+        {
+            SolutionMetadataResource.ValidateResourceId(id);
+            return new SolutionMetadataResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="SolutionMetadataCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="SolutionMetadataResource"/> objects. </returns>
+        public virtual SolutionMetadataCollection GetAllSolutionMetadata(ResourceIdentifier scope)
+        {
+            return new SolutionMetadataCollection(Client, scope);
+        }
+
+        /// <summary> Get a Solution resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="solutionMetadataName"> Name of the solution metadata. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="solutionMetadataName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SolutionMetadataResource> GetSolutionMetadata(ResourceIdentifier scope, string solutionMetadataName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(solutionMetadataName, nameof(solutionMetadataName));
+
+            return GetAllSolutionMetadata(scope).Get(solutionMetadataName, cancellationToken);
+        }
+
+        /// <summary> Get a Solution resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="solutionMetadataName"> Name of the solution metadata. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="solutionMetadataName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SolutionMetadataResource>> GetSolutionMetadataAsync(ResourceIdentifier scope, string solutionMetadataName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(solutionMetadataName, nameof(solutionMetadataName));
+
+            return await GetAllSolutionMetadata(scope).GetAsync(solutionMetadataName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SolutionMetadataVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SolutionMetadataVersionResource"/> object. </returns>
+        public virtual SolutionMetadataVersionResource GetSolutionMetadataVersionResource(ResourceIdentifier id)
+        {
+            SolutionMetadataVersionResource.ValidateResourceId(id);
+            return new SolutionMetadataVersionResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="SolutionMetadataVersionCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="SolutionMetadataVersionResource"/> objects. </returns>
+        public virtual SolutionMetadataVersionCollection GetSolutionMetadataVersions(ResourceIdentifier scope)
+        {
+            return new SolutionMetadataVersionCollection(Client, scope);
+        }
+
+        /// <summary> Get a Solution resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="solutionMetadataVersionName"> Name of the solution metadata version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="solutionMetadataVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionMetadataVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SolutionMetadataVersionResource> GetSolutionMetadataVersion(ResourceIdentifier scope, string solutionMetadataVersionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(solutionMetadataVersionName, nameof(solutionMetadataVersionName));
+
+            return GetSolutionMetadataVersions(scope).Get(solutionMetadataVersionName, cancellationToken);
+        }
+
+        /// <summary> Get a Solution resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="solutionMetadataVersionName"> Name of the solution metadata version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="solutionMetadataVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionMetadataVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SolutionMetadataVersionResource>> GetSolutionMetadataVersionAsync(ResourceIdentifier scope, string solutionMetadataVersionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(solutionMetadataVersionName, nameof(solutionMetadataVersionName));
+
+            return await GetSolutionMetadataVersions(scope).GetAsync(solutionMetadataVersionName, cancellationToken).ConfigureAwait(false);
+        }
+
         /// <summary> Gets an object representing a <see cref="EdgeSolutionTemplateVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EdgeSolutionTemplateVersionResource"/> object. </returns>
@@ -289,6 +379,132 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         {
             EdgeSiteReferenceResource.ValidateResourceId(id);
             return new EdgeSiteReferenceResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SolutionSchemaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SolutionSchemaResource"/> object. </returns>
+        public virtual SolutionSchemaResource GetSolutionSchemaResource(ResourceIdentifier id)
+        {
+            SolutionSchemaResource.ValidateResourceId(id);
+            return new SolutionSchemaResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ConfigTemplateSchemaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ConfigTemplateSchemaResource"/> object. </returns>
+        public virtual ConfigTemplateSchemaResource GetConfigTemplateSchemaResource(ResourceIdentifier id)
+        {
+            ConfigTemplateSchemaResource.ValidateResourceId(id);
+            return new ConfigTemplateSchemaResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ConfigTemplateMetadataResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ConfigTemplateMetadataResource"/> object. </returns>
+        public virtual ConfigTemplateMetadataResource GetConfigTemplateMetadataResource(ResourceIdentifier id)
+        {
+            ConfigTemplateMetadataResource.ValidateResourceId(id);
+            return new ConfigTemplateMetadataResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="HierarchyConfigurationMetadataResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HierarchyConfigurationMetadataResource"/> object. </returns>
+        public virtual HierarchyConfigurationMetadataResource GetHierarchyConfigurationMetadataResource(ResourceIdentifier id)
+        {
+            HierarchyConfigurationMetadataResource.ValidateResourceId(id);
+            return new HierarchyConfigurationMetadataResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="HierarchyConfigurationMetadataCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="HierarchyConfigurationMetadataResource"/> objects. </returns>
+        public virtual HierarchyConfigurationMetadataCollection GetAllHierarchyConfigurationMetadata(ResourceIdentifier scope)
+        {
+            return new HierarchyConfigurationMetadataCollection(Client, scope);
+        }
+
+        /// <summary> Get a Hierarchy Configuration Metadata resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="hierarchyConfigurationMetadataName"> Name of the hierarchy configuration metadata. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="hierarchyConfigurationMetadataName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hierarchyConfigurationMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HierarchyConfigurationMetadataResource> GetHierarchyConfigurationMetadata(ResourceIdentifier scope, string hierarchyConfigurationMetadataName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(hierarchyConfigurationMetadataName, nameof(hierarchyConfigurationMetadataName));
+
+            return GetAllHierarchyConfigurationMetadata(scope).Get(hierarchyConfigurationMetadataName, cancellationToken);
+        }
+
+        /// <summary> Get a Hierarchy Configuration Metadata resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="hierarchyConfigurationMetadataName"> Name of the hierarchy configuration metadata. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="hierarchyConfigurationMetadataName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hierarchyConfigurationMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<HierarchyConfigurationMetadataResource>> GetHierarchyConfigurationMetadataAsync(ResourceIdentifier scope, string hierarchyConfigurationMetadataName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(hierarchyConfigurationMetadataName, nameof(hierarchyConfigurationMetadataName));
+
+            return await GetAllHierarchyConfigurationMetadata(scope).GetAsync(hierarchyConfigurationMetadataName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="HierarchyConfigurationMetadataVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HierarchyConfigurationMetadataVersionResource"/> object. </returns>
+        public virtual HierarchyConfigurationMetadataVersionResource GetHierarchyConfigurationMetadataVersionResource(ResourceIdentifier id)
+        {
+            HierarchyConfigurationMetadataVersionResource.ValidateResourceId(id);
+            return new HierarchyConfigurationMetadataVersionResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="HierarchyConfigurationMetadataVersionCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="HierarchyConfigurationMetadataVersionResource"/> objects. </returns>
+        public virtual HierarchyConfigurationMetadataVersionCollection GetHierarchyConfigurationMetadataVersions(ResourceIdentifier scope)
+        {
+            return new HierarchyConfigurationMetadataVersionCollection(Client, scope);
+        }
+
+        /// <summary> Get a Hierarchy Configuration Metadata Version resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="hierarchyConfigurationMetadataVersionName"> Name of the hierarchy configuration metadata version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="hierarchyConfigurationMetadataVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hierarchyConfigurationMetadataVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HierarchyConfigurationMetadataVersionResource> GetHierarchyConfigurationMetadataVersion(ResourceIdentifier scope, string hierarchyConfigurationMetadataVersionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(hierarchyConfigurationMetadataVersionName, nameof(hierarchyConfigurationMetadataVersionName));
+
+            return GetHierarchyConfigurationMetadataVersions(scope).Get(hierarchyConfigurationMetadataVersionName, cancellationToken);
+        }
+
+        /// <summary> Get a Hierarchy Configuration Metadata Version resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="hierarchyConfigurationMetadataVersionName"> Name of the hierarchy configuration metadata version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="hierarchyConfigurationMetadataVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hierarchyConfigurationMetadataVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<HierarchyConfigurationMetadataVersionResource>> GetHierarchyConfigurationMetadataVersionAsync(ResourceIdentifier scope, string hierarchyConfigurationMetadataVersionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(hierarchyConfigurationMetadataVersionName, nameof(hierarchyConfigurationMetadataVersionName));
+
+            return await GetHierarchyConfigurationMetadataVersions(scope).GetAsync(hierarchyConfigurationMetadataVersionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SolutionDeploymentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SolutionDeploymentResource"/> object. </returns>
+        public virtual SolutionDeploymentResource GetSolutionDeploymentResource(ResourceIdentifier id)
+        {
+            SolutionDeploymentResource.ValidateResourceId(id);
+            return new SolutionDeploymentResource(Client, id);
         }
     }
 }

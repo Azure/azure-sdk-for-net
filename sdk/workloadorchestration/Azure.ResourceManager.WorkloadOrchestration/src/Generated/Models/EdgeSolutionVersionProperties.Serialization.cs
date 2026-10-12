@@ -141,6 +141,21 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(CurrentStage))
+            {
+                writer.WritePropertyName("currentStage"u8);
+                writer.WriteObjectValue(CurrentStage, options);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Stages))
+            {
+                writer.WritePropertyName("stages"u8);
+                writer.WriteStartArray();
+                foreach (StageMap item in Stages)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && Optional.IsDefined(SolutionInstanceName))
             {
                 writer.WritePropertyName("solutionInstanceName"u8);
@@ -165,6 +180,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 writer.WritePropertyName("latestActionTrackingUri"u8);
                 writer.WriteStringValue(LatestActionTrackingUri);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LatestActionTriggeredBy))
+            {
+                writer.WritePropertyName("latestActionTriggeredBy"u8);
+                writer.WriteStringValue(LatestActionTriggeredBy);
             }
             if (options.Format != "W" && Optional.IsDefined(ActionType))
             {
@@ -227,10 +247,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             string reviewId = default;
             string externalValidationId = default;
             SolutionInstanceState? state = default;
+            StageMap currentStage = default;
+            IReadOnlyList<StageMap> stages = default;
             string solutionInstanceName = default;
             IReadOnlyList<EdgeSolutionDependency> solutionDependencies = default;
             ResponseError errorDetails = default;
             string latestActionTrackingUri = default;
+            string latestActionTriggeredBy = default;
             EdgeJobType? actionType = default;
             WorkloadOrchestrationProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -301,6 +324,29 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     state = new SolutionInstanceState(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("currentStage"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    currentStage = StageMap.DeserializeStageMap(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("stages"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<StageMap> array = new List<StageMap>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(StageMap.DeserializeStageMap(item, options));
+                    }
+                    stages = array;
+                    continue;
+                }
                 if (prop.NameEquals("solutionInstanceName"u8))
                 {
                     solutionInstanceName = prop.Value.GetString();
@@ -332,6 +378,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 if (prop.NameEquals("latestActionTrackingUri"u8))
                 {
                     latestActionTrackingUri = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("latestActionTriggeredBy"u8))
+                {
+                    latestActionTriggeredBy = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("actionType"u8))
@@ -367,10 +418,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 reviewId,
                 externalValidationId,
                 state,
+                currentStage,
+                stages ?? new ChangeTrackingList<StageMap>(),
                 solutionInstanceName,
                 solutionDependencies ?? new ChangeTrackingList<EdgeSolutionDependency>(),
                 errorDetails,
                 latestActionTrackingUri,
+                latestActionTriggeredBy,
                 actionType,
                 provisioningState,
                 additionalBinaryDataProperties);
