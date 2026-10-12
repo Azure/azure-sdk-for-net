@@ -15,63 +15,63 @@ using Azure.ResourceManager.AlertRuleRecommendations;
 namespace Azure.ResourceManager.AlertRuleRecommendations.Models
 {
     /// <summary> List of alert rule recommendations. </summary>
-    internal partial class AlertRuleRecommendationsListResponse : IJsonModel<AlertRuleRecommendationsListResponse>
+    internal partial class AlertRuleRecommendationsListResult : IJsonModel<AlertRuleRecommendationsListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="AlertRuleRecommendationsListResponse"/> for deserialization. </summary>
-        internal AlertRuleRecommendationsListResponse()
+        /// <summary> Initializes a new instance of <see cref="AlertRuleRecommendationsListResult"/> for deserialization. </summary>
+        internal AlertRuleRecommendationsListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AlertRuleRecommendationsListResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AlertRuleRecommendationsListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AlertRuleRecommendationsListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertRuleRecommendationsListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAlertRuleRecommendationsListResponse(document.RootElement, options);
+                        return DeserializeAlertRuleRecommendationsListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AlertRuleRecommendationsListResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertRuleRecommendationsListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AlertRuleRecommendationsListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertRuleRecommendationsListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAlertRuleRecommendationsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AlertRuleRecommendationsListResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertRuleRecommendationsListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AlertRuleRecommendationsListResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AlertRuleRecommendationsListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AlertRuleRecommendationsListResponse IPersistableModel<AlertRuleRecommendationsListResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AlertRuleRecommendationsListResult IPersistableModel<AlertRuleRecommendationsListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AlertRuleRecommendationsListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AlertRuleRecommendationsListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AlertRuleRecommendationsListResponse"/> from. </param>
-        internal static AlertRuleRecommendationsListResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AlertRuleRecommendationsListResult"/> from. </param>
+        internal static AlertRuleRecommendationsListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAlertRuleRecommendationsListResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeAlertRuleRecommendationsListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AlertRuleRecommendationsListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AlertRuleRecommendationsListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AlertRuleRecommendationsListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertRuleRecommendationsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertRuleRecommendationsListResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertRuleRecommendationsListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
@@ -118,24 +118,24 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AlertRuleRecommendationsListResponse IJsonModel<AlertRuleRecommendationsListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AlertRuleRecommendationsListResult IJsonModel<AlertRuleRecommendationsListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AlertRuleRecommendationsListResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AlertRuleRecommendationsListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AlertRuleRecommendationsListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertRuleRecommendationsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertRuleRecommendationsListResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertRuleRecommendationsListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAlertRuleRecommendationsListResponse(document.RootElement, options);
+            return DeserializeAlertRuleRecommendationsListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AlertRuleRecommendationsListResponse DeserializeAlertRuleRecommendationsListResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static AlertRuleRecommendationsListResult DeserializeAlertRuleRecommendationsListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AlertRuleRecommendationsListResponse(value, nextLink, additionalBinaryDataProperties);
+            return new AlertRuleRecommendationsListResult(value ?? new ChangeTrackingList<AlertRuleRecommendation>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
