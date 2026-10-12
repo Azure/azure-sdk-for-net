@@ -8,70 +8,72 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.ResourceManager.NewRelicObservability;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> Response of get all accounts Operation. </summary>
-    internal partial class AccountsListResponse : IJsonModel<AccountsListResponse>
+    /// <summary> Response of a list operation. </summary>
+    internal partial class LinkedResourceListResult : IJsonModel<LinkedResourceListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="AccountsListResponse"/> for deserialization. </summary>
-        internal AccountsListResponse()
+        /// <summary> Initializes a new instance of <see cref="LinkedResourceListResult"/> for deserialization. </summary>
+        internal LinkedResourceListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AccountsListResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual LinkedResourceListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccountsListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkedResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAccountsListResponse(document.RootElement, options);
+                        return DeserializeLinkedResourceListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AccountsListResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkedResourceListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccountsListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkedResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNewRelicObservabilityContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AccountsListResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkedResourceListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AccountsListResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<LinkedResourceListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AccountsListResponse IPersistableModel<AccountsListResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        LinkedResourceListResult IPersistableModel<LinkedResourceListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AccountsListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LinkedResourceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AccountsListResponse"/> from. </param>
-        internal static AccountsListResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LinkedResourceListResult"/> from. </param>
+        internal static LinkedResourceListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAccountsListResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeLinkedResourceListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AccountsListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LinkedResourceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,16 +84,21 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccountsListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkedResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccountsListResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkedResourceListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (NewRelicAccountResourceData item in Value)
+            foreach (SubResource item in Value)
             {
-                writer.WriteObjectValue(item, options);
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                ((IJsonModel<SubResource>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -118,40 +125,47 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AccountsListResponse IJsonModel<AccountsListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        LinkedResourceListResult IJsonModel<LinkedResourceListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AccountsListResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual LinkedResourceListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccountsListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkedResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccountsListResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkedResourceListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAccountsListResponse(document.RootElement, options);
+            return DeserializeLinkedResourceListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AccountsListResponse DeserializeAccountsListResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static LinkedResourceListResult DeserializeLinkedResourceListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<NewRelicAccountResourceData> value = default;
+            IList<SubResource> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<NewRelicAccountResourceData> array = new List<NewRelicAccountResourceData>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NewRelicAccountResourceData.DeserializeNewRelicAccountResourceData(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNewRelicObservabilityContext.Default));
+                        }
                     }
                     value = array;
                     continue;
@@ -170,7 +184,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AccountsListResponse(value, nextLink, additionalBinaryDataProperties);
+            return new LinkedResourceListResult(value ?? new ChangeTrackingList<SubResource>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

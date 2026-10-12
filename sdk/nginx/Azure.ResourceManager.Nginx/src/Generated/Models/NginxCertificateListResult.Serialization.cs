@@ -8,72 +8,70 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure;
-using Azure.ResourceManager.NewRelicObservability;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Nginx;
 
-namespace Azure.ResourceManager.NewRelicObservability.Models
+namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> Response of a list operation. </summary>
-    internal partial class LinkedResourceListResponse : IJsonModel<LinkedResourceListResponse>
+    /// <summary> Nginx Certificate List Response. </summary>
+    internal partial class NginxCertificateListResult : IJsonModel<NginxCertificateListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="LinkedResourceListResponse"/> for deserialization. </summary>
-        internal LinkedResourceListResponse()
+        /// <summary> Initializes a new instance of <see cref="NginxCertificateListResult"/> for deserialization. </summary>
+        internal NginxCertificateListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LinkedResourceListResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual NginxCertificateListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LinkedResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NginxCertificateListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLinkedResourceListResponse(document.RootElement, options);
+                        return DeserializeNginxCertificateListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LinkedResourceListResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxCertificateListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LinkedResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NginxCertificateListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNewRelicObservabilityContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNginxContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LinkedResourceListResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxCertificateListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LinkedResourceListResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<NginxCertificateListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LinkedResourceListResponse IPersistableModel<LinkedResourceListResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        NginxCertificateListResult IPersistableModel<NginxCertificateListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LinkedResourceListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NginxCertificateListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LinkedResourceListResponse"/> from. </param>
-        internal static LinkedResourceListResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NginxCertificateListResult"/> from. </param>
+        internal static NginxCertificateListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeLinkedResourceListResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeNginxCertificateListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LinkedResourceListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NginxCertificateListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -84,21 +82,16 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LinkedResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NginxCertificateListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkedResourceListResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxCertificateListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (SubResource item in Value)
+            foreach (NginxCertificateData item in Value)
             {
-                if (item == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-                ((IJsonModel<SubResource>)item).Write(writer, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -125,47 +118,40 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LinkedResourceListResponse IJsonModel<LinkedResourceListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        NginxCertificateListResult IJsonModel<NginxCertificateListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LinkedResourceListResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual NginxCertificateListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LinkedResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NginxCertificateListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkedResourceListResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxCertificateListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLinkedResourceListResponse(document.RootElement, options);
+            return DeserializeNginxCertificateListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LinkedResourceListResponse DeserializeLinkedResourceListResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static NginxCertificateListResult DeserializeNginxCertificateListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<SubResource> value = default;
+            IList<NginxCertificateData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<SubResource> array = new List<SubResource>();
+                    List<NginxCertificateData> array = new List<NginxCertificateData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNewRelicObservabilityContext.Default));
-                        }
+                        array.Add(NginxCertificateData.DeserializeNginxCertificateData(item, options));
                     }
                     value = array;
                     continue;
@@ -184,7 +170,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LinkedResourceListResponse(value, nextLink, additionalBinaryDataProperties);
+            return new NginxCertificateListResult(value ?? new ChangeTrackingList<NginxCertificateData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

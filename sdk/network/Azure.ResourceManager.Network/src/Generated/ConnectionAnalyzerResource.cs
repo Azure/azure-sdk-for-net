@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ConnectionAnalyzerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string connectionAnalyzerApiVersion);
             _networkWatchersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _networkWatchersRestClient = new NetworkWatchers(_networkWatchersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, connectionAnalyzerApiVersion ?? "2026-01-01");
+            _networkWatchersRestClient = new NetworkWatchers(_networkWatchersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

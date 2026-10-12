@@ -10,68 +10,68 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.ResourceManager.NewRelicObservability;
+using Azure.ResourceManager.Nginx;
 
-namespace Azure.ResourceManager.NewRelicObservability.Models
+namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> Response of get all plan data Operation. </summary>
-    internal partial class PlanDataListResponse : IJsonModel<PlanDataListResponse>
+    /// <summary> Response of a list operation. </summary>
+    internal partial class NginxConfigurationListResult : IJsonModel<NginxConfigurationListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="PlanDataListResponse"/> for deserialization. </summary>
-        internal PlanDataListResponse()
+        /// <summary> Initializes a new instance of <see cref="NginxConfigurationListResult"/> for deserialization. </summary>
+        internal NginxConfigurationListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PlanDataListResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual NginxConfigurationListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PlanDataListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NginxConfigurationListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePlanDataListResponse(document.RootElement, options);
+                        return DeserializeNginxConfigurationListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PlanDataListResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxConfigurationListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PlanDataListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NginxConfigurationListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNewRelicObservabilityContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNginxContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PlanDataListResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxConfigurationListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PlanDataListResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<NginxConfigurationListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PlanDataListResponse IPersistableModel<PlanDataListResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        NginxConfigurationListResult IPersistableModel<NginxConfigurationListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PlanDataListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NginxConfigurationListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PlanDataListResponse"/> from. </param>
-        internal static PlanDataListResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NginxConfigurationListResult"/> from. </param>
+        internal static NginxConfigurationListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePlanDataListResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeNginxConfigurationListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PlanDataListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NginxConfigurationListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PlanDataListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NginxConfigurationListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlanDataListResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxConfigurationListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (NewRelicPlanData item in Value)
+            foreach (NginxConfigurationData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -118,40 +118,40 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PlanDataListResponse IJsonModel<PlanDataListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        NginxConfigurationListResult IJsonModel<NginxConfigurationListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PlanDataListResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual NginxConfigurationListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PlanDataListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NginxConfigurationListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlanDataListResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxConfigurationListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePlanDataListResponse(document.RootElement, options);
+            return DeserializeNginxConfigurationListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PlanDataListResponse DeserializePlanDataListResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static NginxConfigurationListResult DeserializeNginxConfigurationListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<NewRelicPlanData> value = default;
+            IList<NginxConfigurationData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<NewRelicPlanData> array = new List<NewRelicPlanData>();
+                    List<NginxConfigurationData> array = new List<NginxConfigurationData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NewRelicPlanData.DeserializeNewRelicPlanData(item, options));
+                        array.Add(NginxConfigurationData.DeserializeNginxConfigurationData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PlanDataListResponse(value, nextLink, additionalBinaryDataProperties);
+            return new NginxConfigurationListResult(value ?? new ChangeTrackingList<NginxConfigurationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

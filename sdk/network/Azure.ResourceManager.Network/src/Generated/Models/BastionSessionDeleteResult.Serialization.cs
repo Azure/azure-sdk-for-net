@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BastionSessionDeleteResult(value, nextLink, additionalBinaryDataProperties);
+            return new BastionSessionDeleteResult(value ?? new ChangeTrackingList<BastionSessionState>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

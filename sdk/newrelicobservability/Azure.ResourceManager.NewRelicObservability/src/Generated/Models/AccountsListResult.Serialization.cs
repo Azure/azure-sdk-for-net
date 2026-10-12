@@ -10,68 +10,68 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.ResourceManager.Nginx;
+using Azure.ResourceManager.NewRelicObservability;
 
-namespace Azure.ResourceManager.Nginx.Models
+namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> Nginx Deployment List Response. </summary>
-    internal partial class NginxDeploymentListResponse : IJsonModel<NginxDeploymentListResponse>
+    /// <summary> Response of get all accounts Operation. </summary>
+    internal partial class AccountsListResult : IJsonModel<AccountsListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="NginxDeploymentListResponse"/> for deserialization. </summary>
-        internal NginxDeploymentListResponse()
+        /// <summary> Initializes a new instance of <see cref="AccountsListResult"/> for deserialization. </summary>
+        internal AccountsListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NginxDeploymentListResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AccountsListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AccountsListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNginxDeploymentListResponse(document.RootElement, options);
+                        return DeserializeAccountsListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NginxDeploymentListResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AccountsListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AccountsListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNginxContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNewRelicObservabilityContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NginxDeploymentListResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AccountsListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NginxDeploymentListResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AccountsListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NginxDeploymentListResponse IPersistableModel<NginxDeploymentListResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AccountsListResult IPersistableModel<AccountsListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NginxDeploymentListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AccountsListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NginxDeploymentListResponse"/> from. </param>
-        internal static NginxDeploymentListResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AccountsListResult"/> from. </param>
+        internal static AccountsListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeNginxDeploymentListResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeAccountsListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NginxDeploymentListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AccountsListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AccountsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxDeploymentListResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AccountsListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (NginxDeploymentData item in Value)
+            foreach (NewRelicAccountResourceData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -118,40 +118,40 @@ namespace Azure.ResourceManager.Nginx.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NginxDeploymentListResponse IJsonModel<NginxDeploymentListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AccountsListResult IJsonModel<AccountsListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NginxDeploymentListResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AccountsListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AccountsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxDeploymentListResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AccountsListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNginxDeploymentListResponse(document.RootElement, options);
+            return DeserializeAccountsListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NginxDeploymentListResponse DeserializeNginxDeploymentListResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static AccountsListResult DeserializeAccountsListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<NginxDeploymentData> value = default;
+            IList<NewRelicAccountResourceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<NginxDeploymentData> array = new List<NginxDeploymentData>();
+                    List<NewRelicAccountResourceData> array = new List<NewRelicAccountResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NginxDeploymentData.DeserializeNginxDeploymentData(item, options));
+                        array.Add(NewRelicAccountResourceData.DeserializeNewRelicAccountResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NginxDeploymentListResponse(value, nextLink, additionalBinaryDataProperties);
+            return new AccountsListResult(value ?? new ChangeTrackingList<NewRelicAccountResourceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

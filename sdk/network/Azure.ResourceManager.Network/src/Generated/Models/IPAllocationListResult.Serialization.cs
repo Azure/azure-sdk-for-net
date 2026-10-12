@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IPAllocationListResult(value, nextLink, additionalBinaryDataProperties);
+            return new IPAllocationListResult(value ?? new ChangeTrackingList<IPAllocationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

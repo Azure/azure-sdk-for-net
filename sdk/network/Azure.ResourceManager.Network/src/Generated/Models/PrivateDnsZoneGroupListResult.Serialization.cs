@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PrivateDnsZoneGroupListResult(value, nextLink, additionalBinaryDataProperties);
+            return new PrivateDnsZoneGroupListResult(value ?? new ChangeTrackingList<PrivateDnsZoneGroupData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

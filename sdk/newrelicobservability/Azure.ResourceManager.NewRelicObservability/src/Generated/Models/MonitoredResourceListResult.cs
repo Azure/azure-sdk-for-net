@@ -12,33 +12,33 @@ using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> Response of a list VM Host Operation. </summary>
-    internal partial class VMHostsListResponse
+    /// <summary> List of all the resources being monitored by NewRelic monitor resource. </summary>
+    internal partial class MonitoredResourceListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VMHostsListResponse"/>. </summary>
-        /// <param name="value"> The VMInfo items on this page. </param>
-        internal VMHostsListResponse(IEnumerable<NewRelicObservabilityVmInfo> value)
+        /// <summary> Initializes a new instance of <see cref="MonitoredResourceListResult"/>. </summary>
+        /// <param name="value"> The MonitoredResource items on this page. </param>
+        internal MonitoredResourceListResult(IEnumerable<NewRelicResourceMonitorResult> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VMHostsListResponse"/>. </summary>
-        /// <param name="value"> The VMInfo items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="MonitoredResourceListResult"/>. </summary>
+        /// <param name="value"> The MonitoredResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VMHostsListResponse(IList<NewRelicObservabilityVmInfo> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MonitoredResourceListResult(IList<NewRelicResourceMonitorResult> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The VMInfo items on this page. </summary>
+        /// <summary> The MonitoredResource items on this page. </summary>
         [WirePath("value")]
-        public IList<NewRelicObservabilityVmInfo> Value { get; }
+        public IList<NewRelicResourceMonitorResult> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

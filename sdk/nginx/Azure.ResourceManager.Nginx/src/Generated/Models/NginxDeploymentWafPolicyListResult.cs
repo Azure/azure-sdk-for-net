@@ -12,23 +12,23 @@ using System.Linq;
 namespace Azure.ResourceManager.Nginx.Models
 {
     /// <summary> Nginx Deployment Waf Policy List Response. </summary>
-    internal partial class NginxDeploymentWafPolicyListResponse
+    internal partial class NginxDeploymentWafPolicyListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NginxDeploymentWafPolicyListResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentWafPolicyListResult"/>. </summary>
         /// <param name="value"> The NginxDeploymentWafPolicyMetadata items on this page. </param>
-        internal NginxDeploymentWafPolicyListResponse(IEnumerable<NginxDeploymentWafPolicyMetadata> value)
+        internal NginxDeploymentWafPolicyListResult(IEnumerable<NginxDeploymentWafPolicyMetadata> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NginxDeploymentWafPolicyListResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentWafPolicyListResult"/>. </summary>
         /// <param name="value"> The NginxDeploymentWafPolicyMetadata items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NginxDeploymentWafPolicyListResponse(IList<NginxDeploymentWafPolicyMetadata> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NginxDeploymentWafPolicyListResult(IList<NginxDeploymentWafPolicyMetadata> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
