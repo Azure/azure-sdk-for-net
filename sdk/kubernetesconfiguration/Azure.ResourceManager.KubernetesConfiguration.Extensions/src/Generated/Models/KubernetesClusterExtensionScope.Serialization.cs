@@ -74,15 +74,29 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
             {
                 throw new FormatException($"The model {nameof(KubernetesClusterExtensionScope)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Cluster))
+            if (_clusterIsDefined || Optional.IsDefined(Cluster))
             {
-                writer.WritePropertyName("cluster"u8);
-                writer.WriteObjectValue(Cluster, options);
+                if (Cluster != null)
+                {
+                    writer.WritePropertyName("cluster"u8);
+                    writer.WriteObjectValue(Cluster, options);
+                }
+                else
+                {
+                    writer.WriteNull("cluster"u8);
+                }
             }
-            if (Optional.IsDefined(Namespace))
+            if (_namespaceIsDefined || Optional.IsDefined(Namespace))
             {
-                writer.WritePropertyName("namespace"u8);
-                writer.WriteObjectValue(Namespace, options);
+                if (Namespace != null)
+                {
+                    writer.WritePropertyName("namespace"u8);
+                    writer.WriteObjectValue(Namespace, options);
+                }
+                else
+                {
+                    writer.WriteNull("namespace"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -126,13 +140,16 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
             {
                 return null;
             }
+            bool clusterIsDefined = false;
             KubernetesClusterExtensionScopeCluster cluster = default;
+            bool namespaceIsDefined = false;
             KubernetesClusterExtensionScopeNamespace @namespace = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("cluster"u8))
                 {
+                    clusterIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         cluster = null;
@@ -143,6 +160,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
                 }
                 if (prop.NameEquals("namespace"u8))
                 {
+                    namespaceIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         @namespace = null;
@@ -156,7 +174,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new KubernetesClusterExtensionScope(cluster, @namespace, additionalBinaryDataProperties);
+            return new KubernetesClusterExtensionScope(cluster, @namespace, additionalBinaryDataProperties)
+            {
+                _clusterIsDefined = clusterIsDefined,
+                _namespaceIsDefined = namespaceIsDefined
+            };
         }
     }
 }
