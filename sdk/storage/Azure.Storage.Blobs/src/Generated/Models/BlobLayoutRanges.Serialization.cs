@@ -101,7 +101,7 @@ namespace Azure.Storage.Blobs.Models
                 throw new FormatException($"The model {nameof(BlobLayoutRanges)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(Range))
+            if (Range != null && Optional.IsCollectionDefined(Range))
             {
                 foreach (BlobLayoutRange item in Range)
                 {

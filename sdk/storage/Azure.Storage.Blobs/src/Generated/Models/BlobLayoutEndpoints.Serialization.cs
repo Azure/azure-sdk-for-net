@@ -101,7 +101,7 @@ namespace Azure.Storage.Blobs.Models
                 throw new FormatException($"The model {nameof(BlobLayoutEndpoints)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(Endpoint))
+            if (Endpoint != null && Optional.IsCollectionDefined(Endpoint))
             {
                 foreach (BlobLayoutEndpoint item in Endpoint)
                 {

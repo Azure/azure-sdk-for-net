@@ -117,7 +117,7 @@ namespace Azure.Storage.Files.Shares.Models
                 writer.WriteObjectValue(item, options);
                 writer.WriteEndElement();
             }
-            if (Optional.IsCollectionDefined(SymLinkItems))
+            if (SymLinkItems != null && Optional.IsCollectionDefined(SymLinkItems))
             {
                 foreach (SymLinkItem item in SymLinkItems)
                 {
@@ -126,7 +126,7 @@ namespace Azure.Storage.Files.Shares.Models
                     writer.WriteEndElement();
                 }
             }
-            if (Optional.IsCollectionDefined(BlockDeviceItems))
+            if (BlockDeviceItems != null && Optional.IsCollectionDefined(BlockDeviceItems))
             {
                 foreach (BlockDeviceItem item in BlockDeviceItems)
                 {
@@ -135,7 +135,7 @@ namespace Azure.Storage.Files.Shares.Models
                     writer.WriteEndElement();
                 }
             }
-            if (Optional.IsCollectionDefined(CharDeviceItems))
+            if (CharDeviceItems != null && Optional.IsCollectionDefined(CharDeviceItems))
             {
                 foreach (CharDeviceItem item in CharDeviceItems)
                 {
@@ -144,7 +144,7 @@ namespace Azure.Storage.Files.Shares.Models
                     writer.WriteEndElement();
                 }
             }
-            if (Optional.IsCollectionDefined(FifoItems))
+            if (FifoItems != null && Optional.IsCollectionDefined(FifoItems))
             {
                 foreach (FifoItem item in FifoItems)
                 {
@@ -153,7 +153,7 @@ namespace Azure.Storage.Files.Shares.Models
                     writer.WriteEndElement();
                 }
             }
-            if (Optional.IsCollectionDefined(SocketItems))
+            if (SocketItems != null && Optional.IsCollectionDefined(SocketItems))
             {
                 foreach (SocketItem item in SocketItems)
                 {
