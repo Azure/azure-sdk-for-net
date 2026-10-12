@@ -5,4 +5,8 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsMgmtLibrary>true</IsMgmtLibrary>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" Condition="'$(UseProjectReferenceToAzureClients)' == 'true'" />
+  </ItemGroup>
 </Project>
