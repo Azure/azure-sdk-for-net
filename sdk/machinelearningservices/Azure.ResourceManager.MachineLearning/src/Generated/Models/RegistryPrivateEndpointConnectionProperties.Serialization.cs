@@ -13,7 +13,6 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Properties of the Private Endpoint Connection. </summary>
     internal partial class RegistryPrivateEndpointConnectionProperties : IJsonModel<RegistryPrivateEndpointConnectionProperties>
     {
         /// <param name="data"> The data to parse. </param>
