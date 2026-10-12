@@ -16,6 +16,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private NotificationSetting _notification;
+        internal bool _notificationIsDefined;
+        private MaterializationComputeResource _resource;
+        internal bool _resourceIsDefined;
+        private MachineLearningRecurrenceTrigger _schedule;
+        internal bool _scheduleIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MaterializationSettings"/>. </summary>
         public MaterializationSettings()
@@ -32,9 +38,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MaterializationSettings(NotificationSetting notification, MaterializationComputeResource resource, MachineLearningRecurrenceTrigger schedule, IDictionary<string, string> sparkConfiguration, MaterializationStoreType? storeType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Notification = notification;
-            Resource = resource;
-            Schedule = schedule;
+            _notification = notification;
+            _resource = resource;
+            _schedule = schedule;
             SparkConfiguration = sparkConfiguration;
             StoreType = storeType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -42,15 +48,48 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Specifies the notification details. </summary>
         [WirePath("notification")]
-        public NotificationSetting Notification { get; set; }
+        public NotificationSetting Notification
+        {
+            get
+            {
+                return _notification;
+            }
+            set
+            {
+                _notification = value;
+                _notificationIsDefined = true;
+            }
+        }
 
         /// <summary> Specifies the compute resource settings. </summary>
         [WirePath("resource")]
-        internal MaterializationComputeResource Resource { get; set; }
+        internal MaterializationComputeResource Resource
+        {
+            get
+            {
+                return _resource;
+            }
+            set
+            {
+                _resource = value;
+                _resourceIsDefined = true;
+            }
+        }
 
         /// <summary> Specifies the schedule details. </summary>
         [WirePath("schedule")]
-        public MachineLearningRecurrenceTrigger Schedule { get; set; }
+        public MachineLearningRecurrenceTrigger Schedule
+        {
+            get
+            {
+                return _schedule;
+            }
+            set
+            {
+                _schedule = value;
+                _scheduleIsDefined = true;
+            }
+        }
 
         /// <summary> Specifies the spark compute settings. </summary>
         [WirePath("sparkConfiguration")]

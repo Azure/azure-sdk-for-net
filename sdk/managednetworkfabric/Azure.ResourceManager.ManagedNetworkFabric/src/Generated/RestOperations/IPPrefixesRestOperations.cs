@@ -12,30 +12,30 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal partial class IpExtendedCommunities
+    internal partial class IPPrefixes
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
 
-        /// <summary> Initializes a new instance of IpExtendedCommunities for mocking. </summary>
-        protected IpExtendedCommunities()
+        /// <summary> Initializes a new instance of IPPrefixes for mocking. </summary>
+        protected IPPrefixes()
         {
         }
 
-        /// <summary> Initializes a new instance of IpExtendedCommunities. </summary>
+        /// <summary> Initializes a new instance of IPPrefixes. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal IpExtendedCommunities(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        internal IPPrefixes(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
-            _userAgent = new TelemetryDetails(typeof(IpExtendedCommunities).Assembly, applicationId);
+            _userAgent = new TelemetryDetails(typeof(IPPrefixes).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string ipExtendedCommunityName, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string ipPrefixName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/", false);
-            uri.AppendPath(ipExtendedCommunityName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/", false);
+            uri.AppendPath(ipPrefixName, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return message;
         }
 
-        internal HttpMessage CreateCreateRequest(Guid subscriptionId, string resourceGroupName, string ipExtendedCommunityName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateRequest(Guid subscriptionId, string resourceGroupName, string ipPrefixName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/", false);
-            uri.AppendPath(ipExtendedCommunityName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/", false);
+            uri.AppendPath(ipPrefixName, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return message;
         }
 
-        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string ipExtendedCommunityName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string ipPrefixName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/", false);
-            uri.AppendPath(ipExtendedCommunityName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/", false);
+            uri.AppendPath(ipPrefixName, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string ipExtendedCommunityName, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string ipPrefixName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -125,8 +125,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/", false);
-            uri.AppendPath(ipExtendedCommunityName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/", false);
+            uri.AppendPath(ipPrefixName, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities", false);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/ipPrefixes", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities", false);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/ipPrefixes", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);

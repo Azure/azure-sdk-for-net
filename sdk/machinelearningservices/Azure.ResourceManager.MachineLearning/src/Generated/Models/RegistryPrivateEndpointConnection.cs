@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private RegistryPrivateEndpointConnectionProperties _properties;
+        internal bool _propertiesIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="RegistryPrivateEndpointConnection"/>. </summary>
         public RegistryPrivateEndpointConnection()
@@ -35,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             Id = id;
             Location = location;
-            Properties = properties;
+            _properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -52,7 +54,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Properties of the Private Endpoint Connection. </summary>
         [WirePath("properties")]
-        internal RegistryPrivateEndpointConnectionProperties Properties { get; set; }
+        internal RegistryPrivateEndpointConnectionProperties Properties
+        {
+            get
+            {
+                return _properties;
+            }
+            set
+            {
+                _properties = value;
+                _propertiesIsDefined = true;
+            }
+        }
 
         /// <summary> The connection state. </summary>
         [WirePath("properties.registryPrivateLinkServiceConnectionState")]
