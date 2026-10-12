@@ -938,6 +938,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.All(listener.Messages, e => Assert.Equal(summary.Payload[0], e.Payload![0]));
         }
 
+        /// <summary>
+        /// The summary counts routes, not endpoints: one endpoint reached with and without AAD is two
+        /// requests, and the message says so rather than claiming two endpoints.
+        /// </summary>
+        [Fact]
+        public void TheSummaryCountsAnEndpointReachedInBothAuthenticationModesAsTwoRoutes()
+        {
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Informational, EventKeywords.All);
+
+            Convert(CreateActivity("ikey-a", EastUs), CreateActivity("ikey-b", EastUs, ingestionAuth: "aad"));
+
+            var summary = Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedExportSummary"));
+            Assert.Equal(2, summary.Payload![2]);
+            Assert.Contains("routes", summary.Message, StringComparison.Ordinal);
+            Assert.DoesNotContain("ingestion endpoints and dropped", summary.Message, StringComparison.Ordinal);
+        }
+
         /// <summary>A shared sequence would tie unrelated exports together.</summary>
         [Fact]
         public void EachExportGetsItsOwnSequence()

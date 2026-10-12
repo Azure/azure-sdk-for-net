@@ -571,7 +571,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         [Event(64, Message = "Rate-limited sampling of {0} traces per second was ignored because multi-endpoint routing is enabled. The limit is per process, so it would be shared across every destination the process carries. Fixed-rate sampling of {1} is used instead; set SamplingRatio to change it.", Level = EventLevel.Warning)]
         public void RateLimitedSamplingIgnoredForMultiEndpointRouting(double tracesPerSecond, float samplingRatio) => WriteEvent(64, tracesPerSecond, samplingRatio);
 
-        [Event(65, Message = "Storage partition for ingestion endpoint '{0}' is directory '{1}'. The directory name is a hash of the endpoint and cannot be reversed.", Level = EventLevel.Informational)]
+        // The parameter names are the payload contract, so they keep their original names even though
+        // the values are now routes: an instrumentation-key route reads exactly as before, and an
+        // AAD route carries the " (aad)" suffix.
+        [Event(65, Message = "Storage partition for route '{0}' is directory '{1}'. The directory name is a hash of the route's partition key - the ingestion endpoint, prefixed with 'aad|' for a Microsoft Entra ID route - and cannot be reversed.", Level = EventLevel.Informational)]
         public void MultiEndpointPartitionCreated(string ingestionEndpoint, string directory) => WriteEvent(65, ingestionEndpoint, directory);
 
         [NonEvent]
@@ -627,7 +630,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         // Guarded in the body: neither parameter list matches a typed WriteEvent overload, so the
         // call allocates an argument array whether or not anything is listening.
-        [Event(71, Message = "Export {0}: routed {1} Activities or metric points to {2} ingestion endpoints and dropped {3} that could not be routed. These count routing inputs, not envelopes - one Activity can produce several - so event 72 reports the item count actually sent to each endpoint.", Level = EventLevel.Informational)]
+        [Event(71, Message = "Export {0}: routed {1} Activities or metric points to {2} routes and dropped {3} that could not be routed. A route is an ingestion endpoint and authentication mode, so one endpoint reached both with and without Microsoft Entra ID counts as two. These count routing inputs, not envelopes - one Activity can produce several - so event 72 reports the item count actually sent on each route.", Level = EventLevel.Informational)]
         public void RoutedExportSummary(long exportSequence, int collected, int endpointCount, int rejected)
         {
             if (IsEnabled(EventLevel.Informational))

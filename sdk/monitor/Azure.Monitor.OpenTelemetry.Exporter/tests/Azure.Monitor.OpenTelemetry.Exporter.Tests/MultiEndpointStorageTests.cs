@@ -132,6 +132,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var created = Assert.Single(listener.Messages.Where(e => e.EventName == "MultiEndpointPartitionCreated"));
             Assert.Equal(EastUs + EndpointRouting.AadRouteSuffix, created.Payload![0]);
+            Assert.Contains(MultiEndpointStorage.AadPartitionKeyPrefix, created.Message, StringComparison.Ordinal);
         }
 
         [Fact]
