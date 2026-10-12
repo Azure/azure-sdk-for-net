@@ -4,6 +4,7 @@
 
 .DESCRIPTION
   This script is used to verify the REST API specifications used to generate SDK package are from the main branch of Azure/azure-rest-api-specs repository.
+  TypeSpec batch entries are followed relative to the containing tsp-location.yaml, and each referenced location is validated.
 
 .PARAMETER ServiceDirectory
   The directory path of the service.
@@ -75,7 +76,38 @@ function Verify-Url([string]$fileUrl, [string]$configFilePath) {
 }
 
 # This function is used to verify the 'repo' and 'commit' settings in tsp-location.yaml point to the main branch of Azure/azure-rest-api-specs repository
-function Verify-TspLocation([System.Object]$tspLocationObj, [string]$tspLocationYamlPath) {
+function Verify-TspLocation([System.Object]$tspLocationObj, [string]$tspLocationYamlPath, [string[]]$ancestorPaths = @()) {
+  $tspLocationYamlPath = [System.IO.Path]::GetFullPath($tspLocationYamlPath)
+  if ($ancestorPaths -contains $tspLocationYamlPath) {
+    LogError "Circular TypeSpec batch reference. ServiceDir:$ServiceDirectory, PackageName:$PackageName, tsp-location.yaml path:$tspLocationYamlPath."
+    exit 1
+  }
+  if ($tspLocationObj -isnot [System.Collections.IDictionary]) {
+    LogError "Invalid TypeSpec location configuration. ServiceDir:$ServiceDirectory, PackageName:$PackageName, tsp-location.yaml path:$tspLocationYamlPath."
+    exit 1
+  }
+  if ($tspLocationObj.Contains("batch")) {
+    $batch = $tspLocationObj["batch"]
+    if ($batch -isnot [System.Collections.IList] -or $batch.Count -eq 0) {
+      LogError "TypeSpec batch must be a non-empty array of directory paths. ServiceDir:$ServiceDirectory, PackageName:$PackageName, tsp-location.yaml path:$tspLocationYamlPath."
+      exit 1
+    }
+    if ($tspLocationObj["repo"] -or $tspLocationObj["commit"] -or $tspLocationObj["directory"]) {
+      LogError "TypeSpec batch configuration cannot have repo, commit, or directory settings. ServiceDir:$ServiceDirectory, PackageName:$PackageName, tsp-location.yaml path:$tspLocationYamlPath."
+      exit 1
+    }
+    $parentDirectory = Split-Path -Path $tspLocationYamlPath -Parent
+    foreach ($batchDirectory in $batch) {
+      if ($batchDirectory -isnot [string] -or [string]::IsNullOrWhiteSpace($batchDirectory)) {
+        LogError "TypeSpec batch entries must be non-empty directory paths. ServiceDir:$ServiceDirectory, PackageName:$PackageName, tsp-location.yaml path:$tspLocationYamlPath."
+        exit 1
+      }
+      $batchLocationYamlPath = Join-Path (Join-Path $parentDirectory $batchDirectory) "tsp-location.yaml"
+      $batchLocationYaml = Get-Content -LiteralPath $batchLocationYamlPath -Raw -ErrorAction Stop | ConvertFrom-Yaml -ErrorAction Stop
+      Verify-TspLocation $batchLocationYaml $batchLocationYamlPath ($ancestorPaths + $tspLocationYamlPath)
+    }
+    return
+  }
   $repo = $tspLocationObj["repo"]
   $commit = $tspLocationObj["commit"]
   if ($repo -ne "Azure/azure-rest-api-specs") {
@@ -231,7 +263,7 @@ try {
   $tspLocationYaml = @{}
   if (Test-Path -Path $tspLocationYamlPath) {
     # typespec scenario
-    $tspLocationYaml = Get-Content -Path $tspLocationYamlPath -Raw | ConvertFrom-Yaml
+    $tspLocationYaml = Get-Content -LiteralPath $tspLocationYamlPath -Raw -ErrorAction Stop | ConvertFrom-Yaml -ErrorAction Stop
     Verify-TspLocation $tspLocationYaml $tspLocationYamlPath
   }
   elseif ($Language -eq "dotnet") {
@@ -277,7 +309,8 @@ try {
   }
 }
 catch {
-  Write-Host "ServiceDir:$ServiceDirectory, PackageName:$PackageName, PackageDirectory:$PackageDirectory. Failed to validate spec location with exception:`n$_ "
+  LogError "ServiceDir:$ServiceDirectory, PackageName:$PackageName, PackageDirectory:$PackageDirectory. Failed to validate spec location with exception:`n$_ "
+  exit 1
 }
 finally {
   Pop-Location
