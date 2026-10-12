@@ -19,14 +19,6 @@ npm install @azure-typespec/http-client-csharp
 
 For detailed instructions on how to customize the generated C# code, see the [Customization Guide](https://github.com/microsoft/typespec/blob/main/packages/http-client-csharp/.tspd/docs/customization.md).
 
-### Async pagination cancellation
-
-Generated `AsyncPageable<T>` collections forward cancellation from `WithCancellation` or
-`GetAsyncEnumerator` to each page request, including when enumerating `AsPages()`.
-The enumeration token is combined with the token passed to the client method or its
-protocol `RequestContext`, so either token can cancel an in-flight page request.
-Each enumeration manages its own combined token without modifying the request context.
-
 ## Emitter usage
 
 1. Via the command line
