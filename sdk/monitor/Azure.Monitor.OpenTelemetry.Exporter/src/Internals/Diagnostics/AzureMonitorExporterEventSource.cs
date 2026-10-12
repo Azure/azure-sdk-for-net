@@ -708,5 +708,50 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
                 WriteEvent(80, settingName, valueType);
             }
         }
+
+        [Event(81, Message = "Routed telemetry marked for Microsoft Entra ID is authenticated with credential type {0} and scope '{1}'. Telemetry not marked for Entra ID is sent without a token.", Level = EventLevel.Informational)]
+        public void MultiEndpointAadEnabled(string credentialType, string scope)
+        {
+            if (IsEnabled(EventLevel.Informational))
+            {
+                WriteEvent(81, credentialType, scope);
+            }
+        }
+
+        [Event(82, Message = "The '{0}' AppContext value was ignored because it must be a string, but was a {1}. The public cloud Microsoft Entra ID audience is used.", Level = EventLevel.Warning)]
+        public void MultiEndpointAadAudienceIgnored(string settingName, string valueType)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                WriteEvent(82, settingName, valueType);
+            }
+        }
+
+        [Event(83, Message = "Export {0}: dropped {1} telemetry items for route '{2}'. The telemetry is marked for Microsoft Entra ID, but AzureMonitorExporterOptions.Credential is not configured, so it is neither sent without a token nor persisted.", Level = EventLevel.Warning)]
+        public void RoutedAadTelemetryDroppedWithoutCredential(long exportSequence, int itemCount, string route)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                WriteEvent(83, exportSequence, itemCount, route);
+            }
+        }
+
+        [Event(84, Message = "This exporter's Credential is {1}, but the transmitter shared for its connection string was built {0} one, so the transmitter's setting is used. Configure the same Credential on every exporter that shares a connection string (with multi-endpoint routing, every exporter).", Level = EventLevel.Warning)]
+        public void CachedTransmitterCredentialMismatch(string transmitterCredential, string exporterCredential)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                WriteEvent(84, transmitterCredential, exporterCredential);
+            }
+        }
+
+        [NonEvent]
+        public void CachedTransmitterCredentialMismatch(bool transmitterHasCredential, bool exporterHasCredential)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                CachedTransmitterCredentialMismatch(transmitterHasCredential ? "with" : "without", exporterHasCredential ? "set" : "not set");
+            }
+        }
     }
 }
