@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Release Channel of this API Management service. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ReleaseChannel
     {
         /// <summary> Preview Channel of the service. </summary>

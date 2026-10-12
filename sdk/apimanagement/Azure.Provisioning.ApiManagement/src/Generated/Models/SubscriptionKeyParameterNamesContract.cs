@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Subscription key parameter names details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SubscriptionKeyParameterNamesContract : ProvisionableConstruct
     {
         private BicepValue<string> _header;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Header. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Header
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Query. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Query
         {
             get

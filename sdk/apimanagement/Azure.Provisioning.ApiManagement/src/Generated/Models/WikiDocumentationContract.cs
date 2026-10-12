@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Wiki documentation details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WikiDocumentationContract : ProvisionableConstruct
     {
         private BicepValue<string> _documentationId;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the DocumentationId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DocumentationId
         {
             get

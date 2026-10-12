@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.BotService
 {
     /// <summary> Network Security Perimeter configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class BotServiceNetworkSecurityPerimeterConfiguration : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.BotService
 {
     /// <summary> Information about profile. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class BotServiceNetworkSecurityPerimeterProfile : ProvisionableConstruct
     {
         private BicepValue<string> _name;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -35,6 +38,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the AccessRulesVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> AccessRulesVersion
         {
             get
@@ -45,6 +49,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the AccessRules. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<NspAccessRule> AccessRules
         {
             get
@@ -55,6 +60,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the DiagnosticSettingsVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> DiagnosticSettingsVersion
         {
             get
@@ -65,6 +71,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the EnabledLogCategories. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> EnabledLogCategories
         {
             get

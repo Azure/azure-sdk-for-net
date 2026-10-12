@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppConfiguration
 {
     /// <summary> Settings concerning key vault encryption for a configuration store. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AppConfigurationKeyVaultProperties : ProvisionableConstruct
     {
         private BicepValue<string> _keyIdentifier;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the KeyIdentifier. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> KeyIdentifier
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the IdentityClientId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> IdentityClientId
         {
             get

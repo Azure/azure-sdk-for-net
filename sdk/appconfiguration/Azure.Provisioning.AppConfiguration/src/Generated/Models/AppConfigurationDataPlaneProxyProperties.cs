@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppConfiguration
 {
     /// <summary> The data plane proxy settings for a configuration store. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AppConfigurationDataPlaneProxyProperties : ProvisionableConstruct
     {
         private BicepValue<DataPlaneProxyAuthenticationMode> _authenticationMode;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the AuthenticationMode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DataPlaneProxyAuthenticationMode> AuthenticationMode
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the PrivateLinkDelegation. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DataPlaneProxyPrivateLinkDelegation> PrivateLinkDelegation
         {
             get

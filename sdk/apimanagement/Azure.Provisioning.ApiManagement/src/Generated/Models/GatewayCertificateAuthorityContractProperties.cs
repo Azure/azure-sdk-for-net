@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Gateway certificate authority details. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class GatewayCertificateAuthorityContractProperties : ProvisionableConstruct
     {
         private BicepValue<bool> _isTrusted;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsTrusted. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsTrusted
         {
             get

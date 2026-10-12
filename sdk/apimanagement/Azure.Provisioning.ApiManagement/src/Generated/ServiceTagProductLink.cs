@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Tag-product link details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ServiceTagProductLink : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -96,6 +97,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ProductId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProductId
         {
             get

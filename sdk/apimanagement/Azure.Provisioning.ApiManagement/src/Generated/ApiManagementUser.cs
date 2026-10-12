@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> User details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApiManagementUser : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -97,6 +98,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the State. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ApiManagementUserState> State
         {
             get
@@ -114,6 +116,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Note. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Note
         {
             get
@@ -131,6 +134,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Identities. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<UserIdentityContract> Identities
         {
             get
@@ -148,6 +152,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the FirstName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> FirstName
         {
             get
@@ -165,6 +170,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the LastName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> LastName
         {
             get
@@ -182,6 +188,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Email. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Email
         {
             get
@@ -199,6 +206,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the RegistriesOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> RegistriesOn
         {
             get
@@ -216,6 +224,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the Groups. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<GroupContractProperties> Groups
         {
             get

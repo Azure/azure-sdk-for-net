@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> The PortalConfigDelegationProperties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class PortalConfigDelegationProperties : ProvisionableConstruct
     {
         private BicepValue<bool> _delegateRegistration;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the DelegateRegistration. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> DelegateRegistration
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the DelegateSubscription. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> DelegateSubscription
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the DelegationUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> DelegationUri
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ValidationKey. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ValidationKey
         {
             get

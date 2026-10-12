@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> KeyVault contract details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class KeyVaultContractProperties : KeyVaultContractCreateProperties
     {
         private KeyVaultLastAccessStatusContractProperties _lastStatus;
@@ -18,6 +21,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the LastStatus. </summary>
+        [Experimental("AZPROVISION001")]
         public KeyVaultLastAccessStatusContractProperties LastStatus
         {
             get

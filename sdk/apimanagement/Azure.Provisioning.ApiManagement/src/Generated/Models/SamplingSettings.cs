@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Sampling settings for Diagnostic. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SamplingSettings : ProvisionableConstruct
     {
         private BicepValue<SamplingType> _samplingType;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the SamplingType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SamplingType> SamplingType
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Percentage. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<double> Percentage
         {
             get

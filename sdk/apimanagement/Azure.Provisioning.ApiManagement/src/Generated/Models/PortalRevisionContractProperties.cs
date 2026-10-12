@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> The PortalRevisionContractProperties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class PortalRevisionContractProperties : ProvisionableConstruct
     {
         private BicepValue<string> _description;
@@ -28,6 +30,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -43,6 +46,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the StatusDetails. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> StatusDetails
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the Status. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PortalRevisionStatus> Status
         {
             get
@@ -63,6 +68,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsCurrent. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsCurrent
         {
             get
@@ -78,6 +84,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the CreatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> CreatedOn
         {
             get
@@ -88,6 +95,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the UpdatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> UpdatedOn
         {
             get
@@ -98,6 +106,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningState
         {
             get

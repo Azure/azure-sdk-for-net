@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> User registration delegation settings properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class RegistrationDelegationSettingProperties : ProvisionableConstruct
     {
         private BicepValue<bool> _isUserRegistrationDelegationEnabled;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsUserRegistrationDelegationEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsUserRegistrationDelegationEnabled
         {
             get

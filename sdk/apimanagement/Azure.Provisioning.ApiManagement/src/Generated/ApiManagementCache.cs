@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Cache details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApiManagementCache : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -97,6 +98,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -114,6 +116,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ConnectionString. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ConnectionString
         {
             get
@@ -131,6 +134,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the UseFromLocation. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> UseFromLocation
         {
             get
@@ -148,6 +152,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ResourceUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> ResourceUri
         {
             get

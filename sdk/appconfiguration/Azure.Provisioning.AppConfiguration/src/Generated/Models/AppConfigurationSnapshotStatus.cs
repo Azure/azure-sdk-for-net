@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.AppConfiguration
 {
     /// <summary> The current status of the snapshot. </summary>
+    [Experimental("AZPROVISION001")]
     public enum AppConfigurationSnapshotStatus
     {
         /// <summary> Provisioning. </summary>

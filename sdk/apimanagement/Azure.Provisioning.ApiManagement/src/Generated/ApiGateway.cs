@@ -17,6 +17,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> A single API Management gateway resource in List or Get response. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApiGateway : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -116,6 +117,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Sku. </summary>
+        [Experimental("AZPROVISION001")]
         public ApiManagementGatewaySkuProperties Sku
         {
             get
@@ -131,6 +133,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the ETag. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ETag> ETag
         {
             get
@@ -141,6 +144,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningState
         {
             get
@@ -154,6 +158,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the TargetProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TargetProvisioningState
         {
             get
@@ -167,6 +172,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the CreatedAtUtc. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> CreatedAtUtc
         {
             get
@@ -180,6 +186,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the VirtualNetworkType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualNetworkType> VirtualNetworkType
         {
             get
@@ -197,6 +204,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the DefaultHostname. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> FrontendDefaultHostname
         {
             get
@@ -210,6 +218,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the SubnetId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> BackendSubnetId
         {
             get
@@ -227,6 +236,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the Hostname. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ConfigurationApiHostname
         {
             get

@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Deleted API Management Service information. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApiManagementDeletedService : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -77,6 +78,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the Location. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AzureLocation> Location
         {
             get
@@ -87,6 +89,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the ServiceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> ServiceId
         {
             get
@@ -96,6 +99,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the ScheduledPurgeOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> ScheduledPurgeOn
         {
             get
@@ -105,6 +109,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the DeletedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> DeletedOn
         {
             get

@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Parameters supplied to the Create TagDescription operation. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class TagDescriptionBaseProperties : ProvisionableConstruct
     {
         private BicepValue<string> _description;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ExternalDocsUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> ExternalDocsUri
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ExternalDocsDescription. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ExternalDocsDescription
         {
             get

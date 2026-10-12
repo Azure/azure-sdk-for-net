@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Tenant access information contract of the API Management service. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class AccessInformationContractProperties : ProvisionableConstruct
     {
         private BicepValue<string> _accessInfoType;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the AccessInfoType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AccessInfoType
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the PrincipalId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PrincipalId
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsDirectAccessEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsDirectAccessEnabled
         {
             get

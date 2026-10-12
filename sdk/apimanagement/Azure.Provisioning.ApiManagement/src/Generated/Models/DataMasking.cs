@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> The DataMasking. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DataMasking : ProvisionableConstruct
     {
         private BicepList<DataMaskingEntity> _queryParams;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the QueryParams. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DataMaskingEntity> QueryParams
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Headers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DataMaskingEntity> Headers
         {
             get

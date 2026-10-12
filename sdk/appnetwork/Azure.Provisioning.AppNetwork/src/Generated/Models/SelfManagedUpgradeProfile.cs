@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppNetwork
 {
     /// <summary> AppLinkMember self managed upgrade profile. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class SelfManagedUpgradeProfile : ProvisionableConstruct
     {
         private BicepValue<string> _version;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppNetwork
         }
 
         /// <summary> Gets or sets the Version. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Version
         {
             get

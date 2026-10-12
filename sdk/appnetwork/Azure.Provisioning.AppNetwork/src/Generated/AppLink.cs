@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppNetwork
 {
     /// <summary> An Azure Kubernetes Application Network resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AppLink : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -128,6 +129,7 @@ namespace Azure.Provisioning.AppNetwork
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AppLinkProvisioningState> AppLinkProvisioningState
         {
             get

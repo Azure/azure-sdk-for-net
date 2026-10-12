@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> The last status of the Key Vault certificate fetch process. </summary>
+    [Experimental("AZPROVISION001")]
     public enum KeyVaultFetchCode
     {
         /// <summary> Success. </summary>

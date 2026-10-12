@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Source from where the session id is extracted. </summary>
+    [Experimental("AZPROVISION001")]
     public enum BackendSessionIdSource
     {
         /// <summary> The session id is set by APIM gateway in a cookie and is extracted from the cookies in client requests. </summary>

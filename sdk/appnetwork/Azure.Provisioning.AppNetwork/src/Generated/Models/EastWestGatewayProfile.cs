@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppNetwork
 {
     /// <summary> AppLinkMember east-west gateway profile. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class EastWestGatewayProfile : ProvisionableConstruct
     {
         private BicepValue<AppLinkEastWestGatewayVisibility> _visibility;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppNetwork
         }
 
         /// <summary> Gets or sets the Visibility. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AppLinkEastWestGatewayVisibility> Visibility
         {
             get

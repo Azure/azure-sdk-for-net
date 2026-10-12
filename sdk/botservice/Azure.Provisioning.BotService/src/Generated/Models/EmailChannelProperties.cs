@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.BotService
 {
     /// <summary> The parameters to provide for the Email channel. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class EmailChannelProperties : ProvisionableConstruct
     {
         private BicepValue<string> _emailAddress;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the EmailAddress. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EmailAddress
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the AuthMethod. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EmailChannelAuthMethod> AuthMethod
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the Password. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Password
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the MagicCode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> MagicCode
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Operation parameters details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ParameterContract : ProvisionableConstruct
     {
         private BicepValue<string> _name;
@@ -29,6 +31,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -44,6 +47,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -59,6 +63,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ParameterContractType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ParameterContractType
         {
             get
@@ -74,6 +79,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the DefaultValue. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DefaultValue
         {
             get
@@ -89,6 +95,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsRequired. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsRequired
         {
             get
@@ -104,6 +111,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Values. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Values
         {
             get
@@ -119,6 +127,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the SchemaId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SchemaId
         {
             get
@@ -134,6 +143,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the TypeName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TypeName
         {
             get
@@ -149,6 +159,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Examples. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<ParameterExampleContract> Examples
         {
             get

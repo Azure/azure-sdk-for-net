@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.AppNetwork
 {
     /// <summary> AppLinkMember private connect profile. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class PrivateConnectProfile : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _subnetResourceId;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppNetwork
         }
 
         /// <summary> Gets or sets the SubnetResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> SubnetResourceId
         {
             get

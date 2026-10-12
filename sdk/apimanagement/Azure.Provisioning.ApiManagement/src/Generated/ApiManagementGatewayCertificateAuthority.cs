@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Gateway certificate authority details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApiManagementGatewayCertificateAuthority : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -96,6 +97,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsTrusted. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsTrusted
         {
             get

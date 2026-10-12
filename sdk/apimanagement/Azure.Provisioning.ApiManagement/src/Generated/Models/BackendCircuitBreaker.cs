@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> The configuration of the backend circuit breaker. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class BackendCircuitBreaker : ProvisionableConstruct
     {
         private BicepList<CircuitBreakerRule> _rules;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Rules. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<CircuitBreakerRule> Rules
         {
             get

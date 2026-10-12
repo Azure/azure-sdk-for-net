@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Parameters supplied to the Create Backend operation. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class BackendContractProperties : BackendBaseParameters
     {
         private BicepValue<Uri> _uri;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Uri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> Uri
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Protocol. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BackendProtocol> Protocol
         {
             get

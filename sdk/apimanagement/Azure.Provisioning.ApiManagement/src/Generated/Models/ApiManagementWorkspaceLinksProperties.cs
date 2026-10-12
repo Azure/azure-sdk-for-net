@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Properties of an API Management workspaceLinks resource. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ApiManagementWorkspaceLinksProperties : WorkspaceLinksBaseProperties
     {
         /// <summary> Creates a new ApiManagementWorkspaceLinksProperties. </summary>

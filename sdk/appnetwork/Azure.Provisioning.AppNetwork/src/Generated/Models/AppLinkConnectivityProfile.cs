@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.AppNetwork
 {
     /// <summary> AppLinkMember connectivity profile. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AppLinkConnectivityProfile : ProvisionableConstruct
     {
         private EastWestGatewayProfile _eastWestGateway;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.AppNetwork
         }
 
         /// <summary> Gets or sets the EastWestGateway. </summary>
+        [Experimental("AZPROVISION001")]
         internal EastWestGatewayProfile EastWestGateway
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.AppNetwork
         }
 
         /// <summary> Gets or sets the PrivateConnect. </summary>
+        [Experimental("AZPROVISION001")]
         internal PrivateConnectProfile PrivateConnect
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.AppNetwork
         }
 
         /// <summary> Gets or sets the Network. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Network
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.AppNetwork
         }
 
         /// <summary> Gets or sets the Visibility. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AppLinkEastWestGatewayVisibility> EastWestGatewayVisibility
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.AppNetwork
         }
 
         /// <summary> Gets or sets the SubnetResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> PrivateConnectSubnetResourceId
         {
             get

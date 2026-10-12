@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppNetwork
 {
     /// <summary> AppLinkMember observability profile. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ObservabilityProfile : ProvisionableConstruct
     {
         private MetricsProfile _metrics;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppNetwork
         }
 
         /// <summary> Gets or sets the Metrics. </summary>
+        [Experimental("AZPROVISION001")]
         internal MetricsProfile Metrics
         {
             get
@@ -36,6 +39,7 @@ namespace Azure.Provisioning.AppNetwork
         }
 
         /// <summary> Gets the MetricsEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> MetricsEndpoint
         {
             get

@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Client application state. The value derives the state of an application based on the statuses of its associated ClientApplicationProductLinks. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ClientApplicationState
     {
         /// <summary> If there are no associated ClientApplicationLinks or all ClientApplicationLinks are in a state that doesn't meet the criteria for the states: active, rejected, approved (e.g., a mix of active and rejected without any approved). </summary>

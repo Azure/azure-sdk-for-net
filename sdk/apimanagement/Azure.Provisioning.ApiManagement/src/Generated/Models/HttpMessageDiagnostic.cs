@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Http message diagnostic settings. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class HttpMessageDiagnostic : ProvisionableConstruct
     {
         private BicepList<string> _headers;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Headers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Headers
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Body. </summary>
+        [Experimental("AZPROVISION001")]
         internal BodyDiagnosticSettings Body
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the DataMasking. </summary>
+        [Experimental("AZPROVISION001")]
         public DataMasking DataMasking
         {
             get
@@ -68,6 +73,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Bytes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> BodyBytes
         {
             get

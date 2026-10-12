@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> The GatewayHostnameBindingKeyVault. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class GatewayHostnameBindingKeyVault : ProvisionableConstruct
     {
         private BicepValue<string> _secretId;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the SecretId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SecretId
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IdentityClientId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> IdentityClientId
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the LastStatus. </summary>
+        [Experimental("AZPROVISION001")]
         public GatewayHostnameBindingKeyVaultLastStatus LastStatus
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.BotService
 {
     /// <summary> The parameters to provide for the Microsoft Teams channel. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class MsTeamsChannelProperties : ProvisionableConstruct
     {
         private BicepValue<bool> _isCallingEnabled;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsCallingEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsCallingEnabled
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the CallingWebhook. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CallingWebhook
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IncomingCallRoute. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> IncomingCallRoute
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the DeploymentEnvironment. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DeploymentEnvironment
         {
             get
@@ -101,6 +108,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the AcceptedTerms. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> AcceptedTerms
         {
             get

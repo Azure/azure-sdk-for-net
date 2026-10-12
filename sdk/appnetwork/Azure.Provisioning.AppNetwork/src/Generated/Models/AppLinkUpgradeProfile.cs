@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppNetwork
 {
     /// <summary> AppLinkMember upgrade profile. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AppLinkUpgradeProfile : ProvisionableConstruct
     {
         private BicepValue<AppLinkUpgradeMode> _mode;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppNetwork
         }
 
         /// <summary> Gets or sets the Mode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AppLinkUpgradeMode> Mode
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppNetwork
         }
 
         /// <summary> Gets or sets the FullyManagedUpgradeProfile. </summary>
+        [Experimental("AZPROVISION001")]
         internal FullyManagedUpgradeProfile FullyManagedUpgradeProfile
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.AppNetwork
         }
 
         /// <summary> Gets or sets the SelfManagedUpgradeProfile. </summary>
+        [Experimental("AZPROVISION001")]
         internal SelfManagedUpgradeProfile SelfManagedUpgradeProfile
         {
             get
@@ -68,6 +73,7 @@ namespace Azure.Provisioning.AppNetwork
         }
 
         /// <summary> Gets or sets the ReleaseChannel. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AppLinkUpgradeReleaseChannel> FullyManagedUpgradeReleaseChannel
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.AppNetwork
         }
 
         /// <summary> Gets or sets the Version. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SelfManagedUpgradeVersion
         {
             get

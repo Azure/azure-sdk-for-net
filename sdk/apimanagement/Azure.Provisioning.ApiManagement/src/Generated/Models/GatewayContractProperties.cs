@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Properties of the Gateway contract. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class GatewayContractProperties : ProvisionableConstruct
     {
         private ResourceLocationDataContract _locationData;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the LocationData. </summary>
+        [Experimental("AZPROVISION001")]
         public ResourceLocationDataContract LocationData
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
