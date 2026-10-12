@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> This is the response from a cancel operations request. </summary>
+    /// <summary> The results of the cancellation requests. </summary>
     public partial class CancelBulkOperationsResult : IJsonModel<CancelBulkOperationsResult>
     {
         /// <summary> Initializes a new instance of <see cref="CancelBulkOperationsResult"/> for deserialization. </summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CancelBulkOperationsResult(results, additionalBinaryDataProperties);

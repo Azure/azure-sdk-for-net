@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.BulkActions
 {
-    /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+    /// <summary> One scheduled execution of a scheduled action. </summary>
     public partial class ScheduledActionOccurrenceData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

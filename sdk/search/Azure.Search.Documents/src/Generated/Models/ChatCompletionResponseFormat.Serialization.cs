@@ -79,10 +79,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
             }
-            if (Optional.IsDefined(JsonSchemaProperties))
+            if (_jsonSchemaPropertiesIsDefined || Optional.IsDefined(JsonSchemaProperties))
             {
-                writer.WritePropertyName("jsonSchemaProperties"u8);
-                writer.WriteObjectValue(JsonSchemaProperties, options);
+                if (JsonSchemaProperties != null)
+                {
+                    writer.WritePropertyName("jsonSchemaProperties"u8);
+                    writer.WriteObjectValue(JsonSchemaProperties, options);
+                }
+                else
+                {
+                    writer.WriteNull("jsonSchemaProperties"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,6 +134,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             ChatCompletionResponseFormatType? @type = default;
+            bool jsonSchemaPropertiesIsDefined = false;
             ChatCompletionSchemaProperties jsonSchemaProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -142,6 +150,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("jsonSchemaProperties"u8))
                 {
+                    jsonSchemaPropertiesIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         jsonSchemaProperties = null;
@@ -152,10 +161,13 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ChatCompletionResponseFormat(@type, jsonSchemaProperties, additionalBinaryDataProperties);
+            return new ChatCompletionResponseFormat(@type, jsonSchemaProperties, additionalBinaryDataProperties)
+            {
+                _jsonSchemaPropertiesIsDefined = jsonSchemaPropertiesIsDefined
+            };
         }
     }
 }

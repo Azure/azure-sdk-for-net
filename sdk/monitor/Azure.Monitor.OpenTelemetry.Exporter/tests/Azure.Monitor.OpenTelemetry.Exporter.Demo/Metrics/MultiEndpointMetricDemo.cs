@@ -48,7 +48,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Metrics
         private readonly Dictionary<string, int> _counts = new(StringComparer.Ordinal);
         private readonly Dictionary<string, int> _unroutableCounts = new(StringComparer.Ordinal);
 
-        public MultiEndpointMetricDemo(string exporterConnectionString, IReadOnlyList<MultiEndpointTraceDemo.EndpointRoute> routes, string runId, bool faultRoutedEndpoints = false)
+        public MultiEndpointMetricDemo(string? exporterConnectionString, IReadOnlyList<MultiEndpointTraceDemo.EndpointRoute> routes, string runId, bool faultRoutedEndpoints = false)
         {
             _routes = routes;
             _runId = runId;
@@ -74,7 +74,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Metrics
                 .AddMeter(meterName)
                 .AddAzureMonitorMetricExporter(o =>
                 {
-                    o.ConnectionString = exporterConnectionString;
+                    if (!string.IsNullOrWhiteSpace(exporterConnectionString))
+                    {
+                        o.ConnectionString = exporterConnectionString;
+                    }
 
                     if (faultRoutedEndpoints)
                     {

@@ -14,7 +14,7 @@ namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary>
     /// Container for results of all tasks in the conversation job.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SummarizationOperationResult"/>, <see cref="CustomSummarizationOperationResult"/>, and <see cref="ConversationPiiOperationResult"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConversationPiiOperationResult"/>, <see cref="CustomSummarizationOperationResult"/>, and <see cref="SummarizationOperationResult"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAnalyzeConversationOperationResult))]
     public abstract partial class AnalyzeConversationOperationResult : IJsonModel<AnalyzeConversationOperationResult>
@@ -139,12 +139,12 @@ namespace Azure.AI.Language.Conversations.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "conversationalSummarizationResults":
-                        return SummarizationOperationResult.DeserializeSummarizationOperationResult(element, options);
-                    case "customConversationalSummarizationResults":
-                        return CustomSummarizationOperationResult.DeserializeCustomSummarizationOperationResult(element, options);
                     case "conversationalPIIResults":
                         return ConversationPiiOperationResult.DeserializeConversationPiiOperationResult(element, options);
+                    case "customConversationalSummarizationResults":
+                        return CustomSummarizationOperationResult.DeserializeCustomSummarizationOperationResult(element, options);
+                    case "conversationalSummarizationResults":
+                        return SummarizationOperationResult.DeserializeSummarizationOperationResult(element, options);
                 }
             }
             return UnknownAnalyzeConversationOperationResult.DeserializeUnknownAnalyzeConversationOperationResult(element, options);

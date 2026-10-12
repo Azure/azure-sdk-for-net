@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ApplicationInsights.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
@@ -674,7 +675,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AnalyticsItemsAnalyticsItemsOperationGroupListAsyncCollectionResultOfT(
+            return new ApplicationInsightsComponentResourceGetAnalyticsItemsAsyncCollectionResultOfT(
                 _analyticsItemsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -720,7 +721,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AnalyticsItemsAnalyticsItemsOperationGroupListCollectionResultOfT(
+            return new ApplicationInsightsComponentResourceGetAnalyticsItemsCollectionResultOfT(
                 _analyticsItemsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -874,7 +875,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new ComponentAPIsAnnotationsOperationGroupCreateAsyncCollectionResultOfT(
+            return new ApplicationInsightsComponentResourceCreateAnnotationsAsyncCollectionResultOfT(
                 _annotationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -917,7 +918,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new ComponentAPIsAnnotationsOperationGroupCreateCollectionResultOfT(
+            return new ApplicationInsightsComponentResourceCreateAnnotationsCollectionResultOfT(
                 _annotationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1057,7 +1058,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new ComponentAPIsAnnotationsOperationGroupGetAsyncCollectionResultOfT(
+            return new ApplicationInsightsComponentResourceGetAnnotationsAsyncCollectionResultOfT(
                 _annotationsRestClient,
                 Id.ResourceGroupName,
                 Guid.Parse(Id.SubscriptionId),
@@ -1101,7 +1102,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new ComponentAPIsAnnotationsOperationGroupGetCollectionResultOfT(
+            return new ApplicationInsightsComponentResourceGetAnnotationsCollectionResultOfT(
                 _annotationsRestClient,
                 Id.ResourceGroupName,
                 Guid.Parse(Id.SubscriptionId),
@@ -1147,7 +1148,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AnnotationsGetAnnotationsAsyncCollectionResultOfT(
+            return new ApplicationInsightsAnnotationAsyncCollectionResultOfT(
                 _annotationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1194,7 +1195,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AnnotationsGetAnnotationsCollectionResultOfT(
+            return new ApplicationInsightsAnnotationCollectionResultOfT(
                 _annotationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1550,7 +1551,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new APIKeysGetApiKeysAsyncCollectionResultOfT(
+            return new ApplicationInsightsComponentApiKeyAsyncCollectionResultOfT(
                 _apiKeysRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1588,7 +1589,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new APIKeysGetApiKeysCollectionResultOfT(
+            return new ApplicationInsightsComponentApiKeyCollectionResultOfT(
                 _apiKeysRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2118,7 +2119,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new ComponentAPIsExportConfigurationsOperationGroupCreateAsyncCollectionResultOfT(
+            return new ApplicationInsightsComponentResourceCreateExportConfigurationsAsyncCollectionResultOfT(
                 _exportConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2161,7 +2162,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new ComponentAPIsExportConfigurationsOperationGroupCreateCollectionResultOfT(
+            return new ApplicationInsightsComponentResourceCreateExportConfigurationsCollectionResultOfT(
                 _exportConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2412,7 +2413,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new ComponentAPIsExportConfigurationsOperationGroupListAsyncCollectionResultOfT(
+            return new ApplicationInsightsComponentResourceGetExportConfigurationsAsyncCollectionResultOfT(
                 _exportConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2450,7 +2451,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new ComponentAPIsExportConfigurationsOperationGroupListCollectionResultOfT(
+            return new ApplicationInsightsComponentResourceGetExportConfigurationsCollectionResultOfT(
                 _exportConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2704,7 +2705,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new ComponentAPIsProactiveDetectionConfigurationsOperationGroupListAsyncCollectionResultOfT(
+            return new ApplicationInsightsComponentResourceGetProactiveDetectionConfigurationsAsyncCollectionResultOfT(
                 _proactiveDetectionConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2742,7 +2743,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new ComponentAPIsProactiveDetectionConfigurationsOperationGroupListCollectionResultOfT(
+            return new ApplicationInsightsComponentResourceGetProactiveDetectionConfigurationsCollectionResultOfT(
                 _proactiveDetectionConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3292,7 +3293,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkItemConfigurationsGetWorkItemConfigurationsAsyncCollectionResultOfT(
+            return new WorkItemConfigurationAsyncCollectionResultOfT(
                 _workItemConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3330,7 +3331,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkItemConfigurationsGetWorkItemConfigurationsCollectionResultOfT(
+            return new WorkItemConfigurationCollectionResultOfT(
                 _workItemConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -4008,7 +4009,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new FavoritesFavoritesOperationGroupListAsyncCollectionResultOfT(
+            return new ApplicationInsightsComponentResourceGetFavoritesAsyncCollectionResultOfT(
                 _favoritesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -4054,7 +4055,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new FavoritesFavoritesOperationGroupListCollectionResultOfT(
+            return new ApplicationInsightsComponentResourceGetFavoritesCollectionResultOfT(
                 _favoritesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -4206,7 +4207,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new WebTestLocationsGetWebTestLocationsAsyncCollectionResultOfT(
+            return new ApplicationInsightsComponentWebTestLocationAsyncCollectionResultOfT(
                 _webTestLocationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -4244,7 +4245,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new WebTestLocationsGetWebTestLocationsCollectionResultOfT(
+            return new ApplicationInsightsComponentWebTestLocationCollectionResultOfT(
                 _webTestLocationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -4282,7 +4283,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApplicationInsightsWebTestData, ApplicationInsightsWebTestResource>(new WebTestsGetWebTestsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApplicationInsightsWebTestData, ApplicationInsightsWebTestResource>(new ApplicationInsightsWebTestDataAsync1CollectionResultOfT(
                 _webTestsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Name,
@@ -4320,7 +4321,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApplicationInsightsWebTestData, ApplicationInsightsWebTestResource>(new WebTestsGetWebTestsCollectionResultOfT(
+            return new PageableWrapper<ApplicationInsightsWebTestData, ApplicationInsightsWebTestResource>(new ApplicationInsightsWebTestData1CollectionResultOfT(
                 _webTestsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Name,
@@ -4439,10 +4440,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -4482,10 +4482,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

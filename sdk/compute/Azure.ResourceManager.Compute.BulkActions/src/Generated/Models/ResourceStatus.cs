@@ -12,15 +12,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The status of a resource after a resource level operation was performed. </summary>
+    /// <summary> Current status for a targeted resource in a scheduled action occurrence. </summary>
     public partial class ResourceStatus
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceStatus"/>. </summary>
-        /// <param name="resourceId"> The arm identifier of the resource. </param>
-        /// <param name="status"> The state the resource is currently on. </param>
+        /// <param name="resourceId"> The Azure resource ID of the targeted resource. </param>
+        /// <param name="status"> The result of the operation for the resource. </param>
         internal ResourceStatus(ResourceIdentifier resourceId, ResourceOperationStatus status)
         {
             ResourceId = resourceId;
@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceStatus"/>. </summary>
-        /// <param name="resourceId"> The arm identifier of the resource. </param>
-        /// <param name="status"> The state the resource is currently on. </param>
-        /// <param name="error"> Errors encountered while trying to perform. </param>
+        /// <param name="resourceId"> The Azure resource ID of the targeted resource. </param>
+        /// <param name="status"> The result of the operation for the resource. </param>
+        /// <param name="error"> Error details when the operation fails for the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ResourceStatus(ResourceIdentifier resourceId, ResourceOperationStatus status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -40,13 +40,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The arm identifier of the resource. </summary>
+        /// <summary> The Azure resource ID of the targeted resource. </summary>
         public ResourceIdentifier ResourceId { get; }
 
-        /// <summary> The state the resource is currently on. </summary>
+        /// <summary> The result of the operation for the resource. </summary>
         public ResourceOperationStatus Status { get; }
 
-        /// <summary> Errors encountered while trying to perform. </summary>
+        /// <summary> Error details when the operation fails for the resource. </summary>
         public ResponseError Error { get; }
     }
 }

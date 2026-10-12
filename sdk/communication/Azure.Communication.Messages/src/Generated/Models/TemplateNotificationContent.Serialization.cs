@@ -149,10 +149,10 @@ namespace Azure.Communication.Messages
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TemplateNotificationContent(channelRegistrationId, to, kind, additionalBinaryDataProperties, template);
+            return new TemplateNotificationContent(channelRegistrationId, to ?? new ChangeTrackingList<string>(), kind, additionalBinaryDataProperties, template);
         }
     }
 }

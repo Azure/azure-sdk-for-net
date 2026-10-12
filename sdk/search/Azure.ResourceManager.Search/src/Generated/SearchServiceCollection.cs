@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Search
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SearchServiceData, SearchServiceResource>(new ServicesGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SearchServiceData, SearchServiceResource>(new SearchServiceDataAsyncCollectionResultOfT(
                 _servicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Search
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SearchServiceData, SearchServiceResource>(new ServicesGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<SearchServiceData, SearchServiceResource>(new SearchServiceDataCollectionResultOfT(
                 _servicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -14,7 +14,7 @@ namespace Azure.Analytics.Defender.Easm
 {
     /// <summary>
     /// The DataConnectionPayload.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LogAnalyticsDataConnectionPayload"/> and <see cref="AzureDataExplorerDataConnectionPayload"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureDataExplorerDataConnectionPayload"/> and <see cref="LogAnalyticsDataConnectionPayload"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDataConnectionPayload))]
     public abstract partial class DataConnectionPayload : IJsonModel<DataConnectionPayload>
@@ -160,10 +160,10 @@ namespace Azure.Analytics.Defender.Easm
             {
                 switch (discriminator.GetString())
                 {
-                    case "logAnalytics":
-                        return LogAnalyticsDataConnectionPayload.DeserializeLogAnalyticsDataConnectionPayload(element, options);
                     case "azureDataExplorer":
                         return AzureDataExplorerDataConnectionPayload.DeserializeAzureDataExplorerDataConnectionPayload(element, options);
+                    case "logAnalytics":
+                        return LogAnalyticsDataConnectionPayload.DeserializeLogAnalyticsDataConnectionPayload(element, options);
                 }
             }
             return UnknownDataConnectionPayload.DeserializeUnknownDataConnectionPayload(element, options);

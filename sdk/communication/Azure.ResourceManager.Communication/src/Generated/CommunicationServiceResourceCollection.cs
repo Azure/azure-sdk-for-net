@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Communication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CommunicationServiceResourceData, CommunicationServiceResource>(new CommunicationServicesGetByResourceGroupAsyncCollectionResultOfT(_communicationServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CommunicationServiceResourceCollection.GetAll"), data => new CommunicationServiceResource(Client, data));
+            return new AsyncPageableWrapper<CommunicationServiceResourceData, CommunicationServiceResource>(new CommunicationServiceResourceDataAsyncCollectionResultOfT(_communicationServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CommunicationServiceResourceCollection.GetAll"), data => new CommunicationServiceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Communication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CommunicationServiceResourceData, CommunicationServiceResource>(new CommunicationServicesGetByResourceGroupCollectionResultOfT(_communicationServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CommunicationServiceResourceCollection.GetAll"), data => new CommunicationServiceResource(Client, data));
+            return new PageableWrapper<CommunicationServiceResourceData, CommunicationServiceResource>(new CommunicationServiceResourceDataCollectionResultOfT(_communicationServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CommunicationServiceResourceCollection.GetAll"), data => new CommunicationServiceResource(Client, data));
         }
 
         /// <summary>

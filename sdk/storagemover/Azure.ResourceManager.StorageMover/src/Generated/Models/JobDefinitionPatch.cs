@@ -131,5 +131,39 @@ namespace Azure.ResourceManager.StorageMover.Models
                 Properties.Schedule = value;
             }
         }
+
+        /// <summary> The synchronization mode for the Job Definition. </summary>
+        public string SyncMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SyncMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobDefinitionUpdateProperties();
+                }
+                Properties.SyncMode = value;
+            }
+        }
+
+        /// <summary> The last time the mover was synchronized. </summary>
+        public DateTimeOffset? MoverSyncedUntil
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MoverSyncedUntil;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobDefinitionUpdateProperties();
+                }
+                Properties.MoverSyncedUntil = value;
+            }
+        }
     }
 }

@@ -152,12 +152,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    storedProcedureParameters = BinaryData.FromString(prop.Value.GetRawText());
+                    storedProcedureParameters = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SqlServerStoredProcedureActivityTypeProperties(storedProcedureName, storedProcedureParameters, additionalBinaryDataProperties);

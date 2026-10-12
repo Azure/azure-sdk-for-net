@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -27,7 +26,7 @@ namespace Azure.Provisioning.AppContainers
         /// <summary> Creates a new ContainerAppJobExecution. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal ContainerAppJobExecution(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.App/jobs/executions", resourceVersion ?? "2025-10-02-preview")
+        internal ContainerAppJobExecution(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.App/jobs/executions", resourceVersion ?? "2026-07-01")
         {
         }
 
@@ -146,7 +145,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Replicas. </summary>
-        public BicepList<ReplicaExecutionStatus> DetailedStatusReplicas
+        public BicepList<ContainerAppJobExecutionReplicaStatus> DetailedStatusReplicas
         {
             get
             {
@@ -187,9 +186,10 @@ namespace Azure.Provisioning.AppContainers
         /// <summary></summary>
         public static partial class ResourceVersions
         {
-            /// <summary> API version "2025-10-02-preview". </summary>
-            [Experimental("AZPROVISION001")]
-            public static readonly string V2025_10_02_PREVIEW = "2025-10-02-preview";
+            /// <summary> API version "2026-07-01". </summary>
+            public static readonly string V2026_07_01 = "2026-07-01";
+            /// <summary> API version "2026-01-01". </summary>
+            public static readonly string V2026_01_01 = "2026-01-01";
         }
     }
 }

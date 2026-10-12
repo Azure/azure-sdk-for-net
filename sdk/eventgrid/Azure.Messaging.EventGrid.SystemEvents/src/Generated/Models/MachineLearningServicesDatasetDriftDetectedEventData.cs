@@ -15,6 +15,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DateTimeOffset? _startTime;
+        internal bool _startTimeIsDefined;
+        private DateTimeOffset? _endTime;
+        internal bool _endTimeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningServicesDatasetDriftDetectedEventData"/>. </summary>
         /// <param name="dataDriftId"> The ID of the data drift monitor that triggered the event. </param>
@@ -49,8 +53,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             BaseDatasetId = baseDatasetId;
             TargetDatasetId = targetDatasetId;
             DriftCoefficient = driftCoefficient;
-            StartTime = startTime;
-            EndTime = endTime;
+            _startTime = startTime;
+            _endTime = endTime;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -73,9 +77,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public double? DriftCoefficient { get; }
 
         /// <summary> The start time of the target dataset time series that resulted in drift detection. </summary>
-        public DateTimeOffset? StartTime { get; }
+        public DateTimeOffset? StartTime
+        {
+            get
+            {
+                return _startTime;
+            }
+        }
 
         /// <summary> The end time of the target dataset time series that resulted in drift detection. </summary>
-        public DateTimeOffset? EndTime { get; }
+        public DateTimeOffset? EndTime
+        {
+            get
+            {
+                return _endTime;
+            }
+        }
     }
 }

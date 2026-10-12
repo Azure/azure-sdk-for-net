@@ -86,10 +86,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("accessCredentials"u8);
                 writer.WriteObjectValue(AccessCredentialsInternal, options);
             }
-            if (Optional.IsDefined(Identity))
+            if (_identityIsDefined || Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                if (Identity != null)
+                {
+                    writer.WritePropertyName("identity"u8);
+                    writer.WriteObjectValue(Identity, options);
+                }
+                else
+                {
+                    writer.WriteNull("identity"u8);
+                }
             }
             if (Optional.IsDefined(IsServiceLevelKey))
             {
@@ -143,6 +150,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string keyName = default;
             string keyVersion = default;
             AzureActiveDirectoryApplicationCredentials accessCredentialsInternal = default;
+            bool identityIsDefined = false;
             SearchIndexerDataIdentity identity = default;
             bool? isServiceLevelKey = default;
             string vaultUri = default;
@@ -170,6 +178,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("identity"u8))
                 {
+                    identityIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         identity = null;
@@ -194,7 +203,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SearchResourceEncryptionKey(
@@ -204,7 +213,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 identity,
                 isServiceLevelKey,
                 vaultUri,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _identityIsDefined = identityIsDefined
+            };
         }
     }
 }

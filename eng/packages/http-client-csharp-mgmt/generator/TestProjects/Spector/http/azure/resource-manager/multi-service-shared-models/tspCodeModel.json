@@ -1,0 +1,4162 @@
+{
+  "name": "Azure.ResourceManager.MultiServiceSharedModels.Combined",
+  "apiVersions": [],
+  "enums": [
+    {
+      "$id": "1",
+      "kind": "enum",
+      "name": "ResourceProvisioningState",
+      "apiVersions": [],
+      "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceProvisioningState",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "3",
+          "kind": "enumvalue",
+          "name": "Succeeded",
+          "value": "Succeeded",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "Resource has been created.",
+          "decorators": [],
+          "isExactName": false
+        },
+        {
+          "$id": "4",
+          "kind": "enumvalue",
+          "name": "Failed",
+          "value": "Failed",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "Resource creation failed.",
+          "decorators": [],
+          "isExactName": false
+        },
+        {
+          "$id": "5",
+          "kind": "enumvalue",
+          "name": "Canceled",
+          "value": "Canceled",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "Resource creation was canceled.",
+          "decorators": [],
+          "isExactName": false
+        }
+      ],
+      "namespace": "Azure.ResourceManager",
+      "doc": "The provisioning state of a resource type.",
+      "isFixed": false,
+      "isFlags": false,
+      "usage": "Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "6",
+      "kind": "enum",
+      "name": "createdByType",
+      "apiVersions": [
+        "v3",
+        "v4",
+        "v5",
+        "v6"
+      ],
+      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.createdByType",
+      "valueType": {
+        "$id": "7",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "8",
+          "kind": "enumvalue",
+          "name": "User",
+          "value": "User",
+          "valueType": {
+            "$ref": "7"
+          },
+          "enumType": {
+            "$ref": "6"
+          },
+          "doc": "The entity was created by a user.",
+          "decorators": [],
+          "isExactName": false
+        },
+        {
+          "$id": "9",
+          "kind": "enumvalue",
+          "name": "Application",
+          "value": "Application",
+          "valueType": {
+            "$ref": "7"
+          },
+          "enumType": {
+            "$ref": "6"
+          },
+          "doc": "The entity was created by an application.",
+          "decorators": [],
+          "isExactName": false
+        },
+        {
+          "$id": "10",
+          "kind": "enumvalue",
+          "name": "ManagedIdentity",
+          "value": "ManagedIdentity",
+          "valueType": {
+            "$ref": "7"
+          },
+          "enumType": {
+            "$ref": "6"
+          },
+          "doc": "The entity was created by a managed identity.",
+          "decorators": [],
+          "isExactName": false
+        },
+        {
+          "$id": "11",
+          "kind": "enumvalue",
+          "name": "Key",
+          "value": "Key",
+          "valueType": {
+            "$ref": "7"
+          },
+          "enumType": {
+            "$ref": "6"
+          },
+          "doc": "The entity was created by a key.",
+          "decorators": [],
+          "isExactName": false
+        }
+      ],
+      "namespace": "Azure.ResourceManager.CommonTypes",
+      "doc": "The kind of entity that created the resource.",
+      "isFixed": false,
+      "isFlags": false,
+      "usage": "Output,Json,LroInitial,LroFinalEnvelope",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "12",
+      "kind": "enum",
+      "name": "Versions",
+      "apiVersions": [
+        "2025-05-01"
+      ],
+      "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.Versions",
+      "valueType": {
+        "$id": "13",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "14",
+          "kind": "enumvalue",
+          "name": "v2025_05_01",
+          "value": "2025-05-01",
+          "valueType": {
+            "$ref": "13"
+          },
+          "enumType": {
+            "$ref": "12"
+          },
+          "doc": "The 2025-05-01 API version.",
+          "decorators": [],
+          "isExactName": false
+        }
+      ],
+      "namespace": "Azure.ResourceManager.MultiServiceSharedModels.Compute",
+      "doc": "The available API versions.",
+      "isFixed": true,
+      "isFlags": false,
+      "usage": "ApiVersionEnum",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "15",
+      "kind": "enum",
+      "name": "Versions",
+      "apiVersions": [
+        "2025-02-01"
+      ],
+      "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.Versions",
+      "valueType": {
+        "$id": "16",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "17",
+          "kind": "enumvalue",
+          "name": "v2025_02_01",
+          "value": "2025-02-01",
+          "valueType": {
+            "$ref": "16"
+          },
+          "enumType": {
+            "$ref": "15"
+          },
+          "doc": "The 2025-02-01 API version.",
+          "decorators": [],
+          "isExactName": false
+        }
+      ],
+      "namespace": "Azure.ResourceManager.MultiServiceSharedModels.Storage",
+      "doc": "The available API versions.",
+      "isFixed": true,
+      "isFlags": false,
+      "usage": "ApiVersionEnum",
+      "decorators": [],
+      "isExactName": false
+    }
+  ],
+  "constants": [
+    {
+      "$id": "18",
+      "kind": "constant",
+      "name": "GetAccept",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "19",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "20",
+      "kind": "constant",
+      "name": "GetAccept1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "21",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "22",
+      "kind": "constant",
+      "name": "GetAccept2",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "23",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "24",
+      "kind": "constant",
+      "name": "GetAccept3",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "25",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "26",
+      "kind": "constant",
+      "name": "GetAccept4",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "27",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "28",
+      "kind": "constant",
+      "name": "GetAccept5",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "29",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "30",
+      "kind": "constant",
+      "name": "GetAccept6",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "31",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "32",
+      "kind": "constant",
+      "name": "GetAccept7",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "33",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "34",
+      "kind": "constant",
+      "name": "GetAccept8",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "35",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "36",
+      "kind": "constant",
+      "name": "GetAccept9",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "37",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    }
+  ],
+  "models": [
+    {
+      "$id": "38",
+      "kind": "model",
+      "name": "VirtualMachine",
+      "apiVersions": [
+        "2025-05-01"
+      ],
+      "namespace": "Azure.ResourceManager.MultiServiceSharedModels.Compute",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachine",
+      "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
+      "doc": "Describes a Virtual Machine.",
+      "decorators": [
+        {
+          "name": "Azure.ResourceManager.@armProviderNamespace",
+          "arguments": {
+            "providerNamespace": "Microsoft.Compute"
+          }
+        },
+        {
+          "name": "Azure.ResourceManager.Private.@armResourceInternal",
+          "arguments": {}
+        }
+      ],
+      "serializationOptions": {
+        "json": {
+          "name": "VirtualMachine"
+        }
+      },
+      "isExactName": false,
+      "baseModel": {
+        "$id": "39",
+        "kind": "model",
+        "name": "TrackedResource",
+        "apiVersions": [
+          "v3",
+          "v4",
+          "v5",
+          "v6"
+        ],
+        "namespace": "Azure.ResourceManager.CommonTypes",
+        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.TrackedResource",
+        "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
+        "doc": "The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'",
+        "summary": "Tracked Resource",
+        "decorators": [],
+        "serializationOptions": {
+          "json": {
+            "name": "TrackedResource"
+          }
+        },
+        "isExactName": false,
+        "baseModel": {
+          "$id": "40",
+          "kind": "model",
+          "name": "Resource",
+          "apiVersions": [
+            "v3",
+            "v4",
+            "v5",
+            "v6"
+          ],
+          "namespace": "Azure.ResourceManager.CommonTypes",
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource",
+          "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
+          "doc": "Common fields that are returned in the response for all Azure Resource Manager resources",
+          "summary": "Resource",
+          "decorators": [],
+          "serializationOptions": {
+            "json": {
+              "name": "Resource"
+            }
+          },
+          "isExactName": false,
+          "properties": [
+            {
+              "$id": "41",
+              "kind": "property",
+              "name": "id",
+              "apiVersions": [
+                "v3",
+                "v4",
+                "v5",
+                "v6"
+              ],
+              "serializedName": "id",
+              "doc": "Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}",
+              "type": {
+                "$id": "42",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "optional": true,
+              "readOnly": true,
+              "discriminator": false,
+              "flatten": false,
+              "decorators": [],
+              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.id",
+              "serializationOptions": {
+                "json": {
+                  "name": "id"
+                }
+              },
+              "isHttpMetadata": false,
+              "isExactName": false
+            },
+            {
+              "$id": "43",
+              "kind": "property",
+              "name": "name",
+              "apiVersions": [
+                "v3",
+                "v4",
+                "v5",
+                "v6"
+              ],
+              "serializedName": "name",
+              "doc": "The name of the resource",
+              "type": {
+                "$id": "44",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "optional": true,
+              "readOnly": true,
+              "discriminator": false,
+              "flatten": false,
+              "decorators": [],
+              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.name",
+              "serializationOptions": {
+                "json": {
+                  "name": "name"
+                }
+              },
+              "isHttpMetadata": false,
+              "isExactName": false
+            },
+            {
+              "$id": "45",
+              "kind": "property",
+              "name": "type",
+              "apiVersions": [
+                "v3",
+                "v4",
+                "v5",
+                "v6"
+              ],
+              "serializedName": "type",
+              "doc": "The type of the resource. E.g. \"Microsoft.Compute/virtualMachines\" or \"Microsoft.Storage/storageAccounts\"",
+              "type": {
+                "$id": "46",
+                "kind": "string",
+                "name": "armResourceType",
+                "crossLanguageDefinitionId": "Azure.Core.armResourceType",
+                "baseType": {
+                  "$id": "47",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "decorators": []
+              },
+              "optional": true,
+              "readOnly": true,
+              "discriminator": false,
+              "flatten": false,
+              "decorators": [],
+              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.type",
+              "serializationOptions": {
+                "json": {
+                  "name": "type"
+                }
+              },
+              "isHttpMetadata": false,
+              "isExactName": false
+            },
+            {
+              "$id": "48",
+              "kind": "property",
+              "name": "systemData",
+              "apiVersions": [
+                "v3",
+                "v4",
+                "v5",
+                "v6"
+              ],
+              "serializedName": "systemData",
+              "doc": "Azure Resource Manager metadata containing createdBy and modifiedBy information.",
+              "type": {
+                "$id": "49",
+                "kind": "model",
+                "name": "SystemData",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
+                "namespace": "Azure.ResourceManager.CommonTypes",
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData",
+                "usage": "Output,Json,LroInitial,LroFinalEnvelope",
+                "doc": "Metadata pertaining to creation and last modification of the resource.",
+                "decorators": [],
+                "serializationOptions": {
+                  "json": {
+                    "name": "SystemData"
+                  }
+                },
+                "isExactName": false,
+                "properties": [
+                  {
+                    "$id": "50",
+                    "kind": "property",
+                    "name": "createdBy",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
+                    "serializedName": "createdBy",
+                    "doc": "The identity that created the resource.",
+                    "type": {
+                      "$id": "51",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "optional": true,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.createdBy",
+                    "serializationOptions": {
+                      "json": {
+                        "name": "createdBy"
+                      }
+                    },
+                    "isHttpMetadata": false,
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "52",
+                    "kind": "property",
+                    "name": "createdByType",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
+                    "serializedName": "createdByType",
+                    "doc": "The type of identity that created the resource.",
+                    "type": {
+                      "$ref": "6"
+                    },
+                    "optional": true,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.createdByType",
+                    "serializationOptions": {
+                      "json": {
+                        "name": "createdByType"
+                      }
+                    },
+                    "isHttpMetadata": false,
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "53",
+                    "kind": "property",
+                    "name": "createdAt",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
+                    "serializedName": "createdAt",
+                    "doc": "The timestamp of resource creation (UTC).",
+                    "type": {
+                      "$id": "54",
+                      "kind": "utcDateTime",
+                      "name": "utcDateTime",
+                      "encode": "rfc3339",
+                      "wireType": {
+                        "$id": "55",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+                      "decorators": []
+                    },
+                    "optional": true,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.createdAt",
+                    "serializationOptions": {
+                      "json": {
+                        "name": "createdAt"
+                      }
+                    },
+                    "isHttpMetadata": false,
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "56",
+                    "kind": "property",
+                    "name": "lastModifiedBy",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
+                    "serializedName": "lastModifiedBy",
+                    "doc": "The identity that last modified the resource.",
+                    "type": {
+                      "$id": "57",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "optional": true,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.lastModifiedBy",
+                    "serializationOptions": {
+                      "json": {
+                        "name": "lastModifiedBy"
+                      }
+                    },
+                    "isHttpMetadata": false,
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "58",
+                    "kind": "property",
+                    "name": "lastModifiedByType",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
+                    "serializedName": "lastModifiedByType",
+                    "doc": "The type of identity that last modified the resource.",
+                    "type": {
+                      "$ref": "6"
+                    },
+                    "optional": true,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.lastModifiedByType",
+                    "serializationOptions": {
+                      "json": {
+                        "name": "lastModifiedByType"
+                      }
+                    },
+                    "isHttpMetadata": false,
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "59",
+                    "kind": "property",
+                    "name": "lastModifiedAt",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
+                    "serializedName": "lastModifiedAt",
+                    "doc": "The timestamp of resource last modification (UTC)",
+                    "type": {
+                      "$id": "60",
+                      "kind": "utcDateTime",
+                      "name": "utcDateTime",
+                      "encode": "rfc3339",
+                      "wireType": {
+                        "$id": "61",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+                      "decorators": []
+                    },
+                    "optional": true,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.lastModifiedAt",
+                    "serializationOptions": {
+                      "json": {
+                        "name": "lastModifiedAt"
+                      }
+                    },
+                    "isHttpMetadata": false,
+                    "isExactName": false
+                  }
+                ]
+              },
+              "optional": true,
+              "readOnly": true,
+              "discriminator": false,
+              "flatten": false,
+              "decorators": [],
+              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.systemData",
+              "serializationOptions": {
+                "json": {
+                  "name": "systemData"
+                }
+              },
+              "isHttpMetadata": false,
+              "isExactName": false
+            }
+          ]
+        },
+        "properties": [
+          {
+            "$id": "62",
+            "kind": "property",
+            "name": "tags",
+            "apiVersions": [
+              "v3",
+              "v4",
+              "v5",
+              "v6"
+            ],
+            "serializedName": "tags",
+            "doc": "Resource tags.",
+            "type": {
+              "$id": "63",
+              "kind": "dict",
+              "keyType": {
+                "$id": "64",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "valueType": {
+                "$id": "65",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.TrackedResource.tags",
+            "serializationOptions": {
+              "json": {
+                "name": "tags"
+              }
+            },
+            "isHttpMetadata": false,
+            "isExactName": false
+          },
+          {
+            "$id": "66",
+            "kind": "property",
+            "name": "location",
+            "apiVersions": [
+              "v3",
+              "v4",
+              "v5",
+              "v6"
+            ],
+            "serializedName": "location",
+            "doc": "The geo-location where the resource lives",
+            "type": {
+              "$id": "67",
+              "kind": "string",
+              "name": "azureLocation",
+              "crossLanguageDefinitionId": "Azure.Core.azureLocation",
+              "baseType": {
+                "$id": "68",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "decorators": []
+            },
+            "optional": false,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.TrackedResource.location",
+            "serializationOptions": {
+              "json": {
+                "name": "location"
+              }
+            },
+            "isHttpMetadata": false,
+            "isExactName": false
+          }
+        ]
+      },
+      "properties": [
+        {
+          "$id": "69",
+          "kind": "property",
+          "name": "properties",
+          "apiVersions": [],
+          "serializedName": "properties",
+          "doc": "The resource-specific properties for this resource.",
+          "type": {
+            "$id": "70",
+            "kind": "model",
+            "name": "VirtualMachineProperties",
+            "apiVersions": [
+              "2025-05-01"
+            ],
+            "namespace": "Azure.ResourceManager.MultiServiceSharedModels.Compute",
+            "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachineProperties",
+            "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
+            "decorators": [
+              {
+                "name": "Azure.ResourceManager.@armProviderNamespace",
+                "arguments": {
+                  "providerNamespace": "Microsoft.Compute"
+                }
+              }
+            ],
+            "serializationOptions": {
+              "json": {
+                "name": "VirtualMachineProperties"
+              }
+            },
+            "isExactName": false,
+            "properties": [
+              {
+                "$id": "71",
+                "kind": "property",
+                "name": "provisioningState",
+                "apiVersions": [
+                  "2025-05-01"
+                ],
+                "serializedName": "provisioningState",
+                "type": {
+                  "$ref": "1"
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachineProperties.provisioningState",
+                "serializationOptions": {
+                  "json": {
+                    "name": "provisioningState"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "72",
+                "kind": "property",
+                "name": "metadata",
+                "apiVersions": [
+                  "2025-05-01"
+                ],
+                "serializedName": "metadata",
+                "doc": "Shared metadata for the virtual machine.",
+                "type": {
+                  "$id": "73",
+                  "kind": "model",
+                  "name": "SharedMetadata",
+                  "apiVersions": [],
+                  "namespace": "Azure.ResourceManager.MultiServiceSharedModels.Shared",
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Shared.SharedMetadata",
+                  "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
+                  "doc": "Common metadata shared across multiple services.",
+                  "decorators": [],
+                  "serializationOptions": {
+                    "json": {
+                      "name": "SharedMetadata"
+                    }
+                  },
+                  "isExactName": false,
+                  "properties": [
+                    {
+                      "$id": "74",
+                      "kind": "property",
+                      "name": "createdAt",
+                      "apiVersions": [],
+                      "serializedName": "createdAt",
+                      "doc": "Creation timestamp of the resource.",
+                      "type": {
+                        "$id": "75",
+                        "kind": "utcDateTime",
+                        "name": "utcDateTime",
+                        "encode": "rfc3339",
+                        "wireType": {
+                          "$id": "76",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+                        "decorators": []
+                      },
+                      "optional": true,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Shared.SharedMetadata.createdAt",
+                      "serializationOptions": {
+                        "json": {
+                          "name": "createdAt"
+                        }
+                      },
+                      "isHttpMetadata": false,
+                      "isExactName": false
+                    },
+                    {
+                      "$id": "77",
+                      "kind": "property",
+                      "name": "createdBy",
+                      "apiVersions": [],
+                      "serializedName": "createdBy",
+                      "doc": "Creator of the resource.",
+                      "type": {
+                        "$id": "78",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "optional": true,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Shared.SharedMetadata.createdBy",
+                      "serializationOptions": {
+                        "json": {
+                          "name": "createdBy"
+                        }
+                      },
+                      "isHttpMetadata": false,
+                      "isExactName": false
+                    },
+                    {
+                      "$id": "79",
+                      "kind": "property",
+                      "name": "tags",
+                      "apiVersions": [],
+                      "serializedName": "tags",
+                      "doc": "Tags associated with the resource.",
+                      "type": {
+                        "$ref": "63"
+                      },
+                      "optional": true,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Shared.SharedMetadata.tags",
+                      "serializationOptions": {
+                        "json": {
+                          "name": "tags"
+                        }
+                      },
+                      "isHttpMetadata": false,
+                      "isExactName": false
+                    }
+                  ]
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachineProperties.metadata",
+                "serializationOptions": {
+                  "json": {
+                    "name": "metadata"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              }
+            ]
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachine.properties",
+          "serializationOptions": {
+            "json": {
+              "name": "properties"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "80",
+          "kind": "property",
+          "name": "name",
+          "apiVersions": [],
+          "serializedName": "name",
+          "doc": "The name of the VirtualMachine",
+          "type": {
+            "$id": "81",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [
+            {
+              "name": "TypeSpec.@pattern",
+              "arguments": {
+                "pattern": ""
+              }
+            }
+          ],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachine.name",
+          "serializationOptions": {
+            "json": {
+              "name": "name"
+            }
+          },
+          "isHttpMetadata": true,
+          "isExactName": false
+        }
+      ]
+    },
+    {
+      "$ref": "70"
+    },
+    {
+      "$ref": "73"
+    },
+    {
+      "$ref": "39"
+    },
+    {
+      "$ref": "40"
+    },
+    {
+      "$ref": "49"
+    },
+    {
+      "$id": "82",
+      "kind": "model",
+      "name": "ErrorResponse",
+      "apiVersions": [
+        "v3",
+        "v4",
+        "v5",
+        "v6"
+      ],
+      "namespace": "Azure.ResourceManager.CommonTypes",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorResponse",
+      "usage": "Json,Exception",
+      "doc": "Common error response for all Azure Resource Manager APIs to return error details for failed operations.",
+      "summary": "Error response",
+      "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ErrorResponse"
+        }
+      },
+      "isExactName": false,
+      "properties": [
+        {
+          "$id": "83",
+          "kind": "property",
+          "name": "error",
+          "apiVersions": [
+            "v3",
+            "v4",
+            "v5",
+            "v6"
+          ],
+          "serializedName": "error",
+          "doc": "The error object.",
+          "type": {
+            "$id": "84",
+            "kind": "model",
+            "name": "ErrorDetail",
+            "apiVersions": [
+              "v3",
+              "v4",
+              "v5",
+              "v6"
+            ],
+            "namespace": "Azure.ResourceManager.CommonTypes",
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail",
+            "usage": "Json,Exception,LroPolling",
+            "doc": "The error detail.",
+            "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": "ErrorDetail"
+              }
+            },
+            "isExactName": false,
+            "properties": [
+              {
+                "$id": "85",
+                "kind": "property",
+                "name": "code",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
+                "serializedName": "code",
+                "doc": "The error code.",
+                "type": {
+                  "$id": "86",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.code",
+                "serializationOptions": {
+                  "json": {
+                    "name": "code"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "87",
+                "kind": "property",
+                "name": "message",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
+                "serializedName": "message",
+                "doc": "The error message.",
+                "type": {
+                  "$id": "88",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.message",
+                "serializationOptions": {
+                  "json": {
+                    "name": "message"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "89",
+                "kind": "property",
+                "name": "target",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
+                "serializedName": "target",
+                "doc": "The error target.",
+                "type": {
+                  "$id": "90",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.target",
+                "serializationOptions": {
+                  "json": {
+                    "name": "target"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "91",
+                "kind": "property",
+                "name": "details",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
+                "serializedName": "details",
+                "doc": "The error details.",
+                "type": {
+                  "$id": "92",
+                  "kind": "array",
+                  "name": "ArrayErrorDetail",
+                  "valueType": {
+                    "$ref": "84"
+                  },
+                  "crossLanguageDefinitionId": "TypeSpec.Array",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.details",
+                "serializationOptions": {
+                  "json": {
+                    "name": "details"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "93",
+                "kind": "property",
+                "name": "additionalInfo",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
+                "serializedName": "additionalInfo",
+                "doc": "The error additional info.",
+                "type": {
+                  "$id": "94",
+                  "kind": "array",
+                  "name": "ArrayErrorAdditionalInfo",
+                  "valueType": {
+                    "$id": "95",
+                    "kind": "model",
+                    "name": "ErrorAdditionalInfo",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
+                    "namespace": "Azure.ResourceManager.CommonTypes",
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo",
+                    "usage": "Json,Exception,LroPolling",
+                    "doc": "The resource management error additional info.",
+                    "decorators": [],
+                    "serializationOptions": {
+                      "json": {
+                        "name": "ErrorAdditionalInfo"
+                      }
+                    },
+                    "isExactName": false,
+                    "properties": [
+                      {
+                        "$id": "96",
+                        "kind": "property",
+                        "name": "type",
+                        "apiVersions": [
+                          "v3",
+                          "v4",
+                          "v5",
+                          "v6"
+                        ],
+                        "serializedName": "type",
+                        "doc": "The additional info type.",
+                        "type": {
+                          "$id": "97",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "optional": true,
+                        "readOnly": true,
+                        "discriminator": false,
+                        "flatten": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo.type",
+                        "serializationOptions": {
+                          "json": {
+                            "name": "type"
+                          }
+                        },
+                        "isHttpMetadata": false,
+                        "isExactName": false
+                      },
+                      {
+                        "$id": "98",
+                        "kind": "property",
+                        "name": "info",
+                        "apiVersions": [
+                          "v3",
+                          "v4",
+                          "v5",
+                          "v6"
+                        ],
+                        "serializedName": "info",
+                        "doc": "The additional info.",
+                        "type": {
+                          "$id": "99",
+                          "kind": "unknown",
+                          "name": "unknown",
+                          "crossLanguageDefinitionId": "",
+                          "decorators": []
+                        },
+                        "optional": true,
+                        "readOnly": true,
+                        "discriminator": false,
+                        "flatten": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo.info",
+                        "serializationOptions": {
+                          "json": {
+                            "name": "info"
+                          }
+                        },
+                        "isHttpMetadata": false,
+                        "isExactName": false
+                      }
+                    ]
+                  },
+                  "crossLanguageDefinitionId": "TypeSpec.Array",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.additionalInfo",
+                "serializationOptions": {
+                  "json": {
+                    "name": "additionalInfo"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              }
+            ]
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorResponse.error",
+          "serializationOptions": {
+            "json": {
+              "name": "error"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        }
+      ]
+    },
+    {
+      "$ref": "84"
+    },
+    {
+      "$ref": "95"
+    },
+    {
+      "$id": "100",
+      "kind": "model",
+      "name": "ArmOperationStatusResourceProvisioningState",
+      "apiVersions": [],
+      "namespace": "Azure.ResourceManager",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus",
+      "usage": "LroPolling",
+      "doc": "Standard Azure Resource Manager operation status response, used as the response\nbody for `GetResourceOperationStatus`.",
+      "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ArmOperationStatus"
+        }
+      },
+      "isExactName": false,
+      "properties": [
+        {
+          "$id": "101",
+          "kind": "property",
+          "name": "status",
+          "apiVersions": [],
+          "serializedName": "status",
+          "doc": "The operation status",
+          "type": {
+            "$ref": "1"
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.status",
+          "serializationOptions": {
+            "json": {
+              "name": "status"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "102",
+          "kind": "property",
+          "name": "id",
+          "apiVersions": [],
+          "serializedName": "id",
+          "doc": "The unique identifier for the operationStatus resource",
+          "type": {
+            "$id": "103",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.id",
+          "serializationOptions": {
+            "json": {
+              "name": "id"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "104",
+          "kind": "property",
+          "name": "name",
+          "apiVersions": [],
+          "serializedName": "name",
+          "doc": "The name of the operationStatus resource",
+          "type": {
+            "$id": "105",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.name",
+          "serializationOptions": {
+            "json": {
+              "name": "name"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "106",
+          "kind": "property",
+          "name": "startTime",
+          "apiVersions": [],
+          "serializedName": "startTime",
+          "doc": "Operation start time",
+          "type": {
+            "$id": "107",
+            "kind": "utcDateTime",
+            "name": "utcDateTime",
+            "encode": "rfc3339",
+            "wireType": {
+              "$id": "108",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string",
+              "decorators": []
+            },
+            "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.startTime",
+          "serializationOptions": {
+            "json": {
+              "name": "startTime"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "109",
+          "kind": "property",
+          "name": "endTime",
+          "apiVersions": [],
+          "serializedName": "endTime",
+          "doc": "Operation complete time",
+          "type": {
+            "$id": "110",
+            "kind": "utcDateTime",
+            "name": "utcDateTime",
+            "encode": "rfc3339",
+            "wireType": {
+              "$id": "111",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string",
+              "decorators": []
+            },
+            "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.endTime",
+          "serializationOptions": {
+            "json": {
+              "name": "endTime"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "112",
+          "kind": "property",
+          "name": "percentComplete",
+          "apiVersions": [],
+          "serializedName": "percentComplete",
+          "doc": "The progress made toward completing the operation",
+          "type": {
+            "$id": "113",
+            "kind": "float64",
+            "name": "float64",
+            "crossLanguageDefinitionId": "TypeSpec.float64",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.percentComplete",
+          "serializationOptions": {
+            "json": {
+              "name": "percentComplete"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "114",
+          "kind": "property",
+          "name": "error",
+          "apiVersions": [],
+          "serializedName": "error",
+          "doc": "Errors that occurred if the operation ended with Canceled or Failed status",
+          "type": {
+            "$ref": "84"
+          },
+          "optional": true,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.error",
+          "serializationOptions": {
+            "json": {
+              "name": "error"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        }
+      ]
+    },
+    {
+      "$id": "115",
+      "kind": "model",
+      "name": "StorageAccount",
+      "apiVersions": [
+        "2025-02-01"
+      ],
+      "namespace": "Azure.ResourceManager.MultiServiceSharedModels.Storage",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccount",
+      "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
+      "doc": "Storage account resource.",
+      "decorators": [
+        {
+          "name": "Azure.ResourceManager.@armProviderNamespace",
+          "arguments": {
+            "providerNamespace": "Microsoft.Storage"
+          }
+        },
+        {
+          "name": "Azure.ResourceManager.Private.@armResourceInternal",
+          "arguments": {}
+        }
+      ],
+      "serializationOptions": {
+        "json": {
+          "name": "StorageAccount"
+        }
+      },
+      "isExactName": false,
+      "baseModel": {
+        "$ref": "39"
+      },
+      "properties": [
+        {
+          "$id": "116",
+          "kind": "property",
+          "name": "properties",
+          "apiVersions": [],
+          "serializedName": "properties",
+          "doc": "The resource-specific properties for this resource.",
+          "type": {
+            "$id": "117",
+            "kind": "model",
+            "name": "StorageAccountProperties",
+            "apiVersions": [
+              "2025-02-01"
+            ],
+            "namespace": "Azure.ResourceManager.MultiServiceSharedModels.Storage",
+            "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccountProperties",
+            "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
+            "doc": "Storage account properties.",
+            "decorators": [
+              {
+                "name": "Azure.ResourceManager.@armProviderNamespace",
+                "arguments": {
+                  "providerNamespace": "Microsoft.Storage"
+                }
+              }
+            ],
+            "serializationOptions": {
+              "json": {
+                "name": "StorageAccountProperties"
+              }
+            },
+            "isExactName": false,
+            "properties": [
+              {
+                "$id": "118",
+                "kind": "property",
+                "name": "provisioningState",
+                "apiVersions": [
+                  "2025-02-01"
+                ],
+                "serializedName": "provisioningState",
+                "type": {
+                  "$ref": "1"
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccountProperties.provisioningState",
+                "serializationOptions": {
+                  "json": {
+                    "name": "provisioningState"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "119",
+                "kind": "property",
+                "name": "metadata",
+                "apiVersions": [
+                  "2025-02-01"
+                ],
+                "serializedName": "metadata",
+                "doc": "Shared metadata for the storage account.",
+                "type": {
+                  "$ref": "73"
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccountProperties.metadata",
+                "serializationOptions": {
+                  "json": {
+                    "name": "metadata"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              }
+            ]
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccount.properties",
+          "serializationOptions": {
+            "json": {
+              "name": "properties"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "120",
+          "kind": "property",
+          "name": "name",
+          "apiVersions": [],
+          "serializedName": "name",
+          "doc": "The name of the StorageAccount",
+          "type": {
+            "$id": "121",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [
+            {
+              "name": "TypeSpec.@pattern",
+              "arguments": {
+                "pattern": ""
+              }
+            }
+          ],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccount.name",
+          "serializationOptions": {
+            "json": {
+              "name": "name"
+            }
+          },
+          "isHttpMetadata": true,
+          "isExactName": false
+        }
+      ]
+    },
+    {
+      "$ref": "117"
+    }
+  ],
+  "clients": [
+    {
+      "$id": "122",
+      "kind": "client",
+      "name": "CombinedClient",
+      "isExactName": false,
+      "namespace": "Azure.ResourceManager.MultiServiceSharedModels.Combined",
+      "methods": [],
+      "parameters": [
+        {
+          "$id": "123",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "124",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "defaultValue": {
+            "type": {
+              "$id": "125",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "https://management.azure.com"
+          },
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Combined.endpoint",
+          "isExactName": false
+        },
+        {
+          "$id": "126",
+          "kind": "method",
+          "name": "apiVersion",
+          "serializedName": "apiVersion",
+          "doc": "The API version to use for this operation.",
+          "type": {
+            "$id": "127",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "location": "",
+          "isApiVersion": true,
+          "optional": true,
+          "scope": "Method",
+          "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.get.apiVersion",
+          "readOnly": false,
+          "access": "public",
+          "decorators": [
+            {
+              "name": "TypeSpec.@minLength",
+              "arguments": {
+                "value": {
+                  "isInteger": true
+                }
+              }
+            }
+          ],
+          "isExactName": false
+        }
+      ],
+      "initializedBy": 1,
+      "decorators": [
+        {
+          "name": "Azure.ClientGenerator.Core.@armProviderSchema",
+          "arguments": {
+            "resources": [
+              {
+                "resourceModelId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachine",
+                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachinesShared/{vmName}",
+                "resourceType": "Microsoft.Compute/virtualMachinesShared",
+                "methods": [
+                  {
+                    "$id": "128",
+                    "methodId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.createOrUpdate",
+                    "kind": "Create",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachinesShared/{vmName}",
+                    "scope": {
+                      "$id": "129",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachinesShared/{vmName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "130",
+                    "methodId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.get",
+                    "kind": "Read",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachinesShared/{vmName}",
+                    "scope": {
+                      "$id": "131",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachinesShared/{vmName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  }
+                ],
+                "scope": {
+                  "$id": "132",
+                  "kind": "ResourceGroup",
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                },
+                "resourceName": "VirtualMachine",
+                "nameConstraints": {},
+                "apiVersions": [
+                  "2025-05-01"
+                ],
+                "rbacRoles": []
+              },
+              {
+                "resourceModelId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccount",
+                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}",
+                "resourceType": "Microsoft.Storage/storageAccounts",
+                "methods": [
+                  {
+                    "$id": "133",
+                    "methodId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.createOrUpdate",
+                    "kind": "Create",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}",
+                    "scope": {
+                      "$id": "134",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "135",
+                    "methodId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.get",
+                    "kind": "Read",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}",
+                    "scope": {
+                      "$id": "136",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  }
+                ],
+                "scope": {
+                  "$id": "137",
+                  "kind": "ResourceGroup",
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                },
+                "resourceName": "StorageAccount",
+                "nameConstraints": {},
+                "apiVersions": [
+                  "2025-02-01"
+                ],
+                "rbacRoles": []
+              }
+            ],
+            "nonResourceMethods": []
+          }
+        }
+      ],
+      "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Combined",
+      "apiVersions": [],
+      "children": [
+        {
+          "$id": "138",
+          "kind": "client",
+          "name": "VirtualMachines",
+          "isExactName": false,
+          "namespace": "Azure.ResourceManager.MultiServiceSharedModels.Compute",
+          "methods": [
+            {
+              "$id": "139",
+              "kind": "basic",
+              "name": "get",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [
+                "2025-05-01"
+              ],
+              "doc": "Retrieves information about the model view or the instance view of a virtual machine.",
+              "operation": {
+                "$id": "140",
+                "name": "get",
+                "isExactName": false,
+                "resourceName": "VirtualMachine",
+                "doc": "Retrieves information about the model view or the instance view of a virtual machine.",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "141",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "142",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "143",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2025-05-01"
+                    },
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.get.apiVersion",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$id": "144",
+                        "kind": "method",
+                        "name": "apiVersion",
+                        "serializedName": "apiVersion",
+                        "doc": "The API version to use for this operation.",
+                        "type": {
+                          "$id": "145",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "",
+                        "isApiVersion": true,
+                        "defaultValue": {
+                          "type": {
+                            "$id": "146",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string"
+                          },
+                          "value": "2025-05-01"
+                        },
+                        "optional": true,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.get.apiVersion",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "147",
+                    "kind": "path",
+                    "name": "subscriptionId",
+                    "serializedName": "subscriptionId",
+                    "doc": "The ID of the target subscription. The value must be an UUID.",
+                    "type": {
+                      "$id": "148",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.get.subscriptionId",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "149",
+                        "kind": "method",
+                        "name": "subscriptionId",
+                        "serializedName": "subscriptionId",
+                        "doc": "The ID of the target subscription. The value must be an UUID.",
+                        "type": {
+                          "$id": "150",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.get.subscriptionId",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "151",
+                    "kind": "path",
+                    "name": "resourceGroupName",
+                    "serializedName": "resourceGroupName",
+                    "doc": "The name of the resource group. The name is case insensitive.",
+                    "type": {
+                      "$id": "152",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@maxLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.get.resourceGroupName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "153",
+                        "kind": "method",
+                        "name": "resourceGroupName",
+                        "serializedName": "resourceGroupName",
+                        "doc": "The name of the resource group. The name is case insensitive.",
+                        "type": {
+                          "$id": "154",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.get.resourceGroupName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@maxLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "155",
+                    "kind": "path",
+                    "name": "vmName",
+                    "serializedName": "vmName",
+                    "doc": "The name of the VirtualMachine",
+                    "type": {
+                      "$id": "156",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": ""
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.get.vmName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "157",
+                        "kind": "method",
+                        "name": "vmName",
+                        "serializedName": "vmName",
+                        "doc": "The name of the VirtualMachine",
+                        "type": {
+                          "$id": "158",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.get.vmName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": ""
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "159",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "18"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.get.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "160",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "18"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.get.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "38"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachinesShared/{vmName}",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.get",
+                "decorators": [
+                  {
+                    "name": "Azure.ResourceManager.@armResourceRead",
+                    "arguments": {}
+                  }
+                ],
+                "namespace": "Azure.ResourceManager.MultiServiceSharedModels.Compute"
+              },
+              "parameters": [
+                {
+                  "$ref": "153"
+                },
+                {
+                  "$ref": "157"
+                },
+                {
+                  "$ref": "160"
+                },
+                {
+                  "$id": "161",
+                  "kind": "method",
+                  "name": "subscriptionId",
+                  "doc": "The ID of the target subscription. The value must be an UUID.",
+                  "type": {
+                    "$ref": "148"
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "serializedName": "subscriptionId",
+                  "isApiVersion": false,
+                  "scope": "Method",
+                  "location": "Path",
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.get.subscriptionId"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "38"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.get"
+            },
+            {
+              "$id": "162",
+              "kind": "lro",
+              "name": "createOrUpdate",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [
+                "2025-05-01"
+              ],
+              "doc": "The operation to create or update a virtual machine. Please note some properties can be set only during virtual machine creation.",
+              "operation": {
+                "$id": "163",
+                "name": "createOrUpdate",
+                "isExactName": false,
+                "resourceName": "VirtualMachine",
+                "doc": "The operation to create or update a virtual machine. Please note some properties can be set only during virtual machine creation.",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "164",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "165",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "166",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2025-05-01"
+                    },
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.createOrUpdate.apiVersion",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "144"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "167",
+                    "kind": "path",
+                    "name": "subscriptionId",
+                    "serializedName": "subscriptionId",
+                    "doc": "The ID of the target subscription. The value must be an UUID.",
+                    "type": {
+                      "$id": "168",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.createOrUpdate.subscriptionId",
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "149"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "169",
+                    "kind": "path",
+                    "name": "resourceGroupName",
+                    "serializedName": "resourceGroupName",
+                    "doc": "The name of the resource group. The name is case insensitive.",
+                    "type": {
+                      "$id": "170",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@maxLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.createOrUpdate.resourceGroupName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "171",
+                        "kind": "method",
+                        "name": "resourceGroupName",
+                        "serializedName": "resourceGroupName",
+                        "doc": "The name of the resource group. The name is case insensitive.",
+                        "type": {
+                          "$id": "172",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.createOrUpdate.resourceGroupName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@maxLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "173",
+                    "kind": "path",
+                    "name": "vmName",
+                    "serializedName": "vmName",
+                    "doc": "The name of the VirtualMachine",
+                    "type": {
+                      "$id": "174",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": ""
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.createOrUpdate.vmName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "175",
+                        "kind": "method",
+                        "name": "vmName",
+                        "serializedName": "vmName",
+                        "doc": "The name of the VirtualMachine",
+                        "type": {
+                          "$id": "176",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.createOrUpdate.vmName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": ""
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "177",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "20"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.createOrUpdate.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "178",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "20"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.createOrUpdate.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "179",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "24"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.createOrUpdate.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "180",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "26"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.createOrUpdate.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "181",
+                    "kind": "body",
+                    "name": "resource",
+                    "serializedName": "resource",
+                    "doc": "Resource create parameters.",
+                    "type": {
+                      "$ref": "38"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.createOrUpdate.resource",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "182",
+                        "kind": "method",
+                        "name": "resource",
+                        "serializedName": "resource",
+                        "doc": "Resource create parameters.",
+                        "type": {
+                          "$ref": "38"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.createOrUpdate.resource",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {
+                      "json": {
+                        "name": "resource"
+                      }
+                    }
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "38"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
+                  },
+                  {
+                    "statusCodes": [
+                      201
+                    ],
+                    "bodyType": {
+                      "$ref": "38"
+                    },
+                    "headers": [
+                      {
+                        "name": "azureAsyncOperation",
+                        "nameInResponse": "Azure-AsyncOperation",
+                        "doc": "A link to the status monitor",
+                        "type": {
+                          "$id": "183",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        }
+                      },
+                      {
+                        "name": "retryAfter",
+                        "nameInResponse": "Retry-After",
+                        "doc": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
+                        "type": {
+                          "$id": "184",
+                          "kind": "int32",
+                          "name": "int32",
+                          "crossLanguageDefinitionId": "TypeSpec.int32",
+                          "decorators": []
+                        }
+                      }
+                    ],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
+                  }
+                ],
+                "httpMethod": "PUT",
+                "uri": "{endpoint}",
+                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachinesShared/{vmName}",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.createOrUpdate",
+                "decorators": [
+                  {
+                    "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
+                    "arguments": {}
+                  }
+                ],
+                "namespace": "Azure.ResourceManager.MultiServiceSharedModels.Compute"
+              },
+              "parameters": [
+                {
+                  "$ref": "171"
+                },
+                {
+                  "$ref": "175"
+                },
+                {
+                  "$ref": "182"
+                },
+                {
+                  "$ref": "178"
+                },
+                {
+                  "$ref": "180"
+                },
+                {
+                  "$id": "185",
+                  "kind": "method",
+                  "name": "subscriptionId",
+                  "doc": "The ID of the target subscription. The value must be an UUID.",
+                  "type": {
+                    "$ref": "168"
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "serializedName": "subscriptionId",
+                  "isApiVersion": false,
+                  "scope": "Method",
+                  "location": "Path",
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.createOrUpdate.subscriptionId"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "38"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.createOrUpdate",
+              "lroMetadata": {
+                "finalStateVia": 0,
+                "finalResponse": {
+                  "statusCodes": [
+                    200
+                  ],
+                  "bodyType": {
+                    "$ref": "38"
+                  }
+                }
+              }
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "186",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "187",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "188",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "https://management.azure.com"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines.endpoint",
+              "isExactName": false
+            },
+            {
+              "$ref": "144"
+            }
+          ],
+          "initializedBy": 0,
+          "decorators": [
+            {
+              "name": "Azure.ResourceManager.@armResourceOperations",
+              "arguments": {}
+            }
+          ],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Compute.VirtualMachines",
+          "apiVersions": [
+            "2025-05-01"
+          ],
+          "parent": {
+            "$ref": "122"
+          },
+          "isMultiServiceClient": false
+        },
+        {
+          "$id": "189",
+          "kind": "client",
+          "name": "StorageAccounts",
+          "isExactName": false,
+          "namespace": "Azure.ResourceManager.MultiServiceSharedModels.Storage",
+          "methods": [
+            {
+              "$id": "190",
+              "kind": "basic",
+              "name": "get",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [
+                "2025-02-01"
+              ],
+              "doc": "Gets information about a storage account.",
+              "operation": {
+                "$id": "191",
+                "name": "get",
+                "isExactName": false,
+                "resourceName": "StorageAccount",
+                "doc": "Gets information about a storage account.",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "192",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "193",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "194",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2025-02-01"
+                    },
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.get.apiVersion",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$id": "195",
+                        "kind": "method",
+                        "name": "apiVersion",
+                        "serializedName": "apiVersion",
+                        "doc": "The API version to use for this operation.",
+                        "type": {
+                          "$id": "196",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "",
+                        "isApiVersion": true,
+                        "defaultValue": {
+                          "type": {
+                            "$id": "197",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string"
+                          },
+                          "value": "2025-02-01"
+                        },
+                        "optional": true,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.get.apiVersion",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "198",
+                    "kind": "path",
+                    "name": "subscriptionId",
+                    "serializedName": "subscriptionId",
+                    "doc": "The ID of the target subscription. The value must be an UUID.",
+                    "type": {
+                      "$id": "199",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.get.subscriptionId",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "200",
+                        "kind": "method",
+                        "name": "subscriptionId",
+                        "serializedName": "subscriptionId",
+                        "doc": "The ID of the target subscription. The value must be an UUID.",
+                        "type": {
+                          "$id": "201",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.get.subscriptionId",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "202",
+                    "kind": "path",
+                    "name": "resourceGroupName",
+                    "serializedName": "resourceGroupName",
+                    "doc": "The name of the resource group. The name is case insensitive.",
+                    "type": {
+                      "$id": "203",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@maxLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.get.resourceGroupName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "204",
+                        "kind": "method",
+                        "name": "resourceGroupName",
+                        "serializedName": "resourceGroupName",
+                        "doc": "The name of the resource group. The name is case insensitive.",
+                        "type": {
+                          "$id": "205",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.get.resourceGroupName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@maxLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "206",
+                    "kind": "path",
+                    "name": "accountName",
+                    "serializedName": "accountName",
+                    "doc": "The name of the StorageAccount",
+                    "type": {
+                      "$id": "207",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": ""
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.get.accountName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "208",
+                        "kind": "method",
+                        "name": "accountName",
+                        "serializedName": "accountName",
+                        "doc": "The name of the StorageAccount",
+                        "type": {
+                          "$id": "209",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.get.accountName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": ""
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "210",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "28"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.get.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "211",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "28"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.get.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "115"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.get",
+                "decorators": [
+                  {
+                    "name": "Azure.ResourceManager.@armResourceRead",
+                    "arguments": {}
+                  }
+                ],
+                "namespace": "Azure.ResourceManager.MultiServiceSharedModels.Storage"
+              },
+              "parameters": [
+                {
+                  "$ref": "204"
+                },
+                {
+                  "$ref": "208"
+                },
+                {
+                  "$ref": "211"
+                },
+                {
+                  "$id": "212",
+                  "kind": "method",
+                  "name": "subscriptionId",
+                  "doc": "The ID of the target subscription. The value must be an UUID.",
+                  "type": {
+                    "$ref": "199"
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "serializedName": "subscriptionId",
+                  "isApiVersion": false,
+                  "scope": "Method",
+                  "location": "Path",
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.get.subscriptionId"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "115"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.get"
+            },
+            {
+              "$id": "213",
+              "kind": "lro",
+              "name": "createOrUpdate",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [
+                "2025-02-01"
+              ],
+              "doc": "Creates or updates a storage account.",
+              "operation": {
+                "$id": "214",
+                "name": "createOrUpdate",
+                "isExactName": false,
+                "resourceName": "StorageAccount",
+                "doc": "Creates or updates a storage account.",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "215",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "216",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "217",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2025-02-01"
+                    },
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.createOrUpdate.apiVersion",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "195"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "218",
+                    "kind": "path",
+                    "name": "subscriptionId",
+                    "serializedName": "subscriptionId",
+                    "doc": "The ID of the target subscription. The value must be an UUID.",
+                    "type": {
+                      "$id": "219",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.createOrUpdate.subscriptionId",
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "200"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "220",
+                    "kind": "path",
+                    "name": "resourceGroupName",
+                    "serializedName": "resourceGroupName",
+                    "doc": "The name of the resource group. The name is case insensitive.",
+                    "type": {
+                      "$id": "221",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@maxLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.createOrUpdate.resourceGroupName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "222",
+                        "kind": "method",
+                        "name": "resourceGroupName",
+                        "serializedName": "resourceGroupName",
+                        "doc": "The name of the resource group. The name is case insensitive.",
+                        "type": {
+                          "$id": "223",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.createOrUpdate.resourceGroupName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@maxLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "224",
+                    "kind": "path",
+                    "name": "accountName",
+                    "serializedName": "accountName",
+                    "doc": "The name of the StorageAccount",
+                    "type": {
+                      "$id": "225",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": ""
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.createOrUpdate.accountName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "226",
+                        "kind": "method",
+                        "name": "accountName",
+                        "serializedName": "accountName",
+                        "doc": "The name of the StorageAccount",
+                        "type": {
+                          "$id": "227",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.createOrUpdate.accountName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": ""
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "228",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "30"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.createOrUpdate.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "229",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "30"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.createOrUpdate.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "230",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "34"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.createOrUpdate.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "231",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "36"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.createOrUpdate.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "232",
+                    "kind": "body",
+                    "name": "resource",
+                    "serializedName": "resource",
+                    "doc": "Resource create parameters.",
+                    "type": {
+                      "$ref": "115"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.createOrUpdate.resource",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "233",
+                        "kind": "method",
+                        "name": "resource",
+                        "serializedName": "resource",
+                        "doc": "Resource create parameters.",
+                        "type": {
+                          "$ref": "115"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.createOrUpdate.resource",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {
+                      "json": {
+                        "name": "resource"
+                      }
+                    }
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "115"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
+                  },
+                  {
+                    "statusCodes": [
+                      201
+                    ],
+                    "bodyType": {
+                      "$ref": "115"
+                    },
+                    "headers": [
+                      {
+                        "name": "azureAsyncOperation",
+                        "nameInResponse": "Azure-AsyncOperation",
+                        "doc": "A link to the status monitor",
+                        "type": {
+                          "$id": "234",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        }
+                      },
+                      {
+                        "name": "retryAfter",
+                        "nameInResponse": "Retry-After",
+                        "doc": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
+                        "type": {
+                          "$id": "235",
+                          "kind": "int32",
+                          "name": "int32",
+                          "crossLanguageDefinitionId": "TypeSpec.int32",
+                          "decorators": []
+                        }
+                      }
+                    ],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
+                  }
+                ],
+                "httpMethod": "PUT",
+                "uri": "{endpoint}",
+                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.createOrUpdate",
+                "decorators": [
+                  {
+                    "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
+                    "arguments": {}
+                  }
+                ],
+                "namespace": "Azure.ResourceManager.MultiServiceSharedModels.Storage"
+              },
+              "parameters": [
+                {
+                  "$ref": "222"
+                },
+                {
+                  "$ref": "226"
+                },
+                {
+                  "$ref": "233"
+                },
+                {
+                  "$ref": "229"
+                },
+                {
+                  "$ref": "231"
+                },
+                {
+                  "$id": "236",
+                  "kind": "method",
+                  "name": "subscriptionId",
+                  "doc": "The ID of the target subscription. The value must be an UUID.",
+                  "type": {
+                    "$ref": "219"
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "serializedName": "subscriptionId",
+                  "isApiVersion": false,
+                  "scope": "Method",
+                  "location": "Path",
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.createOrUpdate.subscriptionId"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "115"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.createOrUpdate",
+              "lroMetadata": {
+                "finalStateVia": 0,
+                "finalResponse": {
+                  "statusCodes": [
+                    200
+                  ],
+                  "bodyType": {
+                    "$ref": "115"
+                  }
+                }
+              }
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "237",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "238",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "239",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "https://management.azure.com"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts.endpoint",
+              "isExactName": false
+            },
+            {
+              "$ref": "195"
+            }
+          ],
+          "initializedBy": 0,
+          "decorators": [
+            {
+              "name": "Azure.ResourceManager.@armResourceOperations",
+              "arguments": {}
+            }
+          ],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.MultiServiceSharedModels.Storage.StorageAccounts",
+          "apiVersions": [
+            "2025-02-01"
+          ],
+          "parent": {
+            "$ref": "122"
+          },
+          "isMultiServiceClient": false
+        }
+      ],
+      "isMultiServiceClient": true
+    }
+  ],
+  "auth": {
+    "oAuth2": {
+      "flows": [
+        {
+          "scopes": [
+            "https://management.azure.com/.default"
+          ],
+          "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize"
+        }
+      ]
+    }
+  }
+}

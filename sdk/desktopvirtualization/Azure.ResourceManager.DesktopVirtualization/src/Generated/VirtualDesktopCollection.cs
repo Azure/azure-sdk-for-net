@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualDesktopData, VirtualDesktopResource>(new DesktopsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<VirtualDesktopData, VirtualDesktopResource>(new VirtualDesktopDataAsyncCollectionResultOfT(
                 _desktopsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualDesktopData, VirtualDesktopResource>(new DesktopsGetAllCollectionResultOfT(
+            return new PageableWrapper<VirtualDesktopData, VirtualDesktopResource>(new VirtualDesktopDataCollectionResultOfT(
                 _desktopsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

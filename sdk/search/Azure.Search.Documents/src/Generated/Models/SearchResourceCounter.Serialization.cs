@@ -81,10 +81,17 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("usage"u8);
             writer.WriteNumberValue(Usage);
-            if (Optional.IsDefined(Quota))
+            if (_quotaIsDefined || Optional.IsDefined(Quota))
             {
-                writer.WritePropertyName("quota"u8);
-                writer.WriteNumberValue(Quota.Value);
+                if (Quota != null)
+                {
+                    writer.WritePropertyName("quota"u8);
+                    writer.WriteNumberValue(Quota.Value);
+                }
+                else
+                {
+                    writer.WriteNull("quota"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -129,6 +136,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             long usage = default;
+            bool quotaIsDefined = false;
             long? quota = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -140,6 +148,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("quota"u8))
                 {
+                    quotaIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         quota = null;
@@ -150,10 +159,13 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SearchResourceCounter(usage, quota, additionalBinaryDataProperties);
+            return new SearchResourceCounter(usage, quota, additionalBinaryDataProperties)
+            {
+                _quotaIsDefined = quotaIsDefined
+            };
         }
     }
 }

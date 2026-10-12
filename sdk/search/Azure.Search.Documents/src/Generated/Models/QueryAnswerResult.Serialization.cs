@@ -88,10 +88,17 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("text"u8);
                 writer.WriteStringValue(Text);
             }
-            if (options.Format != "W" && Optional.IsDefined(Highlights))
+            if (options.Format != "W" && (_highlightsIsDefined || Optional.IsDefined(Highlights)))
             {
-                writer.WritePropertyName("highlights"u8);
-                writer.WriteStringValue(Highlights);
+                if (Highlights != null)
+                {
+                    writer.WritePropertyName("highlights"u8);
+                    writer.WriteStringValue(Highlights);
+                }
+                else
+                {
+                    writer.WriteNull("highlights"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

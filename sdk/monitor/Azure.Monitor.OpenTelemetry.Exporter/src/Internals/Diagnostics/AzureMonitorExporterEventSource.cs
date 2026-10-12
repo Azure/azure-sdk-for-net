@@ -683,5 +683,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(76, Message = "Measurements from meter '{0}' instrument '{1}' were dropped because they could not be routed. Reason: {2}. Reported once per instrument per export; enable Verbose for the individual points.", Level = EventLevel.Informational)]
         public void RoutedInstrumentDropped(string meterName, string instrumentName, string reason) => WriteEvent(76, meterName, instrumentName, reason);
+
+        [Event(77, Message = "No connection string was configured. Multi-endpoint routing is enabled, so telemetry carrying valid routing attributes is still sent to the endpoint it names; everything else is dropped, and this process can send nothing of its own. SDK statistics are not collected, because they identify a component this process does not have.", Level = EventLevel.Warning)]
+        public void RoutingWithoutConnectionString() => WriteEvent(77);
+
+        [Event(78, Message = "Telemetry that was not routed has been dropped because no connection string is configured, so there is no destination of this process's own to send it to.", Level = EventLevel.Warning)]
+        public void DroppedUnroutedTelemetryWithoutConnectionString() => WriteEvent(78);
+
+        [Event(79, Message = "Persistent storage sub directory is named from the '{0}' AppContext value '{1}' instead of the process name and application directory. Storage directory: {2}", Level = EventLevel.Informational)]
+        public void StorageSubDirectoryOverrideApplied(string settingName, string value, string storageDirectory)
+        {
+            if (IsEnabled(EventLevel.Informational))
+            {
+                WriteEvent(79, settingName, value, storageDirectory);
+            }
+        }
+
+        [Event(80, Message = "The '{0}' AppContext value was ignored because it must be a string, but was a {1}. The default persistent storage sub directory is used.", Level = EventLevel.Warning)]
+        public void StorageSubDirectoryOverrideIgnored(string settingName, string valueType)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                WriteEvent(80, settingName, valueType);
+            }
+        }
     }
 }

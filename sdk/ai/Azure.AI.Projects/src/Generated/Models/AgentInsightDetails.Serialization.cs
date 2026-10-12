@@ -166,10 +166,10 @@ namespace Azure.AI.Projects
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentInsightDetails(highlightedTraces, linkedTraces, recommendedActions, additionalBinaryDataProperties);
+            return new AgentInsightDetails(highlightedTraces ?? new ChangeTrackingList<AgentInsightHighlightedTrace>(), linkedTraces ?? new ChangeTrackingList<AgentInsightLinkedTrace>(), recommendedActions, additionalBinaryDataProperties);
         }
     }
 }

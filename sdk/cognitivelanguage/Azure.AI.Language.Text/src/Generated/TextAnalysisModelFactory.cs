@@ -100,7 +100,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary>
         /// The abstract base class for entity OverlapPolicy.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Text.MatchLongestEntityPolicyType"/> and <see cref="Text.AllowOverlapEntityPolicyType"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Text.AllowOverlapEntityPolicyType"/> and <see cref="Text.MatchLongestEntityPolicyType"/>.
         /// </summary>
         /// <param name="policyKind"> The entity OverlapPolicy object kind. </param>
         /// <returns> A new <see cref="Text.EntityOverlapPolicy"/> instance for mocking. </returns>
@@ -264,7 +264,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary>
         /// The abstract base class for RedactionPolicy.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Text.CharacterMaskPolicyType"/>, <see cref="Text.SyntheticReplacementPolicyType"/>, <see cref="Text.NoMaskPolicyType"/>, and <see cref="Text.EntityMaskPolicyType"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Text.CharacterMaskPolicyType"/>, <see cref="Text.EntityMaskPolicyType"/>, <see cref="Text.NoMaskPolicyType"/>, and <see cref="Text.SyntheticReplacementPolicyType"/>.
         /// </summary>
         /// <param name="policyKind"> The entity RedactionPolicy object kind. </param>
         /// <param name="entityTypes"> (Optional) describes the PII categories to which the redaction policy will be applied. If not specified, the redaction policy will be applied to all PII categories. </param>
@@ -387,7 +387,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary>
         /// The result object for the analyze task.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Text.AnalyzeTextEntityLinkingResult"/>, <see cref="Text.AnalyzeTextEntitiesResult"/>, <see cref="Text.AnalyzeTextKeyPhraseResult"/>, <see cref="Text.AnalyzeTextLanguageDetectionResult"/>, <see cref="Text.AnalyzeTextPiiResult"/>, and <see cref="Text.AnalyzeTextSentimentResult"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Text.AnalyzeTextEntitiesResult"/>, <see cref="Text.AnalyzeTextEntityLinkingResult"/>, <see cref="Text.AnalyzeTextKeyPhraseResult"/>, <see cref="Text.AnalyzeTextLanguageDetectionResult"/>, <see cref="Text.AnalyzeTextPiiResult"/>, and <see cref="Text.AnalyzeTextSentimentResult"/>.
         /// </summary>
         /// <param name="kind"> The kind of task result. </param>
         /// <returns> A new <see cref="Text.AnalyzeTextResult"/> instance for mocking. </returns>
@@ -653,7 +653,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary>
         /// The abstract base class for entity Metadata.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Text.AgeMetadata"/>, <see cref="Text.VolumeMetadata"/>, <see cref="Text.SpeedMetadata"/>, <see cref="Text.AreaMetadata"/>, <see cref="Text.LengthMetadata"/>, <see cref="Text.InformationMetadata"/>, <see cref="Text.TemperatureMetadata"/>, <see cref="Text.WeightMetadata"/>, <see cref="Text.CurrencyMetadata"/>, <see cref="Text.AddressMetadata"/>, <see cref="Text.DateMetadata"/>, <see cref="Text.DateTimeMetadata"/>, <see cref="Text.TemporalSetMetadata"/>, <see cref="Text.TimeMetadata"/>, <see cref="Text.NumberMetadata"/>, <see cref="Text.OrdinalMetadata"/>, <see cref="Text.TemporalSpanMetadata"/>, and <see cref="Text.NumericRangeMetadata"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Text.AddressMetadata"/>, <see cref="Text.AgeMetadata"/>, <see cref="Text.AreaMetadata"/>, <see cref="Text.CurrencyMetadata"/>, <see cref="Text.DateMetadata"/>, <see cref="Text.DateTimeMetadata"/>, <see cref="Text.InformationMetadata"/>, <see cref="Text.LengthMetadata"/>, <see cref="Text.NumberMetadata"/>, <see cref="Text.NumericRangeMetadata"/>, <see cref="Text.OrdinalMetadata"/>, <see cref="Text.SpeedMetadata"/>, <see cref="Text.TemperatureMetadata"/>, <see cref="Text.TemporalSetMetadata"/>, <see cref="Text.TemporalSpanMetadata"/>, <see cref="Text.TimeMetadata"/>, <see cref="Text.VolumeMetadata"/>, and <see cref="Text.WeightMetadata"/>.
         /// </summary>
         /// <param name="metadataKind"> The entity Metadata object kind. </param>
         /// <returns> A new <see cref="Text.BaseMetadata"/> instance for mocking. </returns>
@@ -1230,7 +1230,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary>
         /// Contains the AnalyzeText long running operation result object.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Text.CustomEntityRecognitionOperationResult"/>, <see cref="Text.CustomSingleLabelClassificationOperationResult"/>, <see cref="Text.CustomMultiLabelClassificationOperationResult"/>, <see cref="Text.EntityLinkingOperationResult"/>, <see cref="Text.EntityRecognitionOperationResult"/>, <see cref="Text.HealthcareOperationResult"/>, <see cref="Text.KeyPhraseExtractionOperationResult"/>, <see cref="Text.PiiEntityRecognitionOperationResult"/>, <see cref="Text.SentimentOperationResult"/>, <see cref="Text.ExtractiveSummarizationOperationResult"/>, and <see cref="Text.AbstractiveSummarizationOperationResult"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Text.AbstractiveSummarizationOperationResult"/>, <see cref="Text.CustomEntityRecognitionOperationResult"/>, <see cref="Text.CustomMultiLabelClassificationOperationResult"/>, <see cref="Text.CustomSingleLabelClassificationOperationResult"/>, <see cref="Text.EntityLinkingOperationResult"/>, <see cref="Text.EntityRecognitionOperationResult"/>, <see cref="Text.ExtractiveSummarizationOperationResult"/>, <see cref="Text.HealthcareOperationResult"/>, <see cref="Text.KeyPhraseExtractionOperationResult"/>, <see cref="Text.PiiEntityRecognitionOperationResult"/>, and <see cref="Text.SentimentOperationResult"/>.
         /// </summary>
         /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
@@ -1792,7 +1792,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary>
         /// The long running task to be performed by the service on the input documents.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Text.CustomEntitiesOperationAction"/>, <see cref="Text.CustomSingleLabelClassificationOperationAction"/>, <see cref="Text.CustomMultiLabelClassificationOperationAction"/>, <see cref="Text.EntityLinkingOperationAction"/>, <see cref="Text.EntitiesOperationAction"/>, <see cref="Text.HealthcareOperationAction"/>, <see cref="Text.KeyPhraseOperationAction"/>, <see cref="Text.PiiOperationAction"/>, <see cref="Text.SentimentAnalysisOperationAction"/>, <see cref="Text.ExtractiveSummarizationOperationAction"/>, and <see cref="Text.AbstractiveSummarizationOperationAction"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Text.AbstractiveSummarizationOperationAction"/>, <see cref="Text.CustomEntitiesOperationAction"/>, <see cref="Text.CustomMultiLabelClassificationOperationAction"/>, <see cref="Text.CustomSingleLabelClassificationOperationAction"/>, <see cref="Text.EntitiesOperationAction"/>, <see cref="Text.EntityLinkingOperationAction"/>, <see cref="Text.ExtractiveSummarizationOperationAction"/>, <see cref="Text.HealthcareOperationAction"/>, <see cref="Text.KeyPhraseOperationAction"/>, <see cref="Text.PiiOperationAction"/>, and <see cref="Text.SentimentAnalysisOperationAction"/>.
         /// </summary>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>

@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ExportJobDetails(instanceType, affectedObjectDetails ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, blobUri, sasToken);

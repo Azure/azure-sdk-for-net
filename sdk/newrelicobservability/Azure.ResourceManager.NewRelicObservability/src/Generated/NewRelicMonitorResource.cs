@@ -972,7 +972,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 CancellationToken = cancellationToken
             };
-            return new ConnectedPartnerResourcesGetConnectedPartnerResourcesAsyncCollectionResultOfT(
+            return new NewRelicConnectedPartnerResourceInfoAsyncCollectionResultOfT(
                 _connectedPartnerResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1012,7 +1012,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 CancellationToken = cancellationToken
             };
-            return new ConnectedPartnerResourcesGetConnectedPartnerResourcesCollectionResultOfT(
+            return new NewRelicConnectedPartnerResourceInfoCollectionResultOfT(
                 _connectedPartnerResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1055,7 +1055,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetAppServicesAsyncCollectionResultOfT(
+            return new NewRelicObservabilityAppServiceInfoAsyncCollectionResultOfT(
                 _monitorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1098,7 +1098,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetAppServicesCollectionResultOfT(
+            return new NewRelicObservabilityAppServiceInfoCollectionResultOfT(
                 _monitorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1141,7 +1141,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetHostsAsyncCollectionResultOfT(
+            return new NewRelicObservabilityVmInfoAsyncCollectionResultOfT(
                 _monitorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1184,7 +1184,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetHostsCollectionResultOfT(
+            return new NewRelicObservabilityVmInfoCollectionResultOfT(
                 _monitorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1223,7 +1223,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetLinkedResourcesAsyncCollectionResultOfT(
+            return new SubResourceAsyncCollectionResultOfT(
                 _monitorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1261,7 +1261,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetLinkedResourcesCollectionResultOfT(
+            return new SubResourceCollectionResultOfT(
                 _monitorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1299,7 +1299,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetMonitoredResourcesAsyncCollectionResultOfT(
+            return new NewRelicResourceMonitorResultAsyncCollectionResultOfT(
                 _monitorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1337,7 +1337,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetMonitoredResourcesCollectionResultOfT(
+            return new NewRelicResourceMonitorResultCollectionResultOfT(
                 _monitorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1854,10 +1854,9 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -1897,10 +1896,9 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

@@ -166,10 +166,10 @@ namespace Azure.Communication.JobRouter
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedClassificationPolicy(value, nextLink, additionalBinaryDataProperties);
+            return new PagedClassificationPolicy(value ?? new ChangeTrackingList<ClassificationPolicy>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

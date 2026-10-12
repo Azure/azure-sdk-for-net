@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.Network.Mocking
         private ApplicationGateways _applicationGatewaysRestClient;
         private ClientDiagnostics _applicationSecurityGroupsClientDiagnostics;
         private ApplicationSecurityGroups _applicationSecurityGroupsRestClient;
+        private ClientDiagnostics _authenticationPoliciesClientDiagnostics;
+        private AuthenticationPolicies _authenticationPoliciesRestClient;
         private ClientDiagnostics _azureFirewallsClientDiagnostics;
         private AzureFirewalls _azureFirewallsRestClient;
         private ClientDiagnostics _bastionHostsClientDiagnostics;
@@ -162,251 +164,255 @@ namespace Azure.ResourceManager.Network.Mocking
 
         private ClientDiagnostics ApplicationGatewaysClientDiagnostics => _applicationGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ApplicationGateways ApplicationGatewaysRestClient => _applicationGatewaysRestClient ??= new ApplicationGateways(ApplicationGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private ApplicationGateways ApplicationGatewaysRestClient => _applicationGatewaysRestClient ??= new ApplicationGateways(ApplicationGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics ApplicationSecurityGroupsClientDiagnostics => _applicationSecurityGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ApplicationSecurityGroups ApplicationSecurityGroupsRestClient => _applicationSecurityGroupsRestClient ??= new ApplicationSecurityGroups(ApplicationSecurityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private ApplicationSecurityGroups ApplicationSecurityGroupsRestClient => _applicationSecurityGroupsRestClient ??= new ApplicationSecurityGroups(ApplicationSecurityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
+
+        private ClientDiagnostics AuthenticationPoliciesClientDiagnostics => _authenticationPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private AuthenticationPolicies AuthenticationPoliciesRestClient => _authenticationPoliciesRestClient ??= new AuthenticationPolicies(AuthenticationPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics AzureFirewallsClientDiagnostics => _azureFirewallsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AzureFirewalls AzureFirewallsRestClient => _azureFirewallsRestClient ??= new AzureFirewalls(AzureFirewallsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private AzureFirewalls AzureFirewallsRestClient => _azureFirewallsRestClient ??= new AzureFirewalls(AzureFirewallsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics BastionHostsClientDiagnostics => _bastionHostsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BastionHosts BastionHostsRestClient => _bastionHostsRestClient ??= new BastionHosts(BastionHostsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private BastionHosts BastionHostsRestClient => _bastionHostsRestClient ??= new BastionHosts(BastionHostsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics NetworkInterfacesClientDiagnostics => _networkInterfacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkInterfaces NetworkInterfacesRestClient => _networkInterfacesRestClient ??= new NetworkInterfaces(NetworkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private NetworkInterfaces NetworkInterfacesRestClient => _networkInterfacesRestClient ??= new NetworkInterfaces(NetworkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics PublicIPAddressesClientDiagnostics => _publicIPAddressesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PublicIPAddresses PublicIPAddressesRestClient => _publicIPAddressesRestClient ??= new PublicIPAddresses(PublicIPAddressesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private PublicIPAddresses PublicIPAddressesRestClient => _publicIPAddressesRestClient ??= new PublicIPAddresses(PublicIPAddressesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics DdosCustomPoliciesClientDiagnostics => _ddosCustomPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DdosCustomPolicies DdosCustomPoliciesRestClient => _ddosCustomPoliciesRestClient ??= new DdosCustomPolicies(DdosCustomPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private DdosCustomPolicies DdosCustomPoliciesRestClient => _ddosCustomPoliciesRestClient ??= new DdosCustomPolicies(DdosCustomPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics DdosProtectionPlansClientDiagnostics => _ddosProtectionPlansClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DdosProtectionPlans DdosProtectionPlansRestClient => _ddosProtectionPlansRestClient ??= new DdosProtectionPlans(DdosProtectionPlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private DdosProtectionPlans DdosProtectionPlansRestClient => _ddosProtectionPlansRestClient ??= new DdosProtectionPlans(DdosProtectionPlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics ExpressRouteCircuitsClientDiagnostics => _expressRouteCircuitsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ExpressRouteCircuits ExpressRouteCircuitsRestClient => _expressRouteCircuitsRestClient ??= new ExpressRouteCircuits(ExpressRouteCircuitsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private ExpressRouteCircuits ExpressRouteCircuitsRestClient => _expressRouteCircuitsRestClient ??= new ExpressRouteCircuits(ExpressRouteCircuitsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics ExpressRouteCrossConnectionsClientDiagnostics => _expressRouteCrossConnectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ExpressRouteCrossConnections ExpressRouteCrossConnectionsRestClient => _expressRouteCrossConnectionsRestClient ??= new ExpressRouteCrossConnections(ExpressRouteCrossConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private ExpressRouteCrossConnections ExpressRouteCrossConnectionsRestClient => _expressRouteCrossConnectionsRestClient ??= new ExpressRouteCrossConnections(ExpressRouteCrossConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics ExpressRoutePortsClientDiagnostics => _expressRoutePortsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ExpressRoutePorts ExpressRoutePortsRestClient => _expressRoutePortsRestClient ??= new ExpressRoutePorts(ExpressRoutePortsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private ExpressRoutePorts ExpressRoutePortsRestClient => _expressRoutePortsRestClient ??= new ExpressRoutePorts(ExpressRoutePortsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics ExpressRouteLagsClientDiagnostics => _expressRouteLagsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ExpressRouteLags ExpressRouteLagsRestClient => _expressRouteLagsRestClient ??= new ExpressRouteLags(ExpressRouteLagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private ExpressRouteLags ExpressRouteLagsRestClient => _expressRouteLagsRestClient ??= new ExpressRouteLags(ExpressRouteLagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics FirewallPoliciesClientDiagnostics => _firewallPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FirewallPolicies FirewallPoliciesRestClient => _firewallPoliciesRestClient ??= new FirewallPolicies(FirewallPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private FirewallPolicies FirewallPoliciesRestClient => _firewallPoliciesRestClient ??= new FirewallPolicies(FirewallPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics NetworkManagersClientDiagnostics => _networkManagersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkManagers NetworkManagersRestClient => _networkManagersRestClient ??= new NetworkManagers(NetworkManagersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private NetworkManagers NetworkManagersRestClient => _networkManagersRestClient ??= new NetworkManagers(NetworkManagersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics IpAllocationsClientDiagnostics => _ipAllocationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private IpAllocations IpAllocationsRestClient => _ipAllocationsRestClient ??= new IpAllocations(IpAllocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private IpAllocations IpAllocationsRestClient => _ipAllocationsRestClient ??= new IpAllocations(IpAllocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics IpGroupsClientDiagnostics => _ipGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private IpGroups IpGroupsRestClient => _ipGroupsRestClient ??= new IpGroups(IpGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private IpGroups IpGroupsRestClient => _ipGroupsRestClient ??= new IpGroups(IpGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics LoadBalancersClientDiagnostics => _loadBalancersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private LoadBalancers LoadBalancersRestClient => _loadBalancersRestClient ??= new LoadBalancers(LoadBalancersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private LoadBalancers LoadBalancersRestClient => _loadBalancersRestClient ??= new LoadBalancers(LoadBalancersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics NatGatewaysClientDiagnostics => _natGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NatGateways NatGatewaysRestClient => _natGatewaysRestClient ??= new NatGateways(NatGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private NatGateways NatGatewaysRestClient => _natGatewaysRestClient ??= new NatGateways(NatGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics NetworkProfilesClientDiagnostics => _networkProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkProfiles NetworkProfilesRestClient => _networkProfilesRestClient ??= new NetworkProfiles(NetworkProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private NetworkProfiles NetworkProfilesRestClient => _networkProfilesRestClient ??= new NetworkProfiles(NetworkProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics NetworkSecurityGroupsClientDiagnostics => _networkSecurityGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkSecurityGroups NetworkSecurityGroupsRestClient => _networkSecurityGroupsRestClient ??= new NetworkSecurityGroups(NetworkSecurityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private NetworkSecurityGroups NetworkSecurityGroupsRestClient => _networkSecurityGroupsRestClient ??= new NetworkSecurityGroups(NetworkSecurityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics NetworkSecurityPerimetersClientDiagnostics => _networkSecurityPerimetersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkSecurityPerimeters NetworkSecurityPerimetersRestClient => _networkSecurityPerimetersRestClient ??= new NetworkSecurityPerimeters(NetworkSecurityPerimetersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private NetworkSecurityPerimeters NetworkSecurityPerimetersRestClient => _networkSecurityPerimetersRestClient ??= new NetworkSecurityPerimeters(NetworkSecurityPerimetersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics NetworkVirtualAppliancesClientDiagnostics => _networkVirtualAppliancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkVirtualAppliances NetworkVirtualAppliancesRestClient => _networkVirtualAppliancesRestClient ??= new NetworkVirtualAppliances(NetworkVirtualAppliancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private NetworkVirtualAppliances NetworkVirtualAppliancesRestClient => _networkVirtualAppliancesRestClient ??= new NetworkVirtualAppliances(NetworkVirtualAppliancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics NetworkWatchersClientDiagnostics => _networkWatchersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkWatchers NetworkWatchersRestClient => _networkWatchersRestClient ??= new NetworkWatchers(NetworkWatchersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private NetworkWatchers NetworkWatchersRestClient => _networkWatchersRestClient ??= new NetworkWatchers(NetworkWatchersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics PrivateEndpointsClientDiagnostics => _privateEndpointsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PrivateEndpoints PrivateEndpointsRestClient => _privateEndpointsRestClient ??= new PrivateEndpoints(PrivateEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private PrivateEndpoints PrivateEndpointsRestClient => _privateEndpointsRestClient ??= new PrivateEndpoints(PrivateEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics PrivateLinkServicesClientDiagnostics => _privateLinkServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PrivateLinkServices PrivateLinkServicesRestClient => _privateLinkServicesRestClient ??= new PrivateLinkServices(PrivateLinkServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private PrivateLinkServices PrivateLinkServicesRestClient => _privateLinkServicesRestClient ??= new PrivateLinkServices(PrivateLinkServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics PublicIPPrefixesClientDiagnostics => _publicIPPrefixesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PublicIPPrefixes PublicIPPrefixesRestClient => _publicIPPrefixesRestClient ??= new PublicIPPrefixes(PublicIPPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private PublicIPPrefixes PublicIPPrefixesRestClient => _publicIPPrefixesRestClient ??= new PublicIPPrefixes(PublicIPPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics RouteFiltersClientDiagnostics => _routeFiltersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RouteFilters RouteFiltersRestClient => _routeFiltersRestClient ??= new RouteFilters(RouteFiltersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private RouteFilters RouteFiltersRestClient => _routeFiltersRestClient ??= new RouteFilters(RouteFiltersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics RouteTablesClientDiagnostics => _routeTablesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RouteTables RouteTablesRestClient => _routeTablesRestClient ??= new RouteTables(RouteTablesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private RouteTables RouteTablesRestClient => _routeTablesRestClient ??= new RouteTables(RouteTablesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics SecurityPartnerProvidersClientDiagnostics => _securityPartnerProvidersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SecurityPartnerProviders SecurityPartnerProvidersRestClient => _securityPartnerProvidersRestClient ??= new SecurityPartnerProviders(SecurityPartnerProvidersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private SecurityPartnerProviders SecurityPartnerProvidersRestClient => _securityPartnerProvidersRestClient ??= new SecurityPartnerProviders(SecurityPartnerProvidersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics ServiceEndpointPoliciesClientDiagnostics => _serviceEndpointPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ServiceEndpointPolicies ServiceEndpointPoliciesRestClient => _serviceEndpointPoliciesRestClient ??= new ServiceEndpointPolicies(ServiceEndpointPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private ServiceEndpointPolicies ServiceEndpointPoliciesRestClient => _serviceEndpointPoliciesRestClient ??= new ServiceEndpointPolicies(ServiceEndpointPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics VirtualNetworksClientDiagnostics => _virtualNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualNetworks VirtualNetworksRestClient => _virtualNetworksRestClient ??= new VirtualNetworks(VirtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private VirtualNetworks VirtualNetworksRestClient => _virtualNetworksRestClient ??= new VirtualNetworks(VirtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics VirtualNetworkTapsClientDiagnostics => _virtualNetworkTapsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualNetworkTaps VirtualNetworkTapsRestClient => _virtualNetworkTapsRestClient ??= new VirtualNetworkTaps(VirtualNetworkTapsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private VirtualNetworkTaps VirtualNetworkTapsRestClient => _virtualNetworkTapsRestClient ??= new VirtualNetworkTaps(VirtualNetworkTapsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics VirtualRoutersClientDiagnostics => _virtualRoutersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualRouters VirtualRoutersRestClient => _virtualRoutersRestClient ??= new VirtualRouters(VirtualRoutersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private VirtualRouters VirtualRoutersRestClient => _virtualRoutersRestClient ??= new VirtualRouters(VirtualRoutersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics VirtualWansClientDiagnostics => _virtualWansClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualWans VirtualWansRestClient => _virtualWansRestClient ??= new VirtualWans(VirtualWansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private VirtualWans VirtualWansRestClient => _virtualWansRestClient ??= new VirtualWans(VirtualWansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics VpnSitesClientDiagnostics => _vpnSitesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VpnSites VpnSitesRestClient => _vpnSitesRestClient ??= new VpnSites(VpnSitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private VpnSites VpnSitesRestClient => _vpnSitesRestClient ??= new VpnSites(VpnSitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics VpnServerConfigurationsClientDiagnostics => _vpnServerConfigurationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VpnServerConfigurations VpnServerConfigurationsRestClient => _vpnServerConfigurationsRestClient ??= new VpnServerConfigurations(VpnServerConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private VpnServerConfigurations VpnServerConfigurationsRestClient => _vpnServerConfigurationsRestClient ??= new VpnServerConfigurations(VpnServerConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics VirtualHubsClientDiagnostics => _virtualHubsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualHubs VirtualHubsRestClient => _virtualHubsRestClient ??= new VirtualHubs(VirtualHubsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private VirtualHubs VirtualHubsRestClient => _virtualHubsRestClient ??= new VirtualHubs(VirtualHubsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics VpnGatewaysClientDiagnostics => _vpnGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VpnGateways VpnGatewaysRestClient => _vpnGatewaysRestClient ??= new VpnGateways(VpnGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private VpnGateways VpnGatewaysRestClient => _vpnGatewaysRestClient ??= new VpnGateways(VpnGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics WebApplicationFirewallPoliciesClientDiagnostics => _webApplicationFirewallPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private WebApplicationFirewallPolicies WebApplicationFirewallPoliciesRestClient => _webApplicationFirewallPoliciesRestClient ??= new WebApplicationFirewallPolicies(WebApplicationFirewallPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private WebApplicationFirewallPolicies WebApplicationFirewallPoliciesRestClient => _webApplicationFirewallPoliciesRestClient ??= new WebApplicationFirewallPolicies(WebApplicationFirewallPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics VirtualNetworkAppliancesClientDiagnostics => _virtualNetworkAppliancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualNetworkAppliances VirtualNetworkAppliancesRestClient => _virtualNetworkAppliancesRestClient ??= new VirtualNetworkAppliances(VirtualNetworkAppliancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private VirtualNetworkAppliances VirtualNetworkAppliancesRestClient => _virtualNetworkAppliancesRestClient ??= new VirtualNetworkAppliances(VirtualNetworkAppliancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics ServiceGatewaysClientDiagnostics => _serviceGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ServiceGateways ServiceGatewaysRestClient => _serviceGatewaysRestClient ??= new ServiceGateways(ServiceGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private ServiceGateways ServiceGatewaysRestClient => _serviceGatewaysRestClient ??= new ServiceGateways(ServiceGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics InterconnectGroupsClientDiagnostics => _interconnectGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private InterconnectGroups InterconnectGroupsRestClient => _interconnectGroupsRestClient ??= new InterconnectGroups(InterconnectGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private InterconnectGroups InterconnectGroupsRestClient => _interconnectGroupsRestClient ??= new InterconnectGroups(InterconnectGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics FirstPartyServiceTagsClientDiagnostics => _firstPartyServiceTagsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FirstPartyServiceTags FirstPartyServiceTagsRestClient => _firstPartyServiceTagsRestClient ??= new FirstPartyServiceTags(FirstPartyServiceTagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private FirstPartyServiceTags FirstPartyServiceTagsRestClient => _firstPartyServiceTagsRestClient ??= new FirstPartyServiceTags(FirstPartyServiceTagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics CustomIPPrefixesClientDiagnostics => _customIPPrefixesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CustomIPPrefixes CustomIPPrefixesRestClient => _customIPPrefixesRestClient ??= new CustomIPPrefixes(CustomIPPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private CustomIPPrefixes CustomIPPrefixesRestClient => _customIPPrefixesRestClient ??= new CustomIPPrefixes(CustomIPPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics DscpConfigurationClientDiagnostics => _dscpConfigurationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DscpConfiguration DscpConfigurationRestClient => _dscpConfigurationRestClient ??= new DscpConfiguration(DscpConfigurationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private DscpConfiguration DscpConfigurationRestClient => _dscpConfigurationRestClient ??= new DscpConfiguration(DscpConfigurationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics P2sVpnGatewaysClientDiagnostics => _p2sVpnGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private P2sVpnGateways P2sVpnGatewaysRestClient => _p2sVpnGatewaysRestClient ??= new P2sVpnGateways(P2sVpnGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private P2sVpnGateways P2sVpnGatewaysRestClient => _p2sVpnGatewaysRestClient ??= new P2sVpnGateways(P2sVpnGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics ExpressRouteGatewaysClientDiagnostics => _expressRouteGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ExpressRouteGateways ExpressRouteGatewaysRestClient => _expressRouteGatewaysRestClient ??= new ExpressRouteGateways(ExpressRouteGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private ExpressRouteGateways ExpressRouteGatewaysRestClient => _expressRouteGatewaysRestClient ??= new ExpressRouteGateways(ExpressRouteGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics CheckDnsNameAvailabilityClientDiagnostics => _checkDnsNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CheckDnsNameAvailability CheckDnsNameAvailabilityRestClient => _checkDnsNameAvailabilityRestClient ??= new CheckDnsNameAvailability(CheckDnsNameAvailabilityClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private CheckDnsNameAvailability CheckDnsNameAvailabilityRestClient => _checkDnsNameAvailabilityRestClient ??= new CheckDnsNameAvailability(CheckDnsNameAvailabilityClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics ExpressRouteProviderPortsLocationClientDiagnostics => _expressRouteProviderPortsLocationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ExpressRouteProviderPortsLocation ExpressRouteProviderPortsLocationRestClient => _expressRouteProviderPortsLocationRestClient ??= new ExpressRouteProviderPortsLocation(ExpressRouteProviderPortsLocationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private ExpressRouteProviderPortsLocation ExpressRouteProviderPortsLocationRestClient => _expressRouteProviderPortsLocationRestClient ??= new ExpressRouteProviderPortsLocation(ExpressRouteProviderPortsLocationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics AvailableDelegationsClientDiagnostics => _availableDelegationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AvailableDelegations AvailableDelegationsRestClient => _availableDelegationsRestClient ??= new AvailableDelegations(AvailableDelegationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private AvailableDelegations AvailableDelegationsRestClient => _availableDelegationsRestClient ??= new AvailableDelegations(AvailableDelegationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics AvailableServiceAliasesClientDiagnostics => _availableServiceAliasesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AvailableServiceAliases AvailableServiceAliasesRestClient => _availableServiceAliasesRestClient ??= new AvailableServiceAliases(AvailableServiceAliasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private AvailableServiceAliases AvailableServiceAliasesRestClient => _availableServiceAliasesRestClient ??= new AvailableServiceAliases(AvailableServiceAliasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics AzureFirewallFqdnTagsClientDiagnostics => _azureFirewallFqdnTagsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AzureFirewallFqdnTags AzureFirewallFqdnTagsRestClient => _azureFirewallFqdnTagsRestClient ??= new AzureFirewallFqdnTags(AzureFirewallFqdnTagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private AzureFirewallFqdnTags AzureFirewallFqdnTagsRestClient => _azureFirewallFqdnTagsRestClient ??= new AzureFirewallFqdnTags(AzureFirewallFqdnTagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics AvailableEndpointServicesClientDiagnostics => _availableEndpointServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AvailableEndpointServices AvailableEndpointServicesRestClient => _availableEndpointServicesRestClient ??= new AvailableEndpointServices(AvailableEndpointServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private AvailableEndpointServices AvailableEndpointServicesRestClient => _availableEndpointServicesRestClient ??= new AvailableEndpointServices(AvailableEndpointServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics ExpressRouteServiceProvidersClientDiagnostics => _expressRouteServiceProvidersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ExpressRouteServiceProviders ExpressRouteServiceProvidersRestClient => _expressRouteServiceProvidersRestClient ??= new ExpressRouteServiceProviders(ExpressRouteServiceProvidersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private ExpressRouteServiceProviders ExpressRouteServiceProvidersRestClient => _expressRouteServiceProvidersRestClient ??= new ExpressRouteServiceProviders(ExpressRouteServiceProvidersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics NetworkSecurityPerimeterAssociableResourceTypesClientDiagnostics => _networkSecurityPerimeterAssociableResourceTypesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkSecurityPerimeterAssociableResourceTypes NetworkSecurityPerimeterAssociableResourceTypesRestClient => _networkSecurityPerimeterAssociableResourceTypesRestClient ??= new NetworkSecurityPerimeterAssociableResourceTypes(NetworkSecurityPerimeterAssociableResourceTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private NetworkSecurityPerimeterAssociableResourceTypes NetworkSecurityPerimeterAssociableResourceTypesRestClient => _networkSecurityPerimeterAssociableResourceTypesRestClient ??= new NetworkSecurityPerimeterAssociableResourceTypes(NetworkSecurityPerimeterAssociableResourceTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics NetworkSecurityPerimeterOperationStatusesClientDiagnostics => _networkSecurityPerimeterOperationStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkSecurityPerimeterOperationStatuses NetworkSecurityPerimeterOperationStatusesRestClient => _networkSecurityPerimeterOperationStatusesRestClient ??= new NetworkSecurityPerimeterOperationStatuses(NetworkSecurityPerimeterOperationStatusesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private NetworkSecurityPerimeterOperationStatuses NetworkSecurityPerimeterOperationStatusesRestClient => _networkSecurityPerimeterOperationStatusesRestClient ??= new NetworkSecurityPerimeterOperationStatuses(NetworkSecurityPerimeterOperationStatusesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics NetworkSecurityPerimeterServiceTagsClientDiagnostics => _networkSecurityPerimeterServiceTagsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkSecurityPerimeterServiceTags NetworkSecurityPerimeterServiceTagsRestClient => _networkSecurityPerimeterServiceTagsRestClient ??= new NetworkSecurityPerimeterServiceTags(NetworkSecurityPerimeterServiceTagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private NetworkSecurityPerimeterServiceTags NetworkSecurityPerimeterServiceTagsRestClient => _networkSecurityPerimeterServiceTagsRestClient ??= new NetworkSecurityPerimeterServiceTags(NetworkSecurityPerimeterServiceTagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics AvailablePrivateEndpointTypesClientDiagnostics => _availablePrivateEndpointTypesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AvailablePrivateEndpointTypes AvailablePrivateEndpointTypesRestClient => _availablePrivateEndpointTypesRestClient ??= new AvailablePrivateEndpointTypes(AvailablePrivateEndpointTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private AvailablePrivateEndpointTypes AvailablePrivateEndpointTypesRestClient => _availablePrivateEndpointTypesRestClient ??= new AvailablePrivateEndpointTypes(AvailablePrivateEndpointTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics BgpServiceCommunitiesClientDiagnostics => _bgpServiceCommunitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BgpServiceCommunities BgpServiceCommunitiesRestClient => _bgpServiceCommunitiesRestClient ??= new BgpServiceCommunities(BgpServiceCommunitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private BgpServiceCommunities BgpServiceCommunitiesRestClient => _bgpServiceCommunitiesRestClient ??= new BgpServiceCommunities(BgpServiceCommunitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics ServiceTagsClientDiagnostics => _serviceTagsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ServiceTags ServiceTagsRestClient => _serviceTagsRestClient ??= new ServiceTags(ServiceTagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private ServiceTags ServiceTagsRestClient => _serviceTagsRestClient ??= new ServiceTags(ServiceTagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics ServiceTagInformationClientDiagnostics => _serviceTagInformationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ServiceTagInformation ServiceTagInformationRestClient => _serviceTagInformationRestClient ??= new ServiceTagInformation(ServiceTagInformationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private ServiceTagInformation ServiceTagInformationRestClient => _serviceTagInformationRestClient ??= new ServiceTagInformation(ServiceTagInformationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         /// <summary>
         /// Lists available Ssl options for configuring Ssl policy.
@@ -421,7 +427,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -455,7 +461,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -484,7 +490,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -520,7 +526,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -549,7 +555,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -578,7 +584,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -612,7 +618,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -642,7 +648,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -679,7 +685,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -708,7 +714,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -744,7 +750,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -773,7 +779,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -802,7 +808,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -814,7 +820,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApplicationGatewayData, ApplicationGatewayResource>(new ApplicationGatewaysListAllAsyncCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetApplicationGateways"), data => new ApplicationGatewayResource(Client, data));
+            return new AsyncPageableWrapper<ApplicationGatewayData, ApplicationGatewayResource>(new ApplicationGatewayDataAsync0CollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetApplicationGateways"), data => new ApplicationGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -830,7 +836,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -842,7 +848,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApplicationGatewayData, ApplicationGatewayResource>(new ApplicationGatewaysListAllCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetApplicationGateways"), data => new ApplicationGatewayResource(Client, data));
+            return new PageableWrapper<ApplicationGatewayData, ApplicationGatewayResource>(new ApplicationGatewayData0CollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetApplicationGateways"), data => new ApplicationGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -858,7 +864,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -870,7 +876,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApplicationSecurityGroupData, ApplicationSecurityGroupResource>(new ApplicationSecurityGroupsListAllAsyncCollectionResultOfT(ApplicationSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetApplicationSecurityGroups"), data => new ApplicationSecurityGroupResource(Client, data));
+            return new AsyncPageableWrapper<ApplicationSecurityGroupData, ApplicationSecurityGroupResource>(new ApplicationSecurityGroupDataAsync0CollectionResultOfT(ApplicationSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetApplicationSecurityGroups"), data => new ApplicationSecurityGroupResource(Client, data));
         }
 
         /// <summary>
@@ -886,7 +892,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -898,7 +904,63 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApplicationSecurityGroupData, ApplicationSecurityGroupResource>(new ApplicationSecurityGroupsListAllCollectionResultOfT(ApplicationSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetApplicationSecurityGroups"), data => new ApplicationSecurityGroupResource(Client, data));
+            return new PageableWrapper<ApplicationSecurityGroupData, ApplicationSecurityGroupResource>(new ApplicationSecurityGroupData0CollectionResultOfT(ApplicationSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetApplicationSecurityGroups"), data => new ApplicationSecurityGroupResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all the authentication policies in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/authenticationPolicies. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AuthenticationPolicies_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="IdentityIntegrationAuthenticationPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IdentityIntegrationAuthenticationPolicyResource> GetIdentityIntegrationAuthenticationPoliciesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<IdentityIntegrationAuthenticationPolicyData, IdentityIntegrationAuthenticationPolicyResource>(new IdentityIntegrationAuthenticationPolicyDataAsync0CollectionResultOfT(AuthenticationPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetIdentityIntegrationAuthenticationPolicies"), data => new IdentityIntegrationAuthenticationPolicyResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all the authentication policies in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/authenticationPolicies. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AuthenticationPolicies_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="IdentityIntegrationAuthenticationPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IdentityIntegrationAuthenticationPolicyResource> GetIdentityIntegrationAuthenticationPolicies(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<IdentityIntegrationAuthenticationPolicyData, IdentityIntegrationAuthenticationPolicyResource>(new IdentityIntegrationAuthenticationPolicyData0CollectionResultOfT(AuthenticationPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetIdentityIntegrationAuthenticationPolicies"), data => new IdentityIntegrationAuthenticationPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -914,7 +976,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -926,7 +988,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AzureFirewallData, AzureFirewallResource>(new AzureFirewallsListAllAsyncCollectionResultOfT(AzureFirewallsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAzureFirewalls"), data => new AzureFirewallResource(Client, data));
+            return new AsyncPageableWrapper<AzureFirewallData, AzureFirewallResource>(new AzureFirewallDataAsync0CollectionResultOfT(AzureFirewallsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAzureFirewalls"), data => new AzureFirewallResource(Client, data));
         }
 
         /// <summary>
@@ -942,7 +1004,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -954,7 +1016,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AzureFirewallData, AzureFirewallResource>(new AzureFirewallsListAllCollectionResultOfT(AzureFirewallsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAzureFirewalls"), data => new AzureFirewallResource(Client, data));
+            return new PageableWrapper<AzureFirewallData, AzureFirewallResource>(new AzureFirewallData0CollectionResultOfT(AzureFirewallsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAzureFirewalls"), data => new AzureFirewallResource(Client, data));
         }
 
         /// <summary>
@@ -970,7 +1032,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -982,7 +1044,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BastionHostData, BastionHostResource>(new BastionHostsGetAllAsyncCollectionResultOfT(BastionHostsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetBastionHosts"), data => new BastionHostResource(Client, data));
+            return new AsyncPageableWrapper<BastionHostData, BastionHostResource>(new BastionHostDataAsync0CollectionResultOfT(BastionHostsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetBastionHosts"), data => new BastionHostResource(Client, data));
         }
 
         /// <summary>
@@ -998,7 +1060,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1010,7 +1072,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BastionHostData, BastionHostResource>(new BastionHostsGetAllCollectionResultOfT(BastionHostsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetBastionHosts"), data => new BastionHostResource(Client, data));
+            return new PageableWrapper<BastionHostData, BastionHostResource>(new BastionHostData0CollectionResultOfT(BastionHostsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetBastionHosts"), data => new BastionHostResource(Client, data));
         }
 
         /// <summary>
@@ -1026,7 +1088,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1038,7 +1100,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkInterfaceData, NetworkInterfaceResource>(new NetworkInterfacesListAllAsyncCollectionResultOfT(NetworkInterfacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNetworkInterfaces"), data => new NetworkInterfaceResource(Client, data));
+            return new AsyncPageableWrapper<NetworkInterfaceData, NetworkInterfaceResource>(new NetworkInterfaceDataAsync0CollectionResultOfT(NetworkInterfacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNetworkInterfaces"), data => new NetworkInterfaceResource(Client, data));
         }
 
         /// <summary>
@@ -1054,7 +1116,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1066,7 +1128,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkInterfaceData, NetworkInterfaceResource>(new NetworkInterfacesListAllCollectionResultOfT(NetworkInterfacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNetworkInterfaces"), data => new NetworkInterfaceResource(Client, data));
+            return new PageableWrapper<NetworkInterfaceData, NetworkInterfaceResource>(new NetworkInterfaceData0CollectionResultOfT(NetworkInterfacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNetworkInterfaces"), data => new NetworkInterfaceResource(Client, data));
         }
 
         /// <summary>
@@ -1082,7 +1144,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1094,7 +1156,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PublicIPAddressData, PublicIPAddressResource>(new PublicIPAddressesListAllAsyncCollectionResultOfT(PublicIPAddressesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetPublicIPAddresses"), data => new PublicIPAddressResource(Client, data));
+            return new AsyncPageableWrapper<PublicIPAddressData, PublicIPAddressResource>(new PublicIPAddressDataAsync0CollectionResultOfT(PublicIPAddressesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetPublicIPAddresses"), data => new PublicIPAddressResource(Client, data));
         }
 
         /// <summary>
@@ -1110,7 +1172,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1122,7 +1184,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PublicIPAddressData, PublicIPAddressResource>(new PublicIPAddressesListAllCollectionResultOfT(PublicIPAddressesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetPublicIPAddresses"), data => new PublicIPAddressResource(Client, data));
+            return new PageableWrapper<PublicIPAddressData, PublicIPAddressResource>(new PublicIPAddressData0CollectionResultOfT(PublicIPAddressesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetPublicIPAddresses"), data => new PublicIPAddressResource(Client, data));
         }
 
         /// <summary>
@@ -1138,7 +1200,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1150,7 +1212,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DdosCustomPolicyData, DdosCustomPolicyResource>(new DdosCustomPoliciesListAllAsyncCollectionResultOfT(DdosCustomPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetDdosCustomPolicies"), data => new DdosCustomPolicyResource(Client, data));
+            return new AsyncPageableWrapper<DdosCustomPolicyData, DdosCustomPolicyResource>(new DdosCustomPolicyDataAsync0CollectionResultOfT(DdosCustomPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetDdosCustomPolicies"), data => new DdosCustomPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -1166,7 +1228,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1178,7 +1240,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DdosCustomPolicyData, DdosCustomPolicyResource>(new DdosCustomPoliciesListAllCollectionResultOfT(DdosCustomPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetDdosCustomPolicies"), data => new DdosCustomPolicyResource(Client, data));
+            return new PageableWrapper<DdosCustomPolicyData, DdosCustomPolicyResource>(new DdosCustomPolicyData0CollectionResultOfT(DdosCustomPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetDdosCustomPolicies"), data => new DdosCustomPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -1194,7 +1256,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1206,7 +1268,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DdosProtectionPlanData, DdosProtectionPlanResource>(new DdosProtectionPlansGetAllAsyncCollectionResultOfT(DdosProtectionPlansRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetDdosProtectionPlans"), data => new DdosProtectionPlanResource(Client, data));
+            return new AsyncPageableWrapper<DdosProtectionPlanData, DdosProtectionPlanResource>(new DdosProtectionPlanDataAsync0CollectionResultOfT(DdosProtectionPlansRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetDdosProtectionPlans"), data => new DdosProtectionPlanResource(Client, data));
         }
 
         /// <summary>
@@ -1222,7 +1284,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1234,7 +1296,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DdosProtectionPlanData, DdosProtectionPlanResource>(new DdosProtectionPlansGetAllCollectionResultOfT(DdosProtectionPlansRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetDdosProtectionPlans"), data => new DdosProtectionPlanResource(Client, data));
+            return new PageableWrapper<DdosProtectionPlanData, DdosProtectionPlanResource>(new DdosProtectionPlanData0CollectionResultOfT(DdosProtectionPlansRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetDdosProtectionPlans"), data => new DdosProtectionPlanResource(Client, data));
         }
 
         /// <summary>
@@ -1250,7 +1312,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1262,7 +1324,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExpressRouteCircuitData, ExpressRouteCircuitResource>(new ExpressRouteCircuitsListAllAsyncCollectionResultOfT(ExpressRouteCircuitsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetExpressRouteCircuits"), data => new ExpressRouteCircuitResource(Client, data));
+            return new AsyncPageableWrapper<ExpressRouteCircuitData, ExpressRouteCircuitResource>(new ExpressRouteCircuitDataAsync0CollectionResultOfT(ExpressRouteCircuitsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetExpressRouteCircuits"), data => new ExpressRouteCircuitResource(Client, data));
         }
 
         /// <summary>
@@ -1278,7 +1340,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1290,7 +1352,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExpressRouteCircuitData, ExpressRouteCircuitResource>(new ExpressRouteCircuitsListAllCollectionResultOfT(ExpressRouteCircuitsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetExpressRouteCircuits"), data => new ExpressRouteCircuitResource(Client, data));
+            return new PageableWrapper<ExpressRouteCircuitData, ExpressRouteCircuitResource>(new ExpressRouteCircuitData0CollectionResultOfT(ExpressRouteCircuitsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetExpressRouteCircuits"), data => new ExpressRouteCircuitResource(Client, data));
         }
 
         /// <summary>
@@ -1306,7 +1368,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1319,7 +1381,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExpressRouteCrossConnectionData, ExpressRouteCrossConnectionResource>(new ExpressRouteCrossConnectionsGetAllAsyncCollectionResultOfT(ExpressRouteCrossConnectionsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableNetworkSubscriptionResource.GetExpressRouteCrossConnections"), data => new ExpressRouteCrossConnectionResource(Client, data));
+            return new AsyncPageableWrapper<ExpressRouteCrossConnectionData, ExpressRouteCrossConnectionResource>(new ExpressRouteCrossConnectionDataAsync0CollectionResultOfT(ExpressRouteCrossConnectionsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableNetworkSubscriptionResource.GetExpressRouteCrossConnections"), data => new ExpressRouteCrossConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -1335,7 +1397,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1348,7 +1410,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExpressRouteCrossConnectionData, ExpressRouteCrossConnectionResource>(new ExpressRouteCrossConnectionsGetAllCollectionResultOfT(ExpressRouteCrossConnectionsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableNetworkSubscriptionResource.GetExpressRouteCrossConnections"), data => new ExpressRouteCrossConnectionResource(Client, data));
+            return new PageableWrapper<ExpressRouteCrossConnectionData, ExpressRouteCrossConnectionResource>(new ExpressRouteCrossConnectionData0CollectionResultOfT(ExpressRouteCrossConnectionsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableNetworkSubscriptionResource.GetExpressRouteCrossConnections"), data => new ExpressRouteCrossConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -1364,7 +1426,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1376,7 +1438,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExpressRoutePortData, ExpressRoutePortResource>(new ExpressRoutePortsGetAllAsyncCollectionResultOfT(ExpressRoutePortsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetExpressRoutePorts"), data => new ExpressRoutePortResource(Client, data));
+            return new AsyncPageableWrapper<ExpressRoutePortData, ExpressRoutePortResource>(new ExpressRoutePortDataAsync0CollectionResultOfT(ExpressRoutePortsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetExpressRoutePorts"), data => new ExpressRoutePortResource(Client, data));
         }
 
         /// <summary>
@@ -1392,7 +1454,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1404,7 +1466,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExpressRoutePortData, ExpressRoutePortResource>(new ExpressRoutePortsGetAllCollectionResultOfT(ExpressRoutePortsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetExpressRoutePorts"), data => new ExpressRoutePortResource(Client, data));
+            return new PageableWrapper<ExpressRoutePortData, ExpressRoutePortResource>(new ExpressRoutePortData0CollectionResultOfT(ExpressRoutePortsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetExpressRoutePorts"), data => new ExpressRoutePortResource(Client, data));
         }
 
         /// <summary>
@@ -1420,7 +1482,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1432,7 +1494,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExpressRouteLagData, ExpressRouteLagResource>(new ExpressRouteLagsGetAllAsyncCollectionResultOfT(ExpressRouteLagsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetExpressRouteLags"), data => new ExpressRouteLagResource(Client, data));
+            return new AsyncPageableWrapper<ExpressRouteLagData, ExpressRouteLagResource>(new ExpressRouteLagDataAsync0CollectionResultOfT(ExpressRouteLagsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetExpressRouteLags"), data => new ExpressRouteLagResource(Client, data));
         }
 
         /// <summary>
@@ -1448,7 +1510,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1460,7 +1522,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExpressRouteLagData, ExpressRouteLagResource>(new ExpressRouteLagsGetAllCollectionResultOfT(ExpressRouteLagsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetExpressRouteLags"), data => new ExpressRouteLagResource(Client, data));
+            return new PageableWrapper<ExpressRouteLagData, ExpressRouteLagResource>(new ExpressRouteLagData0CollectionResultOfT(ExpressRouteLagsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetExpressRouteLags"), data => new ExpressRouteLagResource(Client, data));
         }
 
         /// <summary>
@@ -1476,7 +1538,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1488,7 +1550,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FirewallPolicyData, FirewallPolicyResource>(new FirewallPoliciesListAllAsyncCollectionResultOfT(FirewallPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetFirewallPolicies"), data => new FirewallPolicyResource(Client, data));
+            return new AsyncPageableWrapper<FirewallPolicyData, FirewallPolicyResource>(new FirewallPolicyDataAsync0CollectionResultOfT(FirewallPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetFirewallPolicies"), data => new FirewallPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -1504,7 +1566,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1516,7 +1578,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FirewallPolicyData, FirewallPolicyResource>(new FirewallPoliciesListAllCollectionResultOfT(FirewallPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetFirewallPolicies"), data => new FirewallPolicyResource(Client, data));
+            return new PageableWrapper<FirewallPolicyData, FirewallPolicyResource>(new FirewallPolicyData0CollectionResultOfT(FirewallPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetFirewallPolicies"), data => new FirewallPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -1532,7 +1594,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1546,7 +1608,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkManagerData, NetworkManagerResource>(new NetworkManagersGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkManagerData, NetworkManagerResource>(new NetworkManagerDataAsync0CollectionResultOfT(
                 NetworkManagersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -1568,7 +1630,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1582,7 +1644,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkManagerData, NetworkManagerResource>(new NetworkManagersGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<NetworkManagerData, NetworkManagerResource>(new NetworkManagerData0CollectionResultOfT(
                 NetworkManagersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -1604,7 +1666,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1616,7 +1678,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IPAllocationData, IPAllocationResource>(new IpAllocationsGetAllAsyncCollectionResultOfT(IpAllocationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetIPAllocations"), data => new IPAllocationResource(Client, data));
+            return new AsyncPageableWrapper<IPAllocationData, IPAllocationResource>(new IPAllocationDataAsync0CollectionResultOfT(IpAllocationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetIPAllocations"), data => new IPAllocationResource(Client, data));
         }
 
         /// <summary>
@@ -1632,7 +1694,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1644,7 +1706,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IPAllocationData, IPAllocationResource>(new IpAllocationsGetAllCollectionResultOfT(IpAllocationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetIPAllocations"), data => new IPAllocationResource(Client, data));
+            return new PageableWrapper<IPAllocationData, IPAllocationResource>(new IPAllocationData0CollectionResultOfT(IpAllocationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetIPAllocations"), data => new IPAllocationResource(Client, data));
         }
 
         /// <summary>
@@ -1660,7 +1722,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1672,7 +1734,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IPGroupData, IPGroupResource>(new IpGroupsGetAllAsyncCollectionResultOfT(IpGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetIPGroups"), data => new IPGroupResource(Client, data));
+            return new AsyncPageableWrapper<IPGroupData, IPGroupResource>(new IPGroupDataAsync0CollectionResultOfT(IpGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetIPGroups"), data => new IPGroupResource(Client, data));
         }
 
         /// <summary>
@@ -1688,7 +1750,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1700,7 +1762,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IPGroupData, IPGroupResource>(new IpGroupsGetAllCollectionResultOfT(IpGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetIPGroups"), data => new IPGroupResource(Client, data));
+            return new PageableWrapper<IPGroupData, IPGroupResource>(new IPGroupData0CollectionResultOfT(IpGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetIPGroups"), data => new IPGroupResource(Client, data));
         }
 
         /// <summary>
@@ -1716,7 +1778,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1728,7 +1790,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LoadBalancerData, LoadBalancerResource>(new LoadBalancersListAllAsyncCollectionResultOfT(LoadBalancersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetLoadBalancers"), data => new LoadBalancerResource(Client, data));
+            return new AsyncPageableWrapper<LoadBalancerData, LoadBalancerResource>(new LoadBalancerDataAsync0CollectionResultOfT(LoadBalancersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetLoadBalancers"), data => new LoadBalancerResource(Client, data));
         }
 
         /// <summary>
@@ -1744,7 +1806,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1756,7 +1818,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LoadBalancerData, LoadBalancerResource>(new LoadBalancersListAllCollectionResultOfT(LoadBalancersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetLoadBalancers"), data => new LoadBalancerResource(Client, data));
+            return new PageableWrapper<LoadBalancerData, LoadBalancerResource>(new LoadBalancerData0CollectionResultOfT(LoadBalancersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetLoadBalancers"), data => new LoadBalancerResource(Client, data));
         }
 
         /// <summary>
@@ -1772,7 +1834,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1784,7 +1846,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NatGatewayData, NatGatewayResource>(new NatGatewaysListAllAsyncCollectionResultOfT(NatGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNatGateways"), data => new NatGatewayResource(Client, data));
+            return new AsyncPageableWrapper<NatGatewayData, NatGatewayResource>(new NatGatewayDataAsync0CollectionResultOfT(NatGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNatGateways"), data => new NatGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -1800,7 +1862,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1812,7 +1874,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NatGatewayData, NatGatewayResource>(new NatGatewaysListAllCollectionResultOfT(NatGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNatGateways"), data => new NatGatewayResource(Client, data));
+            return new PageableWrapper<NatGatewayData, NatGatewayResource>(new NatGatewayData0CollectionResultOfT(NatGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNatGateways"), data => new NatGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -1828,7 +1890,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1840,7 +1902,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkProfileData, NetworkProfileResource>(new NetworkProfilesListAllAsyncCollectionResultOfT(NetworkProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNetworkProfiles"), data => new NetworkProfileResource(Client, data));
+            return new AsyncPageableWrapper<NetworkProfileData, NetworkProfileResource>(new NetworkProfileDataAsync0CollectionResultOfT(NetworkProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNetworkProfiles"), data => new NetworkProfileResource(Client, data));
         }
 
         /// <summary>
@@ -1856,7 +1918,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1868,7 +1930,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkProfileData, NetworkProfileResource>(new NetworkProfilesListAllCollectionResultOfT(NetworkProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNetworkProfiles"), data => new NetworkProfileResource(Client, data));
+            return new PageableWrapper<NetworkProfileData, NetworkProfileResource>(new NetworkProfileData0CollectionResultOfT(NetworkProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNetworkProfiles"), data => new NetworkProfileResource(Client, data));
         }
 
         /// <summary>
@@ -1884,7 +1946,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1896,7 +1958,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkSecurityGroupData, NetworkSecurityGroupResource>(new NetworkSecurityGroupsListAllAsyncCollectionResultOfT(NetworkSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNetworkSecurityGroups"), data => new NetworkSecurityGroupResource(Client, data));
+            return new AsyncPageableWrapper<NetworkSecurityGroupData, NetworkSecurityGroupResource>(new NetworkSecurityGroupDataAsync0CollectionResultOfT(NetworkSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNetworkSecurityGroups"), data => new NetworkSecurityGroupResource(Client, data));
         }
 
         /// <summary>
@@ -1912,7 +1974,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1924,7 +1986,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkSecurityGroupData, NetworkSecurityGroupResource>(new NetworkSecurityGroupsListAllCollectionResultOfT(NetworkSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNetworkSecurityGroups"), data => new NetworkSecurityGroupResource(Client, data));
+            return new PageableWrapper<NetworkSecurityGroupData, NetworkSecurityGroupResource>(new NetworkSecurityGroupData0CollectionResultOfT(NetworkSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNetworkSecurityGroups"), data => new NetworkSecurityGroupResource(Client, data));
         }
 
         /// <summary>
@@ -1940,7 +2002,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1954,7 +2016,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkSecurityPerimeterData, NetworkSecurityPerimeterResource>(new NetworkSecurityPerimetersGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkSecurityPerimeterData, NetworkSecurityPerimeterResource>(new NetworkSecurityPerimeterDataAsync0CollectionResultOfT(
                 NetworkSecurityPerimetersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -1976,7 +2038,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1990,7 +2052,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkSecurityPerimeterData, NetworkSecurityPerimeterResource>(new NetworkSecurityPerimetersGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<NetworkSecurityPerimeterData, NetworkSecurityPerimeterResource>(new NetworkSecurityPerimeterData0CollectionResultOfT(
                 NetworkSecurityPerimetersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -2012,7 +2074,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2024,7 +2086,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkVirtualApplianceData, NetworkVirtualApplianceResource>(new NetworkVirtualAppliancesGetAllAsyncCollectionResultOfT(NetworkVirtualAppliancesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNetworkVirtualAppliances"), data => new NetworkVirtualApplianceResource(Client, data));
+            return new AsyncPageableWrapper<NetworkVirtualApplianceData, NetworkVirtualApplianceResource>(new NetworkVirtualApplianceDataAsync0CollectionResultOfT(NetworkVirtualAppliancesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNetworkVirtualAppliances"), data => new NetworkVirtualApplianceResource(Client, data));
         }
 
         /// <summary>
@@ -2040,7 +2102,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2052,7 +2114,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkVirtualApplianceData, NetworkVirtualApplianceResource>(new NetworkVirtualAppliancesGetAllCollectionResultOfT(NetworkVirtualAppliancesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNetworkVirtualAppliances"), data => new NetworkVirtualApplianceResource(Client, data));
+            return new PageableWrapper<NetworkVirtualApplianceData, NetworkVirtualApplianceResource>(new NetworkVirtualApplianceData0CollectionResultOfT(NetworkVirtualAppliancesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNetworkVirtualAppliances"), data => new NetworkVirtualApplianceResource(Client, data));
         }
 
         /// <summary>
@@ -2068,7 +2130,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2080,7 +2142,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkWatcherData, NetworkWatcherResource>(new NetworkWatchersListAllAsyncCollectionResultOfT(NetworkWatchersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNetworkWatchers"), data => new NetworkWatcherResource(Client, data));
+            return new AsyncPageableWrapper<NetworkWatcherData, NetworkWatcherResource>(new NetworkWatcherDataAsync0CollectionResultOfT(NetworkWatchersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNetworkWatchers"), data => new NetworkWatcherResource(Client, data));
         }
 
         /// <summary>
@@ -2096,7 +2158,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2108,7 +2170,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkWatcherData, NetworkWatcherResource>(new NetworkWatchersListAllCollectionResultOfT(NetworkWatchersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNetworkWatchers"), data => new NetworkWatcherResource(Client, data));
+            return new PageableWrapper<NetworkWatcherData, NetworkWatcherResource>(new NetworkWatcherData0CollectionResultOfT(NetworkWatchersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNetworkWatchers"), data => new NetworkWatcherResource(Client, data));
         }
 
         /// <summary>
@@ -2124,7 +2186,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2136,7 +2198,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PrivateEndpointData, PrivateEndpointResource>(new PrivateEndpointsGetBySubscriptionAsyncCollectionResultOfT(PrivateEndpointsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetPrivateEndpoints"), data => new PrivateEndpointResource(Client, data));
+            return new AsyncPageableWrapper<PrivateEndpointData, PrivateEndpointResource>(new PrivateEndpointDataAsync0CollectionResultOfT(PrivateEndpointsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetPrivateEndpoints"), data => new PrivateEndpointResource(Client, data));
         }
 
         /// <summary>
@@ -2152,7 +2214,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2164,7 +2226,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PrivateEndpointData, PrivateEndpointResource>(new PrivateEndpointsGetBySubscriptionCollectionResultOfT(PrivateEndpointsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetPrivateEndpoints"), data => new PrivateEndpointResource(Client, data));
+            return new PageableWrapper<PrivateEndpointData, PrivateEndpointResource>(new PrivateEndpointData0CollectionResultOfT(PrivateEndpointsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetPrivateEndpoints"), data => new PrivateEndpointResource(Client, data));
         }
 
         /// <summary>
@@ -2180,7 +2242,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2192,7 +2254,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PrivateLinkServiceData, PrivateLinkServiceResource>(new PrivateLinkServicesGetBySubscriptionAsyncCollectionResultOfT(PrivateLinkServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetPrivateLinkServices"), data => new PrivateLinkServiceResource(Client, data));
+            return new AsyncPageableWrapper<PrivateLinkServiceData, PrivateLinkServiceResource>(new PrivateLinkServiceDataAsync0CollectionResultOfT(PrivateLinkServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetPrivateLinkServices"), data => new PrivateLinkServiceResource(Client, data));
         }
 
         /// <summary>
@@ -2208,7 +2270,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2220,7 +2282,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PrivateLinkServiceData, PrivateLinkServiceResource>(new PrivateLinkServicesGetBySubscriptionCollectionResultOfT(PrivateLinkServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetPrivateLinkServices"), data => new PrivateLinkServiceResource(Client, data));
+            return new PageableWrapper<PrivateLinkServiceData, PrivateLinkServiceResource>(new PrivateLinkServiceData0CollectionResultOfT(PrivateLinkServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetPrivateLinkServices"), data => new PrivateLinkServiceResource(Client, data));
         }
 
         /// <summary>
@@ -2236,7 +2298,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2248,7 +2310,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PublicIPPrefixData, PublicIPPrefixResource>(new PublicIPPrefixesListAllAsyncCollectionResultOfT(PublicIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetPublicIPPrefixes"), data => new PublicIPPrefixResource(Client, data));
+            return new AsyncPageableWrapper<PublicIPPrefixData, PublicIPPrefixResource>(new PublicIPPrefixDataAsync0CollectionResultOfT(PublicIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetPublicIPPrefixes"), data => new PublicIPPrefixResource(Client, data));
         }
 
         /// <summary>
@@ -2264,7 +2326,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2276,7 +2338,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PublicIPPrefixData, PublicIPPrefixResource>(new PublicIPPrefixesListAllCollectionResultOfT(PublicIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetPublicIPPrefixes"), data => new PublicIPPrefixResource(Client, data));
+            return new PageableWrapper<PublicIPPrefixData, PublicIPPrefixResource>(new PublicIPPrefixData0CollectionResultOfT(PublicIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetPublicIPPrefixes"), data => new PublicIPPrefixResource(Client, data));
         }
 
         /// <summary>
@@ -2292,7 +2354,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2304,7 +2366,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RouteFilterData, RouteFilterResource>(new RouteFiltersGetAllAsyncCollectionResultOfT(RouteFiltersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetRouteFilters"), data => new RouteFilterResource(Client, data));
+            return new AsyncPageableWrapper<RouteFilterData, RouteFilterResource>(new RouteFilterDataAsync0CollectionResultOfT(RouteFiltersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetRouteFilters"), data => new RouteFilterResource(Client, data));
         }
 
         /// <summary>
@@ -2320,7 +2382,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2332,7 +2394,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RouteFilterData, RouteFilterResource>(new RouteFiltersGetAllCollectionResultOfT(RouteFiltersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetRouteFilters"), data => new RouteFilterResource(Client, data));
+            return new PageableWrapper<RouteFilterData, RouteFilterResource>(new RouteFilterData0CollectionResultOfT(RouteFiltersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetRouteFilters"), data => new RouteFilterResource(Client, data));
         }
 
         /// <summary>
@@ -2348,7 +2410,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2360,7 +2422,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RouteTableData, RouteTableResource>(new RouteTablesListAllAsyncCollectionResultOfT(RouteTablesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetRouteTables"), data => new RouteTableResource(Client, data));
+            return new AsyncPageableWrapper<RouteTableData, RouteTableResource>(new RouteTableDataAsync0CollectionResultOfT(RouteTablesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetRouteTables"), data => new RouteTableResource(Client, data));
         }
 
         /// <summary>
@@ -2376,7 +2438,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2388,7 +2450,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RouteTableData, RouteTableResource>(new RouteTablesListAllCollectionResultOfT(RouteTablesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetRouteTables"), data => new RouteTableResource(Client, data));
+            return new PageableWrapper<RouteTableData, RouteTableResource>(new RouteTableData0CollectionResultOfT(RouteTablesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetRouteTables"), data => new RouteTableResource(Client, data));
         }
 
         /// <summary>
@@ -2404,7 +2466,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2416,7 +2478,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityPartnerProviderData, SecurityPartnerProviderResource>(new SecurityPartnerProvidersGetAllAsyncCollectionResultOfT(SecurityPartnerProvidersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetSecurityPartnerProviders"), data => new SecurityPartnerProviderResource(Client, data));
+            return new AsyncPageableWrapper<SecurityPartnerProviderData, SecurityPartnerProviderResource>(new SecurityPartnerProviderDataAsync0CollectionResultOfT(SecurityPartnerProvidersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetSecurityPartnerProviders"), data => new SecurityPartnerProviderResource(Client, data));
         }
 
         /// <summary>
@@ -2432,7 +2494,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2444,7 +2506,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityPartnerProviderData, SecurityPartnerProviderResource>(new SecurityPartnerProvidersGetAllCollectionResultOfT(SecurityPartnerProvidersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetSecurityPartnerProviders"), data => new SecurityPartnerProviderResource(Client, data));
+            return new PageableWrapper<SecurityPartnerProviderData, SecurityPartnerProviderResource>(new SecurityPartnerProviderData0CollectionResultOfT(SecurityPartnerProvidersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetSecurityPartnerProviders"), data => new SecurityPartnerProviderResource(Client, data));
         }
 
         /// <summary>
@@ -2460,7 +2522,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2472,7 +2534,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceEndpointPolicyData, ServiceEndpointPolicyResource>(new ServiceEndpointPoliciesGetAllAsyncCollectionResultOfT(ServiceEndpointPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetServiceEndpointPolicies"), data => new ServiceEndpointPolicyResource(Client, data));
+            return new AsyncPageableWrapper<ServiceEndpointPolicyData, ServiceEndpointPolicyResource>(new ServiceEndpointPolicyDataAsync0CollectionResultOfT(ServiceEndpointPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetServiceEndpointPolicies"), data => new ServiceEndpointPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -2488,7 +2550,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2500,7 +2562,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceEndpointPolicyData, ServiceEndpointPolicyResource>(new ServiceEndpointPoliciesGetAllCollectionResultOfT(ServiceEndpointPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetServiceEndpointPolicies"), data => new ServiceEndpointPolicyResource(Client, data));
+            return new PageableWrapper<ServiceEndpointPolicyData, ServiceEndpointPolicyResource>(new ServiceEndpointPolicyData0CollectionResultOfT(ServiceEndpointPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetServiceEndpointPolicies"), data => new ServiceEndpointPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -2516,7 +2578,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2528,7 +2590,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualNetworkData, VirtualNetworkResource>(new VirtualNetworksListAllAsyncCollectionResultOfT(VirtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualNetworks"), data => new VirtualNetworkResource(Client, data));
+            return new AsyncPageableWrapper<VirtualNetworkData, VirtualNetworkResource>(new VirtualNetworkDataAsync0CollectionResultOfT(VirtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualNetworks"), data => new VirtualNetworkResource(Client, data));
         }
 
         /// <summary>
@@ -2544,7 +2606,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2556,7 +2618,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualNetworkData, VirtualNetworkResource>(new VirtualNetworksListAllCollectionResultOfT(VirtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualNetworks"), data => new VirtualNetworkResource(Client, data));
+            return new PageableWrapper<VirtualNetworkData, VirtualNetworkResource>(new VirtualNetworkData0CollectionResultOfT(VirtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualNetworks"), data => new VirtualNetworkResource(Client, data));
         }
 
         /// <summary>
@@ -2572,7 +2634,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2584,7 +2646,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualNetworkTapData, VirtualNetworkTapResource>(new VirtualNetworkTapsGetAllAsyncCollectionResultOfT(VirtualNetworkTapsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualNetworkTaps"), data => new VirtualNetworkTapResource(Client, data));
+            return new AsyncPageableWrapper<VirtualNetworkTapData, VirtualNetworkTapResource>(new VirtualNetworkTapDataAsync0CollectionResultOfT(VirtualNetworkTapsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualNetworkTaps"), data => new VirtualNetworkTapResource(Client, data));
         }
 
         /// <summary>
@@ -2600,7 +2662,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2612,7 +2674,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualNetworkTapData, VirtualNetworkTapResource>(new VirtualNetworkTapsGetAllCollectionResultOfT(VirtualNetworkTapsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualNetworkTaps"), data => new VirtualNetworkTapResource(Client, data));
+            return new PageableWrapper<VirtualNetworkTapData, VirtualNetworkTapResource>(new VirtualNetworkTapData0CollectionResultOfT(VirtualNetworkTapsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualNetworkTaps"), data => new VirtualNetworkTapResource(Client, data));
         }
 
         /// <summary>
@@ -2628,7 +2690,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2640,7 +2702,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualRouterData, VirtualRouterResource>(new VirtualRoutersGetAllAsyncCollectionResultOfT(VirtualRoutersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualRouters"), data => new VirtualRouterResource(Client, data));
+            return new AsyncPageableWrapper<VirtualRouterData, VirtualRouterResource>(new VirtualRouterDataAsync0CollectionResultOfT(VirtualRoutersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualRouters"), data => new VirtualRouterResource(Client, data));
         }
 
         /// <summary>
@@ -2656,7 +2718,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2668,7 +2730,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualRouterData, VirtualRouterResource>(new VirtualRoutersGetAllCollectionResultOfT(VirtualRoutersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualRouters"), data => new VirtualRouterResource(Client, data));
+            return new PageableWrapper<VirtualRouterData, VirtualRouterResource>(new VirtualRouterData0CollectionResultOfT(VirtualRoutersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualRouters"), data => new VirtualRouterResource(Client, data));
         }
 
         /// <summary>
@@ -2684,7 +2746,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2696,7 +2758,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualWanData, VirtualWanResource>(new VirtualWansGetAllAsyncCollectionResultOfT(VirtualWansRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualWans"), data => new VirtualWanResource(Client, data));
+            return new AsyncPageableWrapper<VirtualWanData, VirtualWanResource>(new VirtualWanDataAsync0CollectionResultOfT(VirtualWansRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualWans"), data => new VirtualWanResource(Client, data));
         }
 
         /// <summary>
@@ -2712,7 +2774,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2724,7 +2786,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualWanData, VirtualWanResource>(new VirtualWansGetAllCollectionResultOfT(VirtualWansRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualWans"), data => new VirtualWanResource(Client, data));
+            return new PageableWrapper<VirtualWanData, VirtualWanResource>(new VirtualWanData0CollectionResultOfT(VirtualWansRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualWans"), data => new VirtualWanResource(Client, data));
         }
 
         /// <summary>
@@ -2740,7 +2802,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2752,7 +2814,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VpnSiteData, VpnSiteResource>(new VpnSitesGetAllAsyncCollectionResultOfT(VpnSitesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVpnSites"), data => new VpnSiteResource(Client, data));
+            return new AsyncPageableWrapper<VpnSiteData, VpnSiteResource>(new VpnSiteDataAsync0CollectionResultOfT(VpnSitesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVpnSites"), data => new VpnSiteResource(Client, data));
         }
 
         /// <summary>
@@ -2768,7 +2830,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2780,7 +2842,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VpnSiteData, VpnSiteResource>(new VpnSitesGetAllCollectionResultOfT(VpnSitesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVpnSites"), data => new VpnSiteResource(Client, data));
+            return new PageableWrapper<VpnSiteData, VpnSiteResource>(new VpnSiteData0CollectionResultOfT(VpnSitesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVpnSites"), data => new VpnSiteResource(Client, data));
         }
 
         /// <summary>
@@ -2796,7 +2858,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2808,7 +2870,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VpnServerConfigurationData, VpnServerConfigurationResource>(new VpnServerConfigurationsGetAllAsyncCollectionResultOfT(VpnServerConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVpnServerConfigurations"), data => new VpnServerConfigurationResource(Client, data));
+            return new AsyncPageableWrapper<VpnServerConfigurationData, VpnServerConfigurationResource>(new VpnServerConfigurationDataAsync0CollectionResultOfT(VpnServerConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVpnServerConfigurations"), data => new VpnServerConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -2824,7 +2886,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2836,7 +2898,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VpnServerConfigurationData, VpnServerConfigurationResource>(new VpnServerConfigurationsGetAllCollectionResultOfT(VpnServerConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVpnServerConfigurations"), data => new VpnServerConfigurationResource(Client, data));
+            return new PageableWrapper<VpnServerConfigurationData, VpnServerConfigurationResource>(new VpnServerConfigurationData0CollectionResultOfT(VpnServerConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVpnServerConfigurations"), data => new VpnServerConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -2852,7 +2914,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2864,7 +2926,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualHubData, VirtualHubResource>(new VirtualHubsGetAllAsyncCollectionResultOfT(VirtualHubsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualHubs"), data => new VirtualHubResource(Client, data));
+            return new AsyncPageableWrapper<VirtualHubData, VirtualHubResource>(new VirtualHubDataAsync0CollectionResultOfT(VirtualHubsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualHubs"), data => new VirtualHubResource(Client, data));
         }
 
         /// <summary>
@@ -2880,7 +2942,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2892,7 +2954,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualHubData, VirtualHubResource>(new VirtualHubsGetAllCollectionResultOfT(VirtualHubsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualHubs"), data => new VirtualHubResource(Client, data));
+            return new PageableWrapper<VirtualHubData, VirtualHubResource>(new VirtualHubData0CollectionResultOfT(VirtualHubsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualHubs"), data => new VirtualHubResource(Client, data));
         }
 
         /// <summary>
@@ -2908,7 +2970,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2920,7 +2982,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VpnGatewayData, VpnGatewayResource>(new VpnGatewaysGetAllAsyncCollectionResultOfT(VpnGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVpnGateways"), data => new VpnGatewayResource(Client, data));
+            return new AsyncPageableWrapper<VpnGatewayData, VpnGatewayResource>(new VpnGatewayDataAsync0CollectionResultOfT(VpnGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVpnGateways"), data => new VpnGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -2936,7 +2998,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2948,7 +3010,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VpnGatewayData, VpnGatewayResource>(new VpnGatewaysGetAllCollectionResultOfT(VpnGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVpnGateways"), data => new VpnGatewayResource(Client, data));
+            return new PageableWrapper<VpnGatewayData, VpnGatewayResource>(new VpnGatewayData0CollectionResultOfT(VpnGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVpnGateways"), data => new VpnGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -2964,7 +3026,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2976,7 +3038,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WebApplicationFirewallPolicyData, WebApplicationFirewallPolicyResource>(new WebApplicationFirewallPoliciesListAllAsyncCollectionResultOfT(WebApplicationFirewallPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetWebApplicationFirewallPolicies"), data => new WebApplicationFirewallPolicyResource(Client, data));
+            return new AsyncPageableWrapper<WebApplicationFirewallPolicyData, WebApplicationFirewallPolicyResource>(new WebApplicationFirewallPolicyDataAsync0CollectionResultOfT(WebApplicationFirewallPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetWebApplicationFirewallPolicies"), data => new WebApplicationFirewallPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -2992,7 +3054,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3004,7 +3066,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WebApplicationFirewallPolicyData, WebApplicationFirewallPolicyResource>(new WebApplicationFirewallPoliciesListAllCollectionResultOfT(WebApplicationFirewallPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetWebApplicationFirewallPolicies"), data => new WebApplicationFirewallPolicyResource(Client, data));
+            return new PageableWrapper<WebApplicationFirewallPolicyData, WebApplicationFirewallPolicyResource>(new WebApplicationFirewallPolicyData0CollectionResultOfT(WebApplicationFirewallPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetWebApplicationFirewallPolicies"), data => new WebApplicationFirewallPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -3020,7 +3082,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3032,7 +3094,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualNetworkApplianceData, VirtualNetworkApplianceResource>(new VirtualNetworkAppliancesListAllAsyncCollectionResultOfT(VirtualNetworkAppliancesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualNetworkAppliances"), data => new VirtualNetworkApplianceResource(Client, data));
+            return new AsyncPageableWrapper<VirtualNetworkApplianceData, VirtualNetworkApplianceResource>(new VirtualNetworkApplianceDataAsync0CollectionResultOfT(VirtualNetworkAppliancesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualNetworkAppliances"), data => new VirtualNetworkApplianceResource(Client, data));
         }
 
         /// <summary>
@@ -3048,7 +3110,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3060,7 +3122,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualNetworkApplianceData, VirtualNetworkApplianceResource>(new VirtualNetworkAppliancesListAllCollectionResultOfT(VirtualNetworkAppliancesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualNetworkAppliances"), data => new VirtualNetworkApplianceResource(Client, data));
+            return new PageableWrapper<VirtualNetworkApplianceData, VirtualNetworkApplianceResource>(new VirtualNetworkApplianceData0CollectionResultOfT(VirtualNetworkAppliancesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualNetworkAppliances"), data => new VirtualNetworkApplianceResource(Client, data));
         }
 
         /// <summary>
@@ -3076,7 +3138,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3088,7 +3150,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceGatewayData, ServiceGatewayResource>(new ServiceGatewaysListAllAsyncCollectionResultOfT(ServiceGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetServiceGateways"), data => new ServiceGatewayResource(Client, data));
+            return new AsyncPageableWrapper<ServiceGatewayData, ServiceGatewayResource>(new ServiceGatewayDataAsync0CollectionResultOfT(ServiceGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetServiceGateways"), data => new ServiceGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -3104,7 +3166,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3116,7 +3178,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceGatewayData, ServiceGatewayResource>(new ServiceGatewaysListAllCollectionResultOfT(ServiceGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetServiceGateways"), data => new ServiceGatewayResource(Client, data));
+            return new PageableWrapper<ServiceGatewayData, ServiceGatewayResource>(new ServiceGatewayData0CollectionResultOfT(ServiceGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetServiceGateways"), data => new ServiceGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -3132,7 +3194,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3144,7 +3206,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<InterconnectGroupData, InterconnectGroupResource>(new InterconnectGroupsListAllAsyncCollectionResultOfT(InterconnectGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetInterconnectGroups"), data => new InterconnectGroupResource(Client, data));
+            return new AsyncPageableWrapper<InterconnectGroupData, InterconnectGroupResource>(new InterconnectGroupDataAsync0CollectionResultOfT(InterconnectGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetInterconnectGroups"), data => new InterconnectGroupResource(Client, data));
         }
 
         /// <summary>
@@ -3160,7 +3222,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3172,7 +3234,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<InterconnectGroupData, InterconnectGroupResource>(new InterconnectGroupsListAllCollectionResultOfT(InterconnectGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetInterconnectGroups"), data => new InterconnectGroupResource(Client, data));
+            return new PageableWrapper<InterconnectGroupData, InterconnectGroupResource>(new InterconnectGroupData0CollectionResultOfT(InterconnectGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetInterconnectGroups"), data => new InterconnectGroupResource(Client, data));
         }
 
         /// <summary>
@@ -3188,7 +3250,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3200,7 +3262,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FirstPartyServiceTagData, FirstPartyServiceTagResource>(new FirstPartyServiceTagsListAllAsyncCollectionResultOfT(FirstPartyServiceTagsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetFirstPartyServiceTags"), data => new FirstPartyServiceTagResource(Client, data));
+            return new AsyncPageableWrapper<FirstPartyServiceTagData, FirstPartyServiceTagResource>(new FirstPartyServiceTagDataAsync0CollectionResultOfT(FirstPartyServiceTagsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetFirstPartyServiceTags"), data => new FirstPartyServiceTagResource(Client, data));
         }
 
         /// <summary>
@@ -3216,7 +3278,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3228,7 +3290,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FirstPartyServiceTagData, FirstPartyServiceTagResource>(new FirstPartyServiceTagsListAllCollectionResultOfT(FirstPartyServiceTagsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetFirstPartyServiceTags"), data => new FirstPartyServiceTagResource(Client, data));
+            return new PageableWrapper<FirstPartyServiceTagData, FirstPartyServiceTagResource>(new FirstPartyServiceTagData0CollectionResultOfT(FirstPartyServiceTagsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetFirstPartyServiceTags"), data => new FirstPartyServiceTagResource(Client, data));
         }
 
         /// <summary>
@@ -3244,7 +3306,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3256,7 +3318,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CustomIPPrefixData, CustomIPPrefixResource>(new CustomIPPrefixesListAllAsyncCollectionResultOfT(CustomIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetCustomIPPrefixes"), data => new CustomIPPrefixResource(Client, data));
+            return new AsyncPageableWrapper<CustomIPPrefixData, CustomIPPrefixResource>(new CustomIPPrefixDataAsync0CollectionResultOfT(CustomIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetCustomIPPrefixes"), data => new CustomIPPrefixResource(Client, data));
         }
 
         /// <summary>
@@ -3272,7 +3334,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3284,7 +3346,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CustomIPPrefixData, CustomIPPrefixResource>(new CustomIPPrefixesListAllCollectionResultOfT(CustomIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetCustomIPPrefixes"), data => new CustomIPPrefixResource(Client, data));
+            return new PageableWrapper<CustomIPPrefixData, CustomIPPrefixResource>(new CustomIPPrefixData0CollectionResultOfT(CustomIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetCustomIPPrefixes"), data => new CustomIPPrefixResource(Client, data));
         }
 
         /// <summary>
@@ -3300,7 +3362,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3312,7 +3374,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DscpConfigurationData, DscpConfigurationResource>(new DscpConfigurationListAllAsyncCollectionResultOfT(DscpConfigurationRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetDscpConfigurations"), data => new DscpConfigurationResource(Client, data));
+            return new AsyncPageableWrapper<DscpConfigurationData, DscpConfigurationResource>(new DscpConfigurationDataAsync0CollectionResultOfT(DscpConfigurationRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetDscpConfigurations"), data => new DscpConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -3328,7 +3390,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3340,7 +3402,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DscpConfigurationData, DscpConfigurationResource>(new DscpConfigurationListAllCollectionResultOfT(DscpConfigurationRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetDscpConfigurations"), data => new DscpConfigurationResource(Client, data));
+            return new PageableWrapper<DscpConfigurationData, DscpConfigurationResource>(new DscpConfigurationData0CollectionResultOfT(DscpConfigurationRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetDscpConfigurations"), data => new DscpConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -3356,7 +3418,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3368,7 +3430,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<P2SVpnGatewayData, P2SVpnGatewayResource>(new P2sVpnGatewaysGetAllAsyncCollectionResultOfT(P2sVpnGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetP2SVpnGateways"), data => new P2SVpnGatewayResource(Client, data));
+            return new AsyncPageableWrapper<P2SVpnGatewayData, P2SVpnGatewayResource>(new P2SVpnGatewayDataAsync0CollectionResultOfT(P2sVpnGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetP2SVpnGateways"), data => new P2SVpnGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -3384,7 +3446,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3396,7 +3458,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<P2SVpnGatewayData, P2SVpnGatewayResource>(new P2sVpnGatewaysGetAllCollectionResultOfT(P2sVpnGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetP2SVpnGateways"), data => new P2SVpnGatewayResource(Client, data));
+            return new PageableWrapper<P2SVpnGatewayData, P2SVpnGatewayResource>(new P2SVpnGatewayData0CollectionResultOfT(P2sVpnGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetP2SVpnGateways"), data => new P2SVpnGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -3412,7 +3474,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3424,7 +3486,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftNetworkApplicationGatewaysOperationGroupListAvailableServerVariablesAsyncCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableServerVariables");
+            return new MockableNetworkSubscriptionResourceGetAvailableServerVariablesAsyncCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableServerVariables");
         }
 
         /// <summary>
@@ -3440,7 +3502,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3452,7 +3514,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftNetworkApplicationGatewaysOperationGroupListAvailableServerVariablesCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableServerVariables");
+            return new MockableNetworkSubscriptionResourceGetAvailableServerVariablesCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableServerVariables");
         }
 
         /// <summary>
@@ -3468,7 +3530,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3480,7 +3542,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftNetworkApplicationGatewaysOperationGroupListAvailableRequestHeadersAsyncCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableRequestHeaders");
+            return new MockableNetworkSubscriptionResourceGetAvailableRequestHeadersAsyncCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableRequestHeaders");
         }
 
         /// <summary>
@@ -3496,7 +3558,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3508,7 +3570,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftNetworkApplicationGatewaysOperationGroupListAvailableRequestHeadersCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableRequestHeaders");
+            return new MockableNetworkSubscriptionResourceGetAvailableRequestHeadersCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableRequestHeaders");
         }
 
         /// <summary>
@@ -3524,7 +3586,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3536,7 +3598,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftNetworkApplicationGatewaysOperationGroupListAvailableResponseHeadersAsyncCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableResponseHeaders");
+            return new MockableNetworkSubscriptionResourceGetAvailableResponseHeadersAsyncCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableResponseHeaders");
         }
 
         /// <summary>
@@ -3552,7 +3614,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3564,7 +3626,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftNetworkApplicationGatewaysOperationGroupListAvailableResponseHeadersCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableResponseHeaders");
+            return new MockableNetworkSubscriptionResourceGetAvailableResponseHeadersCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableResponseHeaders");
         }
 
         /// <summary>
@@ -3580,7 +3642,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3624,7 +3686,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3668,7 +3730,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3718,7 +3780,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3768,7 +3830,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3824,7 +3886,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3880,7 +3942,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3897,7 +3959,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkServicesGetAutoApprovedPrivateLinkServicesAsyncCollectionResultOfT(PrivateLinkServicesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAutoApprovedPrivateLinkServices");
+            return new AutoApprovedPrivateLinkServiceAsyncCollectionResultOfT(PrivateLinkServicesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAutoApprovedPrivateLinkServices");
         }
 
         /// <summary>
@@ -3913,7 +3975,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3930,7 +3992,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkServicesGetAutoApprovedPrivateLinkServicesCollectionResultOfT(PrivateLinkServicesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAutoApprovedPrivateLinkServices");
+            return new AutoApprovedPrivateLinkServiceCollectionResultOfT(PrivateLinkServicesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAutoApprovedPrivateLinkServices");
         }
 
         /// <summary>
@@ -3946,7 +4008,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3990,7 +4052,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4034,7 +4096,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4084,7 +4146,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4134,7 +4196,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4179,7 +4241,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4224,7 +4286,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4241,7 +4303,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailableDelegationsGetAvailableDelegationsAsyncCollectionResultOfT(AvailableDelegationsRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAvailableDelegations");
+            return new AvailableDelegationAsync0CollectionResultOfT(AvailableDelegationsRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAvailableDelegations");
         }
 
         /// <summary>
@@ -4257,7 +4319,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4274,7 +4336,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailableDelegationsGetAvailableDelegationsCollectionResultOfT(AvailableDelegationsRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAvailableDelegations");
+            return new AvailableDelegation0CollectionResultOfT(AvailableDelegationsRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAvailableDelegations");
         }
 
         /// <summary>
@@ -4290,7 +4352,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4307,7 +4369,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailableServiceAliasesGetAvailableServiceAliasesAsyncCollectionResultOfT(AvailableServiceAliasesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAvailableServiceAliases");
+            return new AvailableServiceAliasAsyncCollectionResultOfT(AvailableServiceAliasesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAvailableServiceAliases");
         }
 
         /// <summary>
@@ -4323,7 +4385,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4340,7 +4402,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailableServiceAliasesGetAvailableServiceAliasesCollectionResultOfT(AvailableServiceAliasesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAvailableServiceAliases");
+            return new AvailableServiceAliasCollectionResultOfT(AvailableServiceAliasesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAvailableServiceAliases");
         }
 
         /// <summary>
@@ -4356,7 +4418,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4368,7 +4430,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AzureFirewallFqdnTagsGetAzureFirewallFqdnTagsAsyncCollectionResultOfT(AzureFirewallFqdnTagsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAzureFirewallFqdnTags");
+            return new AzureFirewallFqdnTagAsyncCollectionResultOfT(AzureFirewallFqdnTagsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAzureFirewallFqdnTags");
         }
 
         /// <summary>
@@ -4384,7 +4446,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4396,7 +4458,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AzureFirewallFqdnTagsGetAzureFirewallFqdnTagsCollectionResultOfT(AzureFirewallFqdnTagsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAzureFirewallFqdnTags");
+            return new AzureFirewallFqdnTagCollectionResultOfT(AzureFirewallFqdnTagsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAzureFirewallFqdnTags");
         }
 
         /// <summary>
@@ -4412,7 +4474,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4429,7 +4491,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailableEndpointServicesGetAvailableEndpointServicesAsyncCollectionResultOfT(AvailableEndpointServicesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAvailableEndpointServices");
+            return new EndpointServiceResultAsyncCollectionResultOfT(AvailableEndpointServicesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAvailableEndpointServices");
         }
 
         /// <summary>
@@ -4445,7 +4507,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4462,7 +4524,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailableEndpointServicesGetAvailableEndpointServicesCollectionResultOfT(AvailableEndpointServicesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAvailableEndpointServices");
+            return new EndpointServiceResultCollectionResultOfT(AvailableEndpointServicesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAvailableEndpointServices");
         }
 
         /// <summary>
@@ -4478,7 +4540,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4490,7 +4552,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ExpressRouteServiceProvidersGetExpressRouteServiceProvidersAsyncCollectionResultOfT(ExpressRouteServiceProvidersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetExpressRouteServiceProviders");
+            return new ExpressRouteServiceProviderAsyncCollectionResultOfT(ExpressRouteServiceProvidersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetExpressRouteServiceProviders");
         }
 
         /// <summary>
@@ -4506,7 +4568,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4518,7 +4580,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ExpressRouteServiceProvidersGetExpressRouteServiceProvidersCollectionResultOfT(ExpressRouteServiceProvidersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetExpressRouteServiceProviders");
+            return new ExpressRouteServiceProviderCollectionResultOfT(ExpressRouteServiceProvidersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetExpressRouteServiceProviders");
         }
 
         /// <summary>
@@ -4534,7 +4596,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4551,7 +4613,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new NetworkSecurityPerimeterAssociableResourceTypesGetNetworkSecurityPerimeterAssociableResourceTypesAsyncCollectionResultOfT(NetworkSecurityPerimeterAssociableResourceTypesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetNetworkSecurityPerimeterAssociableResourceTypes");
+            return new NetworkSecurityPerimeterAssociableResourceTypeAsyncCollectionResultOfT(NetworkSecurityPerimeterAssociableResourceTypesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetNetworkSecurityPerimeterAssociableResourceTypes");
         }
 
         /// <summary>
@@ -4567,7 +4629,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4584,7 +4646,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new NetworkSecurityPerimeterAssociableResourceTypesGetNetworkSecurityPerimeterAssociableResourceTypesCollectionResultOfT(NetworkSecurityPerimeterAssociableResourceTypesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetNetworkSecurityPerimeterAssociableResourceTypes");
+            return new NetworkSecurityPerimeterAssociableResourceTypeCollectionResultOfT(NetworkSecurityPerimeterAssociableResourceTypesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetNetworkSecurityPerimeterAssociableResourceTypes");
         }
 
         /// <summary>
@@ -4600,7 +4662,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4650,7 +4712,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4700,7 +4762,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4717,7 +4779,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new NetworkSecurityPerimeterServiceTagsGetNetworkSecurityPerimeterServiceTagsAsyncCollectionResultOfT(NetworkSecurityPerimeterServiceTagsRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetNetworkSecurityPerimeterServiceTags");
+            return new NetworkSecurityPerimeterServiceTagsAsyncCollectionResultOfT(NetworkSecurityPerimeterServiceTagsRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetNetworkSecurityPerimeterServiceTags");
         }
 
         /// <summary>
@@ -4733,7 +4795,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4750,7 +4812,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new NetworkSecurityPerimeterServiceTagsGetNetworkSecurityPerimeterServiceTagsCollectionResultOfT(NetworkSecurityPerimeterServiceTagsRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetNetworkSecurityPerimeterServiceTags");
+            return new NetworkSecurityPerimeterServiceTagsCollectionResultOfT(NetworkSecurityPerimeterServiceTagsRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetNetworkSecurityPerimeterServiceTags");
         }
 
         /// <summary>
@@ -4766,7 +4828,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4783,7 +4845,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailablePrivateEndpointTypesGetAvailablePrivateEndpointTypesAsyncCollectionResultOfT(AvailablePrivateEndpointTypesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAvailablePrivateEndpointTypes");
+            return new AvailablePrivateEndpointTypeAsyncCollectionResultOfT(AvailablePrivateEndpointTypesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAvailablePrivateEndpointTypes");
         }
 
         /// <summary>
@@ -4799,7 +4861,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4816,7 +4878,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailablePrivateEndpointTypesGetAvailablePrivateEndpointTypesCollectionResultOfT(AvailablePrivateEndpointTypesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAvailablePrivateEndpointTypes");
+            return new AvailablePrivateEndpointTypeCollectionResultOfT(AvailablePrivateEndpointTypesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAvailablePrivateEndpointTypes");
         }
 
         /// <summary>
@@ -4832,7 +4894,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4844,7 +4906,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BgpServiceCommunitiesGetBgpServiceCommunitiesAsyncCollectionResultOfT(BgpServiceCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetBgpServiceCommunities");
+            return new BgpServiceCommunityAsyncCollectionResultOfT(BgpServiceCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetBgpServiceCommunities");
         }
 
         /// <summary>
@@ -4860,7 +4922,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4872,7 +4934,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BgpServiceCommunitiesGetBgpServiceCommunitiesCollectionResultOfT(BgpServiceCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetBgpServiceCommunities");
+            return new BgpServiceCommunityCollectionResultOfT(BgpServiceCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetBgpServiceCommunities");
         }
 
         /// <summary>
@@ -4888,7 +4950,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4933,7 +4995,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4978,7 +5040,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4997,7 +5059,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ServiceTagInformationGetAllServiceTagInformationAsyncCollectionResultOfT(
+            return new ServiceTagInformationAsyncCollectionResultOfT(
                 ServiceTagInformationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 location,
@@ -5020,7 +5082,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5039,7 +5101,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ServiceTagInformationGetAllServiceTagInformationCollectionResultOfT(
+            return new ServiceTagInformationCollectionResultOfT(
                 ServiceTagInformationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 location,
@@ -5062,7 +5124,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5079,7 +5141,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetUsagesAsyncCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetUsages");
+            return new NetworkUsageAsyncCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetUsages");
         }
 
         /// <summary>
@@ -5095,7 +5157,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5112,7 +5174,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetUsagesCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetUsages");
+            return new NetworkUsageCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetUsages");
         }
     }
 }

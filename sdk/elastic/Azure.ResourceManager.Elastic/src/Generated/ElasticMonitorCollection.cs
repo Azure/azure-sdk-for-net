@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ElasticMonitorData, ElasticMonitorResource>(new ElasticMonitorResourcesGetByResourceGroupAsyncCollectionResultOfT(_elasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ElasticMonitorCollection.GetAll"), data => new ElasticMonitorResource(Client, data));
+            return new AsyncPageableWrapper<ElasticMonitorData, ElasticMonitorResource>(new ElasticMonitorDataAsyncCollectionResultOfT(_elasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ElasticMonitorCollection.GetAll"), data => new ElasticMonitorResource(Client, data));
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ElasticMonitorData, ElasticMonitorResource>(new ElasticMonitorResourcesGetByResourceGroupCollectionResultOfT(_elasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ElasticMonitorCollection.GetAll"), data => new ElasticMonitorResource(Client, data));
+            return new PageableWrapper<ElasticMonitorData, ElasticMonitorResource>(new ElasticMonitorDataCollectionResultOfT(_elasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ElasticMonitorCollection.GetAll"), data => new ElasticMonitorResource(Client, data));
         }
 
         /// <summary>

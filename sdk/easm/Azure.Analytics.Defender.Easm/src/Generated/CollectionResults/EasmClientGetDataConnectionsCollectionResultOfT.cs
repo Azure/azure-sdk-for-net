@@ -42,7 +42,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The pages of EasmClientGetDataConnectionsCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<DataConnection>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

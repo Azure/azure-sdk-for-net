@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevOpsPoolData, DevOpsPoolResource>(new PoolsGetByResourceGroupAsyncCollectionResultOfT(_poolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DevOpsPoolCollection.GetAll"), data => new DevOpsPoolResource(Client, data));
+            return new AsyncPageableWrapper<DevOpsPoolData, DevOpsPoolResource>(new DevOpsPoolDataAsyncCollectionResultOfT(_poolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DevOpsPoolCollection.GetAll"), data => new DevOpsPoolResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevOpsPoolData, DevOpsPoolResource>(new PoolsGetByResourceGroupCollectionResultOfT(_poolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DevOpsPoolCollection.GetAll"), data => new DevOpsPoolResource(Client, data));
+            return new PageableWrapper<DevOpsPoolData, DevOpsPoolResource>(new DevOpsPoolDataCollectionResultOfT(_poolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DevOpsPoolCollection.GetAll"), data => new DevOpsPoolResource(Client, data));
         }
 
         /// <summary>

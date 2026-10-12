@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Retry policy the scheduled action can pass. </summary>
+    /// <summary> Retry settings for a scheduled action operation. </summary>
     public partial class ScheduledActionsRetryPolicy : IJsonModel<ScheduledActionsRetryPolicy>
     {
         /// <param name="data"> The data to parse. </param>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ScheduledActionsRetryPolicy(retryCount, retryWindowInMinutes, onFailureAction, additionalBinaryDataProperties);

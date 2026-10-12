@@ -209,7 +209,7 @@ namespace Azure.Monitor.Query.Metrics.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MetricResult(
@@ -220,7 +220,7 @@ namespace Azure.Monitor.Query.Metrics.Models
                 errorCode,
                 errorMessage,
                 unit,
-                timeSeries,
+                timeSeries ?? new ChangeTrackingList<MetricTimeSeriesElement>(),
                 additionalBinaryDataProperties);
         }
     }

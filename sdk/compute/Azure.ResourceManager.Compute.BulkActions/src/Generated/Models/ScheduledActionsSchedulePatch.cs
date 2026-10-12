@@ -11,7 +11,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Schedule properties for update (PATCH). All properties are optional so individual fields can be patched (merge semantics); omitting a property preserves the current value. </summary>
+    /// <summary> Schedule changes for a scheduled action. Omitted properties keep their current values. </summary>
     public partial class ScheduledActionsSchedulePatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionsSchedulePatch"/>. </summary>
-        /// <param name="scheduledTime"> The time the scheduled action is supposed to run on. </param>
-        /// <param name="timeZone"> The timezone the scheduled time is specified on. </param>
-        /// <param name="requestedWeekDays"> The week days the scheduled action is supposed to run on. If empty, it means it will run on every week day. </param>
-        /// <param name="requestedMonths"> The months the scheduled action is supposed to run on. If empty, it means it will run on every month. </param>
-        /// <param name="requestedDaysOfTheMonth"> The days of the month the scheduled action is supposed to run on. If empty, it means it will run on every day of the month. </param>
-        /// <param name="executionParameters"> The execution parameters the scheduled action is supposed to follow. </param>
-        /// <param name="deadlineType"> The type of deadline the scheduled action is supposed to follow for the schedule. If no value is passed, it will default to InitiateAt. </param>
+        /// <param name="scheduledTime"> The local time of day when the scheduled action runs. </param>
+        /// <param name="timeZone"> The time zone used to interpret the scheduled time. </param>
+        /// <param name="requestedWeekDays"> The days of the week when the action runs. An empty array means every day of the week. </param>
+        /// <param name="requestedMonths"> The months when the action runs. An empty array means every month. </param>
+        /// <param name="requestedDaysOfTheMonth"> The calendar days when the action runs. An empty array means every day of the month. </param>
+        /// <param name="executionParameters"> Settings that control operation execution and retries. </param>
+        /// <param name="deadlineType"> How the scheduled time is interpreted. The default is `InitiateAt`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ScheduledActionsSchedulePatch(TimeSpan? scheduledTime, string timeZone, IList<WeekDay> requestedWeekDays, IList<Month> requestedMonths, IList<int> requestedDaysOfTheMonth, ScheduledActionsExecutionParametersContent executionParameters, ScheduledActionsDeadlineType? deadlineType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -46,25 +46,42 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The time the scheduled action is supposed to run on. </summary>
+        /// <summary> The local time of day when the scheduled action runs. </summary>
         public TimeSpan? ScheduledTime { get; set; }
 
-        /// <summary> The timezone the scheduled time is specified on. </summary>
+        /// <summary> The time zone used to interpret the scheduled time. </summary>
         public string TimeZone { get; set; }
 
-        /// <summary> The week days the scheduled action is supposed to run on. If empty, it means it will run on every week day. </summary>
+        /// <summary> The days of the week when the action runs. An empty array means every day of the week. </summary>
         public IList<WeekDay> RequestedWeekDays { get; }
 
-        /// <summary> The months the scheduled action is supposed to run on. If empty, it means it will run on every month. </summary>
+        /// <summary> The months when the action runs. An empty array means every month. </summary>
         public IList<Month> RequestedMonths { get; }
 
-        /// <summary> The days of the month the scheduled action is supposed to run on. If empty, it means it will run on every day of the month. </summary>
+        /// <summary> The calendar days when the action runs. An empty array means every day of the month. </summary>
         public IList<int> RequestedDaysOfTheMonth { get; }
 
-        /// <summary> The execution parameters the scheduled action is supposed to follow. </summary>
-        public ScheduledActionsExecutionParametersContent ExecutionParameters { get; set; }
+        /// <summary> Settings that control operation execution and retries. </summary>
+        internal ScheduledActionsExecutionParametersContent ExecutionParameters { get; set; }
 
-        /// <summary> The type of deadline the scheduled action is supposed to follow for the schedule. If no value is passed, it will default to InitiateAt. </summary>
+        /// <summary> How the scheduled time is interpreted. The default is `InitiateAt`. </summary>
         public ScheduledActionsDeadlineType? DeadlineType { get; set; }
+
+        /// <summary> The retry settings for failed resource operations. </summary>
+        public ScheduledActionsRetryPolicy ExecutionParametersRetryPolicy
+        {
+            get
+            {
+                return ExecutionParameters is null ? default : ExecutionParameters.RetryPolicy;
+            }
+            set
+            {
+                if (ExecutionParameters is null)
+                {
+                    ExecutionParameters = new ScheduledActionsExecutionParametersContent();
+                }
+                ExecutionParameters.RetryPolicy = value;
+            }
+        }
     }
 }

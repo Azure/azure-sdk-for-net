@@ -402,7 +402,7 @@ MCPToolboxTool tool = new(serverLabel: "api-specs")
     Name = "mcp-tool",
     Description = "Sample MCP tool",
     ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-    ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+    ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
 };
 ToolboxVersion toolBox1 = await toolboxClient.CreateVersionAsync(
     name: toolboxName,

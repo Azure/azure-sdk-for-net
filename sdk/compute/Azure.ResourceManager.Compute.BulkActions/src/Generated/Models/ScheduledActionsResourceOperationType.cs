@@ -11,21 +11,19 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The resource operation to take on a scheduled-action failure. </summary>
+    /// <summary> The operation to retry when a scheduled action fails. </summary>
     public readonly partial struct ScheduledActionsResourceOperationType : IEquatable<ScheduledActionsResourceOperationType>
     {
         private readonly string _value;
-        /// <summary> The default value for this enum type. </summary>
-        private const string UnknownValue = "Unknown";
-        /// <summary> Start operations on the resources. </summary>
+        /// <summary> Starts the resources. </summary>
         private const string StartValue = "Start";
-        /// <summary> Deallocate operations on the resources. </summary>
+        /// <summary> Deallocates the resources. </summary>
         private const string DeallocateValue = "Deallocate";
-        /// <summary> Hibernate operations on the resources. </summary>
+        /// <summary> Hibernates the resources. </summary>
         private const string HibernateValue = "Hibernate";
-        /// <summary> Create operations on the resources. </summary>
+        /// <summary> Creates the resources. </summary>
         private const string CreateValue = "Create";
-        /// <summary> Delete operations on the resources. </summary>
+        /// <summary> Deletes the resources. </summary>
         private const string DeleteValue = "Delete";
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionsResourceOperationType"/>. </summary>
@@ -38,22 +36,19 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _value = value;
         }
 
-        /// <summary> The default value for this enum type. </summary>
-        public static ScheduledActionsResourceOperationType Unknown { get; } = new ScheduledActionsResourceOperationType(UnknownValue);
-
-        /// <summary> Start operations on the resources. </summary>
+        /// <summary> Starts the resources. </summary>
         public static ScheduledActionsResourceOperationType Start { get; } = new ScheduledActionsResourceOperationType(StartValue);
 
-        /// <summary> Deallocate operations on the resources. </summary>
+        /// <summary> Deallocates the resources. </summary>
         public static ScheduledActionsResourceOperationType Deallocate { get; } = new ScheduledActionsResourceOperationType(DeallocateValue);
 
-        /// <summary> Hibernate operations on the resources. </summary>
+        /// <summary> Hibernates the resources. </summary>
         public static ScheduledActionsResourceOperationType Hibernate { get; } = new ScheduledActionsResourceOperationType(HibernateValue);
 
-        /// <summary> Create operations on the resources. </summary>
+        /// <summary> Creates the resources. </summary>
         public static ScheduledActionsResourceOperationType Create { get; } = new ScheduledActionsResourceOperationType(CreateValue);
 
-        /// <summary> Delete operations on the resources. </summary>
+        /// <summary> Deletes the resources. </summary>
         public static ScheduledActionsResourceOperationType Delete { get; } = new ScheduledActionsResourceOperationType(DeleteValue);
 
         /// <summary> Determines if two <see cref="ScheduledActionsResourceOperationType"/> values are the same. </summary>

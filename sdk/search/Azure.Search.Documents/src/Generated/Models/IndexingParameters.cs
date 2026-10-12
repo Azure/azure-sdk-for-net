@@ -15,6 +15,12 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private int? _batchSize;
+        internal bool _batchSizeIsDefined;
+        private int? _maxFailedItems;
+        internal bool _maxFailedItemsIsDefined;
+        private int? _maxFailedItemsPerBatch;
+        internal bool _maxFailedItemsPerBatchIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="IndexingParameters"/>. </summary>
         /// <param name="batchSize"> The number of items that are read from the data source and indexed as a single batch in order to improve performance. The default depends on the data source type. </param>
@@ -24,20 +30,53 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal IndexingParameters(int? batchSize, int? maxFailedItems, int? maxFailedItemsPerBatch, IndexingParametersConfiguration indexingParametersConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            BatchSize = batchSize;
-            MaxFailedItems = maxFailedItems;
-            MaxFailedItemsPerBatch = maxFailedItemsPerBatch;
+            _batchSize = batchSize;
+            _maxFailedItems = maxFailedItems;
+            _maxFailedItemsPerBatch = maxFailedItemsPerBatch;
             IndexingParametersConfiguration = indexingParametersConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The number of items that are read from the data source and indexed as a single batch in order to improve performance. The default depends on the data source type. </summary>
-        public int? BatchSize { get; set; }
+        public int? BatchSize
+        {
+            get
+            {
+                return _batchSize;
+            }
+            set
+            {
+                _batchSize = value;
+                _batchSizeIsDefined = true;
+            }
+        }
 
         /// <summary> The maximum number of items that can fail indexing for indexer execution to still be considered successful. -1 means no limit. Default is 0. </summary>
-        public int? MaxFailedItems { get; set; }
+        public int? MaxFailedItems
+        {
+            get
+            {
+                return _maxFailedItems;
+            }
+            set
+            {
+                _maxFailedItems = value;
+                _maxFailedItemsIsDefined = true;
+            }
+        }
 
         /// <summary> The maximum number of items in a single batch that can fail indexing for the batch to still be considered successful. -1 means no limit. Default is 0. </summary>
-        public int? MaxFailedItemsPerBatch { get; set; }
+        public int? MaxFailedItemsPerBatch
+        {
+            get
+            {
+                return _maxFailedItemsPerBatch;
+            }
+            set
+            {
+                _maxFailedItemsPerBatch = value;
+                _maxFailedItemsPerBatchIsDefined = true;
+            }
+        }
     }
 }

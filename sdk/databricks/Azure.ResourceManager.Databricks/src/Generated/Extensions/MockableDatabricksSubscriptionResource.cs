@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Databricks.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatabricksWorkspaceData, DatabricksWorkspaceResource>(new WorkspacesGetBySubscriptionAsyncCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabricksSubscriptionResource.GetDatabricksWorkspaces"), data => new DatabricksWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<DatabricksWorkspaceData, DatabricksWorkspaceResource>(new DatabricksWorkspaceDataAsync0CollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabricksSubscriptionResource.GetDatabricksWorkspaces"), data => new DatabricksWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Databricks.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatabricksWorkspaceData, DatabricksWorkspaceResource>(new WorkspacesGetBySubscriptionCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabricksSubscriptionResource.GetDatabricksWorkspaces"), data => new DatabricksWorkspaceResource(Client, data));
+            return new PageableWrapper<DatabricksWorkspaceData, DatabricksWorkspaceResource>(new DatabricksWorkspaceData0CollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabricksSubscriptionResource.GetDatabricksWorkspaces"), data => new DatabricksWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Databricks.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatabricksAccessConnectorData, DatabricksAccessConnectorResource>(new AccessConnectorsGetBySubscriptionAsyncCollectionResultOfT(AccessConnectorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabricksSubscriptionResource.GetDatabricksAccessConnectors"), data => new DatabricksAccessConnectorResource(Client, data));
+            return new AsyncPageableWrapper<DatabricksAccessConnectorData, DatabricksAccessConnectorResource>(new DatabricksAccessConnectorDataAsync0CollectionResultOfT(AccessConnectorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabricksSubscriptionResource.GetDatabricksAccessConnectors"), data => new DatabricksAccessConnectorResource(Client, data));
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Databricks.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatabricksAccessConnectorData, DatabricksAccessConnectorResource>(new AccessConnectorsGetBySubscriptionCollectionResultOfT(AccessConnectorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabricksSubscriptionResource.GetDatabricksAccessConnectors"), data => new DatabricksAccessConnectorResource(Client, data));
+            return new PageableWrapper<DatabricksAccessConnectorData, DatabricksAccessConnectorResource>(new DatabricksAccessConnectorData0CollectionResultOfT(AccessConnectorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabricksSubscriptionResource.GetDatabricksAccessConnectors"), data => new DatabricksAccessConnectorResource(Client, data));
         }
     }
 }

@@ -1,6 +1,15 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
-trigger: none
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/containerservice/Azure.ResourceManager.ContainerService
+    - sdk/containerservice/Azure.Provisioning.ContainerService
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

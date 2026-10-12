@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WebSiteInstanceStatusData, SiteInstanceResource>(new WebSiteInstanceStatusesGetInstanceIdentifiersAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WebSiteInstanceStatusData, SiteInstanceResource>(new WebSiteInstanceStatusDataAsync0CollectionResultOfT(
                 _webSiteInstanceStatusesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WebSiteInstanceStatusData, SiteInstanceResource>(new WebSiteInstanceStatusesGetInstanceIdentifiersCollectionResultOfT(
+            return new PageableWrapper<WebSiteInstanceStatusData, SiteInstanceResource>(new WebSiteInstanceStatusData0CollectionResultOfT(
                 _webSiteInstanceStatusesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

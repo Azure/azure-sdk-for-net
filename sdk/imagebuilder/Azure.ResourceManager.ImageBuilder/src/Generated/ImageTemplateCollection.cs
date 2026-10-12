@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ImageBuilder
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ImageTemplateData, ImageTemplateResource>(new VirtualMachineImageTemplatesGetByResourceGroupAsyncCollectionResultOfT(_virtualMachineImageTemplatesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ImageTemplateCollection.GetAll"), data => new ImageTemplateResource(Client, data));
+            return new AsyncPageableWrapper<ImageTemplateData, ImageTemplateResource>(new ImageTemplateDataAsyncCollectionResultOfT(_virtualMachineImageTemplatesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ImageTemplateCollection.GetAll"), data => new ImageTemplateResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ImageBuilder
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ImageTemplateData, ImageTemplateResource>(new VirtualMachineImageTemplatesGetByResourceGroupCollectionResultOfT(_virtualMachineImageTemplatesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ImageTemplateCollection.GetAll"), data => new ImageTemplateResource(Client, data));
+            return new PageableWrapper<ImageTemplateData, ImageTemplateResource>(new ImageTemplateDataCollectionResultOfT(_virtualMachineImageTemplatesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ImageTemplateCollection.GetAll"), data => new ImageTemplateResource(Client, data));
         }
 
         /// <summary>

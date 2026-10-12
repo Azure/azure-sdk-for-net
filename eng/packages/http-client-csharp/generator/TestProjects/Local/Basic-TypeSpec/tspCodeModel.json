@@ -11070,6 +11070,7 @@
               "things"
             ],
             "nextLink": {
+              "verb": "GET",
               "responseSegments": [
                 "next"
               ],
@@ -11187,6 +11188,7 @@
               "things"
             ],
             "nextLink": {
+              "verb": "GET",
               "responseSegments": [
                 "next"
               ],
@@ -11316,6 +11318,7 @@
               "things"
             ],
             "nextLink": {
+              "verb": "GET",
               "responseSegments": [
                 "next"
               ],
@@ -11493,6 +11496,7 @@
               "things"
             ],
             "nextLink": {
+              "verb": "GET",
               "responseSegments": [
                 "next"
               ],

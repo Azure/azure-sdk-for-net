@@ -433,14 +433,14 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <returns> A new <see cref="Models.MongoClusterIdentityProvider"/> instance for mocking. </returns>
         public static MongoClusterIdentityProvider MongoClusterIdentityProvider(string @type = default)
         {
-            return new UnknownMongoClusterIdentityProvider(default, default);
+            return new UnknownMongoClusterIdentityProvider(@type is null ? default : new IdentityProviderType(@type), default);
         }
 
         /// <param name="mongoClusterEntraIdentityProviderPrincipalType"> The principal type of the user. </param>
         /// <returns> A new <see cref="Models.MongoClusterEntraIdentityProvider"/> instance for mocking. </returns>
         public static MongoClusterEntraIdentityProvider MongoClusterEntraIdentityProvider(MongoClusterEntraPrincipalType mongoClusterEntraIdentityProviderPrincipalType = default)
         {
-            return new MongoClusterEntraIdentityProvider(default, default, new MongoClusterEntraIdentityProviderProperties(mongoClusterEntraIdentityProviderPrincipalType, default));
+            return new MongoClusterEntraIdentityProvider(IdentityProviderType.MicrosoftEntraID, default, new MongoClusterEntraIdentityProviderProperties(mongoClusterEntraIdentityProviderPrincipalType, default));
         }
 
         /// <summary> Microsoft Entra ID provider properties. </summary>
