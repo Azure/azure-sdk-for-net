@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Updated the default Azure Storage resource API version to `2026-06-01`, while retaining previously supported explicit API versions.
+- Added `AdvancedPlatformMetricsRule`, `ContextCache`, `ContextCacheContainer`, `StorageConnector`, and `StorageDataShare` resources and related models.
+- Added support for the `Smart` storage account access tier, `AllowedCopyScope.All`, `TaskExecutionTriggerType.MockRun`, shared-key access settings, cross-tenant delegation SAS, data collaboration policies, blob static websites, and object replication tag settings.
 - Added `StorageBuiltInRole.StorageFileDataSmbMIAdmin` for the Storage File Data SMB MI Admin role (`a235d3ee-5935-4cfb-8cc5-a3303ad5995e`).
 - Stable release of the Azure Storage provisioning updates introduced in `1.2.0-beta.1`, including `StorageAccount.PrivateEndpointConnectionResources`, `StorageActiveDirectoryProperties.ActiveDirectoryDomainGuid`, and `ExecutionTrigger.TaskExecutionTriggerType`. The previous property names remain available for compatibility.
 
