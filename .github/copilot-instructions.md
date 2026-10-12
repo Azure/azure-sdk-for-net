@@ -32,7 +32,7 @@ This repo contains Azure SDKs for various Azure services and tools that generate
 ## Local SDK Generation and Package Lifecycle (TypeSpec)
 
 ### AUTHORITATIVE REFERENCE
-For all TypeSpec-based SDK workflows (generation, building, validation, testing, versioning, and release preparation), follow #file:../eng/common/instructions/azsdk-tools/local-sdk-workflow.instructions.md
+For all TypeSpec-based SDK workflows (generation, building, validation, testing, versioning, and release preparation), follow `eng/common/instructions/azsdk-tools/local-sdk-workflow.instructions.md` (not yet published -- tracked in [azure-sdk-tools#17247](https://github.com/Azure/azure-sdk-tools/issues/17247)).
 
 ### DEFAULT BEHAVIORS
 - **Repository:** Use the current workspace as the local SDK repository unless the user specifies a different path.
@@ -43,7 +43,7 @@ Ask the user for clarification if repository path or configuration file is ambig
 
 ## SDK release
 
-For detailed workflow instructions, see [SDK Release](https://github.com/Azure/azure-sdk-for-net/tree/main/eng/common/instructions/copilot/sdk-release.instructions.md).
+For detailed workflow instructions, see the shared SDK release instructions (not yet published -- tracked in [azure-sdk-tools#17247](https://github.com/Azure/azure-sdk-tools/issues/17247)).
 
 ## Pre-Commit Validation
 

@@ -28,6 +28,7 @@ gh() {
         printf '2026-09-10T18:00:00Z\t%s\t%s\t%s\n' "$TEST_CONCLUSION" "$CHECK_RUN_HEAD_SHA" "$CHECK_RUN_URL"
       fi ;;
     *"repos/Azure/azure-sdk-for-net/check-runs"*) ;;
+    *"workflows/provisioning-review.lock.yml/runs"*) ;;
     *) echo "Unexpected gh call: $*" >&2; return 90 ;;
   esac
 }
