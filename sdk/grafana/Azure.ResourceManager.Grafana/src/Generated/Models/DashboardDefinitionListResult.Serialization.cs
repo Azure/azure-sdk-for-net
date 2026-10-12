@@ -15,63 +15,63 @@ using Azure.ResourceManager.Grafana;
 namespace Azure.ResourceManager.Grafana.Models
 {
     /// <summary> The list response for dashboard definitions. </summary>
-    internal partial class DashboardDefinitionListResponse : IJsonModel<DashboardDefinitionListResponse>
+    internal partial class DashboardDefinitionListResult : IJsonModel<DashboardDefinitionListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="DashboardDefinitionListResponse"/> for deserialization. </summary>
-        internal DashboardDefinitionListResponse()
+        /// <summary> Initializes a new instance of <see cref="DashboardDefinitionListResult"/> for deserialization. </summary>
+        internal DashboardDefinitionListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DashboardDefinitionListResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DashboardDefinitionListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DashboardDefinitionListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DashboardDefinitionListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDashboardDefinitionListResponse(document.RootElement, options);
+                        return DeserializeDashboardDefinitionListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DashboardDefinitionListResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DashboardDefinitionListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DashboardDefinitionListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DashboardDefinitionListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerGrafanaContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DashboardDefinitionListResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DashboardDefinitionListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DashboardDefinitionListResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DashboardDefinitionListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DashboardDefinitionListResponse IPersistableModel<DashboardDefinitionListResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DashboardDefinitionListResult IPersistableModel<DashboardDefinitionListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DashboardDefinitionListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DashboardDefinitionListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DashboardDefinitionListResponse"/> from. </param>
-        internal static DashboardDefinitionListResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DashboardDefinitionListResult"/> from. </param>
+        internal static DashboardDefinitionListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDashboardDefinitionListResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeDashboardDefinitionListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DashboardDefinitionListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DashboardDefinitionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DashboardDefinitionListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DashboardDefinitionListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DashboardDefinitionListResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DashboardDefinitionListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
@@ -118,24 +118,24 @@ namespace Azure.ResourceManager.Grafana.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DashboardDefinitionListResponse IJsonModel<DashboardDefinitionListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DashboardDefinitionListResult IJsonModel<DashboardDefinitionListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DashboardDefinitionListResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DashboardDefinitionListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DashboardDefinitionListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DashboardDefinitionListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DashboardDefinitionListResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DashboardDefinitionListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDashboardDefinitionListResponse(document.RootElement, options);
+            return DeserializeDashboardDefinitionListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DashboardDefinitionListResponse DeserializeDashboardDefinitionListResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static DashboardDefinitionListResult DeserializeDashboardDefinitionListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DashboardDefinitionListResponse(value, nextLink, additionalBinaryDataProperties);
+            return new DashboardDefinitionListResult(value ?? new ChangeTrackingList<DashboardDefinitionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

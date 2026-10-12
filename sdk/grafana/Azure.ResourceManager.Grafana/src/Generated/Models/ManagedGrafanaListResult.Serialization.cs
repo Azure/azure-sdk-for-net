@@ -14,64 +14,64 @@ using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    /// <summary> Paged collection of IntegrationFabric items. </summary>
-    internal partial class IntegrationFabricListResponse : IJsonModel<IntegrationFabricListResponse>
+    /// <summary> Paged collection of ManagedGrafana items. </summary>
+    internal partial class ManagedGrafanaListResult : IJsonModel<ManagedGrafanaListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="IntegrationFabricListResponse"/> for deserialization. </summary>
-        internal IntegrationFabricListResponse()
+        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaListResult"/> for deserialization. </summary>
+        internal ManagedGrafanaListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IntegrationFabricListResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ManagedGrafanaListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IntegrationFabricListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedGrafanaListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeIntegrationFabricListResponse(document.RootElement, options);
+                        return DeserializeManagedGrafanaListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationFabricListResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedGrafanaListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IntegrationFabricListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedGrafanaListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerGrafanaContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationFabricListResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedGrafanaListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IntegrationFabricListResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ManagedGrafanaListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IntegrationFabricListResponse IPersistableModel<IntegrationFabricListResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ManagedGrafanaListResult IPersistableModel<ManagedGrafanaListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IntegrationFabricListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedGrafanaListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IntegrationFabricListResponse"/> from. </param>
-        internal static IntegrationFabricListResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ManagedGrafanaListResult"/> from. </param>
+        internal static ManagedGrafanaListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeIntegrationFabricListResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeManagedGrafanaListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<IntegrationFabricListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedGrafanaListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IntegrationFabricListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedGrafanaListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationFabricListResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedGrafanaListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (GrafanaIntegrationFabricData item in Value)
+            foreach (ManagedGrafanaData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -118,40 +118,40 @@ namespace Azure.ResourceManager.Grafana.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IntegrationFabricListResponse IJsonModel<IntegrationFabricListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ManagedGrafanaListResult IJsonModel<ManagedGrafanaListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IntegrationFabricListResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ManagedGrafanaListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IntegrationFabricListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedGrafanaListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationFabricListResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedGrafanaListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIntegrationFabricListResponse(document.RootElement, options);
+            return DeserializeManagedGrafanaListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static IntegrationFabricListResponse DeserializeIntegrationFabricListResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static ManagedGrafanaListResult DeserializeManagedGrafanaListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<GrafanaIntegrationFabricData> value = default;
+            IList<ManagedGrafanaData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<GrafanaIntegrationFabricData> array = new List<GrafanaIntegrationFabricData>();
+                    List<ManagedGrafanaData> array = new List<ManagedGrafanaData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(GrafanaIntegrationFabricData.DeserializeGrafanaIntegrationFabricData(item, options));
+                        array.Add(ManagedGrafanaData.DeserializeManagedGrafanaData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IntegrationFabricListResponse(value, nextLink, additionalBinaryDataProperties);
+            return new ManagedGrafanaListResult(value ?? new ChangeTrackingList<ManagedGrafanaData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
