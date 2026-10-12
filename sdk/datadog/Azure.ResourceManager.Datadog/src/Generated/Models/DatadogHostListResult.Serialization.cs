@@ -15,63 +15,63 @@ using Azure.ResourceManager.Datadog;
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> Response of a list operation. </summary>
-    internal partial class DatadogHostListResponse : IJsonModel<DatadogHostListResponse>
+    internal partial class DatadogHostListResult : IJsonModel<DatadogHostListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="DatadogHostListResponse"/> for deserialization. </summary>
-        internal DatadogHostListResponse()
+        /// <summary> Initializes a new instance of <see cref="DatadogHostListResult"/> for deserialization. </summary>
+        internal DatadogHostListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DatadogHostListResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DatadogHostListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatadogHostListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatadogHostListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDatadogHostListResponse(document.RootElement, options);
+                        return DeserializeDatadogHostListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatadogHostListResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogHostListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatadogHostListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatadogHostListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDatadogContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DatadogHostListResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogHostListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DatadogHostListResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DatadogHostListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DatadogHostListResponse IPersistableModel<DatadogHostListResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DatadogHostListResult IPersistableModel<DatadogHostListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DatadogHostListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DatadogHostListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DatadogHostListResponse"/> from. </param>
-        internal static DatadogHostListResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DatadogHostListResult"/> from. </param>
+        internal static DatadogHostListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDatadogHostListResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeDatadogHostListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DatadogHostListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DatadogHostListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatadogHostListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatadogHostListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogHostListResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogHostListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
@@ -118,24 +118,24 @@ namespace Azure.ResourceManager.Datadog.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DatadogHostListResponse IJsonModel<DatadogHostListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DatadogHostListResult IJsonModel<DatadogHostListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DatadogHostListResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DatadogHostListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatadogHostListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatadogHostListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogHostListResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogHostListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDatadogHostListResponse(document.RootElement, options);
+            return DeserializeDatadogHostListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DatadogHostListResponse DeserializeDatadogHostListResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static DatadogHostListResult DeserializeDatadogHostListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DatadogHostListResponse(value, nextLink, additionalBinaryDataProperties);
+            return new DatadogHostListResult(value ?? new ChangeTrackingList<DatadogHost>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

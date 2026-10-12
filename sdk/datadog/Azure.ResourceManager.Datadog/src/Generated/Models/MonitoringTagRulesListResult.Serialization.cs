@@ -15,63 +15,63 @@ using Azure.ResourceManager.Datadog;
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> Response of a list operation. </summary>
-    internal partial class LinkedResourceListResponse : IJsonModel<LinkedResourceListResponse>
+    internal partial class MonitoringTagRulesListResult : IJsonModel<MonitoringTagRulesListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="LinkedResourceListResponse"/> for deserialization. </summary>
-        internal LinkedResourceListResponse()
+        /// <summary> Initializes a new instance of <see cref="MonitoringTagRulesListResult"/> for deserialization. </summary>
+        internal MonitoringTagRulesListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LinkedResourceListResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MonitoringTagRulesListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LinkedResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitoringTagRulesListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLinkedResourceListResponse(document.RootElement, options);
+                        return DeserializeMonitoringTagRulesListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LinkedResourceListResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitoringTagRulesListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LinkedResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitoringTagRulesListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDatadogContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LinkedResourceListResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitoringTagRulesListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LinkedResourceListResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MonitoringTagRulesListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LinkedResourceListResponse IPersistableModel<LinkedResourceListResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MonitoringTagRulesListResult IPersistableModel<MonitoringTagRulesListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LinkedResourceListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MonitoringTagRulesListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LinkedResourceListResponse"/> from. </param>
-        internal static LinkedResourceListResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MonitoringTagRulesListResult"/> from. </param>
+        internal static MonitoringTagRulesListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeLinkedResourceListResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeMonitoringTagRulesListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LinkedResourceListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MonitoringTagRulesListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LinkedResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitoringTagRulesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkedResourceListResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitoringTagRulesListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (DatadogLinkedResourceResult item in Value)
+            foreach (DataMonitoringTagRuleData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -118,40 +118,40 @@ namespace Azure.ResourceManager.Datadog.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LinkedResourceListResponse IJsonModel<LinkedResourceListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MonitoringTagRulesListResult IJsonModel<MonitoringTagRulesListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LinkedResourceListResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MonitoringTagRulesListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LinkedResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitoringTagRulesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkedResourceListResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitoringTagRulesListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLinkedResourceListResponse(document.RootElement, options);
+            return DeserializeMonitoringTagRulesListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LinkedResourceListResponse DeserializeLinkedResourceListResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static MonitoringTagRulesListResult DeserializeMonitoringTagRulesListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<DatadogLinkedResourceResult> value = default;
+            IList<DataMonitoringTagRuleData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<DatadogLinkedResourceResult> array = new List<DatadogLinkedResourceResult>();
+                    List<DataMonitoringTagRuleData> array = new List<DataMonitoringTagRuleData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DatadogLinkedResourceResult.DeserializeDatadogLinkedResourceResult(item, options));
+                        array.Add(DataMonitoringTagRuleData.DeserializeDataMonitoringTagRuleData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LinkedResourceListResponse(value, nextLink, additionalBinaryDataProperties);
+            return new MonitoringTagRulesListResult(value ?? new ChangeTrackingList<DataMonitoringTagRuleData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -12,30 +12,30 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    internal partial class DatabaseMigrationsSqlDb
+    internal partial class DatabaseMigrationsSqlDB
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
 
-        /// <summary> Initializes a new instance of DatabaseMigrationsSqlDb for mocking. </summary>
-        protected DatabaseMigrationsSqlDb()
+        /// <summary> Initializes a new instance of DatabaseMigrationsSqlDB for mocking. </summary>
+        protected DatabaseMigrationsSqlDB()
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseMigrationsSqlDb. </summary>
+        /// <summary> Initializes a new instance of DatabaseMigrationsSqlDB. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal DatabaseMigrationsSqlDb(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        internal DatabaseMigrationsSqlDB(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
-            _userAgent = new TelemetryDetails(typeof(DatabaseMigrationsSqlDb).Assembly, applicationId);
+            _userAgent = new TelemetryDetails(typeof(DatabaseMigrationsSqlDB).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>

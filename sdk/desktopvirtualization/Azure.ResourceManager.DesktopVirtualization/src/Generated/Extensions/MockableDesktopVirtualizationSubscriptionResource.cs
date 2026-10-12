@@ -44,23 +44,23 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
 
         private ClientDiagnostics AppAttachPackageClientDiagnostics => _appAttachPackageClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AppAttachPackage AppAttachPackageRestClient => _appAttachPackageRestClient ??= new AppAttachPackage(AppAttachPackageClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
+        private AppAttachPackage AppAttachPackageRestClient => _appAttachPackageRestClient ??= new AppAttachPackage(AppAttachPackageClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DesktopVirtualization/appAttachPackages", out string apiVersion) ? apiVersion : "2026-03-01-preview");
 
         private ClientDiagnostics ApplicationGroupsClientDiagnostics => _applicationGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ApplicationGroups ApplicationGroupsRestClient => _applicationGroupsRestClient ??= new ApplicationGroups(ApplicationGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
+        private ApplicationGroups ApplicationGroupsRestClient => _applicationGroupsRestClient ??= new ApplicationGroups(ApplicationGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DesktopVirtualization/applicationGroups", out string apiVersion0) ? apiVersion0 : "2026-03-01-preview");
 
         private ClientDiagnostics HostPoolsClientDiagnostics => _hostPoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private HostPools HostPoolsRestClient => _hostPoolsRestClient ??= new HostPools(HostPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
+        private HostPools HostPoolsRestClient => _hostPoolsRestClient ??= new HostPools(HostPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DesktopVirtualization/hostPools", out string apiVersion1) ? apiVersion1 : "2026-03-01-preview");
 
         private ClientDiagnostics ScalingPlansClientDiagnostics => _scalingPlansClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ScalingPlans ScalingPlansRestClient => _scalingPlansRestClient ??= new ScalingPlans(ScalingPlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
+        private ScalingPlans ScalingPlansRestClient => _scalingPlansRestClient ??= new ScalingPlans(ScalingPlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion2) ? apiVersion2 : null);
 
         private ClientDiagnostics WorkspacesClientDiagnostics => _workspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Workspaces WorkspacesRestClient => _workspacesRestClient ??= new Workspaces(WorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
+        private Workspaces WorkspacesRestClient => _workspacesRestClient ??= new Workspaces(WorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DesktopVirtualization/workspaces", out string apiVersion3) ? apiVersion3 : "2026-03-01-preview");
 
         /// <summary>
         /// List App Attach packages in subscription.

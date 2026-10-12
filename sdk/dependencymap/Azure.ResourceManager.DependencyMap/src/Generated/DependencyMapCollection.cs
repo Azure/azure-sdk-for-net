@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.DependencyMap
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DependencyMapCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DependencyMapResource.ResourceType, out string dependencyMapApiVersion);
             _mapsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DependencyMap", DependencyMapResource.ResourceType.Namespace, Diagnostics);
-            _mapsRestClient = new Maps(_mapsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dependencyMapApiVersion ?? "2025-07-01-preview");
+            _mapsRestClient = new Maps(_mapsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DependencyMap/maps", out string mapsApiVersionOverride) ? mapsApiVersionOverride : "2025-07-01-preview");
             ValidateResourceId(id);
         }
 

@@ -18,58 +18,58 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DevHub
 {
     /// <summary> Singleton response of GitHubOAuth containing. </summary>
-    public partial class GitHubOAuthResponseData : ResourceData, IJsonModel<GitHubOAuthResponseData>
+    public partial class GitHubOAuthResultData : ResourceData, IJsonModel<GitHubOAuthResultData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GitHubOAuthResponseData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GitHubOAuthResultData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGitHubOAuthResponseData(document.RootElement, options);
+                        return DeserializeGitHubOAuthResultData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GitHubOAuthResponseData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GitHubOAuthResultData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GitHubOAuthResponseData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GitHubOAuthResultData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDevHubContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GitHubOAuthResponseData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GitHubOAuthResultData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GitHubOAuthResponseData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<GitHubOAuthResultData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GitHubOAuthResponseData IPersistableModel<GitHubOAuthResponseData>.Create(BinaryData data, ModelReaderWriterOptions options) => (GitHubOAuthResponseData)PersistableModelCreateCore(data, options);
+        GitHubOAuthResultData IPersistableModel<GitHubOAuthResultData>.Create(BinaryData data, ModelReaderWriterOptions options) => (GitHubOAuthResultData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GitHubOAuthResponseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GitHubOAuthResultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GitHubOAuthResponseData"/> from. </param>
-        internal static GitHubOAuthResponseData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GitHubOAuthResultData"/> from. </param>
+        internal static GitHubOAuthResultData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeGitHubOAuthResponseData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeGitHubOAuthResultData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GitHubOAuthResponseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GitHubOAuthResultData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GitHubOAuthResponseData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GitHubOAuthResultData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GitHubOAuthResponseData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GitHubOAuthResultData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -110,24 +110,24 @@ namespace Azure.ResourceManager.DevHub
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GitHubOAuthResponseData IJsonModel<GitHubOAuthResponseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GitHubOAuthResponseData)JsonModelCreateCore(ref reader, options);
+        GitHubOAuthResultData IJsonModel<GitHubOAuthResultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GitHubOAuthResultData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GitHubOAuthResponseData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GitHubOAuthResultData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GitHubOAuthResponseData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GitHubOAuthResultData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGitHubOAuthResponseData(document.RootElement, options);
+            return DeserializeGitHubOAuthResultData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GitHubOAuthResponseData DeserializeGitHubOAuthResponseData(JsonElement element, ModelReaderWriterOptions options)
+        internal static GitHubOAuthResultData DeserializeGitHubOAuthResultData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DevHub
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GitHubOAuthResponseData(
+            return new GitHubOAuthResultData(
                 id,
                 name,
                 resourceType,

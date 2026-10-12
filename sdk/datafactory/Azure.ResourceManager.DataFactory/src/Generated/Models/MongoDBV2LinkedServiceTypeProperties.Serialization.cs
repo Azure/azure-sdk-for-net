@@ -133,12 +133,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("connectionString"u8))
                 {
-                    connectionString = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    connectionString = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("database"u8))
                 {
-                    database = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    database = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

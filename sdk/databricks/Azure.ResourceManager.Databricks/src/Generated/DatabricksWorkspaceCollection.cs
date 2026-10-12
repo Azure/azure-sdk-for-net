@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Databricks
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DatabricksWorkspaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DatabricksWorkspaceResource.ResourceType, out string databricksWorkspaceApiVersion);
             _workspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Databricks", DatabricksWorkspaceResource.ResourceType.Namespace, Diagnostics);
-            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databricksWorkspaceApiVersion ?? "2026-01-01");
+            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Databricks/workspaces", out string workspacesApiVersionOverride) ? workspacesApiVersionOverride : "2026-01-01");
             ValidateResourceId(id);
         }
 
