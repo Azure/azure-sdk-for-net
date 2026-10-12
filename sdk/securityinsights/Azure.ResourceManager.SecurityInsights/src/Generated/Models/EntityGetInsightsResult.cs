@@ -12,22 +12,22 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> The Get Insights result operation response. </summary>
-    internal partial class EntityGetInsightsResponse
+    internal partial class EntityGetInsightsResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EntityGetInsightsResponse"/>. </summary>
-        internal EntityGetInsightsResponse()
+        /// <summary> Initializes a new instance of <see cref="EntityGetInsightsResult"/>. </summary>
+        internal EntityGetInsightsResult()
         {
             Value = new ChangeTrackingList<EntityInsightItem>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EntityGetInsightsResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntityGetInsightsResult"/>. </summary>
         /// <param name="metaData"> The metadata from the get insights operation results. </param>
         /// <param name="value"> The insights result values. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntityGetInsightsResponse(GetInsightsResultsMetadata metaData, IList<EntityInsightItem> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EntityGetInsightsResult(GetInsightsResultsMetadata metaData, IList<EntityInsightItem> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MetaData = metaData;
             Value = value;

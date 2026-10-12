@@ -79,25 +79,53 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (_descriptionIsDefined || Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
+                if (Description != null)
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+                else
+                {
+                    writer.WriteNull("description"u8);
+                }
             }
-            if (Optional.IsDefined(Result))
+            if (_resultIsDefined || Optional.IsDefined(Result))
             {
-                writer.WritePropertyName("result"u8);
-                writer.WriteStringValue(Result.Value.ToString());
+                if (Result != null)
+                {
+                    writer.WritePropertyName("result"u8);
+                    writer.WriteStringValue(Result.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("result"u8);
+                }
             }
-            if (Optional.IsDefined(ErrorMessage))
+            if (_errorMessageIsDefined || Optional.IsDefined(ErrorMessage))
             {
-                writer.WritePropertyName("errorMessage"u8);
-                writer.WriteStringValue(ErrorMessage);
+                if (ErrorMessage != null)
+                {
+                    writer.WritePropertyName("errorMessage"u8);
+                    writer.WriteStringValue(ErrorMessage);
+                }
+                else
+                {
+                    writer.WriteNull("errorMessage"u8);
+                }
             }
-            if (Optional.IsDefined(ErrorCode))
+            if (_errorCodeIsDefined || Optional.IsDefined(ErrorCode))
             {
-                writer.WritePropertyName("errorCode"u8);
-                writer.WriteStringValue(ErrorCode);
+                if (ErrorCode != null)
+                {
+                    writer.WritePropertyName("errorCode"u8);
+                    writer.WriteStringValue(ErrorCode);
+                }
+                else
+                {
+                    writer.WriteNull("errorCode"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -142,9 +170,13 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 return null;
             }
             string name = default;
+            bool descriptionIsDefined = false;
             string description = default;
+            bool resultIsDefined = false;
             LinkerValidationResultStatus? result = default;
+            bool errorMessageIsDefined = false;
             string errorMessage = default;
+            bool errorCodeIsDefined = false;
             string errorCode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -156,6 +188,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -166,6 +199,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (prop.NameEquals("result"u8))
                 {
+                    resultIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         result = null;
@@ -176,6 +210,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (prop.NameEquals("errorMessage"u8))
                 {
+                    errorMessageIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         errorMessage = null;
@@ -186,6 +221,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (prop.NameEquals("errorCode"u8))
                 {
+                    errorCodeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         errorCode = null;
@@ -205,7 +241,13 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 result,
                 errorMessage,
                 errorCode,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _descriptionIsDefined = descriptionIsDefined,
+                _resultIsDefined = resultIsDefined,
+                _errorMessageIsDefined = errorMessageIsDefined,
+                _errorCodeIsDefined = errorCodeIsDefined
+            };
         }
     }
 }

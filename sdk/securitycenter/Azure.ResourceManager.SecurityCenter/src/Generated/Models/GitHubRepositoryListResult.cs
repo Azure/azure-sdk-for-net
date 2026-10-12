@@ -12,30 +12,30 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> List of RP resources which supports pagination. </summary>
-    internal partial class AzureDevOpsProjectListResponse
+    internal partial class GitHubRepositoryListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AzureDevOpsProjectListResponse"/>. </summary>
-        internal AzureDevOpsProjectListResponse()
+        /// <summary> Initializes a new instance of <see cref="GitHubRepositoryListResult"/>. </summary>
+        internal GitHubRepositoryListResult()
         {
-            Value = new ChangeTrackingList<AzureDevOpsProjectData>();
+            Value = new ChangeTrackingList<GitHubRepositoryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureDevOpsProjectListResponse"/>. </summary>
-        /// <param name="value"> The AzureDevOpsProject items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="GitHubRepositoryListResult"/>. </summary>
+        /// <param name="value"> The GitHubRepository items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureDevOpsProjectListResponse(IList<AzureDevOpsProjectData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GitHubRepositoryListResult(IList<GitHubRepositoryData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The AzureDevOpsProject items on this page. </summary>
-        public IList<AzureDevOpsProjectData> Value { get; }
+        /// <summary> The GitHubRepository items on this page. </summary>
+        public IList<GitHubRepositoryData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
