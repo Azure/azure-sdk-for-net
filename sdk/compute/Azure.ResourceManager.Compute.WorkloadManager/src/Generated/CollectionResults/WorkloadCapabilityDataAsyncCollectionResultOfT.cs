@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -14,46 +15,49 @@ using Azure.ResourceManager.Compute.WorkloadManager.Models;
 
 namespace Azure.ResourceManager.Compute.WorkloadManager
 {
-    internal partial class WorkloadSpacesGetByResourceGroupCollectionResultOfT : Pageable<WorkloadSpaceData>
+    internal partial class WorkloadCapabilityDataAsyncCollectionResultOfT : AsyncPageable<WorkloadCapabilityData>
     {
-        private readonly WorkloadSpaces _client;
+        private readonly Capabilities _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
+        private readonly string _spaceName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of WorkloadSpacesGetByResourceGroupCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The WorkloadSpaces client used to send requests. </param>
+        /// <summary> Initializes a new instance of WorkloadCapabilityDataAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The Capabilities client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="spaceName"> The name of the WorkloadSpace. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public WorkloadSpacesGetByResourceGroupCollectionResultOfT(WorkloadSpaces client, Guid subscriptionId, string resourceGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public WorkloadCapabilityDataAsyncCollectionResultOfT(Capabilities client, Guid subscriptionId, string resourceGroupName, string spaceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
+            _spaceName = spaceName;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of WorkloadSpacesGetByResourceGroupCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of WorkloadCapabilityDataAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of WorkloadSpacesGetByResourceGroupCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<WorkloadSpaceData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of WorkloadCapabilityDataAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<WorkloadCapabilityData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
                 }
-                WorkloadSpaceListResult result = WorkloadSpaceListResult.FromResponse(response);
+                CapabilityListResult result = CapabilityListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<WorkloadSpaceData>.FromValues((IReadOnlyList<WorkloadSpaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<WorkloadCapabilityData>.FromValues((IReadOnlyList<WorkloadCapabilityData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
@@ -64,14 +68,14 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _context) : _client.CreateGetByResourceGroupRequest(_subscriptionId, _resourceGroupName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByWorkloadSpaceRequest(nextLink, _subscriptionId, _resourceGroupName, _spaceName, _context) : _client.CreateGetByWorkloadSpaceRequest(_subscriptionId, _resourceGroupName, _spaceName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

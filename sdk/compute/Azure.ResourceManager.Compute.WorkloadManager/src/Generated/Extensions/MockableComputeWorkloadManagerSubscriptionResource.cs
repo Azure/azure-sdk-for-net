@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkloadSpaceData, WorkloadSpaceResource>(new WorkloadSpacesGetBySubscriptionAsyncCollectionResultOfT(WorkloadSpacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableComputeWorkloadManagerSubscriptionResource.GetWorkloadSpaces"), data => new WorkloadSpaceResource(Client, data));
+            return new AsyncPageableWrapper<WorkloadSpaceData, WorkloadSpaceResource>(new WorkloadSpaceDataAsync0CollectionResultOfT(WorkloadSpacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableComputeWorkloadManagerSubscriptionResource.GetWorkloadSpaces"), data => new WorkloadSpaceResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkloadSpaceData, WorkloadSpaceResource>(new WorkloadSpacesGetBySubscriptionCollectionResultOfT(WorkloadSpacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableComputeWorkloadManagerSubscriptionResource.GetWorkloadSpaces"), data => new WorkloadSpaceResource(Client, data));
+            return new PageableWrapper<WorkloadSpaceData, WorkloadSpaceResource>(new WorkloadSpaceData0CollectionResultOfT(WorkloadSpacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableComputeWorkloadManagerSubscriptionResource.GetWorkloadSpaces"), data => new WorkloadSpaceResource(Client, data));
         }
     }
 }

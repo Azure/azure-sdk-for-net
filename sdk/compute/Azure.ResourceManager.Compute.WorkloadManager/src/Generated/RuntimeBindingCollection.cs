@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RuntimeBindingData, RuntimeBindingResource>(new RuntimeBindingsGetByWorkloadSpaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RuntimeBindingData, RuntimeBindingResource>(new RuntimeBindingDataAsyncCollectionResultOfT(
                 _runtimeBindingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RuntimeBindingData, RuntimeBindingResource>(new RuntimeBindingsGetByWorkloadSpaceCollectionResultOfT(
+            return new PageableWrapper<RuntimeBindingData, RuntimeBindingResource>(new RuntimeBindingDataCollectionResultOfT(
                 _runtimeBindingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

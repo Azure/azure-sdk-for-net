@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkloadSpaceData, WorkloadSpaceResource>(new WorkloadSpacesGetByResourceGroupAsyncCollectionResultOfT(_workloadSpacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WorkloadSpaceCollection.GetAll"), data => new WorkloadSpaceResource(Client, data));
+            return new AsyncPageableWrapper<WorkloadSpaceData, WorkloadSpaceResource>(new WorkloadSpaceDataAsyncCollectionResultOfT(_workloadSpacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WorkloadSpaceCollection.GetAll"), data => new WorkloadSpaceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkloadSpaceData, WorkloadSpaceResource>(new WorkloadSpacesGetByResourceGroupCollectionResultOfT(_workloadSpacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WorkloadSpaceCollection.GetAll"), data => new WorkloadSpaceResource(Client, data));
+            return new PageableWrapper<WorkloadSpaceData, WorkloadSpaceResource>(new WorkloadSpaceDataCollectionResultOfT(_workloadSpacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WorkloadSpaceCollection.GetAll"), data => new WorkloadSpaceResource(Client, data));
         }
 
         /// <summary>

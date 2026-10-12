@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.WorkloadManager.Models;
 
 namespace Azure.ResourceManager.Compute.WorkloadManager
 {
-    internal partial class RuntimeBindingsGetByWorkloadSpaceCollectionResultOfT : Pageable<RuntimeBindingData>
+    internal partial class RuntimeBindingDataCollectionResultOfT : Pageable<RuntimeBindingData>
     {
         private readonly RuntimeBindings _client;
         private readonly Guid _subscriptionId;
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of RuntimeBindingsGetByWorkloadSpaceCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of RuntimeBindingDataCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The RuntimeBindings client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="spaceName"> The name of the WorkloadSpace. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public RuntimeBindingsGetByWorkloadSpaceCollectionResultOfT(RuntimeBindings client, Guid subscriptionId, string resourceGroupName, string spaceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public RuntimeBindingDataCollectionResultOfT(RuntimeBindings client, Guid subscriptionId, string resourceGroupName, string spaceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of RuntimeBindingsGetByWorkloadSpaceCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of RuntimeBindingDataCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of RuntimeBindingsGetByWorkloadSpaceCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of RuntimeBindingDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<RuntimeBindingData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
