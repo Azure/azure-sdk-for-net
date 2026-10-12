@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> IoT Connector destination properties for an Azure FHIR service. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class HealthcareApisIotFhirDestinationProperties : IotDestinationProperties
     {
         private BicepValue<HealthcareApisIotIdentityResolutionType> _resourceIdentityResolutionType;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the ResourceIdentityResolutionType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<HealthcareApisIotIdentityResolutionType> ResourceIdentityResolutionType
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the FhirServiceResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> FhirServiceResourceId
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the FhirMapping. </summary>
+        [Experimental("AZPROVISION001")]
         internal HealthcareApisIotMappingProperties FhirMapping
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the Content. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> FhirMappingContent
         {
             get

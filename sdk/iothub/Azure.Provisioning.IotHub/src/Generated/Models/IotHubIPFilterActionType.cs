@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The desired action for requests captured by this rule. </summary>
+    [Experimental("AZPROVISION001")]
     public enum IotHubIPFilterActionType
     {
         /// <summary> Accept. </summary>

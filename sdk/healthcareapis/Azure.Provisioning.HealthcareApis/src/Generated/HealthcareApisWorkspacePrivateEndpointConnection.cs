@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> The Private Endpoint Connection resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class HealthcareApisWorkspacePrivateEndpointConnection : ProvisionableResource
     {
         private BicepValue<string> _id;

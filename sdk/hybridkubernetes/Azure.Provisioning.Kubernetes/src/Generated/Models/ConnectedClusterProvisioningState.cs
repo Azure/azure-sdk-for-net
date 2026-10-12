@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Kubernetes
 {
     /// <summary> The current deployment state of connectedClusters. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ConnectedClusterProvisioningState
     {
         /// <summary> Succeeded. </summary>

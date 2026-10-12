@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> Aggregation type. Relevant and required only for rules of the kind LogAlert. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ScheduledQueryRuleTimeAggregationType
     {
         /// <summary> Count. </summary>

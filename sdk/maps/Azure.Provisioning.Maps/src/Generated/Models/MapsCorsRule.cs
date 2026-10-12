@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Maps
 {
     /// <summary> Specifies a CORS rule for the Map Account. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class MapsCorsRule : ProvisionableConstruct
     {
         private BicepList<string> _allowedOrigins;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.Maps
         }
 
         /// <summary> Gets or sets the AllowedOrigins. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> AllowedOrigins
         {
             get

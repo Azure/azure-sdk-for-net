@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> The type of the diagnostic settings category. </summary>
+    [Experimental("AZPROVISION001")]
     public enum CategoryType
     {
         /// <summary> Metrics. </summary>

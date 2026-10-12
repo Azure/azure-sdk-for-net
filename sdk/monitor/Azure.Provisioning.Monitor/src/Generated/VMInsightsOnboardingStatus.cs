@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> VM Insights onboarding status for a resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VMInsightsOnboardingStatus : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -69,6 +70,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets the ResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ResourceId
         {
             get
@@ -78,6 +80,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets the OnboardingStatus. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<OnboardingStatus> OnboardingStatus
         {
             get
@@ -87,6 +90,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets the DataStatus. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DataStatus> DataStatus
         {
             get
@@ -96,6 +100,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets the Data. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DataContainer> Data
         {
             get

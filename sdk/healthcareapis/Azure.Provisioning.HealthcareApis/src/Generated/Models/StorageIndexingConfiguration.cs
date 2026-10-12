@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> The configuration for indexing the connected storage. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class StorageIndexingConfiguration : ProvisionableConstruct
     {
         private BicepValue<string> _storageEventQueueName;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the StorageEventQueueName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> StorageEventQueueName
         {
             get

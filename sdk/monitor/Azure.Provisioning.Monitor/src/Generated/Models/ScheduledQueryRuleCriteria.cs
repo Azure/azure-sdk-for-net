@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> The rule criteria that defines the conditions of the scheduled query rule. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ScheduledQueryRuleCriteria : ProvisionableConstruct
     {
         private BicepList<ScheduledQueryRuleCondition> _allOf;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the AllOf. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ScheduledQueryRuleCondition> AllOf
         {
             get

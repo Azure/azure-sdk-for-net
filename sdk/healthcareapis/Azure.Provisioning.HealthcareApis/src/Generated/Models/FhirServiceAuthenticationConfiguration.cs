@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> Authentication configuration information. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class FhirServiceAuthenticationConfiguration : ProvisionableConstruct
     {
         private BicepValue<string> _authority;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the Authority. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Authority
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the Audience. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Audience
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the IsSmartProxyEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsSmartProxyEnabled
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the SmartIdentityProviders. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SmartIdentityProviderConfiguration> SmartIdentityProviders
         {
             get

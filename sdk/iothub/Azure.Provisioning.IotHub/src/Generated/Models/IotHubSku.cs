@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The name of the SKU. </summary>
+    [Experimental("AZPROVISION001")]
     public enum IotHubSku
     {
         /// <summary> F1. </summary>

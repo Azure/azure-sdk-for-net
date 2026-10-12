@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The encryption properties for the IoT hub. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class IotHubEncryptionProperties : ProvisionableConstruct
     {
         private BicepValue<string> _keySource;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the KeySource. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> KeySource
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the KeyVaultProperties. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<IotHubKeyVaultKeyProperties> KeyVaultProperties
         {
             get

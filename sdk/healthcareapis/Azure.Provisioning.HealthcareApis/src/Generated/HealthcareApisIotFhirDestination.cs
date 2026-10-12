@@ -17,6 +17,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> IoT Connector FHIR destination definition. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class HealthcareApisIotFhirDestination : ProvisionableResource
     {
         private BicepValue<string> _id;
@@ -85,6 +86,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the ETag. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ETag> ETag
         {
             get
@@ -100,6 +102,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the Location. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AzureLocation> Location
         {
             get
@@ -130,6 +133,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<HealthcareApisProvisioningState> ProvisioningState
         {
             get
@@ -143,6 +147,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the ResourceIdentityResolutionType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<HealthcareApisIotIdentityResolutionType> ResourceIdentityResolutionType
         {
             get
@@ -160,6 +165,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the FhirServiceResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> FhirServiceResourceId
         {
             get
@@ -177,6 +183,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the Content. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> FhirMappingContent
         {
             get

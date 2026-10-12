@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> Properties that define the scope private link mode settings. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class MonitorPrivateLinkAccessModeSettings : ProvisionableConstruct
     {
         private BicepValue<MonitorPrivateLinkAccessMode> _queryAccessMode;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the QueryAccessMode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<MonitorPrivateLinkAccessMode> QueryAccessMode
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the IngestionAccessMode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<MonitorPrivateLinkAccessMode> IngestionAccessMode
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Exclusions. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<MonitorPrivateLinkAccessModeSettingsExclusion> Exclusions
         {
             get

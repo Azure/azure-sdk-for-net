@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> Azure container registry configuration information. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class FhirServiceAcrConfiguration : ProvisionableConstruct
     {
         private BicepList<string> _loginServers;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the LoginServers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> LoginServers
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the OciArtifacts. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<HealthcareApisServiceOciArtifactEntry> OciArtifacts
         {
             get

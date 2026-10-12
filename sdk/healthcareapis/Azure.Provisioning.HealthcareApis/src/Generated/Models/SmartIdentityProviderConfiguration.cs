@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> An object to configure an identity provider for use with SMART on FHIR authentication. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SmartIdentityProviderConfiguration : ProvisionableConstruct
     {
         private BicepValue<string> _authority;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the Authority. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Authority
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the Applications. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SmartIdentityProviderApplication> Applications
         {
             get

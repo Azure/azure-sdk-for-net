@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> Controls how resources are versioned on the FHIR service. </summary>
+    [Experimental("AZPROVISION001")]
     public enum FhirResourceVersionPolicy
     {
         /// <summary> no-version. </summary>

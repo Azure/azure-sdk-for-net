@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> IP Filter Action. </summary>
+    [Experimental("AZPROVISION001")]
     public enum IotHubNetworkRuleIPAction
     {
         /// <summary> Allow. </summary>

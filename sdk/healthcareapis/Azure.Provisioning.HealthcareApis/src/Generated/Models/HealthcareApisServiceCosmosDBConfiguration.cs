@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> The settings for the Cosmos DB database backing the service. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class HealthcareApisServiceCosmosDBConfiguration : ProvisionableConstruct
     {
         private BicepValue<int> _offerThroughput;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the OfferThroughput. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> OfferThroughput
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the KeyVaultKeyUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> KeyVaultKeyUri
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the CrossTenantCmkApplicationId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CrossTenantCmkApplicationId
         {
             get

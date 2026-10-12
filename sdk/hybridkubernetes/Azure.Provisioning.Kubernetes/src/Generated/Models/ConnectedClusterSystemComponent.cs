@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Kubernetes
 {
     /// <summary> System extensions and its current versions installed on the cluster resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ConnectedClusterSystemComponent : ProvisionableConstruct
     {
         private BicepValue<string> _type;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the Type. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Type
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the UserSpecifiedVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> UserSpecifiedVersion
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the MajorVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MajorVersion
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets the CurrentVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CurrentVersion
         {
             get

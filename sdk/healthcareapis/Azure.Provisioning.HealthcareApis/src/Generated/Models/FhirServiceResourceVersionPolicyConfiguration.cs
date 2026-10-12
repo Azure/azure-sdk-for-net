@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> The settings for history tracking for FHIR resources. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class FhirServiceResourceVersionPolicyConfiguration : ProvisionableConstruct
     {
         private BicepValue<FhirResourceVersionPolicy> _default;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the Default. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<FhirResourceVersionPolicy> Default
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the ResourceTypeOverrides. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<FhirResourceVersionPolicy> ResourceTypeOverrides
         {
             get

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> The incident management service type. </summary>
+    [Experimental("AZPROVISION001")]
     public enum MonitorIncidentManagementService
     {
         /// <summary> Icm. </summary>

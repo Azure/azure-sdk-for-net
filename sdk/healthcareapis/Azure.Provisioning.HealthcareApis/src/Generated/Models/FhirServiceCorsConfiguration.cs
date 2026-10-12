@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> The settings for the CORS configuration of the service instance. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class FhirServiceCorsConfiguration : ProvisionableConstruct
     {
         private BicepList<string> _origins;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the Origins. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Origins
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the Headers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Headers
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the Methods. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Methods
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the MaxAge. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxAge
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the AllowCredentials. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> AllowCredentials
         {
             get

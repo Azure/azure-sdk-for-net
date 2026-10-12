@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -13,6 +14,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> A logic app receiver. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class MonitorLogicAppReceiver : ProvisionableConstruct
     {
         private BicepValue<string> _name;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -42,6 +45,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the ResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> ResourceId
         {
             get
@@ -57,6 +61,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the CallbackUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> CallbackUri
         {
             get
@@ -72,6 +77,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the UseCommonAlertSchema. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> UseCommonAlertSchema
         {
             get
@@ -87,6 +93,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the ManagedIdentity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ManagedIdentity
         {
             get

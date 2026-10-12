@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Maps
 {
     /// <summary> Data processing location. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class MapsLocationItem : ProvisionableConstruct
     {
         private BicepValue<string> _locationName;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.Maps
         }
 
         /// <summary> Gets or sets the LocationName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> LocationName
         {
             get

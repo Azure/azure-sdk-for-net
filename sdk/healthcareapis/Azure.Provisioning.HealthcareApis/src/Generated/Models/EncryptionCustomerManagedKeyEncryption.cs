@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> The encryption settings for the customer-managed key. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class EncryptionCustomerManagedKeyEncryption : ProvisionableConstruct
     {
         private BicepValue<Uri> _keyEncryptionKeyUri;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the KeyEncryptionKeyUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> KeyEncryptionKeyUri
         {
             get

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> Access mode types. </summary>
+    [Experimental("AZPROVISION001")]
     public enum MonitorPrivateLinkAccessMode
     {
         /// <summary> Open. </summary>

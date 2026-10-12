@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> Set of additional read-only properties for the IoT hub. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class IotHubDetails : ProvisionableConstruct
     {
         private BicepValue<IotHubGatewayVersion> _gatewayVersion;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets the GatewayVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<IotHubGatewayVersion> GatewayVersion
         {
             get

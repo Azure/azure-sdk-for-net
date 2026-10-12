@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> Workspaces resource specific properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class HealthcareApisWorkspaceProperties : ProvisionableConstruct
     {
         private BicepValue<HealthcareApisProvisioningState> _provisioningState;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<HealthcareApisProvisioningState> ProvisioningState
         {
             get
@@ -33,6 +36,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<HealthcareApisPrivateEndpointConnection> PrivateEndpointConnections
         {
             get
@@ -43,6 +47,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<HealthcareApisPublicNetworkAccess> PublicNetworkAccess
         {
             get

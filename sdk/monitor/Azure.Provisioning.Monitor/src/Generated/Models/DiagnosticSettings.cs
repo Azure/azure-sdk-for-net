@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> The diagnostic settings. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DiagnosticSettings : ProvisionableConstruct
     {
         private BicepValue<string> _storageAccountId;
@@ -29,6 +31,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the StorageAccountId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> StorageAccountId
         {
             get
@@ -44,6 +47,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the ServiceBusRuleId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ServiceBusRuleId
         {
             get
@@ -59,6 +63,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the EventHubAuthorizationRuleId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EventHubAuthorizationRuleId
         {
             get
@@ -74,6 +79,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the EventHubName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EventHubName
         {
             get
@@ -89,6 +95,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Metrics. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DiagnosticsMetricSettings> Metrics
         {
             get
@@ -104,6 +111,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Logs. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DiagnosticsLogSettings> Logs
         {
             get
@@ -119,6 +127,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the WorkspaceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> WorkspaceId
         {
             get
@@ -134,6 +143,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the MarketplacePartnerId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> MarketplacePartnerId
         {
             get
@@ -149,6 +159,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the LogAnalyticsDestinationType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> LogAnalyticsDestinationType
         {
             get

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> The Data Actions that can be enabled for a Smart Identity Provider Application. </summary>
+    [Experimental("AZPROVISION001")]
     public enum SmartDataAction
     {
         /// <summary> Read. </summary>

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> The provisioning state. </summary>
+    [Experimental("AZPROVISION001")]
     public enum HealthcareApisProvisioningState
     {
         /// <summary> Deleting. </summary>

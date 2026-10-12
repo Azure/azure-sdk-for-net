@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> Export operation configuration information. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ServiceExportConfigurationInfo : ProvisionableConstruct
     {
         private BicepValue<string> _storageAccountName;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the StorageAccountName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> StorageAccountName
         {
             get

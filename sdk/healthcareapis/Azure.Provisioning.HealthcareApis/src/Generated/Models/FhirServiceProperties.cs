@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> Fhir Service properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class FhirServiceProperties : ProvisionableConstruct
     {
         private BicepValue<HealthcareApisProvisioningState> _provisioningState;
@@ -33,6 +35,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<HealthcareApisProvisioningState> ProvisioningState
         {
             get
@@ -43,6 +46,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the AcrConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public FhirServiceAcrConfiguration AcrConfiguration
         {
             get
@@ -58,6 +62,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the AuthenticationConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public FhirServiceAuthenticationConfiguration AuthenticationConfiguration
         {
             get
@@ -73,6 +78,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the CorsConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public FhirServiceCorsConfiguration CorsConfiguration
         {
             get
@@ -88,6 +94,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the ExportConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         internal FhirServiceExportConfiguration ExportConfiguration
         {
             get
@@ -103,6 +110,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<HealthcareApisServicePrivateEndpointConnection> PrivateEndpointConnections
         {
             get
@@ -113,6 +121,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<HealthcareApisPublicNetworkAccess> PublicNetworkAccess
         {
             get
@@ -128,6 +137,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets the EventState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<FhirServiceEventState> EventState
         {
             get
@@ -138,6 +148,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the ResourceVersionPolicyConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public FhirServiceResourceVersionPolicyConfiguration ResourceVersionPolicyConfiguration
         {
             get
@@ -153,6 +164,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the ImportConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public FhirServiceImportConfiguration ImportConfiguration
         {
             get
@@ -168,6 +180,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the ImplementationGuidesConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         internal ImplementationGuidesConfiguration ImplementationGuidesConfiguration
         {
             get
@@ -183,6 +196,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the Encryption. </summary>
+        [Experimental("AZPROVISION001")]
         internal Encryption Encryption
         {
             get
@@ -198,6 +212,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the StorageAccountName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ExportStorageAccountName
         {
             get
@@ -215,6 +230,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the IsUsCoreMissingDataEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> ImplementationGuidesIsUsCoreMissingDataEnabled
         {
             get
@@ -232,6 +248,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the KeyEncryptionKeyUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> KeyEncryptionKeyUri
         {
             get

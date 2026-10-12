@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> An Azure Monitor PrivateLinkScope definition. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class MonitorPrivateLinkScope : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -111,6 +112,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets the PrivateLinkScopeProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<MonitorPrivateLinkScopeProvisioningState> PrivateLinkScopeProvisioningState
         {
             get
@@ -124,6 +126,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<MonitorPrivateEndpointConnection> PrivateEndpointConnections
         {
             get
@@ -137,6 +140,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the AccessModeSettings. </summary>
+        [Experimental("AZPROVISION001")]
         public MonitorPrivateLinkAccessModeSettings AccessModeSettings
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> Authentication configuration information. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DicomServiceAuthenticationConfiguration : ProvisionableConstruct
     {
         private BicepValue<string> _authority;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets the Authority. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Authority
         {
             get
@@ -32,6 +35,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets the Audiences. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Audiences
         {
             get

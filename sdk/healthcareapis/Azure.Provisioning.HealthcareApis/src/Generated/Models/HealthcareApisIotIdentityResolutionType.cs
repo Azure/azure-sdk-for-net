@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> The type of IoT identity resolution to use with the destination. </summary>
+    [Experimental("AZPROVISION001")]
     public enum HealthcareApisIotIdentityResolutionType
     {
         /// <summary> Create. </summary>

@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> A tenant action group resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class TenantActionGroupResource : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -112,6 +113,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the GroupShortName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> GroupShortName
         {
             get
@@ -129,6 +131,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Enabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> Enabled
         {
             get
@@ -146,6 +149,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the EmailReceivers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<MonitorEmailReceiver> EmailReceivers
         {
             get
@@ -163,6 +167,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the SmsReceivers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<MonitorSmsReceiver> SmsReceivers
         {
             get
@@ -180,6 +185,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the WebhookReceivers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<WebhookReceiver> WebhookReceivers
         {
             get
@@ -197,6 +203,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the AzureAppPushReceivers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<MonitorAzureAppPushReceiver> AzureAppPushReceivers
         {
             get
@@ -214,6 +221,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the VoiceReceivers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<MonitorVoiceReceiver> VoiceReceivers
         {
             get

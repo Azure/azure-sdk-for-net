@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> Common IoT Connector destination properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class IotDestinationProperties : ProvisionableConstruct
     {
         private BicepValue<HealthcareApisProvisioningState> _provisioningState;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<HealthcareApisProvisioningState> ProvisioningState
         {
             get

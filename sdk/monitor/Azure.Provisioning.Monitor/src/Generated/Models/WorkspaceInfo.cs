@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> Information about a Log Analytics Workspace. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WorkspaceInfo : ProvisionableConstruct
     {
         private BicepValue<string> _id;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Id
         {
             get
@@ -33,6 +36,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets the Location. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Location
         {
             get
@@ -43,6 +47,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets the Properties. </summary>
+        [Experimental("AZPROVISION001")]
         internal WorkspaceInfoProperties Properties
         {
             get
@@ -53,6 +58,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets the CustomerId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CustomerId
         {
             get

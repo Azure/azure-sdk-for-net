@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> Import operation configuration information. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class FhirServiceImportConfiguration : ProvisionableConstruct
     {
         private BicepValue<string> _integrationDataStore;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the IntegrationDataStore. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> IntegrationDataStore
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the IsInitialImportMode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsInitialImportMode
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get

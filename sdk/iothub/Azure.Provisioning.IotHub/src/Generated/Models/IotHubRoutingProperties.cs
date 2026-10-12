@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The routing related properties of the IoT hub. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class IotHubRoutingProperties : ProvisionableConstruct
     {
         private RoutingEndpoints _endpoints;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the Endpoints. </summary>
+        [Experimental("AZPROVISION001")]
         public RoutingEndpoints Endpoints
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the Routes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<RoutingRuleProperties> Routes
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the FallbackRoute. </summary>
+        [Experimental("AZPROVISION001")]
         public IotHubFallbackRouteProperties FallbackRoute
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the Enrichments. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<IotHubEnrichmentProperties> Enrichments
         {
             get
