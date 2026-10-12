@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,7 +15,7 @@ namespace Azure.Provisioning.ApiCenter
     public partial class EnvironmentOnboardingInformation : ProvisionableConstruct
     {
         private BicepValue<string> _instructions;
-        private BicepList<string> _developerPortalUri;
+        private BicepValue<Uri> _developerPortalUri;
 
         /// <summary> Creates a new EnvironmentOnboardingInformation. </summary>
         public EnvironmentOnboardingInformation()
@@ -37,7 +38,7 @@ namespace Azure.Provisioning.ApiCenter
         }
 
         /// <summary> Gets or sets the DeveloperPortalUri. </summary>
-        public BicepList<string> DeveloperPortalUri
+        public BicepValue<Uri> DeveloperPortalUri
         {
             get
             {
@@ -56,7 +57,7 @@ namespace Azure.Provisioning.ApiCenter
         {
             base.DefineProvisionableProperties();
             _instructions = DefineProperty<string>(nameof(Instructions), new string[] { "instructions" });
-            _developerPortalUri = DefineListProperty<string>(nameof(DeveloperPortalUri), new string[] { "developerPortalUri" });
+            _developerPortalUri = DefineProperty<Uri>(nameof(DeveloperPortalUri), new string[] { "developerPortalUri" });
             DefineAdditionalProperties();
         }
 

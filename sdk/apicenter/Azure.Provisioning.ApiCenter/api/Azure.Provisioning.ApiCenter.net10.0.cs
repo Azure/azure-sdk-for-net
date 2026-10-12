@@ -218,7 +218,7 @@ namespace Azure.Provisioning.ApiCenter
     {
         public ApiCenterEnvironmentServer() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiCenter.EnvironmentServerType> EnvironmentServerType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> ManagementPortalUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> ManagementPortalUri { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum ApiCenterImportSpecificationModel
@@ -428,7 +428,7 @@ namespace Azure.Provisioning.ApiCenter
     public partial class EnvironmentOnboardingInformation : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public EnvironmentOnboardingInformation() { }
-        public Azure.Provisioning.BicepList<string> DeveloperPortalUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> DeveloperPortalUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Instructions { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }

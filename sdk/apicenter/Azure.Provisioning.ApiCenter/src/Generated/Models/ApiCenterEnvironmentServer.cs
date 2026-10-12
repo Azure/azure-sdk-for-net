@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,7 +15,7 @@ namespace Azure.Provisioning.ApiCenter
     public partial class ApiCenterEnvironmentServer : ProvisionableConstruct
     {
         private BicepValue<EnvironmentServerType> _environmentServerType;
-        private BicepList<string> _managementPortalUri;
+        private BicepValue<Uri> _managementPortalUri;
 
         /// <summary> Creates a new ApiCenterEnvironmentServer. </summary>
         public ApiCenterEnvironmentServer()
@@ -37,7 +38,7 @@ namespace Azure.Provisioning.ApiCenter
         }
 
         /// <summary> Gets or sets the ManagementPortalUri. </summary>
-        public BicepList<string> ManagementPortalUri
+        public BicepValue<Uri> ManagementPortalUri
         {
             get
             {
@@ -56,7 +57,7 @@ namespace Azure.Provisioning.ApiCenter
         {
             base.DefineProvisionableProperties();
             _environmentServerType = DefineProperty<EnvironmentServerType>(nameof(EnvironmentServerType), new string[] { "type" });
-            _managementPortalUri = DefineListProperty<string>(nameof(ManagementPortalUri), new string[] { "managementPortalUri" });
+            _managementPortalUri = DefineProperty<Uri>(nameof(ManagementPortalUri), new string[] { "managementPortalUri" });
             DefineAdditionalProperties();
         }
 
