@@ -12,22 +12,22 @@ using Azure.ResourceManager.Education;
 namespace Azure.ResourceManager.Education.Models
 {
     /// <summary> List of Grants info. </summary>
-    internal partial class GrantListResponse
+    internal partial class GrantListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GrantListResponse"/>. </summary>
-        internal GrantListResponse()
+        /// <summary> Initializes a new instance of <see cref="GrantListResult"/>. </summary>
+        internal GrantListResult()
         {
             Value = new ChangeTrackingList<GrantDetailsData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="GrantListResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrantListResult"/>. </summary>
         /// <param name="value"> The GrantDetails items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GrantListResponse(IReadOnlyList<GrantDetailsData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GrantListResult(IReadOnlyList<GrantDetailsData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;

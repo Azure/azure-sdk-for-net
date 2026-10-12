@@ -10,68 +10,68 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.ResourceManager.Elastic;
+using Azure.ResourceManager.Dynatrace;
 
-namespace Azure.ResourceManager.Elastic.Models
+namespace Azure.ResourceManager.Dynatrace.Models
 {
-    /// <summary> Response of a list operation. </summary>
-    internal partial class OpenAIIntegrationRPModelListResponse : IJsonModel<OpenAIIntegrationRPModelListResponse>
+    /// <summary> Response for getting all the linkable environments. </summary>
+    internal partial class LinkableEnvironmentListResult : IJsonModel<LinkableEnvironmentListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="OpenAIIntegrationRPModelListResponse"/> for deserialization. </summary>
-        internal OpenAIIntegrationRPModelListResponse()
+        /// <summary> Initializes a new instance of <see cref="LinkableEnvironmentListResult"/> for deserialization. </summary>
+        internal LinkableEnvironmentListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OpenAIIntegrationRPModelListResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual LinkableEnvironmentListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OpenAIIntegrationRPModelListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkableEnvironmentListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOpenAIIntegrationRPModelListResponse(document.RootElement, options);
+                        return DeserializeLinkableEnvironmentListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OpenAIIntegrationRPModelListResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkableEnvironmentListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OpenAIIntegrationRPModelListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkableEnvironmentListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDynatraceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OpenAIIntegrationRPModelListResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkableEnvironmentListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OpenAIIntegrationRPModelListResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<LinkableEnvironmentListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OpenAIIntegrationRPModelListResponse IPersistableModel<OpenAIIntegrationRPModelListResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        LinkableEnvironmentListResult IPersistableModel<LinkableEnvironmentListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OpenAIIntegrationRPModelListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LinkableEnvironmentListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="OpenAIIntegrationRPModelListResponse"/> from. </param>
-        internal static OpenAIIntegrationRPModelListResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LinkableEnvironmentListResult"/> from. </param>
+        internal static LinkableEnvironmentListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeOpenAIIntegrationRPModelListResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeLinkableEnvironmentListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OpenAIIntegrationRPModelListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LinkableEnvironmentListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OpenAIIntegrationRPModelListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkableEnvironmentListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OpenAIIntegrationRPModelListResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkableEnvironmentListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ElasticOpenAIIntegrationData item in Value)
+            foreach (LinkableEnvironmentResult item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -118,40 +118,40 @@ namespace Azure.ResourceManager.Elastic.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OpenAIIntegrationRPModelListResponse IJsonModel<OpenAIIntegrationRPModelListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        LinkableEnvironmentListResult IJsonModel<LinkableEnvironmentListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OpenAIIntegrationRPModelListResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual LinkableEnvironmentListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OpenAIIntegrationRPModelListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkableEnvironmentListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OpenAIIntegrationRPModelListResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkableEnvironmentListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOpenAIIntegrationRPModelListResponse(document.RootElement, options);
+            return DeserializeLinkableEnvironmentListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static OpenAIIntegrationRPModelListResponse DeserializeOpenAIIntegrationRPModelListResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static LinkableEnvironmentListResult DeserializeLinkableEnvironmentListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<ElasticOpenAIIntegrationData> value = default;
+            IList<LinkableEnvironmentResult> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ElasticOpenAIIntegrationData> array = new List<ElasticOpenAIIntegrationData>();
+                    List<LinkableEnvironmentResult> array = new List<LinkableEnvironmentResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ElasticOpenAIIntegrationData.DeserializeElasticOpenAIIntegrationData(item, options));
+                        array.Add(LinkableEnvironmentResult.DeserializeLinkableEnvironmentResult(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new OpenAIIntegrationRPModelListResponse(value, nextLink, additionalBinaryDataProperties);
+            return new LinkableEnvironmentListResult(value ?? new ChangeTrackingList<LinkableEnvironmentResult>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
