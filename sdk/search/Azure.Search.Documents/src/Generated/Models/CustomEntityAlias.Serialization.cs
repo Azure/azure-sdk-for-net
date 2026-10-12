@@ -81,7 +81,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (_caseSensitiveIsDefined || Optional.IsDefined(CaseSensitive))
+            if (Optional.IsDefined(CaseSensitive, _caseSensitiveIsDefined))
             {
                 if (CaseSensitive != null)
                 {
@@ -93,7 +93,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("caseSensitive"u8);
                 }
             }
-            if (_accentSensitiveIsDefined || Optional.IsDefined(AccentSensitive))
+            if (Optional.IsDefined(AccentSensitive, _accentSensitiveIsDefined))
             {
                 if (AccentSensitive != null)
                 {
@@ -105,7 +105,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("accentSensitive"u8);
                 }
             }
-            if (_fuzzyEditDistanceIsDefined || Optional.IsDefined(FuzzyEditDistance))
+            if (Optional.IsDefined(FuzzyEditDistance, _fuzzyEditDistanceIsDefined))
             {
                 if (FuzzyEditDistance != null)
                 {

@@ -16,13 +16,13 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private SearchIndexerDataIdentity _identity;
-        internal bool _identityIsDefined;
+        private bool _identityIsDefined;
         private DataChangeDetectionPolicy _dataChangeDetectionPolicy;
-        internal bool _dataChangeDetectionPolicyIsDefined;
+        private bool _dataChangeDetectionPolicyIsDefined;
         private DataDeletionDetectionPolicy _dataDeletionDetectionPolicy;
-        internal bool _dataDeletionDetectionPolicyIsDefined;
+        private bool _dataDeletionDetectionPolicyIsDefined;
         private SearchResourceEncryptionKey _encryptionKey;
-        internal bool _encryptionKeyIsDefined;
+        private bool _encryptionKeyIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexerDataSourceConnection"/>. </summary>
         /// <param name="name"> The name of the datasource. </param>
