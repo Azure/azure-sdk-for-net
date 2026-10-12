@@ -38,13 +38,21 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="diskSizeInGB"> Disk size for each vm in the node type in GBs. </param>
         /// <param name="diskType"> Managed data disk type. Specifies the storage account type for the managed disk. </param>
         /// <param name="diskLetter"> Managed data disk letter. It can not use the reserved letter C or D and it can not change after created. </param>
+        /// <param name="caching"> Specifies the caching requirements for the managed data disk. Possible values include: None, ReadOnly, ReadWrite. </param>
+        /// <param name="isWriteAcceleratorEnabled"> Specifies whether write accelerator should be enabled or disabled on the managed data disk. </param>
+        /// <param name="diskIopsReadWrite"> Specifies the Read-Write IOPS for the managed data disk. </param>
+        /// <param name="diskMbpsReadWrite"> Specifies the bandwidth in MB per second for the managed data disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NodeTypeVmssDataDisk(int lun, int diskSizeInGB, ServiceFabricManagedDataDiskType diskType, string diskLetter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NodeTypeVmssDataDisk(int lun, int diskSizeInGB, ServiceFabricManagedDataDiskType diskType, string diskLetter, ServiceFabricManagedDiskCachingType? caching, bool? isWriteAcceleratorEnabled, int? diskIopsReadWrite, int? diskMbpsReadWrite, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Lun = lun;
             DiskSizeInGB = diskSizeInGB;
             DiskType = diskType;
             DiskLetter = diskLetter;
+            Caching = caching;
+            IsWriteAcceleratorEnabled = isWriteAcceleratorEnabled;
+            DiskIopsReadWrite = diskIopsReadWrite;
+            DiskMbpsReadWrite = diskMbpsReadWrite;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -59,5 +67,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Managed data disk letter. It can not use the reserved letter C or D and it can not change after created. </summary>
         public string DiskLetter { get; set; }
+
+        /// <summary> Specifies the caching requirements for the managed data disk. Possible values include: None, ReadOnly, ReadWrite. </summary>
+        public ServiceFabricManagedDiskCachingType? Caching { get; set; }
+
+        /// <summary> Specifies whether write accelerator should be enabled or disabled on the managed data disk. </summary>
+        public bool? IsWriteAcceleratorEnabled { get; set; }
+
+        /// <summary> Specifies the Read-Write IOPS for the managed data disk. </summary>
+        public int? DiskIopsReadWrite { get; set; }
+
+        /// <summary> Specifies the bandwidth in MB per second for the managed data disk. </summary>
+        public int? DiskMbpsReadWrite { get; set; }
     }
 }

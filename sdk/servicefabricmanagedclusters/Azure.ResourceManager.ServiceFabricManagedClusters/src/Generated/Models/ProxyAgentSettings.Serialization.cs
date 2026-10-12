@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
             bool? enabled = default;
             int? keyIncarnationId = default;
-            HostEndpointSettings wireServer = default;
-            HostEndpointSettings imds = default;
+            ProxyAgentHostEndpointSettings wireServer = default;
+            ProxyAgentHostEndpointSettings imds = default;
             bool? shouldAddProxyAgentExtension = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    wireServer = HostEndpointSettings.DeserializeHostEndpointSettings(prop.Value, options);
+                    wireServer = ProxyAgentHostEndpointSettings.DeserializeProxyAgentHostEndpointSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("imds"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    imds = HostEndpointSettings.DeserializeHostEndpointSettings(prop.Value, options);
+                    imds = ProxyAgentHostEndpointSettings.DeserializeProxyAgentHostEndpointSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("addProxyAgentExtension"u8))
