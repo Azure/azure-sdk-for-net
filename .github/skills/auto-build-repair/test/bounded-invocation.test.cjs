@@ -127,15 +127,25 @@ test("MCP fixture rejects an invalid bound rather than simulating success", () =
 });
 
 const workflow = fs.readFileSync(path.resolve(__dirname, "../../../workflows/sdk-build-repair.md"), "utf8");
+test("posted command code preserves URLs without changing the network allowlist", () => {
+  const frontmatter = evalRequire("yaml").parse(/^---\r?\n([\s\S]*?)\r?\n---/.exec(workflow)[1]);
+  assert.equal(frontmatter["safe-outputs"].urls, "allowed-or-code-region");
+  assert.deepEqual(frontmatter.network.allowed, ["defaults", "dotnet", "github", "registry.npmjs.org", "api.githubcopilot.com"]);
+  const lock = fs.readFileSync(path.resolve(__dirname, "../../../workflows/sdk-build-repair.lock.yml"), "utf8");
+  assert.equal((lock.match(/GH_AW_SAFE_OUTPUTS_URLS: "allowed-or-code-region"/g) || []).length, 2);
+});
 const invocation = /```bash\r?\n(mkdir -p "\$RUNNER_TEMP\/repair-results"[\s\S]*?)```/.exec(workflow)[1].replace(/\r\n/g, "\n");
 const bash = process.env.BASH || "bash";
-for (const [bound, mode, expected] of [[1, "success", 0], [3, "success", 0], [10, "success", 0],
+for (const [bound, mode, expected, quoted = false] of [[1, "success", 0], [3, "success", 0], [10, "success", 0],
+  [3, "success", 0, true], [3, "failed", 1, true],
   [3, "failed", 1], [3, "failed-stderr", 1], [3, "failed-stderr-upgrade", 1], [3, "failed-stderr-array", 1],
   [3, "invalid-result", 1], [3, "invalid-array-result", 1],
   [3, "contradictory-result", 1], [3, "old-cli", 1], [3, "help-failed", 1]]) {
-  test(`workflow invokes the engine once with bound ${bound}: ${mode}`, (t) => {
+  test(`workflow invokes the engine once with bound ${bound}: ${mode}${quoted ? " (quoted arguments)" : ""}`, (t) => {
     const root = fs.mkdtempSync(path.join(os.tmpdir(), "bounded-invocation-"));
     t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+    fs.mkdirSync(path.join(root, "repair-results"));
+    fs.writeFileSync(path.join(root, "repair-results", "engine-command.txt"), "stale invocation\n");
     const fake = `
 azsdk() {
   if [[ "$*" == *"--help" ]]; then
@@ -144,6 +154,7 @@ azsdk() {
     return 0
   fi
   printf '%s\\n' "$*" >> "$RUNNER_TEMP/calls"
+  printf '%s\\0' "$@" >> "$RUNNER_TEMP/calls-argv"
   if [[ "$MODE" == "invalid-result" ]]; then echo "not JSON"; return 0; fi
   if [[ "$MODE" == "invalid-array-result" ]]; then
     printf '[\\n {"success":true,"attemptsUsed":%s}\\n]\\n' "$BOUND"; return 0
@@ -162,10 +173,16 @@ azsdk() {
   if [[ "$MODE" == "failed" || "$MODE" == "contradictory-result" ]]; then echo "Actual engine diagnostic" >&2; return 1; fi
 }
 `;
-    const run = spawnSync(bash, ["--noprofile", "--norc", "-c",
-      fake + invocation.replaceAll("<maxIterations from repair-config.yml>", String(bound))], {
-      env: { ...process.env, RUNNER_TEMP: root.replace(/\\/g, "/"),
-        GITHUB_WORKSPACE: path.resolve(__dirname, "../../../..").replace(/\\/g, "/"), MODE: mode, BOUND: String(bound) },
+    const packagePath = quoted ? "sdk/contoso widgets/'[x] & $HOME; Azure.Widgets" : "sdk/contoso/Azure.Contoso.Widgets";
+    const request = quoted ? "Fix 'X' | `Y` <Z> & $HOME; $(touch \"$RUNNER_TEMP/injected\")\nnext line\r\n```bash\nhttp://example.test/error https://example.test/error @contoso/types #42" : "Fix CS1061 in custom code";
+    const environment = { ...process.env, RUNNER_TEMP: root.replace(/\\/g, "/"),
+      GITHUB_WORKSPACE: path.resolve(__dirname, "../../../..").replace(/\\/g, "/"), MODE: mode, BOUND: String(bound),
+      TEST_PACKAGE_PATH: packagePath, TEST_CUSTOMIZATION_REQUEST: request };
+    const command = invocation.replaceAll("<maxIterations from repair-config.yml>", String(bound))
+      .replace('"<failing SDK package dir>"', '"$TEST_PACKAGE_PATH"')
+      .replace('"<the build errors / failure context>"', '"$TEST_CUSTOMIZATION_REQUEST"');
+    const run = spawnSync(bash, ["--noprofile", "--norc", "-c", fake + command], {
+      env: environment,
       encoding: "utf8", timeout: 30000,
     });
     assert.ifError(run.error);
@@ -173,13 +190,27 @@ azsdk() {
     const calls = path.join(root, "calls");
     if (mode === "old-cli" || mode === "help-failed") {
       assert.equal(fs.existsSync(calls), false);
+      assert.equal(fs.existsSync(path.join(root, "repair-results", "engine-command.txt")), false);
       assert.match(fs.readFileSync(path.join(root, "repair-results", "engine-errors.txt"), "utf8"),
         /does not support --max-attempts|CLI unavailable/);
     } else {
-      const lines = fs.readFileSync(calls, "utf8").trim().split("\n");
-      assert.equal(lines.length, 1);
-      assert.match(lines[0], new RegExp("--max-attempts " + bound + "$"));
-      assert.match(lines[0], /--edit-scope CustomCode/);
+      const expectedArgs = ["-o", "json", "tsp", "client", "customized-update", "--edit-scope", "CustomCode",
+        "--package-path", packagePath, "--customization-request", request, "--max-attempts", String(bound)];
+      const readArgs = (directory) => fs.readFileSync(path.join(directory, "calls-argv"), "utf8").split("\0").slice(0, -1);
+      assert.deepEqual(readArgs(root), expectedArgs);
+      const recordedCommand = fs.readFileSync(path.join(root, "repair-results", "engine-command.txt"), "utf8");
+      assert.match(recordedCommand, /^azsdk -o json tsp client customized-update /);
+      assert.match(recordedCommand, new RegExp("--max-attempts " + bound + "\\n$"));
+      const replayRoot = path.join(root, "replay");
+      fs.mkdirSync(replayRoot);
+      const replay = spawnSync(bash, ["--noprofile", "--norc", "-c", fake + recordedCommand], {
+        env: { ...environment, RUNNER_TEMP: replayRoot.replace(/\\/g, "/") },
+        encoding: "utf8", timeout: 10000,
+      });
+      assert.ifError(replay.error);
+      assert.deepEqual(readArgs(replayRoot), expectedArgs, "recorded command preserves every executed argument");
+      assert.equal(fs.existsSync(path.join(root, "injected")), false);
+      assert.equal(fs.existsSync(path.join(replayRoot, "injected")), false);
       const resultPath = path.join(root, "repair-results", "result.json");
       assert.equal(fs.readFileSync(path.join(root, "repair-results", "engine-exit-code.txt"), "utf8").trim(),
         mode.startsWith("failed") || mode === "contradictory-result" ? "1" : "0");

@@ -53,6 +53,11 @@ function Get-DiagnosticDetails([string]$body) {
     if ($m.Success) { return $m.Groups[1].Value } else { return '' }
 }
 
+function Get-EngineCommand([string]$body) {
+    $m = [regex]::Match($body, '(?s)<details><summary>Exact engine command</summary>\s*(?<fence>`{3,})bash\n(?<command>.*?)\n\k<fence>\n</details>')
+    if ($m.Success) { return $m.Groups['command'].Value } else { return $null }
+}
+
 # Characters/patterns the gh-aw sanitizer rewrites. The object must contain NONE of them.
 function Test-SanitizerSafe([string]$obj) {
     $violations = @()
@@ -93,6 +98,52 @@ try {
         response_error = 'Repair stopped after 3 attempts: final build failed with CS0111: duplicate member.'
         appliedPatches = @(@{ FilePath = 'sdk/foo/Azure.Foo/src/Custom.cs'; Description = 'attempted fix'; ReplacementCount = 1 })
     } | ConvertTo-Json -Depth 6 | Set-Content (Join-Path $failedProgressDir 'result.json')
+
+    Write-Host 'Section: the recorded invocation is displayed exactly, not reconstructed'
+    $commandDir = Join-Path $tmp 'command'; New-Item -ItemType Directory -Path $commandDir | Out-Null
+    $commandFile = Join-Path $commandDir 'engine-command.txt'
+    $commandOut = Join-Path $tmp 'command.md'
+    foreach ($success in @($true, $false)) {
+        @{ success = $success; attemptsUsed = 0 } | ConvertTo-Json | Set-Content (Join-Path $commandDir 'result.json')
+        foreach ($command in @(
+            'azsdk -o json tsp client customized-update --edit-scope CustomCode --package-path sdk/foo/Azure.Foo --customization-request Fix --max-attempts 1',
+            'azsdk -o json tsp client customized-update --edit-scope CustomCode --package-path sdk/foo/Azure.Foo --customization-request Fix --max-attempts 3',
+            'azsdk -o json tsp client customized-update --edit-scope CustomCode --package-path sdk/foo/Azure.Foo --customization-request Fix --max-attempts 10',
+            'azsdk -o json tsp client customized-update --package-path sdk/foo\ package --customization-request $''Fix \''X\'' | `Y` <Z> & $HOME; $(false)\nnext line'' --edit-scope CustomCode --max-attempts 3',
+            'azsdk --customization-request http://example.test/error\ https://example.test/error\ @contoso/types\ #42 --max-attempts 3',
+            ("azsdk --customization-request 'first line`n````````````json`n{}`n````````````' --max-attempts 3"),
+            ("azsdk --customization-request '" + ('x' * 9000) + "' --max-attempts 3")
+        )) {
+            Set-Content -LiteralPath $commandFile -Value $command
+            & pwsh -NoProfile -File $EmitterPath -ResultsDir $commandDir -PackagePath 'sdk/foo/Azure.Foo' -RepoRoot $tmp -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $commandOut | Out-Null
+            $body = Get-Content -Raw $commandOut
+            Assert ((Get-EngineCommand $body) -ceq $command) "command(success=$success): exact recorded arguments, order, quoting, and bound are preserved"
+            Assert ($body.Contains('| **Engine** | See exact invocation below |')) "command(success=$success): summary points to the actual invocation"
+            Assert (($body | Select-String -Pattern '(?m)^```json$' -AllMatches).Matches.Count -eq 1) "command(success=$success): embedded fences cannot introduce telemetry blocks"
+            Assert ($body.Length -lt 65536) "command(success=$success): long command fits the comment without truncation"
+        }
+    }
+    foreach ($value in @($null, '', " `r`n")) {
+        if ($null -eq $value) { Remove-Item -LiteralPath $commandFile }
+        else { Set-Content -LiteralPath $commandFile -Value $value }
+        & pwsh -NoProfile -File $EmitterPath -ResultsDir $commandDir -RepoRoot $tmp -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $commandOut | Out-Null
+        $body = Get-Content -Raw $commandOut
+        Assert ($body.Contains('| **Engine** | Unavailable (invocation was not recorded) |')) 'missing/empty command is explicitly unavailable'
+        Assert ($null -eq (Get-EngineCommand $body) -and $body -notmatch 'azsdk tsp client customized-update') 'missing command never falls back to an invented invocation'
+    }
+    Set-Content -LiteralPath $commandFile -Value 'azsdk --max-attempts 10'
+    foreach ($json in @($null, '{')) {
+        if ($null -eq $json) { Remove-Item -LiteralPath (Join-Path $commandDir 'result.json') }
+        else { Set-Content -LiteralPath (Join-Path $commandDir 'result.json') -Value $json }
+        & pwsh -NoProfile -File $EmitterPath -ResultsDir $commandDir -RepoRoot $tmp -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $commandOut | Out-Null
+        Assert ((Get-EngineCommand (Get-Content -Raw $commandOut)) -ceq 'azsdk --max-attempts 10') 'missing/malformed response still displays the captured invocation'
+    }
+    Remove-Item -LiteralPath (Join-Path $commandDir 'result.json')
+    & pwsh -NoProfile -File $EmitterPath -ResultsDir $commandDir -ForcedStatus skipped_already_green -RepoRoot $tmp -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $commandOut | Out-Null
+    $body = Get-Content -Raw $commandOut
+    Assert ($body.Contains('| **Engine** | Not invoked (package already green) |') -and $null -eq (Get-EngineCommand $body)) 'already-green report does not display a stale invocation'
+    & pwsh -NoProfile -File $EmitterPath -ResultsDir $commandDir '-Eligible:$false' -RepoRoot $tmp -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $commandOut | Out-Null
+    Assert ($null -eq (Get-EngineCommand (Get-Content -Raw $commandOut))) 'ineligible report does not display a stale invocation'
 
     $cases = @(
         @{ name = 'repaired';              args = @('-ResultsDir', $repairedDir, '-PackagePath', 'sdk/foo/Azure.Foo', '-PreRepairSha', '', '-PreRepairErrorsFile', $repairedPre) ; expect = 'repaired' }

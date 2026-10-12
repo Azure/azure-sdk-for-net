@@ -5,7 +5,7 @@
 
 .DESCRIPTION
   Produces the ENTIRE PR summary comment from code-accessible sources only
-  (the final engine result JSON, `git diff`, and $GITHUB_* env) so the
+  (the recorded engine command, final engine result JSON, `git diff`, and $GITHUB_* env) so the
   content never depends on the LLM. The agent's only job is to run this script
   and pass the rendered file's contents verbatim to the gh-aw `add_comment`
   safe-output tool.
@@ -142,6 +142,15 @@ elseif ((Get-Prop $final 'success') -eq $true -and
 else {
     $ec = Get-Prop $final 'errorCode'
     $stopReason = if ($ec) { [string]$ec } elseif ($iterations -ge $MaxIterations) { 'maxIterations' } else { 'EngineFailed' }
+}
+
+$engineCommand = ''
+if ($status -in @('repaired', 'failed') -and $ResultsDir) {
+    $commandFile = Join-Path $ResultsDir 'engine-command.txt'
+    if (Test-Path -LiteralPath $commandFile -PathType Leaf) {
+        $engineCommand = ([string](Get-Content -Raw -LiteralPath $commandFile)).TrimEnd([char[]]"`r`n")
+        if ([string]::IsNullOrWhiteSpace($engineCommand)) { $engineCommand = '' }
+    }
 }
 
 # repaired_at anchors the time-to-green / subsequent-correction metrics, so it must be
@@ -356,7 +365,10 @@ else {
     [void]$sb.AppendLine("| **Final build status** | $buildStatusCell |")
     $iterationText = if ($null -ne $iterations) { "$iterations of $MaxIterations" } else { "Unknown of $MaxIterations (no valid attemptsUsed)" }
     [void]$sb.AppendLine("| **Iterations used** | $iterationText |")
-    [void]$sb.AppendLine('| **Engine** | `azsdk tsp client customized-update --edit-scope CustomCode` |')
+    $engineText = if ($engineCommand) { 'See exact invocation below' }
+        elseif ($status -eq 'skipped_already_green') { 'Not invoked (package already green)' }
+        else { 'Unavailable (invocation was not recorded)' }
+    [void]$sb.AppendLine("| **Engine** | $engineText |")
     if ($stopReason) { [void]$sb.AppendLine("| **Stop reason** | ``$(Format-Cell $stopReason)`` |") }
     [void]$sb.AppendLine('')
     [void]$sb.AppendLine('_Iterations count completed patch proposals reaching host validation, including no-progress proposals; baseline/classifier checks and tool calls are excluded._')
@@ -365,6 +377,21 @@ else {
         [void]$sb.AppendLine("[Workflow logs]($server/$Repo/actions/runs/$($Matches[1]))")
     }
     [void]$sb.AppendLine('')
+
+    if ($engineCommand) {
+        $fenceLength = 3
+        foreach ($match in [regex]::Matches($engineCommand, '`+')) {
+            $fenceLength = [Math]::Max($fenceLength, $match.Length + 1)
+        }
+        $fence = '`' * $fenceLength
+        [void]$sb.AppendLine('<details><summary>Exact engine command</summary>')
+        [void]$sb.AppendLine('')
+        [void]$sb.AppendLine("${fence}bash")
+        [void]$sb.AppendLine($engineCommand)
+        [void]$sb.AppendLine($fence)
+        [void]$sb.AppendLine('</details>')
+        [void]$sb.AppendLine('')
+    }
 
     # ----- Build errors (fixed on success, remaining on failure) -----
     if ($status -eq 'repaired' -or $status -eq 'failed') {

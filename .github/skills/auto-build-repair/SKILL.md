@@ -58,7 +58,12 @@ directory. Do not manufacture responses, diagnostics, or build evidence. If the
 process fails, retain its actual output/error for the failure report; do not
 substitute an earlier successful result.
 
-For CLI invocations, record stdout as `engine-stdout.txt`, stderr as
+For CLI invocations, execute a Bash argument array and record that same array,
+serialized with `printf '%q '`, as `engine-command.txt` in the results directory.
+Include every argument and its actual value, including `-o json`, the package
+path, customization request, and `--max-attempts`; never reconstruct or
+abbreviate the command for reporting.
+Record stdout as `engine-stdout.txt`, stderr as
 `engine-stderr.txt`, and the process exit code as `engine-exit-code.txt`. Run
 [capture-engine-result.ps1](capture-engine-result.ps1) with `-ResultsDir` and
 `-MaxIterations` to capture the actual response. azsdk can write failed JSON to
@@ -98,6 +103,9 @@ comment or telemetry yourself.
 
 - Pass `-ResultsDir` containing the single `result.json`, the captured
   `-PreRepairErrorsFile`, package/PR identity, and configured `-MaxIterations`.
+- The engine command comes only from `engine-command.txt`, displayed verbatim in
+  a Bash code block. Missing capture is explicitly unavailable, not a guessed
+  invocation. Already-green and ineligible outcomes must not display a stale command.
 - Iterations come from `attemptsUsed`: completed patch proposals reaching host
   validation, including a no-progress proposal. Baseline/classifier-only builds
   and tool/Exit reminders do not count. Never count JSON files or infer attempts
