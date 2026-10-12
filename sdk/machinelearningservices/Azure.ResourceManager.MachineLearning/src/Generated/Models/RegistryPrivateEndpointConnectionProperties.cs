@@ -16,6 +16,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private RegistryPrivateEndpoint _privateEndpoint;
+        internal bool _privateEndpointIsDefined;
+        private RegistryPrivateLinkServiceConnectionState _registryPrivateLinkServiceConnectionState;
+        internal bool _registryPrivateLinkServiceConnectionStateIsDefined;
+        private string _provisioningState;
+        internal bool _provisioningStateIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="RegistryPrivateEndpointConnectionProperties"/>. </summary>
         public RegistryPrivateEndpointConnectionProperties()
@@ -32,9 +38,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal RegistryPrivateEndpointConnectionProperties(IList<string> groupIds, RegistryPrivateEndpoint privateEndpoint, RegistryPrivateLinkServiceConnectionState registryPrivateLinkServiceConnectionState, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GroupIds = groupIds;
-            PrivateEndpoint = privateEndpoint;
-            RegistryPrivateLinkServiceConnectionState = registryPrivateLinkServiceConnectionState;
-            ProvisioningState = provisioningState;
+            _privateEndpoint = privateEndpoint;
+            _registryPrivateLinkServiceConnectionState = registryPrivateLinkServiceConnectionState;
+            _provisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -44,14 +50,47 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The PE network resource that is linked to this PE connection. </summary>
         [WirePath("privateEndpoint")]
-        public RegistryPrivateEndpoint PrivateEndpoint { get; set; }
+        public RegistryPrivateEndpoint PrivateEndpoint
+        {
+            get
+            {
+                return _privateEndpoint;
+            }
+            set
+            {
+                _privateEndpoint = value;
+                _privateEndpointIsDefined = true;
+            }
+        }
 
         /// <summary> The connection state. </summary>
         [WirePath("registryPrivateLinkServiceConnectionState")]
-        public RegistryPrivateLinkServiceConnectionState RegistryPrivateLinkServiceConnectionState { get; set; }
+        public RegistryPrivateLinkServiceConnectionState RegistryPrivateLinkServiceConnectionState
+        {
+            get
+            {
+                return _registryPrivateLinkServiceConnectionState;
+            }
+            set
+            {
+                _registryPrivateLinkServiceConnectionState = value;
+                _registryPrivateLinkServiceConnectionStateIsDefined = true;
+            }
+        }
 
         /// <summary> One of null, "Succeeded", "Provisioning", "Failed". While not approved, it's null. </summary>
         [WirePath("provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return _provisioningState;
+            }
+            set
+            {
+                _provisioningState = value;
+                _provisioningStateIsDefined = true;
+            }
+        }
     }
 }

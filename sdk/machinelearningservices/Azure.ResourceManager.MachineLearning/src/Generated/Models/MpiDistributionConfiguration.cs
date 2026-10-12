@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> MPI distribution configuration. </summary>
     public partial class MpiDistributionConfiguration : MachineLearningDistributionConfiguration
     {
+        private int? _processCountPerInstance;
+        internal bool _processCountPerInstanceIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MpiDistributionConfiguration"/>. </summary>
         public MpiDistributionConfiguration() : base(DistributionType.Mpi)
         {
@@ -25,11 +28,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="processCountPerInstance"> Number of processes per MPI node. </param>
         internal MpiDistributionConfiguration(DistributionType distributionType, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? processCountPerInstance) : base(distributionType, additionalBinaryDataProperties)
         {
-            ProcessCountPerInstance = processCountPerInstance;
+            _processCountPerInstance = processCountPerInstance;
         }
 
         /// <summary> Number of processes per MPI node. </summary>
         [WirePath("processCountPerInstance")]
-        public int? ProcessCountPerInstance { get; set; }
+        public int? ProcessCountPerInstance
+        {
+            get
+            {
+                return _processCountPerInstance;
+            }
+            set
+            {
+                _processCountPerInstance = value;
+                _processCountPerInstanceIsDefined = true;
+            }
+        }
     }
 }

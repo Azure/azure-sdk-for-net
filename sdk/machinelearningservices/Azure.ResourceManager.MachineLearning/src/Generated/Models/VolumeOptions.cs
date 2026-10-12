@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private bool? _nocopy;
+        internal bool _nocopyIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="VolumeOptions"/>. </summary>
         public VolumeOptions()
@@ -27,12 +29,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal VolumeOptions(bool? nocopy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Nocopy = nocopy;
+            _nocopy = nocopy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicate whether volume is nocopy. </summary>
         [WirePath("nocopy")]
-        public bool? Nocopy { get; set; }
+        public bool? Nocopy
+        {
+            get
+            {
+                return _nocopy;
+            }
+            set
+            {
+                _nocopy = value;
+                _nocopyIsDefined = true;
+            }
+        }
     }
 }

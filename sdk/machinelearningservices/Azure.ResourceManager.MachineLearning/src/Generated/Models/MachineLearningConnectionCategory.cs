@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string S3Value = "S3";
         private const string SnowflakeValue = "Snowflake";
         private const string AzureKeyVaultValue = "AzureKeyVault";
-        private const string AzureSqlDbValue = "AzureSqlDb";
+        private const string AzureSqlDBValue = "AzureSqlDb";
         private const string AzureSynapseAnalyticsValue = "AzureSynapseAnalytics";
-        private const string AzureMySqlDbValue = "AzureMySqlDb";
-        private const string AzurePostgresDbValue = "AzurePostgresDb";
+        private const string AzureMySqlDBValue = "AzureMySqlDb";
+        private const string AzurePostgresDBValue = "AzurePostgresDb";
         private const string ADLSGen2Value = "ADLSGen2";
         private const string AzureContainerAppEnvironmentValue = "AzureContainerAppEnvironment";
         private const string RedisValue = "Redis";
@@ -164,17 +164,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Gets the AzureKeyVault. </summary>
         public static MachineLearningConnectionCategory AzureKeyVault { get; } = new MachineLearningConnectionCategory(AzureKeyVaultValue);
 
-        /// <summary> Gets the AzureSqlDb. </summary>
-        public static MachineLearningConnectionCategory AzureSqlDb { get; } = new MachineLearningConnectionCategory(AzureSqlDbValue);
-
         /// <summary> Gets the AzureSynapseAnalytics. </summary>
         public static MachineLearningConnectionCategory AzureSynapseAnalytics { get; } = new MachineLearningConnectionCategory(AzureSynapseAnalyticsValue);
-
-        /// <summary> Gets the AzureMySqlDb. </summary>
-        public static MachineLearningConnectionCategory AzureMySqlDb { get; } = new MachineLearningConnectionCategory(AzureMySqlDbValue);
-
-        /// <summary> Gets the AzurePostgresDb. </summary>
-        public static MachineLearningConnectionCategory AzurePostgresDb { get; } = new MachineLearningConnectionCategory(AzurePostgresDbValue);
 
         /// <summary> Gets the ADLSGen2. </summary>
         public static MachineLearningConnectionCategory ADLSGen2 { get; } = new MachineLearningConnectionCategory(ADLSGen2Value);

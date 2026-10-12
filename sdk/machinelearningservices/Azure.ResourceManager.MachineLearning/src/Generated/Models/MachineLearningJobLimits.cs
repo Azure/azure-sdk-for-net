@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private TimeSpan? _timeout;
+        internal bool _timeoutIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningJobLimits"/>. </summary>
         /// <param name="jobLimitsType"> [Required] JobLimit type. </param>
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal MachineLearningJobLimits(JobLimitsType jobLimitsType, TimeSpan? timeout, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             JobLimitsType = jobLimitsType;
-            Timeout = timeout;
+            _timeout = timeout;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -44,6 +46,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The max run duration in ISO 8601 format, after which the job will be cancelled. Only supports duration with precision as low as Seconds. </summary>
         [WirePath("timeout")]
-        public TimeSpan? Timeout { get; set; }
+        public TimeSpan? Timeout
+        {
+            get
+            {
+                return _timeout;
+            }
+            set
+            {
+                _timeout = value;
+                _timeoutIsDefined = true;
+            }
+        }
     }
 }

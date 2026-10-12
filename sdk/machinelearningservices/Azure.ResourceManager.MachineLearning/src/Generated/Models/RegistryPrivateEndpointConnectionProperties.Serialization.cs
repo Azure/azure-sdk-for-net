@@ -76,33 +76,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(GroupIds))
             {
-                writer.WritePropertyName("groupIds"u8);
-                writer.WriteStartArray();
-                foreach (string item in GroupIds)
+                if (GroupIds != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("groupIds"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in GroupIds)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("groupIds"u8);
+                }
             }
-            if (Optional.IsDefined(PrivateEndpoint))
+            if (_privateEndpointIsDefined || Optional.IsDefined(PrivateEndpoint))
             {
-                writer.WritePropertyName("privateEndpoint"u8);
-                writer.WriteObjectValue(PrivateEndpoint, options);
+                if (PrivateEndpoint != null)
+                {
+                    writer.WritePropertyName("privateEndpoint"u8);
+                    writer.WriteObjectValue(PrivateEndpoint, options);
+                }
+                else
+                {
+                    writer.WriteNull("privateEndpoint"u8);
+                }
             }
-            if (Optional.IsDefined(RegistryPrivateLinkServiceConnectionState))
+            if (_registryPrivateLinkServiceConnectionStateIsDefined || Optional.IsDefined(RegistryPrivateLinkServiceConnectionState))
             {
-                writer.WritePropertyName("registryPrivateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(RegistryPrivateLinkServiceConnectionState, options);
+                if (RegistryPrivateLinkServiceConnectionState != null)
+                {
+                    writer.WritePropertyName("registryPrivateLinkServiceConnectionState"u8);
+                    writer.WriteObjectValue(RegistryPrivateLinkServiceConnectionState, options);
+                }
+                else
+                {
+                    writer.WriteNull("registryPrivateLinkServiceConnectionState"u8);
+                }
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (_provisioningStateIsDefined || Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState);
+                if (ProvisioningState != null)
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState);
+                }
+                else
+                {
+                    writer.WriteNull("provisioningState"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -146,9 +174,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            IList<string> groupIds = default;
+            IList<string> groupIds = new ChangeTrackingList<string>();
+            bool privateEndpointIsDefined = false;
             RegistryPrivateEndpoint privateEndpoint = default;
+            bool registryPrivateLinkServiceConnectionStateIsDefined = false;
             RegistryPrivateLinkServiceConnectionState registryPrivateLinkServiceConnectionState = default;
+            bool provisioningStateIsDefined = false;
             string provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -157,6 +188,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        groupIds = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -176,6 +208,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("privateEndpoint"u8))
                 {
+                    privateEndpointIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         privateEndpoint = null;
@@ -186,6 +219,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("registryPrivateLinkServiceConnectionState"u8))
                 {
+                    registryPrivateLinkServiceConnectionStateIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         registryPrivateLinkServiceConnectionState = null;
@@ -196,6 +230,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("provisioningState"u8))
                 {
+                    provisioningStateIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         provisioningState = null;
@@ -209,7 +244,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RegistryPrivateEndpointConnectionProperties(groupIds ?? new ChangeTrackingList<string>(), privateEndpoint, registryPrivateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties);
+            return new RegistryPrivateEndpointConnectionProperties(groupIds, privateEndpoint, registryPrivateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties)
+            {
+                _privateEndpointIsDefined = privateEndpointIsDefined,
+                _registryPrivateLinkServiceConnectionStateIsDefined = registryPrivateLinkServiceConnectionStateIsDefined,
+                _provisioningStateIsDefined = provisioningStateIsDefined
+            };
         }
     }
 }
