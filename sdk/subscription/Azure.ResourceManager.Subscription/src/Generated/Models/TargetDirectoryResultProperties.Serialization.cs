@@ -102,10 +102,17 @@ namespace Azure.ResourceManager.Subscription.Models
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(AcceptedOn))
+            if (options.Format != "W" && (_acceptedOnIsDefined || Optional.IsDefined(AcceptedOn)))
             {
-                writer.WritePropertyName("acceptedDate"u8);
-                writer.WriteStringValue(AcceptedOn.Value, "O");
+                if (AcceptedOn != null)
+                {
+                    writer.WritePropertyName("acceptedDate"u8);
+                    writer.WriteStringValue(AcceptedOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("acceptedDate"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(SourceOwnerEmail))
             {
@@ -178,6 +185,7 @@ namespace Azure.ResourceManager.Subscription.Models
             Guid? destinationOwnerId = default;
             string subscriptionId = default;
             DateTimeOffset? createdOn = default;
+            bool acceptedOnIsDefined = false;
             DateTimeOffset? acceptedOn = default;
             string sourceOwnerEmail = default;
             Guid? sourceOwnerId = default;
@@ -221,6 +229,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
                 if (prop.NameEquals("acceptedDate"u8))
                 {
+                    acceptedOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         acceptedOn = null;
@@ -286,7 +295,10 @@ namespace Azure.ResourceManager.Subscription.Models
                 sourceTenantId,
                 status,
                 expiresOn,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _acceptedOnIsDefined = acceptedOnIsDefined
+            };
         }
     }
 }
