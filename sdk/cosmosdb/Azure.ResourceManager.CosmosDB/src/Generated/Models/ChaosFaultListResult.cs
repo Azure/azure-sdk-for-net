@@ -13,23 +13,23 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Chaos Fault List Response. </summary>
-    internal partial class ChaosFaultListResponse
+    internal partial class ChaosFaultListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ChaosFaultListResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChaosFaultListResult"/>. </summary>
         /// <param name="value"> The chaosFaultResource items on this page. </param>
-        internal ChaosFaultListResponse(IEnumerable<ChaosFaultData> value)
+        internal ChaosFaultListResult(IEnumerable<ChaosFaultData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChaosFaultListResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChaosFaultListResult"/>. </summary>
         /// <param name="value"> The chaosFaultResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosFaultListResponse(IList<ChaosFaultData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChaosFaultListResult(IList<ChaosFaultData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
