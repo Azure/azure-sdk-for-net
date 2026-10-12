@@ -99,10 +99,65 @@ namespace Azure.ResourceManager.Advisor.Models
                 writer.WritePropertyName("impactedValue"u8);
                 writer.WriteStringValue(ImpactedValue);
             }
+            if (options.Format != "W" && Optional.IsDefined(CriticalityScore))
+            {
+                writer.WritePropertyName("criticalityScore"u8);
+                writer.WriteStringValue(CriticalityScore);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Criticality))
+            {
+                writer.WritePropertyName("criticality"u8);
+                writer.WriteStringValue(Criticality);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ScoreChangedAt))
+            {
+                writer.WritePropertyName("scoreChangedAt"u8);
+                writer.WriteStringValue(ScoreChangedAt);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ServiceGroupId))
+            {
+                writer.WritePropertyName("serviceGroupId"u8);
+                writer.WriteStringValue(ServiceGroupId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Savings))
+            {
+                writer.WritePropertyName("savings"u8);
+                writer.WriteObjectValue(Savings, options);
+            }
+            if (Optional.IsDefined(RecommendationStatus))
+            {
+                writer.WritePropertyName("recommendationStatus"u8);
+                writer.WriteStringValue(RecommendationStatus.Value.ToString());
+            }
+            if (Optional.IsDefined(CompletionType))
+            {
+                writer.WritePropertyName("completionType"u8);
+                writer.WriteStringValue(CompletionType);
+            }
+            if (Optional.IsDefined(RecommendationDismissReason))
+            {
+                writer.WritePropertyName("recommendationDismissReason"u8);
+                writer.WriteStringValue(RecommendationDismissReason.Value.ToString());
+            }
+            if (Optional.IsDefined(PostponedUntilOn))
+            {
+                writer.WritePropertyName("postponedUntilDateTime"u8);
+                writer.WriteStringValue(PostponedUntilOn.Value, "O");
+            }
+            if (Optional.IsDefined(LastRefreshed))
+            {
+                writer.WritePropertyName("lastRefreshed"u8);
+                writer.WriteStringValue(LastRefreshed.Value, "O");
+            }
             if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
+            }
+            if (Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("createdTime"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(Metadata))
             {
@@ -142,15 +197,10 @@ namespace Azure.ResourceManager.Advisor.Models
                 writer.WritePropertyName("shortDescription"u8);
                 writer.WriteObjectValue(ShortDescription, options);
             }
-            if (Optional.IsCollectionDefined(SuppressionIds))
+            if (Optional.IsDefined(SuppressionId))
             {
-                writer.WritePropertyName("suppressionIds"u8);
-                writer.WriteStartArray();
-                foreach (Guid item in SuppressionIds)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("suppressionId"u8);
+                writer.WriteStringValue(SuppressionId);
             }
             if (Optional.IsCollectionDefined(ExtendedProperties))
             {
@@ -272,11 +322,6 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(IsTracked))
-            {
-                writer.WritePropertyName("tracked"u8);
-                writer.WriteBooleanValue(IsTracked.Value);
-            }
             if (Optional.IsDefined(TrackedProperties))
             {
                 writer.WritePropertyName("trackedProperties"u8);
@@ -349,12 +394,23 @@ namespace Azure.ResourceManager.Advisor.Models
             RecommendationBusinessImpact? impact = default;
             string impactedField = default;
             string impactedValue = default;
+            string criticalityScore = default;
+            string criticality = default;
+            string scoreChangedAt = default;
+            string serviceGroupId = default;
+            ResourceRecommendationSavings savings = default;
+            RecommendationStatus? recommendationStatus = default;
+            string completionType = default;
+            RecommendationDismissReason? recommendationDismissReason = default;
+            DateTimeOffset? postponedUntilOn = default;
+            DateTimeOffset? lastRefreshed = default;
             DateTimeOffset? lastUpdatedOn = default;
+            DateTimeOffset? createdOn = default;
             IDictionary<string, BinaryData> metadata = default;
             string recommendationTypeId = default;
             RecommendationRisk? risk = default;
             RecommendationShortDescription shortDescription = default;
-            IList<Guid> suppressionIds = default;
+            string suppressionId = default;
             IDictionary<string, string> extendedProperties = default;
             RecommendationResourceMetadata resourceMetadata = default;
             string description = default;
@@ -364,7 +420,6 @@ namespace Azure.ResourceManager.Advisor.Models
             IList<IDictionary<string, BinaryData>> actions = default;
             IDictionary<string, BinaryData> remediation = default;
             IDictionary<string, BinaryData> exposedMetadataProperties = default;
-            bool? isTracked = default;
             TrackedRecommendationProperties trackedProperties = default;
             RecommendationReview review = default;
             RecommendationResourceWorkload resourceWorkload = default;
@@ -410,6 +465,76 @@ namespace Azure.ResourceManager.Advisor.Models
                     impactedValue = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("criticalityScore"u8))
+                {
+                    criticalityScore = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("criticality"u8))
+                {
+                    criticality = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("scoreChangedAt"u8))
+                {
+                    scoreChangedAt = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("serviceGroupId"u8))
+                {
+                    serviceGroupId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("savings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    savings = ResourceRecommendationSavings.DeserializeResourceRecommendationSavings(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("recommendationStatus"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recommendationStatus = new RecommendationStatus(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("completionType"u8))
+                {
+                    completionType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("recommendationDismissReason"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recommendationDismissReason = new RecommendationDismissReason(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("postponedUntilDateTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    postponedUntilOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("lastRefreshed"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastRefreshed = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
                 if (prop.NameEquals("lastUpdated"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -417,6 +542,15 @@ namespace Azure.ResourceManager.Advisor.Models
                         continue;
                     }
                     lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("createdTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("metadata"u8))
@@ -463,18 +597,9 @@ namespace Azure.ResourceManager.Advisor.Models
                     shortDescription = RecommendationShortDescription.DeserializeRecommendationShortDescription(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("suppressionIds"u8))
+                if (prop.NameEquals("suppressionId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<Guid> array = new List<Guid>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(new Guid(item.GetString()));
-                    }
-                    suppressionIds = array;
+                    suppressionId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("extendedProperties"u8))
@@ -602,15 +727,6 @@ namespace Azure.ResourceManager.Advisor.Models
                     exposedMetadataProperties = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("tracked"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isTracked = prop.Value.GetBoolean();
-                    continue;
-                }
                 if (prop.NameEquals("trackedProperties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -659,12 +775,23 @@ namespace Azure.ResourceManager.Advisor.Models
                 impact,
                 impactedField,
                 impactedValue,
+                criticalityScore,
+                criticality,
+                scoreChangedAt,
+                serviceGroupId,
+                savings,
+                recommendationStatus,
+                completionType,
+                recommendationDismissReason,
+                postponedUntilOn,
+                lastRefreshed,
                 lastUpdatedOn,
+                createdOn,
                 metadata ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 recommendationTypeId,
                 risk,
                 shortDescription,
-                suppressionIds ?? new ChangeTrackingList<Guid>(),
+                suppressionId,
                 extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
                 resourceMetadata,
                 description,
@@ -674,7 +801,6 @@ namespace Azure.ResourceManager.Advisor.Models
                 actions ?? new ChangeTrackingList<IDictionary<string, BinaryData>>(),
                 remediation ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 exposedMetadataProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                isTracked,
                 trackedProperties,
                 review,
                 resourceWorkload,

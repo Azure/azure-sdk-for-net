@@ -83,10 +83,6 @@ namespace Azure.ResourceManager.Advisor
         public static Azure.Response<Azure.ResourceManager.Advisor.AdvisorMetadataEntityResource> GetAdvisorMetadataEntity(this Azure.ResourceManager.Resources.TenantResource tenantResource, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.AdvisorMetadataEntityResource>> GetAdvisorMetadataEntityAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Advisor.AdvisorMetadataEntityResource GetAdvisorMetadataEntityResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Advisor.AdvisorRecommendationResource> GetAdvisorRecommendation(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.AdvisorRecommendationResource>> GetAdvisorRecommendationAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Advisor.AdvisorRecommendationResource GetAdvisorRecommendationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Advisor.AdvisorRecommendationCollection GetAdvisorRecommendations(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Advisor.AdvisorResiliencyReviewResource> GetAdvisorResiliencyReview(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string reviewId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.AdvisorResiliencyReviewResource>> GetAdvisorResiliencyReviewAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string reviewId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Advisor.AdvisorResiliencyReviewResource GetAdvisorResiliencyReviewResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -101,18 +97,20 @@ namespace Azure.ResourceManager.Advisor
         public static Azure.ResourceManager.Advisor.AdvisorSuppressionContractCollection GetAdvisorSuppressionContracts(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Advisor.AdvisorSuppressionContractResource> GetAdvisorSuppressionContracts(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Advisor.AdvisorSuppressionContractResource> GetAdvisorSuppressionContractsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Advisor.AdvisorTriageResource> GetAdvisorTriage(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string recommendationResourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.AdvisorTriageResource>> GetAdvisorTriageAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string recommendationResourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationResource> GetAdvisorTriageRecommendation(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationResource>> GetAdvisorTriageRecommendationAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Advisor.AdvisorTriageRecommendationResource GetAdvisorTriageRecommendationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Advisor.AdvisorTriageRecommendationCollection GetAdvisorTriageRecommendations(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
-        public static Azure.ResourceManager.Advisor.AdvisorTriageResource GetAdvisorTriageResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Advisor.AdvisorTriageCollection GetAdvisorTriages(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Advisor.Models.AdvisorWorkload> GetAdvisorWorkloads(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Advisor.Models.AdvisorWorkload> GetAdvisorWorkloadsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response GetGenerateStatusRecommendation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Guid operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response> GetGenerateStatusRecommendationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Guid operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Advisor.ResourceRecommendationBaseResource> GetResourceRecommendationBase(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.ResourceRecommendationBaseResource>> GetResourceRecommendationBaseAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Advisor.ResourceRecommendationBaseResource GetResourceRecommendationBaseResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Advisor.ResourceRecommendationBaseCollection GetResourceRecommendationBases(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Advisor.ServiceGroupRecommendationResource> GetServiceGroupRecommendation(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.ServiceGroupRecommendationResource>> GetServiceGroupRecommendationAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Advisor.ServiceGroupRecommendationResource GetServiceGroupRecommendationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Advisor.ServiceGroupRecommendationCollection GetServiceGroupRecommendations(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Advisor.AdvisorRecommendationData> Update(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string recommendationId, Azure.ResourceManager.Advisor.Models.ServiceGroupRecommendationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.AdvisorRecommendationData>> UpdateAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string recommendationId, Azure.ResourceManager.Advisor.Models.ServiceGroupRecommendationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AdvisorMetadataEntityCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Advisor.AdvisorMetadataEntityResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Advisor.AdvisorMetadataEntityResource>, System.Collections.IEnumerable
     {
@@ -120,8 +118,8 @@ namespace Azure.ResourceManager.Advisor
         public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Advisor.AdvisorMetadataEntityResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Advisor.AdvisorMetadataEntityResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Advisor.AdvisorMetadataEntityResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Advisor.AdvisorMetadataEntityResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Advisor.AdvisorMetadataEntityResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.AdvisorMetadataEntityResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.Advisor.AdvisorMetadataEntityResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Advisor.AdvisorMetadataEntityResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -161,50 +159,45 @@ namespace Azure.ResourceManager.Advisor
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorMetadataEntityData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorMetadataEntityData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AdvisorRecommendationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Advisor.AdvisorRecommendationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Advisor.AdvisorRecommendationResource>, System.Collections.IEnumerable
-    {
-        protected AdvisorRecommendationCollection() { }
-        public virtual Azure.Response<bool> Exists(string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Advisor.AdvisorRecommendationResource> Get(string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Advisor.AdvisorRecommendationResource> GetAll(string filter = null, int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Advisor.AdvisorRecommendationResource> GetAllAsync(string filter = null, int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.AdvisorRecommendationResource>> GetAsync(string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Advisor.AdvisorRecommendationResource> GetIfExists(string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Advisor.AdvisorRecommendationResource>> GetIfExistsAsync(string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Advisor.AdvisorRecommendationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Advisor.AdvisorRecommendationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Advisor.AdvisorRecommendationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Advisor.AdvisorRecommendationResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
     public partial class AdvisorRecommendationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.AdvisorRecommendationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorRecommendationData>
     {
         internal AdvisorRecommendationData() { }
         public System.Collections.Generic.IList<System.Collections.Generic.IDictionary<string, System.BinaryData>> Actions { get { throw null; } }
         public Azure.ResourceManager.Advisor.Models.RecommendationCategory? Category { get { throw null; } }
+        public string CompletionType { get { throw null; } }
         public Azure.ResourceManager.Advisor.Models.RecommendationControlType? Control { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public string Criticality { get { throw null; } }
+        public string CriticalityScore { get { throw null; } }
         public string Description { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> ExposedMetadataProperties { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> ExtendedProperties { get { throw null; } }
         public Azure.ResourceManager.Advisor.Models.RecommendationBusinessImpact? Impact { get { throw null; } }
         public string ImpactedField { get { throw null; } }
         public string ImpactedValue { get { throw null; } }
-        public bool? IsTracked { get { throw null; } }
         public string Label { get { throw null; } }
+        public System.DateTimeOffset? LastRefreshed { get { throw null; } }
         public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         public string LearnMoreLink { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Metadata { get { throw null; } }
         public string Notes { get { throw null; } }
+        public System.DateTimeOffset? PostponedUntilOn { get { throw null; } }
         public string PotentialBenefits { get { throw null; } }
+        public Azure.ResourceManager.Advisor.Models.RecommendationDismissReason? RecommendationDismissReason { get { throw null; } }
+        public Azure.ResourceManager.Advisor.Models.RecommendationStatus? RecommendationStatus { get { throw null; } }
         public string RecommendationTypeId { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Remediation { get { throw null; } }
         public Azure.ResourceManager.Advisor.Models.RecommendationResourceMetadata ResourceMetadata { get { throw null; } }
         public Azure.ResourceManager.Advisor.Models.RecommendationResourceWorkload ResourceWorkload { get { throw null; } }
         public Azure.ResourceManager.Advisor.Models.RecommendationReview Review { get { throw null; } }
         public Azure.ResourceManager.Advisor.Models.RecommendationRisk? Risk { get { throw null; } }
+        public Azure.ResourceManager.Advisor.Models.ResourceRecommendationSavings Savings { get { throw null; } }
+        public string ScoreChangedAt { get { throw null; } }
+        public string ServiceGroupId { get { throw null; } }
         public Azure.ResourceManager.Advisor.Models.RecommendationShortDescription ShortDescription { get { throw null; } }
         public string SourceSystem { get { throw null; } }
-        public System.Collections.Generic.IList<System.Guid> SuppressionIds { get { throw null; } }
-        public Azure.ResourceManager.Advisor.Models.TrackedRecommendationProperties TrackedProperties { get { throw null; } }
+        public string SuppressionId { get { throw null; } }
+        public Azure.ResourceManager.Advisor.Models.RecommendationPriority? TrackedPriority { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -214,26 +207,6 @@ namespace Azure.ResourceManager.Advisor
         Azure.ResourceManager.Advisor.AdvisorRecommendationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorRecommendationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorRecommendationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorRecommendationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class AdvisorRecommendationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.AdvisorRecommendationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorRecommendationData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected AdvisorRecommendationResource() { }
-        public virtual Azure.ResourceManager.Advisor.AdvisorRecommendationData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string resourceUri, string recommendationId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Advisor.AdvisorRecommendationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Advisor.AdvisorSuppressionContractResource> GetAdvisorSuppressionContract(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.AdvisorSuppressionContractResource>> GetAdvisorSuppressionContractAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Advisor.AdvisorSuppressionContractCollection GetAdvisorSuppressionContracts() { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.AdvisorRecommendationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.Advisor.AdvisorRecommendationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.AdvisorRecommendationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.AdvisorRecommendationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Advisor.AdvisorRecommendationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorRecommendationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorRecommendationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorRecommendationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Advisor.AdvisorRecommendationResource> Update(Azure.ResourceManager.Advisor.Models.AdvisorRecommendationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.AdvisorRecommendationResource>> UpdateAsync(Azure.ResourceManager.Advisor.Models.AdvisorRecommendationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AdvisorResiliencyReviewCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Advisor.AdvisorResiliencyReviewResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Advisor.AdvisorResiliencyReviewResource>, System.Collections.IEnumerable
     {
@@ -277,9 +250,6 @@ namespace Azure.ResourceManager.Advisor
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string reviewId) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Advisor.AdvisorResiliencyReviewResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationResource> GetAdvisorTriageRecommendation(string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationResource>> GetAdvisorTriageRecommendationAsync(string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Advisor.AdvisorTriageRecommendationCollection GetAdvisorTriageRecommendations() { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.AdvisorResiliencyReviewResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.Advisor.AdvisorResiliencyReviewData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.AdvisorResiliencyReviewData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.AdvisorResiliencyReviewData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -379,123 +349,76 @@ namespace Azure.ResourceManager.Advisor
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Advisor.AdvisorSuppressionContractResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Advisor.AdvisorSuppressionContractData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Advisor.AdvisorSuppressionContractResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Advisor.AdvisorSuppressionContractData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class AdvisorTriageCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Advisor.AdvisorTriageResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Advisor.AdvisorTriageResource>, System.Collections.IEnumerable
-    {
-        protected AdvisorTriageCollection() { }
-        public virtual Azure.Response<bool> Exists(string recommendationResourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string recommendationResourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Advisor.AdvisorTriageResource> Get(string recommendationResourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Advisor.AdvisorTriageResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Advisor.AdvisorTriageResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.AdvisorTriageResource>> GetAsync(string recommendationResourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Advisor.AdvisorTriageResource> GetIfExists(string recommendationResourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Advisor.AdvisorTriageResource>> GetIfExistsAsync(string recommendationResourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Advisor.AdvisorTriageResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Advisor.AdvisorTriageResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Advisor.AdvisorTriageResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Advisor.AdvisorTriageResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class AdvisorTriageData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.AdvisorTriageData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorTriageData>
-    {
-        internal AdvisorTriageData() { }
-        public string RecommendationId { get { throw null; } }
-        public string ResourceGroup { get { throw null; } }
-        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
-        public string ResourceName { get { throw null; } }
-        public string ReviewId { get { throw null; } }
-        public string SubscriptionId { get { throw null; } }
-        public string TriageResourceType { get { throw null; } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Advisor.AdvisorTriageData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.AdvisorTriageData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.AdvisorTriageData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Advisor.AdvisorTriageData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorTriageData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorTriageData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorTriageData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class AdvisorTriageRecommendationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationResource>, System.Collections.IEnumerable
-    {
-        protected AdvisorTriageRecommendationCollection() { }
-        public virtual Azure.Response<bool> Exists(string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationResource> Get(string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationResource> GetAll(int? top = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationResource> GetAllAsync(int? top = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationResource>> GetAsync(string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationResource> GetIfExists(string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationResource>> GetIfExistsAsync(string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class AdvisorTriageRecommendationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationData>
-    {
-        internal AdvisorTriageRecommendationData() { }
-        public System.Collections.Generic.IReadOnlyList<string> AppliesToSubscriptions { get { throw null; } }
-        public string Description { get { throw null; } }
-        public string Notes { get { throw null; } }
-        public string PotentialBenefits { get { throw null; } }
-        public Azure.ResourceManager.Advisor.Models.RecommendationPriorityName? Priority { get { throw null; } }
-        public Azure.ResourceManager.Advisor.Models.RecommendationStatusName? RecommendationStatus { get { throw null; } }
-        public string RejectReason { get { throw null; } }
-        public string ReviewId { get { throw null; } }
-        public string Title { get { throw null; } }
-        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Advisor.AdvisorTriageRecommendationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Advisor.AdvisorTriageRecommendationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class AdvisorTriageRecommendationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected AdvisorTriageRecommendationResource() { }
-        public virtual Azure.ResourceManager.Advisor.AdvisorTriageRecommendationData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response ApproveTriageRecommendation(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ApproveTriageRecommendationAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string reviewId, string recommendationId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Advisor.AdvisorTriageResource> GetAdvisorTriage(string recommendationResourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.AdvisorTriageResource>> GetAdvisorTriageAsync(string recommendationResourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Advisor.AdvisorTriageCollection GetAdvisorTriages() { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response RejectTriageRecommendation(Azure.ResourceManager.Advisor.Models.RecommendationRejectContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> RejectTriageRecommendationAsync(Azure.ResourceManager.Advisor.Models.RecommendationRejectContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response ResetTriageRecommendation(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ResetTriageRecommendationAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.Advisor.AdvisorTriageRecommendationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Advisor.AdvisorTriageRecommendationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class AdvisorTriageResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.AdvisorTriageData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorTriageData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected AdvisorTriageResource() { }
-        public virtual Azure.ResourceManager.Advisor.AdvisorTriageData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string reviewId, string recommendationId, string recommendationResourceId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Advisor.AdvisorTriageResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.AdvisorTriageResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.Advisor.AdvisorTriageData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.AdvisorTriageData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.AdvisorTriageData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Advisor.AdvisorTriageData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorTriageData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorTriageData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorTriageData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class AzureResourceManagerAdvisorContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerAdvisorContext() { }
         public static Azure.ResourceManager.Advisor.AzureResourceManagerAdvisorContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
+    public partial class ResourceRecommendationBaseCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Advisor.ResourceRecommendationBaseResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Advisor.ResourceRecommendationBaseResource>, System.Collections.IEnumerable
+    {
+        protected ResourceRecommendationBaseCollection() { }
+        public virtual Azure.Response<bool> Exists(string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Advisor.ResourceRecommendationBaseResource> Get(string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Advisor.ResourceRecommendationBaseResource> GetAll(string filter = null, int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Advisor.ResourceRecommendationBaseResource> GetAllAsync(string filter = null, int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.ResourceRecommendationBaseResource>> GetAsync(string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Advisor.ResourceRecommendationBaseResource> GetIfExists(string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Advisor.ResourceRecommendationBaseResource>> GetIfExistsAsync(string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Advisor.ResourceRecommendationBaseResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Advisor.ResourceRecommendationBaseResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Advisor.ResourceRecommendationBaseResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Advisor.ResourceRecommendationBaseResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ResourceRecommendationBaseResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.AdvisorRecommendationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorRecommendationData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ResourceRecommendationBaseResource() { }
+        public virtual Azure.ResourceManager.Advisor.AdvisorRecommendationData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string resourceUri, string recommendationId) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Advisor.ResourceRecommendationBaseResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Advisor.AdvisorSuppressionContractResource> GetAdvisorSuppressionContract(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.AdvisorSuppressionContractResource>> GetAdvisorSuppressionContractAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Advisor.AdvisorSuppressionContractCollection GetAdvisorSuppressionContracts() { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.ResourceRecommendationBaseResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Advisor.AdvisorRecommendationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.AdvisorRecommendationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.AdvisorRecommendationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Advisor.AdvisorRecommendationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorRecommendationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorRecommendationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorRecommendationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ServiceGroupRecommendationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Advisor.ServiceGroupRecommendationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Advisor.ServiceGroupRecommendationResource>, System.Collections.IEnumerable
+    {
+        protected ServiceGroupRecommendationCollection() { }
+        public virtual Azure.Response<bool> Exists(string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Advisor.ServiceGroupRecommendationResource> Get(string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Advisor.ServiceGroupRecommendationResource> GetAll(string filter = null, Azure.ResourceManager.Advisor.Models.RecommendationListMode? mode = default(Azure.ResourceManager.Advisor.Models.RecommendationListMode?), int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Advisor.ServiceGroupRecommendationResource> GetAllAsync(string filter = null, Azure.ResourceManager.Advisor.Models.RecommendationListMode? mode = default(Azure.ResourceManager.Advisor.Models.RecommendationListMode?), int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.ServiceGroupRecommendationResource>> GetAsync(string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Advisor.ServiceGroupRecommendationResource> GetIfExists(string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Advisor.ServiceGroupRecommendationResource>> GetIfExistsAsync(string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Advisor.ServiceGroupRecommendationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Advisor.ServiceGroupRecommendationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Advisor.ServiceGroupRecommendationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Advisor.ServiceGroupRecommendationResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ServiceGroupRecommendationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.AdvisorRecommendationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorRecommendationData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ServiceGroupRecommendationResource() { }
+        public virtual Azure.ResourceManager.Advisor.AdvisorRecommendationData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string serviceGroupName, string recommendationId) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Advisor.ServiceGroupRecommendationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.ServiceGroupRecommendationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Advisor.AdvisorRecommendationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.AdvisorRecommendationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.AdvisorRecommendationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Advisor.AdvisorRecommendationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorRecommendationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorRecommendationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.AdvisorRecommendationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Advisor.ServiceGroupRecommendationResource> Update(Azure.ResourceManager.Advisor.Models.ServiceGroupRecommendationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.ServiceGroupRecommendationResource>> UpdateAsync(Azure.ResourceManager.Advisor.Models.ServiceGroupRecommendationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Advisor.Mocking
@@ -505,24 +428,20 @@ namespace Azure.ResourceManager.Advisor.Mocking
         protected MockableAdvisorArmClient() { }
         public virtual Azure.ResourceManager.Advisor.AdvisorAssessmentResource GetAdvisorAssessmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Advisor.AdvisorMetadataEntityResource GetAdvisorMetadataEntityResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Advisor.AdvisorRecommendationResource> GetAdvisorRecommendation(Azure.Core.ResourceIdentifier scope, string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.AdvisorRecommendationResource>> GetAdvisorRecommendationAsync(Azure.Core.ResourceIdentifier scope, string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Advisor.AdvisorRecommendationResource GetAdvisorRecommendationResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.Advisor.AdvisorRecommendationCollection GetAdvisorRecommendations(Azure.Core.ResourceIdentifier scope) { throw null; }
         public virtual Azure.ResourceManager.Advisor.AdvisorResiliencyReviewResource GetAdvisorResiliencyReviewResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Advisor.AdvisorScoreEntityResource GetAdvisorScoreEntityResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Advisor.AdvisorSuppressionContractResource> GetAdvisorSuppressionContract(Azure.Core.ResourceIdentifier scope, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.AdvisorSuppressionContractResource>> GetAdvisorSuppressionContractAsync(Azure.Core.ResourceIdentifier scope, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Advisor.AdvisorSuppressionContractResource GetAdvisorSuppressionContractResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Advisor.AdvisorSuppressionContractCollection GetAdvisorSuppressionContracts(Azure.Core.ResourceIdentifier scope) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Advisor.AdvisorTriageResource> GetAdvisorTriage(Azure.Core.ResourceIdentifier scope, string recommendationResourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.AdvisorTriageResource>> GetAdvisorTriageAsync(Azure.Core.ResourceIdentifier scope, string recommendationResourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationResource> GetAdvisorTriageRecommendation(Azure.Core.ResourceIdentifier scope, string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.AdvisorTriageRecommendationResource>> GetAdvisorTriageRecommendationAsync(Azure.Core.ResourceIdentifier scope, string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Advisor.AdvisorTriageRecommendationResource GetAdvisorTriageRecommendationResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.Advisor.AdvisorTriageRecommendationCollection GetAdvisorTriageRecommendations(Azure.Core.ResourceIdentifier scope) { throw null; }
-        public virtual Azure.ResourceManager.Advisor.AdvisorTriageResource GetAdvisorTriageResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.Advisor.AdvisorTriageCollection GetAdvisorTriages(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Advisor.ResourceRecommendationBaseResource> GetResourceRecommendationBase(Azure.Core.ResourceIdentifier scope, string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.ResourceRecommendationBaseResource>> GetResourceRecommendationBaseAsync(Azure.Core.ResourceIdentifier scope, string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Advisor.ResourceRecommendationBaseResource GetResourceRecommendationBaseResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Advisor.ResourceRecommendationBaseCollection GetResourceRecommendationBases(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Advisor.ServiceGroupRecommendationResource> GetServiceGroupRecommendation(Azure.Core.ResourceIdentifier scope, string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.ServiceGroupRecommendationResource>> GetServiceGroupRecommendationAsync(Azure.Core.ResourceIdentifier scope, string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Advisor.ServiceGroupRecommendationResource GetServiceGroupRecommendationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Advisor.ServiceGroupRecommendationCollection GetServiceGroupRecommendations(Azure.Core.ResourceIdentifier scope) { throw null; }
     }
     public partial class MockableAdvisorResourceGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -560,6 +479,8 @@ namespace Azure.ResourceManager.Advisor.Mocking
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Advisor.Models.AdvisorWorkload> GetAdvisorWorkloadsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetGenerateStatusRecommendation(System.Guid operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetGenerateStatusRecommendationAsync(System.Guid operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Advisor.AdvisorRecommendationData> Update(string recommendationId, Azure.ResourceManager.Advisor.Models.ServiceGroupRecommendationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.AdvisorRecommendationData>> UpdateAsync(string recommendationId, Azure.ResourceManager.Advisor.Models.ServiceGroupRecommendationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MockableAdvisorTenantResource : Azure.ResourceManager.ArmResource
     {
@@ -749,20 +670,6 @@ namespace Azure.ResourceManager.Advisor.Models
         public static bool operator !=(Azure.ResourceManager.Advisor.Models.AdvisorPredictionType left, Azure.ResourceManager.Advisor.Models.AdvisorPredictionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AdvisorRecommendationPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.Models.AdvisorRecommendationPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.AdvisorRecommendationPatch>
-    {
-        public AdvisorRecommendationPatch() { }
-        public Azure.ResourceManager.Advisor.Models.TrackedRecommendationProperties AdvisorRecommendationPatchTrackedProperties { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Advisor.Models.AdvisorRecommendationPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Advisor.Models.AdvisorRecommendationPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Advisor.Models.AdvisorRecommendationPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.Models.AdvisorRecommendationPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.Models.AdvisorRecommendationPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Advisor.Models.AdvisorRecommendationPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.AdvisorRecommendationPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.AdvisorRecommendationPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.AdvisorRecommendationPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class AdvisorScoreEntityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.Models.AdvisorScoreEntityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.AdvisorScoreEntityContent>
     {
         internal AdvisorScoreEntityContent() { }
@@ -823,23 +730,22 @@ namespace Azure.ResourceManager.Advisor.Models
         public static Azure.ResourceManager.Advisor.AdvisorMetadataEntityData AdvisorMetadataEntityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, System.Collections.Generic.IEnumerable<string> dependsOn = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Advisor.Models.MetadataScenarioType> applicableScenarios = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Advisor.Models.MetadataSupportedValueDetail> supportedValues = null) { throw null; }
         public static Azure.ResourceManager.Advisor.Models.AdvisorPredictionContent AdvisorPredictionContent(Azure.ResourceManager.Advisor.Models.AdvisorPredictionType? predictionType = default(Azure.ResourceManager.Advisor.Models.AdvisorPredictionType?), System.BinaryData extendedProperties = null) { throw null; }
         public static Azure.ResourceManager.Advisor.Models.AdvisorPredictionResult AdvisorPredictionResult(System.BinaryData extendedProperties = null, Azure.ResourceManager.Advisor.Models.AdvisorPredictionType? predictionType = default(Azure.ResourceManager.Advisor.Models.AdvisorPredictionType?), Azure.ResourceManager.Advisor.Models.RecommendationCategory? category = default(Azure.ResourceManager.Advisor.Models.RecommendationCategory?), Azure.ResourceManager.Advisor.Models.RecommendationBusinessImpact? impact = default(Azure.ResourceManager.Advisor.Models.RecommendationBusinessImpact?), string impactedField = null, System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Advisor.Models.RecommendationShortDescription shortDescription = null) { throw null; }
-        public static Azure.ResourceManager.Advisor.AdvisorRecommendationData AdvisorRecommendationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Advisor.Models.RecommendationCategory? category = default(Azure.ResourceManager.Advisor.Models.RecommendationCategory?), Azure.ResourceManager.Advisor.Models.RecommendationControlType? control = default(Azure.ResourceManager.Advisor.Models.RecommendationControlType?), Azure.ResourceManager.Advisor.Models.RecommendationBusinessImpact? impact = default(Azure.ResourceManager.Advisor.Models.RecommendationBusinessImpact?), string impactedField = null, string impactedValue = null, System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), System.Collections.Generic.IDictionary<string, System.BinaryData> metadata = null, string recommendationTypeId = null, Azure.ResourceManager.Advisor.Models.RecommendationRisk? risk = default(Azure.ResourceManager.Advisor.Models.RecommendationRisk?), Azure.ResourceManager.Advisor.Models.RecommendationShortDescription shortDescription = null, System.Collections.Generic.IEnumerable<System.Guid> suppressionIds = null, System.Collections.Generic.IDictionary<string, string> extendedProperties = null, Azure.ResourceManager.Advisor.Models.RecommendationResourceMetadata resourceMetadata = null, string description = null, string label = null, string learnMoreLink = null, string potentialBenefits = null, System.Collections.Generic.IEnumerable<System.Collections.Generic.IDictionary<string, System.BinaryData>> actions = null, System.Collections.Generic.IDictionary<string, System.BinaryData> remediation = null, System.Collections.Generic.IDictionary<string, System.BinaryData> exposedMetadataProperties = null, bool? isTracked = default(bool?), Azure.ResourceManager.Advisor.Models.TrackedRecommendationProperties trackedProperties = null, Azure.ResourceManager.Advisor.Models.RecommendationReview review = null, Azure.ResourceManager.Advisor.Models.RecommendationResourceWorkload resourceWorkload = null, string sourceSystem = null, string notes = null) { throw null; }
-        public static Azure.ResourceManager.Advisor.Models.AdvisorRecommendationPatch AdvisorRecommendationPatch(Azure.ResourceManager.Advisor.Models.TrackedRecommendationProperties advisorRecommendationPatchTrackedProperties = null) { throw null; }
+        public static Azure.ResourceManager.Advisor.AdvisorRecommendationData AdvisorRecommendationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Advisor.Models.RecommendationCategory? category = default(Azure.ResourceManager.Advisor.Models.RecommendationCategory?), Azure.ResourceManager.Advisor.Models.RecommendationControlType? control = default(Azure.ResourceManager.Advisor.Models.RecommendationControlType?), Azure.ResourceManager.Advisor.Models.RecommendationBusinessImpact? impact = default(Azure.ResourceManager.Advisor.Models.RecommendationBusinessImpact?), string impactedField = null, string impactedValue = null, string criticalityScore = null, string criticality = null, string scoreChangedAt = null, string serviceGroupId = null, Azure.ResourceManager.Advisor.Models.ResourceRecommendationSavings savings = null, Azure.ResourceManager.Advisor.Models.RecommendationStatus? recommendationStatus = default(Azure.ResourceManager.Advisor.Models.RecommendationStatus?), string completionType = null, Azure.ResourceManager.Advisor.Models.RecommendationDismissReason? recommendationDismissReason = default(Azure.ResourceManager.Advisor.Models.RecommendationDismissReason?), System.DateTimeOffset? postponedUntilOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastRefreshed = default(System.DateTimeOffset?), System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.Collections.Generic.IDictionary<string, System.BinaryData> metadata = null, string recommendationTypeId = null, Azure.ResourceManager.Advisor.Models.RecommendationRisk? risk = default(Azure.ResourceManager.Advisor.Models.RecommendationRisk?), Azure.ResourceManager.Advisor.Models.RecommendationShortDescription shortDescription = null, string suppressionId = null, System.Collections.Generic.IDictionary<string, string> extendedProperties = null, Azure.ResourceManager.Advisor.Models.RecommendationResourceMetadata resourceMetadata = null, string description = null, string label = null, string learnMoreLink = null, string potentialBenefits = null, System.Collections.Generic.IEnumerable<System.Collections.Generic.IDictionary<string, System.BinaryData>> actions = null, System.Collections.Generic.IDictionary<string, System.BinaryData> remediation = null, System.Collections.Generic.IDictionary<string, System.BinaryData> exposedMetadataProperties = null, Azure.ResourceManager.Advisor.Models.RecommendationReview review = null, Azure.ResourceManager.Advisor.Models.RecommendationResourceWorkload resourceWorkload = null, string sourceSystem = null, string notes = null, Azure.ResourceManager.Advisor.Models.RecommendationPriority? trackedPriority = default(Azure.ResourceManager.Advisor.Models.RecommendationPriority?)) { throw null; }
         public static Azure.ResourceManager.Advisor.AdvisorResiliencyReviewData AdvisorResiliencyReviewData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string reviewName = null, string workloadName = null, Azure.ResourceManager.Advisor.Models.ResiliencyReviewStatus? reviewStatus = default(Azure.ResourceManager.Advisor.Models.ResiliencyReviewStatus?), int? recommendationsCount = default(int?), System.DateTimeOffset? publishedOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Advisor.Models.AdvisorScoreEntityContent AdvisorScoreEntityContent(string date = null, float? score = default(float?), float? consumptionUnits = default(float?), float? impactedResourceCount = default(float?), float? potentialScoreIncrease = default(float?), float? categoryCount = default(float?)) { throw null; }
         public static Azure.ResourceManager.Advisor.AdvisorScoreEntityData AdvisorScoreEntityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Advisor.Models.AdvisorScoreEntityContent lastRefreshedScore = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Advisor.Models.AdvisorTimeSeriesEntity> timeSeries = null) { throw null; }
         public static Azure.ResourceManager.Advisor.AdvisorSuppressionContractData AdvisorSuppressionContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string suppressionId = null, string ttl = null, System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Advisor.Models.AdvisorTimeSeriesEntity AdvisorTimeSeriesEntity(Azure.ResourceManager.Advisor.Models.ScoreAggregationLevel? aggregationLevel = default(Azure.ResourceManager.Advisor.Models.ScoreAggregationLevel?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Advisor.Models.AdvisorScoreEntityContent> scoreHistory = null) { throw null; }
-        public static Azure.ResourceManager.Advisor.AdvisorTriageData AdvisorTriageData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string reviewId = null, string recommendationId = null, string subscriptionId = null, string resourceGroup = null, string triageResourceType = null, Azure.Core.ResourceIdentifier resourceId = null, string resourceName = null) { throw null; }
-        public static Azure.ResourceManager.Advisor.AdvisorTriageRecommendationData AdvisorTriageRecommendationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string reviewId = null, string title = null, Azure.ResourceManager.Advisor.Models.RecommendationPriorityName? priority = default(Azure.ResourceManager.Advisor.Models.RecommendationPriorityName?), System.Collections.Generic.IEnumerable<string> appliesToSubscriptions = null, Azure.ResourceManager.Advisor.Models.RecommendationStatusName? recommendationStatus = default(Azure.ResourceManager.Advisor.Models.RecommendationStatusName?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string rejectReason = null, string potentialBenefits = null, string description = null, string notes = null) { throw null; }
         public static Azure.ResourceManager.Advisor.Models.AdvisorWorkload AdvisorWorkload(string id = null, string name = null, string subscriptionId = null, string subscriptionName = null) { throw null; }
         public static Azure.ResourceManager.Advisor.Models.MetadataSupportedValueDetail MetadataSupportedValueDetail(string id = null, string displayName = null) { throw null; }
-        public static Azure.ResourceManager.Advisor.Models.RecommendationRejectContent RecommendationRejectContent(Azure.ResourceManager.Advisor.Models.RejectingRecommendationReason? reasonForRejection = default(Azure.ResourceManager.Advisor.Models.RejectingRecommendationReason?)) { throw null; }
         public static Azure.ResourceManager.Advisor.Models.RecommendationResourceMetadata RecommendationResourceMetadata(Azure.Core.ResourceIdentifier resourceId = null, string source = null, System.Collections.Generic.IDictionary<string, System.BinaryData> action = null, string singular = null, string plural = null) { throw null; }
         public static Azure.ResourceManager.Advisor.Models.RecommendationResourceWorkload RecommendationResourceWorkload(string id = null, string name = null) { throw null; }
         public static Azure.ResourceManager.Advisor.Models.RecommendationReview RecommendationReview(string id = null, string name = null) { throw null; }
         public static Azure.ResourceManager.Advisor.Models.RecommendationShortDescription RecommendationShortDescription(string problem = null, string solution = null) { throw null; }
-        public static Azure.ResourceManager.Advisor.Models.TrackedRecommendationProperties TrackedRecommendationProperties(Azure.ResourceManager.Advisor.Models.RecommendationState? state = default(Azure.ResourceManager.Advisor.Models.RecommendationState?), System.DateTimeOffset? postponedUntil = default(System.DateTimeOffset?), Azure.ResourceManager.Advisor.Models.RecommendationStateChangeReason? reason = default(Azure.ResourceManager.Advisor.Models.RecommendationStateChangeReason?), Azure.ResourceManager.Advisor.Models.RecommendationPriority? priority = default(Azure.ResourceManager.Advisor.Models.RecommendationPriority?)) { throw null; }
+        public static Azure.ResourceManager.Advisor.Models.RecommendationStatePropertiesPayload RecommendationStatePropertiesPayload(Azure.ResourceManager.Advisor.Models.RecommendationStatus? recommendationStatus = default(Azure.ResourceManager.Advisor.Models.RecommendationStatus?), Azure.ResourceManager.Advisor.Models.RecommendationDismissReason? recommendationDismissReason = default(Azure.ResourceManager.Advisor.Models.RecommendationDismissReason?), System.DateTimeOffset? postponedUntilOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Advisor.Models.ResourceRecommendationSavings ResourceRecommendationSavings(string providerCurrency = null, string billingCurrency = null, bool? isDirectChannel = default(bool?), System.DateTimeOffset? resourceDeletedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Advisor.Models.ResourceRecommendationSavingsDetails retail = null, Azure.ResourceManager.Advisor.Models.ResourceRecommendationSavingsDetails contracted = null) { throw null; }
+        public static Azure.ResourceManager.Advisor.Models.ResourceRecommendationSavingsDetails ResourceRecommendationSavingsDetails(double? potentialSavings = default(double?), double? potentialSavingsInBillingCurrency = default(double?), double? wastedTillDate = default(double?), double? wastedTillDateInBillingCurrency = default(double?), double? realizedSavings = default(double?), double? realizedSavingsInBillingCurrency = default(double?)) { throw null; }
+        public static Azure.ResourceManager.Advisor.Models.ServiceGroupRecommendationPatch ServiceGroupRecommendationPatch(Azure.ResourceManager.Advisor.Models.RecommendationStatePropertiesPayload properties = null) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MetadataScenarioType : System.IEquatable<Azure.ResourceManager.Advisor.Models.MetadataScenarioType>
@@ -935,6 +841,45 @@ namespace Azure.ResourceManager.Advisor.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RecommendationDismissReason : System.IEquatable<Azure.ResourceManager.Advisor.Models.RecommendationDismissReason>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RecommendationDismissReason(string value) { throw null; }
+        public static Azure.ResourceManager.Advisor.Models.RecommendationDismissReason AnAlternativeSolutionIsAlreadyInPlace { get { throw null; } }
+        public static Azure.ResourceManager.Advisor.Models.RecommendationDismissReason ExcessiveCostInvestmentRequired { get { throw null; } }
+        public static Azure.ResourceManager.Advisor.Models.RecommendationDismissReason ImplementationStepsAreUnclear { get { throw null; } }
+        public static Azure.ResourceManager.Advisor.Models.RecommendationDismissReason IncompatibleWithTheCurrentConfiguration { get { throw null; } }
+        public static Azure.ResourceManager.Advisor.Models.RecommendationDismissReason Other { get { throw null; } }
+        public static Azure.ResourceManager.Advisor.Models.RecommendationDismissReason RiskIsAcceptable { get { throw null; } }
+        public static Azure.ResourceManager.Advisor.Models.RecommendationDismissReason TooComplexOrImpracticalToImplement { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Advisor.Models.RecommendationDismissReason other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Advisor.Models.RecommendationDismissReason left, Azure.ResourceManager.Advisor.Models.RecommendationDismissReason right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Advisor.Models.RecommendationDismissReason (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Advisor.Models.RecommendationDismissReason? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Advisor.Models.RecommendationDismissReason left, Azure.ResourceManager.Advisor.Models.RecommendationDismissReason right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RecommendationListMode : System.IEquatable<Azure.ResourceManager.Advisor.Models.RecommendationListMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RecommendationListMode(string value) { throw null; }
+        public static Azure.ResourceManager.Advisor.Models.RecommendationListMode All { get { throw null; } }
+        public static Azure.ResourceManager.Advisor.Models.RecommendationListMode Contextual { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Advisor.Models.RecommendationListMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Advisor.Models.RecommendationListMode left, Azure.ResourceManager.Advisor.Models.RecommendationListMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Advisor.Models.RecommendationListMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Advisor.Models.RecommendationListMode? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Advisor.Models.RecommendationListMode left, Azure.ResourceManager.Advisor.Models.RecommendationListMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RecommendationPriority : System.IEquatable<Azure.ResourceManager.Advisor.Models.RecommendationPriority>
     {
         private readonly object _dummy;
@@ -953,38 +898,6 @@ namespace Azure.ResourceManager.Advisor.Models
         public static implicit operator Azure.ResourceManager.Advisor.Models.RecommendationPriority? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Advisor.Models.RecommendationPriority left, Azure.ResourceManager.Advisor.Models.RecommendationPriority right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RecommendationPriorityName : System.IEquatable<Azure.ResourceManager.Advisor.Models.RecommendationPriorityName>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RecommendationPriorityName(string value) { throw null; }
-        public static Azure.ResourceManager.Advisor.Models.RecommendationPriorityName High { get { throw null; } }
-        public static Azure.ResourceManager.Advisor.Models.RecommendationPriorityName Low { get { throw null; } }
-        public static Azure.ResourceManager.Advisor.Models.RecommendationPriorityName Medium { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Advisor.Models.RecommendationPriorityName other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Advisor.Models.RecommendationPriorityName left, Azure.ResourceManager.Advisor.Models.RecommendationPriorityName right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Advisor.Models.RecommendationPriorityName (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Advisor.Models.RecommendationPriorityName? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Advisor.Models.RecommendationPriorityName left, Azure.ResourceManager.Advisor.Models.RecommendationPriorityName right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class RecommendationRejectContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.Models.RecommendationRejectContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.RecommendationRejectContent>
-    {
-        public RecommendationRejectContent() { }
-        public Azure.ResourceManager.Advisor.Models.RejectingRecommendationReason? ReasonForRejection { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Advisor.Models.RecommendationRejectContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Advisor.Models.RecommendationRejectContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Advisor.Models.RecommendationRejectContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.Models.RecommendationRejectContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.Models.RecommendationRejectContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Advisor.Models.RecommendationRejectContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.RecommendationRejectContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.RecommendationRejectContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.RecommendationRejectContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class RecommendationResourceMetadata : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.Models.RecommendationResourceMetadata>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.RecommendationResourceMetadata>
     {
@@ -1067,82 +980,39 @@ namespace Azure.ResourceManager.Advisor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.RecommendationShortDescription>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.RecommendationShortDescription>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RecommendationState : System.IEquatable<Azure.ResourceManager.Advisor.Models.RecommendationState>
+    public partial class RecommendationStatePropertiesPayload : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.Models.RecommendationStatePropertiesPayload>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.RecommendationStatePropertiesPayload>
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RecommendationState(string value) { throw null; }
-        public static Azure.ResourceManager.Advisor.Models.RecommendationState Approved { get { throw null; } }
-        public static Azure.ResourceManager.Advisor.Models.RecommendationState Completed { get { throw null; } }
-        public static Azure.ResourceManager.Advisor.Models.RecommendationState Dismissed { get { throw null; } }
-        public static Azure.ResourceManager.Advisor.Models.RecommendationState InProgress { get { throw null; } }
-        public static Azure.ResourceManager.Advisor.Models.RecommendationState Pending { get { throw null; } }
-        public static Azure.ResourceManager.Advisor.Models.RecommendationState Postponed { get { throw null; } }
-        public static Azure.ResourceManager.Advisor.Models.RecommendationState Rejected { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Advisor.Models.RecommendationState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Advisor.Models.RecommendationState left, Azure.ResourceManager.Advisor.Models.RecommendationState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Advisor.Models.RecommendationState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Advisor.Models.RecommendationState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Advisor.Models.RecommendationState left, Azure.ResourceManager.Advisor.Models.RecommendationState right) { throw null; }
-        public override string ToString() { throw null; }
+        public RecommendationStatePropertiesPayload() { }
+        public System.DateTimeOffset? PostponedUntilOn { get { throw null; } set { } }
+        public Azure.ResourceManager.Advisor.Models.RecommendationDismissReason? RecommendationDismissReason { get { throw null; } set { } }
+        public Azure.ResourceManager.Advisor.Models.RecommendationStatus? RecommendationStatus { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Advisor.Models.RecommendationStatePropertiesPayload JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Advisor.Models.RecommendationStatePropertiesPayload PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Advisor.Models.RecommendationStatePropertiesPayload System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.Models.RecommendationStatePropertiesPayload>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.Models.RecommendationStatePropertiesPayload>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Advisor.Models.RecommendationStatePropertiesPayload System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.RecommendationStatePropertiesPayload>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.RecommendationStatePropertiesPayload>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.RecommendationStatePropertiesPayload>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RecommendationStateChangeReason : System.IEquatable<Azure.ResourceManager.Advisor.Models.RecommendationStateChangeReason>
+    public readonly partial struct RecommendationStatus : System.IEquatable<Azure.ResourceManager.Advisor.Models.RecommendationStatus>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public RecommendationStateChangeReason(string value) { throw null; }
-        public static Azure.ResourceManager.Advisor.Models.RecommendationStateChangeReason AlternativeSolution { get { throw null; } }
-        public static Azure.ResourceManager.Advisor.Models.RecommendationStateChangeReason ExcessiveInvestment { get { throw null; } }
-        public static Azure.ResourceManager.Advisor.Models.RecommendationStateChangeReason Incompatible { get { throw null; } }
-        public static Azure.ResourceManager.Advisor.Models.RecommendationStateChangeReason RiskAccepted { get { throw null; } }
-        public static Azure.ResourceManager.Advisor.Models.RecommendationStateChangeReason TooComplex { get { throw null; } }
-        public static Azure.ResourceManager.Advisor.Models.RecommendationStateChangeReason Unclear { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Advisor.Models.RecommendationStateChangeReason other) { throw null; }
+        public RecommendationStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Advisor.Models.RecommendationStatus Completed { get { throw null; } }
+        public static Azure.ResourceManager.Advisor.Models.RecommendationStatus Dismissed { get { throw null; } }
+        public static Azure.ResourceManager.Advisor.Models.RecommendationStatus New { get { throw null; } }
+        public static Azure.ResourceManager.Advisor.Models.RecommendationStatus Postponed { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Advisor.Models.RecommendationStatus other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Advisor.Models.RecommendationStateChangeReason left, Azure.ResourceManager.Advisor.Models.RecommendationStateChangeReason right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Advisor.Models.RecommendationStateChangeReason (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Advisor.Models.RecommendationStateChangeReason? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Advisor.Models.RecommendationStateChangeReason left, Azure.ResourceManager.Advisor.Models.RecommendationStateChangeReason right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RecommendationStatusName : System.IEquatable<Azure.ResourceManager.Advisor.Models.RecommendationStatusName>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RecommendationStatusName(string value) { throw null; }
-        public static Azure.ResourceManager.Advisor.Models.RecommendationStatusName Approved { get { throw null; } }
-        public static Azure.ResourceManager.Advisor.Models.RecommendationStatusName Pending { get { throw null; } }
-        public static Azure.ResourceManager.Advisor.Models.RecommendationStatusName Rejected { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Advisor.Models.RecommendationStatusName other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Advisor.Models.RecommendationStatusName left, Azure.ResourceManager.Advisor.Models.RecommendationStatusName right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Advisor.Models.RecommendationStatusName (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Advisor.Models.RecommendationStatusName? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Advisor.Models.RecommendationStatusName left, Azure.ResourceManager.Advisor.Models.RecommendationStatusName right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RejectingRecommendationReason : System.IEquatable<Azure.ResourceManager.Advisor.Models.RejectingRecommendationReason>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RejectingRecommendationReason(string value) { throw null; }
-        public static Azure.ResourceManager.Advisor.Models.RejectingRecommendationReason NotARisk { get { throw null; } }
-        public static Azure.ResourceManager.Advisor.Models.RejectingRecommendationReason RiskAccepted { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Advisor.Models.RejectingRecommendationReason other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Advisor.Models.RejectingRecommendationReason left, Azure.ResourceManager.Advisor.Models.RejectingRecommendationReason right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Advisor.Models.RejectingRecommendationReason (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Advisor.Models.RejectingRecommendationReason? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Advisor.Models.RejectingRecommendationReason left, Azure.ResourceManager.Advisor.Models.RejectingRecommendationReason right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Advisor.Models.RecommendationStatus left, Azure.ResourceManager.Advisor.Models.RecommendationStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Advisor.Models.RecommendationStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Advisor.Models.RecommendationStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Advisor.Models.RecommendationStatus left, Azure.ResourceManager.Advisor.Models.RecommendationStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1154,7 +1024,6 @@ namespace Azure.ResourceManager.Advisor.Models
         public static Azure.ResourceManager.Advisor.Models.ResiliencyReviewStatus Completed { get { throw null; } }
         public static Azure.ResourceManager.Advisor.Models.ResiliencyReviewStatus InProgress { get { throw null; } }
         public static Azure.ResourceManager.Advisor.Models.ResiliencyReviewStatus New { get { throw null; } }
-        public static Azure.ResourceManager.Advisor.Models.ResiliencyReviewStatus Triaged { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Advisor.Models.ResiliencyReviewStatus other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -1163,6 +1032,44 @@ namespace Azure.ResourceManager.Advisor.Models
         public static implicit operator Azure.ResourceManager.Advisor.Models.ResiliencyReviewStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Advisor.Models.ResiliencyReviewStatus left, Azure.ResourceManager.Advisor.Models.ResiliencyReviewStatus right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ResourceRecommendationSavings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.Models.ResourceRecommendationSavings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.ResourceRecommendationSavings>
+    {
+        internal ResourceRecommendationSavings() { }
+        public string BillingCurrency { get { throw null; } }
+        public Azure.ResourceManager.Advisor.Models.ResourceRecommendationSavingsDetails Contracted { get { throw null; } }
+        public bool? IsDirectChannel { get { throw null; } }
+        public string ProviderCurrency { get { throw null; } }
+        public System.DateTimeOffset? ResourceDeletedOn { get { throw null; } }
+        public Azure.ResourceManager.Advisor.Models.ResourceRecommendationSavingsDetails Retail { get { throw null; } }
+        protected virtual Azure.ResourceManager.Advisor.Models.ResourceRecommendationSavings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Advisor.Models.ResourceRecommendationSavings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Advisor.Models.ResourceRecommendationSavings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.Models.ResourceRecommendationSavings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.Models.ResourceRecommendationSavings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Advisor.Models.ResourceRecommendationSavings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.ResourceRecommendationSavings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.ResourceRecommendationSavings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.ResourceRecommendationSavings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ResourceRecommendationSavingsDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.Models.ResourceRecommendationSavingsDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.ResourceRecommendationSavingsDetails>
+    {
+        internal ResourceRecommendationSavingsDetails() { }
+        public double? PotentialSavings { get { throw null; } }
+        public double? PotentialSavingsInBillingCurrency { get { throw null; } }
+        public double? RealizedSavings { get { throw null; } }
+        public double? RealizedSavingsInBillingCurrency { get { throw null; } }
+        public double? WastedTillDate { get { throw null; } }
+        public double? WastedTillDateInBillingCurrency { get { throw null; } }
+        protected virtual Azure.ResourceManager.Advisor.Models.ResourceRecommendationSavingsDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Advisor.Models.ResourceRecommendationSavingsDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Advisor.Models.ResourceRecommendationSavingsDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.Models.ResourceRecommendationSavingsDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.Models.ResourceRecommendationSavingsDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Advisor.Models.ResourceRecommendationSavingsDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.ResourceRecommendationSavingsDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.ResourceRecommendationSavingsDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.ResourceRecommendationSavingsDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ScoreAggregationLevel : System.IEquatable<Azure.ResourceManager.Advisor.Models.ScoreAggregationLevel>
@@ -1182,21 +1089,18 @@ namespace Azure.ResourceManager.Advisor.Models
         public static bool operator !=(Azure.ResourceManager.Advisor.Models.ScoreAggregationLevel left, Azure.ResourceManager.Advisor.Models.ScoreAggregationLevel right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TrackedRecommendationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.Models.TrackedRecommendationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.TrackedRecommendationProperties>
+    public partial class ServiceGroupRecommendationPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.Models.ServiceGroupRecommendationPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.ServiceGroupRecommendationPatch>
     {
-        public TrackedRecommendationProperties() { }
-        public System.DateTimeOffset? PostponedUntil { get { throw null; } set { } }
-        public Azure.ResourceManager.Advisor.Models.RecommendationPriority? Priority { get { throw null; } set { } }
-        public Azure.ResourceManager.Advisor.Models.RecommendationStateChangeReason? Reason { get { throw null; } set { } }
-        public Azure.ResourceManager.Advisor.Models.RecommendationState? State { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Advisor.Models.TrackedRecommendationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public ServiceGroupRecommendationPatch() { }
+        public Azure.ResourceManager.Advisor.Models.RecommendationStatePropertiesPayload Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Advisor.Models.ServiceGroupRecommendationPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Advisor.Models.TrackedRecommendationProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.Advisor.Models.ServiceGroupRecommendationPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Advisor.Models.TrackedRecommendationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.Models.TrackedRecommendationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.Models.TrackedRecommendationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Advisor.Models.TrackedRecommendationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.TrackedRecommendationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.TrackedRecommendationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.TrackedRecommendationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Advisor.Models.ServiceGroupRecommendationPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.Models.ServiceGroupRecommendationPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.Models.ServiceGroupRecommendationPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Advisor.Models.ServiceGroupRecommendationPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.ServiceGroupRecommendationPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.ServiceGroupRecommendationPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.Models.ServiceGroupRecommendationPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

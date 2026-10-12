@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Advisor.Models
         internal AdvisorRecommendationProperties()
         {
             Metadata = new ChangeTrackingDictionary<string, BinaryData>();
-            SuppressionIds = new ChangeTrackingList<Guid>();
             ExtendedProperties = new ChangeTrackingDictionary<string, string>();
             Actions = new ChangeTrackingList<IDictionary<string, BinaryData>>();
             Remediation = new ChangeTrackingDictionary<string, BinaryData>();
@@ -35,12 +34,23 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="impact"> The business impact of the recommendation. </param>
         /// <param name="impactedField"> The resource type identified by Advisor. </param>
         /// <param name="impactedValue"> The resource identified by Advisor. </param>
-        /// <param name="lastUpdatedOn"> The most recent time that Advisor checked the validity of the recommendation. </param>
+        /// <param name="criticalityScore"> The criticality score assigned to the recommendation. </param>
+        /// <param name="criticality"> The criticality assigned to the recommendation. </param>
+        /// <param name="scoreChangedAt"> The time when the recommendation's criticality score last changed. </param>
+        /// <param name="serviceGroupId"> The service group ID associated with the recommendation. </param>
+        /// <param name="savings"> The estimated savings associated with the recommendation. </param>
+        /// <param name="recommendationStatus"> The state of the Recommendation. </param>
+        /// <param name="completionType"> The type of recommendation completion, which is either MarkedByUser or SystemVerified. </param>
+        /// <param name="recommendationDismissReason"> The reason the Recommendation was dismissed. </param>
+        /// <param name="postponedUntilOn"> The time the Recommendation was postponed until. </param>
+        /// <param name="lastRefreshed"> The most recent time Advisor evaluated the recommendation for validity (re-ingested). </param>
+        /// <param name="lastUpdatedOn"> The most recent time the recommendation state changed (manual or automated). </param>
+        /// <param name="createdOn"> The created time of the recommendation. </param>
         /// <param name="metadata"> The recommendation metadata. </param>
         /// <param name="recommendationTypeId"> The recommendation-type GUID. </param>
         /// <param name="risk"> The potential risk of not implementing the recommendation. </param>
         /// <param name="shortDescription"> A summary of the recommendation. </param>
-        /// <param name="suppressionIds"> The list of snoozed and dismissed rules for the recommendation. </param>
+        /// <param name="suppressionId"> The single snoozed or dismissed rule for the recommendation. </param>
         /// <param name="extendedProperties"> Extended properties. </param>
         /// <param name="resourceMetadata"> Metadata of resource that was assessed. </param>
         /// <param name="description"> The detailed description of recommendation. </param>
@@ -50,26 +60,36 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="actions"> The list of recommended actions to implement recommendation. </param>
         /// <param name="remediation"> The automated way to apply recommendation. </param>
         /// <param name="exposedMetadataProperties"> The recommendation metadata properties exposed to customer to provide additional information. </param>
-        /// <param name="isTracked"> If the Recommendation has Tracking enabled. </param>
         /// <param name="trackedProperties"> The properties of a tracked recommendation. </param>
         /// <param name="review"> The Review that this Recommendation belongs to. </param>
         /// <param name="resourceWorkload"> The Workload that this Resource belongs to. </param>
         /// <param name="sourceSystem"> The Source System that this Recommendation originated from. </param>
         /// <param name="notes"> Additional notes for the Recommendation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AdvisorRecommendationProperties(RecommendationCategory? category, RecommendationControlType? control, RecommendationBusinessImpact? impact, string impactedField, string impactedValue, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> metadata, string recommendationTypeId, RecommendationRisk? risk, RecommendationShortDescription shortDescription, IList<Guid> suppressionIds, IDictionary<string, string> extendedProperties, RecommendationResourceMetadata resourceMetadata, string description, string label, string learnMoreLink, string potentialBenefits, IList<IDictionary<string, BinaryData>> actions, IDictionary<string, BinaryData> remediation, IDictionary<string, BinaryData> exposedMetadataProperties, bool? isTracked, TrackedRecommendationProperties trackedProperties, RecommendationReview review, RecommendationResourceWorkload resourceWorkload, string sourceSystem, string notes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AdvisorRecommendationProperties(RecommendationCategory? category, RecommendationControlType? control, RecommendationBusinessImpact? impact, string impactedField, string impactedValue, string criticalityScore, string criticality, string scoreChangedAt, string serviceGroupId, ResourceRecommendationSavings savings, RecommendationStatus? recommendationStatus, string completionType, RecommendationDismissReason? recommendationDismissReason, DateTimeOffset? postponedUntilOn, DateTimeOffset? lastRefreshed, DateTimeOffset? lastUpdatedOn, DateTimeOffset? createdOn, IDictionary<string, BinaryData> metadata, string recommendationTypeId, RecommendationRisk? risk, RecommendationShortDescription shortDescription, string suppressionId, IDictionary<string, string> extendedProperties, RecommendationResourceMetadata resourceMetadata, string description, string label, string learnMoreLink, string potentialBenefits, IList<IDictionary<string, BinaryData>> actions, IDictionary<string, BinaryData> remediation, IDictionary<string, BinaryData> exposedMetadataProperties, TrackedRecommendationProperties trackedProperties, RecommendationReview review, RecommendationResourceWorkload resourceWorkload, string sourceSystem, string notes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             Control = control;
             Impact = impact;
             ImpactedField = impactedField;
             ImpactedValue = impactedValue;
+            CriticalityScore = criticalityScore;
+            Criticality = criticality;
+            ScoreChangedAt = scoreChangedAt;
+            ServiceGroupId = serviceGroupId;
+            Savings = savings;
+            RecommendationStatus = recommendationStatus;
+            CompletionType = completionType;
+            RecommendationDismissReason = recommendationDismissReason;
+            PostponedUntilOn = postponedUntilOn;
+            LastRefreshed = lastRefreshed;
             LastUpdatedOn = lastUpdatedOn;
+            CreatedOn = createdOn;
             Metadata = metadata;
             RecommendationTypeId = recommendationTypeId;
             Risk = risk;
             ShortDescription = shortDescription;
-            SuppressionIds = suppressionIds;
+            SuppressionId = suppressionId;
             ExtendedProperties = extendedProperties;
             ResourceMetadata = resourceMetadata;
             Description = description;
@@ -79,7 +99,6 @@ namespace Azure.ResourceManager.Advisor.Models
             Actions = actions;
             Remediation = remediation;
             ExposedMetadataProperties = exposedMetadataProperties;
-            IsTracked = isTracked;
             TrackedProperties = trackedProperties;
             Review = review;
             ResourceWorkload = resourceWorkload;
@@ -103,8 +122,41 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <summary> The resource identified by Advisor. </summary>
         public string ImpactedValue { get; }
 
-        /// <summary> The most recent time that Advisor checked the validity of the recommendation. </summary>
+        /// <summary> The criticality score assigned to the recommendation. </summary>
+        public string CriticalityScore { get; }
+
+        /// <summary> The criticality assigned to the recommendation. </summary>
+        public string Criticality { get; }
+
+        /// <summary> The time when the recommendation's criticality score last changed. </summary>
+        public string ScoreChangedAt { get; }
+
+        /// <summary> The service group ID associated with the recommendation. </summary>
+        public string ServiceGroupId { get; }
+
+        /// <summary> The estimated savings associated with the recommendation. </summary>
+        public ResourceRecommendationSavings Savings { get; }
+
+        /// <summary> The state of the Recommendation. </summary>
+        public RecommendationStatus? RecommendationStatus { get; }
+
+        /// <summary> The type of recommendation completion, which is either MarkedByUser or SystemVerified. </summary>
+        public string CompletionType { get; }
+
+        /// <summary> The reason the Recommendation was dismissed. </summary>
+        public RecommendationDismissReason? RecommendationDismissReason { get; }
+
+        /// <summary> The time the Recommendation was postponed until. </summary>
+        public DateTimeOffset? PostponedUntilOn { get; }
+
+        /// <summary> The most recent time Advisor evaluated the recommendation for validity (re-ingested). </summary>
+        public DateTimeOffset? LastRefreshed { get; }
+
+        /// <summary> The most recent time the recommendation state changed (manual or automated). </summary>
         public DateTimeOffset? LastUpdatedOn { get; }
+
+        /// <summary> The created time of the recommendation. </summary>
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary>
         /// The recommendation metadata.
@@ -143,8 +195,8 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <summary> A summary of the recommendation. </summary>
         public RecommendationShortDescription ShortDescription { get; }
 
-        /// <summary> The list of snoozed and dismissed rules for the recommendation. </summary>
-        public IList<Guid> SuppressionIds { get; } = new ChangeTrackingList<Guid>();
+        /// <summary> The single snoozed or dismissed rule for the recommendation. </summary>
+        public string SuppressionId { get; }
 
         /// <summary> Extended properties. </summary>
         public IDictionary<string, string> ExtendedProperties { get; } = new ChangeTrackingDictionary<string, string>();
@@ -248,11 +300,8 @@ namespace Azure.ResourceManager.Advisor.Models
         /// </summary>
         public IDictionary<string, BinaryData> ExposedMetadataProperties { get; } = new ChangeTrackingDictionary<string, BinaryData>();
 
-        /// <summary> If the Recommendation has Tracking enabled. </summary>
-        public bool? IsTracked { get; }
-
         /// <summary> The properties of a tracked recommendation. </summary>
-        public TrackedRecommendationProperties TrackedProperties { get; }
+        internal TrackedRecommendationProperties TrackedProperties { get; }
 
         /// <summary> The Review that this Recommendation belongs to. </summary>
         public RecommendationReview Review { get; }
@@ -265,5 +314,14 @@ namespace Azure.ResourceManager.Advisor.Models
 
         /// <summary> Additional notes for the Recommendation. </summary>
         public string Notes { get; }
+
+        /// <summary> The Priority of the Recommendation. </summary>
+        public RecommendationPriority? TrackedPriority
+        {
+            get
+            {
+                return TrackedProperties is null ? default : TrackedProperties.Priority;
+            }
+        }
     }
 }

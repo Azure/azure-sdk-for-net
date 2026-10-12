@@ -39,35 +39,21 @@ namespace Azure.ResourceManager.Advisor.Mocking
             return new AdvisorMetadataEntityResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="AdvisorRecommendationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ResourceRecommendationBaseResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AdvisorRecommendationResource"/> object. </returns>
-        public virtual AdvisorRecommendationResource GetAdvisorRecommendationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceRecommendationBaseResource"/> object. </returns>
+        public virtual ResourceRecommendationBaseResource GetResourceRecommendationBaseResource(ResourceIdentifier id)
         {
-            AdvisorRecommendationResource.ValidateResourceId(id);
-            return new AdvisorRecommendationResource(Client, id);
+            ResourceRecommendationBaseResource.ValidateResourceId(id);
+            return new ResourceRecommendationBaseResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="AdvisorRecommendationCollection"/> objects within the specified scope. </summary>
+        /// <summary> Gets a collection of <see cref="ResourceRecommendationBaseCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="AdvisorRecommendationResource"/> objects. </returns>
-        public virtual AdvisorRecommendationCollection GetAdvisorRecommendations(ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="ResourceRecommendationBaseResource"/> objects. </returns>
+        public virtual ResourceRecommendationBaseCollection GetResourceRecommendationBases(ResourceIdentifier scope)
         {
-            return new AdvisorRecommendationCollection(Client, scope);
-        }
-
-        /// <summary> Obtains details of a cached recommendation. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="recommendationId"> The recommendation ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AdvisorRecommendationResource> GetAdvisorRecommendation(ResourceIdentifier scope, string recommendationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
-
-            return GetAdvisorRecommendations(scope).Get(recommendationId, cancellationToken);
+            return new ResourceRecommendationBaseCollection(Client, scope);
         }
 
         /// <summary> Obtains details of a cached recommendation. </summary>
@@ -77,11 +63,70 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AdvisorRecommendationResource>> GetAdvisorRecommendationAsync(ResourceIdentifier scope, string recommendationId, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceRecommendationBaseResource> GetResourceRecommendationBase(ResourceIdentifier scope, string recommendationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
 
-            return await GetAdvisorRecommendations(scope).GetAsync(recommendationId, cancellationToken).ConfigureAwait(false);
+            return GetResourceRecommendationBases(scope).Get(recommendationId, cancellationToken);
+        }
+
+        /// <summary> Obtains details of a cached recommendation. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="recommendationId"> The recommendation ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ResourceRecommendationBaseResource>> GetResourceRecommendationBaseAsync(ResourceIdentifier scope, string recommendationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
+
+            return await GetResourceRecommendationBases(scope).GetAsync(recommendationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ServiceGroupRecommendationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServiceGroupRecommendationResource"/> object. </returns>
+        public virtual ServiceGroupRecommendationResource GetServiceGroupRecommendationResource(ResourceIdentifier id)
+        {
+            ServiceGroupRecommendationResource.ValidateResourceId(id);
+            return new ServiceGroupRecommendationResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="ServiceGroupRecommendationCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="ServiceGroupRecommendationResource"/> objects. </returns>
+        public virtual ServiceGroupRecommendationCollection GetServiceGroupRecommendations(ResourceIdentifier scope)
+        {
+            return new ServiceGroupRecommendationCollection(Client, scope);
+        }
+
+        /// <summary> Obtains details of a recommendation for a service group. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="recommendationId"> The recommendation ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceGroupRecommendationResource> GetServiceGroupRecommendation(ResourceIdentifier scope, string recommendationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
+
+            return GetServiceGroupRecommendations(scope).Get(recommendationId, cancellationToken);
+        }
+
+        /// <summary> Obtains details of a recommendation for a service group. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="recommendationId"> The recommendation ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ServiceGroupRecommendationResource>> GetServiceGroupRecommendationAsync(ResourceIdentifier scope, string recommendationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
+
+            return await GetServiceGroupRecommendations(scope).GetAsync(recommendationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="AdvisorSuppressionContractResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -154,96 +199,6 @@ namespace Azure.ResourceManager.Advisor.Mocking
         {
             AdvisorResiliencyReviewResource.ValidateResourceId(id);
             return new AdvisorResiliencyReviewResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="AdvisorTriageRecommendationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AdvisorTriageRecommendationResource"/> object. </returns>
-        public virtual AdvisorTriageRecommendationResource GetAdvisorTriageRecommendationResource(ResourceIdentifier id)
-        {
-            AdvisorTriageRecommendationResource.ValidateResourceId(id);
-            return new AdvisorTriageRecommendationResource(Client, id);
-        }
-
-        /// <summary> Gets a collection of <see cref="AdvisorTriageRecommendationCollection"/> objects within the specified scope. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="AdvisorTriageRecommendationResource"/> objects. </returns>
-        public virtual AdvisorTriageRecommendationCollection GetAdvisorTriageRecommendations(ResourceIdentifier scope)
-        {
-            return new AdvisorTriageRecommendationCollection(Client, scope);
-        }
-
-        /// <summary> Get an existing recommendation by id for an existing Azure Advisor Resiliency Review Id. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="recommendationId"> Existing triage recommendation id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AdvisorTriageRecommendationResource> GetAdvisorTriageRecommendation(ResourceIdentifier scope, string recommendationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
-
-            return GetAdvisorTriageRecommendations(scope).Get(recommendationId, cancellationToken);
-        }
-
-        /// <summary> Get an existing recommendation by id for an existing Azure Advisor Resiliency Review Id. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="recommendationId"> Existing triage recommendation id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AdvisorTriageRecommendationResource>> GetAdvisorTriageRecommendationAsync(ResourceIdentifier scope, string recommendationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
-
-            return await GetAdvisorTriageRecommendations(scope).GetAsync(recommendationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets an object representing a <see cref="AdvisorTriageResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AdvisorTriageResource"/> object. </returns>
-        public virtual AdvisorTriageResource GetAdvisorTriageResource(ResourceIdentifier id)
-        {
-            AdvisorTriageResource.ValidateResourceId(id);
-            return new AdvisorTriageResource(Client, id);
-        }
-
-        /// <summary> Gets a collection of <see cref="AdvisorTriageCollection"/> objects within the specified scope. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="AdvisorTriageResource"/> objects. </returns>
-        public virtual AdvisorTriageCollection GetAdvisorTriages(ResourceIdentifier scope)
-        {
-            return new AdvisorTriageCollection(Client, scope);
-        }
-
-        /// <summary> Get a triage resource for a given review and recommendation. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="recommendationResourceId"> Existing recommendation triage resource associated with a triage recommendation. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recommendationResourceId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="recommendationResourceId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AdvisorTriageResource> GetAdvisorTriage(ResourceIdentifier scope, string recommendationResourceId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(recommendationResourceId, nameof(recommendationResourceId));
-
-            return GetAdvisorTriages(scope).Get(recommendationResourceId, cancellationToken);
-        }
-
-        /// <summary> Get a triage resource for a given review and recommendation. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="recommendationResourceId"> Existing recommendation triage resource associated with a triage recommendation. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recommendationResourceId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="recommendationResourceId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AdvisorTriageResource>> GetAdvisorTriageAsync(ResourceIdentifier scope, string recommendationResourceId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(recommendationResourceId, nameof(recommendationResourceId));
-
-            return await GetAdvisorTriages(scope).GetAsync(recommendationResourceId, cancellationToken).ConfigureAwait(false);
         }
     }
 }

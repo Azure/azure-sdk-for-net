@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Advisor
         {
             TryGetApiVersion(AdvisorResiliencyReviewResource.ResourceType, out string advisorResiliencyReviewApiVersion);
             _resiliencyReviewsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", AdvisorResiliencyReviewResource.ResourceType.Namespace, Diagnostics);
-            _resiliencyReviewsRestClient = new ResiliencyReviews(_resiliencyReviewsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, advisorResiliencyReviewApiVersion ?? "2025-05-01-preview");
+            _resiliencyReviewsRestClient = new ResiliencyReviews(_resiliencyReviewsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, advisorResiliencyReviewApiVersion ?? "2026-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

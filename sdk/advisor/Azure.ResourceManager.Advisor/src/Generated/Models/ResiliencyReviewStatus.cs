@@ -15,13 +15,11 @@ namespace Azure.ResourceManager.Advisor.Models
     public readonly partial struct ResiliencyReviewStatus : IEquatable<ResiliencyReviewStatus>
     {
         private readonly string _value;
-        /// <summary> New. </summary>
+        /// <summary> The review has been newly created. </summary>
         private const string NewValue = "New";
-        /// <summary> In Progress. </summary>
+        /// <summary> The review is currently in progress. </summary>
         private const string InProgressValue = "InProgress";
-        /// <summary> Triaged. </summary>
-        private const string TriagedValue = "Triaged";
-        /// <summary> Completed. </summary>
+        /// <summary> The review has been completed. </summary>
         private const string CompletedValue = "Completed";
 
         /// <summary> Initializes a new instance of <see cref="ResiliencyReviewStatus"/>. </summary>
@@ -34,16 +32,13 @@ namespace Azure.ResourceManager.Advisor.Models
             _value = value;
         }
 
-        /// <summary> New. </summary>
+        /// <summary> The review has been newly created. </summary>
         public static ResiliencyReviewStatus New { get; } = new ResiliencyReviewStatus(NewValue);
 
-        /// <summary> In Progress. </summary>
+        /// <summary> The review is currently in progress. </summary>
         public static ResiliencyReviewStatus InProgress { get; } = new ResiliencyReviewStatus(InProgressValue);
 
-        /// <summary> Triaged. </summary>
-        public static ResiliencyReviewStatus Triaged { get; } = new ResiliencyReviewStatus(TriagedValue);
-
-        /// <summary> Completed. </summary>
+        /// <summary> The review has been completed. </summary>
         public static ResiliencyReviewStatus Completed { get; } = new ResiliencyReviewStatus(CompletedValue);
 
         /// <summary> Determines if two <see cref="ResiliencyReviewStatus"/> values are the same. </summary>

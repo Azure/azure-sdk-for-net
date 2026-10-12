@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Advisor
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(RequestContext context)
+        internal HttpMessage CreateGetAllRequest(string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.Advisor
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -81,7 +85,7 @@ namespace Azure.ResourceManager.Advisor
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, RequestContext context)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

@@ -63,46 +63,46 @@ namespace Azure.ResourceManager.Advisor
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="AdvisorRecommendationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ResourceRecommendationBaseResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetAdvisorRecommendationResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetResourceRecommendationBaseResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AdvisorRecommendationResource"/> object. </returns>
-        public static AdvisorRecommendationResource GetAdvisorRecommendationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceRecommendationBaseResource"/> object. </returns>
+        public static ResourceRecommendationBaseResource GetResourceRecommendationBaseResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAdvisorArmClient(client).GetAdvisorRecommendationResource(id);
+            return GetMockableAdvisorArmClient(client).GetResourceRecommendationBaseResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of <see cref="AdvisorRecommendationCollection"/> objects within the specified scope.
+        /// Gets a collection of <see cref="ResourceRecommendationBaseCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetAdvisorRecommendations(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetResourceRecommendationBases(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="AdvisorRecommendationResource"/> objects. </returns>
-        public static AdvisorRecommendationCollection GetAdvisorRecommendations(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="ResourceRecommendationBaseResource"/> objects. </returns>
+        public static ResourceRecommendationBaseCollection GetResourceRecommendationBases(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAdvisorArmClient(client).GetAdvisorRecommendations(scope);
+            return GetMockableAdvisorArmClient(client).GetResourceRecommendationBases(scope);
         }
 
         /// <summary>
         /// Obtains details of a cached recommendation.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetAdvisorRecommendation(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetResourceRecommendationBase(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -111,18 +111,18 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<AdvisorRecommendationResource> GetAdvisorRecommendation(this ArmClient client, ResourceIdentifier scope, string recommendationId, CancellationToken cancellationToken = default)
+        public static Response<ResourceRecommendationBaseResource> GetResourceRecommendationBase(this ArmClient client, ResourceIdentifier scope, string recommendationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAdvisorArmClient(client).GetAdvisorRecommendation(scope, recommendationId, cancellationToken);
+            return GetMockableAdvisorArmClient(client).GetResourceRecommendationBase(scope, recommendationId, cancellationToken);
         }
 
         /// <summary>
         /// Obtains details of a cached recommendation.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetAdvisorRecommendationAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetResourceRecommendationBaseAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -131,11 +131,87 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<AdvisorRecommendationResource>> GetAdvisorRecommendationAsync(this ArmClient client, ResourceIdentifier scope, string recommendationId, CancellationToken cancellationToken = default)
+        public static async Task<Response<ResourceRecommendationBaseResource>> GetResourceRecommendationBaseAsync(this ArmClient client, ResourceIdentifier scope, string recommendationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableAdvisorArmClient(client).GetAdvisorRecommendationAsync(scope, recommendationId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAdvisorArmClient(client).GetResourceRecommendationBaseAsync(scope, recommendationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceGroupRecommendationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetServiceGroupRecommendationResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServiceGroupRecommendationResource"/> object. </returns>
+        public static ServiceGroupRecommendationResource GetServiceGroupRecommendationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAdvisorArmClient(client).GetServiceGroupRecommendationResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of <see cref="ServiceGroupRecommendationCollection"/> objects within the specified scope.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetServiceGroupRecommendations(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a collection of <see cref="ServiceGroupRecommendationResource"/> objects. </returns>
+        public static ServiceGroupRecommendationCollection GetServiceGroupRecommendations(this ArmClient client, ResourceIdentifier scope)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAdvisorArmClient(client).GetServiceGroupRecommendations(scope);
+        }
+
+        /// <summary>
+        /// Obtains details of a recommendation for a service group.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetServiceGroupRecommendation(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="recommendationId"> The recommendation ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ServiceGroupRecommendationResource> GetServiceGroupRecommendation(this ArmClient client, ResourceIdentifier scope, string recommendationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAdvisorArmClient(client).GetServiceGroupRecommendation(scope, recommendationId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Obtains details of a recommendation for a service group.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetServiceGroupRecommendationAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="recommendationId"> The recommendation ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ServiceGroupRecommendationResource>> GetServiceGroupRecommendationAsync(this ArmClient client, ResourceIdentifier scope, string recommendationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableAdvisorArmClient(client).GetServiceGroupRecommendationAsync(scope, recommendationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -266,158 +342,6 @@ namespace Azure.ResourceManager.Advisor
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAdvisorArmClient(client).GetAdvisorResiliencyReviewResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="AdvisorTriageRecommendationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetAdvisorTriageRecommendationResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AdvisorTriageRecommendationResource"/> object. </returns>
-        public static AdvisorTriageRecommendationResource GetAdvisorTriageRecommendationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAdvisorArmClient(client).GetAdvisorTriageRecommendationResource(id);
-        }
-
-        /// <summary>
-        /// Gets a collection of <see cref="AdvisorTriageRecommendationCollection"/> objects within the specified scope.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetAdvisorTriageRecommendations(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="AdvisorTriageRecommendationResource"/> objects. </returns>
-        public static AdvisorTriageRecommendationCollection GetAdvisorTriageRecommendations(this ArmClient client, ResourceIdentifier scope)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAdvisorArmClient(client).GetAdvisorTriageRecommendations(scope);
-        }
-
-        /// <summary>
-        /// Get an existing recommendation by id for an existing Azure Advisor Resiliency Review Id.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetAdvisorTriageRecommendation(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="recommendationId"> Existing triage recommendation id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<AdvisorTriageRecommendationResource> GetAdvisorTriageRecommendation(this ArmClient client, ResourceIdentifier scope, string recommendationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAdvisorArmClient(client).GetAdvisorTriageRecommendation(scope, recommendationId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get an existing recommendation by id for an existing Azure Advisor Resiliency Review Id.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetAdvisorTriageRecommendationAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="recommendationId"> Existing triage recommendation id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<AdvisorTriageRecommendationResource>> GetAdvisorTriageRecommendationAsync(this ArmClient client, ResourceIdentifier scope, string recommendationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return await GetMockableAdvisorArmClient(client).GetAdvisorTriageRecommendationAsync(scope, recommendationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="AdvisorTriageResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetAdvisorTriageResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AdvisorTriageResource"/> object. </returns>
-        public static AdvisorTriageResource GetAdvisorTriageResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAdvisorArmClient(client).GetAdvisorTriageResource(id);
-        }
-
-        /// <summary>
-        /// Gets a collection of <see cref="AdvisorTriageCollection"/> objects within the specified scope.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetAdvisorTriages(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="AdvisorTriageResource"/> objects. </returns>
-        public static AdvisorTriageCollection GetAdvisorTriages(this ArmClient client, ResourceIdentifier scope)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAdvisorArmClient(client).GetAdvisorTriages(scope);
-        }
-
-        /// <summary>
-        /// Get a triage resource for a given review and recommendation.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetAdvisorTriage(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="recommendationResourceId"> Existing recommendation triage resource associated with a triage recommendation. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<AdvisorTriageResource> GetAdvisorTriage(this ArmClient client, ResourceIdentifier scope, string recommendationResourceId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAdvisorArmClient(client).GetAdvisorTriage(scope, recommendationResourceId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a triage resource for a given review and recommendation.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetAdvisorTriageAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="recommendationResourceId"> Existing recommendation triage resource associated with a triage recommendation. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<AdvisorTriageResource>> GetAdvisorTriageAsync(this ArmClient client, ResourceIdentifier scope, string recommendationResourceId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return await GetMockableAdvisorArmClient(client).GetAdvisorTriageAsync(scope, recommendationResourceId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -693,6 +617,44 @@ namespace Azure.ResourceManager.Advisor
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableAdvisorSubscriptionResource(subscriptionResource).AdvisorPredict(content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Update the state of a Recommendation
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.UpdateAsync(string, ServiceGroupRecommendationPatch, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="recommendationId"> The recommendation ID. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response<AdvisorRecommendationData>> UpdateAsync(this SubscriptionResource subscriptionResource, string recommendationId, ServiceGroupRecommendationPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableAdvisorSubscriptionResource(subscriptionResource).UpdateAsync(recommendationId, patch, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Update the state of a Recommendation
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.Update(string, ServiceGroupRecommendationPatch, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="recommendationId"> The recommendation ID. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<AdvisorRecommendationData> Update(this SubscriptionResource subscriptionResource, string recommendationId, ServiceGroupRecommendationPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAdvisorSubscriptionResource(subscriptionResource).Update(recommendationId, patch, cancellationToken);
         }
 
         /// <summary>

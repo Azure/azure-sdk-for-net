@@ -85,12 +85,111 @@ namespace Azure.ResourceManager.Advisor
             }
         }
 
-        /// <summary> The most recent time that Advisor checked the validity of the recommendation. </summary>
+        /// <summary> The criticality score assigned to the recommendation. </summary>
+        public string CriticalityScore
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CriticalityScore;
+            }
+        }
+
+        /// <summary> The criticality assigned to the recommendation. </summary>
+        public string Criticality
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Criticality;
+            }
+        }
+
+        /// <summary> The time when the recommendation's criticality score last changed. </summary>
+        public string ScoreChangedAt
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScoreChangedAt;
+            }
+        }
+
+        /// <summary> The service group ID associated with the recommendation. </summary>
+        public string ServiceGroupId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceGroupId;
+            }
+        }
+
+        /// <summary> The estimated savings associated with the recommendation. </summary>
+        public ResourceRecommendationSavings Savings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Savings;
+            }
+        }
+
+        /// <summary> The state of the Recommendation. </summary>
+        public RecommendationStatus? RecommendationStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RecommendationStatus;
+            }
+        }
+
+        /// <summary> The type of recommendation completion, which is either MarkedByUser or SystemVerified. </summary>
+        public string CompletionType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CompletionType;
+            }
+        }
+
+        /// <summary> The reason the Recommendation was dismissed. </summary>
+        public RecommendationDismissReason? RecommendationDismissReason
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RecommendationDismissReason;
+            }
+        }
+
+        /// <summary> The time the Recommendation was postponed until. </summary>
+        public DateTimeOffset? PostponedUntilOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PostponedUntilOn;
+            }
+        }
+
+        /// <summary> The most recent time Advisor evaluated the recommendation for validity (re-ingested). </summary>
+        public DateTimeOffset? LastRefreshed
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastRefreshed;
+            }
+        }
+
+        /// <summary> The most recent time the recommendation state changed (manual or automated). </summary>
         public DateTimeOffset? LastUpdatedOn
         {
             get
             {
                 return Properties is null ? default : Properties.LastUpdatedOn;
+            }
+        }
+
+        /// <summary> The created time of the recommendation. </summary>
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
             }
         }
 
@@ -130,12 +229,12 @@ namespace Azure.ResourceManager.Advisor
             }
         }
 
-        /// <summary> The list of snoozed and dismissed rules for the recommendation. </summary>
-        public IList<Guid> SuppressionIds
+        /// <summary> The single snoozed or dismissed rule for the recommendation. </summary>
+        public string SuppressionId
         {
             get
             {
-                return Properties is null ? default : Properties.SuppressionIds;
+                return Properties is null ? default : Properties.SuppressionId;
             }
         }
 
@@ -220,24 +319,6 @@ namespace Azure.ResourceManager.Advisor
             }
         }
 
-        /// <summary> If the Recommendation has Tracking enabled. </summary>
-        public bool? IsTracked
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IsTracked;
-            }
-        }
-
-        /// <summary> The properties of a tracked recommendation. </summary>
-        public TrackedRecommendationProperties TrackedProperties
-        {
-            get
-            {
-                return Properties is null ? default : Properties.TrackedProperties;
-            }
-        }
-
         /// <summary> The Review that this Recommendation belongs to. </summary>
         public RecommendationReview Review
         {
@@ -271,6 +352,15 @@ namespace Azure.ResourceManager.Advisor
             get
             {
                 return Properties is null ? default : Properties.Notes;
+            }
+        }
+
+        /// <summary> The Priority of the Recommendation. </summary>
+        public RecommendationPriority? TrackedPriority
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TrackedPriority;
             }
         }
     }

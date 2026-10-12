@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.Advisor
             return message;
         }
 
-        internal HttpMessage CreatePatchRequest(string resourceUri, string recommendationId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string recommendationId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Advisor/recommendations/", false);
             uri.AppendPath(recommendationId, true);
             if (_apiVersion != null)

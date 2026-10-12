@@ -18,28 +18,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Advisor
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AdvisorRecommendationResource"/> and their operations.
-    /// Each <see cref="AdvisorRecommendationResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="AdvisorRecommendationCollection"/> instance call the GetAdvisorRecommendations method from an instance of <see cref="ArmResource"/>.
+    /// A class representing a collection of <see cref="ResourceRecommendationBaseResource"/> and their operations.
+    /// Each <see cref="ResourceRecommendationBaseResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="ResourceRecommendationBaseCollection"/> instance call the GetResourceRecommendationBases method from an instance of <see cref="ArmResource"/>.
     /// </summary>
-    public partial class AdvisorRecommendationCollection : ArmCollection, IEnumerable<AdvisorRecommendationResource>, IAsyncEnumerable<AdvisorRecommendationResource>
+    public partial class ResourceRecommendationBaseCollection : ArmCollection, IEnumerable<ResourceRecommendationBaseResource>, IAsyncEnumerable<ResourceRecommendationBaseResource>
     {
         private readonly ClientDiagnostics _resourceRecommendationBasesClientDiagnostics;
         private readonly ResourceRecommendationBases _resourceRecommendationBasesRestClient;
 
-        /// <summary> Initializes a new instance of AdvisorRecommendationCollection for mocking. </summary>
-        protected AdvisorRecommendationCollection()
+        /// <summary> Initializes a new instance of ResourceRecommendationBaseCollection for mocking. </summary>
+        protected ResourceRecommendationBaseCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AdvisorRecommendationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceRecommendationBaseCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AdvisorRecommendationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ResourceRecommendationBaseCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AdvisorRecommendationResource.ResourceType, out string advisorRecommendationApiVersion);
-            _resourceRecommendationBasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", AdvisorRecommendationResource.ResourceType.Namespace, Diagnostics);
-            _resourceRecommendationBasesRestClient = new ResourceRecommendationBases(_resourceRecommendationBasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, advisorRecommendationApiVersion ?? "2025-05-01-preview");
+            TryGetApiVersion(ResourceRecommendationBaseResource.ResourceType, out string resourceRecommendationBaseApiVersion);
+            _resourceRecommendationBasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", ResourceRecommendationBaseResource.ResourceType.Namespace, Diagnostics);
+            _resourceRecommendationBasesRestClient = new ResourceRecommendationBases(_resourceRecommendationBasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceRecommendationBaseApiVersion ?? "2026-08-01-preview");
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AdvisorRecommendationResource>> GetAsync(string recommendationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceRecommendationBaseResource>> GetAsync(string recommendationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
 
-            using DiagnosticScope scope = _resourceRecommendationBasesClientDiagnostics.CreateScope("AdvisorRecommendationCollection.Get");
+            using DiagnosticScope scope = _resourceRecommendationBasesClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.Get");
             scope.Start();
             try
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AdvisorRecommendationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceRecommendationBaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AdvisorRecommendationResource> Get(string recommendationId, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceRecommendationBaseResource> Get(string recommendationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
 
-            using DiagnosticScope scope = _resourceRecommendationBasesClientDiagnostics.CreateScope("AdvisorRecommendationCollection.Get");
+            using DiagnosticScope scope = _resourceRecommendationBasesClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.Get");
             scope.Start();
             try
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AdvisorRecommendationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceRecommendationBaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -161,21 +161,21 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="top"> The number of recommendations per page if a paged version of this API is being used. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AdvisorRecommendationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AdvisorRecommendationResource> GetAllAsync(string filter = default, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceRecommendationBaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceRecommendationBaseResource> GetAllAsync(string filter = default, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AdvisorRecommendationData, AdvisorRecommendationResource>(new AdvisorRecommendationDataAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AdvisorRecommendationData, ResourceRecommendationBaseResource>(new AdvisorRecommendationDataAsyncCollectionResultOfT(
                 _resourceRecommendationBasesRestClient,
                 Id.ToString(),
                 filter,
                 top,
                 skipToken,
                 context,
-                "AdvisorRecommendationCollection.GetAll"), data => new AdvisorRecommendationResource(Client, data));
+                "ResourceRecommendationBaseCollection.GetAll"), data => new ResourceRecommendationBaseResource(Client, data));
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,21 +199,21 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="top"> The number of recommendations per page if a paged version of this API is being used. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AdvisorRecommendationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AdvisorRecommendationResource> GetAll(string filter = default, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceRecommendationBaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceRecommendationBaseResource> GetAll(string filter = default, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AdvisorRecommendationData, AdvisorRecommendationResource>(new AdvisorRecommendationDataCollectionResultOfT(
+            return new PageableWrapper<AdvisorRecommendationData, ResourceRecommendationBaseResource>(new AdvisorRecommendationDataCollectionResultOfT(
                 _resourceRecommendationBasesRestClient,
                 Id.ToString(),
                 filter,
                 top,
                 skipToken,
                 context,
-                "AdvisorRecommendationCollection.GetAll"), data => new AdvisorRecommendationResource(Client, data));
+                "ResourceRecommendationBaseCollection.GetAll"), data => new ResourceRecommendationBaseResource(Client, data));
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Advisor
         {
             Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
 
-            using DiagnosticScope scope = _resourceRecommendationBasesClientDiagnostics.CreateScope("AdvisorRecommendationCollection.Exists");
+            using DiagnosticScope scope = _resourceRecommendationBasesClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.Exists");
             scope.Start();
             try
             {
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Advisor
         {
             Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
 
-            using DiagnosticScope scope = _resourceRecommendationBasesClientDiagnostics.CreateScope("AdvisorRecommendationCollection.Exists");
+            using DiagnosticScope scope = _resourceRecommendationBasesClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.Exists");
             scope.Start();
             try
             {
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -351,11 +351,11 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<AdvisorRecommendationResource>> GetIfExistsAsync(string recommendationId, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ResourceRecommendationBaseResource>> GetIfExistsAsync(string recommendationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
 
-            using DiagnosticScope scope = _resourceRecommendationBasesClientDiagnostics.CreateScope("AdvisorRecommendationCollection.GetIfExists");
+            using DiagnosticScope scope = _resourceRecommendationBasesClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -380,9 +380,9 @@ namespace Azure.ResourceManager.Advisor
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<AdvisorRecommendationResource>(response.GetRawResponse());
+                    return new NoValueResponse<ResourceRecommendationBaseResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new AdvisorRecommendationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceRecommendationBaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -412,11 +412,11 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<AdvisorRecommendationResource> GetIfExists(string recommendationId, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ResourceRecommendationBaseResource> GetIfExists(string recommendationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
 
-            using DiagnosticScope scope = _resourceRecommendationBasesClientDiagnostics.CreateScope("AdvisorRecommendationCollection.GetIfExists");
+            using DiagnosticScope scope = _resourceRecommendationBasesClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -441,9 +441,9 @@ namespace Azure.ResourceManager.Advisor
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<AdvisorRecommendationResource>(response.GetRawResponse());
+                    return new NoValueResponse<ResourceRecommendationBaseResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new AdvisorRecommendationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceRecommendationBaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Advisor
             }
         }
 
-        IEnumerator<AdvisorRecommendationResource> IEnumerable<AdvisorRecommendationResource>.GetEnumerator()
+        IEnumerator<ResourceRecommendationBaseResource> IEnumerable<ResourceRecommendationBaseResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Advisor
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<AdvisorRecommendationResource> IAsyncEnumerable<AdvisorRecommendationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ResourceRecommendationBaseResource> IAsyncEnumerable<ResourceRecommendationBaseResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
