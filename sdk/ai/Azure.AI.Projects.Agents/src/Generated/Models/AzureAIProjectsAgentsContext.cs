@@ -4,7 +4,6 @@
 
 using System.ClientModel.Primitives;
 using Azure.AI.Extensions.OpenAI;
-using OpenAI;
 using OpenAI.Chat;
 using OpenAI.Realtime;
 using OpenAI.Responses;
@@ -136,7 +135,6 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(InlineSkillParam))]
     [ModelReaderWriterBuildable(typeof(InlineSkillSourceParam))]
     [ModelReaderWriterBuildable(typeof(InternalCreateAgentRequest))]
-    [ModelReaderWriterBuildable(typeof(InternalMetadataContainer))]
     [ModelReaderWriterBuildable(typeof(InternalUpdateAgentRequest))]
     [ModelReaderWriterBuildable(typeof(InvocationsProtocolConfiguration))]
     [ModelReaderWriterBuildable(typeof(InvocationsWsProtocolConfiguration))]

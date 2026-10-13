@@ -115,13 +115,13 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MaxOutputTokens))
+            if (Optional.IsDefined(InternalMaxOutputTokens))
             {
                 writer.WritePropertyName("max_output_tokens"u8);
 #if NET6_0_OR_GREATER
-                writer.WriteRawValue(MaxOutputTokens);
+                writer.WriteRawValue(InternalMaxOutputTokens);
 #else
-                using (JsonDocument document = JsonDocument.Parse(MaxOutputTokens))
+                using (JsonDocument document = JsonDocument.Parse(InternalMaxOutputTokens))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -232,7 +232,7 @@ namespace Azure.AI.Projects.Agents
             VoiceAgentGreetingConfig greeting = default;
             VoiceAgentAudioConfig audio = default;
             IList<VoiceOutputModality> outputModalities = default;
-            BinaryData maxOutputTokens = default;
+            BinaryData internalMaxOutputTokens = default;
             IList<VoiceAgentSessionIncludeOption> include = default;
             VoiceAgentInterimResponseConfig interimResponse = default;
             VoiceAgentAvatarConfig avatar = default;
@@ -324,7 +324,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    maxOutputTokens = prop.Value.GetUtf8Bytes();
+                    internalMaxOutputTokens = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("include"u8))
@@ -439,7 +439,7 @@ namespace Azure.AI.Projects.Agents
                 greeting,
                 audio,
                 outputModalities ?? new ChangeTrackingList<VoiceOutputModality>(),
-                maxOutputTokens,
+                internalMaxOutputTokens,
                 include ?? new ChangeTrackingList<VoiceAgentSessionIncludeOption>(),
                 interimResponse,
                 avatar,

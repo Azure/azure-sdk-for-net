@@ -2721,7 +2721,7 @@ namespace Azure.AI.Projects.Agents
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadTurnDetection VoiceAgentAzureSemanticVadTurnDetection(bool? autoTruncate = default(bool?), float? threshold = default(float?), System.TimeSpan? prefixPaddingMs = default(System.TimeSpan?), System.TimeSpan? silenceDurationMs = default(System.TimeSpan?), System.TimeSpan? idleTimeoutMs = default(System.TimeSpan?), Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = null, System.TimeSpan? speechDurationMs = default(System.TimeSpan?), bool? removeFillerWords = default(bool?), bool? createResponse = default(bool?), bool? interruptResponse = default(bool?), System.Collections.Generic.IEnumerable<string> languages = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-        public static Azure.AI.Projects.Agents.VoiceAgentDefinition VoiceAgentDefinition(Azure.AI.Projects.Agents.ContentFilterConfiguration contentFilterConfiguration = null, Azure.AI.Projects.Agents.VoiceModelType? modelType = default(Azure.AI.Projects.Agents.VoiceModelType?), string model = null, Azure.AI.Projects.Agents.VoiceConversationEngine conversationEngine = null, string instructions = null, Azure.AI.Projects.Agents.VoiceAgentGreetingConfig greeting = null, Azure.AI.Projects.Agents.VoiceAgentAudioConfig audio = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.VoiceOutputModality> outputModalities = null, System.BinaryData maxOutputTokens = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.VoiceAgentSessionIncludeOption> include = null, Azure.AI.Projects.Agents.VoiceAgentInterimResponseConfig interimResponse = null, Azure.AI.Projects.Agents.VoiceAgentAvatarConfig avatar = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.VoiceAgentTool> tools = null, System.BinaryData toolChoice = null, bool? parallelToolCalls = default(bool?), System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Agents.StructuredInputDefinition> structuredInputs = null, Azure.AI.Projects.Agents.VoiceAgentSubagentConfig subagentConfig = null, bool? store = default(bool?)) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAgentDefinition VoiceAgentDefinition(Azure.AI.Projects.Agents.ContentFilterConfiguration contentFilterConfiguration = null, Azure.AI.Projects.Agents.VoiceModelType? modelType = default(Azure.AI.Projects.Agents.VoiceModelType?), string model = null, Azure.AI.Projects.Agents.VoiceConversationEngine conversationEngine = null, string instructions = null, Azure.AI.Projects.Agents.VoiceAgentGreetingConfig greeting = null, Azure.AI.Projects.Agents.VoiceAgentAudioConfig audio = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.VoiceOutputModality> outputModalities = null, System.BinaryData internalMaxOutputTokens = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.VoiceAgentSessionIncludeOption> include = null, Azure.AI.Projects.Agents.VoiceAgentInterimResponseConfig interimResponse = null, Azure.AI.Projects.Agents.VoiceAgentAvatarConfig avatar = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.VoiceAgentTool> tools = null, System.BinaryData toolChoice = null, bool? parallelToolCalls = default(bool?), System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Agents.StructuredInputDefinition> structuredInputs = null, Azure.AI.Projects.Agents.VoiceAgentSubagentConfig subagentConfig = null, bool? store = default(bool?)) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.VoiceAgentEchoCancellation VoiceAgentEchoCancellation(Azure.AI.Projects.Agents.VoiceAgentEchoCancellationReferenceSource? referenceSource = default(Azure.AI.Projects.Agents.VoiceAgentEchoCancellationReferenceSource?), int? channels = default(int?)) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
@@ -2782,6 +2782,8 @@ namespace Azure.AI.Projects.Agents
         public static Azure.AI.Projects.Agents.VoiceResponseAudio VoiceResponseAudio(Azure.AI.Projects.Agents.VoiceResponseAudioOutput output = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.VoiceResponseAudioOutput VoiceResponseAudioOutput(string voice = null, Azure.AI.Projects.Agents.VoiceType? voiceType = default(Azure.AI.Projects.Agents.VoiceType?), string voiceLocale = null, OpenAI.Realtime.RealtimeAudioFormat format = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceResult VoiceResult(string id = null, Azure.AI.Projects.Agents.VoiceResponseObject? @object = default(Azure.AI.Projects.Agents.VoiceResponseObject?), OpenAI.Realtime.RealtimeResponseStatus? status = default(OpenAI.Realtime.RealtimeResponseStatus?), OpenAI.Realtime.RealtimeResponseStatusDetails statusDetails = null, System.Collections.Generic.IEnumerable<OpenAI.Realtime.RealtimeItem> output = null, System.Collections.Generic.IDictionary<string, System.BinaryData> metadata = null, OpenAI.Realtime.RealtimeResponseUsage usage = null, string conversationId = null, System.Collections.Generic.IEnumerable<OpenAI.Realtime.RealtimeOutputModality> outputModalities = null, System.BinaryData maxOutputTokens = null, Azure.AI.Projects.Agents.VoiceResponseAudio audio = null, float? temperature = default(float?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? completedOn = default(System.DateTimeOffset?)) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.WebIQPreviewToolboxTool WebIQPreviewToolboxTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs = null, string projectConnectionId = null, string serverLabel = null, System.BinaryData requireApprovalInternal = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
@@ -4875,7 +4877,7 @@ namespace Azure.AI.Projects.Agents
         public System.Collections.Generic.IList<Azure.AI.Projects.Agents.VoiceAgentSessionIncludeOption> Include { get { throw null; } }
         public string Instructions { get { throw null; } set { } }
         public Azure.AI.Projects.Agents.VoiceAgentInterimResponseConfig InterimResponse { get { throw null; } set { } }
-        public System.BinaryData MaxOutputTokens { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.VoiceAgentMaxOutputTokens MaxOutputTokens { get { throw null; } set { } }
         public string Model { get { throw null; } set { } }
         public Azure.AI.Projects.Agents.VoiceModelType? ModelType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.Projects.Agents.VoiceOutputModality> OutputModalities { get { throw null; } }
@@ -5133,6 +5135,23 @@ namespace Azure.AI.Projects.Agents
         Azure.AI.Projects.Agents.VoiceAgentLlmInterimResponseConfig System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentLlmInterimResponseConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentLlmInterimResponseConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentLlmInterimResponseConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class VoiceAgentMaxOutputTokens : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentMaxOutputTokens>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentMaxOutputTokens>
+    {
+        public VoiceAgentMaxOutputTokens(int numberValue) { }
+        public static Azure.AI.Projects.Agents.VoiceAgentMaxOutputTokens Infinity { get { throw null; } }
+        public int? NumericValue { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentMaxOutputTokens CreateDefaultMaxTokensOption() { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAgentMaxOutputTokens CreateInfiniteMaxTokensOption() { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAgentMaxOutputTokens CreateNumericMaxTokensOption(int maxTokens) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAgentMaxOutputTokens (int maxTokens) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentMaxOutputTokens System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentMaxOutputTokens>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentMaxOutputTokens>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentMaxOutputTokens System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentMaxOutputTokens>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentMaxOutputTokens>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentMaxOutputTokens>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public partial class VoiceAgentMcpTool : Azure.AI.Projects.Agents.VoiceAgentTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentMcpTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentMcpTool>
@@ -5751,7 +5770,7 @@ namespace Azure.AI.Projects.Agents
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Id { get { throw null; } }
         public System.BinaryData MaxOutputTokens { get { throw null; } }
-        public OpenAI.InternalMetadataContainer Metadata { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> Metadata { get { throw null; } }
         public Azure.AI.Projects.Agents.VoiceResponseObject? Object { get { throw null; } }
         public System.Collections.Generic.IList<OpenAI.Realtime.RealtimeItem> Output { get { throw null; } }
         public System.Collections.Generic.IList<OpenAI.Realtime.RealtimeOutputModality> OutputModalities { get { throw null; } }
@@ -5874,22 +5893,5 @@ namespace Azure.AI.Projects.Agents
         Azure.AI.Projects.Agents.WorkIQPreviewToolboxTool System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.WorkIQPreviewToolboxTool>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.WorkIQPreviewToolboxTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.WorkIQPreviewToolboxTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-}
-namespace OpenAI
-{
-    public partial class InternalMetadataContainer : System.ClientModel.Primitives.IJsonModel<OpenAI.InternalMetadataContainer>, System.ClientModel.Primitives.IPersistableModel<OpenAI.InternalMetadataContainer>
-    {
-        public InternalMetadataContainer() { }
-        public System.Collections.Generic.IDictionary<string, string> AdditionalProperties { get { throw null; } }
-        protected virtual OpenAI.InternalMetadataContainer JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual OpenAI.InternalMetadataContainer PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        OpenAI.InternalMetadataContainer System.ClientModel.Primitives.IJsonModel<OpenAI.InternalMetadataContainer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<OpenAI.InternalMetadataContainer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        OpenAI.InternalMetadataContainer System.ClientModel.Primitives.IPersistableModel<OpenAI.InternalMetadataContainer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<OpenAI.InternalMetadataContainer>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<OpenAI.InternalMetadataContainer>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
