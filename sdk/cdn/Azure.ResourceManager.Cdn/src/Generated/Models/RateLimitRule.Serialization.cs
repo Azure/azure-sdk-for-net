@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 name,
                 enabledState,
                 priority,
-                matchConditions,
+                matchConditions ?? new ChangeTrackingList<CustomRuleMatchCondition>(),
                 action,
                 additionalBinaryDataProperties,
                 rateLimitThreshold,

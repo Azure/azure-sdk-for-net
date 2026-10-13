@@ -17,6 +17,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private ArmResourceId _armResourceIdentifier;
+        internal bool _armResourceIdentifierIsDefined;
+        private string _storageAccountName;
+        internal bool _storageAccountNameIsDefined;
+        private string _storageAccountType;
+        internal bool _storageAccountTypeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SystemCreatedStorageAccount"/>. </summary>
         public SystemCreatedStorageAccount()
@@ -43,10 +49,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal SystemCreatedStorageAccount(bool? allowBlobPublicAccess, ArmResourceId armResourceIdentifier, bool? storageAccountHnsEnabled, string storageAccountName, string storageAccountType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AllowBlobPublicAccess = allowBlobPublicAccess;
-            ArmResourceIdentifier = armResourceIdentifier;
+            _armResourceIdentifier = armResourceIdentifier;
             StorageAccountHnsEnabled = storageAccountHnsEnabled;
-            StorageAccountName = storageAccountName;
-            StorageAccountType = storageAccountType;
+            _storageAccountName = storageAccountName;
+            _storageAccountType = storageAccountType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -56,7 +62,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> This is populated once the storage account is created. </summary>
         [WirePath("armResourceId")]
-        internal ArmResourceId ArmResourceIdentifier { get; set; }
+        internal ArmResourceId ArmResourceIdentifier
+        {
+            get
+            {
+                return _armResourceIdentifier;
+            }
+            set
+            {
+                _armResourceIdentifier = value;
+                _armResourceIdentifierIsDefined = true;
+            }
+        }
 
         /// <summary> HNS enabled for storage account. </summary>
         [WirePath("storageAccountHnsEnabled")]
@@ -64,7 +81,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Name of the storage account. </summary>
         [WirePath("storageAccountName")]
-        public string StorageAccountName { get; set; }
+        public string StorageAccountName
+        {
+            get
+            {
+                return _storageAccountName;
+            }
+            set
+            {
+                _storageAccountName = value;
+                _storageAccountNameIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Allowed values:
@@ -78,7 +106,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// "Premium_ZRS"
         /// </summary>
         [WirePath("storageAccountType")]
-        public string StorageAccountType { get; set; }
+        public string StorageAccountType
+        {
+            get
+            {
+                return _storageAccountType;
+            }
+            set
+            {
+                _storageAccountType = value;
+                _storageAccountTypeIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Arm ResourceId is in the format "/subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Storage/storageAccounts/{StorageAccountName}"

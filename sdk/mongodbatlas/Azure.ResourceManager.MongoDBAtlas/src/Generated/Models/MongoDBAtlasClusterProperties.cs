@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private bool? _isBackupsEnabled;
+        internal bool _isBackupsEnabledIsDefined;
+        private string _state;
+        internal bool _stateIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MongoDBAtlasClusterProperties"/>. </summary>
         /// <param name="clusterTier"> Cluster tier (FREE, FLEX, M10, M30). </param>
@@ -44,8 +48,8 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             ClusterTier = clusterTier;
             RegionName = regionName;
             MongoDBVersion = mongoDBVersion;
-            IsBackupsEnabled = isBackupsEnabled;
-            State = state;
+            _isBackupsEnabled = isBackupsEnabled;
+            _state = state;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -63,10 +67,22 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         public string MongoDBVersion { get; }
 
         /// <summary> Whether backups are active for the cluster; null if undetermined. </summary>
-        public bool? IsBackupsEnabled { get; }
+        public bool? IsBackupsEnabled
+        {
+            get
+            {
+                return _isBackupsEnabled;
+            }
+        }
 
         /// <summary> Current state of the cluster. </summary>
-        public string State { get; }
+        public string State
+        {
+            get
+            {
+                return _state;
+            }
+        }
 
         /// <summary> Provisioning state of the resource. </summary>
         public MongoDBAtlasResourceProvisioningState? ProvisioningState { get; }

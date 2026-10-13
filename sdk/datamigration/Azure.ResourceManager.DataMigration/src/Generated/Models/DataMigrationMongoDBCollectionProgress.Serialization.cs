@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 bytesCopied,
                 documentsCopied,
                 elapsedTime,
-                errors,
+                errors ?? new ChangeTrackingDictionary<string, DataMigrationMongoDBError>(),
                 eventsPending,
                 eventsReplayed,
                 lastEventOn,

@@ -87,28 +87,42 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("command"u8);
             writer.WriteStringValue(Command);
-            if (Optional.IsDefined(Distribution))
+            if (_distributionIsDefined || Optional.IsDefined(Distribution))
             {
-                writer.WritePropertyName("distribution"u8);
-                writer.WriteObjectValue(Distribution, options);
+                if (Distribution != null)
+                {
+                    writer.WritePropertyName("distribution"u8);
+                    writer.WriteObjectValue(Distribution, options);
+                }
+                else
+                {
+                    writer.WriteNull("distribution"u8);
+                }
             }
             writer.WritePropertyName("environmentId"u8);
             writer.WriteStringValue(EnvironmentId);
             if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
-                writer.WritePropertyName("environmentVariables"u8);
-                writer.WriteStartObject();
-                foreach (var item in EnvironmentVariables)
+                if (EnvironmentVariables != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("environmentVariables"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in EnvironmentVariables)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("environmentVariables"u8);
+                }
             }
             if (Optional.IsDefined(Resources))
             {
@@ -159,9 +173,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             ResourceIdentifier codeId = default;
             string command = default;
+            bool distributionIsDefined = false;
             MachineLearningDistributionConfiguration distribution = default;
             ResourceIdentifier environmentId = default;
-            IDictionary<string, string> environmentVariables = default;
+            IDictionary<string, string> environmentVariables = new ChangeTrackingDictionary<string, string>();
             MachineLearningJobResourceConfiguration resources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -182,6 +197,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("distribution"u8))
                 {
+                    distributionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         distribution = null;
@@ -199,6 +215,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        environmentVariables = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -235,9 +252,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 command,
                 distribution,
                 environmentId,
-                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
+                environmentVariables,
                 resources,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _distributionIsDefined = distributionIsDefined
+            };
         }
     }
 }

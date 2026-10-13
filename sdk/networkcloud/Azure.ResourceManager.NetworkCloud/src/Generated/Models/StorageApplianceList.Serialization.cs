@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StorageApplianceList(value, nextLink, additionalBinaryDataProperties);
+            return new StorageApplianceList(value ?? new ChangeTrackingList<NetworkCloudStorageApplianceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

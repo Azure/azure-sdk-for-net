@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private ValidateResult _properties;
+        internal bool _propertiesIsDefined;
+        private string _status;
+        internal bool _statusIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="LinkerValidateOperationResult"/>. </summary>
         internal LinkerValidateOperationResult()
@@ -29,20 +33,32 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal LinkerValidateOperationResult(ValidateResult properties, ResourceIdentifier resourceId, string status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Properties = properties;
+            _properties = properties;
             ResourceId = resourceId;
-            Status = status;
+            _status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The validation result detail. </summary>
-        internal ValidateResult Properties { get; }
+        internal ValidateResult Properties
+        {
+            get
+            {
+                return _properties;
+            }
+        }
 
         /// <summary> Validated Linker id. </summary>
         public ResourceIdentifier ResourceId { get; }
 
         /// <summary> Validation operation status. </summary>
-        public string Status { get; }
+        public string Status
+        {
+            get
+            {
+                return _status;
+            }
+        }
 
         /// <summary> The linker name. </summary>
         public string LinkerName

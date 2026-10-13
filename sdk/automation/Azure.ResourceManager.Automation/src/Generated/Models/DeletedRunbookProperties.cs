@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.Automation.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _runtimeEnvironment;
+        internal bool _runtimeEnvironmentIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DeletedRunbookProperties"/>. </summary>
         internal DeletedRunbookProperties()
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.Automation.Models
             RunbookId = runbookId;
             RunbookType = runbookType;
             Runtime = runtime;
-            RuntimeEnvironment = runtimeEnvironment;
+            _runtimeEnvironment = runtimeEnvironment;
             CreatedOn = createdOn;
             DeletedOn = deletedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -50,7 +52,13 @@ namespace Azure.ResourceManager.Automation.Models
         public string Runtime { get; }
 
         /// <summary> Environment of the runbook. </summary>
-        public string RuntimeEnvironment { get; }
+        public string RuntimeEnvironment
+        {
+            get
+            {
+                return _runtimeEnvironment;
+            }
+        }
 
         /// <summary> Gets or sets the creation time. </summary>
         public DateTimeOffset? CreatedOn { get; }

@@ -11,12 +11,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 using Azure.ResourceManager.ResilienceManagement;
 
 namespace Azure.ResourceManager.ResilienceManagement.Models
 {
-    /// <summary> Definition of goal assignment property. </summary>
+    /// <summary> Properties of a goal assignment. </summary>
     public partial class GoalAssignmentProperties : IJsonModel<GoalAssignmentProperties>
     {
         /// <summary> Initializes a new instance of <see cref="GoalAssignmentProperties"/> for deserialization. </summary>
@@ -82,10 +81,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 throw new FormatException($"The model {nameof(GoalAssignmentProperties)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("goalTemplateId"u8);
-            writer.WriteStringValue(GoalTemplateId);
-            writer.WritePropertyName("goalAssignmentType"u8);
-            writer.WriteStringValue(GoalAssignmentType.ToString());
+            writer.WritePropertyName("requireZonalResiliency"u8);
+            writer.WriteBooleanValue(IsZonalResiliencyRequired);
             if (Optional.IsCollectionDefined(ServiceLevelResources))
             {
                 writer.WritePropertyName("serviceLevelResources"u8);
@@ -148,22 +145,16 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            ResourceIdentifier goalTemplateId = default;
-            GoalAssignmentType goalAssignmentType = default;
+            bool isZonalResiliencyRequired = default;
             IList<ServiceLevelTarget> serviceLevelResources = default;
             ResilienceManagementProvisioningState? provisioningState = default;
             ResponseError errorDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("goalTemplateId"u8))
+                if (prop.NameEquals("requireZonalResiliency"u8))
                 {
-                    goalTemplateId = new ResourceIdentifier(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("goalAssignmentType"u8))
-                {
-                    goalAssignmentType = new GoalAssignmentType(prop.Value.GetString());
+                    isZonalResiliencyRequired = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("serviceLevelResources"u8))
@@ -203,13 +194,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GoalAssignmentProperties(
-                goalTemplateId,
-                goalAssignmentType,
-                serviceLevelResources ?? new ChangeTrackingList<ServiceLevelTarget>(),
-                provisioningState,
-                errorDetails,
-                additionalBinaryDataProperties);
+            return new GoalAssignmentProperties(isZonalResiliencyRequired, serviceLevelResources ?? new ChangeTrackingList<ServiceLevelTarget>(), provisioningState, errorDetails, additionalBinaryDataProperties);
         }
     }
 }

@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ForEachActivityTypeProperties(isSequential, batchCount, items, activities, additionalBinaryDataProperties);
+            return new ForEachActivityTypeProperties(isSequential, batchCount, items, activities ?? new ChangeTrackingList<PipelineActivity>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GatewayListDebugCredentialsContract(credentialsExpireAfter, purposes, apiId, additionalBinaryDataProperties);
+            return new GatewayListDebugCredentialsContract(credentialsExpireAfter, purposes ?? new ChangeTrackingList<GatewayListDebugCredentialsContractPurpose>(), apiId, additionalBinaryDataProperties);
         }
     }
 }

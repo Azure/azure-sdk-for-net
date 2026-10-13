@@ -74,10 +74,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningScheduleBase)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Id))
+            if (_idIsDefined || Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNull("id"u8);
+                }
             }
             if (Optional.IsDefined(ProvisioningStatus))
             {
@@ -131,6 +138,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool idIsDefined = false;
             string id = default;
             MachineLearningScheduleProvisioningState? provisioningStatus = default;
             MachineLearningScheduleStatus? status = default;
@@ -139,6 +147,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (prop.NameEquals("id"u8))
                 {
+                    idIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         id = null;
@@ -170,7 +179,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MachineLearningScheduleBase(id, provisioningStatus, status, additionalBinaryDataProperties);
+            return new MachineLearningScheduleBase(id, provisioningStatus, status, additionalBinaryDataProperties)
+            {
+                _idIsDefined = idIsDefined
+            };
         }
     }
 }

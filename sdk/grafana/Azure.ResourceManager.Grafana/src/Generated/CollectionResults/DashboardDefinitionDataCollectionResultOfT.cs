@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> The pages of DashboardDefinitionDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<DashboardDefinitionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Grafana
                 {
                     yield break;
                 }
-                DashboardDefinitionListResponse result = DashboardDefinitionListResponse.FromResponse(response);
+                DashboardDefinitionListResult result = DashboardDefinitionListResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<DashboardDefinitionData>.FromValues((IReadOnlyList<DashboardDefinitionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ContainerServiceSafeguards.Models
                 provisioningState,
                 level,
                 excludedNamespaces ?? new ChangeTrackingList<string>(),
-                systemExcludedNamespaces,
+                systemExcludedNamespaces ?? new ChangeTrackingList<string>(),
                 podSecurityStandardsLevel,
                 additionalBinaryDataProperties);
         }

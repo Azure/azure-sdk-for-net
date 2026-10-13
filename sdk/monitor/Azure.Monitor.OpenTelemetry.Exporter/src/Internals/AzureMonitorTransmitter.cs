@@ -442,13 +442,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         }
 
         /// <remarks>
-        /// A group that cannot be sent is written to its endpoint's own storage partition, so one
-        /// region's backlog and back-off never affect another's.
+        /// A group that cannot be sent is persisted to its route's own storage partition. Every group
+        /// is sent with this transmitter's authentication.
         /// </remarks>
         private async ValueTask<ExportResult> SendGroupAsync(EndpointRouteBatch.Group group, long exportSequence, TelemetryItemOrigin origin, bool async, CancellationToken cancellationToken)
         {
             var itemCount = group.TelemetryItems.Count;
-            var storage = _multiEndpointStorage?.TryGet(group.IngestionEndpoint);
+            var storage = _multiEndpointStorage?.TryGet(group.IngestionEndpoint, group.IsAad);
 
             if (storage != null && (IsPersistOnly || storage.TransmissionStateManager.State != TransmissionState.Closed))
             {
@@ -538,7 +538,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         }
 
         private static void ReportDelivery(long exportSequence, EndpointRouteBatch.Group group, int itemCount, string outcome, int accepted = -1, int statusCode = 0)
-            => AzureMonitorExporterEventSource.Log.RoutedGroupOutcome(exportSequence, itemCount, group.IngestionEndpoint, outcome, accepted, statusCode);
+            => AzureMonitorExporterEventSource.Log.RoutedGroupOutcome(exportSequence, itemCount, group.Description, outcome, accepted, statusCode);
 
         /// <summary>
         /// Only the accepted count is asserted. A 206 settles each item separately, and which of the
@@ -573,7 +573,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             catch (Exception ex)
             {
                 // Reached on back-off and on a send exception, not only at shutdown.
-                AzureMonitorExporterEventSource.Log.RoutedTelemetryPersistenceThrew(group.IngestionEndpoint, ex);
+                AzureMonitorExporterEventSource.Log.RoutedTelemetryPersistenceThrew(group.Description, ex);
 
                 return ExportResult.Failure;
             }

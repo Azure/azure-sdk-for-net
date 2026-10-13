@@ -90,15 +90,29 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(SnapshotCreatedOn))
+            if (options.Format != "W" && (_snapshotCreatedOnIsDefined || Optional.IsDefined(SnapshotCreatedOn)))
             {
-                writer.WritePropertyName("snapshotCreationDate"u8);
-                writer.WriteStringValue(SnapshotCreatedOn.Value, "O");
+                if (SnapshotCreatedOn != null)
+                {
+                    writer.WritePropertyName("snapshotCreationDate"u8);
+                    writer.WriteStringValue(SnapshotCreatedOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("snapshotCreationDate"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(CompletionOn))
+            if (options.Format != "W" && (_completionOnIsDefined || Optional.IsDefined(CompletionOn)))
             {
-                writer.WritePropertyName("completionDate"u8);
-                writer.WriteStringValue(CompletionOn.Value, "O");
+                if (CompletionOn != null)
+                {
+                    writer.WritePropertyName("completionDate"u8);
+                    writer.WriteStringValue(CompletionOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("completionDate"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -191,7 +205,9 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             string backupId = default;
             DateTimeOffset? createdOn = default;
+            bool snapshotCreatedOnIsDefined = false;
             DateTimeOffset? snapshotCreatedOn = default;
+            bool completionOnIsDefined = false;
             DateTimeOffset? completionOn = default;
             string provisioningState = default;
             long? size = default;
@@ -222,6 +238,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("snapshotCreationDate"u8))
                 {
+                    snapshotCreatedOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         snapshotCreatedOn = null;
@@ -232,6 +249,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("completionDate"u8))
                 {
+                    completionOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         completionOn = null;
@@ -330,7 +348,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 snapshotName,
                 backupPolicyArmResourceId,
                 isLargeVolume,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _snapshotCreatedOnIsDefined = snapshotCreatedOnIsDefined,
+                _completionOnIsDefined = completionOnIsDefined
+            };
         }
     }
 }

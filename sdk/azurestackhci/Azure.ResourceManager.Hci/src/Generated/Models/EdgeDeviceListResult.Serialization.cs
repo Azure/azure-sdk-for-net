@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EdgeDeviceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new EdgeDeviceListResult(value ?? new ChangeTrackingList<HciEdgeDeviceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

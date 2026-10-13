@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ContainerServiceSshConfiguration(publicKeys, additionalBinaryDataProperties);
+            return new ContainerServiceSshConfiguration(publicKeys ?? new ChangeTrackingList<ContainerServiceSshPublicKey>(), additionalBinaryDataProperties);
         }
     }
 }

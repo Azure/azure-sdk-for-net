@@ -84,10 +84,17 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartedBy))
+            if (options.Format != "W" && (_startedByIsDefined || Optional.IsDefined(StartedBy)))
             {
-                writer.WritePropertyName("startedBy"u8);
-                writer.WriteStringValue(StartedBy);
+                if (StartedBy != null)
+                {
+                    writer.WritePropertyName("startedBy"u8);
+                    writer.WriteStringValue(StartedBy);
+                }
+                else
+                {
+                    writer.WriteNull("startedBy"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -99,20 +106,41 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartsOn))
+            if (options.Format != "W" && (_startsOnIsDefined || Optional.IsDefined(StartsOn)))
             {
-                writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartsOn.Value, "O");
+                if (StartsOn != null)
+                {
+                    writer.WritePropertyName("startTime"u8);
+                    writer.WriteStringValue(StartsOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("startTime"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(EndsOn))
+            if (options.Format != "W" && (_endsOnIsDefined || Optional.IsDefined(EndsOn)))
             {
-                writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndsOn.Value, "O");
+                if (EndsOn != null)
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteStringValue(EndsOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("endTime"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
+            if (options.Format != "W" && (_lastModifiedOnIsDefined || Optional.IsDefined(LastModifiedOn)))
             {
-                writer.WritePropertyName("lastModifiedTime"u8);
-                writer.WriteStringValue(LastModifiedOn.Value, "O");
+                if (LastModifiedOn != null)
+                {
+                    writer.WritePropertyName("lastModifiedTime"u8);
+                    writer.WriteStringValue(LastModifiedOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("lastModifiedTime"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -173,11 +201,15 @@ namespace Azure.ResourceManager.Automation.Models
             }
             RunbookAssociationProperty runbook = default;
             Guid? jobId = default;
+            bool startedByIsDefined = false;
             string startedBy = default;
             DateTimeOffset? createdOn = default;
             AutomationJobStatus? status = default;
+            bool startsOnIsDefined = false;
             DateTimeOffset? startsOn = default;
+            bool endsOnIsDefined = false;
             DateTimeOffset? endsOn = default;
+            bool lastModifiedOnIsDefined = false;
             DateTimeOffset? lastModifiedOn = default;
             string provisioningState = default;
             JobRuntimeEnvironment jobRuntimeEnvironment = default;
@@ -205,6 +237,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("startedBy"u8))
                 {
+                    startedByIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         startedBy = null;
@@ -233,6 +266,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
+                    startsOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         startsOn = null;
@@ -243,6 +277,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
+                    endsOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         endsOn = null;
@@ -253,6 +288,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("lastModifiedTime"u8))
                 {
+                    lastModifiedOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         lastModifiedOn = null;
@@ -297,7 +333,13 @@ namespace Azure.ResourceManager.Automation.Models
                 provisioningState,
                 jobRuntimeEnvironment,
                 runOn,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _startedByIsDefined = startedByIsDefined,
+                _startsOnIsDefined = startsOnIsDefined,
+                _endsOnIsDefined = endsOnIsDefined,
+                _lastModifiedOnIsDefined = lastModifiedOnIsDefined
+            };
         }
     }
 }

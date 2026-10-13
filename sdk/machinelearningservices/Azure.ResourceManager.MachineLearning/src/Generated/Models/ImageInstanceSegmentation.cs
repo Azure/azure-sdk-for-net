@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class ImageInstanceSegmentation : AutoMLVertical
     {
+        private ImageModelSettingsObjectDetection _modelSettings;
+        internal bool _modelSettingsIsDefined;
+        private ImageSweepSettings _sweepSettings;
+        internal bool _sweepSettingsIsDefined;
+        private MachineLearningTableJobInput _validationData;
+        internal bool _validationDataIsDefined;
+        private double? _validationDataSize;
+        internal bool _validationDataSizeIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="ImageInstanceSegmentation"/>. </summary>
         /// <param name="trainingData"> [Required] Training data input. </param>
         /// <param name="limitSettings"> [Required] Limit settings for the AutoML job. </param>
@@ -52,18 +61,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="primaryMetric"> Primary metrics for InstanceSegmentation tasks. </param>
         internal ImageInstanceSegmentation(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ImageModelSettingsObjectDetection modelSettings, IList<ImageModelDistributionSettingsObjectDetection> searchSpace, ImageLimitSettings limitSettings, ImageSweepSettings sweepSettings, MachineLearningTableJobInput validationData, double? validationDataSize, InstanceSegmentationPrimaryMetric? primaryMetric) : base(logVerbosity, targetColumnName, taskType, trainingData, additionalBinaryDataProperties)
         {
-            ModelSettings = modelSettings;
+            _modelSettings = modelSettings;
             SearchSpace = searchSpace;
             LimitSettings = limitSettings;
-            SweepSettings = sweepSettings;
-            ValidationData = validationData;
-            ValidationDataSize = validationDataSize;
+            _sweepSettings = sweepSettings;
+            _validationData = validationData;
+            _validationDataSize = validationDataSize;
             PrimaryMetric = primaryMetric;
         }
 
         /// <summary> Settings used for training the model. </summary>
         [WirePath("modelSettings")]
-        public ImageModelSettingsObjectDetection ModelSettings { get; set; }
+        public ImageModelSettingsObjectDetection ModelSettings
+        {
+            get
+            {
+                return _modelSettings;
+            }
+            set
+            {
+                _modelSettings = value;
+                _modelSettingsIsDefined = true;
+            }
+        }
 
         /// <summary> Search space for sampling different combinations of models and their hyperparameters. </summary>
         [WirePath("searchSpace")]
@@ -75,11 +95,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Model sweeping and hyperparameter sweeping related settings. </summary>
         [WirePath("sweepSettings")]
-        public ImageSweepSettings SweepSettings { get; set; }
+        public ImageSweepSettings SweepSettings
+        {
+            get
+            {
+                return _sweepSettings;
+            }
+            set
+            {
+                _sweepSettings = value;
+                _sweepSettingsIsDefined = true;
+            }
+        }
 
         /// <summary> Validation data inputs. </summary>
         [WirePath("validationData")]
-        public MachineLearningTableJobInput ValidationData { get; set; }
+        public MachineLearningTableJobInput ValidationData
+        {
+            get
+            {
+                return _validationData;
+            }
+            set
+            {
+                _validationData = value;
+                _validationDataIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// The fraction of training dataset that needs to be set aside for validation purpose.
@@ -87,7 +129,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Applied when validation dataset is not provided.
         /// </summary>
         [WirePath("validationDataSize")]
-        public double? ValidationDataSize { get; set; }
+        public double? ValidationDataSize
+        {
+            get
+            {
+                return _validationDataSize;
+            }
+            set
+            {
+                _validationDataSize = value;
+                _validationDataSizeIsDefined = true;
+            }
+        }
 
         /// <summary> Primary metrics for InstanceSegmentation tasks. </summary>
         [WirePath("primaryMetric")]

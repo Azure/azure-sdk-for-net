@@ -74,60 +74,123 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 throw new FormatException($"The model {nameof(FluxConfigurationsKustomizationPatch)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Path))
+            if (_pathIsDefined || Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path"u8);
-                writer.WriteStringValue(Path);
+                if (Path != null)
+                {
+                    writer.WritePropertyName("path"u8);
+                    writer.WriteStringValue(Path);
+                }
+                else
+                {
+                    writer.WriteNull("path"u8);
+                }
             }
             if (Optional.IsCollectionDefined(DependsOn))
             {
-                writer.WritePropertyName("dependsOn"u8);
-                writer.WriteStartArray();
-                foreach (string item in DependsOn)
+                if (DependsOn != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("dependsOn"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in DependsOn)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("dependsOn"u8);
+                }
             }
-            if (Optional.IsDefined(TimeoutInSeconds))
+            if (_timeoutInSecondsIsDefined || Optional.IsDefined(TimeoutInSeconds))
             {
-                writer.WritePropertyName("timeoutInSeconds"u8);
-                writer.WriteNumberValue(TimeoutInSeconds.Value);
+                if (TimeoutInSeconds != null)
+                {
+                    writer.WritePropertyName("timeoutInSeconds"u8);
+                    writer.WriteNumberValue(TimeoutInSeconds.Value);
+                }
+                else
+                {
+                    writer.WriteNull("timeoutInSeconds"u8);
+                }
             }
-            if (Optional.IsDefined(SyncIntervalInSeconds))
+            if (_syncIntervalInSecondsIsDefined || Optional.IsDefined(SyncIntervalInSeconds))
             {
-                writer.WritePropertyName("syncIntervalInSeconds"u8);
-                writer.WriteNumberValue(SyncIntervalInSeconds.Value);
+                if (SyncIntervalInSeconds != null)
+                {
+                    writer.WritePropertyName("syncIntervalInSeconds"u8);
+                    writer.WriteNumberValue(SyncIntervalInSeconds.Value);
+                }
+                else
+                {
+                    writer.WriteNull("syncIntervalInSeconds"u8);
+                }
             }
-            if (Optional.IsDefined(RetryIntervalInSeconds))
+            if (_retryIntervalInSecondsIsDefined || Optional.IsDefined(RetryIntervalInSeconds))
             {
-                writer.WritePropertyName("retryIntervalInSeconds"u8);
-                writer.WriteNumberValue(RetryIntervalInSeconds.Value);
+                if (RetryIntervalInSeconds != null)
+                {
+                    writer.WritePropertyName("retryIntervalInSeconds"u8);
+                    writer.WriteNumberValue(RetryIntervalInSeconds.Value);
+                }
+                else
+                {
+                    writer.WriteNull("retryIntervalInSeconds"u8);
+                }
             }
-            if (Optional.IsDefined(IsPrune))
+            if (_isPruneIsDefined || Optional.IsDefined(IsPrune))
             {
-                writer.WritePropertyName("prune"u8);
-                writer.WriteBooleanValue(IsPrune.Value);
+                if (IsPrune != null)
+                {
+                    writer.WritePropertyName("prune"u8);
+                    writer.WriteBooleanValue(IsPrune.Value);
+                }
+                else
+                {
+                    writer.WriteNull("prune"u8);
+                }
             }
-            if (Optional.IsDefined(IsForce))
+            if (_isForceIsDefined || Optional.IsDefined(IsForce))
             {
-                writer.WritePropertyName("force"u8);
-                writer.WriteBooleanValue(IsForce.Value);
+                if (IsForce != null)
+                {
+                    writer.WritePropertyName("force"u8);
+                    writer.WriteBooleanValue(IsForce.Value);
+                }
+                else
+                {
+                    writer.WriteNull("force"u8);
+                }
             }
-            if (Optional.IsDefined(IsWait))
+            if (_isWaitIsDefined || Optional.IsDefined(IsWait))
             {
-                writer.WritePropertyName("wait"u8);
-                writer.WriteBooleanValue(IsWait.Value);
+                if (IsWait != null)
+                {
+                    writer.WritePropertyName("wait"u8);
+                    writer.WriteBooleanValue(IsWait.Value);
+                }
+                else
+                {
+                    writer.WriteNull("wait"u8);
+                }
             }
-            if (Optional.IsDefined(PostBuild))
+            if (_postBuildIsDefined || Optional.IsDefined(PostBuild))
             {
-                writer.WritePropertyName("postBuild"u8);
-                writer.WriteObjectValue(PostBuild, options);
+                if (PostBuild != null)
+                {
+                    writer.WritePropertyName("postBuild"u8);
+                    writer.WriteObjectValue(PostBuild, options);
+                }
+                else
+                {
+                    writer.WriteNull("postBuild"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -171,20 +234,29 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 return null;
             }
+            bool pathIsDefined = false;
             string path = default;
-            IList<string> dependsOn = default;
+            IList<string> dependsOn = new ChangeTrackingList<string>();
+            bool timeoutInSecondsIsDefined = false;
             long? timeoutInSeconds = default;
+            bool syncIntervalInSecondsIsDefined = false;
             long? syncIntervalInSeconds = default;
+            bool retryIntervalInSecondsIsDefined = false;
             long? retryIntervalInSeconds = default;
+            bool isPruneIsDefined = false;
             bool? isPrune = default;
+            bool isForceIsDefined = false;
             bool? isForce = default;
+            bool isWaitIsDefined = false;
             bool? isWait = default;
+            bool postBuildIsDefined = false;
             FluxPostBuildPatch postBuild = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("path"u8))
                 {
+                    pathIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         path = null;
@@ -197,6 +269,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        dependsOn = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -216,6 +289,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("timeoutInSeconds"u8))
                 {
+                    timeoutInSecondsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         timeoutInSeconds = null;
@@ -226,6 +300,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("syncIntervalInSeconds"u8))
                 {
+                    syncIntervalInSecondsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         syncIntervalInSeconds = null;
@@ -236,6 +311,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("retryIntervalInSeconds"u8))
                 {
+                    retryIntervalInSecondsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         retryIntervalInSeconds = null;
@@ -246,6 +322,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("prune"u8))
                 {
+                    isPruneIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         isPrune = null;
@@ -256,6 +333,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("force"u8))
                 {
+                    isForceIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         isForce = null;
@@ -266,6 +344,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("wait"u8))
                 {
+                    isWaitIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         isWait = null;
@@ -276,6 +355,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("postBuild"u8))
                 {
+                    postBuildIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         postBuild = null;
@@ -291,7 +371,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             }
             return new FluxConfigurationsKustomizationPatch(
                 path,
-                dependsOn ?? new ChangeTrackingList<string>(),
+                dependsOn,
                 timeoutInSeconds,
                 syncIntervalInSeconds,
                 retryIntervalInSeconds,
@@ -299,7 +379,17 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 isForce,
                 isWait,
                 postBuild,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _pathIsDefined = pathIsDefined,
+                _timeoutInSecondsIsDefined = timeoutInSecondsIsDefined,
+                _syncIntervalInSecondsIsDefined = syncIntervalInSecondsIsDefined,
+                _retryIntervalInSecondsIsDefined = retryIntervalInSecondsIsDefined,
+                _isPruneIsDefined = isPruneIsDefined,
+                _isForceIsDefined = isForceIsDefined,
+                _isWaitIsDefined = isWaitIsDefined,
+                _postBuildIsDefined = postBuildIsDefined
+            };
         }
     }
 }
