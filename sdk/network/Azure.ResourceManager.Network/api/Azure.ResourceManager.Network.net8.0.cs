@@ -16119,7 +16119,7 @@ namespace Azure.ResourceManager.Network.Models
         public DdosSettings() { }
         public Azure.Core.ResourceIdentifier DdosCustomPolicyId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier DdosProtectionPlanId { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
+        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, use ProtectionMode instead", false)]
         public bool? ProtectedIP { get { throw null; } set { } }
         [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
         public Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage? ProtectionCoverage { get { throw null; } set { } }
@@ -17295,6 +17295,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal ExpressRouteFailoverConnectionResourceDetails() { }
         public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, use LastUpdatedOn instead", false)]
         public string LastUpdatedTime { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Uri NrpResourceUri { get { throw null; } }
@@ -17384,10 +17385,12 @@ namespace Azure.ResourceManager.Network.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ExpressRouteFailoverCircuitResourceDetails> Circuits { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ExpressRouteFailoverConnectionResourceDetails> Connections { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, use EndOn instead", false)]
         public string EndTime { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Issues { get { throw null; } }
         public string PeeringLocation { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, use StartOn instead", false)]
         public string StartTime { get { throw null; } }
         public Azure.ResourceManager.Network.Models.FailoverTestStatus? Status { get { throw null; } }
         public System.Guid? TestGuid { get { throw null; } }
@@ -21287,6 +21290,7 @@ namespace Azure.ResourceManager.Network.Models
         internal NetworkManagerDeploymentStatus() { }
         public System.DateTimeOffset? CommitOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ConfigurationIds { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, use DeploymentStatus instead", false)]
         public Azure.ResourceManager.Network.Models.NetworkManagerDeploymentState? DeploymentState { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkManagerDeploymentState? DeploymentStatus { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkConfigurationDeploymentType? DeploymentType { get { throw null; } }
@@ -23730,7 +23734,6 @@ namespace Azure.ResourceManager.Network.Models
     {
         public RoutingConfiguration() { }
         public new Azure.ResourceManager.Network.Models.PropagatedRouteTable PropagatedRouteTables { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.StaticRoute> StaticRoutes { get { throw null; } }
         Azure.ResourceManager.Network.Models.RoutingConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.RoutingConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.RoutingConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -24965,6 +24968,7 @@ namespace Azure.ResourceManager.Network.Models
         public TroubleshootingContent(Azure.Core.ResourceIdentifier targetResourceId, Azure.Core.ResourceIdentifier storageId, System.Uri storagePath) { }
         public Azure.Core.ResourceIdentifier StorageId { get { throw null; } }
         public string StoragePath { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, use StoragePath instead", false)]
         public System.Uri StorageUri { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } }
         protected virtual Azure.ResourceManager.Network.Models.TroubleshootingContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -25979,6 +25983,7 @@ namespace Azure.ResourceManager.Network.Models
         internal VirtualWanSecurityProvider() { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Network.Models.VirtualWanSecurityProviderType? ProviderType { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, use ProviderType instead", false)]
         public Azure.ResourceManager.Network.Models.VirtualWanSecurityProviderType? Type { get { throw null; } }
         public System.Uri Uri { get { throw null; } }
         protected virtual Azure.ResourceManager.Network.Models.VirtualWanSecurityProvider JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

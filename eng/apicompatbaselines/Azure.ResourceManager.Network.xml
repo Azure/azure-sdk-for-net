@@ -13,4 +13,16 @@
     <DiagnosticId>CP0014</DiagnosticId>
     <Target>P:Azure.ResourceManager.Network.Models.ApplicationGatewaySslProfile.VerifyClientCertIssuerDN:[T:System.ObsoleteAttribute]</Target>
   </Suppression>
+  <!-- The still-supported static routes retain their historical flattened facade.
+       Hide that facade, without deprecating the native nested routing field. -->
+  <Suppression>
+    <DiagnosticId>CP0014</DiagnosticId>
+    <Target>P:Azure.ResourceManager.Network.Models.RoutingConfiguration.StaticRoutes:[T:System.ObsoleteAttribute]</Target>
+  </Suppression>
+  <!-- Correct ProtectedIP's obsolete guidance to its connected ProtectionMode replacement.
+       The released TagToIPAddresses recommendation refers to an unrelated model. -->
+  <Suppression>
+    <DiagnosticId>CP0015</DiagnosticId>
+    <Target>P:Azure.ResourceManager.Network.Models.DdosSettings.ProtectedIP:[T:System.ObsoleteAttribute]</Target>
+  </Suppression>
 </Suppressions>

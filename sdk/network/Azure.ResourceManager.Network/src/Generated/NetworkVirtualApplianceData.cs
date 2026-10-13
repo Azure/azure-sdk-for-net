@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -280,6 +281,16 @@ namespace Azure.ResourceManager.Network
                     Properties = new NetworkVirtualAppliancePropertiesFormat();
                 }
                 return Properties.AddressFamily;
+            }
+        }
+
+        /// <summary> A Internal Load Balancer's HA port frontend IP address. Can be used to set routes &amp; UDR to load balance traffic between NVA instances. </summary>
+        [WirePath("properties.privateIpAddress")]
+        public IPAddress PrivateIPAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAddress;
             }
         }
 

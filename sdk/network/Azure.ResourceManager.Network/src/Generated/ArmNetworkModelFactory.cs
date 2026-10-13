@@ -9071,14 +9071,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="peeringLocation"> Peering location of the test. </param>
         /// <param name="circuits"> All circuits in the peering location. </param>
         /// <param name="status"> The current status of the test. </param>
-        /// <param name="startTime"> Time when the test was started. </param>
-        /// <param name="endTime"> Time when the test was completed. </param>
+        /// <param name="startOn"> Time when the test was started. </param>
+        /// <param name="endOn"> Time when the test was completed. </param>
         /// <param name="connections"> All connections to the circuits in the peering location. </param>
         /// <param name="testGuid"> The unique GUID associated with the test. </param>
         /// <param name="testType"> The type of failover test. </param>
         /// <param name="issues"> A list of all issues with the test. </param>
         /// <returns> A new <see cref="Models.ExpressRouteFailoverTestDetails"/> instance for mocking. </returns>
-        public static ExpressRouteFailoverTestDetails ExpressRouteFailoverTestDetails(string peeringLocation = default, IEnumerable<ExpressRouteFailoverCircuitResourceDetails> circuits = default, FailoverTestStatus? status = default, string startTime = default, string endTime = default, IEnumerable<ExpressRouteFailoverConnectionResourceDetails> connections = default, Guid? testGuid = default, FailoverTestType? testType = default, IEnumerable<string> issues = default)
+        public static ExpressRouteFailoverTestDetails ExpressRouteFailoverTestDetails(string peeringLocation = default, IEnumerable<ExpressRouteFailoverCircuitResourceDetails> circuits = default, FailoverTestStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<ExpressRouteFailoverConnectionResourceDetails> connections = default, Guid? testGuid = default, FailoverTestType? testType = default, IEnumerable<string> issues = default)
         {
             circuits ??= new ChangeTrackingList<ExpressRouteFailoverCircuitResourceDetails>();
             connections ??= new ChangeTrackingList<ExpressRouteFailoverConnectionResourceDetails>();
@@ -9088,8 +9088,8 @@ namespace Azure.ResourceManager.Network.Models
                 peeringLocation,
                 (circuits ?? new ChangeTrackingList<ExpressRouteFailoverCircuitResourceDetails>()).ToList(),
                 status,
-                startTime,
-                endTime,
+                startOn,
+                endOn,
                 (connections ?? new ChangeTrackingList<ExpressRouteFailoverConnectionResourceDetails>()).ToList(),
                 testGuid,
                 testType,
@@ -9111,11 +9111,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="nrpResourceUri"> NRP Resource URI of the connection. </param>
         /// <param name="name"> Connection Name. </param>
         /// <param name="status"> The current status of the connection. </param>
-        /// <param name="lastUpdatedTime"> Time when the connection was last updated. </param>
+        /// <param name="lastUpdatedOn"> Time when the connection was last updated. </param>
         /// <returns> A new <see cref="Models.ExpressRouteFailoverConnectionResourceDetails"/> instance for mocking. </returns>
-        public static ExpressRouteFailoverConnectionResourceDetails ExpressRouteFailoverConnectionResourceDetails(Uri nrpResourceUri = default, string name = default, FailoverConnectionStatus? status = default, string lastUpdatedTime = default)
+        public static ExpressRouteFailoverConnectionResourceDetails ExpressRouteFailoverConnectionResourceDetails(Uri nrpResourceUri = default, string name = default, FailoverConnectionStatus? status = default, DateTimeOffset? lastUpdatedOn = default)
         {
-            return new ExpressRouteFailoverConnectionResourceDetails(nrpResourceUri, name, status, lastUpdatedTime, default);
+            return new ExpressRouteFailoverConnectionResourceDetails(nrpResourceUri, name, status, lastUpdatedOn, default);
         }
 
         /// <summary> ExpressRoute failover single test details. </summary>
@@ -9512,13 +9512,14 @@ namespace Azure.ResourceManager.Network.Models
             return new VirtualWanSecurityProviders((supportedProviders ?? new ChangeTrackingList<VirtualWanSecurityProvider>()).ToList(), default);
         }
 
+        /// <summary> Collection of SecurityProviders. </summary>
         /// <param name="name"> Name of the security provider. </param>
         /// <param name="uri"> Url of the security provider. </param>
         /// <param name="providerType"> Name of the security provider. </param>
         /// <returns> A new <see cref="Models.VirtualWanSecurityProvider"/> instance for mocking. </returns>
         public static VirtualWanSecurityProvider VirtualWanSecurityProvider(string name = default, Uri uri = default, VirtualWanSecurityProviderType? providerType = default)
         {
-            return new VirtualWanSecurityProvider(name, uri, default, default);
+            return new VirtualWanSecurityProvider(name, uri, providerType, default);
         }
 
         /// <summary> Virtual Wan Vpn profile parameters Vpn profile generation. </summary>
@@ -17293,6 +17294,45 @@ namespace Azure.ResourceManager.Network.Models
                 eTag);
         }
 
+        /// <summary> ExpressRoute failover test details. </summary>
+        /// <param name="peeringLocation"> Peering location of the test. </param>
+        /// <param name="circuits"> All circuits in the peering location. </param>
+        /// <param name="status"> The current status of the test. </param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="connections"> All connections to the circuits in the peering location. </param>
+        /// <param name="testGuid"> The unique GUID associated with the test. </param>
+        /// <param name="testType"> The type of failover test. </param>
+        /// <param name="issues"> A list of all issues with the test. </param>
+        /// <returns> A new <see cref="Models.ExpressRouteFailoverTestDetails"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ExpressRouteFailoverTestDetails ExpressRouteFailoverTestDetails(string peeringLocation = default, IEnumerable<ExpressRouteFailoverCircuitResourceDetails> circuits = default, FailoverTestStatus? status = default, string startTime = default, string endTime = default, IEnumerable<ExpressRouteFailoverConnectionResourceDetails> connections = default, Guid? testGuid = default, FailoverTestType? testType = default, IEnumerable<string> issues = default)
+        {
+            return new ExpressRouteFailoverTestDetails(
+                peeringLocation,
+                (circuits ?? new ChangeTrackingList<ExpressRouteFailoverCircuitResourceDetails>()).ToList(),
+                status,
+                default,
+                default,
+                (connections ?? new ChangeTrackingList<ExpressRouteFailoverConnectionResourceDetails>()).ToList(),
+                testGuid,
+                testType,
+                (issues ?? new ChangeTrackingList<string>()).ToList(),
+                default);
+        }
+
+        /// <summary> The ExpressRouteFailoverConnectionResourceDetails. </summary>
+        /// <param name="nrpResourceUri"> NRP Resource URI of the connection. </param>
+        /// <param name="name"> Connection Name. </param>
+        /// <param name="status"> The current status of the connection. </param>
+        /// <param name="lastUpdatedTime"></param>
+        /// <returns> A new <see cref="Models.ExpressRouteFailoverConnectionResourceDetails"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ExpressRouteFailoverConnectionResourceDetails ExpressRouteFailoverConnectionResourceDetails(Uri nrpResourceUri = default, string name = default, FailoverConnectionStatus? status = default, string lastUpdatedTime = default)
+        {
+            return new ExpressRouteFailoverConnectionResourceDetails(nrpResourceUri, name, status, default, default);
+        }
+
         /// <summary> A common class for general resource information. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -24702,45 +24742,6 @@ namespace Azure.ResourceManager.Network.Models
                     default,
                     default),
                 etag);
-        }
-
-        /// <summary> ExpressRoute failover test details. </summary>
-        /// <param name="peeringLocation"> Peering location of the test. </param>
-        /// <param name="circuits"> All circuits in the peering location. </param>
-        /// <param name="status"> The current status of the test. </param>
-        /// <param name="startOn"></param>
-        /// <param name="endOn"></param>
-        /// <param name="connections"> All connections to the circuits in the peering location. </param>
-        /// <param name="testGuid"> The unique GUID associated with the test. </param>
-        /// <param name="testType"> The type of failover test. </param>
-        /// <param name="issues"> A list of all issues with the test. </param>
-        /// <returns> A new <see cref="Models.ExpressRouteFailoverTestDetails"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ExpressRouteFailoverTestDetails ExpressRouteFailoverTestDetails(string peeringLocation = default, IEnumerable<ExpressRouteFailoverCircuitResourceDetails> circuits = default, FailoverTestStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<ExpressRouteFailoverConnectionResourceDetails> connections = default, Guid? testGuid = default, FailoverTestType? testType = default, IEnumerable<string> issues = default)
-        {
-            return new ExpressRouteFailoverTestDetails(
-                peeringLocation,
-                (circuits ?? new ChangeTrackingList<ExpressRouteFailoverCircuitResourceDetails>()).ToList(),
-                status,
-                default,
-                default,
-                (connections ?? new ChangeTrackingList<ExpressRouteFailoverConnectionResourceDetails>()).ToList(),
-                testGuid,
-                testType,
-                (issues ?? new ChangeTrackingList<string>()).ToList(),
-                default);
-        }
-
-        /// <summary> The ExpressRouteFailoverConnectionResourceDetails. </summary>
-        /// <param name="nrpResourceUri"> NRP Resource URI of the connection. </param>
-        /// <param name="name"> Connection Name. </param>
-        /// <param name="status"> The current status of the connection. </param>
-        /// <param name="lastUpdatedOn"></param>
-        /// <returns> A new <see cref="Models.ExpressRouteFailoverConnectionResourceDetails"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ExpressRouteFailoverConnectionResourceDetails ExpressRouteFailoverConnectionResourceDetails(Uri nrpResourceUri = default, string name = default, FailoverConnectionStatus? status = default, DateTimeOffset? lastUpdatedOn = default)
-        {
-            return new ExpressRouteFailoverConnectionResourceDetails(nrpResourceUri, name, status, default, default);
         }
 
         /// <summary> A common class for general resource information. </summary>

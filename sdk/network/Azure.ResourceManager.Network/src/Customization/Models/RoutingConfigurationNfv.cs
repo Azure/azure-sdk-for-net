@@ -13,6 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     [CodeGenType("RoutingConfiguration")]
     public partial class RoutingConfigurationNfv
     {
+        // Let the legacy derived wrapper preserve native fields and unknown JSON when reading.
+        internal RoutingConfigurationNfv(RoutingConfigurationNfv original)
+            : this(original.AssociatedRouteTable, original.PropagatedRouteTables, original.VnetRoutes,
+                  original.InboundRouteMap, original.OutboundRouteMap, original._additionalBinaryDataProperties)
+        {
+        }
+
         /// <summary> Compatibility member. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is obsolete and no longer functions. Please use AssociatedRouteTableId instead.", false)]

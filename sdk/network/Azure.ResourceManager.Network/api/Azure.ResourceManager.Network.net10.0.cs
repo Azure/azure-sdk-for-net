@@ -10518,6 +10518,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ActiveConnectivityConfiguration : Azure.ResourceManager.Network.Models.EffectiveConnectivityConfiguration, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.ActiveConnectivityConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ActiveConnectivityConfiguration>
     {
         internal ActiveConnectivityConfiguration() { }
+        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `CommittedOn` instead", false)]
         public System.DateTimeOffset? CommitOn { get { throw null; } }
         public System.DateTimeOffset? CommittedOn { get { throw null; } }
         public Azure.Core.AzureLocation? Region { get { throw null; } }
@@ -12283,7 +12284,6 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicy SslPolicy { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> TrustedClientCertificates { get { throw null; } }
-        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
         public bool? VerifyClientCertIssuerDN { get { throw null; } set { } }
         protected override Azure.ResourceManager.Network.Models.NetworkSubResource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -12588,7 +12588,6 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.AddressPrefixItem AddressPrefixItem(string addressPrefix = null, Azure.ResourceManager.Network.Models.AddressPrefixType? addressPrefixType = default(Azure.ResourceManager.Network.Models.AddressPrefixType?)) { throw null; }
         public static Azure.ResourceManager.Network.AddressPrefixSetData AddressPrefixSetData(Azure.Core.ResourceIdentifier id = null, string name = null, string type = null, string eTag = null, Azure.ResourceManager.Network.Models.AddressPrefixSetPropertiesFormat properties = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.AddressPrefixSetPropertiesFormat AddressPrefixSetPropertiesFormat(System.Collections.Generic.IEnumerable<string> addressPrefixes = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.Network.AdminRuleGroupData AdminRuleGroupData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string description, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkManagerSecurityGroupItem> appliesToGroups, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, System.Guid? resourceGuid) { throw null; }
         public static Azure.ResourceManager.Network.AdminRuleGroupData AdminRuleGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkManagerSecurityGroupItem> appliesToGroups = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Guid? resourceGuid = default(System.Guid?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.Network.AdminRuleGroupData AdminRuleGroupData(string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkManagerSecurityGroupItem> appliesToGroups = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Guid? resourceGuid = default(System.Guid?), string name = null, Azure.ResourceManager.Models.SystemData systemData = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.AdvertisedPublicPrefixProperties AdvertisedPublicPrefixProperties(string prefix = null, string validationId = null, string signature = null, Azure.ResourceManager.Network.Models.AdvertisedPublicPrefixPropertiesValidationState? validationState = default(Azure.ResourceManager.Network.Models.AdvertisedPublicPrefixPropertiesValidationState?)) { throw null; }
@@ -12900,7 +12899,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.CustomIPPrefixData CustomIPPrefixData(Azure.Core.ResourceIdentifier id = null, string name = null, string type = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, string asn = null, string cidr = null, string signedMessage = null, string authorizationMessage = null, Azure.Core.ResourceIdentifier customIpPrefixParent = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkSubResource> childCustomIpPrefixes = null, Azure.ResourceManager.Network.Models.CommissionedState? commissionedState = default(Azure.ResourceManager.Network.Models.CommissionedState?), bool? expressRouteAdvertise = default(bool?), Azure.ResourceManager.Network.Models.CidrAdvertisingGeoCode? geo = default(Azure.ResourceManager.Network.Models.CidrAdvertisingGeoCode?), bool? noInternetAdvertise = default(bool?), Azure.ResourceManager.Network.Models.CustomIPPrefixType? prefixType = default(Azure.ResourceManager.Network.Models.CustomIPPrefixType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkSubResource> publicIpPrefixes = null, System.Guid? resourceGuid = default(System.Guid?), string failedReason = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, Azure.ETag? eTag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<string> zones = null) { throw null; }
         public static Azure.ResourceManager.Network.DdosCustomPolicyData DdosCustomPolicyData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ETag? etag, System.Guid? resourceGuid, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.Network.DdosCustomPolicyData DdosCustomPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag? etag = default(Azure.ETag?), System.Guid? resourceGuid = default(System.Guid?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.DdosDetectionRule> detectionRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> frontEndIPConfiguration = null) { throw null; }
-        public static Azure.ResourceManager.Network.DdosCustomPolicyData DdosCustomPolicyData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, System.Guid? resourceGuid, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.DdosDetectionRule> detectionRules, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkSubResource> frontEndIPConfiguration, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> publicIPAddresses, Azure.ETag? eTag) { throw null; }
+        public static Azure.ResourceManager.Network.DdosCustomPolicyData DdosCustomPolicyData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, System.Guid? resourceGuid, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.DdosDetectionRule> detectionRules, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> frontEndIPConfiguration, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> publicIPAddresses, Azure.ETag? eTag) { throw null; }
         public static Azure.ResourceManager.Network.DdosCustomPolicyData DdosCustomPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, string type = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, System.Guid? resourceGuid = default(System.Guid?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.DdosDetectionRule> detectionRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkSubResource> frontEndIpConfiguration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> publicIPAddresses = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.DdosDetectionRule DdosDetectionRule(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), Azure.ResourceManager.Network.Models.DdosDetectionMode? detectionMode = default(Azure.ResourceManager.Network.Models.DdosDetectionMode?), Azure.ResourceManager.Network.Models.TrafficDetectionRule trafficDetectionRule = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.DdosDetectionRule DdosDetectionRule(Azure.Core.ResourceIdentifier id = null, string name = null, string type = null, Azure.ETag? eTag = default(Azure.ETag?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), Azure.ResourceManager.Network.Models.DdosDetectionMode? detectionMode = default(Azure.ResourceManager.Network.Models.DdosDetectionMode?), Azure.ResourceManager.Network.Models.TrafficDetectionRule trafficDetectionRule = null) { throw null; }
@@ -14241,6 +14240,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         public AzureFirewallPacketCaptureFlags() { }
         public Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureFlagsType? FlagsType { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `FlagsType` instead", false)]
         public Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureFlagsType? Type { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureFlags JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -15721,6 +15721,7 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.ResourceManager.Network.Models.NetworkHttpConfiguration HttpProtocolConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkIPVersion? PreferredIPVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkWatcherProtocol? Protocol { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `HttpProtocolConfiguration` instead", false)]
         public Azure.ResourceManager.Network.Models.NetworkHttpConfiguration ProtocolHTTPConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ConnectivitySource Source { get { throw null; } }
         protected virtual Azure.ResourceManager.Network.Models.ConnectivityContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -15778,6 +15779,7 @@ namespace Azure.ResourceManager.Network.Models
         public System.Collections.Generic.IReadOnlyList<string> PreviousHopIds { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.HopLink> PreviousLinks { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `ConnectivityHopType` instead", false)]
         public string Type { get { throw null; } }
         protected virtual Azure.ResourceManager.Network.Models.ConnectivityHopInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -15829,10 +15831,12 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal ConnectivityIssueInfo() { }
         public Azure.ResourceManager.Network.Models.ConnectivityIssueType? ConnectivityIssueType { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `Contexts` instead", false)]
         public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IDictionary<string, string>> Context { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IDictionary<string, string>> Contexts { get { throw null; } }
         public Azure.ResourceManager.Network.Models.IssueOrigin? Origin { get { throw null; } }
         public Azure.ResourceManager.Network.Models.IssueSeverity? Severity { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `ConnectivityIssueType` instead", false)]
         public Azure.ResourceManager.Network.Models.ConnectivityIssueType? Type { get { throw null; } }
         protected virtual Azure.ResourceManager.Network.Models.ConnectivityIssueInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -16113,10 +16117,9 @@ namespace Azure.ResourceManager.Network.Models
     public partial class DdosSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.DdosSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.DdosSettings>
     {
         public DdosSettings() { }
-        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
         public Azure.Core.ResourceIdentifier DdosCustomPolicyId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier DdosProtectionPlanId { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
+        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, use ProtectionMode instead", false)]
         public bool? ProtectedIP { get { throw null; } set { } }
         [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
         public Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage? ProtectionCoverage { get { throw null; } set { } }
@@ -17292,6 +17295,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal ExpressRouteFailoverConnectionResourceDetails() { }
         public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, use LastUpdatedOn instead", false)]
         public string LastUpdatedTime { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Uri NrpResourceUri { get { throw null; } }
@@ -17381,10 +17385,12 @@ namespace Azure.ResourceManager.Network.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ExpressRouteFailoverCircuitResourceDetails> Circuits { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ExpressRouteFailoverConnectionResourceDetails> Connections { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, use EndOn instead", false)]
         public string EndTime { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Issues { get { throw null; } }
         public string PeeringLocation { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, use StartOn instead", false)]
         public string StartTime { get { throw null; } }
         public Azure.ResourceManager.Network.Models.FailoverTestStatus? Status { get { throw null; } }
         public System.Guid? TestGuid { get { throw null; } }
@@ -21284,6 +21290,7 @@ namespace Azure.ResourceManager.Network.Models
         internal NetworkManagerDeploymentStatus() { }
         public System.DateTimeOffset? CommitOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ConfigurationIds { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, use DeploymentStatus instead", false)]
         public Azure.ResourceManager.Network.Models.NetworkManagerDeploymentState? DeploymentState { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkManagerDeploymentState? DeploymentStatus { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkConfigurationDeploymentType? DeploymentType { get { throw null; } }
@@ -23727,7 +23734,6 @@ namespace Azure.ResourceManager.Network.Models
     {
         public RoutingConfiguration() { }
         public new Azure.ResourceManager.Network.Models.PropagatedRouteTable PropagatedRouteTables { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.StaticRoute> StaticRoutes { get { throw null; } }
         Azure.ResourceManager.Network.Models.RoutingConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.RoutingConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.RoutingConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -24962,6 +24968,7 @@ namespace Azure.ResourceManager.Network.Models
         public TroubleshootingContent(Azure.Core.ResourceIdentifier targetResourceId, Azure.Core.ResourceIdentifier storageId, System.Uri storagePath) { }
         public Azure.Core.ResourceIdentifier StorageId { get { throw null; } }
         public string StoragePath { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, use StoragePath instead", false)]
         public System.Uri StorageUri { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } }
         protected virtual Azure.ResourceManager.Network.Models.TroubleshootingContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -25976,6 +25983,7 @@ namespace Azure.ResourceManager.Network.Models
         internal VirtualWanSecurityProvider() { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Network.Models.VirtualWanSecurityProviderType? ProviderType { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, use ProviderType instead", false)]
         public Azure.ResourceManager.Network.Models.VirtualWanSecurityProviderType? Type { get { throw null; } }
         public System.Uri Uri { get { throw null; } }
         protected virtual Azure.ResourceManager.Network.Models.VirtualWanSecurityProvider JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
