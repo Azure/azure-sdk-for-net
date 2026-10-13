@@ -11,7 +11,7 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> An MCP tool available to a voice agent. </summary>
+    /// <summary> An MCP tool available to a voice agent. Server endpoints use `server_url`; connector and tunnel identifiers are not supported. </summary>
     [Experimental("AAIP001")]
     public partial class VoiceAgentMcpTool : VoiceAgentTool
     {
@@ -37,6 +37,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="type"> The tool kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>
+        /// <param name="serverUrl">
+        /// The URL for the MCP server. One of `server_url`, `connector_id`, or
+        ///   `tunnel_id` must be provided.
+        /// </param>
         /// <param name="authorization">
         /// An OAuth access token that can be used with a remote MCP server, either
         ///   with a custom MCP server URL or a service connector. Your application
@@ -50,11 +54,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="deferLoading"> Whether this MCP tool is deferred and discovered via tool search. </param>
         /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        /// <param name="serverUrl"> The URL for the MCP server. </param>
         /// <param name="responseScheduling"> When the MCP invocation creates a follow-up response. Defaults to `when_idle`. </param>
-        internal VoiceAgentMcpTool(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, IList<CallableToolAllowedCaller> allowedCallers, BinaryData requireApproval, bool? deferLoading, string projectConnectionId, IDictionary<string, ToolConfig> toolConfigs, Uri serverUrl, VoiceAgentToolResponseScheduling? responseScheduling) : base(@type, additionalBinaryDataProperties)
+        internal VoiceAgentMcpTool(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUrl, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, IList<CallableToolAllowedCaller> allowedCallers, BinaryData requireApproval, bool? deferLoading, string projectConnectionId, IDictionary<string, ToolConfig> toolConfigs, VoiceAgentToolResponseScheduling? responseScheduling) : base(@type, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
+            ServerUrl = serverUrl;
             Authorization = authorization;
             ServerDescription = serverDescription;
             Headers = headers;
@@ -64,12 +68,17 @@ namespace Azure.AI.Projects.Agents
             DeferLoading = deferLoading;
             ProjectConnectionId = projectConnectionId;
             ToolConfigs = toolConfigs;
-            ServerUrl = serverUrl;
             ResponseScheduling = responseScheduling;
         }
 
         /// <summary> A label for this MCP server, used to identify it in tool calls. </summary>
         public string ServerLabel { get; set; }
+
+        /// <summary>
+        /// The URL for the MCP server. One of `server_url`, `connector_id`, or
+        ///   `tunnel_id` must be provided.
+        /// </summary>
+        public Uri ServerUrl { get; set; }
 
         /// <summary>
         /// An OAuth access token that can be used with a remote MCP server, either
@@ -202,9 +211,6 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
         public IDictionary<string, ToolConfig> ToolConfigs { get; }
-
-        /// <summary> The URL for the MCP server. </summary>
-        public Uri ServerUrl { get; set; }
 
         /// <summary> When the MCP invocation creates a follow-up response. Defaults to `when_idle`. </summary>
         public VoiceAgentToolResponseScheduling? ResponseScheduling { get; set; }

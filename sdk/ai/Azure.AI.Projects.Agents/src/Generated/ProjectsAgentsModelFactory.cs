@@ -1038,8 +1038,12 @@ namespace Azure.AI.Projects.Agents
             return new RealtimeFunctionToolParameters(additionalBinaryDataProperties: null);
         }
 
-        /// <summary> An MCP tool available to a voice agent. </summary>
+        /// <summary> An MCP tool available to a voice agent. Server endpoints use `server_url`; connector and tunnel identifiers are not supported. </summary>
         /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>
+        /// <param name="serverUrl">
+        /// The URL for the MCP server. One of `server_url`, `connector_id`, or
+        ///   `tunnel_id` must be provided.
+        /// </param>
         /// <param name="authorization">
         /// An OAuth access token that can be used with a remote MCP server, either
         ///   with a custom MCP server URL or a service connector. Your application
@@ -1053,11 +1057,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="deferLoading"> Whether this MCP tool is deferred and discovered via tool search. </param>
         /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        /// <param name="serverUrl"> The URL for the MCP server. </param>
         /// <param name="responseScheduling"> When the MCP invocation creates a follow-up response. Defaults to `when_idle`. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentMcpTool"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentMcpTool VoiceAgentMcpTool(string serverLabel = default, string authorization = default, string serverDescription = default, IDictionary<string, string> headers = default, BinaryData allowedTools = default, IEnumerable<CallableToolAllowedCaller> allowedCallers = default, BinaryData requireApproval = default, bool? deferLoading = default, string projectConnectionId = default, IDictionary<string, ToolConfig> toolConfigs = default, Uri serverUrl = default, VoiceAgentToolResponseScheduling? responseScheduling = default)
+        public static VoiceAgentMcpTool VoiceAgentMcpTool(string serverLabel = default, Uri serverUrl = default, string authorization = default, string serverDescription = default, IDictionary<string, string> headers = default, BinaryData allowedTools = default, IEnumerable<CallableToolAllowedCaller> allowedCallers = default, BinaryData requireApproval = default, bool? deferLoading = default, string projectConnectionId = default, IDictionary<string, ToolConfig> toolConfigs = default, VoiceAgentToolResponseScheduling? responseScheduling = default)
         {
             headers ??= new ChangeTrackingDictionary<string, string>();
             allowedCallers ??= new ChangeTrackingList<CallableToolAllowedCaller>();
@@ -1067,6 +1070,7 @@ namespace Azure.AI.Projects.Agents
                 "mcp",
                 additionalBinaryDataProperties: null,
                 serverLabel,
+                serverUrl,
                 authorization,
                 serverDescription,
                 headers,
@@ -1076,7 +1080,6 @@ namespace Azure.AI.Projects.Agents
                 deferLoading,
                 projectConnectionId,
                 toolConfigs,
-                serverUrl,
                 responseScheduling);
         }
 
@@ -1572,68 +1575,6 @@ namespace Azure.AI.Projects.Agents
             return new SessionLogEvent(@event, data, additionalBinaryDataProperties: null);
         }
 
-        /// <summary>
-        /// A persisted voice response representing one model inference turn within a conversation. In list results the
-        /// `output` projection may be omitted; retrieve the
-        /// full response (`GET .../responses/{response_id}`) or the paged response-items route
-        /// (`GET .../responses/{response_id}/items`) for its output items. `created_at`/`completed_at` are Foundry
-        /// durable ordering extensions.
-        /// </summary>
-        /// <param name="object"> The object type, must be `realtime.response`. </param>
-        /// <param name="status">
-        /// The final status of the response (`completed`, `cancelled`, `failed`, or
-        ///   `incomplete`, `in_progress`).
-        /// </param>
-        /// <param name="statusDetails"> Additional details about the status. </param>
-        /// <param name="usage">
-        /// Usage statistics for the Response, this will correspond to billing. A
-        ///   Realtime API session will maintain a conversation context and append new
-        ///   Items to the Conversation, thus output from previous turns (text and
-        ///   audio tokens) will become the input for later turns.
-        /// </param>
-        /// <param name="outputModalities">
-        /// The set of modalities the model used to respond, currently the only possible values are
-        ///   `[\"audio\"]`, `[\"text\"]`. Audio output always include a text transcript. Setting the
-        ///   output to mode `text` will disable audio output from the model.
-        /// </param>
-        /// <param name="maxOutputTokens">
-        /// Maximum number of output tokens for a single assistant response,
-        ///   inclusive of tool calls, that was used in this response.
-        /// </param>
-        /// <param name="id"> The unique id of the response. </param>
-        /// <param name="output"> The output items produced by the response. May be omitted in list results; retrieve the full response (GET .../responses/{response_id}) or use the paged response-items route (GET .../responses/{response_id}/items) for its output items. Each item's `response_id` also links it back to this response in the conversation-level items list. </param>
-        /// <param name="conversationId"> The id of the conversation this response belongs to. </param>
-        /// <param name="audio"> The audio configuration used for the response, including the voice and audio format used for output. </param>
-        /// <param name="metadata"> A set of key-value pairs attached to the response. </param>
-        /// <param name="temperature"> The sampling temperature used for the response. </param>
-        /// <param name="createdOn"> The Unix timestamp (in seconds) for when the response was created. </param>
-        /// <param name="completedOn"> The Unix timestamp (in seconds) for when the response completed. </param>
-        /// <returns> A new <see cref="Agents.VoiceResult"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static VoiceResult VoiceResult(VoiceResponseBaseObject? @object = default, RealtimeResponseStatus? status = default, RealtimeResponseStatusDetails statusDetails = default, RealtimeResponseUsage usage = default, IEnumerable<RealtimeOutputModality> outputModalities = default, BinaryData maxOutputTokens = default, string id = default, IEnumerable<RealtimeItem> output = default, string conversationId = default, VoiceResponseAudio audio = default, IDictionary<string, string> metadata = default, float? temperature = default, DateTimeOffset? createdOn = default, DateTimeOffset? completedOn = default)
-        {
-            outputModalities ??= new ChangeTrackingList<RealtimeOutputModality>();
-            output ??= new ChangeTrackingList<RealtimeItem>();
-            metadata ??= new ChangeTrackingDictionary<string, string>();
-
-            return new VoiceResult(
-                @object,
-                status,
-                statusDetails,
-                usage,
-                outputModalities.ToList(),
-                maxOutputTokens,
-                additionalBinaryDataProperties: null,
-                id,
-                output.ToList(),
-                conversationId,
-                audio,
-                metadata,
-                temperature,
-                createdOn,
-                completedOn);
-        }
-
         /// <summary> Audio configuration for a response. Follows the OpenAI Realtime GA `audio` object shape. </summary>
         /// <param name="output"> The audio output configuration used for the response. </param>
         /// <returns> A new <see cref="Agents.VoiceResponseAudio"/> instance for mocking. </returns>
@@ -1653,44 +1594,6 @@ namespace Azure.AI.Projects.Agents
         public static VoiceResponseAudioOutput VoiceResponseAudioOutput(string voice = default, VoiceType? voiceType = default, string voiceLocale = default, RealtimeAudioFormat format = default)
         {
             return new VoiceResponseAudioOutput(voice, voiceType, voiceLocale, format, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Properties shared by persisted voice responses. </summary>
-        /// <param name="object"> The object type, must be `realtime.response`. </param>
-        /// <param name="status">
-        /// The final status of the response (`completed`, `cancelled`, `failed`, or
-        ///   `incomplete`, `in_progress`).
-        /// </param>
-        /// <param name="statusDetails"> Additional details about the status. </param>
-        /// <param name="usage">
-        /// Usage statistics for the Response, this will correspond to billing. A
-        ///   Realtime API session will maintain a conversation context and append new
-        ///   Items to the Conversation, thus output from previous turns (text and
-        ///   audio tokens) will become the input for later turns.
-        /// </param>
-        /// <param name="outputModalities">
-        /// The set of modalities the model used to respond, currently the only possible values are
-        ///   `[\"audio\"]`, `[\"text\"]`. Audio output always include a text transcript. Setting the
-        ///   output to mode `text` will disable audio output from the model.
-        /// </param>
-        /// <param name="maxOutputTokens">
-        /// Maximum number of output tokens for a single assistant response,
-        ///   inclusive of tool calls, that was used in this response.
-        /// </param>
-        /// <returns> A new <see cref="Agents.VoiceResponseBase"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static VoiceResponseBase VoiceResponseBase(VoiceResponseBaseObject? @object = default, RealtimeResponseStatus? status = default, RealtimeResponseStatusDetails statusDetails = default, RealtimeResponseUsage usage = default, IEnumerable<RealtimeOutputModality> outputModalities = default, BinaryData maxOutputTokens = default)
-        {
-            outputModalities ??= new ChangeTrackingList<RealtimeOutputModality>();
-
-            return new VoiceResponseBase(
-                @object,
-                status,
-                statusDetails,
-                usage,
-                outputModalities.ToList(),
-                maxOutputTokens,
-                additionalBinaryDataProperties: null);
         }
 
         /// <summary>

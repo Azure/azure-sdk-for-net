@@ -4,6 +4,7 @@
 
 using System.ClientModel.Primitives;
 using Azure.AI.Extensions.OpenAI;
+using OpenAI;
 using OpenAI.Chat;
 using OpenAI.Realtime;
 using OpenAI.Responses;
@@ -135,6 +136,7 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(InlineSkillParam))]
     [ModelReaderWriterBuildable(typeof(InlineSkillSourceParam))]
     [ModelReaderWriterBuildable(typeof(InternalCreateAgentRequest))]
+    [ModelReaderWriterBuildable(typeof(InternalMetadataContainer))]
     [ModelReaderWriterBuildable(typeof(InternalUpdateAgentRequest))]
     [ModelReaderWriterBuildable(typeof(InvocationsProtocolConfiguration))]
     [ModelReaderWriterBuildable(typeof(InvocationsWsProtocolConfiguration))]
@@ -444,9 +446,6 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceResponseAudioOutput is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(VoiceResponseAudioOutput))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceResponseAudioOutput is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceResponseBase is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(VoiceResponseBase))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceResponseBase is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceResult is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(VoiceResult))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceResult is experimental and may change in future versions.
