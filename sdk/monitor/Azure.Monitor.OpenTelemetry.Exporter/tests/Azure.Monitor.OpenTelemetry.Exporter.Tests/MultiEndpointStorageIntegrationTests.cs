@@ -250,7 +250,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void TheAadRouteTokenUsesTheConfiguredAudience()
         {
-            AppContext.SetData(MultiEndpointConfig.AadAudienceName, " https://monitor.azure.cn/ ");
+            AppDomain.CurrentDomain.SetData(MultiEndpointConfig.AadAudienceName, " https://monitor.azure.cn/ ");
 
             try
             {
@@ -264,14 +264,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             }
             finally
             {
-                AppContext.SetData(MultiEndpointConfig.AadAudienceName, null);
+                AppDomain.CurrentDomain.SetData(MultiEndpointConfig.AadAudienceName, null);
             }
         }
 
         [Fact]
         public void ANonStringAudienceIsIgnoredInFavourOfThePublicCloud()
         {
-            AppContext.SetData(MultiEndpointConfig.AadAudienceName, 42);
+            AppDomain.CurrentDomain.SetData(MultiEndpointConfig.AadAudienceName, 42);
 
             try
             {
@@ -285,7 +285,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             }
             finally
             {
-                AppContext.SetData(MultiEndpointConfig.AadAudienceName, null);
+                AppDomain.CurrentDomain.SetData(MultiEndpointConfig.AadAudienceName, null);
             }
         }
 
