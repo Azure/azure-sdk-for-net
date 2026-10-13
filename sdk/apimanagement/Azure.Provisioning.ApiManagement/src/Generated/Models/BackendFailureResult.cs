@@ -11,12 +11,12 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> The response to be returned when a backend fails to respond. </summary>
-    internal partial class BackendFailureResponse : ProvisionableConstruct
+    internal partial class BackendFailureResult : ProvisionableConstruct
     {
         private BicepValue<int> _statusCode;
 
-        /// <summary> Creates a new BackendFailureResponse. </summary>
-        public BackendFailureResponse()
+        /// <summary> Creates a new BackendFailureResult. </summary>
+        public BackendFailureResult()
         {
         }
 
@@ -35,7 +35,7 @@ namespace Azure.Provisioning.ApiManagement
             }
         }
 
-        /// <summary> Define all the provisionable properties for BackendFailureResponse. </summary>
+        /// <summary> Define all the provisionable properties for BackendFailureResult. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -43,7 +43,7 @@ namespace Azure.Provisioning.ApiManagement
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for BackendFailureResponse that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for BackendFailureResult that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }
