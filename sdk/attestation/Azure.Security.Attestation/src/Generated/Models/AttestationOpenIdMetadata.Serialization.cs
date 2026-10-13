@@ -119,7 +119,7 @@ namespace Azure.Security.Attestation
             if (Optional.IsDefined(Issuer))
             {
                 writer.WritePropertyName("issuer"u8);
-                writer.WriteStringValue(Issuer.AbsoluteUri);
+                writer.WriteStringValue(Issuer);
             }
             if (Optional.IsDefined(JsonWebKeySetUri))
             {
@@ -186,7 +186,7 @@ namespace Azure.Security.Attestation
             IReadOnlyList<string> responseTypesSupported = default;
             IReadOnlyList<string> tokenSigningAlgorithmsSupported = default;
             string revocationEndpoint = default;
-            Uri issuer = default;
+            string issuer = default;
             Uri jsonWebKeySetUri = default;
             IReadOnlyList<string> supportedClaims = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -241,11 +241,7 @@ namespace Azure.Security.Attestation
                 }
                 if (prop.NameEquals("issuer"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    issuer = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    issuer = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("jwks_uri"u8))

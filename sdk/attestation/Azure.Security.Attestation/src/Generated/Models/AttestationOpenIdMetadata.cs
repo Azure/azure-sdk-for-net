@@ -32,7 +32,7 @@ namespace Azure.Security.Attestation
         /// <param name="jsonWebKeySetUri"> The URI to retrieve the signing keys. </param>
         /// <param name="supportedClaims"> Set of claims supported by the OpenID metadata endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AttestationOpenIdMetadata(IReadOnlyList<string> responseTypesSupported, IReadOnlyList<string> tokenSigningAlgorithmsSupported, string revocationEndpoint, Uri issuer, Uri jsonWebKeySetUri, IReadOnlyList<string> supportedClaims, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AttestationOpenIdMetadata(IReadOnlyList<string> responseTypesSupported, IReadOnlyList<string> tokenSigningAlgorithmsSupported, string revocationEndpoint, string issuer, Uri jsonWebKeySetUri, IReadOnlyList<string> supportedClaims, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResponseTypesSupported = responseTypesSupported;
             TokenSigningAlgorithmsSupported = tokenSigningAlgorithmsSupported;

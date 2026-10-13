@@ -21,7 +21,7 @@ namespace Azure.Security.Attestation
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("TpmAttestationRequest", typeof(BinaryData))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("StoredAttestationPolicy", typeof(string))]
     // Replaced below by an overload without the internal revocation endpoint.
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("AttestationOpenIdMetadata", typeof(IEnumerable<string>), typeof(IEnumerable<string>), typeof(string), typeof(Uri), typeof(Uri), typeof(IEnumerable<string>))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("AttestationOpenIdMetadata", typeof(IEnumerable<string>), typeof(IEnumerable<string>), typeof(string), typeof(string), typeof(Uri), typeof(IEnumerable<string>))]
     // Replaced below by the same overload with an accurate description of the token.
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SealedAttestationResult", typeof(string))]
     public static partial class AttestationModelFactory
@@ -224,7 +224,7 @@ namespace Azure.Security.Attestation
         /// <param name="tokenSigningAlgorithmsSupported">The algorithms the attestation provider signs tokens with.</param>
         /// <param name="supportedClaims">The names of the claims the attestation provider can issue.</param>
         /// <returns>A new <see cref="Attestation.AttestationOpenIdMetadata"/> instance for mocking.</returns>
-        public static AttestationOpenIdMetadata AttestationOpenIdMetadata(Uri issuer = default, Uri jsonWebKeySetUri = default, IEnumerable<string> responseTypesSupported = default, IEnumerable<string> tokenSigningAlgorithmsSupported = default, IEnumerable<string> supportedClaims = default)
+        public static AttestationOpenIdMetadata AttestationOpenIdMetadata(string issuer = default, Uri jsonWebKeySetUri = default, IEnumerable<string> responseTypesSupported = default, IEnumerable<string> tokenSigningAlgorithmsSupported = default, IEnumerable<string> supportedClaims = default)
             => new AttestationOpenIdMetadata(
                 new List<string>(responseTypesSupported ?? Array.Empty<string>()),
                 new List<string>(tokenSigningAlgorithmsSupported ?? Array.Empty<string>()),

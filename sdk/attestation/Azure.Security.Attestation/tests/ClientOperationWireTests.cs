@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -373,7 +374,8 @@ namespace Azure.Security.Attestation.Tests
             CapturedRequest request = captured.Single();
             Assert.AreEqual(RequestMethod.Get, request.Method);
             Assert.AreEqual($"{Endpoint}/.well-known/openid-configuration?{ApiVersion}", request.Uri);
-            Assert.AreEqual(new Uri(Endpoint), metadata.Issuer);
+            Assert.AreEqual(Endpoint, metadata.Issuer);
+            StringAssert.Contains($"\"issuer\":\"{Endpoint}\"", ModelReaderWriter.Write(metadata).ToString());
             Assert.AreEqual(new Uri($"{Endpoint}/certs"), metadata.JsonWebKeySetUri);
             CollectionAssert.AreEqual(new[] { "token", "none" }, metadata.ResponseTypesSupported);
             CollectionAssert.AreEqual(new[] { "RS256" }, metadata.TokenSigningAlgorithmsSupported);
@@ -383,12 +385,28 @@ namespace Azure.Security.Attestation.Tests
         [Test]
         public void OpenIdMetadataFactory()
         {
-            AttestationOpenIdMetadata metadata = AttestationModelFactory.AttestationOpenIdMetadata(issuer: new Uri(Endpoint), supportedClaims: new[] { "nonce" });
+            AttestationOpenIdMetadata metadata = AttestationModelFactory.AttestationOpenIdMetadata(issuer: Endpoint, supportedClaims: new[] { "nonce" });
 
-            Assert.AreEqual(new Uri(Endpoint), metadata.Issuer);
+            Assert.AreEqual(Endpoint, metadata.Issuer);
             Assert.IsNull(metadata.JsonWebKeySetUri);
             CollectionAssert.IsEmpty(metadata.ResponseTypesSupported);
             CollectionAssert.AreEqual(new[] { "nonce" }, metadata.SupportedClaims);
+        }
+
+        // Draft-policy attestation returns unsigned tokens, so the issuer check runs without signing keys.
+        [Test]
+        public async System.Threading.Tasks.Task OpenIdMetadataIssuerMatchesHostOnlyTokenIssuer([Values] bool async)
+        {
+            var metadataClient = new AttestationClient(new Uri(Endpoint), new MockCredential(), Options(new List<CapturedRequest>(), $@"{{""issuer"":""{Endpoint}""}}"));
+            string issuer = (async ? await metadataClient.GetOpenIdMetadataAsync() : metadataClient.GetOpenIdMetadata()).Value.Issuer;
+            var tokenOptions = new AttestationTokenValidationOptions { ValidateIssuer = true, ExpectedIssuer = issuer };
+            var request = new AttestationRequest { Evidence = BinaryData.FromString("{}"), DraftPolicyForAttestation = Policy };
+
+            AttestationClient client = ValidatingClient($"{{\"iss\":\"{Endpoint}\"}}", tokenOptions);
+            Assert.AreEqual(Endpoint, (await Attest(client, "SevSnpVm", request, async)).Value.Issuer.OriginalString);
+
+            AttestationClient otherIssuerClient = ValidatingClient("{\"iss\":\"https://fabrikam.attest.azure.net\"}", tokenOptions);
+            Assert.CatchAsync(() => Attest(otherIssuerClient, "SevSnpVm", request, async));
         }
 
         [Test]

@@ -10,14 +10,16 @@ namespace Azure.Security.Attestation
     /// <summary>
     /// The <see href="https://openid.net/specs/openid-connect-discovery-1_0.html">OpenID Connect discovery document</see> of an attestation provider.
     /// </summary>
-    // The generated OpenIDConfigurationResult, renamed and typed (Uri, read-only lists) to match the Java library's AttestationOpenIdMetadata.
+    // Makes the generated OpenIDConfigurationResult public under a descriptive name.
     [CodeGenType("OpenIDConfigurationResult")]
     public partial class AttestationOpenIdMetadata
     {
         /// <summary>
         /// Gets the issuer of the tokens the attestation provider returns: the "issuer" metadata value.
+        /// It matches the "iss" claim of those tokens exactly, so it can be used as <see cref="AttestationTokenValidationOptions.ExpectedIssuer"/>.
         /// </summary>
-        public Uri Issuer { get; }
+        // A string, not a Uri: OpenID Connect requires an exact match with "iss", and Uri adds a trailing slash to host-only values.
+        public string Issuer { get; }
 
         /// <summary>
         /// Gets the URI of the keys that sign the tokens the attestation provider returns: the "jwks_uri" metadata value.
@@ -42,7 +44,7 @@ namespace Azure.Security.Attestation
         [CodeGenMember("ClaimsSupported")]
         public IReadOnlyList<string> SupportedClaims { get; }
 
-        // Not exposed, as in the Java library; kept so the property stays internal instead of being generated public.
+        // Not exposed: the service advertises this address but serves nothing there. Declared so it is generated internal.
         internal string RevocationEndpoint { get; }
     }
 }
