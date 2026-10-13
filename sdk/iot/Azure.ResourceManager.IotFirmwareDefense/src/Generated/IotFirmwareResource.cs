@@ -6,60 +6,50 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.IotFirmwareDefense.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense
 {
     /// <summary>
-    /// A Class representing an IotFirmware along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IotFirmwareResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetIotFirmwareResource method.
-    /// Otherwise you can get one from its parent resource <see cref="FirmwareAnalysisWorkspaceResource"/> using the GetIotFirmware method.
+    /// A class representing a IotFirmware along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="IotFirmwareResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="FirmwareAnalysisWorkspaceResource"/> using the GetIotFirmwares method.
     /// </summary>
     public partial class IotFirmwareResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="IotFirmwareResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="workspaceName"> The workspaceName. </param>
-        /// <param name="firmwareId"> The firmwareId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _iotFirmwareFirmwaresClientDiagnostics;
-        private readonly FirmwaresRestOperations _iotFirmwareFirmwaresRestClient;
+        private readonly ClientDiagnostics _firmwaresClientDiagnostics;
+        private readonly Firmwares _firmwaresRestClient;
         private readonly ClientDiagnostics _binaryHardeningClientDiagnostics;
-        private readonly BinaryHardeningRestOperations _binaryHardeningRestClient;
+        private readonly BinaryHardening _binaryHardeningRestClient;
         private readonly ClientDiagnostics _cryptoCertificatesClientDiagnostics;
-        private readonly CryptoCertificatesRestOperations _cryptoCertificatesRestClient;
+        private readonly CryptoCertificates _cryptoCertificatesRestClient;
         private readonly ClientDiagnostics _cryptoKeysClientDiagnostics;
-        private readonly CryptoKeysRestOperations _cryptoKeysRestClient;
+        private readonly CryptoKeys _cryptoKeysRestClient;
         private readonly ClientDiagnostics _cvesClientDiagnostics;
-        private readonly CvesRestOperations _cvesRestClient;
+        private readonly Cves _cvesRestClient;
         private readonly ClientDiagnostics _passwordHashesClientDiagnostics;
-        private readonly PasswordHashesRestOperations _passwordHashesRestClient;
+        private readonly PasswordHashes _passwordHashesRestClient;
         private readonly ClientDiagnostics _sbomComponentsClientDiagnostics;
-        private readonly SbomComponentsRestOperations _sbomComponentsRestClient;
+        private readonly SbomComponents _sbomComponentsRestClient;
+        private readonly ClientDiagnostics _unsafeFunctionCallsClientDiagnostics;
+        private readonly UnsafeFunctionCalls _unsafeFunctionCallsRestClient;
         private readonly IotFirmwareData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.IoTFirmwareDefense/workspaces/firmwares";
 
-        /// <summary> Initializes a new instance of the <see cref="IotFirmwareResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of IotFirmwareResource for mocking. </summary>
         protected IotFirmwareResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="IotFirmwareResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotFirmwareResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal IotFirmwareResource(ArmClient client, IotFirmwareData data) : this(client, data.Id)
@@ -68,148 +58,107 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="IotFirmwareResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotFirmwareResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal IotFirmwareResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _iotFirmwareFirmwaresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string iotFirmwareFirmwaresApiVersion);
-            _iotFirmwareFirmwaresRestClient = new FirmwaresRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, iotFirmwareFirmwaresApiVersion);
-            _binaryHardeningClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _binaryHardeningRestClient = new BinaryHardeningRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _cryptoCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _cryptoCertificatesRestClient = new CryptoCertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _cryptoKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _cryptoKeysRestClient = new CryptoKeysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _cvesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _cvesRestClient = new CvesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _passwordHashesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _passwordHashesRestClient = new PasswordHashesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _sbomComponentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _sbomComponentsRestClient = new SbomComponentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string iotFirmwareApiVersion);
+            _firmwaresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ResourceType.Namespace, Diagnostics);
+            _firmwaresRestClient = new Firmwares(_firmwaresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotFirmwareApiVersion ?? "2026-06-01-preview");
+            _binaryHardeningClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ResourceType.Namespace, Diagnostics);
+            _binaryHardeningRestClient = new BinaryHardening(_binaryHardeningClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotFirmwareApiVersion ?? "2026-06-01-preview");
+            _cryptoCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ResourceType.Namespace, Diagnostics);
+            _cryptoCertificatesRestClient = new CryptoCertificates(_cryptoCertificatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotFirmwareApiVersion ?? "2026-06-01-preview");
+            _cryptoKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ResourceType.Namespace, Diagnostics);
+            _cryptoKeysRestClient = new CryptoKeys(_cryptoKeysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotFirmwareApiVersion ?? "2026-06-01-preview");
+            _cvesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ResourceType.Namespace, Diagnostics);
+            _cvesRestClient = new Cves(_cvesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotFirmwareApiVersion ?? "2026-06-01-preview");
+            _passwordHashesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ResourceType.Namespace, Diagnostics);
+            _passwordHashesRestClient = new PasswordHashes(_passwordHashesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotFirmwareApiVersion ?? "2026-06-01-preview");
+            _sbomComponentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ResourceType.Namespace, Diagnostics);
+            _sbomComponentsRestClient = new SbomComponents(_sbomComponentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotFirmwareApiVersion ?? "2026-06-01-preview");
+            _unsafeFunctionCallsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ResourceType.Namespace, Diagnostics);
+            _unsafeFunctionCallsRestClient = new UnsafeFunctionCalls(_unsafeFunctionCallsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotFirmwareApiVersion ?? "2026-06-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual IotFirmwareData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="firmwareId"> The firmwareId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of FirmwareAnalysisSummaryResources in the IotFirmware. </summary>
-        /// <returns> An object representing collection of FirmwareAnalysisSummaryResources and their operations over a FirmwareAnalysisSummaryResource. </returns>
-        public virtual FirmwareAnalysisSummaryCollection GetFirmwareAnalysisSummaries()
-        {
-            return GetCachedClient(client => new FirmwareAnalysisSummaryCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get an analysis result summary of a firmware by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryType}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Summaries_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareAnalysisSummaryResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="summaryType"> The Firmware analysis summary name describing the type of summary. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<FirmwareAnalysisSummaryResource>> GetFirmwareAnalysisSummaryAsync(FirmwareAnalysisSummaryType summaryType, CancellationToken cancellationToken = default)
-        {
-            return await GetFirmwareAnalysisSummaries().GetAsync(summaryType, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get an analysis result summary of a firmware by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryType}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Summaries_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareAnalysisSummaryResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="summaryType"> The Firmware analysis summary name describing the type of summary. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<FirmwareAnalysisSummaryResource> GetFirmwareAnalysisSummary(FirmwareAnalysisSummaryType summaryType, CancellationToken cancellationToken = default)
-        {
-            return GetFirmwareAnalysisSummaries().Get(summaryType, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get firmware.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmwares_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Firmwares_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotFirmwareResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotFirmwareResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<IotFirmwareResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _iotFirmwareFirmwaresClientDiagnostics.CreateScope("IotFirmwareResource.Get");
+            using DiagnosticScope scope = _firmwaresClientDiagnostics.CreateScope("IotFirmwareResource.Get");
             scope.Start();
             try
             {
-                var response = await _iotFirmwareFirmwaresRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firmwaresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<IotFirmwareData> response = Response.FromValue(IotFirmwareData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new IotFirmwareResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -223,122 +172,42 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// Get firmware.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmwares_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Firmwares_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotFirmwareResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotFirmwareResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<IotFirmwareResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _iotFirmwareFirmwaresClientDiagnostics.CreateScope("IotFirmwareResource.Get");
+            using DiagnosticScope scope = _firmwaresClientDiagnostics.CreateScope("IotFirmwareResource.Get");
             scope.Start();
             try
             {
-                var response = _iotFirmwareFirmwaresRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firmwaresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<IotFirmwareData> response = Response.FromValue(IotFirmwareData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new IotFirmwareResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The operation to delete a firmware.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmwares_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotFirmwareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _iotFirmwareFirmwaresClientDiagnostics.CreateScope("IotFirmwareResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _iotFirmwareFirmwaresRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _iotFirmwareFirmwaresRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new IotFirmwareDefenseArmOperation(response, rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The operation to delete a firmware.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmwares_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotFirmwareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _iotFirmwareFirmwaresClientDiagnostics.CreateScope("IotFirmwareResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _iotFirmwareFirmwaresRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _iotFirmwareFirmwaresRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new IotFirmwareDefenseArmOperation(response, rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -351,20 +220,20 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// The operation to update firmware.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmwares_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Firmwares_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotFirmwareResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotFirmwareResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -375,11 +244,21 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _iotFirmwareFirmwaresClientDiagnostics.CreateScope("IotFirmwareResource.Update");
+            using DiagnosticScope scope = _firmwaresClientDiagnostics.CreateScope("IotFirmwareResource.Update");
             scope.Start();
             try
             {
-                var response = await _iotFirmwareFirmwaresRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firmwaresRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IotFirmwarePatch.ToRequestContent(patch), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<IotFirmwareData> response = Response.FromValue(IotFirmwareData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new IotFirmwareResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -393,20 +272,20 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// The operation to update firmware.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmwares_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Firmwares_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotFirmwareResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotFirmwareResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -417,12 +296,124 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _iotFirmwareFirmwaresClientDiagnostics.CreateScope("IotFirmwareResource.Update");
+            using DiagnosticScope scope = _firmwaresClientDiagnostics.CreateScope("IotFirmwareResource.Update");
             scope.Start();
             try
             {
-                var response = _iotFirmwareFirmwaresRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firmwaresRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IotFirmwarePatch.ToRequestContent(patch), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<IotFirmwareData> response = Response.FromValue(IotFirmwareData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new IotFirmwareResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The operation to delete a firmware.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Firmwares_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotFirmwareResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _firmwaresClientDiagnostics.CreateScope("IotFirmwareResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firmwaresRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                IotFirmwareDefenseArmOperation operation = new IotFirmwareDefenseArmOperation(response, rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The operation to delete a firmware.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Firmwares_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotFirmwareResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _firmwaresClientDiagnostics.CreateScope("IotFirmwareResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firmwaresRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                IotFirmwareDefenseArmOperation operation = new IotFirmwareDefenseArmOperation(response, rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -435,42 +426,59 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// Lists binary hardening analysis results of a firmware.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/binaryHardeningResults</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/binaryHardeningResults. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BinaryHardening_ListByFirmware</description>
+        /// <term> Operation Id. </term>
+        /// <description> BinaryHardening_ListByFirmware. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotFirmwareResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BinaryHardeningResult"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BinaryHardeningResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BinaryHardeningResult> GetBinaryHardeningResultsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _binaryHardeningRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _binaryHardeningRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryHardeningResult.DeserializeBinaryHardeningResult(e), _binaryHardeningClientDiagnostics, Pipeline, "IotFirmwareResource.GetBinaryHardeningResults", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new BinaryHardeningGetBinaryHardeningResultsAsyncCollectionResultOfT(
+                _binaryHardeningRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "IotFirmwareResource.GetBinaryHardeningResults");
         }
 
         /// <summary>
         /// Lists binary hardening analysis results of a firmware.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/binaryHardeningResults</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/binaryHardeningResults. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BinaryHardening_ListByFirmware</description>
+        /// <term> Operation Id. </term>
+        /// <description> BinaryHardening_ListByFirmware. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotFirmwareResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -478,51 +486,77 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <returns> A collection of <see cref="BinaryHardeningResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BinaryHardeningResult> GetBinaryHardeningResults(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _binaryHardeningRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _binaryHardeningRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryHardeningResult.DeserializeBinaryHardeningResult(e), _binaryHardeningClientDiagnostics, Pipeline, "IotFirmwareResource.GetBinaryHardeningResults", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new BinaryHardeningGetBinaryHardeningResultsCollectionResultOfT(
+                _binaryHardeningRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "IotFirmwareResource.GetBinaryHardeningResults");
         }
 
         /// <summary>
         /// Lists crypto certificate analysis results of a firmware.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/cryptoCertificates</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/cryptoCertificates. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CryptoCertificates_ListByFirmware</description>
+        /// <term> Operation Id. </term>
+        /// <description> CryptoCertificates_ListByFirmware. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotFirmwareResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CryptoCertificateResult"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CryptoCertificateResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CryptoCertificateResult> GetCryptoCertificatesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cryptoCertificatesRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cryptoCertificatesRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CryptoCertificateResult.DeserializeCryptoCertificateResult(e), _cryptoCertificatesClientDiagnostics, Pipeline, "IotFirmwareResource.GetCryptoCertificates", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new CryptoCertificatesGetCryptoCertificatesAsyncCollectionResultOfT(
+                _cryptoCertificatesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "IotFirmwareResource.GetCryptoCertificates");
         }
 
         /// <summary>
         /// Lists crypto certificate analysis results of a firmware.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/cryptoCertificates</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/cryptoCertificates. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CryptoCertificates_ListByFirmware</description>
+        /// <term> Operation Id. </term>
+        /// <description> CryptoCertificates_ListByFirmware. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotFirmwareResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -530,51 +564,77 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <returns> A collection of <see cref="CryptoCertificateResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CryptoCertificateResult> GetCryptoCertificates(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cryptoCertificatesRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cryptoCertificatesRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CryptoCertificateResult.DeserializeCryptoCertificateResult(e), _cryptoCertificatesClientDiagnostics, Pipeline, "IotFirmwareResource.GetCryptoCertificates", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new CryptoCertificatesGetCryptoCertificatesCollectionResultOfT(
+                _cryptoCertificatesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "IotFirmwareResource.GetCryptoCertificates");
         }
 
         /// <summary>
         /// Lists crypto key analysis results of a firmware.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/cryptoKeys</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/cryptoKeys. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CryptoKeys_ListByFirmware</description>
+        /// <term> Operation Id. </term>
+        /// <description> CryptoKeys_ListByFirmware. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotFirmwareResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CryptoKeyResult"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CryptoKeyResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CryptoKeyResult> GetCryptoKeysAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cryptoKeysRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cryptoKeysRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CryptoKeyResult.DeserializeCryptoKeyResult(e), _cryptoKeysClientDiagnostics, Pipeline, "IotFirmwareResource.GetCryptoKeys", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new CryptoKeysGetCryptoKeysAsyncCollectionResultOfT(
+                _cryptoKeysRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "IotFirmwareResource.GetCryptoKeys");
         }
 
         /// <summary>
         /// Lists crypto key analysis results of a firmware.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/cryptoKeys</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/cryptoKeys. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CryptoKeys_ListByFirmware</description>
+        /// <term> Operation Id. </term>
+        /// <description> CryptoKeys_ListByFirmware. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotFirmwareResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -582,51 +642,77 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <returns> A collection of <see cref="CryptoKeyResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CryptoKeyResult> GetCryptoKeys(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cryptoKeysRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cryptoKeysRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CryptoKeyResult.DeserializeCryptoKeyResult(e), _cryptoKeysClientDiagnostics, Pipeline, "IotFirmwareResource.GetCryptoKeys", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new CryptoKeysGetCryptoKeysCollectionResultOfT(
+                _cryptoKeysRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "IotFirmwareResource.GetCryptoKeys");
         }
 
         /// <summary>
         /// Lists CVE analysis results of a firmware.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/cves</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/cves. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Cves_ListByFirmware</description>
+        /// <term> Operation Id. </term>
+        /// <description> Cves_ListByFirmware. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotFirmwareResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CveResult"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CveResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CveResult> GetCvesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cvesRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cvesRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CveResult.DeserializeCveResult(e), _cvesClientDiagnostics, Pipeline, "IotFirmwareResource.GetCves", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new CvesGetCvesAsyncCollectionResultOfT(
+                _cvesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "IotFirmwareResource.GetCves");
         }
 
         /// <summary>
         /// Lists CVE analysis results of a firmware.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/cves</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/cves. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Cves_ListByFirmware</description>
+        /// <term> Operation Id. </term>
+        /// <description> Cves_ListByFirmware. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotFirmwareResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -634,51 +720,77 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <returns> A collection of <see cref="CveResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CveResult> GetCves(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cvesRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cvesRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CveResult.DeserializeCveResult(e), _cvesClientDiagnostics, Pipeline, "IotFirmwareResource.GetCves", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new CvesGetCvesCollectionResultOfT(
+                _cvesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "IotFirmwareResource.GetCves");
         }
 
         /// <summary>
         /// Lists password hash analysis results of a firmware.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/passwordHashes</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/passwordHashes. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PasswordHashes_ListByFirmware</description>
+        /// <term> Operation Id. </term>
+        /// <description> PasswordHashes_ListByFirmware. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotFirmwareResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PasswordHashResult"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PasswordHashResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PasswordHashResult> GetPasswordHashesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _passwordHashesRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _passwordHashesRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PasswordHashResult.DeserializePasswordHashResult(e), _passwordHashesClientDiagnostics, Pipeline, "IotFirmwareResource.GetPasswordHashes", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PasswordHashesGetPasswordHashesAsyncCollectionResultOfT(
+                _passwordHashesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "IotFirmwareResource.GetPasswordHashes");
         }
 
         /// <summary>
         /// Lists password hash analysis results of a firmware.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/passwordHashes</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/passwordHashes. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PasswordHashes_ListByFirmware</description>
+        /// <term> Operation Id. </term>
+        /// <description> PasswordHashes_ListByFirmware. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotFirmwareResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -686,51 +798,77 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <returns> A collection of <see cref="PasswordHashResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PasswordHashResult> GetPasswordHashes(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _passwordHashesRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _passwordHashesRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PasswordHashResult.DeserializePasswordHashResult(e), _passwordHashesClientDiagnostics, Pipeline, "IotFirmwareResource.GetPasswordHashes", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PasswordHashesGetPasswordHashesCollectionResultOfT(
+                _passwordHashesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "IotFirmwareResource.GetPasswordHashes");
         }
 
         /// <summary>
         /// Lists sbom analysis results of a firmware.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/sbomComponents</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/sbomComponents. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SbomComponents_ListByFirmware</description>
+        /// <term> Operation Id. </term>
+        /// <description> SbomComponents_ListByFirmware. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotFirmwareResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SbomComponentResult"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SbomComponentResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SbomComponentResult> GetSbomComponentsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sbomComponentsRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sbomComponentsRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SbomComponentResult.DeserializeSbomComponentResult(e), _sbomComponentsClientDiagnostics, Pipeline, "IotFirmwareResource.GetSbomComponents", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new SbomComponentsGetSbomComponentsAsyncCollectionResultOfT(
+                _sbomComponentsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "IotFirmwareResource.GetSbomComponents");
         }
 
         /// <summary>
         /// Lists sbom analysis results of a firmware.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/sbomComponents</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/sbomComponents. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SbomComponents_ListByFirmware</description>
+        /// <term> Operation Id. </term>
+        /// <description> SbomComponents_ListByFirmware. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotFirmwareResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -738,9 +876,121 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <returns> A collection of <see cref="SbomComponentResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SbomComponentResult> GetSbomComponents(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sbomComponentsRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sbomComponentsRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SbomComponentResult.DeserializeSbomComponentResult(e), _sbomComponentsClientDiagnostics, Pipeline, "IotFirmwareResource.GetSbomComponents", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new SbomComponentsGetSbomComponentsCollectionResultOfT(
+                _sbomComponentsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "IotFirmwareResource.GetSbomComponents");
+        }
+
+        /// <summary>
+        /// Lists unsafe function call analysis results of a firmware.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/unsafeFunctionCalls. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> UnsafeFunctionCalls_ListByFirmware. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotFirmwareResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="UnsafeFunctionCallsResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<UnsafeFunctionCallsResult> GetUnsafeFunctionCallsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new UnsafeFunctionCallsGetUnsafeFunctionCallsAsyncCollectionResultOfT(
+                _unsafeFunctionCallsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "IotFirmwareResource.GetUnsafeFunctionCalls");
+        }
+
+        /// <summary>
+        /// Lists unsafe function call analysis results of a firmware.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/unsafeFunctionCalls. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> UnsafeFunctionCalls_ListByFirmware. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotFirmwareResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="UnsafeFunctionCallsResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<UnsafeFunctionCallsResult> GetUnsafeFunctionCalls(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new UnsafeFunctionCallsGetUnsafeFunctionCallsCollectionResultOfT(
+                _unsafeFunctionCallsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "IotFirmwareResource.GetUnsafeFunctionCalls");
+        }
+
+        /// <summary> Gets a collection of FirmwareAnalysisSummaries in the <see cref="IotFirmwareResource"/>. </summary>
+        /// <returns> An object representing collection of FirmwareAnalysisSummaries and their operations over a FirmwareAnalysisSummaryResource. </returns>
+        public virtual FirmwareAnalysisSummaryCollection GetFirmwareAnalysisSummaries()
+        {
+            return GetCachedClient(client => new FirmwareAnalysisSummaryCollection(client, Id));
+        }
+
+        /// <summary> Get an analysis result summary of a firmware by name. </summary>
+        /// <param name="summaryType"> The Firmware analysis summary name describing the type of summary. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<FirmwareAnalysisSummaryResource>> GetFirmwareAnalysisSummaryAsync(FirmwareAnalysisSummaryType summaryType, CancellationToken cancellationToken = default)
+        {
+            return await GetFirmwareAnalysisSummaries().GetAsync(summaryType, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get an analysis result summary of a firmware by name. </summary>
+        /// <param name="summaryType"> The Firmware analysis summary name describing the type of summary. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<FirmwareAnalysisSummaryResource> GetFirmwareAnalysisSummary(FirmwareAnalysisSummaryType summaryType, CancellationToken cancellationToken = default)
+        {
+            return GetFirmwareAnalysisSummaries().Get(summaryType, cancellationToken);
         }
     }
 }
