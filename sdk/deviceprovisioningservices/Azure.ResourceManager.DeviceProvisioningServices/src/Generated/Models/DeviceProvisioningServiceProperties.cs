@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             IPFilterRules = new ChangeTrackingList<DeviceProvisioningServicesIPFilterRule>();
             PrivateEndpointConnections = new ChangeTrackingList<DeviceProvisioningServicesPrivateEndpointConnectionData>();
             IotHubs = new ChangeTrackingList<IotHubDefinitionDescription>();
+            DeviceRegistryNamespaces = new ChangeTrackingList<DeviceRegistryNamespaceDescription>();
             AuthorizationPolicies = new ChangeTrackingList<DeviceProvisioningServicesSharedAccessKey>();
         }
 
@@ -33,6 +34,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="privateEndpointConnections"> Private endpoint connections created on this IotHub. </param>
         /// <param name="provisioningState"> The ARM provisioning state of the provisioning service. </param>
         /// <param name="iotHubs"> List of IoT hubs associated with this provisioning service. </param>
+        /// <param name="deviceRegistryNamespaces"> The Device Registry namespaces linked to the provisioning service. </param>
         /// <param name="allocationPolicy"> Allocation policy to be used by this provisioning service. </param>
         /// <param name="serviceOperationsHostName"> Service endpoint for provisioning service. </param>
         /// <param name="deviceProvisioningHostName"> Device endpoint for this provisioning service. </param>
@@ -45,7 +47,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="portalOperationsHostName"> Portal endpoint to enable CORS for this provisioning service. </param>
         /// <param name="disableLocalAuth"> Disables all authentication methods other than Azure RBAC. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceProvisioningServiceProperties(DeviceProvisioningServicesState? state, DeviceProvisioningServicesPublicNetworkAccess? publicNetworkAccess, IList<DeviceProvisioningServicesIPFilterRule> ipFilterRules, IList<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, IList<IotHubDefinitionDescription> iotHubs, DeviceProvisioningServicesAllocationPolicy? allocationPolicy, string serviceOperationsHostName, string deviceProvisioningHostName, string idScope, IList<DeviceProvisioningServicesSharedAccessKey> authorizationPolicies, bool? isDataResidencyEnabled, string portalOperationsHostName, bool? disableLocalAuth, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeviceProvisioningServiceProperties(DeviceProvisioningServicesState? state, DeviceProvisioningServicesPublicNetworkAccess? publicNetworkAccess, IList<DeviceProvisioningServicesIPFilterRule> ipFilterRules, IList<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, IList<IotHubDefinitionDescription> iotHubs, IReadOnlyList<DeviceRegistryNamespaceDescription> deviceRegistryNamespaces, DeviceProvisioningServicesAllocationPolicy? allocationPolicy, string serviceOperationsHostName, string deviceProvisioningHostName, string idScope, IList<DeviceProvisioningServicesSharedAccessKey> authorizationPolicies, bool? isDataResidencyEnabled, string portalOperationsHostName, bool? disableLocalAuth, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             PublicNetworkAccess = publicNetworkAccess;
@@ -53,6 +55,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             PrivateEndpointConnections = privateEndpointConnections;
             ProvisioningState = provisioningState;
             IotHubs = iotHubs;
+            DeviceRegistryNamespaces = deviceRegistryNamespaces;
             AllocationPolicy = allocationPolicy;
             ServiceOperationsHostName = serviceOperationsHostName;
             DeviceProvisioningHostName = deviceProvisioningHostName;
@@ -81,6 +84,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         /// <summary> List of IoT hubs associated with this provisioning service. </summary>
         public IList<IotHubDefinitionDescription> IotHubs { get; }
+
+        /// <summary> The Device Registry namespaces linked to the provisioning service. </summary>
+        public IReadOnlyList<DeviceRegistryNamespaceDescription> DeviceRegistryNamespaces { get; }
 
         /// <summary> Allocation policy to be used by this provisioning service. </summary>
         public DeviceProvisioningServicesAllocationPolicy? AllocationPolicy { get; set; }

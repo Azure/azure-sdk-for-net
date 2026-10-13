@@ -1,8 +1,11 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0 (2026-11-01)
 
 ### Features Added
+
+- Updated to support API version `2026-11-01`.
+- Added support for Device Registry namespaces linked to a Device Provisioning Service.
 
 ### Breaking Changes
 

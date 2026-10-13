@@ -152,6 +152,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="privateEndpointConnections"> Private endpoint connections created on this IotHub. </param>
         /// <param name="provisioningState"> The ARM provisioning state of the provisioning service. </param>
         /// <param name="iotHubs"> List of IoT hubs associated with this provisioning service. </param>
+        /// <param name="deviceRegistryNamespaces"> The Device Registry namespaces linked to the provisioning service. </param>
         /// <param name="allocationPolicy"> Allocation policy to be used by this provisioning service. </param>
         /// <param name="serviceOperationsHostName"> Service endpoint for provisioning service. </param>
         /// <param name="deviceProvisioningHostName"> Device endpoint for this provisioning service. </param>
@@ -164,11 +165,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="portalOperationsHostName"> Portal endpoint to enable CORS for this provisioning service. </param>
         /// <param name="disableLocalAuth"> Disables all authentication methods other than Azure RBAC. </param>
         /// <returns> A new <see cref="Models.DeviceProvisioningServiceProperties"/> instance for mocking. </returns>
-        public static DeviceProvisioningServiceProperties DeviceProvisioningServiceProperties(DeviceProvisioningServicesState? state = default, DeviceProvisioningServicesPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<DeviceProvisioningServicesIPFilterRule> ipFilterRules = default, IEnumerable<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections = default, string provisioningState = default, IEnumerable<IotHubDefinitionDescription> iotHubs = default, DeviceProvisioningServicesAllocationPolicy? allocationPolicy = default, string serviceOperationsHostName = default, string deviceProvisioningHostName = default, string idScope = default, IEnumerable<DeviceProvisioningServicesSharedAccessKey> authorizationPolicies = default, bool? isDataResidencyEnabled = default, string portalOperationsHostName = default, bool? disableLocalAuth = default)
+        public static DeviceProvisioningServiceProperties DeviceProvisioningServiceProperties(DeviceProvisioningServicesState? state, DeviceProvisioningServicesPublicNetworkAccess? publicNetworkAccess, IEnumerable<DeviceProvisioningServicesIPFilterRule> ipFilterRules, IEnumerable<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, IEnumerable<IotHubDefinitionDescription> iotHubs, IEnumerable<DeviceRegistryNamespaceDescription> deviceRegistryNamespaces, DeviceProvisioningServicesAllocationPolicy? allocationPolicy, string serviceOperationsHostName, string deviceProvisioningHostName, string idScope, IEnumerable<DeviceProvisioningServicesSharedAccessKey> authorizationPolicies, bool? isDataResidencyEnabled, string portalOperationsHostName, bool? disableLocalAuth)
         {
             ipFilterRules ??= new ChangeTrackingList<DeviceProvisioningServicesIPFilterRule>();
             privateEndpointConnections ??= new ChangeTrackingList<DeviceProvisioningServicesPrivateEndpointConnectionData>();
             iotHubs ??= new ChangeTrackingList<IotHubDefinitionDescription>();
+            deviceRegistryNamespaces ??= new ChangeTrackingList<DeviceRegistryNamespaceDescription>();
             authorizationPolicies ??= new ChangeTrackingList<DeviceProvisioningServicesSharedAccessKey>();
 
             return new DeviceProvisioningServiceProperties(
@@ -178,6 +180,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 (privateEndpointConnections ?? new ChangeTrackingList<DeviceProvisioningServicesPrivateEndpointConnectionData>()).ToList(),
                 provisioningState,
                 (iotHubs ?? new ChangeTrackingList<IotHubDefinitionDescription>()).ToList(),
+                (deviceRegistryNamespaces ?? new ChangeTrackingList<DeviceRegistryNamespaceDescription>()).ToList(),
                 allocationPolicy,
                 serviceOperationsHostName,
                 deviceProvisioningHostName,
@@ -257,6 +260,28 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 selectedUserAssignedIdentityResourceId,
                 connectionString,
                 location,
+                default);
+        }
+
+        /// <summary> Description of the Device Registry namespace that is linked to the provisioning service. </summary>
+        /// <param name="resourceId"> The ARM resource ID of the Device Registry namespace. </param>
+        /// <param name="authenticationType"> Device Registry Namespace MI authentication type: UserAssigned, SystemAssigned. </param>
+        /// <param name="selectedUserAssignedIdentityResourceId"> The selected user-assigned identity resource Id associated with Device Registry namespace. This is required when authenticationType is UserAssigned. </param>
+        /// <param name="namespaceUuid"> Unique identifier of the linked Device Registry namespace. </param>
+        /// <param name="dataAddress"> The data plane address of the linked Azure Device Registry namespace. </param>
+        /// <param name="location"> Azure location of the linked Device Registry namespace. </param>
+        /// <param name="linkingState"> The linking state of this namespace. </param>
+        /// <returns> A new <see cref="Models.DeviceRegistryNamespaceDescription"/> instance for mocking. </returns>
+        public static DeviceRegistryNamespaceDescription DeviceRegistryNamespaceDescription(ResourceIdentifier resourceId = default, DeviceRegistryNamespaceAuthenticationType authenticationType = default, ResourceIdentifier selectedUserAssignedIdentityResourceId = default, string namespaceUuid = default, string dataAddress = default, AzureLocation? location = default, LinkingState? linkingState = default)
+        {
+            return new DeviceRegistryNamespaceDescription(
+                resourceId,
+                authenticationType,
+                selectedUserAssignedIdentityResourceId,
+                namespaceUuid,
+                dataAddress,
+                location,
+                linkingState,
                 default);
         }
 
@@ -348,6 +373,47 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             return new DeviceProvisioningServicesNameAvailabilityResult(isNameAvailable, reason, message, default);
         }
 
+        /// <summary> the service specific properties of a provisioning service, including keys, linked iot hubs, current state, and system generated properties such as hostname and idScope. </summary>
+        /// <param name="state"> Current state of the provisioning service. </param>
+        /// <param name="publicNetworkAccess"> Whether requests from Public Network are allowed. </param>
+        /// <param name="ipFilterRules"> The IP filter rules. </param>
+        /// <param name="privateEndpointConnections"> Private endpoint connections created on this IotHub. </param>
+        /// <param name="provisioningState"> The ARM provisioning state of the provisioning service. </param>
+        /// <param name="iotHubs"> List of IoT hubs associated with this provisioning service. </param>
+        /// <param name="allocationPolicy"> Allocation policy to be used by this provisioning service. </param>
+        /// <param name="serviceOperationsHostName"> Service endpoint for provisioning service. </param>
+        /// <param name="deviceProvisioningHostName"> Device endpoint for this provisioning service. </param>
+        /// <param name="idScope"> Unique identifier of this provisioning service. </param>
+        /// <param name="authorizationPolicies"> List of authorization keys for a provisioning service. </param>
+        /// <param name="isDataResidencyEnabled">
+        /// Optional.
+        /// Indicates if the DPS instance has Data Residency enabled, removing the cross geo-pair disaster recovery.
+        /// </param>
+        /// <param name="portalOperationsHostName"> Portal endpoint to enable CORS for this provisioning service. </param>
+        /// <param name="disableLocalAuth"> Disables all authentication methods other than Azure RBAC. </param>
+        /// <returns> A new <see cref="Models.DeviceProvisioningServiceProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DeviceProvisioningServiceProperties DeviceProvisioningServiceProperties(DeviceProvisioningServicesState? state = default, DeviceProvisioningServicesPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<DeviceProvisioningServicesIPFilterRule> ipFilterRules = default, IEnumerable<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections = default, string provisioningState = default, IEnumerable<IotHubDefinitionDescription> iotHubs = default, DeviceProvisioningServicesAllocationPolicy? allocationPolicy = default, string serviceOperationsHostName = default, string deviceProvisioningHostName = default, string idScope = default, IEnumerable<DeviceProvisioningServicesSharedAccessKey> authorizationPolicies = default, bool? isDataResidencyEnabled = default, string portalOperationsHostName = default, bool? disableLocalAuth = default)
+        {
+            return new DeviceProvisioningServiceProperties(
+                state,
+                publicNetworkAccess,
+                (ipFilterRules ?? new ChangeTrackingList<DeviceProvisioningServicesIPFilterRule>()).ToList(),
+                (privateEndpointConnections ?? new ChangeTrackingList<DeviceProvisioningServicesPrivateEndpointConnectionData>()).ToList(),
+                provisioningState,
+                (iotHubs ?? new ChangeTrackingList<IotHubDefinitionDescription>()).ToList(),
+                default,
+                allocationPolicy,
+                serviceOperationsHostName,
+                deviceProvisioningHostName,
+                idScope,
+                (authorizationPolicies ?? new ChangeTrackingList<DeviceProvisioningServicesSharedAccessKey>()).ToList(),
+                isDataResidencyEnabled,
+                portalOperationsHostName,
+                disableLocalAuth,
+                default);
+        }
+
         /// <summary> The description of the provisioning service. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -405,6 +471,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 (privateEndpointConnections ?? new ChangeTrackingList<DeviceProvisioningServicesPrivateEndpointConnectionData>()).ToList(),
                 provisioningState,
                 (iotHubs ?? new ChangeTrackingList<IotHubDefinitionDescription>()).ToList(),
+                default,
                 allocationPolicy,
                 serviceOperationsHostName,
                 deviceProvisioningHostName,
