@@ -1,5 +1,5 @@
 directory: specification/compute/resource-manager/Microsoft.Compute/WorkloadManager
-commit: 2d2cedc72ee5df6efb3e9275660fd35cbfd1df05
+commit: 8ec074d8a9d4929f9db8c1e0c464507722f0f105
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 
