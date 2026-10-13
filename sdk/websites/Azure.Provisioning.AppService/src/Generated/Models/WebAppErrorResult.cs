@@ -10,12 +10,12 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.AppService
 {
     /// <summary> Error response indicates Logic service is not able to process the incoming request. The error property contains the error details. </summary>
-    internal partial class WebAppErrorResponse : ProvisionableConstruct
+    internal partial class WebAppErrorResult : ProvisionableConstruct
     {
         private WebAppErrorProperties _errorInfo;
 
-        /// <summary> Creates a new WebAppErrorResponse. </summary>
-        public WebAppErrorResponse()
+        /// <summary> Creates a new WebAppErrorResult. </summary>
+        public WebAppErrorResult()
         {
         }
 
@@ -29,7 +29,7 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Define all the provisionable properties for WebAppErrorResponse. </summary>
+        /// <summary> Define all the provisionable properties for WebAppErrorResult. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -37,7 +37,7 @@ namespace Azure.Provisioning.AppService
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for WebAppErrorResponse that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for WebAppErrorResult that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }
