@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new HybridConnectionsGetWebAppsByHybridConnectionAsyncCollectionResultOfT(
+            return new StringAsyncCollectionResultOfT(
                 _hybridConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new HybridConnectionsGetWebAppsByHybridConnectionCollectionResultOfT(
+            return new StringCollectionResultOfT(
                 _hybridConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

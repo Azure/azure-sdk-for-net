@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MigrateExpressRouteCircuitValidateAndHealthCheckContent(targetPeeringLocation, targetPortMapping, additionalBinaryDataProperties);
+            return new MigrateExpressRouteCircuitValidateAndHealthCheckContent(targetPeeringLocation, targetPortMapping ?? new ChangeTrackingList<ExpressRouteCircuitPortMapping>(), additionalBinaryDataProperties);
         }
     }
 }

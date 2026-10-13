@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new OrganizationResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new OrganizationResourceListResult(value ?? new ChangeTrackingList<NapsterOrganizationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

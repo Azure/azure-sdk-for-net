@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="RouteConfiguration"/>. </summary>
+        protected RouteConfiguration() : this(default)
+        {
+        }
+
         /// <summary> Gets or sets the OdataType. </summary>
         [WirePath("@odata.type")]
         internal string OdataType { get; set; }

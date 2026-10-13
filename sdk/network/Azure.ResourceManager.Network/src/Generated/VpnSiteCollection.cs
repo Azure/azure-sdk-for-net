@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VpnSiteData, VpnSiteResource>(new VpnSitesGetByResourceGroupAsyncCollectionResultOfT(_vpnSitesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VpnSiteCollection.GetAll"), data => new VpnSiteResource(Client, data));
+            return new AsyncPageableWrapper<VpnSiteData, VpnSiteResource>(new VpnSiteDataAsyncCollectionResultOfT(_vpnSitesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VpnSiteCollection.GetAll"), data => new VpnSiteResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VpnSiteData, VpnSiteResource>(new VpnSitesGetByResourceGroupCollectionResultOfT(_vpnSitesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VpnSiteCollection.GetAll"), data => new VpnSiteResource(Client, data));
+            return new PageableWrapper<VpnSiteData, VpnSiteResource>(new VpnSiteDataCollectionResultOfT(_vpnSitesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VpnSiteCollection.GetAll"), data => new VpnSiteResource(Client, data));
         }
 
         /// <summary>

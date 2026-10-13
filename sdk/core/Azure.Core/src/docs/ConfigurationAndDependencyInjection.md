@@ -427,9 +427,42 @@ the `Credential` section as well.
 ```
 
 `ManagedIdentityIdKind` can be `ClientId`, `ResourceId`, or `ObjectId`. `AzureCloud` can be `public`, `usgov`, or `china`.
-Set `EnableMtlsProofOfPossession` to `true` to enable mTLS proof-of-possession for both token exchanges in the managed identity federated identity flow. The default is `false`.
+mTLS proof-of-possession is enabled by default for both token exchanges in the managed identity federated identity flow. Set `EnableMtlsProofOfPossession` to `false` to force bearer authentication instead. The default is `true`.
 
-> mTLS proof-of-possession requires the application to reference the optional `Microsoft.Identity.Client.KeyAttestation` package and to run on a KeyGuard-capable host. MSAL resolves that package dynamically and Azure.Core does not ship it; when it is absent, a proof-of-possession request cannot obtain a binding certificate. Leave `EnableMtlsProofOfPossession` set to `false` to use bearer authentication instead.
+> mTLS proof-of-possession requires the application to reference the optional `Microsoft.Identity.Client.KeyAttestation` package and to run on a KeyGuard-capable host. MSAL resolves that package dynamically and Azure.Core does not ship it; when it is absent, a proof-of-possession request cannot obtain a binding certificate and the flow falls back to a bearer token. Set `EnableMtlsProofOfPossession` to `false` to skip the proof-of-possession attempt and always use bearer authentication.
+
+To opt out of mTLS proof-of-possession for both exchanges without editing JSON, set the
+environment variable matching the credential's configuration path before starting the
+application. For a client registered under `MyClient`:
+
+```powershell
+$env:MyClient__Credential__EnableMtlsProofOfPossession = "false"
+```
+
+If the federated credential is the first source in a `ChainedTokenCredential`, set the
+option on that source instead:
+
+```powershell
+$env:MyClient__Credential__Sources__0__EnableMtlsProofOfPossession = "false"
+```
+
+Replace `MyClient` and the source index with the values from your configuration.
+`Host.CreateApplicationBuilder()` loads environment variables after JSON by default.
+For a custom configuration builder, add the environment-variable provider after the
+JSON provider so the override takes precedence:
+
+```C# Snippet:Azure_Core_Samples_AzureClient_EnvironmentVariableOverride
+IConfiguration configuration = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json")
+    .AddEnvironmentVariables()
+    .Build();
+```
+
+These are configuration overrides, not global Azure Identity switches.
+`AZURE_IDENTITY_ENABLE_CLIENT_CERTIFICATE_MTLS_POP` controls only `ClientCertificateCredential`.
+`MSAL_MI_DISABLE_IMDS_V2` does not disable the outer federated client assertion PoP client;
+it is not a substitute for setting `EnableMtlsProofOfPossession` to `false` for the
+federated credential.
 
 **VisualStudioCodeCredential:**
 ```json

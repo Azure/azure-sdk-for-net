@@ -196,7 +196,7 @@ namespace Azure.AI.Translation.Text
                 script,
                 language,
                 textType,
-                translationTargets,
+                translationTargets ?? new ChangeTrackingList<TranslationTarget>(),
                 additionalBinaryDataProperties);
         }
     }

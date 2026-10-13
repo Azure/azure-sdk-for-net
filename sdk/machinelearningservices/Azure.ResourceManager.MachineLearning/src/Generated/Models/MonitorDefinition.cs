@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private MonitorNotificationSettings _alertNotificationSettings;
+        internal bool _alertNotificationSettingsIsDefined;
+        private MonitoringTarget _monitoringTarget;
+        internal bool _monitoringTargetIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MonitorDefinition"/>. </summary>
         /// <param name="computeConfiguration"> [Required] The ARM resource ID of the compute resource to run the monitoring job on. </param>
@@ -38,16 +42,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MonitorDefinition(MonitorNotificationSettings alertNotificationSettings, MonitorComputeConfigurationBase computeConfiguration, MonitoringTarget monitoringTarget, IDictionary<string, MonitoringSignalBase> signals, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AlertNotificationSettings = alertNotificationSettings;
+            _alertNotificationSettings = alertNotificationSettings;
             ComputeConfiguration = computeConfiguration;
-            MonitoringTarget = monitoringTarget;
+            _monitoringTarget = monitoringTarget;
             Signals = signals;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The monitor's notification settings. </summary>
         [WirePath("alertNotificationSettings")]
-        internal MonitorNotificationSettings AlertNotificationSettings { get; set; }
+        internal MonitorNotificationSettings AlertNotificationSettings
+        {
+            get
+            {
+                return _alertNotificationSettings;
+            }
+            set
+            {
+                _alertNotificationSettings = value;
+                _alertNotificationSettingsIsDefined = true;
+            }
+        }
 
         /// <summary> [Required] The ARM resource ID of the compute resource to run the monitoring job on. </summary>
         [WirePath("computeConfiguration")]
@@ -55,7 +70,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The entities targeted by the monitor. </summary>
         [WirePath("monitoringTarget")]
-        public MonitoringTarget MonitoringTarget { get; set; }
+        public MonitoringTarget MonitoringTarget
+        {
+            get
+            {
+                return _monitoringTarget;
+            }
+            set
+            {
+                _monitoringTarget = value;
+                _monitoringTargetIsDefined = true;
+            }
+        }
 
         /// <summary> [Required] The signals to monitor. </summary>
         [WirePath("signals")]

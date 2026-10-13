@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
 
         private ClientDiagnostics ScheduledActionExtensionClientDiagnostics => _scheduledActionExtensionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ScheduledActionExtension ScheduledActionExtensionRestClient => _scheduledActionExtensionRestClient ??= new ScheduledActionExtension(ScheduledActionExtensionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-06-preview");
+        private ScheduledActionExtension ScheduledActionExtensionRestClient => _scheduledActionExtensionRestClient ??= new ScheduledActionExtension(ScheduledActionExtensionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-10-06-preview");
 
         private ClientDiagnostics OccurrenceExtensionClientDiagnostics => _occurrenceExtensionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private OccurrenceExtension OccurrenceExtensionRestClient => _occurrenceExtensionRestClient ??= new OccurrenceExtension(OccurrenceExtensionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-06-preview");
+        private OccurrenceExtension OccurrenceExtensionRestClient => _occurrenceExtensionRestClient ??= new OccurrenceExtension(OccurrenceExtensionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-10-06-preview");
 
         /// <summary> Gets an object representing a <see cref="LocationBasedBulkCreateCustomResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ScheduledActionExtensionGetByVmsAsyncCollectionResultOfT(ScheduledActionExtensionRestClient, scope.ToString(), context, "MockableComputeBulkActionsArmClient.GetByVms");
+            return new ScheduledActionResourcesAsyncCollectionResultOfT(ScheduledActionExtensionRestClient, scope.ToString(), context, "MockableComputeBulkActionsArmClient.GetByVms");
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ScheduledActionExtensionGetByVmsCollectionResultOfT(ScheduledActionExtensionRestClient, scope.ToString(), context, "MockableComputeBulkActionsArmClient.GetByVms");
+            return new ScheduledActionResourcesCollectionResultOfT(ScheduledActionExtensionRestClient, scope.ToString(), context, "MockableComputeBulkActionsArmClient.GetByVms");
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new OccurrenceExtensionGetOccurrenceByVmsAsyncCollectionResultOfT(OccurrenceExtensionRestClient, scope.ToString(), context, "MockableComputeBulkActionsArmClient.GetOccurrenceByVms");
+            return new OccurrenceExtensionAsyncCollectionResultOfT(OccurrenceExtensionRestClient, scope.ToString(), context, "MockableComputeBulkActionsArmClient.GetOccurrenceByVms");
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new OccurrenceExtensionGetOccurrenceByVmsCollectionResultOfT(OccurrenceExtensionRestClient, scope.ToString(), context, "MockableComputeBulkActionsArmClient.GetOccurrenceByVms");
+            return new OccurrenceExtensionCollectionResultOfT(OccurrenceExtensionRestClient, scope.ToString(), context, "MockableComputeBulkActionsArmClient.GetOccurrenceByVms");
         }
     }
 }

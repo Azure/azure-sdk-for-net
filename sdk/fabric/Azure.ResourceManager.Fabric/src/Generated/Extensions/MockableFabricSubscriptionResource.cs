@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FabricCapacityData, FabricCapacityResource>(new FabricCapacitiesGetBySubscriptionAsyncCollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableFabricSubscriptionResource.GetFabricCapacities"), data => new FabricCapacityResource(Client, data));
+            return new AsyncPageableWrapper<FabricCapacityData, FabricCapacityResource>(new FabricCapacityDataAsync0CollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableFabricSubscriptionResource.GetFabricCapacities"), data => new FabricCapacityResource(Client, data));
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FabricCapacityData, FabricCapacityResource>(new FabricCapacitiesGetBySubscriptionCollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableFabricSubscriptionResource.GetFabricCapacities"), data => new FabricCapacityResource(Client, data));
+            return new PageableWrapper<FabricCapacityData, FabricCapacityResource>(new FabricCapacityData0CollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableFabricSubscriptionResource.GetFabricCapacities"), data => new FabricCapacityResource(Client, data));
         }
 
         /// <summary>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new FabricCapacitiesGetSkusFabricCapacitiesAsyncCollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableFabricSubscriptionResource.GetSkusFabricCapacities");
+            return new FabricSkuDetailsForNewCapacityAsyncCollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableFabricSubscriptionResource.GetSkusFabricCapacities");
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new FabricCapacitiesGetSkusFabricCapacitiesCollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableFabricSubscriptionResource.GetSkusFabricCapacities");
+            return new FabricSkuDetailsForNewCapacityCollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableFabricSubscriptionResource.GetSkusFabricCapacities");
         }
 
         /// <summary>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new FabricCapacitiesGetUsagesAsyncCollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableFabricSubscriptionResource.GetUsages");
+            return new FabricCapacitiesQuotaAsyncCollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableFabricSubscriptionResource.GetUsages");
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new FabricCapacitiesGetUsagesCollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableFabricSubscriptionResource.GetUsages");
+            return new FabricCapacitiesQuotaCollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableFabricSubscriptionResource.GetUsages");
         }
     }
 }

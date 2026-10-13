@@ -164,14 +164,14 @@ namespace Azure.Generator.Management.Visitors
                     constructorParameters,
                     newInstanceExpression.Parameters,
                     excludedArgumentIndex: FindOriginalArgumentIndex(method, constructorParameter, newInstanceExpression.Parameters));
-                if (TryBuildCompatibilityArgument(method, constructorParameter, unavailableDirectParameterNames, out var argument))
+                ValueExpression rebuiltArgument;
+                if (TryBuildDiscriminatorArgument(method, modelProvider, constructorParameter, out var discriminatorArgument))
                 {
-                    arguments.Add(argument.Argument);
-                    var index = arguments.Count - 1;
-                    if (!changed && !ReferenceEquals(argument.Argument, newInstanceExpression.Parameters[index]))
-                    {
-                        changed = true;
-                    }
+                    rebuiltArgument = discriminatorArgument;
+                }
+                else if (TryBuildCompatibilityArgument(method, constructorParameter, unavailableDirectParameterNames, out var argument))
+                {
+                    rebuiltArgument = argument.Argument;
                 }
                 else
                 {
@@ -181,10 +181,68 @@ namespace Azure.Generator.Management.Visitors
                     {
                         changed = true;
                     }
+                    continue;
+                }
+
+                arguments.Add(rebuiltArgument);
+                if (!changed && !ReferenceEquals(rebuiltArgument, newInstanceExpression.Parameters[arguments.Count - 1]))
+                {
+                    changed = true;
                 }
             }
             updatedArguments = changed ? arguments : null;
             return changed;
+        }
+
+        private static bool TryBuildDiscriminatorArgument(
+            MethodProvider method,
+            ModelProvider model,
+            ParameterProvider constructorParameter,
+            [NotNullWhen(true)] out ValueExpression? argument)
+        {
+            argument = null;
+            if (constructorParameter.Property is not { IsDiscriminator: true } property)
+            {
+                return false;
+            }
+
+            if (TryGetMethodParameter(method, constructorParameter.Name, constructorParameter.Type, property, out var parameter))
+            {
+                argument = BuildParameterArgument(parameter, constructorParameter.Type);
+                return true;
+            }
+
+            // Factories expose an enum discriminator's underlying type, not the internal enum itself.
+            if (constructorParameter.Type.IsEnum
+                && TryGetMethodParameter(method, constructorParameter.Name, constructorParameter.Type.UnderlyingEnumType, property, out parameter))
+            {
+                var convertedArgument = constructorParameter.Type.ToEnum(parameter);
+                // Preserve omitted/null inputs, including a null nullable enum rather than an empty enum value.
+                argument = parameter.Type.IsValueType && !parameter.Type.IsNullable
+                    ? convertedArgument
+                    : new TernaryConditionalExpression(parameter.Is(Null), Default.CastTo(constructorParameter.Type), convertedArgument);
+                return true;
+            }
+
+            // Match the upstream factory's initializer/known-discriminator behavior when no input is exposed.
+            if (property.Body is AutoPropertyBody { InitializationExpression: not null } autoProperty)
+            {
+                argument = autoProperty.InitializationExpression;
+                return true;
+            }
+
+            // Different hierarchy levels can have different discriminators. Use the value belonging to
+            // this property's declaring base model, rather than always using the most-derived value.
+            for (var current = model; current.BaseModelProvider is { } baseModel; current = baseModel)
+            {
+                if (baseModel.Properties.Any(p => ReferenceEquals(p, property)))
+                {
+                    argument = current.DiscriminatorValueExpression;
+                    return argument is not null;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -570,8 +628,12 @@ namespace Azure.Generator.Management.Visitors
             return expression switch
             {
                 VariableExpression variable => string.Equals(variable.Declaration.RequestedName, parameter.Name, StringComparison.Ordinal),
-                PositionalParameterReferenceExpression positional => string.Equals(positional.ParameterName, parameter.Name, StringComparison.Ordinal)
-                    || ReferencesParameter(positional.ParameterValue, parameter),
+                PositionalParameterReferenceExpression positional => ReferencesParameter(positional.ParameterValue, parameter),
+                MemberExpression { Inner: not null } member => ReferencesParameter(member.Inner, parameter),
+                CastExpression cast => ReferencesParameter(cast.Inner, parameter),
+                NullConditionalExpression conditional => ReferencesParameter(conditional.Inner, parameter),
+                TernaryConditionalExpression ternary => ReferencesParameter(ternary.Consequent, parameter)
+                    || ReferencesParameter(ternary.Alternative, parameter),
                 InvokeMethodExpression invoke => (invoke.InstanceReference is not null && ReferencesParameter(invoke.InstanceReference, parameter))
                     || invoke.Arguments.Any(argument => ReferencesParameter(argument, parameter)),
                 NewInstanceExpression newInstance => newInstance.Parameters.Any(argument => ReferencesParameter(argument, parameter)),
@@ -744,6 +806,25 @@ namespace Azure.Generator.Management.Visitors
                 return true;
             }
 
+            // A generated C# name can change while the wire name remains stable (e.g. a factory's
+            // historical `uri` argument and a current `ClusterUri` leaf serialized as `uri`).
+            // Only use the wire name when exactly one compatible constructor destination exists
+            // across the returned model, not merely within this particular nested model.
+            var wireName = nestedParameter.Property?.WireInfo?.SerializedName;
+            if (wireName is not null && !string.Equals(wireName, nestedParameter.Name, StringComparison.OrdinalIgnoreCase)
+                && TryGetMethodParameter(method, wireName, nestedParameter.Type, nestedParameter.Property, out var wireParameter)
+                && !unavailableDirectParameterNames.Contains(wireParameter.Name)
+                && method.Signature.ReturnType is { } returnType
+                && TryGetModelProvider(returnType, out var returnModel)
+                && CountMatchingDestinations(returnModel, wireName, wireParameter.Type, []) == 1)
+            {
+                argument = new CompatibilityArgument(
+                    BuildParameterArgument(wireParameter, nestedParameter.Type),
+                    [wireParameter],
+                    [new ParameterDocumentation(wireParameter, nestedParameter.Description)]);
+                return true;
+            }
+
             return TryBuildModelCompatibilityArgument(
                 method,
                 nestedParameter,
@@ -783,6 +864,37 @@ namespace Azure.Generator.Management.Visitors
 
             parameter = matches.Length == 1 ? matches[0] : null;
             return parameter is not null;
+        }
+
+        private static int CountMatchingDestinations(ModelProvider model, string name, CSharpType parameterType, HashSet<string> visitedTypes)
+        {
+            if (!visitedTypes.Add(model.Type.FullyQualifiedName))
+            {
+                return 0;
+            }
+
+            var count = 0;
+            foreach (var parameter in model.FullConstructor.Signature.Parameters)
+            {
+                // Include ordinary C# name matches: a wire-name fallback must not reuse an old
+                // argument already claimed by a different constructor slot.
+                if ((string.Equals(parameter.Name, name, StringComparison.OrdinalIgnoreCase)
+                        || string.Equals(parameter.Property?.WireInfo?.SerializedName, name, StringComparison.OrdinalIgnoreCase))
+                    && AreCompatibleParameterTypes(parameterType, parameter.Type))
+                {
+                    count++;
+                }
+                if (!parameter.Type.IsFrameworkType && TryGetModelProvider(parameter.Type, out var nestedModel))
+                {
+                    count += CountMatchingDestinations(nestedModel, name, parameterType, visitedTypes);
+                }
+                if (count > 1)
+                {
+                    break;
+                }
+            }
+            visitedTypes.Remove(model.Type.FullyQualifiedName);
+            return count;
         }
 
         private static bool TryGetContextualMethodParameter(MethodProvider method, string parentName, ParameterProvider nestedParameter, [NotNullWhen(true)] out ParameterProvider? parameter)

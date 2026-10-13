@@ -237,14 +237,14 @@ namespace Azure.ResourceManager.IotOperations.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new IotOperationsDataflowGraphProperties(
                 mode,
                 requestDiskPersistence,
-                nodes,
-                nodeConnections,
+                nodes ?? new ChangeTrackingList<DataflowGraphNode>(),
+                nodeConnections ?? new ChangeTrackingList<DataflowGraphNodeConnection>(),
                 provisioningState,
                 status,
                 healthState,

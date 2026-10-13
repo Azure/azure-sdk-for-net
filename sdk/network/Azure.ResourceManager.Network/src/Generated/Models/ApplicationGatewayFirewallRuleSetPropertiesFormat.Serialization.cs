@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ApplicationGatewayFirewallRuleSetPropertiesFormat(
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Network.Models
                 ruleSetType,
                 ruleSetVersion,
                 displayName,
-                ruleGroups,
+                ruleGroups ?? new ChangeTrackingList<ApplicationGatewayFirewallRuleGroup>(),
                 tiers ?? new ChangeTrackingList<ApplicationGatewayTierType>(),
                 additionalBinaryDataProperties);
         }

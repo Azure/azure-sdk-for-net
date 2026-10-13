@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary>
     /// Dataflow Destination Header Action properties
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataflowDestinationAddIfNotPresentHeaderAction"/>, <see cref="DataflowDestinationRemoveHeaderAction"/>, and <see cref="DataflowDestinationAddOrReplaceHeaderAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataflowDestinationAddIfNotPresentHeaderAction"/>, <see cref="DataflowDestinationAddOrReplaceHeaderAction"/>, and <see cref="DataflowDestinationRemoveHeaderAction"/>.
     /// </summary>
     public abstract partial class DataflowDestinationHeaderAction
     {

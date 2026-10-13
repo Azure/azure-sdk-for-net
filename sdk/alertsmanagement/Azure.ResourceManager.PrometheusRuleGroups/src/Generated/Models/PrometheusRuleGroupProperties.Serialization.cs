@@ -227,16 +227,16 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new PrometheusRuleGroupProperties(
                 description,
                 isEnabled,
                 clusterName,
-                scopes,
+                scopes ?? new ChangeTrackingList<ResourceIdentifier>(),
                 interval,
-                rules,
+                rules ?? new ChangeTrackingList<PrometheusRule>(),
                 additionalBinaryDataProperties);
         }
     }

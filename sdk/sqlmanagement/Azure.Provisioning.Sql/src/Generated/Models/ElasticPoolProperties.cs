@@ -27,6 +27,7 @@ namespace Azure.Provisioning.Sql
         private BicepValue<int> _autoPauseDelay;
         private BicepValue<SqlAlwaysEncryptedEnclaveType> _preferredEnclaveType;
         private BicepValue<SqlAvailabilityZoneType> _availabilityZone;
+        private SqlSku _currentSku;
 
         /// <summary> Creates a new ElasticPoolProperties. </summary>
         public ElasticPoolProperties()
@@ -203,6 +204,16 @@ namespace Azure.Provisioning.Sql
             }
         }
 
+        /// <summary> Gets the CurrentSku. </summary>
+        public SqlSku CurrentSku
+        {
+            get
+            {
+                Initialize();
+                return _currentSku;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ElasticPoolProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -219,6 +230,7 @@ namespace Azure.Provisioning.Sql
             _autoPauseDelay = DefineProperty<int>(nameof(AutoPauseDelay), new string[] { "autoPauseDelay" });
             _preferredEnclaveType = DefineProperty<SqlAlwaysEncryptedEnclaveType>(nameof(PreferredEnclaveType), new string[] { "preferredEnclaveType" });
             _availabilityZone = DefineProperty<SqlAvailabilityZoneType>(nameof(AvailabilityZone), new string[] { "availabilityZone" });
+            _currentSku = DefineModelProperty<SqlSku>(nameof(CurrentSku), new string[] { "currentSku" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

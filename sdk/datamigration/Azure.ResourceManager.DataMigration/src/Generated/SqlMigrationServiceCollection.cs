@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlMigrationServiceData, SqlMigrationServiceResource>(new SqlMigrationServicesGetByResourceGroupAsyncCollectionResultOfT(_sqlMigrationServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SqlMigrationServiceCollection.GetAll"), data => new SqlMigrationServiceResource(Client, data));
+            return new AsyncPageableWrapper<SqlMigrationServiceData, SqlMigrationServiceResource>(new SqlMigrationServiceDataAsyncCollectionResultOfT(_sqlMigrationServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SqlMigrationServiceCollection.GetAll"), data => new SqlMigrationServiceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlMigrationServiceData, SqlMigrationServiceResource>(new SqlMigrationServicesGetByResourceGroupCollectionResultOfT(_sqlMigrationServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SqlMigrationServiceCollection.GetAll"), data => new SqlMigrationServiceResource(Client, data));
+            return new PageableWrapper<SqlMigrationServiceData, SqlMigrationServiceResource>(new SqlMigrationServiceDataCollectionResultOfT(_sqlMigrationServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SqlMigrationServiceCollection.GetAll"), data => new SqlMigrationServiceResource(Client, data));
         }
 
         /// <summary>

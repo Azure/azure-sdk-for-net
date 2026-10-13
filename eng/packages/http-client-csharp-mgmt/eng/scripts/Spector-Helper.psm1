@@ -1,8 +1,10 @@
 $repoRoot = Resolve-Path (Join-Path $PSScriptRoot '..')
 
 $supportedSpecs = @(
+    "http/azure/resource-manager/common-properties"
     "http/azure/resource-manager/large-header"
     "http/azure/resource-manager/management-group"
+    "http/azure/resource-manager/method-subscription-id"
     "http/azure/resource-manager/multi-service"
     "http/azure/resource-manager/multi-service-shared-models"
     "http/azure/resource-manager/non-resource"

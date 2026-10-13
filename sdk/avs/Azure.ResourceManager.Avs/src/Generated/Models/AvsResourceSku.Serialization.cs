@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AvsResourceSku(
@@ -264,10 +264,10 @@ namespace Azure.ResourceManager.Avs.Models
                 tier,
                 size,
                 family,
-                locations,
-                locationInfo,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                locationInfo ?? new ChangeTrackingList<AvsResourceSkuLocationInfo>(),
                 capabilities ?? new ChangeTrackingList<AvsResourceSkuCapabilities>(),
-                restrictions,
+                restrictions ?? new ChangeTrackingList<AvsResourceSkuRestrictions>(),
                 additionalBinaryDataProperties);
         }
     }

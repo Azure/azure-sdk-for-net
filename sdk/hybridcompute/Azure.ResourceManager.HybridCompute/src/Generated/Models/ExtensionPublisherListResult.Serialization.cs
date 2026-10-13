@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ExtensionPublisherListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ExtensionPublisherListResult(value ?? new ChangeTrackingList<HybridComputeExtensionPublisher>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

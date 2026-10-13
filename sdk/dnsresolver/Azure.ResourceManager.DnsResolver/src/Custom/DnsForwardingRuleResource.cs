@@ -28,43 +28,5 @@ namespace Azure.ResourceManager.DnsResolver
             string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{rulesetName}/forwardingRules/{forwardingRuleName}";
             return new ResourceIdentifier(resourceId);
         }
-
-        // Backward-compat: old Delete/DeleteAsync took string ifMatch, new takes ETag? ifMatch.
-        /// <summary>
-        /// Deletes the resource.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation Delete(WaitUntil waitUntil, string ifMatch, CancellationToken cancellationToken = default)
-        {
-            return Delete(waitUntil, ifMatch != null ? new ETag(ifMatch) : default(ETag?), cancellationToken);
-        }
-
-        /// <summary>
-        /// Asynchronously deletes the resource.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch, CancellationToken cancellationToken = default)
-        {
-            return await DeleteAsync(waitUntil, ifMatch != null ? new ETag(ifMatch) : default(ETag?), cancellationToken).ConfigureAwait(false);
-        }
-
-        // Backward-compat: old non-LRO Update/UpdateAsync took string ifMatch, new takes ETag? ifMatch.
-        /// <summary>
-        /// Updates the resource.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<DnsForwardingRuleResource> Update(DnsForwardingRulePatch patch, string ifMatch, CancellationToken cancellationToken = default)
-        {
-            return Update(patch, ifMatch != null ? new ETag(ifMatch) : default(ETag?), cancellationToken);
-        }
-
-        /// <summary>
-        /// Asynchronously updates the resource.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<DnsForwardingRuleResource>> UpdateAsync(DnsForwardingRulePatch patch, string ifMatch, CancellationToken cancellationToken = default)
-        {
-            return await UpdateAsync(patch, ifMatch != null ? new ETag(ifMatch) : default(ETag?), cancellationToken).ConfigureAwait(false);
-        }
     }
 }

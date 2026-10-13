@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SignalRCustomCertificateList(value, nextLink, additionalBinaryDataProperties);
+            return new SignalRCustomCertificateList(value ?? new ChangeTrackingList<SignalRCustomCertificateData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

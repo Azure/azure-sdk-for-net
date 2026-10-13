@@ -817,7 +817,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <returns> A new <see cref="Models.EdgeOrderProductMeterDetails"/> instance for mocking. </returns>
         public static EdgeOrderProductMeterDetails EdgeOrderProductMeterDetails(string billingType = default, double? multiplier = default, EdgeOrderProductChargingType? chargingType = default)
         {
-            return new UnknownMeterDetails(default, multiplier, chargingType, default);
+            return new UnknownMeterDetails(billingType is null ? default : new BillingType(billingType), multiplier, chargingType, default);
         }
 
         /// <summary> Billing type PAV2 meter details. </summary>
@@ -827,7 +827,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <returns> A new <see cref="Models.Pav2MeterDetails"/> instance for mocking. </returns>
         public static Pav2MeterDetails Pav2MeterDetails(double? multiplier = default, EdgeOrderProductChargingType? chargingType = default, Guid? meterGuid = default)
         {
-            return new Pav2MeterDetails(default, multiplier, chargingType, default, meterGuid);
+            return new Pav2MeterDetails(BillingType.Pav2, multiplier, chargingType, default, meterGuid);
         }
 
         /// <summary> Billing type Purchase meter details. </summary>
@@ -840,7 +840,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static PurchaseMeterDetails PurchaseMeterDetails(double? multiplier = default, EdgeOrderProductChargingType? chargingType = default, string productId = default, string skuId = default, string termId = default)
         {
             return new PurchaseMeterDetails(
-                default,
+                BillingType.Purchase,
                 multiplier,
                 chargingType,
                 default,
@@ -1040,12 +1040,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
         /// <param name="filterableProperties"> List of filters supported for a product. </param>
         /// <param name="productLines"> List of product lines supported in the product family. </param>
-        /// <param name="resourceProviderDetails"></param>
+        /// <param name="resourceProviderDetails"> Contains details related to resource provider. </param>
         /// <returns> A new <see cref="Models.ProductFamily"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProductFamily ProductFamily(string displayName, ProductDescription description, IEnumerable<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IEnumerable<FilterableProperty> filterableProperties, IEnumerable<ProductLine> productLines, IEnumerable<ResourceProviderDetails> resourceProviderDetails)
         {
-            return new ProductFamily(displayName is null && description is null && imageInformation is null && costInformation is null && availabilityInformation is null && hierarchyInformation is null && filterableProperties is null && productLines is null ? default : new ProductFamilyProperties(
+            return new ProductFamily(displayName is null && description is null && imageInformation is null && costInformation is null && availabilityInformation is null && hierarchyInformation is null && filterableProperties is null && productLines is null && resourceProviderDetails is null ? default : new ProductFamilyProperties(
                 displayName,
                 description,
                 (imageInformation ?? new ChangeTrackingList<EdgeOrderProductImageInformation>()).ToList(),
@@ -1056,7 +1056,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default,
                 (filterableProperties ?? new ChangeTrackingList<FilterableProperty>()).ToList(),
                 (productLines ?? new ChangeTrackingList<ProductLine>()).ToList(),
-                default), default);
+                (resourceProviderDetails ?? new ChangeTrackingList<ResourceProviderDetails>()).ToList()), default);
         }
 
         /// <summary> Product line. </summary>
@@ -1180,12 +1180,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
         /// <param name="filterableProperties"> List of filters supported for a product. </param>
         /// <param name="productLines"> List of product lines supported in the product family. </param>
-        /// <param name="resourceProviderDetails"></param>
+        /// <param name="resourceProviderDetails"> Contains details related to resource provider. </param>
         /// <returns> A new <see cref="Models.ProductFamiliesMetadata"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProductFamiliesMetadata ProductFamiliesMetadata(string displayName, ProductDescription description, IEnumerable<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IEnumerable<FilterableProperty> filterableProperties, IEnumerable<ProductLine> productLines, IEnumerable<ResourceProviderDetails> resourceProviderDetails)
         {
-            return new ProductFamiliesMetadata(displayName is null && description is null && imageInformation is null && costInformation is null && availabilityInformation is null && hierarchyInformation is null && filterableProperties is null && productLines is null ? default : new ProductFamilyProperties(
+            return new ProductFamiliesMetadata(displayName is null && description is null && imageInformation is null && costInformation is null && availabilityInformation is null && hierarchyInformation is null && filterableProperties is null && productLines is null && resourceProviderDetails is null ? default : new ProductFamilyProperties(
                 displayName,
                 description,
                 (imageInformation ?? new ChangeTrackingList<EdgeOrderProductImageInformation>()).ToList(),
@@ -1196,7 +1196,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default,
                 (filterableProperties ?? new ChangeTrackingList<FilterableProperty>()).ToList(),
                 (productLines ?? new ChangeTrackingList<ProductLine>()).ToList(),
-                default), default);
+                (resourceProviderDetails ?? new ChangeTrackingList<ResourceProviderDetails>()).ToList()), default);
         }
 
         /// <summary> Specifies the properties or parameters for an order. Order is a grouping of one or more order items. </summary>

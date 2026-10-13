@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new IpamPoolProperties(
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Network.Models
                 displayName,
                 ipAddressType ?? new ChangeTrackingList<IpamIPType>(),
                 parentPoolName,
-                addressPrefixes,
+                addressPrefixes ?? new ChangeTrackingList<string>(),
                 provisioningState,
                 minAllocationSize,
                 maxAllocationSize,

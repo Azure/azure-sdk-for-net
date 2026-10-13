@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualHubData, VirtualHubResource>(new VirtualHubsGetByResourceGroupAsyncCollectionResultOfT(_virtualHubsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualHubCollection.GetAll"), data => new VirtualHubResource(Client, data));
+            return new AsyncPageableWrapper<VirtualHubData, VirtualHubResource>(new VirtualHubDataAsyncCollectionResultOfT(_virtualHubsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualHubCollection.GetAll"), data => new VirtualHubResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualHubData, VirtualHubResource>(new VirtualHubsGetByResourceGroupCollectionResultOfT(_virtualHubsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualHubCollection.GetAll"), data => new VirtualHubResource(Client, data));
+            return new PageableWrapper<VirtualHubData, VirtualHubResource>(new VirtualHubDataCollectionResultOfT(_virtualHubsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualHubCollection.GetAll"), data => new VirtualHubResource(Client, data));
         }
 
         /// <summary>

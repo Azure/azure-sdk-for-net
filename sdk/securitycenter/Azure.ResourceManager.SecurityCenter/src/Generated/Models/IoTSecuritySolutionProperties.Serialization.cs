@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new IoTSecuritySolutionProperties(
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 status,
                 export ?? new ChangeTrackingList<IotSecuritySolutionExportOption>(),
                 disabledDataSources ?? new ChangeTrackingList<IotSecuritySolutionDataSource>(),
-                iotHubs,
+                iotHubs ?? new ChangeTrackingList<string>(),
                 userDefinedResources,
                 autoDiscoveredResources ?? new ChangeTrackingList<string>(),
                 recommendationsConfiguration ?? new ChangeTrackingList<RecommendationConfigurationProperties>(),

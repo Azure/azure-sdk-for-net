@@ -23,20 +23,12 @@ namespace Azure.ResourceManager.ContainerService.Mocking
     {
         private ClientDiagnostics _managedClustersClientDiagnostics;
         private ManagedClusters _managedClustersRestClient;
-        private ClientDiagnostics _maintenanceWindowsClientDiagnostics;
-        private MaintenanceWindows _maintenanceWindowsRestClient;
         private ClientDiagnostics _snapshotsClientDiagnostics;
         private Snapshots _snapshotsRestClient;
-        private ClientDiagnostics _managedClusterSnapshotsClientDiagnostics;
-        private ManagedClusterSnapshots _managedClusterSnapshotsRestClient;
         private ClientDiagnostics _managedClustersOperationGroupClientDiagnostics;
         private ManagedClustersOperationGroup _managedClustersOperationGroupRestClient;
         private ClientDiagnostics _trustedAccessRolesOperationGroupClientDiagnostics;
         private TrustedAccessRolesOperationGroup _trustedAccessRolesOperationGroupRestClient;
-        private ClientDiagnostics _containerServiceOperationGroupClientDiagnostics;
-        private ContainerServiceOperationGroup _containerServiceOperationGroupRestClient;
-        private ClientDiagnostics _vmSkusOperationGroupClientDiagnostics;
-        private VmSkusOperationGroup _vmSkusOperationGroupRestClient;
 
         /// <summary> Initializes a new instance of MockableContainerServiceSubscriptionResource for mocking. </summary>
         protected MockableContainerServiceSubscriptionResource()
@@ -52,171 +44,19 @@ namespace Azure.ResourceManager.ContainerService.Mocking
 
         private ClientDiagnostics ManagedClustersClientDiagnostics => _managedClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ManagedClusters ManagedClustersRestClient => _managedClustersRestClient ??= new ManagedClusters(ManagedClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-02-preview");
-
-        private ClientDiagnostics MaintenanceWindowsClientDiagnostics => _maintenanceWindowsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private MaintenanceWindows MaintenanceWindowsRestClient => _maintenanceWindowsRestClient ??= new MaintenanceWindows(MaintenanceWindowsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-02-preview");
+        private ManagedClusters ManagedClustersRestClient => _managedClustersRestClient ??= new ManagedClusters(ManagedClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics SnapshotsClientDiagnostics => _snapshotsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Snapshots SnapshotsRestClient => _snapshotsRestClient ??= new Snapshots(SnapshotsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-02-preview");
-
-        private ClientDiagnostics ManagedClusterSnapshotsClientDiagnostics => _managedClusterSnapshotsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private ManagedClusterSnapshots ManagedClusterSnapshotsRestClient => _managedClusterSnapshotsRestClient ??= new ManagedClusterSnapshots(ManagedClusterSnapshotsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-02-preview");
+        private Snapshots SnapshotsRestClient => _snapshotsRestClient ??= new Snapshots(SnapshotsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics ManagedClustersOperationGroupClientDiagnostics => _managedClustersOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ManagedClustersOperationGroup ManagedClustersOperationGroupRestClient => _managedClustersOperationGroupRestClient ??= new ManagedClustersOperationGroup(ManagedClustersOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-02-preview");
+        private ManagedClustersOperationGroup ManagedClustersOperationGroupRestClient => _managedClustersOperationGroupRestClient ??= new ManagedClustersOperationGroup(ManagedClustersOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics TrustedAccessRolesOperationGroupClientDiagnostics => _trustedAccessRolesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private TrustedAccessRolesOperationGroup TrustedAccessRolesOperationGroupRestClient => _trustedAccessRolesOperationGroupRestClient ??= new TrustedAccessRolesOperationGroup(TrustedAccessRolesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-02-preview");
-
-        private ClientDiagnostics ContainerServiceOperationGroupClientDiagnostics => _containerServiceOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private ContainerServiceOperationGroup ContainerServiceOperationGroupRestClient => _containerServiceOperationGroupRestClient ??= new ContainerServiceOperationGroup(ContainerServiceOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-02-preview");
-
-        private ClientDiagnostics VmSkusOperationGroupClientDiagnostics => _vmSkusOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private VmSkusOperationGroup VmSkusOperationGroupRestClient => _vmSkusOperationGroupRestClient ??= new VmSkusOperationGroup(VmSkusOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-02-preview");
-
-        /// <summary> Gets a collection of ContainerServiceGuardrailsAvailableVersions in the <see cref="SubscriptionResource"/>. </summary>
-        /// <param name="location"> The location for the resource. </param>
-        /// <returns> An object representing collection of ContainerServiceGuardrailsAvailableVersions and their operations over a ContainerServiceGuardrailsAvailableVersionResource. </returns>
-        public virtual ContainerServiceGuardrailsAvailableVersionCollection GetContainerServiceGuardrailsAvailableVersions(AzureLocation location)
-        {
-            return GetCachedClient(client => new ContainerServiceGuardrailsAvailableVersionCollection(client, Id, location));
-        }
-
-        /// <summary>
-        /// Contains Guardrails version along with its support info and whether it is a default version.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/guardrailsVersions/{version}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> GuardrailsAvailableVersions_GetGuardrailsVersions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location for the resource. </param>
-        /// <param name="version"> Safeguards version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerServiceGuardrailsAvailableVersionResource>> GetContainerServiceGuardrailsAvailableVersionAsync(AzureLocation location, string version, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-
-            return await GetContainerServiceGuardrailsAvailableVersions(location).GetAsync(version, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Contains Guardrails version along with its support info and whether it is a default version.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/guardrailsVersions/{version}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> GuardrailsAvailableVersions_GetGuardrailsVersions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location for the resource. </param>
-        /// <param name="version"> Safeguards version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ContainerServiceGuardrailsAvailableVersionResource> GetContainerServiceGuardrailsAvailableVersion(AzureLocation location, string version, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-
-            return GetContainerServiceGuardrailsAvailableVersions(location).Get(version, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ContainerServiceSafeguardsAvailableVersions in the <see cref="SubscriptionResource"/>. </summary>
-        /// <param name="location"> The location for the resource. </param>
-        /// <returns> An object representing collection of ContainerServiceSafeguardsAvailableVersions and their operations over a ContainerServiceSafeguardsAvailableVersionResource. </returns>
-        public virtual ContainerServiceSafeguardsAvailableVersionCollection GetContainerServiceSafeguardsAvailableVersions(AzureLocation location)
-        {
-            return GetCachedClient(client => new ContainerServiceSafeguardsAvailableVersionCollection(client, Id, location));
-        }
-
-        /// <summary>
-        /// Contains Safeguards version along with its support info and whether it is a default version.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/safeguardsVersions/{version}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SafeguardsAvailableVersions_GetSafeguardsVersions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location for the resource. </param>
-        /// <param name="version"> Safeguards version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerServiceSafeguardsAvailableVersionResource>> GetContainerServiceSafeguardsAvailableVersionAsync(AzureLocation location, string version, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-
-            return await GetContainerServiceSafeguardsAvailableVersions(location).GetAsync(version, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Contains Safeguards version along with its support info and whether it is a default version.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/safeguardsVersions/{version}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SafeguardsAvailableVersions_GetSafeguardsVersions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location for the resource. </param>
-        /// <param name="version"> Safeguards version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ContainerServiceSafeguardsAvailableVersionResource> GetContainerServiceSafeguardsAvailableVersion(AzureLocation location, string version, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-
-            return GetContainerServiceSafeguardsAvailableVersions(location).Get(version, cancellationToken);
-        }
+        private TrustedAccessRolesOperationGroup TrustedAccessRolesOperationGroupRestClient => _trustedAccessRolesOperationGroupRestClient ??= new TrustedAccessRolesOperationGroup(TrustedAccessRolesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         /// <summary> Gets a collection of MeshRevisionProfiles in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
@@ -239,7 +79,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,7 +109,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,7 +139,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -311,7 +151,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerServiceManagedClusterData, ContainerServiceManagedClusterResource>(new ManagedClustersGetContainerServiceManagedClustersAsyncCollectionResultOfT(ManagedClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetContainerServiceManagedClusters"), data => new ContainerServiceManagedClusterResource(Client, data));
+            return new AsyncPageableWrapper<ContainerServiceManagedClusterData, ContainerServiceManagedClusterResource>(new ContainerServiceManagedClusterDataAsync0CollectionResultOfT(ManagedClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetContainerServiceManagedClusters"), data => new ContainerServiceManagedClusterResource(Client, data));
         }
 
         /// <summary>
@@ -327,7 +167,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -339,63 +179,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerServiceManagedClusterData, ContainerServiceManagedClusterResource>(new ManagedClustersGetContainerServiceManagedClustersCollectionResultOfT(ManagedClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetContainerServiceManagedClusters"), data => new ContainerServiceManagedClusterResource(Client, data));
-        }
-
-        /// <summary>
-        /// Lists maintenance windows in the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/maintenanceWindows. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MaintenanceWindows_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceWindowResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MaintenanceWindowResource> GetMaintenanceWindowsAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<MaintenanceWindowData, MaintenanceWindowResource>(new MaintenanceWindowsGetBySubscriptionAsyncCollectionResultOfT(MaintenanceWindowsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetMaintenanceWindows"), data => new MaintenanceWindowResource(Client, data));
-        }
-
-        /// <summary>
-        /// Lists maintenance windows in the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/maintenanceWindows. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MaintenanceWindows_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceWindowResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MaintenanceWindowResource> GetMaintenanceWindows(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<MaintenanceWindowData, MaintenanceWindowResource>(new MaintenanceWindowsGetBySubscriptionCollectionResultOfT(MaintenanceWindowsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetMaintenanceWindows"), data => new MaintenanceWindowResource(Client, data));
+            return new PageableWrapper<ContainerServiceManagedClusterData, ContainerServiceManagedClusterResource>(new ContainerServiceManagedClusterData0CollectionResultOfT(ManagedClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetContainerServiceManagedClusters"), data => new ContainerServiceManagedClusterResource(Client, data));
         }
 
         /// <summary>
@@ -411,7 +195,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -423,7 +207,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AgentPoolSnapshotData, AgentPoolSnapshotResource>(new SnapshotsGetAllAsyncCollectionResultOfT(SnapshotsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetAgentPoolSnapshots"), data => new AgentPoolSnapshotResource(Client, data));
+            return new AsyncPageableWrapper<AgentPoolSnapshotData, AgentPoolSnapshotResource>(new AgentPoolSnapshotDataAsync0CollectionResultOfT(SnapshotsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetAgentPoolSnapshots"), data => new AgentPoolSnapshotResource(Client, data));
         }
 
         /// <summary>
@@ -439,7 +223,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -451,63 +235,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AgentPoolSnapshotData, AgentPoolSnapshotResource>(new SnapshotsGetAllCollectionResultOfT(SnapshotsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetAgentPoolSnapshots"), data => new AgentPoolSnapshotResource(Client, data));
-        }
-
-        /// <summary>
-        /// Gets a list of managed cluster snapshots in the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/managedclustersnapshots. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedClusterSnapshots_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedClusterSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedClusterSnapshotResource> GetManagedClusterSnapshotsAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ManagedClusterSnapshotData, ManagedClusterSnapshotResource>(new ManagedClusterSnapshotsGetAllAsyncCollectionResultOfT(ManagedClusterSnapshotsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetManagedClusterSnapshots"), data => new ManagedClusterSnapshotResource(Client, data));
-        }
-
-        /// <summary>
-        /// Gets a list of managed cluster snapshots in the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/managedclustersnapshots. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedClusterSnapshots_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedClusterSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedClusterSnapshotResource> GetManagedClusterSnapshots(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ManagedClusterSnapshotData, ManagedClusterSnapshotResource>(new ManagedClusterSnapshotsGetAllCollectionResultOfT(ManagedClusterSnapshotsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetManagedClusterSnapshots"), data => new ManagedClusterSnapshotResource(Client, data));
+            return new PageableWrapper<AgentPoolSnapshotData, AgentPoolSnapshotResource>(new AgentPoolSnapshotData0CollectionResultOfT(SnapshotsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetAgentPoolSnapshots"), data => new AgentPoolSnapshotResource(Client, data));
         }
 
         /// <summary>
@@ -523,7 +251,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -568,7 +296,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -613,7 +341,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -626,7 +354,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new TrustedAccessRolesOperationGroupGetTrustedAccessRolesAsyncCollectionResultOfT(TrustedAccessRolesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerServiceSubscriptionResource.GetTrustedAccessRoles");
+            return new ContainerServiceTrustedAccessRoleAsyncCollectionResultOfT(TrustedAccessRolesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerServiceSubscriptionResource.GetTrustedAccessRoles");
         }
 
         /// <summary>
@@ -642,7 +370,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -655,137 +383,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new TrustedAccessRolesOperationGroupGetTrustedAccessRolesCollectionResultOfT(TrustedAccessRolesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerServiceSubscriptionResource.GetTrustedAccessRoles");
-        }
-
-        /// <summary>
-        /// Only returns the latest version of each node image. For example there may be an AKSUbuntu-1804gen2containerd-2024.01.26, but only AKSUbuntu-1804gen2containerd-2024.02.02 is visible in this list.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/nodeImageVersions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ContainerServiceOperationGroup_ListNodeImageVersions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NodeImageVersion"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NodeImageVersion> GetNodeImageVersionsAsync(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new ContainerServiceOperationGroupGetNodeImageVersionsAsyncCollectionResultOfT(ContainerServiceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerServiceSubscriptionResource.GetNodeImageVersions");
-        }
-
-        /// <summary>
-        /// Only returns the latest version of each node image. For example there may be an AKSUbuntu-1804gen2containerd-2024.01.26, but only AKSUbuntu-1804gen2containerd-2024.02.02 is visible in this list.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/nodeImageVersions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ContainerServiceOperationGroup_ListNodeImageVersions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NodeImageVersion"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NodeImageVersion> GetNodeImageVersions(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new ContainerServiceOperationGroupGetNodeImageVersionsCollectionResultOfT(ContainerServiceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerServiceSubscriptionResource.GetNodeImageVersions");
-        }
-
-        /// <summary>
-        /// Gets the list of VM SKUs accepted by AKS when creating node pools in a specified location. AKS will perform a best effort approach to provision the requested VM SKUs, but availability is not guaranteed.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/vmSkus. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> VmSkusOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerServiceVmSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContainerServiceVmSku> GetVmSkusAsync(AzureLocation location, bool? includeExtendedLocations = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new VmSkusOperationGroupGetVmSkusAsyncCollectionResultOfT(
-                VmSkusOperationGroupRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                location,
-                includeExtendedLocations,
-                context,
-                "MockableContainerServiceSubscriptionResource.GetVmSkus");
-        }
-
-        /// <summary>
-        /// Gets the list of VM SKUs accepted by AKS when creating node pools in a specified location. AKS will perform a best effort approach to provision the requested VM SKUs, but availability is not guaranteed.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/vmSkus. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> VmSkusOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerServiceVmSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContainerServiceVmSku> GetVmSkus(AzureLocation location, bool? includeExtendedLocations = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new VmSkusOperationGroupGetVmSkusCollectionResultOfT(
-                VmSkusOperationGroupRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                location,
-                includeExtendedLocations,
-                context,
-                "MockableContainerServiceSubscriptionResource.GetVmSkus");
+            return new ContainerServiceTrustedAccessRoleCollectionResultOfT(TrustedAccessRolesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerServiceSubscriptionResource.GetTrustedAccessRoles");
         }
     }
 }

@@ -131,6 +131,8 @@
 # ServiceLabel: %Azure Stack
 # ServiceOwners: @bganapa
 
+/sdk/dataai/    @Azure/azure-data-ai-net-sdk
+
 # PRLabel: %Batch
 /sdk/batch/    @cRui861 @dpwatrous @iwang2 @lilinvictorms @skapur12 @wanghoppe @wiboris @xingwu1
 
@@ -903,8 +905,8 @@
 # AzureSdkOwners:                                                  @ArcturusZhang @ArthurMa1978
 
 # ######## Eng Sys ########
-/eng/                                                              @danieljurek @raych1
-/eng/common/                                                       @Azure/azure-sdk-eng
+/eng/                                                              @danieljurek @raych1 @Azure/azure-sdk-write-net-core
+/eng/common/                                                       @Azure/azure-sdk-eng @Azure/azure-sdk-sync-approvers @Azure/azure-sdk-write-net-core
 /eng/mgmt/                                                         @ArthurMa1978 @m-nash
 
 # Add owners for notifications for specific pipelines

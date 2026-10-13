@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary>
     /// Describes an automation rule condition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BooleanConditionProperties"/>, <see cref="SecurityInsightsPropertyArrayChangedConditionProperties"/>, <see cref="PropertyArrayConditionProperties"/>, <see cref="SecurityInsightsPropertyChangedConditionProperties"/>, and <see cref="SecurityInsightsPropertyConditionProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BooleanConditionProperties"/>, <see cref="PropertyArrayConditionProperties"/>, <see cref="SecurityInsightsPropertyArrayChangedConditionProperties"/>, <see cref="SecurityInsightsPropertyChangedConditionProperties"/>, and <see cref="SecurityInsightsPropertyConditionProperties"/>.
     /// </summary>
     public abstract partial class SecurityInsightsAutomationRuleCondition
     {

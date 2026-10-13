@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DataFactoryExpressionV2(v2Type, v2Value, operators ?? new ChangeTrackingList<DataFactoryElement<string>>(), operands ?? new ChangeTrackingList<DataFactoryExpressionV2>(), additionalBinaryDataProperties);

@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingRoleAssignmentData, BillingEnrollmentAccountRoleAssignmentResource>(new BillingRoleAssignmentsGetByEnrollmentAccountAsyncCollectionResultOfT(_billingRoleAssignmentsRestClient, Id.Parent.Name, Id.Name, context, "BillingEnrollmentAccountRoleAssignmentCollection.GetAll"), data => new BillingEnrollmentAccountRoleAssignmentResource(Client, data));
+            return new AsyncPageableWrapper<BillingRoleAssignmentData, BillingEnrollmentAccountRoleAssignmentResource>(new BillingRoleAssignmentDataAsync4CollectionResultOfT(_billingRoleAssignmentsRestClient, Id.Parent.Name, Id.Name, context, "BillingEnrollmentAccountRoleAssignmentCollection.GetAll"), data => new BillingEnrollmentAccountRoleAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingRoleAssignmentData, BillingEnrollmentAccountRoleAssignmentResource>(new BillingRoleAssignmentsGetByEnrollmentAccountCollectionResultOfT(_billingRoleAssignmentsRestClient, Id.Parent.Name, Id.Name, context, "BillingEnrollmentAccountRoleAssignmentCollection.GetAll"), data => new BillingEnrollmentAccountRoleAssignmentResource(Client, data));
+            return new PageableWrapper<BillingRoleAssignmentData, BillingEnrollmentAccountRoleAssignmentResource>(new BillingRoleAssignmentData4CollectionResultOfT(_billingRoleAssignmentsRestClient, Id.Parent.Name, Id.Name, context, "BillingEnrollmentAccountRoleAssignmentCollection.GetAll"), data => new BillingEnrollmentAccountRoleAssignmentResource(Client, data));
         }
 
         /// <summary>

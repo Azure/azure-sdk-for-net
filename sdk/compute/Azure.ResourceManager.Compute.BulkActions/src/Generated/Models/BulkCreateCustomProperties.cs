@@ -30,7 +30,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             Capacity = capacity;
             Resources = new ChangeTrackingList<BulkCreateCustomResolvedItem>();
             PriorityProfile = priorityProfile;
-            VmSizesProfile = new ChangeTrackingList<BulkCreateCustomVmSizeProfile>();
             ComputeProfile = computeProfile;
         }
 
@@ -43,13 +42,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="partialFulfillmentPolicy"> Controls how partial fulfillment is handled for a BulkCreateCustom request. When enabled, Azure creates only the VMs or vCPUs it has high confidence can be successfully allocated, instead of attempting the entire request and potentially returning allocation failures. </param>
         /// <param name="resources"> The virtual machine resources resolved for the operation. </param>
         /// <param name="priorityProfile"> Configuration Options for Regular or Spot instances in BulkCreateCustom. </param>
-        /// <param name="vmSizesProfile"> List of VM sizes supported for BulkCreateCustom. </param>
         /// <param name="computeProfile"> Compute Profile to configure the Virtual Machines. </param>
-        /// <param name="zoneAllocationPolicy"> Zone Allocation Policy for launching instances. </param>
         /// <param name="overridesProfile"> Per-VM overrides and the shared name prefix, specified when the operation is created. </param>
         /// <param name="executionParameters"> Extra parameters that control how the request is executed, including the retry policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkCreateCustomProperties(DateTimeOffset? createdOn, BulkInstancesOperationProvisioningState? provisioningState, int capacity, CapacityType? capacityType, int? minCapacity, PartialFulfillmentPolicy partialFulfillmentPolicy, IReadOnlyList<BulkCreateCustomResolvedItem> resources, BulkCreateCustomPriorityProfile priorityProfile, IList<BulkCreateCustomVmSizeProfile> vmSizesProfile, ComputeProfile computeProfile, BulkCreateCustomZoneAllocationPolicy zoneAllocationPolicy, BulkCreateCustomOverridesProfile overridesProfile, BulkActionExecutionParameterDetail executionParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkCreateCustomProperties(DateTimeOffset? createdOn, BulkInstancesOperationProvisioningState? provisioningState, int capacity, CapacityType? capacityType, int? minCapacity, PartialFulfillmentPolicy partialFulfillmentPolicy, IReadOnlyList<BulkCreateCustomResolvedItem> resources, BulkCreateCustomPriorityProfile priorityProfile, ComputeProfile computeProfile, BulkCreateCustomOverridesProfile overridesProfile, BulkActionExecutionParameterDetail executionParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
@@ -59,9 +56,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             PartialFulfillmentPolicy = partialFulfillmentPolicy;
             Resources = resources;
             PriorityProfile = priorityProfile;
-            VmSizesProfile = vmSizesProfile;
             ComputeProfile = computeProfile;
-            ZoneAllocationPolicy = zoneAllocationPolicy;
             OverridesProfile = overridesProfile;
             ExecutionParameters = executionParameters;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -91,14 +86,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Configuration Options for Regular or Spot instances in BulkCreateCustom. </summary>
         public BulkCreateCustomPriorityProfile PriorityProfile { get; set; }
 
-        /// <summary> List of VM sizes supported for BulkCreateCustom. </summary>
-        public IList<BulkCreateCustomVmSizeProfile> VmSizesProfile { get; }
-
         /// <summary> Compute Profile to configure the Virtual Machines. </summary>
         public ComputeProfile ComputeProfile { get; set; }
-
-        /// <summary> Zone Allocation Policy for launching instances. </summary>
-        public BulkCreateCustomZoneAllocationPolicy ZoneAllocationPolicy { get; set; }
 
         /// <summary> Per-VM overrides and the shared name prefix, specified when the operation is created. </summary>
         public BulkCreateCustomOverridesProfile OverridesProfile { get; set; }

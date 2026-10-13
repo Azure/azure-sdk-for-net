@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Attestation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AttestationPrivateLinkResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AttestationPrivateLinkResourceListResult(value ?? new ChangeTrackingList<AttestationPrivateLinkResource>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

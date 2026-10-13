@@ -181,10 +181,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SensitivitySettingCreateOrUpdateContent(sensitiveInfoTypesIds, sensitivityThresholdLabelOrder, sensitivityThresholdLabelId, additionalBinaryDataProperties);
+            return new SensitivitySettingCreateOrUpdateContent(sensitiveInfoTypesIds ?? new ChangeTrackingList<Guid>(), sensitivityThresholdLabelOrder, sensitivityThresholdLabelId, additionalBinaryDataProperties);
         }
     }
 }

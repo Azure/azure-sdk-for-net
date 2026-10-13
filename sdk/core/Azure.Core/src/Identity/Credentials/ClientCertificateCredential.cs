@@ -204,8 +204,9 @@ namespace Azure.Identity
                          sendCertificateChain,
                          options);
 
-            // The PoP client is only usable when subject name / issuer authentication is enabled through
-            // SendCertificateChain. Token requests additionally require the first-party AppContext opt-in.
+            // The PoP client requires subject name / issuer authentication via SendCertificateChain.
+            // PoP is enabled by default when requested by the caller, unless disabled by the
+            // first-party AppContext switch or environment variable.
             //
             // The PoP client is created lazily on first use, but all input parameters - including a
             // snapshot of the options - are captured here at construction time so the client's state is

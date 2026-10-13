@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary>
     /// Base model for discovery rule specifications
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResourceGraphQuerySpecification"/> and <see cref="ApplicationInsightsTopologySpecification"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ApplicationInsightsTopologySpecification"/> and <see cref="ResourceGraphQuerySpecification"/>.
     /// </summary>
     public abstract partial class DiscoveryRuleSpecification
     {

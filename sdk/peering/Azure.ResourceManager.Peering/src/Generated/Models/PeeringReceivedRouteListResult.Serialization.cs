@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PeeringReceivedRouteListResult(value, nextLink, additionalBinaryDataProperties);
+            return new PeeringReceivedRouteListResult(value ?? new ChangeTrackingList<PeeringReceivedRoute>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

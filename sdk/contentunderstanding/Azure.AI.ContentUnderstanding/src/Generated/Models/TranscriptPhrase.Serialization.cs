@@ -230,7 +230,7 @@ namespace Azure.AI.ContentUnderstanding
                 text,
                 confidence,
                 span,
-                words,
+                words ?? new ChangeTrackingList<TranscriptWord>(),
                 additionalBinaryDataProperties);
         }
     }

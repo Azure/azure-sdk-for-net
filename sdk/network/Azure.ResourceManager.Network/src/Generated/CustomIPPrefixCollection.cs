@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CustomIPPrefixData, CustomIPPrefixResource>(new CustomIPPrefixesListAsyncCollectionResultOfT(_customIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CustomIPPrefixCollection.GetAll"), data => new CustomIPPrefixResource(Client, data));
+            return new AsyncPageableWrapper<CustomIPPrefixData, CustomIPPrefixResource>(new CustomIPPrefixDataAsyncCollectionResultOfT(_customIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CustomIPPrefixCollection.GetAll"), data => new CustomIPPrefixResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CustomIPPrefixData, CustomIPPrefixResource>(new CustomIPPrefixesListCollectionResultOfT(_customIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CustomIPPrefixCollection.GetAll"), data => new CustomIPPrefixResource(Client, data));
+            return new PageableWrapper<CustomIPPrefixData, CustomIPPrefixResource>(new CustomIPPrefixDataCollectionResultOfT(_customIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CustomIPPrefixCollection.GetAll"), data => new CustomIPPrefixResource(Client, data));
         }
 
         /// <summary>

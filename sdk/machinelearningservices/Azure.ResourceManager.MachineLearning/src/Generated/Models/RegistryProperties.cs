@@ -17,6 +17,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _intellectualPropertyPublisher;
+        internal bool _intellectualPropertyPublisherIsDefined;
+        private ArmResourceId _managedResourceGroup;
+        internal bool _managedResourceGroupIsDefined;
+        private ManagedResourceGroupSettings _managedResourceGroupSettings;
+        internal bool _managedResourceGroupSettingsIsDefined;
+        private string _publicNetworkAccess;
+        internal bool _publicNetworkAccessIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="RegistryProperties"/>. </summary>
         public RegistryProperties()
@@ -41,12 +49,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal RegistryProperties(Uri discoveryUri, string intellectualPropertyPublisher, ArmResourceId managedResourceGroup, ManagedResourceGroupSettings managedResourceGroupSettings, Uri mlFlowRegistryUri, IList<RegistryPrivateEndpointConnection> registryPrivateEndpointConnections, string publicNetworkAccess, IList<RegistryRegionArmDetails> regionDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiscoveryUri = discoveryUri;
-            IntellectualPropertyPublisher = intellectualPropertyPublisher;
-            ManagedResourceGroup = managedResourceGroup;
-            ManagedResourceGroupSettings = managedResourceGroupSettings;
+            _intellectualPropertyPublisher = intellectualPropertyPublisher;
+            _managedResourceGroup = managedResourceGroup;
+            _managedResourceGroupSettings = managedResourceGroupSettings;
             MlFlowRegistryUri = mlFlowRegistryUri;
             RegistryPrivateEndpointConnections = registryPrivateEndpointConnections;
-            PublicNetworkAccess = publicNetworkAccess;
+            _publicNetworkAccess = publicNetworkAccess;
             RegionDetails = regionDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -57,15 +65,48 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> IntellectualPropertyPublisher for the registry. </summary>
         [WirePath("intellectualPropertyPublisher")]
-        public string IntellectualPropertyPublisher { get; set; }
+        public string IntellectualPropertyPublisher
+        {
+            get
+            {
+                return _intellectualPropertyPublisher;
+            }
+            set
+            {
+                _intellectualPropertyPublisher = value;
+                _intellectualPropertyPublisherIsDefined = true;
+            }
+        }
 
         /// <summary> ResourceId of the managed RG if the registry has system created resources. </summary>
         [WirePath("managedResourceGroup")]
-        internal ArmResourceId ManagedResourceGroup { get; set; }
+        internal ArmResourceId ManagedResourceGroup
+        {
+            get
+            {
+                return _managedResourceGroup;
+            }
+            set
+            {
+                _managedResourceGroup = value;
+                _managedResourceGroupIsDefined = true;
+            }
+        }
 
         /// <summary> Managed resource group specific settings. </summary>
         [WirePath("managedResourceGroupSettings")]
-        internal ManagedResourceGroupSettings ManagedResourceGroupSettings { get; set; }
+        internal ManagedResourceGroupSettings ManagedResourceGroupSettings
+        {
+            get
+            {
+                return _managedResourceGroupSettings;
+            }
+            set
+            {
+                _managedResourceGroupSettings = value;
+                _managedResourceGroupSettingsIsDefined = true;
+            }
+        }
 
         /// <summary> MLFlow Registry URI for the Registry. </summary>
         [WirePath("mlFlowRegistryUri")]
@@ -80,7 +121,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Possible values: "Enabled" or "Disabled"
         /// </summary>
         [WirePath("publicNetworkAccess")]
-        public string PublicNetworkAccess { get; set; }
+        public string PublicNetworkAccess
+        {
+            get
+            {
+                return _publicNetworkAccess;
+            }
+            set
+            {
+                _publicNetworkAccess = value;
+                _publicNetworkAccessIsDefined = true;
+            }
+        }
 
         /// <summary> Details of each region the registry is in. </summary>
         [WirePath("regionDetails")]

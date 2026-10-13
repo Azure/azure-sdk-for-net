@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private ConfigurationStore _configurationStore;
+        internal bool _configurationStoreIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="LinkerConfigurationInfo"/>. </summary>
         public LinkerConfigurationInfo()
@@ -42,7 +44,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             DaprProperties = daprProperties;
             AdditionalConfigurations = additionalConfigurations;
             AdditionalConnectionStringProperties = additionalConnectionStringProperties;
-            ConfigurationStore = configurationStore;
+            _configurationStore = configurationStore;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -65,7 +67,18 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public IDictionary<string, string> AdditionalConnectionStringProperties { get; }
 
         /// <summary> An option to store configuration into different place. </summary>
-        internal ConfigurationStore ConfigurationStore { get; set; }
+        internal ConfigurationStore ConfigurationStore
+        {
+            get
+            {
+                return _configurationStore;
+            }
+            set
+            {
+                _configurationStore = value;
+                _configurationStoreIsDefined = true;
+            }
+        }
 
         /// <summary> The app configuration id to store configuration. </summary>
         public string AppConfigurationId

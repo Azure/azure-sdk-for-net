@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutomationAccountData, AutomationAccountResource>(new AutomationAccountGetByResourceGroupAsyncCollectionResultOfT(_automationAccountRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AutomationAccountCollection.GetAll"), data => new AutomationAccountResource(Client, data));
+            return new AsyncPageableWrapper<AutomationAccountData, AutomationAccountResource>(new AutomationAccountDataAsyncCollectionResultOfT(_automationAccountRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AutomationAccountCollection.GetAll"), data => new AutomationAccountResource(Client, data));
         }
 
         /// <summary>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutomationAccountData, AutomationAccountResource>(new AutomationAccountGetByResourceGroupCollectionResultOfT(_automationAccountRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AutomationAccountCollection.GetAll"), data => new AutomationAccountResource(Client, data));
+            return new PageableWrapper<AutomationAccountData, AutomationAccountResource>(new AutomationAccountDataCollectionResultOfT(_automationAccountRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AutomationAccountCollection.GetAll"), data => new AutomationAccountResource(Client, data));
         }
 
         /// <summary>

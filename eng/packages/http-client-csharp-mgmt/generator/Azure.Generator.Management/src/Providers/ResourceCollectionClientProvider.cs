@@ -372,7 +372,12 @@ namespace Azure.Generator.Management.Providers
 
             var bodyStatements = new List<MethodBodyStatement>();
 
-            bodyStatements.Add(thisCollection.TryGetApiVersion(_resourceTypeExpression, $"{ResourceName}ApiVersion".ToVariableName(), out var apiVersion).Terminate());
+            ScopedApi<string>? apiVersion = null;
+            if (_clientInfos.Keys.Any(client => client.NeedsApiVersionField && client.ConstructorApiVersion is null))
+            {
+                bodyStatements.Add(thisCollection.TryGetApiVersion(_resourceTypeExpression, $"{ResourceName}ApiVersion".ToVariableName(), out var resolvedApiVersion).Terminate());
+                apiVersion = resolvedApiVersion;
+            }
 
             // Assign all path parameter fields by assigning from the path parameters
             foreach (var parameter in _extraCtorParameters)
@@ -384,8 +389,15 @@ namespace Azure.Generator.Management.Providers
             foreach (var (inputClient, clientInfo) in _clientInfos)
             {
                 bodyStatements.Add(clientInfo.DiagnosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), _resourceTypeExpression.Namespace(), thisCollection.Diagnostics())).Terminate());
-                var effectiveApiVersion = apiVersion.NullCoalesce(Literal(inputClient.CurrentApiVersion));
-                bodyStatements.Add(clientInfo.RestClientField.Assign(New.Instance(clientInfo.RestClientProvider.Type, clientInfo.DiagnosticsField, thisCollection.Pipeline(), thisCollection.Diagnostics().Property(nameof(DiagnosticsOptions.ApplicationId)), thisCollection.Endpoint(), effectiveApiVersion)).Terminate());
+                bodyStatements.Add(clientInfo.RestClientField.Assign(New.Instance(clientInfo.RestClientProvider.Type,
+                [
+                    clientInfo.DiagnosticsField, thisCollection.Pipeline(), thisCollection.Diagnostics().Property(nameof(DiagnosticsOptions.ApplicationId)), thisCollection.Endpoint(),
+                    .. inputClient.NeedsApiVersionField ? new[] { inputClient.ConstructorApiVersion is { } constructorVersion
+                        ? InputClientExtensions.BuildConstructorApiVersion(constructorVersion, isCollection: true,
+                            variableName: $"{clientInfo.RestClientProvider.Name}ApiVersionOverride".ToVariableName())
+                        : apiVersion!.NullCoalesce(Literal(inputClient.CurrentApiVersion)) } : [],
+                    .. inputClient.NeedsApiVersionResolver ? new[] { InputClientExtensions.BuildApiVersionResolver(isCollection: true) } : []
+                ])).Terminate());
             }
 
             if (TryGetResourceIdValidationType(out _))
@@ -458,6 +470,12 @@ namespace Azure.Generator.Management.Providers
 
             return BackCompatHelper.DecorateBackwardCompatibilityMethods(backCompatMethods, originalMethodList);
         }
+
+        internal IEnumerable<ArrayResponseCollectionResultPlan> ArrayCollectionResultPlans =>
+            _getAlls.Where(method => ArrayResponseCollectionResultPlan.IsArrayResponse(method.InputMethod))
+                .Select(method => new ArrayResponseCollectionResultPlan(this, method.InputClient, method.InputMethod, "GetAll", "GetAllAsync"))
+                .Concat(_actions.Where(method => ArrayResponseCollectionResultPlan.IsArrayResponse(method.InputMethod))
+                    .Select(method => new ArrayResponseCollectionResultPlan(this, method.InputClient, method.InputMethod)));
 
         protected override MethodProvider[] BuildMethods()
         {

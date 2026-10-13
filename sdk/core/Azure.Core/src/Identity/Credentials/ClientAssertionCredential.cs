@@ -33,12 +33,6 @@ namespace Azure.Identity
         internal CredentialPipeline Pipeline { get; }
         internal TenantIdResolverBase TenantIdResolver { get; }
 
-        private const string MtlsPopUnavailableError =
-            "Proof-of-possession (mTLS PoP) was requested, but no binding certificate was available to bind the token. " +
-            "This usually means the host does not support managed identity mTLS proof-of-possession. " +
-            "Bearer fallback is intentionally not performed for an explicit proof-of-possession request. " +
-            "To use bearer tokens instead, set EnableMtlsProofOfPossession to false, or run on a host that supports mTLS proof-of-possession.";
-
         /// <summary>
         /// Protected constructor for <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
         /// </summary>
@@ -163,8 +157,10 @@ namespace Azure.Identity
                 }
                 catch (MsalClientException e) when (client == PopClient && e.ErrorCode == MsalError.MtlsCertificateNotProvided)
                 {
-                    // Proof-of-possession was explicitly requested but could not be satisfied. Do not silently downgrade to a bearer token.
-                    throw new AuthenticationFailedException(MtlsPopUnavailableError, e);
+                    // The host could not provide a binding certificate (for example, managed identity returned a
+                    // bearer assertion because the host is not mTLS proof-of-possession capable). Fall back to a
+                    // bearer token, matching the graceful degradation of the direct managed identity flow.
+                    result = Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.Claims, requestContext.IsCaeEnabled, false, cancellationToken).EnsureCompleted();
                 }
 
                 return scope.Succeeded(result.ToAccessToken());
@@ -198,8 +194,10 @@ namespace Azure.Identity
                 }
                 catch (MsalClientException e) when (client == PopClient && e.ErrorCode == MsalError.MtlsCertificateNotProvided)
                 {
-                    // Proof-of-possession was explicitly requested but could not be satisfied. Do not silently downgrade to a bearer token.
-                    throw new AuthenticationFailedException(MtlsPopUnavailableError, e);
+                    // The host could not provide a binding certificate (for example, managed identity returned a
+                    // bearer assertion because the host is not mTLS proof-of-possession capable). Fall back to a
+                    // bearer token, matching the graceful degradation of the direct managed identity flow.
+                    result = await Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.Claims, requestContext.IsCaeEnabled, true, cancellationToken).ConfigureAwait(false);
                 }
 
                 return scope.Succeeded(result.ToAccessToken());

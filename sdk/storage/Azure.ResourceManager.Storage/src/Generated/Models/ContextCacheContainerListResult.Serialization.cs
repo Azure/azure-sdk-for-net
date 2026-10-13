@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ContextCacheContainerListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ContextCacheContainerListResult(value ?? new ChangeTrackingList<ContextCacheContainerData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

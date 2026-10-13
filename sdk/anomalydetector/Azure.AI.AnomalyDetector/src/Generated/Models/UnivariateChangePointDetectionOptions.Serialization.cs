@@ -226,7 +226,7 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             return new UnivariateChangePointDetectionOptions(
-                series,
+                series ?? new ChangeTrackingList<TimeSeriesPoint>(),
                 granularity,
                 customInterval,
                 period,
