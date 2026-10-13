@@ -14,7 +14,7 @@ namespace Azure.AI.Translation.Text
         /// A float value indicating the confidence in the result.
         /// The score is between zero and one and a low score indicates a low confidence.
         /// </summary>
-        [Obsolete("Confidence is deprecated. Use Score instead.")]
+        [Obsolete("Confidence is deprecated. Use Score instead.", error: true)]
         public float Confidence { get; }
     }
 }
