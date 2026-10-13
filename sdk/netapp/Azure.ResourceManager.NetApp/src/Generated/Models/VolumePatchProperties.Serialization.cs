@@ -129,10 +129,17 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("defaultGroupQuotaInKiBs"u8);
                 writer.WriteNumberValue(DefaultGroupQuotaInKiBs.Value);
             }
-            if (Optional.IsDefined(UnixPermissions))
+            if (_unixPermissionsIsDefined || Optional.IsDefined(UnixPermissions))
             {
-                writer.WritePropertyName("unixPermissions"u8);
-                writer.WriteStringValue(UnixPermissions);
+                if (UnixPermissions != null)
+                {
+                    writer.WritePropertyName("unixPermissions"u8);
+                    writer.WriteStringValue(UnixPermissions);
+                }
+                else
+                {
+                    writer.WriteNull("unixPermissions"u8);
+                }
             }
             if (Optional.IsDefined(IsCoolAccessEnabled))
             {
@@ -159,10 +166,17 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("snapshotDirectoryVisible"u8);
                 writer.WriteBooleanValue(IsSnapshotDirectoryVisible.Value);
             }
-            if (Optional.IsDefined(SmbAccessBasedEnumeration))
+            if (_smbAccessBasedEnumerationIsDefined || Optional.IsDefined(SmbAccessBasedEnumeration))
             {
-                writer.WritePropertyName("smbAccessBasedEnumeration"u8);
-                writer.WriteStringValue(SmbAccessBasedEnumeration.Value.ToString());
+                if (SmbAccessBasedEnumeration != null)
+                {
+                    writer.WritePropertyName("smbAccessBasedEnumeration"u8);
+                    writer.WriteStringValue(SmbAccessBasedEnumeration.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("smbAccessBasedEnumeration"u8);
+                }
             }
             if (Optional.IsDefined(SmbNonBrowsable))
             {
@@ -220,12 +234,14 @@ namespace Azure.ResourceManager.NetApp.Models
             bool? isDefaultQuotaEnabled = default;
             long? defaultUserQuotaInKiBs = default;
             long? defaultGroupQuotaInKiBs = default;
+            bool unixPermissionsIsDefined = false;
             string unixPermissions = default;
             bool? isCoolAccessEnabled = default;
             int? coolnessPeriod = default;
             CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default;
             CoolAccessTieringPolicy? coolAccessTieringPolicy = default;
             bool? isSnapshotDirectoryVisible = default;
+            bool smbAccessBasedEnumerationIsDefined = false;
             SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default;
             SmbNonBrowsable? smbNonBrowsable = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -326,6 +342,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("unixPermissions"u8))
                 {
+                    unixPermissionsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         unixPermissions = null;
@@ -381,6 +398,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("smbAccessBasedEnumeration"u8))
                 {
+                    smbAccessBasedEnumerationIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         smbAccessBasedEnumeration = null;
@@ -421,7 +439,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 isSnapshotDirectoryVisible,
                 smbAccessBasedEnumeration,
                 smbNonBrowsable,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _unixPermissionsIsDefined = unixPermissionsIsDefined,
+                _smbAccessBasedEnumerationIsDefined = smbAccessBasedEnumerationIsDefined
+            };
         }
     }
 }

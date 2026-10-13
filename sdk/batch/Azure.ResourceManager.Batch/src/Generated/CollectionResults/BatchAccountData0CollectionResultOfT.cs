@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Batch
         /// <returns> The pages of BatchAccountData0CollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<BatchAccountData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

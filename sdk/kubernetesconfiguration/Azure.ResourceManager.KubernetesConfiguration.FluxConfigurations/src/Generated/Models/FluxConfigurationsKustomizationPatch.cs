@@ -16,6 +16,22 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _path;
+        internal bool _pathIsDefined;
+        private long? _timeoutInSeconds;
+        internal bool _timeoutInSecondsIsDefined;
+        private long? _syncIntervalInSeconds;
+        internal bool _syncIntervalInSecondsIsDefined;
+        private long? _retryIntervalInSeconds;
+        internal bool _retryIntervalInSecondsIsDefined;
+        private bool? _isPrune;
+        internal bool _isPruneIsDefined;
+        private bool? _isForce;
+        internal bool _isForceIsDefined;
+        private bool? _isWait;
+        internal bool _isWaitIsDefined;
+        private FluxPostBuildPatch _postBuild;
+        internal bool _postBuildIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FluxConfigurationsKustomizationPatch"/>. </summary>
         public FluxConfigurationsKustomizationPatch()
@@ -36,43 +52,131 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal FluxConfigurationsKustomizationPatch(string path, IList<string> dependsOn, long? timeoutInSeconds, long? syncIntervalInSeconds, long? retryIntervalInSeconds, bool? isPrune, bool? isForce, bool? isWait, FluxPostBuildPatch postBuild, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Path = path;
+            _path = path;
             DependsOn = dependsOn;
-            TimeoutInSeconds = timeoutInSeconds;
-            SyncIntervalInSeconds = syncIntervalInSeconds;
-            RetryIntervalInSeconds = retryIntervalInSeconds;
-            IsPrune = isPrune;
-            IsForce = isForce;
-            IsWait = isWait;
-            PostBuild = postBuild;
+            _timeoutInSeconds = timeoutInSeconds;
+            _syncIntervalInSeconds = syncIntervalInSeconds;
+            _retryIntervalInSeconds = retryIntervalInSeconds;
+            _isPrune = isPrune;
+            _isForce = isForce;
+            _isWait = isWait;
+            _postBuild = postBuild;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The path in the source reference to reconcile on the cluster. </summary>
-        public string Path { get; set; }
+        public string Path
+        {
+            get
+            {
+                return _path;
+            }
+            set
+            {
+                _path = value;
+                _pathIsDefined = true;
+            }
+        }
 
         /// <summary> Specifies other Kustomizations that this Kustomization depends on. This Kustomization will not reconcile until all dependencies have completed their reconciliation. </summary>
         public IList<string> DependsOn { get; set; }
 
         /// <summary> The maximum time to attempt to reconcile the Kustomization on the cluster. </summary>
-        public long? TimeoutInSeconds { get; set; }
+        public long? TimeoutInSeconds
+        {
+            get
+            {
+                return _timeoutInSeconds;
+            }
+            set
+            {
+                _timeoutInSeconds = value;
+                _timeoutInSecondsIsDefined = true;
+            }
+        }
 
         /// <summary> The interval at which to re-reconcile the Kustomization on the cluster. </summary>
-        public long? SyncIntervalInSeconds { get; set; }
+        public long? SyncIntervalInSeconds
+        {
+            get
+            {
+                return _syncIntervalInSeconds;
+            }
+            set
+            {
+                _syncIntervalInSeconds = value;
+                _syncIntervalInSecondsIsDefined = true;
+            }
+        }
 
         /// <summary> The interval at which to re-reconcile the Kustomization on the cluster in the event of failure on reconciliation. </summary>
-        public long? RetryIntervalInSeconds { get; set; }
+        public long? RetryIntervalInSeconds
+        {
+            get
+            {
+                return _retryIntervalInSeconds;
+            }
+            set
+            {
+                _retryIntervalInSeconds = value;
+                _retryIntervalInSecondsIsDefined = true;
+            }
+        }
 
         /// <summary> Enable/disable garbage collections of Kubernetes objects created by this Kustomization. </summary>
-        public bool? IsPrune { get; set; }
+        public bool? IsPrune
+        {
+            get
+            {
+                return _isPrune;
+            }
+            set
+            {
+                _isPrune = value;
+                _isPruneIsDefined = true;
+            }
+        }
 
         /// <summary> Enable/disable re-creating Kubernetes resources on the cluster when patching fails due to an immutable field change. </summary>
-        public bool? IsForce { get; set; }
+        public bool? IsForce
+        {
+            get
+            {
+                return _isForce;
+            }
+            set
+            {
+                _isForce = value;
+                _isForceIsDefined = true;
+            }
+        }
 
         /// <summary> Enable/disable health check for all Kubernetes objects created by this Kustomization. </summary>
-        public bool? IsWait { get; set; }
+        public bool? IsWait
+        {
+            get
+            {
+                return _isWait;
+            }
+            set
+            {
+                _isWait = value;
+                _isWaitIsDefined = true;
+            }
+        }
 
         /// <summary> Used for variable substitution for this Kustomization after kustomize build. </summary>
-        public FluxPostBuildPatch PostBuild { get; set; }
+        public FluxPostBuildPatch PostBuild
+        {
+            get
+            {
+                return _postBuild;
+            }
+            set
+            {
+                _postBuild = value;
+                _postBuildIsDefined = true;
+            }
+        }
     }
 }

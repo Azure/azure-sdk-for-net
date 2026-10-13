@@ -75,45 +75,94 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 throw new FormatException($"The model {nameof(CognitiveServicesAgenticApplicationProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(DisplayName))
+            if (_displayNameIsDefined || Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
+                if (DisplayName != null)
+                {
+                    writer.WritePropertyName("displayName"u8);
+                    writer.WriteStringValue(DisplayName);
+                }
+                else
+                {
+                    writer.WriteNull("displayName"u8);
+                }
             }
-            if (Optional.IsDefined(BaseUri))
+            if (_baseUriIsDefined || Optional.IsDefined(BaseUri))
             {
-                writer.WritePropertyName("baseUrl"u8);
-                writer.WriteStringValue(BaseUri);
+                if (BaseUri != null)
+                {
+                    writer.WritePropertyName("baseUrl"u8);
+                    writer.WriteStringValue(BaseUri);
+                }
+                else
+                {
+                    writer.WriteNull("baseUrl"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Agents))
             {
-                writer.WritePropertyName("agents"u8);
-                writer.WriteStartArray();
-                foreach (CognitiveServicesAgentReferenceProperties item in Agents)
+                if (Agents != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("agents"u8);
+                    writer.WriteStartArray();
+                    foreach (CognitiveServicesAgentReferenceProperties item in Agents)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("agents"u8);
+                }
             }
-            if (Optional.IsDefined(AgentIdentityBlueprint))
+            if (_agentIdentityBlueprintIsDefined || Optional.IsDefined(AgentIdentityBlueprint))
             {
-                writer.WritePropertyName("agentIdentityBlueprint"u8);
-                writer.WriteObjectValue(AgentIdentityBlueprint, options);
+                if (AgentIdentityBlueprint != null)
+                {
+                    writer.WritePropertyName("agentIdentityBlueprint"u8);
+                    writer.WriteObjectValue(AgentIdentityBlueprint, options);
+                }
+                else
+                {
+                    writer.WriteNull("agentIdentityBlueprint"u8);
+                }
             }
-            if (Optional.IsDefined(DefaultInstanceIdentity))
+            if (_defaultInstanceIdentityIsDefined || Optional.IsDefined(DefaultInstanceIdentity))
             {
-                writer.WritePropertyName("defaultInstanceIdentity"u8);
-                writer.WriteObjectValue(DefaultInstanceIdentity, options);
+                if (DefaultInstanceIdentity != null)
+                {
+                    writer.WritePropertyName("defaultInstanceIdentity"u8);
+                    writer.WriteObjectValue(DefaultInstanceIdentity, options);
+                }
+                else
+                {
+                    writer.WriteNull("defaultInstanceIdentity"u8);
+                }
             }
-            if (Optional.IsDefined(AuthorizationPolicy))
+            if (_authorizationPolicyIsDefined || Optional.IsDefined(AuthorizationPolicy))
             {
-                writer.WritePropertyName("authorizationPolicy"u8);
-                writer.WriteObjectValue(AuthorizationPolicy, options);
+                if (AuthorizationPolicy != null)
+                {
+                    writer.WritePropertyName("authorizationPolicy"u8);
+                    writer.WriteObjectValue(AuthorizationPolicy, options);
+                }
+                else
+                {
+                    writer.WriteNull("authorizationPolicy"u8);
+                }
             }
-            if (Optional.IsDefined(TrafficRoutingPolicy))
+            if (_trafficRoutingPolicyIsDefined || Optional.IsDefined(TrafficRoutingPolicy))
             {
-                writer.WritePropertyName("trafficRoutingPolicy"u8);
-                writer.WriteObjectValue(TrafficRoutingPolicy, options);
+                if (TrafficRoutingPolicy != null)
+                {
+                    writer.WritePropertyName("trafficRoutingPolicy"u8);
+                    writer.WriteObjectValue(TrafficRoutingPolicy, options);
+                }
+                else
+                {
+                    writer.WriteNull("trafficRoutingPolicy"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -152,15 +201,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
+            bool descriptionIsDefined = false;
             string description = default;
-            IDictionary<string, string> tags = default;
+            IDictionary<string, string> tags = new ChangeTrackingDictionary<string, string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool displayNameIsDefined = false;
             string displayName = default;
+            bool baseUriIsDefined = false;
             string baseUri = default;
-            IList<CognitiveServicesAgentReferenceProperties> agents = default;
+            IList<CognitiveServicesAgentReferenceProperties> agents = new ChangeTrackingList<CognitiveServicesAgentReferenceProperties>();
+            bool agentIdentityBlueprintIsDefined = false;
             CognitiveServicesAssignedIdentity agentIdentityBlueprint = default;
+            bool defaultInstanceIdentityIsDefined = false;
             CognitiveServicesAssignedIdentity defaultInstanceIdentity = default;
+            bool authorizationPolicyIsDefined = false;
             CognitiveServicesApplicationAuthorizationPolicy authorizationPolicy = default;
+            bool trafficRoutingPolicyIsDefined = false;
             CognitiveServicesApplicationTrafficRoutingPolicy trafficRoutingPolicy = default;
             CognitiveServicesAgenticApplicationProvisioningState? provisioningState = default;
             bool? isEnabled = default;
@@ -168,6 +224,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -180,6 +237,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        tags = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -199,6 +257,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("displayName"u8))
                 {
+                    displayNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         displayName = null;
@@ -209,6 +268,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("baseUrl"u8))
                 {
+                    baseUriIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         baseUri = null;
@@ -221,6 +281,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        agents = null;
                         continue;
                     }
                     List<CognitiveServicesAgentReferenceProperties> array = new List<CognitiveServicesAgentReferenceProperties>();
@@ -233,6 +294,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("agentIdentityBlueprint"u8))
                 {
+                    agentIdentityBlueprintIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         agentIdentityBlueprint = null;
@@ -243,6 +305,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("defaultInstanceIdentity"u8))
                 {
+                    defaultInstanceIdentityIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         defaultInstanceIdentity = null;
@@ -253,6 +316,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("authorizationPolicy"u8))
                 {
+                    authorizationPolicyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         authorizationPolicy = null;
@@ -263,6 +327,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("trafficRoutingPolicy"u8))
                 {
+                    trafficRoutingPolicyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         trafficRoutingPolicy = null;
@@ -296,17 +361,26 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             return new CognitiveServicesAgenticApplicationProperties(
                 description,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                tags,
                 additionalBinaryDataProperties,
                 displayName,
                 baseUri,
-                agents ?? new ChangeTrackingList<CognitiveServicesAgentReferenceProperties>(),
+                agents,
                 agentIdentityBlueprint,
                 defaultInstanceIdentity,
                 authorizationPolicy,
                 trafficRoutingPolicy,
                 provisioningState,
-                isEnabled);
+                isEnabled)
+            {
+                _descriptionIsDefined = descriptionIsDefined,
+                _displayNameIsDefined = displayNameIsDefined,
+                _baseUriIsDefined = baseUriIsDefined,
+                _agentIdentityBlueprintIsDefined = agentIdentityBlueprintIsDefined,
+                _defaultInstanceIdentityIsDefined = defaultInstanceIdentityIsDefined,
+                _authorizationPolicyIsDefined = authorizationPolicyIsDefined,
+                _trafficRoutingPolicyIsDefined = trafficRoutingPolicyIsDefined
+            };
         }
     }
 }

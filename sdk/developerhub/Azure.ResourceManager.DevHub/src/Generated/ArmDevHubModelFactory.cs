@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="gitHubOAuthUsername"> user making request. </param>
-        /// <returns> A new <see cref="DevHub.GitHubOAuthResponseData"/> instance for mocking. </returns>
-        public static GitHubOAuthResponseData GitHubOAuthResponseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string gitHubOAuthUsername = default)
+        /// <returns> A new <see cref="DevHub.GitHubOAuthResultData"/> instance for mocking. </returns>
+        public static GitHubOAuthResultData GitHubOAuthResultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string gitHubOAuthUsername = default)
         {
-            return new GitHubOAuthResponseData(
+            return new GitHubOAuthResultData(
                 id,
                 name,
                 resourceType,
@@ -72,11 +72,11 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <summary> The response from List GitHubOAuth operation. </summary>
         /// <param name="value"> Singleton list response containing one GitHubOAuthResponse response. </param>
         /// <returns> A new <see cref="Models.DeveloperHubGitHubOAuthListResult"/> instance for mocking. </returns>
-        public static DeveloperHubGitHubOAuthListResult DeveloperHubGitHubOAuthListResult(IEnumerable<GitHubOAuthResponseData> value = default)
+        public static DeveloperHubGitHubOAuthListResult DeveloperHubGitHubOAuthListResult(IEnumerable<GitHubOAuthResultData> value = default)
         {
-            value ??= new ChangeTrackingList<GitHubOAuthResponseData>();
+            value ??= new ChangeTrackingList<GitHubOAuthResultData>();
 
-            return new DeveloperHubGitHubOAuthListResult((value ?? new ChangeTrackingList<GitHubOAuthResponseData>()).ToList(), default);
+            return new DeveloperHubGitHubOAuthListResult((value ?? new ChangeTrackingList<GitHubOAuthResultData>()).ToList(), default);
         }
 
         /// <summary> GitHubOAuth request object. </summary>
@@ -575,10 +575,10 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="adoOAuthUsername"> user making request. </param>
-        /// <returns> A new <see cref="DevHub.AdoOAuthResponseData"/> instance for mocking. </returns>
-        public static AdoOAuthResponseData AdoOAuthResponseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string adoOAuthUsername = default)
+        /// <returns> A new <see cref="DevHub.AdoOAuthResultData"/> instance for mocking. </returns>
+        public static AdoOAuthResultData AdoOAuthResultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string adoOAuthUsername = default)
         {
-            return new AdoOAuthResponseData(
+            return new AdoOAuthResultData(
                 id,
                 name,
                 resourceType,

@@ -74,36 +74,64 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MaterializationSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Notification))
+            if (_notificationIsDefined || Optional.IsDefined(Notification))
             {
-                writer.WritePropertyName("notification"u8);
-                writer.WriteObjectValue(Notification, options);
+                if (Notification != null)
+                {
+                    writer.WritePropertyName("notification"u8);
+                    writer.WriteObjectValue(Notification, options);
+                }
+                else
+                {
+                    writer.WriteNull("notification"u8);
+                }
             }
-            if (Optional.IsDefined(Resource))
+            if (_resourceIsDefined || Optional.IsDefined(Resource))
             {
-                writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue(Resource, options);
+                if (Resource != null)
+                {
+                    writer.WritePropertyName("resource"u8);
+                    writer.WriteObjectValue(Resource, options);
+                }
+                else
+                {
+                    writer.WriteNull("resource"u8);
+                }
             }
-            if (Optional.IsDefined(Schedule))
+            if (_scheduleIsDefined || Optional.IsDefined(Schedule))
             {
-                writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule, options);
+                if (Schedule != null)
+                {
+                    writer.WritePropertyName("schedule"u8);
+                    writer.WriteObjectValue(Schedule, options);
+                }
+                else
+                {
+                    writer.WriteNull("schedule"u8);
+                }
             }
             if (Optional.IsCollectionDefined(SparkConfiguration))
             {
-                writer.WritePropertyName("sparkConfiguration"u8);
-                writer.WriteStartObject();
-                foreach (var item in SparkConfiguration)
+                if (SparkConfiguration != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("sparkConfiguration"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in SparkConfiguration)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("sparkConfiguration"u8);
+                }
             }
             if (Optional.IsDefined(StoreType))
             {
@@ -152,16 +180,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool notificationIsDefined = false;
             NotificationSetting notification = default;
+            bool resourceIsDefined = false;
             MaterializationComputeResource resource = default;
+            bool scheduleIsDefined = false;
             MachineLearningRecurrenceTrigger schedule = default;
-            IDictionary<string, string> sparkConfiguration = default;
+            IDictionary<string, string> sparkConfiguration = new ChangeTrackingDictionary<string, string>();
             MaterializationStoreType? storeType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("notification"u8))
                 {
+                    notificationIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         notification = null;
@@ -172,6 +204,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("resource"u8))
                 {
+                    resourceIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         resource = null;
@@ -182,6 +215,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("schedule"u8))
                 {
+                    scheduleIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         schedule = null;
@@ -194,6 +228,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        sparkConfiguration = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -229,9 +264,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 notification,
                 resource,
                 schedule,
-                sparkConfiguration ?? new ChangeTrackingDictionary<string, string>(),
+                sparkConfiguration,
                 storeType,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _notificationIsDefined = notificationIsDefined,
+                _resourceIsDefined = resourceIsDefined,
+                _scheduleIsDefined = scheduleIsDefined
+            };
         }
     }
 }

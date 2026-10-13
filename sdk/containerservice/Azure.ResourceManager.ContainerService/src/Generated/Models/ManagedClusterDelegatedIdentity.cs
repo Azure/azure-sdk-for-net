@@ -19,6 +19,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterDelegatedIdentity"/>. </summary>
+        public ManagedClusterDelegatedIdentity()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterDelegatedIdentity"/>. </summary>
         /// <param name="resourceId"> The ARM resource id of the delegated resource - internal use only. </param>
         /// <param name="tenantId"> The tenant id of the delegated resource - internal use only. </param>
         /// <param name="referralResource"> The delegation id of the referral delegation (optional) - internal use only. </param>

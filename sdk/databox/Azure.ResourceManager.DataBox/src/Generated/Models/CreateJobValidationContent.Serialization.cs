@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CreateJobValidationContent(validationCategory, individualRequestDetails, additionalBinaryDataProperties);
+            return new CreateJobValidationContent(validationCategory, individualRequestDetails ?? new ChangeTrackingList<DataBoxValidationInputContent>(), additionalBinaryDataProperties);
         }
     }
 }

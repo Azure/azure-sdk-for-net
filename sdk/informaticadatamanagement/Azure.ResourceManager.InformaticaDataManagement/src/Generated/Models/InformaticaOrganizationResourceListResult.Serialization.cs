@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new InformaticaOrganizationResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new InformaticaOrganizationResourceListResult(value ?? new ChangeTrackingList<InformaticaOrganizationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

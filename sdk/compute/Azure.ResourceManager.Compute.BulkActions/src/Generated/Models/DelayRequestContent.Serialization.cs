@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DelayRequestContent(scheduleOn, resourceIds, additionalBinaryDataProperties);
+            return new DelayRequestContent(scheduleOn, resourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
         }
     }
 }

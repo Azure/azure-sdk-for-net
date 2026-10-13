@@ -89,10 +89,17 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WritePropertyName("keyVaultUri"u8);
                 writer.WriteStringValue(VaultUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Identity))
+            if (_identityIsDefined || Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                if (Identity != null)
+                {
+                    writer.WritePropertyName("identity"u8);
+                    writer.WriteObjectValue(Identity, options);
+                }
+                else
+                {
+                    writer.WriteNull("identity"u8);
+                }
             }
             if (Optional.IsDefined(AccessCredentials))
             {
@@ -144,6 +151,7 @@ namespace Azure.ResourceManager.Search.Models
             string keyName = default;
             string keyVersion = default;
             Uri vaultUri = default;
+            bool identityIsDefined = false;
             SearchDataIdentity identity = default;
             SearchAadApplicationCredentials accessCredentials = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -170,6 +178,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
                 if (prop.NameEquals("identity"u8))
                 {
+                    identityIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         identity = null;
@@ -198,7 +207,10 @@ namespace Azure.ResourceManager.Search.Models
                 vaultUri,
                 identity,
                 accessCredentials,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _identityIsDefined = identityIsDefined
+            };
         }
     }
 }

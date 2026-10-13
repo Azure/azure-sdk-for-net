@@ -80,21 +80,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningOnlineEndpointProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Compute))
+            if (_computeIsDefined || Optional.IsDefined(Compute))
             {
-                writer.WritePropertyName("compute"u8);
-                writer.WriteStringValue(Compute);
+                if (Compute != null)
+                {
+                    writer.WritePropertyName("compute"u8);
+                    writer.WriteStringValue(Compute);
+                }
+                else
+                {
+                    writer.WriteNull("compute"u8);
+                }
             }
             if (Optional.IsCollectionDefined(MirrorTraffic))
             {
-                writer.WritePropertyName("mirrorTraffic"u8);
-                writer.WriteStartObject();
-                foreach (var item in MirrorTraffic)
+                if (MirrorTraffic != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteNumberValue(item.Value);
+                    writer.WritePropertyName("mirrorTraffic"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in MirrorTraffic)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteNumberValue(item.Value);
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("mirrorTraffic"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -108,14 +122,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(Traffic))
             {
-                writer.WritePropertyName("traffic"u8);
-                writer.WriteStartObject();
-                foreach (var item in Traffic)
+                if (Traffic != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteNumberValue(item.Value);
+                    writer.WritePropertyName("traffic"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Traffic)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteNumberValue(item.Value);
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("traffic"u8);
+                }
             }
         }
 
@@ -145,17 +166,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             MachineLearningEndpointAuthMode authMode = default;
+            bool descriptionIsDefined = false;
             string description = default;
+            bool keysIsDefined = false;
             MachineLearningEndpointAuthKeys keys = default;
-            IDictionary<string, string> properties = default;
+            IDictionary<string, string> properties = new ChangeTrackingDictionary<string, string>();
+            bool scoringUriIsDefined = false;
             Uri scoringUri = default;
+            bool swaggerUriIsDefined = false;
             Uri swaggerUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool computeIsDefined = false;
             string compute = default;
-            IDictionary<string, int> mirrorTraffic = default;
+            IDictionary<string, int> mirrorTraffic = new ChangeTrackingDictionary<string, int>();
             MachineLearningEndpointProvisioningState? provisioningState = default;
             MachineLearningPublicNetworkAccessType? publicNetworkAccess = default;
-            IDictionary<string, int> traffic = default;
+            IDictionary<string, int> traffic = new ChangeTrackingDictionary<string, int>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("authMode"u8))
@@ -165,6 +191,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -175,6 +202,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("keys"u8))
                 {
+                    keysIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         keys = null;
@@ -187,6 +215,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -206,6 +235,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("scoringUri"u8))
                 {
+                    scoringUriIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         scoringUri = null;
@@ -216,6 +246,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("swaggerUri"u8))
                 {
+                    swaggerUriIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         swaggerUri = null;
@@ -226,6 +257,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("compute"u8))
                 {
+                    computeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         compute = null;
@@ -238,6 +270,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        mirrorTraffic = null;
                         continue;
                     }
                     Dictionary<string, int> dictionary = new Dictionary<string, int>();
@@ -270,6 +303,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        traffic = null;
                         continue;
                     }
                     Dictionary<string, int> dictionary = new Dictionary<string, int>();
@@ -289,15 +323,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 authMode,
                 description,
                 keys,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
+                properties,
                 scoringUri,
                 swaggerUri,
                 additionalBinaryDataProperties,
                 compute,
-                mirrorTraffic ?? new ChangeTrackingDictionary<string, int>(),
+                mirrorTraffic,
                 provisioningState,
                 publicNetworkAccess,
-                traffic ?? new ChangeTrackingDictionary<string, int>());
+                traffic)
+            {
+                _descriptionIsDefined = descriptionIsDefined,
+                _keysIsDefined = keysIsDefined,
+                _scoringUriIsDefined = scoringUriIsDefined,
+                _swaggerUriIsDefined = swaggerUriIsDefined,
+                _computeIsDefined = computeIsDefined
+            };
         }
     }
 }

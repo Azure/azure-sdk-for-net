@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EdgeContextProperties(capabilities, hierarchies, provisioningState, additionalBinaryDataProperties);
+            return new EdgeContextProperties(capabilities ?? new ChangeTrackingList<ContextCapability>(), hierarchies ?? new ChangeTrackingList<ContextHierarchy>(), provisioningState, additionalBinaryDataProperties);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     public partial class NetworkFabricIPCommunityCollection : ArmCollection, IEnumerable<NetworkFabricIPCommunityResource>, IAsyncEnumerable<NetworkFabricIPCommunityResource>
     {
         private readonly ClientDiagnostics _ipCommunitiesClientDiagnostics;
-        private readonly IpCommunities _ipCommunitiesRestClient;
+        private readonly IPCommunities _ipCommunitiesRestClient;
 
         /// <summary> Initializes a new instance of NetworkFabricIPCommunityCollection for mocking. </summary>
         protected NetworkFabricIPCommunityCollection()
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             TryGetApiVersion(NetworkFabricIPCommunityResource.ResourceType, out string networkFabricIPCommunityApiVersion);
             _ipCommunitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkFabricIPCommunityResource.ResourceType.Namespace, Diagnostics);
-            _ipCommunitiesRestClient = new IpCommunities(_ipCommunitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFabricIPCommunityApiVersion ?? "2025-07-15");
+            _ipCommunitiesRestClient = new IPCommunities(_ipCommunitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFabricIPCommunityApiVersion ?? "2025-07-15");
             ValidateResourceId(id);
         }
 

@@ -84,7 +84,7 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.AbsoluteUri);
             }
-            if (_operationResultIsDefined || Optional.IsDefined(OperationResult))
+            if (Optional.IsDefined(OperationResult, _operationResultIsDefined))
             {
                 if (OperationResult != null)
                 {

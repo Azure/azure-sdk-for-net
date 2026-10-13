@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 displayName,
                 @type,
                 description,
-                allowedValues,
+                allowedValues ?? new ChangeTrackingList<string>(),
                 defaultValue,
                 additionalBinaryDataProperties);
         }

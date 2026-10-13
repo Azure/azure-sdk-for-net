@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AzureMonitorPrivateLinkScopeListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AzureMonitorPrivateLinkScopeListResult(value ?? new ChangeTrackingList<MonitorPrivateLinkScopeData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

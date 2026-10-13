@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _clientId;
+        internal bool _clientIdIsDefined;
+        private string _dataId;
+        internal bool _dataIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DataCollectionConfiguration"/>. </summary>
         public DataCollectionConfiguration()
@@ -30,16 +34,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal DataCollectionConfiguration(string clientId, DataCollectionMode? dataCollectionMode, string dataId, double? samplingRate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ClientId = clientId;
+            _clientId = clientId;
             DataCollectionMode = dataCollectionMode;
-            DataId = dataId;
+            _dataId = dataId;
             SamplingRate = samplingRate;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The msi client id used to collect logging to blob storage. If it's null,backend will pick a registered endpoint identity to auth. </summary>
         [WirePath("clientId")]
-        public string ClientId { get; set; }
+        public string ClientId
+        {
+            get
+            {
+                return _clientId;
+            }
+            set
+            {
+                _clientId = value;
+                _clientIdIsDefined = true;
+            }
+        }
 
         /// <summary> Enable or disable data collection. </summary>
         [WirePath("dataCollectionMode")]
@@ -47,7 +62,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The data asset arm resource id. Client side will ensure data asset is pointing to the blob storage, and backend will collect data to the blob storage. </summary>
         [WirePath("dataId")]
-        public string DataId { get; set; }
+        public string DataId
+        {
+            get
+            {
+                return _dataId;
+            }
+            set
+            {
+                _dataId = value;
+                _dataIdIsDefined = true;
+            }
+        }
 
         /// <summary> The sampling rate for collection. Sampling rate 1.0 means we collect 100% of data by default. </summary>
         [WirePath("samplingRate")]

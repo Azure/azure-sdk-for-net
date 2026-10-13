@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private OnUploadFilters _filters;
+        internal bool _filtersIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="OnUploadProperties"/>. </summary>
         public OnUploadProperties()
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             IsEnabled = isEnabled;
             CapGBPerMonth = capGBPerMonth;
-            Filters = filters;
+            _filters = filters;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,6 +43,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public int? CapGBPerMonth { get; set; }
 
         /// <summary> Optional. Determine which blobs get scanned by On Upload malware scanning. An Or operation is performed between each filter type. </summary>
-        public OnUploadFilters Filters { get; set; }
+        public OnUploadFilters Filters
+        {
+            get
+            {
+                return _filters;
+            }
+            set
+            {
+                _filters = value;
+                _filtersIsDefined = true;
+            }
+        }
     }
 }

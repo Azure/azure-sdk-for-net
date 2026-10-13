@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GraphQueryListResult(value, nextLink, additionalBinaryDataProperties);
+            return new GraphQueryListResult(value ?? new ChangeTrackingList<ResourceGraphQueryData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

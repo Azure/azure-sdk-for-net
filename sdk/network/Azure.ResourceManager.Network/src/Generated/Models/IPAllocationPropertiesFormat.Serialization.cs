@@ -94,10 +94,17 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
             }
-            if (Optional.IsDefined(PrefixLength))
+            if (_prefixLengthIsDefined || Optional.IsDefined(PrefixLength))
             {
-                writer.WritePropertyName("prefixLength"u8);
-                writer.WriteNumberValue(PrefixLength.Value);
+                if (PrefixLength != null)
+                {
+                    writer.WritePropertyName("prefixLength"u8);
+                    writer.WriteNumberValue(PrefixLength.Value);
+                }
+                else
+                {
+                    writer.WriteNull("prefixLength"u8);
+                }
             }
             if (Optional.IsDefined(PrefixType))
             {
@@ -171,6 +178,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkSubResource virtualNetwork = default;
             NetworkIPAllocationType? ipAllocationType = default;
             string prefix = default;
+            bool prefixLengthIsDefined = false;
             int? prefixLength = default;
             NetworkIPVersion? prefixType = default;
             string ipamAllocationId = default;
@@ -212,6 +220,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("prefixLength"u8))
                 {
+                    prefixLengthIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         prefixLength = null;
@@ -269,7 +278,10 @@ namespace Azure.ResourceManager.Network.Models
                 prefixType,
                 ipamAllocationId,
                 allocationTags ?? new ChangeTrackingDictionary<string, string>(),
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _prefixLengthIsDefined = prefixLengthIsDefined
+            };
         }
     }
 }

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CapacityReservationListResult(value, nextLink, additionalBinaryDataProperties);
+            return new CapacityReservationListResult(value ?? new ChangeTrackingList<CapacityReservationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
