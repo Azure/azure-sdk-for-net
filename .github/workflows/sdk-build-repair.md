@@ -188,7 +188,14 @@ engine_command=(
   --customization-request "<the build errors / failure context>"
   --max-attempts "<maxIterations from repair-config.yml>"
 )
-LC_ALL=C printf -v engine_command_text '%q ' "${engine_command[@]}"
+engine_command_text=''
+for engine_argument in "${engine_command[@]}"; do
+  LC_ALL=C printf -v engine_argument_text '%q' "$engine_argument"
+  if [[ "$engine_argument_text" == "\$'"* ]]; then
+    engine_argument_text=${engine_argument_text//&/'\x26'}
+  fi
+  engine_command_text+="$engine_argument_text "
+done
 printf '%s\n' "${engine_command_text% }" \
   > "$RUNNER_TEMP/repair-results/engine-command.txt" || exit 1
 if "${engine_command[@]}" \
@@ -209,8 +216,10 @@ diagnostics. It preserves both raw streams, consolidates diagnostics into
 `engine-errors.txt`, and writes only the actual final response to `result.json`.
 `engine-command.txt` records the same argument array that is executed, with Bash
 escaping under the C locale to preserve argument boundaries and Unicode bytes
-through comment sanitization. The engine's locale is unchanged. Do not author
-or abbreviate this record.
+through comment sanitization. Ampersands within ANSI-C-quoted arguments are
+encoded as `\x26` so global HTML-entity decoding cannot change their values.
+Ordinary shell-escaped arguments are unchanged. The engine's locale is unchanged.
+Do not author or abbreviate this record.
 It returns the engine's nonzero exit code on a valid failure, or fails closed when
 the response is missing, malformed, ambiguous, or contradicts the process outcome.
 Do not merge stderr into JSON or extract a response manually.

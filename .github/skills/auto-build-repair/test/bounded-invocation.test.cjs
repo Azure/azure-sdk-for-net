@@ -136,13 +136,48 @@ test("posted command code preserves URLs without changing the network allowlist"
 });
 const invocation = /```bash\r?\n(mkdir -p "\$RUNNER_TEMP\/repair-results"[\s\S]*?)```/.exec(workflow)[1].replace(/\r\n/g, "\n");
 const bash = process.env.BASH || "bash";
+let sanitizeContent;
+test.before(async () => {
+  const lock = fs.readFileSync(path.resolve(__dirname, "../../../workflows/sdk-build-repair.lock.yml"), "utf8");
+  assert.equal(JSON.parse(/^# gh-aw-metadata: (.+)/.exec(lock)[1]).compiler_version, "v0.88.7");
+  // Fetch the real sanitizer at the immutable v0.88.7 commit, not a local approximation.
+  const sourceRoot = "https://raw.githubusercontent.com/github/gh-aw/bde367913adeb3132f0a171594c88a17f4b7d08c/actions/setup/js/";
+  const sources = new Map(await Promise.all([
+    "sanitize_content.cjs", "sanitize_content_core.cjs", "repo_helpers.cjs",
+    "slash_command_matcher.cjs", "markdown_code_region_balancer.cjs",
+    "glob_pattern_helpers.cjs", "error_codes.cjs",
+  ].map(async (name) => {
+    const response = await fetch(sourceRoot + name, { signal: AbortSignal.timeout(30000) });
+    assert(response.ok, `fetch pinned sanitizer ${name}: HTTP ${response.status}`);
+    return [name, await response.text()];
+  })));
+  const modules = new Map();
+  function load(name) {
+    if (modules.has(name)) return modules.get(name).exports;
+    assert(sources.has(name), `missing pinned sanitizer dependency: ${name}`);
+    const module = { exports: {} };
+    modules.set(name, module);
+    vm.runInNewContext(sources.get(name), {
+      module, exports: module.exports,
+      require: (dependency) => dependency.startsWith("./") ? load(dependency.slice(2)) : require(dependency),
+      process: { env: { GH_AW_SAFE_OUTPUTS_URLS: "allowed-or-code-region", GITHUB_REPOSITORY: "Azure/azure-sdk-for-net" } },
+      core: { info() {} }, URL,
+    }, { filename: name });
+    return module.exports;
+  }
+  sanitizeContent = load("sanitize_content.cjs").sanitizeContent;
+  assert.match(sanitizeContent("```text\n&lt;T&gt;\n```"), /<T>/, "the real sanitizer decodes entities inside code regions");
+});
 for (const [bound, mode, expected, quoted = false] of [[1, "success", 0], [3, "success", 0], [10, "success", 0],
   [3, "success", 0, true], [3, "failed", 1, true],
+  [3, "success", 0, "entities"], [3, "failed", 1, "entities"],
+  [3, "success", 0, "entities-ascii"], [3, "failed", 1, "entities-ascii"],
+  [3, "success", 0, "entities-unicode"], [3, "failed", 1, "entities-unicode"],
   [3, "success", 0, "oversized"], [3, "failed", 1, "oversized"],
   [3, "failed", 1], [3, "failed-stderr", 1], [3, "failed-stderr-upgrade", 1], [3, "failed-stderr-array", 1],
   [3, "invalid-result", 1], [3, "invalid-array-result", 1],
   [3, "contradictory-result", 1], [3, "old-cli", 1], [3, "help-failed", 1]]) {
-  test(`workflow invokes the engine once with bound ${bound}: ${mode}${quoted ? " (quoted arguments)" : ""}`, (t) => {
+  test(`workflow invokes the engine once with bound ${bound}: ${mode}${quoted ? ` (${quoted === true ? "quoted arguments" : quoted})` : ""}`, (t) => {
     const root = fs.mkdtempSync(path.join(os.tmpdir(), "bounded-invocation-"));
     t.after(() => fs.rmSync(root, { recursive: true, force: true }));
     fs.mkdirSync(path.join(root, "repair-results"));
@@ -176,8 +211,13 @@ azsdk() {
 }
 `;
     const unicode = "caf\u00e9 e\u0301 \uff21\uff22\uff23 \u0430\u0441 \ud83d\ude80";
-    const packagePath = quoted ? `sdk/${unicode} widgets/'[x] & $HOME; Azure.Widgets` : "sdk/contoso/Azure.Contoso.Widgets";
+    const entities = "Preserve &lt;T&gt; &amp; &quot; &apos; &#60; &#x3E; &amp;lt;T&amp;gt; \\&lt;escaped&gt; \\x26";
+    const packagePath = quoted === "entities-ascii" ? "sdk/contoso &lt;T&gt; Azure.Widgets"
+      : quoted ? `sdk/${unicode} widgets/'[x] &lt;T&gt; & $HOME; Azure.Widgets` : "sdk/contoso/Azure.Contoso.Widgets";
     const request = quoted === "oversized" ? "x".repeat(70000)
+      : quoted === "entities" ? `${entities}\nNext line`
+      : quoted === "entities-ascii" ? entities
+      : quoted === "entities-unicode" ? `${entities} ${unicode}`
       : quoted ? `Fix ${unicode} 'X' | \`Y\` <Z> & $HOME; $(touch "$RUNNER_TEMP/injected")\nnext line\r\n\`\`\`bash\nhttp://example.test/error https://example.test/error @contoso/types #42` : "Fix CS1061 in custom code";
     const requestFile = path.join(root, "request.txt");
     fs.writeFileSync(requestFile, request);
@@ -209,17 +249,22 @@ azsdk() {
       assert.match(recordedCommand, /^[\x00-\x7f]*$/, "Unicode argv is recorded using ASCII byte escapes");
       assert.match(recordedCommand, /^azsdk -o json tsp client customized-update /);
       assert.match(recordedCommand, new RegExp("--max-attempts " + bound + "\\n$"));
-      const replayRoot = path.join(root, "replay");
-      fs.mkdirSync(replayRoot);
-      const replay = spawnSync(bash, ["--noprofile", "--norc", "-c", fake + '\nsource "$RECORDED_COMMAND_FILE"'], {
-        env: { ...environment, RUNNER_TEMP: replayRoot.replace(/\\/g, "/"),
-          RECORDED_COMMAND_FILE: path.join(root, "repair-results", "engine-command.txt").replace(/\\/g, "/") },
-        encoding: "utf8", timeout: 10000,
-      });
-      assert.ifError(replay.error);
-      assert.deepEqual(readArgs(replayRoot), expectedArgs, "recorded command preserves every executed argument");
+      function replayCommand(text, name) {
+        const replayRoot = path.join(root, name);
+        fs.mkdirSync(replayRoot);
+        const commandFile = path.join(replayRoot, "engine-command.txt");
+        fs.writeFileSync(commandFile, text);
+        const replay = spawnSync(bash, ["--noprofile", "--norc", "-c", fake + '\nsource "$RECORDED_COMMAND_FILE"'], {
+          env: { ...environment, RUNNER_TEMP: replayRoot.replace(/\\/g, "/"),
+            RECORDED_COMMAND_FILE: commandFile.replace(/\\/g, "/") },
+          encoding: "utf8", timeout: 10000,
+        });
+        assert.ifError(replay.error);
+        assert.deepEqual(readArgs(replayRoot), expectedArgs, `${name} preserves every executed argument`);
+        assert.equal(fs.existsSync(path.join(replayRoot, "injected")), false);
+      }
+      replayCommand(recordedCommand, "replay");
       assert.equal(fs.existsSync(path.join(root, "injected")), false);
-      assert.equal(fs.existsSync(path.join(replayRoot, "injected")), false);
       const reportPath = path.join(root, "report.md");
       const artifactDir = path.join(root, "agent-logs");
       fs.mkdirSync(artifactDir);
@@ -238,6 +283,13 @@ azsdk() {
         assert(fs.readFileSync(path.join(artifactDir, "repair-report-full.md"), "utf8").includes(recordedCommand.trimEnd()));
       } else {
         assert(report.includes(recordedCommand.trimEnd()), "comment includes the complete executed command");
+        let sanitized = report;
+        for (let pass = 1; pass <= 2; pass++) {
+          sanitized = sanitizeContent(sanitized);
+          const commandBlock = /^(`{3,})bash\n([\s\S]*?)\n\1$/m.exec(sanitized);
+          assert(commandBlock, `sanitizer pass ${pass} preserves the command code block`);
+          replayCommand(commandBlock[2], `sanitized-replay-${pass}`);
+        }
       }
       const resultPath = path.join(root, "repair-results", "result.json");
       assert.equal(fs.readFileSync(path.join(root, "repair-results", "engine-exit-code.txt"), "utf8").trim(),

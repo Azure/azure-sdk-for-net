@@ -59,9 +59,13 @@ process fails, retain its actual output/error for the failure report; do not
 substitute an earlier successful result.
 
 For CLI invocations, execute a Bash argument array and record that same array,
-serialized with `LC_ALL=C printf '%q '`, as `engine-command.txt` in the results
-directory. Scope the C locale to this serialization only, not the engine process:
-it encodes non-ASCII bytes as ASCII shell escapes that survive comment sanitization.
+serialized per argument with `LC_ALL=C printf '%q'`, as `engine-command.txt` in
+the results directory. Within ANSI-C-quoted arguments (`$'...'`), replace literal
+ampersands with `\x26` before joining the serialized arguments with spaces; this
+prevents the comment sanitizer's global HTML-entity decoding from changing values.
+Leave ordinary shell-escaped arguments unchanged. Scope the C locale to this
+serialization only, not the engine process: it encodes non-ASCII bytes as ASCII
+shell escapes that survive comment sanitization.
 Include every argument and its actual value, including `-o json`, the package
 path, customization request, and `--max-attempts`; never reconstruct or
 abbreviate the command for reporting.
