@@ -18,7 +18,7 @@ namespace Azure.Generator.Visitors
     /// </summary>
     internal class ClientApiVersionVisitor : ScmLibraryVisitor
     {
-        private readonly Dictionary<CSharpType, InputConstant> _apiVersionOverrides = new();
+        private Dictionary<CSharpType, InputConstant>? _apiVersionOverrides;
 
         protected override ClientProvider? Visit(InputClient client, ClientProvider? clientProvider)
         {
@@ -26,7 +26,7 @@ namespace Azure.Generator.Visitors
                 client.Parameters.FirstOrDefault(p => p.IsApiVersion && p.DefaultValue?.Value != null)
                     ?.DefaultValue is { } defaultValue)
             {
-                _apiVersionOverrides.TryAdd(clientProvider.Type, defaultValue);
+                (_apiVersionOverrides ??= new()).TryAdd(clientProvider.Type, defaultValue);
             }
 
             return clientProvider;
@@ -37,7 +37,8 @@ namespace Azure.Generator.Visitors
         // The surrounding Volatile.Read/Interlocked.CompareExchange caching expression is preserved.
         protected override ValueExpression? VisitKeywordExpression(KeywordExpression expression, MethodProvider method)
         {
-            if (expression is not { Keyword: "return", Expression: { } value } ||
+            if (_apiVersionOverrides == null ||
+                expression is not { Keyword: "return", Expression: { } value } ||
                 method.EnclosingType is not ClientProvider client ||
                 method.Signature.ReturnType is not { } returnType ||
                 !_apiVersionOverrides.TryGetValue(returnType, out var defaultValue) ||

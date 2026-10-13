@@ -4,9 +4,13 @@
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
 using Azure.Generator.Visitors;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Primitives;
 using NUnit.Framework;
 using System.Linq;
 
@@ -34,9 +38,7 @@ namespace Azure.Generator.Tests.Visitors
             visitor.InvokeVisitLibrary(library);
 
             var provider = library.TypeProviders.OfType<ClientProvider>().Single(c => c.Name == "TestClient");
-            var factory = provider.Methods.Single(m => m.Signature.Name == "GetLegacyClient");
-            Assert.AreEqual(Helpers.GetExpectedFromFile(cached.ToString()), factory.BodyStatements!.ToDisplayString());
-            Assert.AreEqual(cached ? 0 : 1, factory.Signature.Parameters.Count);
+            Assert.AreEqual(Helpers.GetExpectedFromFile(cached.ToString()), GetFactoryMethod(provider, "GetLegacyClient"));
         }
 
         [TestCase(true, null)]
@@ -56,11 +58,17 @@ namespace Azure.Generator.Tests.Visitors
             MockHelpers.LoadMockGenerator(clients: () => [parent, child], visitors: () => [visitor]);
             var library = AzureClientGenerator.Instance.OutputLibrary;
             var provider = library.TypeProviders.OfType<ClientProvider>().Single(c => c.Name == "TestClient");
-            var factory = provider.Methods.Single(m => m.Signature.Name == "GetChildClient");
-
             visitor.InvokeVisitLibrary(library);
 
-            Assert.AreEqual(Helpers.GetExpectedFromFile(isApiVersion.ToString()), factory.BodyStatements!.ToDisplayString());
+            Assert.AreEqual(Helpers.GetExpectedFromFile(isApiVersion.ToString()), GetFactoryMethod(provider, "GetChildClient"));
+        }
+
+        private static string GetFactoryMethod(ClientProvider provider, string name)
+        {
+            var file = new TypeProviderWriter(provider).Write();
+            return CSharpSyntaxTree.ParseText(file.Content).GetRoot().DescendantNodes()
+                .OfType<MethodDeclarationSyntax>().Single(m => m.Identifier.ValueText == name)
+                .NormalizeWhitespace(eol: "\n").ToString() + "\n";
         }
 
         private class TestClientApiVersionVisitor : ClientApiVersionVisitor
