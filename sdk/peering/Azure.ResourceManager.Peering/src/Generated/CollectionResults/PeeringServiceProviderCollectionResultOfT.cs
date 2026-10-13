@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> The pages of PeeringServiceProviderCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<PeeringServiceProvider>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

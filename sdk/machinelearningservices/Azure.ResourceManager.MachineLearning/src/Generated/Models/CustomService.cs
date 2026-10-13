@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DockerSetting _docker;
+        internal bool _dockerIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CustomService"/>. </summary>
         public CustomService()
@@ -40,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Name = name;
             Image = image;
             EnvironmentVariables = environmentVariables;
-            Docker = docker;
+            _docker = docker;
             Endpoints = endpoints;
             Volumes = volumes;
             Kernel = kernel;
@@ -61,7 +63,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Describes the docker settings for the image. </summary>
         [WirePath("docker")]
-        public DockerSetting Docker { get; set; }
+        public DockerSetting Docker
+        {
+            get
+            {
+                return _docker;
+            }
+            set
+            {
+                _docker = value;
+                _dockerIsDefined = true;
+            }
+        }
 
         /// <summary> Configuring the endpoints for the container. </summary>
         [WirePath("endpoints")]

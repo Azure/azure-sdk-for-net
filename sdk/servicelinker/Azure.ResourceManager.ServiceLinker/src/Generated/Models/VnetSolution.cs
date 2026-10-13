@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private VnetSolutionType? _solutionType;
+        internal bool _solutionTypeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="VnetSolution"/>. </summary>
         public VnetSolution()
@@ -27,13 +29,24 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal VnetSolution(VnetSolutionType? solutionType, LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SolutionType = solutionType;
+            _solutionType = solutionType;
             DeleteOrUpdateBehavior = deleteOrUpdateBehavior;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Type of VNet solution. </summary>
-        public VnetSolutionType? SolutionType { get; set; }
+        public VnetSolutionType? SolutionType
+        {
+            get
+            {
+                return _solutionType;
+            }
+            set
+            {
+                _solutionType = value;
+                _solutionTypeIsDefined = true;
+            }
+        }
 
         /// <summary> Indicates whether to clean up previous operation when Linker is updating or deleting. </summary>
         public LinkerDeleteOrUpdateBehavior? DeleteOrUpdateBehavior { get; set; }

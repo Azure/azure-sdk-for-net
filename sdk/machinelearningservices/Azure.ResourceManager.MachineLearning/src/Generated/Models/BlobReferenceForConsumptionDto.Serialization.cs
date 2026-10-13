@@ -75,15 +75,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(BlobReferenceForConsumptionDto)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(BlobUri))
+            if (_blobUriIsDefined || Optional.IsDefined(BlobUri))
             {
-                writer.WritePropertyName("blobUri"u8);
-                writer.WriteStringValue(BlobUri.AbsoluteUri);
+                if (BlobUri != null)
+                {
+                    writer.WritePropertyName("blobUri"u8);
+                    writer.WriteStringValue(BlobUri.AbsoluteUri);
+                }
+                else
+                {
+                    writer.WriteNull("blobUri"u8);
+                }
             }
-            if (Optional.IsDefined(Credential))
+            if (_credentialIsDefined || Optional.IsDefined(Credential))
             {
-                writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue(Credential, options);
+                if (Credential != null)
+                {
+                    writer.WritePropertyName("credential"u8);
+                    writer.WriteObjectValue(Credential, options);
+                }
+                else
+                {
+                    writer.WriteNull("credential"u8);
+                }
             }
             if (Optional.IsDefined(StorageAccountArmId))
             {
@@ -132,7 +146,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool blobUriIsDefined = false;
             Uri blobUri = default;
+            bool credentialIsDefined = false;
             PendingUploadCredentialDto credential = default;
             ResourceIdentifier storageAccountArmId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -140,6 +156,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (prop.NameEquals("blobUri"u8))
                 {
+                    blobUriIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         blobUri = null;
@@ -150,6 +167,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("credential"u8))
                 {
+                    credentialIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         credential = null;
@@ -172,7 +190,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BlobReferenceForConsumptionDto(blobUri, credential, storageAccountArmId, additionalBinaryDataProperties);
+            return new BlobReferenceForConsumptionDto(blobUri, credential, storageAccountArmId, additionalBinaryDataProperties)
+            {
+                _blobUriIsDefined = blobUriIsDefined,
+                _credentialIsDefined = credentialIsDefined
+            };
         }
     }
 }

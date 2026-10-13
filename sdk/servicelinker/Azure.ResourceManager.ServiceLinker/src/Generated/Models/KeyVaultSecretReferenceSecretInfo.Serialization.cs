@@ -80,10 +80,17 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Version))
+            if (_versionIsDefined || Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version);
+                if (Version != null)
+                {
+                    writer.WritePropertyName("version"u8);
+                    writer.WriteStringValue(Version);
+                }
+                else
+                {
+                    writer.WriteNull("version"u8);
+                }
             }
         }
 
@@ -115,6 +122,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             LinkerSecretType secretType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
+            bool versionIsDefined = false;
             string version = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -130,6 +138,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (prop.NameEquals("version"u8))
                 {
+                    versionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         version = null;
@@ -143,7 +152,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new KeyVaultSecretReferenceSecretInfo(secretType, additionalBinaryDataProperties, name, version);
+            return new KeyVaultSecretReferenceSecretInfo(secretType, additionalBinaryDataProperties, name, version)
+            {
+                _versionIsDefined = versionIsDefined
+            };
         }
     }
 }

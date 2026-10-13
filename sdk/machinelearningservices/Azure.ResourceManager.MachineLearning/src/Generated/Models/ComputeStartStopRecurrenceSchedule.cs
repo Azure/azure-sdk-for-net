@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _startTime;
+        internal bool _startTimeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ComputeStartStopRecurrenceSchedule"/>. </summary>
         public ComputeStartStopRecurrenceSchedule()
@@ -36,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             Frequency = frequency;
             Interval = interval;
-            StartTime = startTime;
+            _startTime = startTime;
             TimeZone = timeZone;
             Schedule = schedule;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -52,7 +54,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The start time in yyyy-MM-ddTHH:mm:ss format. </summary>
         [WirePath("startTime")]
-        public string StartTime { get; set; }
+        public string StartTime
+        {
+            get
+            {
+                return _startTime;
+            }
+            set
+            {
+                _startTime = value;
+                _startTimeIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Specifies time zone in which the schedule runs.

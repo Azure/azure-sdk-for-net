@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BulkActionCancelOperationsContent(operationIds, correlationId, additionalBinaryDataProperties);
+            return new BulkActionCancelOperationsContent(operationIds ?? new ChangeTrackingList<string>(), correlationId, additionalBinaryDataProperties);
         }
     }
 }

@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningJobResourceConfiguration. </summary>
     public partial class MachineLearningJobResourceConfiguration : MachineLearningResourceConfiguration
     {
+        private string _dockerArgs;
+        internal bool _dockerArgsIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningJobResourceConfiguration"/>. </summary>
         public MachineLearningJobResourceConfiguration()
         {
@@ -30,14 +33,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="shmSize"> Size of the docker container's shared memory block. This should be in the format of (number)(unit) where number as to be greater than 0 and the unit can be one of b(bytes), k(kilobytes), m(megabytes), or g(gigabytes). </param>
         internal MachineLearningJobResourceConfiguration(int? instanceCount, string instanceType, IDictionary<string, BinaryData> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties, string dockerArgs, IList<string> dockerArgsList, string shmSize) : base(instanceCount, instanceType, properties, additionalBinaryDataProperties)
         {
-            DockerArgs = dockerArgs;
+            _dockerArgs = dockerArgs;
             DockerArgsList = dockerArgsList;
             ShmSize = shmSize;
         }
 
         /// <summary> Extra arguments to pass to the Docker run command. This would override any parameters that have already been set by the system, or in this section. This parameter is only supported for Azure ML compute types. </summary>
         [WirePath("dockerArgs")]
-        public string DockerArgs { get; set; }
+        public string DockerArgs
+        {
+            get
+            {
+                return _dockerArgs;
+            }
+            set
+            {
+                _dockerArgs = value;
+                _dockerArgsIsDefined = true;
+            }
+        }
 
         /// <summary> Extra arguments to pass to the Docker run command, as a collection. This would override any parameters that have already been set by the system, or in this section. This parameter is only supported for Azure ML compute types. </summary>
         [WirePath("dockerArgsList")]

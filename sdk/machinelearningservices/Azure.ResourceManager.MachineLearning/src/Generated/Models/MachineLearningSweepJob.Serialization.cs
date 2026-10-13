@@ -81,21 +81,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningSweepJob)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(EarlyTermination))
+            if (_earlyTerminationIsDefined || Optional.IsDefined(EarlyTermination))
             {
-                writer.WritePropertyName("earlyTermination"u8);
-                writer.WriteObjectValue(EarlyTermination, options);
+                if (EarlyTermination != null)
+                {
+                    writer.WritePropertyName("earlyTermination"u8);
+                    writer.WriteObjectValue(EarlyTermination, options);
+                }
+                else
+                {
+                    writer.WriteNull("earlyTermination"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Inputs))
             {
-                writer.WritePropertyName("inputs"u8);
-                writer.WriteStartObject();
-                foreach (var item in Inputs)
+                if (Inputs != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    writer.WritePropertyName("inputs"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Inputs)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteObjectValue(item.Value, options);
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("inputs"u8);
+                }
             }
             if (Optional.IsDefined(Limits))
             {
@@ -106,19 +120,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteObjectValue(Objective, options);
             if (Optional.IsCollectionDefined(Outputs))
             {
-                writer.WritePropertyName("outputs"u8);
-                writer.WriteStartObject();
-                foreach (var item in Outputs)
+                if (Outputs != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    writer.WritePropertyName("outputs"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Outputs)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteObjectValue(item.Value, options);
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("outputs"u8);
+                }
             }
-            if (Optional.IsDefined(QueueSettings))
+            if (_queueSettingsIsDefined || Optional.IsDefined(QueueSettings))
             {
-                writer.WritePropertyName("queueSettings"u8);
-                writer.WriteObjectValue(QueueSettings, options);
+                if (QueueSettings != null)
+                {
+                    writer.WritePropertyName("queueSettings"u8);
+                    writer.WriteObjectValue(QueueSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("queueSettings"u8);
+                }
             }
             writer.WritePropertyName("samplingAlgorithm"u8);
             writer.WriteObjectValue(SamplingAlgorithm, options);
@@ -160,25 +188,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool descriptionIsDefined = false;
             string description = default;
-            IDictionary<string, string> properties = default;
-            IDictionary<string, string> tags = default;
+            IDictionary<string, string> properties = new ChangeTrackingDictionary<string, string>();
+            IDictionary<string, string> tags = new ChangeTrackingDictionary<string, string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceIdentifier componentId = default;
             ResourceIdentifier computeId = default;
+            bool displayNameIsDefined = false;
             string displayName = default;
             string experimentName = default;
+            bool identityIsDefined = false;
             MachineLearningIdentityConfiguration identity = default;
             bool? isArchived = default;
             JobType jobType = default;
+            bool notificationSettingIsDefined = false;
             NotificationSetting notificationSetting = default;
-            IDictionary<string, MachineLearningJobService> services = default;
+            IDictionary<string, MachineLearningJobService> services = new ChangeTrackingDictionary<string, MachineLearningJobService>();
             MachineLearningJobStatus? status = default;
+            bool earlyTerminationIsDefined = false;
             MachineLearningEarlyTerminationPolicy earlyTermination = default;
-            IDictionary<string, MachineLearningJobInput> inputs = default;
+            IDictionary<string, MachineLearningJobInput> inputs = new ChangeTrackingDictionary<string, MachineLearningJobInput>();
             MachineLearningSweepJobLimits limits = default;
             MachineLearningObjective objective = default;
-            IDictionary<string, MachineLearningJobOutput> outputs = default;
+            IDictionary<string, MachineLearningJobOutput> outputs = new ChangeTrackingDictionary<string, MachineLearningJobOutput>();
+            bool queueSettingsIsDefined = false;
             QueueSettings queueSettings = default;
             SamplingAlgorithm samplingAlgorithm = default;
             BinaryData searchSpace = default;
@@ -187,6 +221,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -199,6 +234,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -220,6 +256,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        tags = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -257,6 +294,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("displayName"u8))
                 {
+                    displayNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         displayName = null;
@@ -272,6 +310,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("identity"u8))
                 {
+                    identityIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         identity = null;
@@ -296,6 +335,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("notificationSetting"u8))
                 {
+                    notificationSettingIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         notificationSetting = null;
@@ -308,6 +348,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        services = null;
                         continue;
                     }
                     Dictionary<string, MachineLearningJobService> dictionary = new Dictionary<string, MachineLearningJobService>();
@@ -329,6 +370,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("earlyTermination"u8))
                 {
+                    earlyTerminationIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         earlyTermination = null;
@@ -341,6 +383,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        inputs = null;
                         continue;
                     }
                     Dictionary<string, MachineLearningJobInput> dictionary = new Dictionary<string, MachineLearningJobInput>();
@@ -369,6 +412,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        outputs = null;
                         continue;
                     }
                     Dictionary<string, MachineLearningJobOutput> dictionary = new Dictionary<string, MachineLearningJobOutput>();
@@ -381,6 +425,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("queueSettings"u8))
                 {
+                    queueSettingsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         queueSettings = null;
@@ -411,8 +456,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             return new MachineLearningSweepJob(
                 description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                properties,
+                tags,
                 additionalBinaryDataProperties,
                 componentId,
                 computeId,
@@ -422,17 +467,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 isArchived,
                 jobType,
                 notificationSetting,
-                services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
+                services,
                 status,
                 earlyTermination,
-                inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(),
+                inputs,
                 limits,
                 objective,
-                outputs ?? new ChangeTrackingDictionary<string, MachineLearningJobOutput>(),
+                outputs,
                 queueSettings,
                 samplingAlgorithm,
                 searchSpace,
-                trial);
+                trial)
+            {
+                _descriptionIsDefined = descriptionIsDefined,
+                _displayNameIsDefined = displayNameIsDefined,
+                _identityIsDefined = identityIsDefined,
+                _notificationSettingIsDefined = notificationSettingIsDefined,
+                _earlyTerminationIsDefined = earlyTerminationIsDefined,
+                _queueSettingsIsDefined = queueSettingsIsDefined
+            };
         }
     }
 }

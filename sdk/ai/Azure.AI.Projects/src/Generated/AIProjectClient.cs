@@ -43,12 +43,8 @@ namespace Azure.AI.Projects
 #pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         private EvaluationTaxonomies _cachedEvaluationTaxonomies;
 #pragma warning restore AAIP001 // This generated code depends on experimental functionality.
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         private ProjectEvaluators _cachedProjectEvaluators;
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         private EvaluatorGenerationJobs _cachedEvaluatorGenerationJobs;
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 #pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         private ProjectInsights _cachedProjectInsights;
 #pragma warning restore AAIP001 // This generated code depends on experimental functionality.
@@ -61,9 +57,7 @@ namespace Azure.AI.Projects
 #pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         private AIProjectRoutines _cachedAIProjectRoutines;
 #pragma warning restore AAIP001 // This generated code depends on experimental functionality.
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         private DataGenerationJobs _cachedDataGenerationJobs;
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }

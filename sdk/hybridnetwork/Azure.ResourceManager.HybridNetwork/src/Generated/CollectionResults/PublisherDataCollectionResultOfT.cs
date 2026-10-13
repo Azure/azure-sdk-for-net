@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> The pages of PublisherDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<PublisherData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

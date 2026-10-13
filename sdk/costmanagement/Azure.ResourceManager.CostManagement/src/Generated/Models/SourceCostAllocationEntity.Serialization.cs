@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SourceCostAllocationEntity(resourceType, name, additionalBinaryDataProperties, values);
+            return new SourceCostAllocationEntity(resourceType, name, additionalBinaryDataProperties, values ?? new ChangeTrackingList<string>());
         }
     }
 }

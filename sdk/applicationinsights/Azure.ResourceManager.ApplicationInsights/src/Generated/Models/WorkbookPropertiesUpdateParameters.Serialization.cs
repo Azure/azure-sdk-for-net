@@ -104,15 +104,29 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Description))
+            if (_descriptionIsDefined || Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
+                if (Description != null)
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+                else
+                {
+                    writer.WriteNull("description"u8);
+                }
             }
-            if (Optional.IsDefined(Revision))
+            if (_revisionIsDefined || Optional.IsDefined(Revision))
             {
-                writer.WritePropertyName("revision"u8);
-                writer.WriteStringValue(Revision);
+                if (Revision != null)
+                {
+                    writer.WritePropertyName("revision"u8);
+                    writer.WriteStringValue(Revision);
+                }
+                else
+                {
+                    writer.WriteNull("revision"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -160,7 +174,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             string serializedData = default;
             string category = default;
             IList<string> tagsPropertiesTags = default;
+            bool descriptionIsDefined = false;
             string description = default;
+            bool revisionIsDefined = false;
             string revision = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -203,6 +219,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -213,6 +230,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (prop.NameEquals("revision"u8))
                 {
+                    revisionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         revision = null;
@@ -233,7 +251,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 tagsPropertiesTags ?? new ChangeTrackingList<string>(),
                 description,
                 revision,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _descriptionIsDefined = descriptionIsDefined,
+                _revisionIsDefined = revisionIsDefined
+            };
         }
     }
 }

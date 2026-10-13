@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                 partnerId,
                 solutionId,
                 partnerTenantId,
-                dataAccessScopes,
+                dataAccessScopes ?? new ChangeTrackingList<string>(),
                 marketPlaceOfferDetails,
                 saasApplicationId,
                 accessAzureDataManagerForAgricultureApplicationId,

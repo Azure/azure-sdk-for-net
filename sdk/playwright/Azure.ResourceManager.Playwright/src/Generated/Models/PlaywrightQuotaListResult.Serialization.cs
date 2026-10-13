@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Playwright.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PlaywrightQuotaListResult(value, nextLink, additionalBinaryDataProperties);
+            return new PlaywrightQuotaListResult(value ?? new ChangeTrackingList<PlaywrightQuotaData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

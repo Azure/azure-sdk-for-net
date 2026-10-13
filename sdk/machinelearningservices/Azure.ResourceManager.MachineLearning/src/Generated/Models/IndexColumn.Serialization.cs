@@ -74,10 +74,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(IndexColumn)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ColumnName))
+            if (_columnNameIsDefined || Optional.IsDefined(ColumnName))
             {
-                writer.WritePropertyName("columnName"u8);
-                writer.WriteStringValue(ColumnName);
+                if (ColumnName != null)
+                {
+                    writer.WritePropertyName("columnName"u8);
+                    writer.WriteStringValue(ColumnName);
+                }
+                else
+                {
+                    writer.WriteNull("columnName"u8);
+                }
             }
             if (Optional.IsDefined(DataType))
             {
@@ -126,6 +133,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool columnNameIsDefined = false;
             string columnName = default;
             FeatureDataType? dataType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -133,6 +141,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (prop.NameEquals("columnName"u8))
                 {
+                    columnNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         columnName = null;
@@ -155,7 +164,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IndexColumn(columnName, dataType, additionalBinaryDataProperties);
+            return new IndexColumn(columnName, dataType, additionalBinaryDataProperties)
+            {
+                _columnNameIsDefined = columnNameIsDefined
+            };
         }
     }
 }

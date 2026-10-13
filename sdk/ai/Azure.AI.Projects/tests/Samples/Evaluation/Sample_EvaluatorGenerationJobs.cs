@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Agents;
@@ -11,7 +12,7 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests.Samples.Evaluation;
-#pragma warning disable AAIP001
+#pragma warning disable SCME0006
 
 public class Sample_EvaluatorGenerationJob : SamplesBase
 {
@@ -38,26 +39,18 @@ public class Sample_EvaluatorGenerationJob : SamplesBase
             agentName: "evalAgent",
             options: new(agentDefinition));
         Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
-        EvaluatorGenerationJob job = new()
-        {
-            Inputs = new EvaluatorGenerationInputs(
-                sources: [new AgentEvaluatorGenerationJobSource(agentName: agentVersion.Name)],
-                model: modelDeploymentName,
-                evaluatorName: "coherence"
-            )
-        };
+        EvaluatorGenerationInputs job = new(
+            sources: [new AgentEvaluatorGenerationJobSource(agentName: agentVersion.Name)],
+            model: modelDeploymentName,
+            evaluatorName: "coherence"
+        );
         #endregion
         #region Snippet:Sample_CreateJob_EvaluatorGenerationJob_Async
-        EvaluatorGenerationJob runningJob = await projectClient.EvaluatorGenerationJobs.CreateAsync(job);
+        OperationResult result = await projectClient.EvaluatorGenerationJobs.CreateAsync(waitUntilCompleted: true, job: job);
+        EvaluatorGenerationJob runningJob = EvaluatorGenerationJob.FromClientResult(await result.UpdateStatusAsync());
         Console.WriteLine($"Created job ID: {runningJob.Id}");
         #endregion
         #region Snippet:Sample_GetJob_EvaluatorGenerationJob_Async
-        while (runningJob.Status != ProjectsJobStatus.Failed && runningJob.Status != ProjectsJobStatus.Succeeded)
-        {
-            await Task.Delay(500);
-            Console.WriteLine($"Waiting for job ID: {runningJob.Id}...");
-            runningJob = await projectClient.EvaluatorGenerationJobs.GetAsync(jobId: runningJob.Id);
-        }
         if (runningJob.Status == ProjectsJobStatus.Failed)
         {
             throw new InvalidOperationException($"The job {runningJob.Id} has failed.");
@@ -65,15 +58,13 @@ public class Sample_EvaluatorGenerationJob : SamplesBase
         Console.WriteLine($"The job ID: {runningJob.Id} completed, created evaluator {runningJob.Result.Name}, v. {runningJob.Result.Version}");
         #endregion
         #region Snippet:Sample_CancelingJob_EvaluatorGenerationJob_Async
-        job = new()
-        {
-            Inputs = new EvaluatorGenerationInputs(
-                sources: [new PromptEvaluatorGenerationJobSource("Please explain the Maxwell's equation")],
-                model: modelDeploymentName,
-                evaluatorName: "violence"
-            )
-        };
-        EvaluatorGenerationJob jobToCancel = await projectClient.EvaluatorGenerationJobs.CreateAsync(job);
+        job = new(
+            sources: [new PromptEvaluatorGenerationJobSource("Please explain the Maxwell's equation")],
+            model: modelDeploymentName,
+            evaluatorName: "violence"
+        );
+        result = await projectClient.EvaluatorGenerationJobs.CreateAsync(waitUntilCompleted: false, job: job);
+        EvaluatorGenerationJob jobToCancel = EvaluatorGenerationJob.FromClientResult(await result.UpdateStatusAsync());
         jobToCancel = await projectClient.EvaluatorGenerationJobs.CancelAsync(jobToCancel.Id);
         while (jobToCancel.Status != ProjectsJobStatus.Failed && jobToCancel.Status != ProjectsJobStatus.Succeeded && jobToCancel.Status != ProjectsJobStatus.Cancelled)
         {
@@ -103,7 +94,7 @@ public class Sample_EvaluatorGenerationJob : SamplesBase
 
     [Test]
     [SyncOnly]
-    public void EvaluatorGenerationJobSync()
+    public async Task EvaluatorGenerationJobSync()
     {
 #if SNIPPET
         var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
@@ -123,26 +114,18 @@ public class Sample_EvaluatorGenerationJob : SamplesBase
             agentName: "evalAgent",
             options: new(agentDefinition));
         Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
-        EvaluatorGenerationJob job = new()
-        {
-            Inputs = new EvaluatorGenerationInputs(
-                sources: [new AgentEvaluatorGenerationJobSource(agentName: agentVersion.Name)],
-                model: modelDeploymentName,
-                evaluatorName: "coherence"
-            )
-        };
+        EvaluatorGenerationInputs job = new(
+            sources: [new AgentEvaluatorGenerationJobSource(agentName: agentVersion.Name)],
+            model: modelDeploymentName,
+            evaluatorName: "coherence"
+        );
         #endregion
         #region Snippet:Sample_CreateJob_EvaluatorGenerationJob_Sync
-        EvaluatorGenerationJob runningJob = projectClient.EvaluatorGenerationJobs.Create(job);
+        OperationResult result = projectClient.EvaluatorGenerationJobs.Create(waitUntilCompleted: true, job: job);
+        EvaluatorGenerationJob runningJob = EvaluatorGenerationJob.FromClientResult(result.UpdateStatus());
         Console.WriteLine($"Created job ID: {runningJob.Id}");
         #endregion
         #region Snippet:Sample_GetJob_EvaluatorGenerationJob_Sync
-        while (runningJob.Status != ProjectsJobStatus.Failed && runningJob.Status != ProjectsJobStatus.Succeeded)
-        {
-            Thread.Sleep(500);
-            Console.WriteLine($"Waiting for job ID: {runningJob.Id}...");
-            runningJob = projectClient.EvaluatorGenerationJobs.Get(jobId: runningJob.Id);
-        }
         if (runningJob.Status == ProjectsJobStatus.Failed)
         {
             throw new InvalidOperationException($"The job {runningJob.Id} has failed.");
@@ -150,15 +133,13 @@ public class Sample_EvaluatorGenerationJob : SamplesBase
         Console.WriteLine($"The job ID: {runningJob.Id} completed, created evaluator {runningJob.Result.Name}, v. {runningJob.Result.Version}");
         #endregion
         #region Snippet:Sample_CancelingJob_EvaluatorGenerationJob_Sync
-        job = new()
-        {
-            Inputs = new EvaluatorGenerationInputs(
-                sources: [new PromptEvaluatorGenerationJobSource("Please explain the Maxwell's equation")],
-                model: modelDeploymentName,
-                evaluatorName: "violence"
-            )
-        };
-        EvaluatorGenerationJob jobToCancel = projectClient.EvaluatorGenerationJobs.Create(job);
+        job = new(
+            sources: [new PromptEvaluatorGenerationJobSource("Please explain the Maxwell's equation")],
+            model: modelDeploymentName,
+            evaluatorName: "violence"
+        );
+        result = projectClient.EvaluatorGenerationJobs.Create(waitUntilCompleted: false, job: job);
+        EvaluatorGenerationJob jobToCancel = EvaluatorGenerationJob.FromClientResult(result.UpdateStatus());
         jobToCancel = projectClient.EvaluatorGenerationJobs.Cancel(jobToCancel.Id);
         while (jobToCancel.Status != ProjectsJobStatus.Failed && jobToCancel.Status != ProjectsJobStatus.Succeeded && jobToCancel.Status != ProjectsJobStatus.Cancelled)
         {

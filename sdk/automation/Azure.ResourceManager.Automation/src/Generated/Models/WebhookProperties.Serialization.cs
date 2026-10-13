@@ -89,10 +89,17 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpiresOn.Value, "O");
             }
-            if (Optional.IsDefined(LastInvokedOn))
+            if (_lastInvokedOnIsDefined || Optional.IsDefined(LastInvokedOn))
             {
-                writer.WritePropertyName("lastInvokedTime"u8);
-                writer.WriteStringValue(LastInvokedOn.Value, "O");
+                if (LastInvokedOn != null)
+                {
+                    writer.WritePropertyName("lastInvokedTime"u8);
+                    writer.WriteStringValue(LastInvokedOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("lastInvokedTime"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
@@ -185,6 +192,7 @@ namespace Azure.ResourceManager.Automation.Models
             bool? isEnabled = default;
             Uri uri = default;
             DateTimeOffset? expiresOn = default;
+            bool lastInvokedOnIsDefined = false;
             DateTimeOffset? lastInvokedOn = default;
             IDictionary<string, string> parameters = default;
             RunbookAssociationProperty runbook = default;
@@ -225,6 +233,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("lastInvokedTime"u8))
                 {
+                    lastInvokedOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         lastInvokedOn = null;
@@ -313,7 +322,10 @@ namespace Azure.ResourceManager.Automation.Models
                 lastModifiedOn,
                 lastModifiedBy,
                 description,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _lastInvokedOnIsDefined = lastInvokedOnIsDefined
+            };
         }
     }
 }

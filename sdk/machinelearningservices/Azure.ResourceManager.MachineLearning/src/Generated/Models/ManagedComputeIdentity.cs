@@ -15,6 +15,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Managed compute identity definition. </summary>
     public partial class ManagedComputeIdentity : MonitorComputeIdentityBase
     {
+        private ManagedServiceIdentity _identity;
+        internal bool _identityIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="ManagedComputeIdentity"/>. </summary>
         public ManagedComputeIdentity() : base(MonitorComputeIdentityType.ManagedIdentity)
         {
@@ -26,11 +29,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="identity"> The identity which will be leveraged by the monitoring jobs. </param>
         internal ManagedComputeIdentity(MonitorComputeIdentityType computeIdentityType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ManagedServiceIdentity identity) : base(computeIdentityType, additionalBinaryDataProperties)
         {
-            Identity = identity;
+            _identity = identity;
         }
 
         /// <summary> The identity which will be leveraged by the monitoring jobs. </summary>
         [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity
+        {
+            get
+            {
+                return _identity;
+            }
+            set
+            {
+                _identity = value;
+                _identityIsDefined = true;
+            }
+        }
     }
 }

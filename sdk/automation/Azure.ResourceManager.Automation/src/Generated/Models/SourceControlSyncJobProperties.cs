@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DateTimeOffset? _startsOn;
+        internal bool _startsOnIsDefined;
+        private DateTimeOffset? _endsOn;
+        internal bool _endsOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SourceControlSyncJobProperties"/>. </summary>
         internal SourceControlSyncJobProperties()
@@ -34,8 +38,8 @@ namespace Azure.ResourceManager.Automation.Models
             SourceControlSyncJobId = sourceControlSyncJobId;
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
-            StartsOn = startsOn;
-            EndsOn = endsOn;
+            _startsOn = startsOn;
+            _endsOn = endsOn;
             SyncType = syncType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -50,10 +54,22 @@ namespace Azure.ResourceManager.Automation.Models
         public SourceControlProvisioningState? ProvisioningState { get; }
 
         /// <summary> The start time of the job. </summary>
-        public DateTimeOffset? StartsOn { get; }
+        public DateTimeOffset? StartsOn
+        {
+            get
+            {
+                return _startsOn;
+            }
+        }
 
         /// <summary> The end time of the job. </summary>
-        public DateTimeOffset? EndsOn { get; }
+        public DateTimeOffset? EndsOn
+        {
+            get
+            {
+                return _endsOn;
+            }
+        }
 
         /// <summary> The sync type. </summary>
         public SourceControlSyncType? SyncType { get; }

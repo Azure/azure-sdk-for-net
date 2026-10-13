@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private CognitiveServicesQuotaScopeType? _scopeType;
+        internal bool _scopeTypeIsDefined;
+        private string _scopeId;
+        internal bool _scopeIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ServiceAccountUsage"/>. </summary>
         internal ServiceAccountUsage()
@@ -42,8 +46,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CurrentValue = currentValue;
             NextResetTime = nextResetTime;
             Status = status;
-            ScopeType = scopeType;
-            ScopeId = scopeId;
+            _scopeType = scopeType;
+            _scopeId = scopeId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -77,10 +81,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> The scope type of the quota usage. </summary>
         [WirePath("scopeType")]
-        public CognitiveServicesQuotaScopeType? ScopeType { get; }
+        public CognitiveServicesQuotaScopeType? ScopeType
+        {
+            get
+            {
+                return _scopeType;
+            }
+        }
 
         /// <summary> The scope identifier of the quota usage. </summary>
         [WirePath("scopeId")]
-        public string ScopeId { get; }
+        public string ScopeId
+        {
+            get
+            {
+                return _scopeId;
+            }
+        }
     }
 }
