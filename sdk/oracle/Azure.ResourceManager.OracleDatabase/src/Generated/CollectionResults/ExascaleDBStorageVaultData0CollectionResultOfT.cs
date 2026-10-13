@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.OracleDatabase
 {
     internal partial class ExascaleDBStorageVaultData0CollectionResultOfT : Pageable<ExascaleDBStorageVaultData>
     {
-        private readonly ExascaleDbStorageVaults _client;
+        private readonly ExascaleDBStorageVaults _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ExascaleDBStorageVaultData0CollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ExascaleDbStorageVaults client used to send requests. </param>
+        /// <param name="client"> The ExascaleDBStorageVaults client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ExascaleDBStorageVaultData0CollectionResultOfT(ExascaleDbStorageVaults client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ExascaleDBStorageVaultData0CollectionResultOfT(ExascaleDBStorageVaults client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <returns> The pages of ExascaleDBStorageVaultData0CollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ExascaleDBStorageVaultData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

@@ -1,14 +1,17 @@
 # Release History
 
-## 3.0.0-beta.4 (Unreleased)
+## 3.0.0-beta.4 (2026-10-12)
 
 ### Features Added
+- `EvaluatorGenerationJobs` and `DataGenerationJob` do not require warning suppression anymore.
+- Agent optimization does not require `AAIP001` warning suppression anymore.
 
 ### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- `EvaluatorGenerationJobs.Create` and `EvaluatorGenerationJobs.CreateAsync` are now returning the LRO poller.
+- To create a data generation job, `DataGenerationJobInputs` is now need to be used. It can be of three types: `EvaluationDataGenerationJobInputs`, `ReinforcementFineTuningDataGenerationJobInputs` and `SupervisedFineTuningDataGenerationJobInputs`. 
+- `DataGenerationJobOptions` was replaced by `DataGenerationJobConfiguration` subtypes.
+- `DataGenerationJobOutputOptions` was replaced by `EvaluationDataGenerationJobOutputConfiguration`.
+- The `EvaluatorName` property of `EvaluatorGenerationInputs` now can only be set through constructor.
 
 ## 3.0.0-beta.3 (2026-09-16)
 

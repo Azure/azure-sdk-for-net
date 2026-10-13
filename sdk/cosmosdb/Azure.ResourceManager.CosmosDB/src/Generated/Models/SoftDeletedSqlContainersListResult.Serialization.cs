@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SoftDeletedSqlContainersListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SoftDeletedSqlContainersListResult(value ?? new ChangeTrackingList<SoftDeletedSqlContainerGetResultData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

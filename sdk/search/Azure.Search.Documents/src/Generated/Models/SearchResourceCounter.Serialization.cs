@@ -81,7 +81,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("usage"u8);
             writer.WriteNumberValue(Usage);
-            if (_quotaIsDefined || Optional.IsDefined(Quota))
+            if (Optional.IsDefined(Quota, _quotaIsDefined))
             {
                 if (Quota != null)
                 {

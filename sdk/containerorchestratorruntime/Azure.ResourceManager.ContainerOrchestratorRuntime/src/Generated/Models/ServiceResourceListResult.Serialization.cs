@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ServiceResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ServiceResourceListResult(value ?? new ChangeTrackingList<ConnectedClusterServiceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

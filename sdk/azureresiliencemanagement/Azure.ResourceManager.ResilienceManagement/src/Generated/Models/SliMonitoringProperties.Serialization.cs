@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SliMonitoringProperties(identity, slis, additionalBinaryDataProperties);
+            return new SliMonitoringProperties(identity, slis ?? new ChangeTrackingList<SliSelection>(), additionalBinaryDataProperties);
         }
     }
 }

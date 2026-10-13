@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> The pages of ChaosFaultDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ChaosFaultData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     yield break;
                 }
-                ChaosFaultListResponse result = ChaosFaultListResponse.FromResponse(response);
+                ChaosFaultListResult result = ChaosFaultListResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<ChaosFaultData>.FromValues((IReadOnlyList<ChaosFaultData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

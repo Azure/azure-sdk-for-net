@@ -16,6 +16,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _nextTierName;
+        internal bool _nextTierNameIsDefined;
+        private DateTimeOffset? _upgradeApplicableOn;
+        internal bool _upgradeApplicableOnIsDefined;
+        private string _upgradeUnavailabilityReason;
+        internal bool _upgradeUnavailabilityReasonIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="QuotaTierUpgradeEligibilityInfo"/>. </summary>
         internal QuotaTierUpgradeEligibilityInfo()
@@ -30,16 +36,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal QuotaTierUpgradeEligibilityInfo(string nextTierName, QuotaTierUpgradeAvailabilityStatus? upgradeAvailabilityStatus, DateTimeOffset? upgradeApplicableOn, string upgradeUnavailabilityReason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            NextTierName = nextTierName;
+            _nextTierName = nextTierName;
             UpgradeAvailabilityStatus = upgradeAvailabilityStatus;
-            UpgradeApplicableOn = upgradeApplicableOn;
-            UpgradeUnavailabilityReason = upgradeUnavailabilityReason;
+            _upgradeApplicableOn = upgradeApplicableOn;
+            _upgradeUnavailabilityReason = upgradeUnavailabilityReason;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the next quota tier for the subscription. </summary>
         [WirePath("nextTierName")]
-        public string NextTierName { get; }
+        public string NextTierName
+        {
+            get
+            {
+                return _nextTierName;
+            }
+        }
 
         /// <summary> Specifies whether an upgrade to the next quota tier is available. </summary>
         [WirePath("upgradeAvailabilityStatus")]
@@ -47,10 +59,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> The date after which the current tier will be upgraded to the next tier if the TierUpgradePolicy is "OnceUpgradeIsAvailable" (UTC). </summary>
         [WirePath("upgradeApplicableDate")]
-        public DateTimeOffset? UpgradeApplicableOn { get; }
+        public DateTimeOffset? UpgradeApplicableOn
+        {
+            get
+            {
+                return _upgradeApplicableOn;
+            }
+        }
 
         /// <summary> Reason in case the subscription is not eligible for upgrade to the next tier. </summary>
         [WirePath("upgradeUnavailabilityReason")]
-        public string UpgradeUnavailabilityReason { get; }
+        public string UpgradeUnavailabilityReason
+        {
+            get
+            {
+                return _upgradeUnavailabilityReason;
+            }
+        }
     }
 }

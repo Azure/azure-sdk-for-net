@@ -74,10 +74,17 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 throw new FormatException($"The model {nameof(ManagedIdentityPatchDefinition)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ClientId))
+            if (_clientIdIsDefined || Optional.IsDefined(ClientId))
             {
-                writer.WritePropertyName("clientId"u8);
-                writer.WriteStringValue(ClientId);
+                if (ClientId != null)
+                {
+                    writer.WritePropertyName("clientId"u8);
+                    writer.WriteStringValue(ClientId);
+                }
+                else
+                {
+                    writer.WriteNull("clientId"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,12 +128,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 return null;
             }
+            bool clientIdIsDefined = false;
             string clientId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("clientId"u8))
                 {
+                    clientIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         clientId = null;
@@ -140,7 +149,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ManagedIdentityPatchDefinition(clientId, additionalBinaryDataProperties);
+            return new ManagedIdentityPatchDefinition(clientId, additionalBinaryDataProperties)
+            {
+                _clientIdIsDefined = clientIdIsDefined
+            };
         }
     }
 }

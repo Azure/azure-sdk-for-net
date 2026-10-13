@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StoragePoolHealthInfo(health, alerts, additionalBinaryDataProperties);
+            return new StoragePoolHealthInfo(health, alerts ?? new ChangeTrackingList<PureStorageHealthAlert>(), additionalBinaryDataProperties);
         }
     }
 }

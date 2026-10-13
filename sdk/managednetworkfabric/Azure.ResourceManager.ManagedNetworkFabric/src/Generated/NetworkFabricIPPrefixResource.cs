@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     public partial class NetworkFabricIPPrefixResource : ArmResource
     {
         private readonly ClientDiagnostics _ipPrefixesClientDiagnostics;
-        private readonly IpPrefixes _ipPrefixesRestClient;
+        private readonly IPPrefixes _ipPrefixesRestClient;
         private readonly NetworkFabricIPPrefixData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/ipPrefixes";
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             TryGetApiVersion(ResourceType, out string networkFabricIPPrefixApiVersion);
             _ipPrefixesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", ResourceType.Namespace, Diagnostics);
-            _ipPrefixesRestClient = new IpPrefixes(_ipPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFabricIPPrefixApiVersion ?? "2025-07-15");
+            _ipPrefixesRestClient = new IPPrefixes(_ipPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFabricIPPrefixApiVersion ?? "2025-07-15");
             ValidateResourceId(id);
         }
 

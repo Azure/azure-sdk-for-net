@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private SearchIndexerDataIdentity _authIdentity;
-        internal bool _authIdentityIsDefined;
+        private bool _authIdentityIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AIServicesVisionParameters"/>. </summary>
         /// <param name="modelVersion"> The version of the model to use when calling the AI Services Vision service. It will default to the latest available when not specified. </param>

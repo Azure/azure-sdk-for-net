@@ -104,15 +104,29 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 writer.WritePropertyName("monitoringProperties"u8);
                 writer.WriteObjectValue(MonitoringProperties, options);
             }
-            if (Optional.IsDefined(HealthModelMonitoringProperties))
+            if (_healthModelMonitoringPropertiesIsDefined || Optional.IsDefined(HealthModelMonitoringProperties))
             {
-                writer.WritePropertyName("healthModelMonitoringProperties"u8);
-                writer.WriteObjectValue(HealthModelMonitoringProperties, options);
+                if (HealthModelMonitoringProperties != null)
+                {
+                    writer.WritePropertyName("healthModelMonitoringProperties"u8);
+                    writer.WriteObjectValue(HealthModelMonitoringProperties, options);
+                }
+                else
+                {
+                    writer.WriteNull("healthModelMonitoringProperties"u8);
+                }
             }
-            if (Optional.IsDefined(SliMonitoringProperties))
+            if (_sliMonitoringPropertiesIsDefined || Optional.IsDefined(SliMonitoringProperties))
             {
-                writer.WritePropertyName("sliMonitoringProperties"u8);
-                writer.WriteObjectValue(SliMonitoringProperties, options);
+                if (SliMonitoringProperties != null)
+                {
+                    writer.WritePropertyName("sliMonitoringProperties"u8);
+                    writer.WriteObjectValue(SliMonitoringProperties, options);
+                }
+                else
+                {
+                    writer.WriteNull("sliMonitoringProperties"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -162,7 +176,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             ChaosResourcePropertiesOfDrill chaosResourceProperties = default;
             ResilienceManagementRbacSetupMode? rbacSetupMode = default;
             MonitoringPropertiesOfDrill monitoringProperties = default;
+            bool healthModelMonitoringPropertiesIsDefined = false;
             HealthModelMonitoringProperties healthModelMonitoringProperties = default;
+            bool sliMonitoringPropertiesIsDefined = false;
             SliMonitoringProperties sliMonitoringProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -223,6 +239,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 }
                 if (prop.NameEquals("healthModelMonitoringProperties"u8))
                 {
+                    healthModelMonitoringPropertiesIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         healthModelMonitoringProperties = null;
@@ -233,6 +250,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 }
                 if (prop.NameEquals("sliMonitoringProperties"u8))
                 {
+                    sliMonitoringPropertiesIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         sliMonitoringProperties = null;
@@ -255,7 +273,11 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 monitoringProperties,
                 healthModelMonitoringProperties,
                 sliMonitoringProperties,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _healthModelMonitoringPropertiesIsDefined = healthModelMonitoringPropertiesIsDefined,
+                _sliMonitoringPropertiesIsDefined = sliMonitoringPropertiesIsDefined
+            };
         }
     }
 }

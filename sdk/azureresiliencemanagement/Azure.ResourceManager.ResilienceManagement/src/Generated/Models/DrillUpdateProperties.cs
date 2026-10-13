@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private HealthModelMonitoringProperties _healthModelMonitoringProperties;
+        internal bool _healthModelMonitoringPropertiesIsDefined;
+        private SliMonitoringProperties _sliMonitoringProperties;
+        internal bool _sliMonitoringPropertiesIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DrillUpdateProperties"/>. </summary>
         public DrillUpdateProperties()
@@ -39,8 +43,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             ChaosResourceProperties = chaosResourceProperties;
             RbacSetupMode = rbacSetupMode;
             MonitoringProperties = monitoringProperties;
-            HealthModelMonitoringProperties = healthModelMonitoringProperties;
-            SliMonitoringProperties = sliMonitoringProperties;
+            _healthModelMonitoringProperties = healthModelMonitoringProperties;
+            _sliMonitoringProperties = sliMonitoringProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -63,9 +67,31 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public MonitoringPropertiesOfDrill MonitoringProperties { get; set; }
 
         /// <summary> Azure Health Model monitoring properties of the Drill. Send null to clear the selection. </summary>
-        public HealthModelMonitoringProperties HealthModelMonitoringProperties { get; set; }
+        public HealthModelMonitoringProperties HealthModelMonitoringProperties
+        {
+            get
+            {
+                return _healthModelMonitoringProperties;
+            }
+            set
+            {
+                _healthModelMonitoringProperties = value;
+                _healthModelMonitoringPropertiesIsDefined = true;
+            }
+        }
 
         /// <summary> SLI monitoring properties of the Drill. Send null to clear the selection; the submitted slis array is the new desired state. </summary>
-        public SliMonitoringProperties SliMonitoringProperties { get; set; }
+        public SliMonitoringProperties SliMonitoringProperties
+        {
+            get
+            {
+                return _sliMonitoringProperties;
+            }
+            set
+            {
+                _sliMonitoringProperties = value;
+                _sliMonitoringPropertiesIsDefined = true;
+            }
+        }
     }
 }

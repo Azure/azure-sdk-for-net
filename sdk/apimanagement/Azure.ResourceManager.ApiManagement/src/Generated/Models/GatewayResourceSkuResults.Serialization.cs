@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GatewayResourceSkuResults(value, nextLink, additionalBinaryDataProperties);
+            return new GatewayResourceSkuResults(value ?? new ChangeTrackingList<GatewayResourceSkuResult>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

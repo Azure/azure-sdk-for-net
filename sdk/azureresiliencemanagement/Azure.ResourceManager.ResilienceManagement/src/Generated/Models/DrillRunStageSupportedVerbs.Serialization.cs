@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DrillRunStageSupportedVerbs(drillRunStage, supportedVerbs, additionalBinaryDataProperties);
+            return new DrillRunStageSupportedVerbs(drillRunStage, supportedVerbs ?? new ChangeTrackingList<DrillRunOperationVerb>(), additionalBinaryDataProperties);
         }
     }
 }

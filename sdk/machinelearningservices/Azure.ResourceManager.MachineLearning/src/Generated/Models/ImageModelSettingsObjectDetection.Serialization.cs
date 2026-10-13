@@ -79,65 +79,142 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(ImageModelSettingsObjectDetection)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(BoxDetectionsPerImage))
+            if (_boxDetectionsPerImageIsDefined || Optional.IsDefined(BoxDetectionsPerImage))
             {
-                writer.WritePropertyName("boxDetectionsPerImage"u8);
-                writer.WriteNumberValue(BoxDetectionsPerImage.Value);
+                if (BoxDetectionsPerImage != null)
+                {
+                    writer.WritePropertyName("boxDetectionsPerImage"u8);
+                    writer.WriteNumberValue(BoxDetectionsPerImage.Value);
+                }
+                else
+                {
+                    writer.WriteNull("boxDetectionsPerImage"u8);
+                }
             }
-            if (Optional.IsDefined(BoxScoreThreshold))
+            if (_boxScoreThresholdIsDefined || Optional.IsDefined(BoxScoreThreshold))
             {
-                writer.WritePropertyName("boxScoreThreshold"u8);
-                writer.WriteNumberValue(BoxScoreThreshold.Value);
+                if (BoxScoreThreshold != null)
+                {
+                    writer.WritePropertyName("boxScoreThreshold"u8);
+                    writer.WriteNumberValue(BoxScoreThreshold.Value);
+                }
+                else
+                {
+                    writer.WriteNull("boxScoreThreshold"u8);
+                }
             }
-            if (Optional.IsDefined(ImageSize))
+            if (_imageSizeIsDefined || Optional.IsDefined(ImageSize))
             {
-                writer.WritePropertyName("imageSize"u8);
-                writer.WriteNumberValue(ImageSize.Value);
+                if (ImageSize != null)
+                {
+                    writer.WritePropertyName("imageSize"u8);
+                    writer.WriteNumberValue(ImageSize.Value);
+                }
+                else
+                {
+                    writer.WriteNull("imageSize"u8);
+                }
             }
-            if (Optional.IsDefined(MaxSize))
+            if (_maxSizeIsDefined || Optional.IsDefined(MaxSize))
             {
-                writer.WritePropertyName("maxSize"u8);
-                writer.WriteNumberValue(MaxSize.Value);
+                if (MaxSize != null)
+                {
+                    writer.WritePropertyName("maxSize"u8);
+                    writer.WriteNumberValue(MaxSize.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maxSize"u8);
+                }
             }
-            if (Optional.IsDefined(MinSize))
+            if (_minSizeIsDefined || Optional.IsDefined(MinSize))
             {
-                writer.WritePropertyName("minSize"u8);
-                writer.WriteNumberValue(MinSize.Value);
+                if (MinSize != null)
+                {
+                    writer.WritePropertyName("minSize"u8);
+                    writer.WriteNumberValue(MinSize.Value);
+                }
+                else
+                {
+                    writer.WriteNull("minSize"u8);
+                }
             }
             if (Optional.IsDefined(ModelSize))
             {
                 writer.WritePropertyName("modelSize"u8);
                 writer.WriteStringValue(ModelSize.Value.ToString());
             }
-            if (Optional.IsDefined(MultiScale))
+            if (_multiScaleIsDefined || Optional.IsDefined(MultiScale))
             {
-                writer.WritePropertyName("multiScale"u8);
-                writer.WriteBooleanValue(MultiScale.Value);
+                if (MultiScale != null)
+                {
+                    writer.WritePropertyName("multiScale"u8);
+                    writer.WriteBooleanValue(MultiScale.Value);
+                }
+                else
+                {
+                    writer.WriteNull("multiScale"u8);
+                }
             }
-            if (Optional.IsDefined(NmsIouThreshold))
+            if (_nmsIouThresholdIsDefined || Optional.IsDefined(NmsIouThreshold))
             {
-                writer.WritePropertyName("nmsIouThreshold"u8);
-                writer.WriteNumberValue(NmsIouThreshold.Value);
+                if (NmsIouThreshold != null)
+                {
+                    writer.WritePropertyName("nmsIouThreshold"u8);
+                    writer.WriteNumberValue(NmsIouThreshold.Value);
+                }
+                else
+                {
+                    writer.WriteNull("nmsIouThreshold"u8);
+                }
             }
-            if (Optional.IsDefined(TileGridSize))
+            if (_tileGridSizeIsDefined || Optional.IsDefined(TileGridSize))
             {
-                writer.WritePropertyName("tileGridSize"u8);
-                writer.WriteStringValue(TileGridSize);
+                if (TileGridSize != null)
+                {
+                    writer.WritePropertyName("tileGridSize"u8);
+                    writer.WriteStringValue(TileGridSize);
+                }
+                else
+                {
+                    writer.WriteNull("tileGridSize"u8);
+                }
             }
-            if (Optional.IsDefined(TileOverlapRatio))
+            if (_tileOverlapRatioIsDefined || Optional.IsDefined(TileOverlapRatio))
             {
-                writer.WritePropertyName("tileOverlapRatio"u8);
-                writer.WriteNumberValue(TileOverlapRatio.Value);
+                if (TileOverlapRatio != null)
+                {
+                    writer.WritePropertyName("tileOverlapRatio"u8);
+                    writer.WriteNumberValue(TileOverlapRatio.Value);
+                }
+                else
+                {
+                    writer.WriteNull("tileOverlapRatio"u8);
+                }
             }
-            if (Optional.IsDefined(TilePredictionsNmsThreshold))
+            if (_tilePredictionsNmsThresholdIsDefined || Optional.IsDefined(TilePredictionsNmsThreshold))
             {
-                writer.WritePropertyName("tilePredictionsNmsThreshold"u8);
-                writer.WriteNumberValue(TilePredictionsNmsThreshold.Value);
+                if (TilePredictionsNmsThreshold != null)
+                {
+                    writer.WritePropertyName("tilePredictionsNmsThreshold"u8);
+                    writer.WriteNumberValue(TilePredictionsNmsThreshold.Value);
+                }
+                else
+                {
+                    writer.WriteNull("tilePredictionsNmsThreshold"u8);
+                }
             }
-            if (Optional.IsDefined(ValidationIouThreshold))
+            if (_validationIouThresholdIsDefined || Optional.IsDefined(ValidationIouThreshold))
             {
-                writer.WritePropertyName("validationIouThreshold"u8);
-                writer.WriteNumberValue(ValidationIouThreshold.Value);
+                if (ValidationIouThreshold != null)
+                {
+                    writer.WritePropertyName("validationIouThreshold"u8);
+                    writer.WriteNumberValue(ValidationIouThreshold.Value);
+                }
+                else
+                {
+                    writer.WriteNull("validationIouThreshold"u8);
+                }
             }
             if (Optional.IsDefined(ValidationMetricType))
             {
@@ -171,56 +248,98 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool advancedSettingsIsDefined = false;
             string advancedSettings = default;
+            bool amsGradientIsDefined = false;
             bool? amsGradient = default;
+            bool augmentationsIsDefined = false;
             string augmentations = default;
+            bool beta1IsDefined = false;
             float? beta1 = default;
+            bool beta2IsDefined = false;
             float? beta2 = default;
+            bool checkpointFrequencyIsDefined = false;
             int? checkpointFrequency = default;
+            bool checkpointModelIsDefined = false;
             MachineLearningFlowModelJobInput checkpointModel = default;
+            bool checkpointRunIdIsDefined = false;
             string checkpointRunId = default;
+            bool distributedIsDefined = false;
             bool? distributed = default;
+            bool earlyStoppingIsDefined = false;
             bool? earlyStopping = default;
+            bool earlyStoppingDelayIsDefined = false;
             int? earlyStoppingDelay = default;
+            bool earlyStoppingPatienceIsDefined = false;
             int? earlyStoppingPatience = default;
+            bool enableOnnxNormalizationIsDefined = false;
             bool? enableOnnxNormalization = default;
+            bool evaluationFrequencyIsDefined = false;
             int? evaluationFrequency = default;
+            bool gradientAccumulationStepIsDefined = false;
             int? gradientAccumulationStep = default;
+            bool layersToFreezeIsDefined = false;
             int? layersToFreeze = default;
+            bool learningRateIsDefined = false;
             float? learningRate = default;
             LearningRateScheduler? learningRateScheduler = default;
+            bool modelNameIsDefined = false;
             string modelName = default;
+            bool momentumIsDefined = false;
             float? momentum = default;
+            bool nesterovIsDefined = false;
             bool? nesterov = default;
+            bool numberOfEpochsIsDefined = false;
             int? numberOfEpochs = default;
+            bool numberOfWorkersIsDefined = false;
             int? numberOfWorkers = default;
             StochasticOptimizer? optimizer = default;
+            bool randomSeedIsDefined = false;
             int? randomSeed = default;
+            bool stepLRGammaIsDefined = false;
             float? stepLRGamma = default;
+            bool stepLRStepSizeIsDefined = false;
             int? stepLRStepSize = default;
+            bool trainingBatchSizeIsDefined = false;
             int? trainingBatchSize = default;
+            bool validationBatchSizeIsDefined = false;
             int? validationBatchSize = default;
+            bool warmupCosineLRCyclesIsDefined = false;
             float? warmupCosineLRCycles = default;
+            bool warmupCosineLRWarmupEpochsIsDefined = false;
             int? warmupCosineLRWarmupEpochs = default;
+            bool weightDecayIsDefined = false;
             float? weightDecay = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool boxDetectionsPerImageIsDefined = false;
             int? boxDetectionsPerImage = default;
+            bool boxScoreThresholdIsDefined = false;
             float? boxScoreThreshold = default;
+            bool imageSizeIsDefined = false;
             int? imageSize = default;
+            bool maxSizeIsDefined = false;
             int? maxSize = default;
+            bool minSizeIsDefined = false;
             int? minSize = default;
             MachineLearningModelSize? modelSize = default;
+            bool multiScaleIsDefined = false;
             bool? multiScale = default;
+            bool nmsIouThresholdIsDefined = false;
             float? nmsIouThreshold = default;
+            bool tileGridSizeIsDefined = false;
             string tileGridSize = default;
+            bool tileOverlapRatioIsDefined = false;
             float? tileOverlapRatio = default;
+            bool tilePredictionsNmsThresholdIsDefined = false;
             float? tilePredictionsNmsThreshold = default;
+            bool validationIouThresholdIsDefined = false;
             float? validationIouThreshold = default;
             ValidationMetricType? validationMetricType = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("advancedSettings"u8))
                 {
+                    advancedSettingsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         advancedSettings = null;
@@ -231,6 +350,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("amsGradient"u8))
                 {
+                    amsGradientIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         amsGradient = null;
@@ -241,6 +361,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("augmentations"u8))
                 {
+                    augmentationsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         augmentations = null;
@@ -251,6 +372,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("beta1"u8))
                 {
+                    beta1IsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         beta1 = null;
@@ -261,6 +383,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("beta2"u8))
                 {
+                    beta2IsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         beta2 = null;
@@ -271,6 +394,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("checkpointFrequency"u8))
                 {
+                    checkpointFrequencyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         checkpointFrequency = null;
@@ -281,6 +405,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("checkpointModel"u8))
                 {
+                    checkpointModelIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         checkpointModel = null;
@@ -291,6 +416,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("checkpointRunId"u8))
                 {
+                    checkpointRunIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         checkpointRunId = null;
@@ -301,6 +427,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("distributed"u8))
                 {
+                    distributedIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         distributed = null;
@@ -311,6 +438,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("earlyStopping"u8))
                 {
+                    earlyStoppingIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         earlyStopping = null;
@@ -321,6 +449,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("earlyStoppingDelay"u8))
                 {
+                    earlyStoppingDelayIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         earlyStoppingDelay = null;
@@ -331,6 +460,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("earlyStoppingPatience"u8))
                 {
+                    earlyStoppingPatienceIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         earlyStoppingPatience = null;
@@ -341,6 +471,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("enableOnnxNormalization"u8))
                 {
+                    enableOnnxNormalizationIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         enableOnnxNormalization = null;
@@ -351,6 +482,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("evaluationFrequency"u8))
                 {
+                    evaluationFrequencyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         evaluationFrequency = null;
@@ -361,6 +493,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("gradientAccumulationStep"u8))
                 {
+                    gradientAccumulationStepIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         gradientAccumulationStep = null;
@@ -371,6 +504,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("layersToFreeze"u8))
                 {
+                    layersToFreezeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         layersToFreeze = null;
@@ -381,6 +515,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("learningRate"u8))
                 {
+                    learningRateIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         learningRate = null;
@@ -400,6 +535,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("modelName"u8))
                 {
+                    modelNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         modelName = null;
@@ -410,6 +546,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("momentum"u8))
                 {
+                    momentumIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         momentum = null;
@@ -420,6 +557,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("nesterov"u8))
                 {
+                    nesterovIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         nesterov = null;
@@ -430,6 +568,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("numberOfEpochs"u8))
                 {
+                    numberOfEpochsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         numberOfEpochs = null;
@@ -440,6 +579,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("numberOfWorkers"u8))
                 {
+                    numberOfWorkersIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         numberOfWorkers = null;
@@ -459,6 +599,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("randomSeed"u8))
                 {
+                    randomSeedIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         randomSeed = null;
@@ -469,6 +610,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("stepLRGamma"u8))
                 {
+                    stepLRGammaIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         stepLRGamma = null;
@@ -479,6 +621,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("stepLRStepSize"u8))
                 {
+                    stepLRStepSizeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         stepLRStepSize = null;
@@ -489,6 +632,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("trainingBatchSize"u8))
                 {
+                    trainingBatchSizeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         trainingBatchSize = null;
@@ -499,6 +643,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("validationBatchSize"u8))
                 {
+                    validationBatchSizeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         validationBatchSize = null;
@@ -509,6 +654,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("warmupCosineLRCycles"u8))
                 {
+                    warmupCosineLRCyclesIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         warmupCosineLRCycles = null;
@@ -519,6 +665,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("warmupCosineLRWarmupEpochs"u8))
                 {
+                    warmupCosineLRWarmupEpochsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         warmupCosineLRWarmupEpochs = null;
@@ -529,6 +676,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("weightDecay"u8))
                 {
+                    weightDecayIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         weightDecay = null;
@@ -539,6 +687,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("boxDetectionsPerImage"u8))
                 {
+                    boxDetectionsPerImageIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         boxDetectionsPerImage = null;
@@ -549,6 +698,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("boxScoreThreshold"u8))
                 {
+                    boxScoreThresholdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         boxScoreThreshold = null;
@@ -559,6 +709,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("imageSize"u8))
                 {
+                    imageSizeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         imageSize = null;
@@ -569,6 +720,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("maxSize"u8))
                 {
+                    maxSizeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         maxSize = null;
@@ -579,6 +731,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("minSize"u8))
                 {
+                    minSizeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         minSize = null;
@@ -598,6 +751,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("multiScale"u8))
                 {
+                    multiScaleIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         multiScale = null;
@@ -608,6 +762,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("nmsIouThreshold"u8))
                 {
+                    nmsIouThresholdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         nmsIouThreshold = null;
@@ -618,6 +773,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("tileGridSize"u8))
                 {
+                    tileGridSizeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         tileGridSize = null;
@@ -628,6 +784,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("tileOverlapRatio"u8))
                 {
+                    tileOverlapRatioIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         tileOverlapRatio = null;
@@ -638,6 +795,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("tilePredictionsNmsThreshold"u8))
                 {
+                    tilePredictionsNmsThresholdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         tilePredictionsNmsThreshold = null;
@@ -648,6 +806,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("validationIouThreshold"u8))
                 {
+                    validationIouThresholdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         validationIouThreshold = null;
@@ -716,7 +875,50 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 tileOverlapRatio,
                 tilePredictionsNmsThreshold,
                 validationIouThreshold,
-                validationMetricType);
+                validationMetricType)
+            {
+                _advancedSettingsIsDefined = advancedSettingsIsDefined,
+                _amsGradientIsDefined = amsGradientIsDefined,
+                _augmentationsIsDefined = augmentationsIsDefined,
+                _beta1IsDefined = beta1IsDefined,
+                _beta2IsDefined = beta2IsDefined,
+                _checkpointFrequencyIsDefined = checkpointFrequencyIsDefined,
+                _checkpointModelIsDefined = checkpointModelIsDefined,
+                _checkpointRunIdIsDefined = checkpointRunIdIsDefined,
+                _distributedIsDefined = distributedIsDefined,
+                _earlyStoppingIsDefined = earlyStoppingIsDefined,
+                _earlyStoppingDelayIsDefined = earlyStoppingDelayIsDefined,
+                _earlyStoppingPatienceIsDefined = earlyStoppingPatienceIsDefined,
+                _enableOnnxNormalizationIsDefined = enableOnnxNormalizationIsDefined,
+                _evaluationFrequencyIsDefined = evaluationFrequencyIsDefined,
+                _gradientAccumulationStepIsDefined = gradientAccumulationStepIsDefined,
+                _layersToFreezeIsDefined = layersToFreezeIsDefined,
+                _learningRateIsDefined = learningRateIsDefined,
+                _modelNameIsDefined = modelNameIsDefined,
+                _momentumIsDefined = momentumIsDefined,
+                _nesterovIsDefined = nesterovIsDefined,
+                _numberOfEpochsIsDefined = numberOfEpochsIsDefined,
+                _numberOfWorkersIsDefined = numberOfWorkersIsDefined,
+                _randomSeedIsDefined = randomSeedIsDefined,
+                _stepLRGammaIsDefined = stepLRGammaIsDefined,
+                _stepLRStepSizeIsDefined = stepLRStepSizeIsDefined,
+                _trainingBatchSizeIsDefined = trainingBatchSizeIsDefined,
+                _validationBatchSizeIsDefined = validationBatchSizeIsDefined,
+                _warmupCosineLRCyclesIsDefined = warmupCosineLRCyclesIsDefined,
+                _warmupCosineLRWarmupEpochsIsDefined = warmupCosineLRWarmupEpochsIsDefined,
+                _weightDecayIsDefined = weightDecayIsDefined,
+                _boxDetectionsPerImageIsDefined = boxDetectionsPerImageIsDefined,
+                _boxScoreThresholdIsDefined = boxScoreThresholdIsDefined,
+                _imageSizeIsDefined = imageSizeIsDefined,
+                _maxSizeIsDefined = maxSizeIsDefined,
+                _minSizeIsDefined = minSizeIsDefined,
+                _multiScaleIsDefined = multiScaleIsDefined,
+                _nmsIouThresholdIsDefined = nmsIouThresholdIsDefined,
+                _tileGridSizeIsDefined = tileGridSizeIsDefined,
+                _tileOverlapRatioIsDefined = tileOverlapRatioIsDefined,
+                _tilePredictionsNmsThresholdIsDefined = tilePredictionsNmsThresholdIsDefined,
+                _validationIouThresholdIsDefined = validationIouThresholdIsDefined
+            };
         }
     }
 }

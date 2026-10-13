@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ResilienceManagementFailoverProperties(sourceLocations, selectedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), executionConfigurations, additionalBinaryDataProperties);
+            return new ResilienceManagementFailoverProperties(sourceLocations ?? new ChangeTrackingList<string>(), selectedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), executionConfigurations, additionalBinaryDataProperties);
         }
     }
 }

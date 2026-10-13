@@ -74,10 +74,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(PartialBatchDeployment)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Description))
+            if (_descriptionIsDefined || Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
+                if (Description != null)
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+                else
+                {
+                    writer.WriteNull("description"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,12 +128,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool descriptionIsDefined = false;
             string description = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -140,7 +149,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PartialBatchDeployment(description, additionalBinaryDataProperties);
+            return new PartialBatchDeployment(description, additionalBinaryDataProperties)
+            {
+                _descriptionIsDefined = descriptionIsDefined
+            };
         }
     }
 }

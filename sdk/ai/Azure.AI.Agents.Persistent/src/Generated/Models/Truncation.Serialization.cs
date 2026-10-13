@@ -83,7 +83,7 @@ namespace Azure.AI.Agents.Persistent
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (_lastMessagesIsDefined || Optional.IsDefined(LastMessages))
+            if (Optional.IsDefined(LastMessages, _lastMessagesIsDefined))
             {
                 if (LastMessages != null)
                 {
