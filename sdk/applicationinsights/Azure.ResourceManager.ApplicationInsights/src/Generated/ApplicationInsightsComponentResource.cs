@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         {
             TryGetApiVersion(ResourceType, out string applicationInsightsComponentApiVersion);
             _componentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ResourceType.Namespace, Diagnostics);
-            _componentsRestClient = new Components(_componentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsComponentApiVersion ?? "2020-02-02");
+            _componentsRestClient = new Components(_componentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsComponentApiVersion ?? "2025-01-23-preview");
             _analyticsItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ResourceType.Namespace, Diagnostics);
             _analyticsItemsRestClient = new AnalyticsItems(_analyticsItemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsComponentApiVersion ?? "2015-05-01");
             _annotationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ResourceType.Namespace, Diagnostics);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2020-02-02. </description>
+        /// <description> 2025-01-23-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2020-02-02. </description>
+        /// <description> 2025-01-23-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2020-02-02. </description>
+        /// <description> 2025-01-23-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2020-02-02. </description>
+        /// <description> 2025-01-23-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2020-02-02. </description>
+        /// <description> 2025-01-23-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2020-02-02. </description>
+        /// <description> 2025-01-23-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -3465,7 +3465,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2020-02-02. </description>
+        /// <description> 2025-01-23-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -3519,7 +3519,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2020-02-02. </description>
+        /// <description> 2025-01-23-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -3571,7 +3571,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2020-02-02. </description>
+        /// <description> 2025-01-23-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -3624,7 +3624,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2020-02-02. </description>
+        /// <description> 2025-01-23-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

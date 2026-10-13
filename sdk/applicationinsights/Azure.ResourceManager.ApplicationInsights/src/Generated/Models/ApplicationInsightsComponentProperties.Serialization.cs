@@ -207,6 +207,36 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("ForceCustomerStorageForProfiler"u8);
                 writer.WriteBooleanValue(IsForceCustomerStorageForProfiler.Value);
             }
+            if (Optional.IsDefined(AzureMonitorWorkspaceResourceId))
+            {
+                writer.WritePropertyName("AzureMonitorWorkspaceResourceId"u8);
+                writer.WriteStringValue(AzureMonitorWorkspaceResourceId);
+            }
+            if (Optional.IsDefined(AzureMonitorWorkspaceIngestionMode))
+            {
+                writer.WritePropertyName("AzureMonitorWorkspaceIngestionMode"u8);
+                writer.WriteStringValue(AzureMonitorWorkspaceIngestionMode.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(DataCollectionRuleResourceId))
+            {
+                writer.WritePropertyName("DataCollectionRuleResourceId"u8);
+                writer.WriteStringValue(DataCollectionRuleResourceId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(OtlpMetricsEndpoint))
+            {
+                writer.WritePropertyName("OTLPMetricsEndpoint"u8);
+                writer.WriteStringValue(OtlpMetricsEndpoint.AbsoluteUri);
+            }
+            if (options.Format != "W" && Optional.IsDefined(OtlpLogsEndpoint))
+            {
+                writer.WritePropertyName("OTLPLogsEndpoint"u8);
+                writer.WriteStringValue(OtlpLogsEndpoint.AbsoluteUri);
+            }
+            if (options.Format != "W" && Optional.IsDefined(OtlpTracesEndpoint))
+            {
+                writer.WritePropertyName("OTLPTracesEndpoint"u8);
+                writer.WriteStringValue(OtlpTracesEndpoint.AbsoluteUri);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -274,6 +304,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             ComponentIngestionMode? ingestionMode = default;
             bool? isDisableLocalAuth = default;
             bool? isForceCustomerStorageForProfiler = default;
+            ResourceIdentifier azureMonitorWorkspaceResourceId = default;
+            ComponentAzureMonitorWorkspaceIngestionMode? azureMonitorWorkspaceIngestionMode = default;
+            ResourceIdentifier dataCollectionRuleResourceId = default;
+            Uri otlpMetricsEndpoint = default;
+            Uri otlpLogsEndpoint = default;
+            Uri otlpTracesEndpoint = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -471,6 +507,60 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     isForceCustomerStorageForProfiler = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("AzureMonitorWorkspaceResourceId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    azureMonitorWorkspaceResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("AzureMonitorWorkspaceIngestionMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    azureMonitorWorkspaceIngestionMode = new ComponentAzureMonitorWorkspaceIngestionMode(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("DataCollectionRuleResourceId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataCollectionRuleResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("OTLPMetricsEndpoint"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    otlpMetricsEndpoint = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    continue;
+                }
+                if (prop.NameEquals("OTLPLogsEndpoint"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    otlpLogsEndpoint = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    continue;
+                }
+                if (prop.NameEquals("OTLPTracesEndpoint"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    otlpTracesEndpoint = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -502,6 +592,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 ingestionMode,
                 isDisableLocalAuth,
                 isForceCustomerStorageForProfiler,
+                azureMonitorWorkspaceResourceId,
+                azureMonitorWorkspaceIngestionMode,
+                dataCollectionRuleResourceId,
+                otlpMetricsEndpoint,
+                otlpLogsEndpoint,
+                otlpTracesEndpoint,
                 additionalBinaryDataProperties);
         }
     }

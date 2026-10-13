@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
 
         private ClientDiagnostics ComponentsClientDiagnostics => _componentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Components ComponentsRestClient => _componentsRestClient ??= new Components(ComponentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-02-02");
+        private Components ComponentsRestClient => _componentsRestClient ??= new Components(ComponentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-01-23-preview");
 
         private ClientDiagnostics DeletedWorkbooksClientDiagnostics => _deletedWorkbooksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2020-02-02. </description>
+        /// <description> 2025-01-23-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2020-02-02. </description>
+        /// <description> 2025-01-23-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2020-02-02. </description>
+        /// <description> 2025-01-23-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2020-02-02. </description>
+        /// <description> 2025-01-23-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
